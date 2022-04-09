@@ -1,0 +1,6 @@
+splash screen
+    1. login in, in case if there is credentials present in the local storage as per the role
+    2. if not present
+        1. if the last role saved is customer, show him the screens
+        2. if not saved
+            ask him the user type, then route accordingly

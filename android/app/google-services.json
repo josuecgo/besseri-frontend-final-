@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "817083462769",
+    "firebase_url": "https://besseri-334619-default-rtdb.firebaseio.com",
+    "project_id": "besseri-334619",
+    "storage_bucket": "besseri-334619.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817083462769:android:65e44ae2a989437d2297d0",
+        "android_client_info": {
+          "package_name": "com.besseri"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "817083462769-b3rhdm4d6k4ie94cubhq22plmaf71ssr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2G4EswlvlJxAvzR_zZmtzS-pJjxLFr5I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "817083462769-b3rhdm4d6k4ie94cubhq22plmaf71ssr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

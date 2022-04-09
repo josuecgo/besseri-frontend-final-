@@ -1,0 +1,175 @@
+import { useIsFocused, useRoute } from '@react-navigation/native';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Text, View, StyleSheet, Image, useWindowDimensions,TouchableOpacity, ScrollView, Linking, Alert } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import ButtonComponent from '../components/button/button.component';
+import Colors from '../util/styles/colors';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Feather from 'react-native-vector-icons/Feather';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import moment from 'moment';
+import CommonStyles from '../util/styles/styles';
+import { api_statuses, base_url, vendor_api_urls } from '../util/api/api_essentials';
+import RatingComponent from '../components/Ratings/rating.component';
+import { BOTTOM_TAB_VENDOR_ROUTES, CUSTOMER_HOME_SCREEN_ROUTES, showToaster, VENDOR_DETAILS_ROUTES } from '../util/constants';
+import LoaderComponent from '../components/Loader/Loader.component';
+import { getBusinessId, getUserId } from '../util/local-storage/auth_service';
+const ShareServiceDetail = (props) => {
+    const {width,height} = useWindowDimensions();
+    const {params} = useRoute();
+  const [loading,setLoading] = useState(false);
+  const isVendor = params.isVendor;
+  const [service,setService] = useState(params?.service);
+
+  const changeServiceAvailability = async() => {
+    try {
+      setLoading(true);
+       const apiCall = await axios.post(vendor_api_urls.change_service_availability,{
+         serviceId:service?._id,
+         flag:!service.active
+       });
+       if(apiCall.status == api_statuses.success) {
+         console.log(apiCall.data)
+         setLoading(false);
+         setService(apiCall.data.data);
+       } else {
+         showToaster('something went wrong');
+       }
+    } catch(e) {
+      console.log(e)
+        setLoading(false);
+        showToaster('something went wrong, try again later');
+    }
+  }
+
+  const deleteService = async() => {
+    try {
+      setLoading(true);
+      const businessId = await getBusinessId();
+      const userId = await getUserId();
+      console.log(businessId,userId,service?._id)
+       const apiCall = await axios.post(vendor_api_urls.delete_service,{
+         serviceId:service?._id,
+         businessId:businessId,
+         userId:userId
+       });
+       setLoading(false);
+       if(apiCall.status == api_statuses.success) {
+         showToaster('Service Deleted successfully');
+         props.navigation.navigate(BOTTOM_TAB_VENDOR_ROUTES.SERVICES);
+       } else {
+         showToaster('something went wrong');
+       }
+    } catch(e) {
+      console.log(e.response.data)
+        setLoading(false);
+        showToaster('something went wrong, try again later');
+    }
+  }
+
+  return (
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <LoaderComponent isVisible={loading}/>
+        <View style={styles.header}>
+            <TouchableOpacity 
+            onPress={() => props.navigation.goBack()}
+            style={{alignSelf:'flex-start'}}>
+                <MaterialCommunityIcons
+                name='keyboard-backspace'
+                color={Colors.white}
+                size={25}
+                />
+            </TouchableOpacity>
+            <View style={{...CommonStyles.flexDirectionRow,...CommonStyles.horizontalCenter,marginTop:10}}>
+                <View style={{width:45,height:45,borderWidth:1,borderColor:Colors.white,backgroundColor:Colors.white,...CommonStyles.flexCenter,borderRadius:5}}>
+               <MaterialIcons name='miscellaneous-services' size={30} color={Colors.primaryColor}/>
+                </View>
+                <View>
+                <Text style={styles.headerText}>{service?.name}</Text>
+                <Text style={{...CommonStyles.fontFamily,fontSize:13,paddingLeft:12,color:isVendor ?  service?.active ? 'green' : Colors.red : 'white'}}>{isVendor ?  service?.active ? 'Active' : 'In Active' : 'Service detail'}</Text>
+                </View>
+            </View>
+        </View>
+
+      <ScrollView contentContainerStyle={{flexGrow:1,paddingBottom:'25%'}}> 
+      <View style={{width:'95%',alignSelf:'center'}}>
+       <Image
+        source={{uri:`${base_url}/${service?.coverImg}`}}
+        style={{width:'100%',height:200,borderRadius:10,alignSelf:'center',margin:10}}
+        />
+       <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+                  <View>
+                  <Text style={{...CommonStyles.fontFamily,fontSize:17}}>{service?.name}</Text>
+                    <Text style={{color:'grey'}}>{service?.category?.name}</Text>
+                    {/* <RatingComponent numOfStars={5} totalReviews={10}/> */}
+                    </View>
+                    <Text style={{...CommonStyles.fontFamily,fontSize:16}}>$ {service?.price}</Text>
+                    </View>
+                    <Text style={{fontSize:12,color:'grey'}}>{service?.description}</Text>
+
+       </View>
+      </ScrollView>
+        {
+          isVendor ? 
+          <View style={{...CommonStyles.flexDirectionRow,justifyContent:'space-around',backgroundColor:'transparent',position:'absolute',bottom:15}}>
+          <ButtonComponent
+          buttonText={service?.active ? 'In-Active' : 'Active'}
+          width={width / 2.2}
+          colorB={Colors.secondaryColorGreenShade}
+          borderRadius={10}
+          margin={10}
+          handlePress={() => {
+            Alert.alert(`${service?.active ? 'MARKING SERVICE IN-ACTIVE' : 'MARKING SERVICE ACTIVE'}`,'Do you really want to change its availability?',
+            [{text:'yes',onPress:changeServiceAvailability},{text:'No'}]
+            )
+          }}
+          />
+           <ButtonComponent
+          buttonText={'Delete'}
+          width={width / 2.2}
+          colorB={Colors.red}
+          borderRadius={10}
+          margin={10}
+          handlePress={() => {
+            Alert.alert('DELETING SERVICE','Do you really want to delete this service??',
+            [{text:'yes',onPress:deleteService},{text:'No'}]
+            )
+          }}
+          />
+      </View>  
+      :
+      (
+        isVendor ? 
+        null:
+        <ButtonComponent
+      buttonText={'Book Now'}
+      width={width - 20}
+      colorB={Colors.brightBlue}
+      borderRadius={5}
+      margin={10}
+      handlePress={() => {
+        props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.BOOK_SERVICE,{
+          service:service
+        });
+      }}
+      />
+      )
+        }
+    </View>
+  );
+};
+const styles = StyleSheet.create({
+  placeOrderText: { ...CommonStyles.fontFamily, fontSize: 20 },
+  placeOrderTextDetail: { fontSize: 13, fontWeight: '300', width: '90%', alignSelf: 'center', textAlign: 'center', color: Colors.dark },
+  placeOrderWrapper: { justifyContent: 'center', alignItems: 'center', bottom: 40 },
+  header:{
+    width:'100%',
+    minHeight:110,
+    backgroundColor:Colors.primaryColor,
+    paddingHorizontal:20,
+    justifyContent:'center'
+},
+headerText:{...CommonStyles.fontFamily,color:Colors.white,fontSize:20,paddingLeft:10},
+})
+export default ShareServiceDetail;
