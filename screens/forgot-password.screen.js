@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
+import {View,StyleSheet} from 'react-native';
 import CustomSafeAreaViewComponent from '../components/custom-safe-area-view/custom-safe-area-view.component';
 import TopCircleComponent from '../components/top-circle/top-circle.component';
 import KEYBOARD_TYPES from '../util/keyboard-types';
@@ -9,6 +9,7 @@ import ButtonComponent from '../components/button/button.component';
 import {
   LOGIN_SIGNUP_FORGOT_ROUTES,
   SCREEN_HORIZONTAL_MARGIN,
+  SCREEN_HORIZONTAL_MARGIN_FORM,
   showToaster,
 } from '../util/constants';
 import SideOptionComponent from '../components/top-circle/side-option.component';
@@ -21,8 +22,8 @@ import { api_statuses, api_urls } from '../util/api/api_essentials';
 import LoaderComponent from '../components/Loader/Loader.component';
 
 const CREDENTIAL_KEYS = {
-  EMAIL_ADDRESS: 'Email Address',
-  OTP_CODE: 'Verification Code',
+  EMAIL_ADDRESS: 'Correo electrónico',
+  OTP_CODE: 'Código de verificación',
 };
 
 const ForgotPasswordScreen = ({navigation}) => {
@@ -52,11 +53,11 @@ const ForgotPasswordScreen = ({navigation}) => {
      setRecievedOtp(apiCall?.data?.OTP)
       setCodeSent(true);
      } else {
-       showToaster('Something went wrong')
+       showToaster('Algo salió mal')
      }
     } catch(e) {
       setLoading(false);
-      showToaster(e?.response?.data?.message ?  e?.response?.data?.message :'Something went wrong')
+      showToaster(e?.response?.data?.message ?  e?.response?.data?.message :'Algo salió mal')
     }
   };
   const verifyOtp = () => {
@@ -76,67 +77,76 @@ const ForgotPasswordScreen = ({navigation}) => {
     <CustomSafeAreaViewComponent>
       <LoaderComponent isVisible={loading}/>
       <TopCircleComponent
-        textHeading="Forgotten your password?"
-        subText="We've got you covered!"
+        textHeading="¿Olvidaste tu contraseña?"
       />
       <View
         style={[
           CommonStyles.flexCenter,
-          {marginTop: SCREEN_HORIZONTAL_MARGIN},
+          styles.body
         ]}>
-        {codeSent ? (
-          <InputFieldComponent
-            icon={
-              <MaterialCommunityIcons
-                color={Colors.dark}
-                size={20}
-                name="key-variant"
-              />
-            }
-            keyboardType={KEYBOARD_TYPES.NUMBER_PAD}
-            onChangeText={inputText => {
-              onChangeText(inputText, CREDENTIAL_KEYS.OTP_CODE);
-            }}
-            placeholderText={CREDENTIAL_KEYS.OTP_CODE}
-            value={userCredentials[CREDENTIAL_KEYS.OTP_CODE]}
-            secureTextEntry={false}
+          {codeSent ? (
+            <InputFieldComponent
+              icon={
+                <MaterialCommunityIcons
+                  color={Colors.dark}
+                  size={28}
+                  name="key-variant"
+                />
+              }
+              keyboardType={KEYBOARD_TYPES.NUMBER_PAD}
+              onChangeText={inputText => {
+                onChangeText(inputText, CREDENTIAL_KEYS.OTP_CODE);
+              }}
+              placeholderText={CREDENTIAL_KEYS.OTP_CODE}
+              value={userCredentials[CREDENTIAL_KEYS.OTP_CODE]}
+              secureTextEntry={false}
+            />
+          ) : (
+            <InputFieldComponent
+              icon={
+                <MaterialIcons
+                  color={Colors.dark}
+                  size={28}
+                  name="email"
+                />
+              }
+              keyboardType={KEYBOARD_TYPES.EMAIL_ADDRESS}
+              onChangeText={inputText1 => {
+                setEmail(inputText1)
+              }}
+              placeholderText={CREDENTIAL_KEYS.EMAIL_ADDRESS}
+              value={email}
+              secureTextEntry={false}
+            />
+          )}
+          <View style={{justifyContent: 'flex-end'}}>
+            <SideOptionComponent
+              text="Iniciar sesión en su cuenta"
+              textAlign="right"
+              navigation={navigation}
+              keyToRoute={LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN}
+            />
+          </View>
+          <BottomContentComponent>
+          <ButtonComponent
+            colorB={Colors.terciarySolid}
+            buttonText={codeSent ? 'Verificar' : 'ENVIAR CÓDIGO'}
+            handlePress={codeSent ? verifyOtp : handleForgotPassword}
           />
-        ) : (
-          <InputFieldComponent
-            icon={
-              <MaterialIcons
-                color={Colors.dark}
-                size={20}
-                name="alternate-email"
-              />
-            }
-            keyboardType={KEYBOARD_TYPES.EMAIL_ADDRESS}
-            onChangeText={inputText1 => {
-              setEmail(inputText1)
-            }}
-            placeholderText={CREDENTIAL_KEYS.EMAIL_ADDRESS}
-            value={email}
-            secureTextEntry={false}
-          />
-        )}
-        <View style={{justifyContent: 'flex-end'}}>
-          <SideOptionComponent
-            text="Sign in to your account"
-            textAlign="right"
-            navigation={navigation}
-            keyToRoute={LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN}
-          />
-        </View>
+        </BottomContentComponent>
       </View>
-      <BottomContentComponent>
-        <ButtonComponent
-          colorB={Colors.primaryColor}
-          buttonText={codeSent ? 'Verify' : 'SEND CODE'}
-          handlePress={codeSent ? verifyOtp : handleForgotPassword}
-        />
-      </BottomContentComponent>
     </CustomSafeAreaViewComponent>
   );
 };
 
 export default ForgotPasswordScreen;
+const styles = StyleSheet.create({
+  body:{
+    marginTop: SCREEN_HORIZONTAL_MARGIN,
+    backgroundColor:Colors.white,
+    paddingVertical:50,
+    elevation:2,
+    marginHorizontal:SCREEN_HORIZONTAL_MARGIN_FORM
+    
+  }
+})

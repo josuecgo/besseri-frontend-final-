@@ -1,11 +1,11 @@
 import React, { useRef, useState } from 'react';
-import { useWindowDimensions, View,Text, Pressable, ImageBackground } from 'react-native';
+import { useWindowDimensions, View,Text, Pressable, ImageBackground,StyleSheet,ScrollView } from 'react-native';
 import CustomSafeAreaViewComponent from '../components/custom-safe-area-view/custom-safe-area-view.component';
 import TopCircleComponent from '../components/top-circle/top-circle.component';
 import {
   LOGIN_SIGNUP_FORGOT_ROUTES,
   ROLES,
-  SCREEN_HORIZONTAL_MARGIN,
+  SCREEN_HORIZONTAL_MARGIN_FORM,
   showToaster,
 } from '../util/constants';
 import CommonStyles from '../util/styles/styles';
@@ -22,24 +22,25 @@ import axios from 'axios';
 import { api_statuses, api_urls, vendor_api_urls } from '../util/api/api_essentials';
 import LoaderComponent from '../components/Loader/Loader.component';
 import ImageCropPicker from 'react-native-image-crop-picker';
+import { deviceHeight, deviceWidth } from '../util/Dimentions';
 const CREDENTIAL_KEYS = {
-  WORK_EMAIL: 'Work Email',
-  STORE_NAME: 'Store Name',
-  FULL_NAME: 'Full Name',
-  PHONE_NUMBER: 'Phone Number (+923XXXXXXXXX)',
-  ADDRESS_LINE_ONE: 'Address Line One',
-  ADDRESS_LINE_TWO: 'Address Line Two',
-  STATE: 'State',
-  CITY: 'City',
-  COUNTRY: 'Country',
-  PASSWORD: 'Password'
+  WORK_EMAIL: 'Correo electrónico del trabajo',
+  STORE_NAME: 'Nombre de la tienda',
+  FULL_NAME: 'Nombre completo',
+  PHONE_NUMBER: 'Número de teléfono',
+  ADDRESS_LINE_ONE: 'Dirección Línea Uno',
+  ADDRESS_LINE_TWO: 'Dirección Línea Dos',
+  STATE: 'Estado',
+  CITY: 'Ciudad',
+  COUNTRY: 'País',
+  PASSWORD: 'Contraseña'
 };
 
 // text to render based on the role type
 const TEXT_TO_RENDER = {
   [ROLES.BUSINESS]: {
-    textHeading: 'Create Business account',
-    subText: 'Business Account',
+    textHeading: 'Crear cuenta comercial',
+    
   },
 };
 
@@ -117,27 +118,29 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
       console.log(res);
       setLogo(res);
     }).catch(e => {
-      showToaster('something went wrong')
+      showToaster('Algo salio mal')
     })
   }
  
 
   return (
-    <CustomSafeAreaViewComponent>
+    <View style={{flex:1}}>
 
       <LoaderComponent isVisible={showLoader} />
 
       <TopCircleComponent
         textHeading={getTextObject.textHeading}
-        subText={getTextObject.subText}
+        
       />
       <View
         style={[
           CommonStyles.flexCenter,
-          { marginTop: SCREEN_HORIZONTAL_MARGIN },
+          styles.body,
         ]}>
+        <ScrollView>
+          
         <InputFieldComponent
-          icon={<Ionicons color={Colors.dark} size={20} name="person" />}
+         
           keyboardType={KEYBOARD_TYPES.DEFAULT}
           onChangeText={inputText => {
             onChangeText(inputText, CREDENTIAL_KEYS.FULL_NAME);
@@ -149,13 +152,6 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
           returnType="next"
         />
         <InputFieldComponent
-          icon={
-            <MaterialIcons
-              color={Colors.dark}
-              size={20}
-              name="alternate-email"
-            />
-          }
           keyboardType={KEYBOARD_TYPES.EMAIL_ADDRESS}
           onChangeText={inputText => {
             onChangeText(inputText, CREDENTIAL_KEYS.WORK_EMAIL);
@@ -168,7 +164,7 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
           returnType="next"
         />
         <InputFieldComponent
-          icon={<Ionicons color={Colors.dark} size={20} name="person" />}
+         
           keyboardType={KEYBOARD_TYPES.PHONE_PAD}
           onChangeText={inputText => {
             onChangeText(inputText, CREDENTIAL_KEYS.PHONE_NUMBER);
@@ -181,7 +177,7 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
           returnType="next"
         />
         <InputFieldComponent
-          icon={<FontAwesome5 color={Colors.dark} size={20} name="store-alt" />}
+          // icon={<FontAwesome5 color={Colors.dark} size={20} name="store-alt" />}
           keyboardType={KEYBOARD_TYPES.DEFAULT}
           onChangeText={inputText => {
             onChangeText(inputText, CREDENTIAL_KEYS.STORE_NAME);
@@ -194,7 +190,7 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
           returnType="next"
         />
         <InputFieldComponent
-          icon={<Entypo color={Colors.dark} size={20} name="address" />}
+         
           keyboardType={KEYBOARD_TYPES.DEFAULT}
           onChangeText={inputText => {
             onChangeText(inputText, CREDENTIAL_KEYS.ADDRESS_LINE_ONE);
@@ -207,7 +203,7 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
           returnType="next"
         />
         <InputFieldComponent
-          icon={<Entypo color={Colors.dark} size={20} name="address" />}
+         
           keyboardType={KEYBOARD_TYPES.DEFAULT}
           onChangeText={inputText => {
             onChangeText(inputText, CREDENTIAL_KEYS.ADDRESS_LINE_TWO);
@@ -220,13 +216,6 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
           returnType="next"
         />
         <InputFieldComponent
-          icon={
-            <MaterialCommunityIcons
-              color={Colors.dark}
-              size={20}
-              name="sign-real-estate"
-            />
-          }
           keyboardType={KEYBOARD_TYPES.DEFAULT}
           onChangeText={inputText => {
             onChangeText(inputText, CREDENTIAL_KEYS.STATE);
@@ -239,7 +228,7 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
           returnType="next"
         />
         <InputFieldComponent
-          icon={<FontAwesome5 color={Colors.dark} size={20} name="city" />}
+         
           keyboardType={KEYBOARD_TYPES.DEFAULT}
           onChangeText={inputText => {
             onChangeText(inputText, CREDENTIAL_KEYS.CITY);
@@ -252,7 +241,7 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
           returnType="next"
         />
         <InputFieldComponent
-          icon={<MaterialIcons color={Colors.dark} size={20} name="place" />}
+          
           keyboardType={KEYBOARD_TYPES.DEFAULT}
           onChangeText={inputText => {
             onChangeText(inputText, CREDENTIAL_KEYS.COUNTRY);
@@ -263,7 +252,7 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
           ref={countryRef}
         />
         <InputFieldComponent
-          icon={<MaterialIcons color={Colors.dark} size={20} name="place" />}
+          
           keyboardType={KEYBOARD_TYPES.DEFAULT}
           onChangeText={inputText => {
             onChangeText(inputText, CREDENTIAL_KEYS.PASSWORD);
@@ -280,14 +269,14 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
           backgroundColor:Colors.brightBlue,
           alignSelf:'center',
           borderRadius:10,
-          margin:10,
+          marginVertical:4,
           flexDirection:'row',
           justifyContent:'space-between',alignItems:'center',
-          paddingVertical:15,
+          paddingVertical:9,
           paddingHorizontal:5
         }}>
          <View style={{width:'70%'}}>
-           <Text style={{color:'white'}}>Upload business logo, logo must be clear and should present your business, any violation can get your account suspended</Text>
+           <Text style={{color:'white'}}>Cargue el logotipo de la empresa, el logotipo debe ser claro y debe presentar su empresa, cualquier infracción puede suspender su cuenta</Text>
          </View>
         {
           logo ? 
@@ -308,14 +297,33 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
         </View>
         <ButtonComponent
           marginTop={0}
-          colorB={Colors.primaryColor}
-          buttonText="CREATE ACCOUNT"
+          colorB={Colors.terciarySolid}
+          buttonText="CREAR CUENTA"
           handlePress={generateOtp}
-          width={200}
+          width={'100%'}
+          borderRadius={0}
+    
         />
+
+        <View style={{width:deviceWidth , height : deviceHeight * 0.10}} />
+        
+      </ScrollView>
+
       </View>
-    </CustomSafeAreaViewComponent>
+    </View>
   );
 };
 
 export default VendorSsSignUpScreen;
+
+
+const styles = StyleSheet.create({
+  body:{  
+    // marginTop: deviceHeight * 0.01, 
+    backgroundColor:Colors.white,
+    // marginHorizontal:SCREEN_HORIZONTAL_MARGIN_FORM,
+    paddingVertical: 10,
+    marginBottom:50,
+    
+  }
+})

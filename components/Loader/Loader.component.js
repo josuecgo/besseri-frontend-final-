@@ -13,9 +13,9 @@ const LoaderComponent = ({isVisible}) => {
        <View style={CommonStyles.flexOneCenter}>
            <View style={styles.loaderWrapperStyle}>
                <SpinKit
-               type='Wave'
+               type='Circle'
                isVisible={isVisible}
-               color={Colors.primaryColor}
+               color={Colors.terciarySolid}
                size={30}
                />
              </View>

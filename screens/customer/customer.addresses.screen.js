@@ -13,6 +13,11 @@ import LoaderComponent from '../../components/Loader/Loader.component';
 import AddressComponent from '../../components/customer-components/customer.addresscard.component';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Geolocation from '@react-native-community/geolocation';
+import { HeaderBackground } from '../../components/Background/HeaderBackground';
+import { deviceHeight } from '../../util/Dimentions';
+import { useLocation } from '../../hooks/useLocation';
+
+
 const CustomerAddressesScreen = (props) => {
     const {width,height} = useWindowDimensions();
     const [user,setUser] = useState(null);
@@ -20,12 +25,16 @@ const CustomerAddressesScreen = (props) => {
     const [editMode,setEditMode] = useState(false);
     const createAddressRef = useRef();
     const [selectedAddressType,setSelectedAddressType] = useState(editMode ? selectedAddress?.label : '');
-    const [addressLine,setAddressLine] = useState(editMode ? selectedAddress?.addressLine : '');
+    const [addressLine,setAddressLine] = useState('');
     const [addresses,setAddresses] = useState([]);
     const [selectedAddress,setSelectedAddress] = useState(null);
     const [info,setInfo] = useState(editMode ? selectedAddress?.info : '');
     const [phone,setPhone] = useState(editMode ? selectedAddress?.phone : '');
     const [location,setLocation] = useState(null);
+    const [coords,setCoords] = useState({
+        longitude: 0,
+        latitude: 0
+    });
     const handleModalize = (flag) => {
         if(flag == 'open') {
             createAddressRef.current.open();
@@ -44,26 +53,39 @@ const CustomerAddressesScreen = (props) => {
         getUserDetails();
         getAddresses();
     },[]);
-    const getLocation = async() => {
+
+    const getUserLocation = async() => {
         try {
           const granted = await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
             {
-              'title': 'Besseri',
-              'message': 'Besseri wants to know your location'
+              'title': 'Permiso de ubicación',
+              'message': 'Esta aplicación necesita acceso a tu ubicación ' +
+                         'para que sepamos donde estas.'
             }
           )
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            Geolocation.getCurrentPosition(position => {
-                
-                setLocation(position.coords)
-            })
+            await Geolocation.getCurrentPosition(res => {
+              setCoords({
+                latitude:res?.coords?.latitude,
+                longitude:res?.coords?.longitude
+              });
+              // Geocoder.from(res.coords?.latitude,res?.coords?.longitude).then(response => {
+              //     setCity(response.results[0]?.address_components[2]?.long_name);
+              //     setAddressLine(response?.results[0]?.formatted_address)
+              //     setState(response.results[0]?.address_components[5]?.long_name)
+              // }).catch(e => {
+              //     console.log(e)
+              // })
+              // setState(res.coords,SCREEN_STATES.USER_LOCATION);
+            });
           } else {
-            console.log("location permission denied")
-            showToaster("Location permission denied");
+            console.log("Location permission denied")
           }
+      
         } catch(e) {
-            showToaster('Couldnt get your location')
+          console.log(e)
+         showToaster('No se pudo obtener la ubicación actual.')
         }
       }
     
@@ -72,50 +94,76 @@ const CustomerAddressesScreen = (props) => {
         try {
             setLoading(true);
             const userId = await getUserId();
-         const apiCall = await axios.get(`${customer_api_urls.get_addresses}/${userId}`);
-         setLoading(false);
-         if(apiCall.status == api_statuses.success) {
-             setAddresses(apiCall.data.data);
-         } else {
-             showToaster('Something went wrong please try again :/')
-         }
+            const apiCall = await axios.get(`${customer_api_urls.get_addresses}/${userId}`);
+            setLoading(false);
+            if(apiCall.status == api_statuses.success) {
+                setAddresses(apiCall.data.data);
+            } else {
+                showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
+            }
         } catch(e) 
         { 
             console.log(e.response)
             setLoading(false);  
-            showToaster('Something went wrong please try again :/')
+            showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
         }
     }
     const createAddress = async() => {
-        try {
-            setLoading(true);
-         const location = Geolocation.getCurrentPosition(async(position) => {
-            const apiCall = await axios.post(customer_api_urls.create_address,{
-                label:selectedAddressType,
-                address:addressLine,
-                userId:user?._id,
-                created_on:new Date(),
-                phone:phone,
-                info:info,
-                latitude:position?.coords?.latitude,
-                longitude:position?.coords?.longitude
-            });
-            handleModalize('close')
-            setLoading(false);
-            if(apiCall.status == api_statuses.success) {
-                showToaster('Address created successfully');
-                await getAddresses()
-            } else {
-                showToaster('Something went wrong please try again :/')
-            }
-         })
        
-        } catch(e) 
-        { 
-            console.log(e.response.data)
-            setLoading(false);  
-            showToaster('Something went wrong please try again :/')
-        }
+            if (coords.latitude > 0 || coords.longitude > 0) {
+                try {
+                    setLoading(true);
+                const apiCall = await axios.post(customer_api_urls.create_address,{
+                    label:selectedAddressType,
+                    address:addressLine,
+                    userId:user?._id,
+                    created_on:new Date(),
+                    phone:phone,
+                    info:info,
+                    latitude:coords?.latitude,
+                    longitude:coords?.longitude
+                });
+                handleModalize('close')
+                setLoading(false);
+                if(apiCall.status == api_statuses.success) {
+                    showToaster('Dirección creada con éxito');
+                    await getAddresses()
+                } else {
+                    showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
+                }
+
+                } catch(e) 
+                { 
+                    console.log(e.response.data)
+                    setLoading(false);  
+                    showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
+                }
+            }else{
+                showToaster('No olvides ingresar tus coordenadas')
+            }
+            
+        //     const location = Geolocation.getCurrentPosition(async(position) => {
+        //     const apiCall = await axios.post(customer_api_urls.create_address,{
+        //         label:selectedAddressType,
+        //         address:addressLine,
+        //         userId:user?._id,
+        //         created_on:new Date(),
+        //         phone:phone,
+        //         info:info,
+        //         latitude:position?.coords?.latitude,
+        //         longitude:position?.coords?.longitude
+        //     });
+        //     handleModalize('close')
+        //     setLoading(false);
+        //     if(apiCall.status == api_statuses.success) {
+        //         showToaster('Dirección creada con éxito');
+        //         await getAddresses()
+        //     } else {
+        //         showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
+        //     }
+        //  })
+       
+        
     }
     const deleteAddress = async(id) => {
         try {
@@ -124,18 +172,19 @@ const CustomerAddressesScreen = (props) => {
          setLoading(false);
          if(apiCall.status == api_statuses.success) {
             handleModalize('close')
-            showToaster('Address deleted');
+            showToaster('Dirección eliminada');
             getAddresses();
          } else {
-             showToaster('Something went wrong please try again :/')
+             showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
          }
         } catch(e) 
         { 
             console.log(e.response.data)
             setLoading(false);  
-            showToaster('Something went wrong please try again :/')
+            showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
         }
     }
+    
   return (
     <View style={{flex:1,backgroundColor:'white'}}>
         <CreateAddressModal
@@ -145,7 +194,7 @@ const CustomerAddressesScreen = (props) => {
             setSelectedAddressType('')
         }}
         onDelete={() => deleteAddress(selectedAddress?._id)}
-        value={addressLine}
+        value={editMode ? selectedAddress?.addressLine : addressLine}
         onChangeText={al => setAddressLine(al)}
         editMode={editMode}
         createAddressRef={createAddressRef}
@@ -156,11 +205,12 @@ const CustomerAddressesScreen = (props) => {
         onChangePhone={pn => setPhone(pn)}
         infoVal={info}
         onChangeInfo={inf => setInfo(inf)}
-
+        getCoordinates={getUserLocation} coords={coords}
         />
         <LoaderComponent
         isVisible={loading}
         />
+        <HeaderBackground/>
         <View style={styles.header}>
             <TouchableOpacity
             onPress={() => props?.navigation?.goBack()}
@@ -171,7 +221,7 @@ const CustomerAddressesScreen = (props) => {
                 size={25}
                 />
             </TouchableOpacity>
-            <Text style={styles.headerText}>My Addresses</Text>
+            <Text style={styles.headerText}>Mis direcciones</Text>
         </View>
       {
           addresses.length > 0 ? 
@@ -189,11 +239,11 @@ const CustomerAddressesScreen = (props) => {
          style={{width:200,height:200}}
          />
          <View style={[styles.AddressesDetailsWrapper,{width}]}>
-         <Text style={styles.createAddressText}>Create Address</Text>
-         <Text style={styles.createAddressDetailText}>Create addresses and make it easier for you to select them while placing orders, selected address will be delivery address while placing order</Text>
+         <Text style={styles.createAddressText}>Crear dirección</Text>
+         <Text style={styles.createAddressDetailText}>Cree direcciones y haga que le resulte más fácil seleccionarlas al realizar pedidos, la dirección seleccionada será la dirección de entrega al realizar el pedido</Text>
           <ButtonComponent
-          buttonText={'Create Now'}
-          colorB={Colors.primaryColor}
+          buttonText={'Crea ahora'}
+          colorB={Colors.terciarySolid}
           width={width / 1.5}
           margin={10}
           handlePress={() => createAddressRef.current.open()}
@@ -225,9 +275,8 @@ const CustomerAddressesScreen = (props) => {
 };
 const styles = StyleSheet.create({
     header:{
-        width:'100%',
-        height:80,
-        backgroundColor:Colors.primaryColor,
+        width: '100%',
+        height: Platform.OS == 'ios' ? deviceHeight * 0.15 : deviceHeight * 0.10,
         paddingHorizontal:20,
         alignItems:'center',
         justifyContent:'center'

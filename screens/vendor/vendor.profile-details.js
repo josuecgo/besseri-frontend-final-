@@ -12,7 +12,11 @@ import {getBusinessProfile} from '../../util/local-storage/auth_service';
 import Loader from '../../components/Loader/Loader.component'
 import {useRoute} from '@react-navigation/native';
 import { base_url } from '../../util/api/api_essentials';
-const { width,height } = Dimensions.get('screen');
+import { adjust, deviceHeight } from '../../util/Dimentions';
+
+
+import { HeaderBackground } from '../../components/Background/HeaderBackground';
+
 const VendorProfileDetailScreen = ({navigation, route}) => {
   const [showLoader,setShowLoader] = useState(false);
   const {params} = useRoute();
@@ -32,15 +36,27 @@ const VendorProfileDetailScreen = ({navigation, route}) => {
     getBusinessData()
   },[]);
   return (
-   <View style={styles.container}>
+    <View style={[styles.container]}>
      <Loader isVisible={showLoader}/>
-    <View style={styles.header}> 
-    <TouchableOpacity onPress={() => navigation.pop()}>
-        <MaterialCommunityIcons name='keyboard-backspace' color={Colors.darker} size={30}/>
-    </TouchableOpacity>
-    <TouchableOpacity>
-        <AntDesign name='setting' color={Colors.darker} size={27}/>
-    </TouchableOpacity>
+     <HeaderBackground/>
+    <View
+      style={styles.header}
+    > 
+      <View style={{flexDirection:'row',flex:1,paddingLeft:10}} >
+        <TouchableOpacity onPress={() => navigation.pop()}>
+            <MaterialCommunityIcons name='keyboard-backspace' color={Colors.white} size={30}/>
+        </TouchableOpacity>
+        {/* <TouchableOpacity>
+            <AntDesign name='setting' color={Colors.white} size={27}/>
+        </TouchableOpacity> */}
+
+        
+      </View>
+
+      <View style={{flex:2}}>
+        <Text style={{color:Colors.white, fontSize:adjust(17), marginLeft:20}} >Perfil</Text>
+      </View>
+    
     </View>
 
     <View style={styles.profileBgBanner}>
@@ -71,11 +87,11 @@ const VendorProfileDetailScreen = ({navigation, route}) => {
            </View> */}
            <ThinlineSeparator margin={15} width={'95%'}/>
            <Heading
-           text='Contact Info'
+           text='Datos de contacto'
            />
            <Text style={commonTextStyle}>{profile?.email}</Text>
            <ThinlineSeparator margin={15} width={'95%'}/>
-           <Heading text='Location & Address'/>
+           <Heading text='Dirección del sitio'/>
           
           <View style={styles.locationBox}>
            <Entypo name='location-pin' color='red' size={30}/>
@@ -96,18 +112,17 @@ const VendorProfileDetailScreen = ({navigation, route}) => {
 const styles = StyleSheet.create({
  container:{
    flex:1,
-   backgroundColor:Colors.white
+   backgroundColor:Colors.white,
+   
  },
  header:{
    width:'100%',
-   height:65,
-   borderWidth:1,
-   borderColor:Colors.white,
-   backgroundColor:Colors.white,
+   height:Platform.OS == 'ios' ? deviceHeight *0.15 : deviceHeight * 0.10,   
    ...CommonStyles.flexDirectionRow,
-   ...CommonStyles.justifySpaceBetween,
+  //  ...CommonStyles.justifySpaceBetween,
    ...CommonStyles.horizontalCenter,
-   paddingHorizontal:10
+  //  paddingHorizontal:10
+
  },
  profileBtn:{
    width:'95%',
@@ -125,10 +140,11 @@ const styles = StyleSheet.create({
      width:'90%',
      height:130,
      borderWidth:1,
-     borderColor:Colors.primaryColor,
-     backgroundColor:Colors.primaryColor,
+     borderColor:Colors.white,
+     backgroundColor:Colors.bgColor,
      alignSelf:'center',
-     borderRadius:20
+     borderRadius:20,
+     top:20
  },
  profileImg:{
      width:100,
@@ -159,4 +175,5 @@ ordersCardsWrapper : {
  },
  locationBox:{...CommonStyles.flexDirectionRow,...CommonStyles.horizontalCenter,width:'80%',paddingLeft:5}
 })
+
 export default VendorProfileDetailScreen;

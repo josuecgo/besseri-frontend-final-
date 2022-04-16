@@ -15,6 +15,8 @@ import KEYBOARD_TYPES from '../../util/keyboard-types';
 import {useRoute} from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ProductCardComponent from '../../components/customer-components/product-card.component';
+import { HeaderBackground } from '../../components/Background/HeaderBackground';
+import { deviceHeight, deviceWidth } from '../../util/Dimentions';
 const SCREEN_STATES = {
   USER_LOCATION:'User location',
   PRODUCTS:'Products',
@@ -30,6 +32,7 @@ const CustomerMoreProductsScreen = (props) => {
     [SCREEN_STATES.CATEGORIES]:[]
   });
   const [products,setProducts] = useState([]);
+  const [comision, setComision] = useState(0)
   const [categories,setCategories] = useState([]);
   const [userLocation,setUserLocation] = useState(null);
   const cartProductIds = useSelector(state => state.cart.cart_item_ids);
@@ -74,10 +77,13 @@ const CustomerMoreProductsScreen = (props) => {
   const getProducts = async() => {
     try {
      const apiCall = await axios.get(`${customer_api_urls.get_category_products}/${params?.category?._id}`);
+     const getFee = await axios.get(customer_api_urls?.get_fees);
+      
+      setComision(getFee.data.data[0]?.besseri_comission);
      setProducts(apiCall.data.data);
     //  setState(apiCall.data.data.products,SCREEN_STATES.PRODUCTS);
     //  setState(apiCall.data.data.categories,SCREEN_STATES.CATEGORIES);
-     console.log(screenStates)
+     
     } catch(e) {
        showToaster('Something went wrong please try again');
     }
@@ -101,6 +107,7 @@ const CustomerMoreProductsScreen = (props) => {
   return (
     <View style={{ ...CommonStyles.flexOne }}>
       <View style={{ flex: 1 }}>
+        <HeaderBackground/>
       <View style={styles.header}>
             <TouchableOpacity onPress={() => {
               props.navigation.goBack()
@@ -133,17 +140,19 @@ const CustomerMoreProductsScreen = (props) => {
               name="search"
             />
             <TextInput
-            placeholder='Search for product'
+            placeholder='Buscar producto'
             placeholderTextColor={'black'}
             style={{paddingLeft:10}}
             />
        </View>
-       <Text style={{fontSize:15,...CommonStyles.fontFamily,paddingLeft:10,bottom:10}}>Products for : {params?.category?.name}</Text>
+       <Text style={{fontSize:15,...CommonStyles.fontFamily,paddingLeft:10,bottom:10}}>
+         Productos por : {params?.category?.name}
+        </Text>
         <View style={{ marginTop: '2%', backgroundColor: 'transparent', alignSelf: 'flex-start', flexDirection: 'row' }}>
         </View>
 
         <ScrollView contentContainerStyle={{ flexGrow: 1, marginTop: 20 }}>
-          <FlatList
+          {/* <FlatList
           data={products}
           numColumns={2}
           contentContainerStyle={{flexGrow:1,margin:10}}
@@ -154,14 +163,39 @@ const CustomerMoreProductsScreen = (props) => {
             cartProduct={false}
             onViewDetail={() => {
                 props?.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL,{
-                  product:itemData.item
+                  product:itemData.item,
+                  comision:comision
                 });
             }}
+            comision={comision}
             />
             // <ProductListing category={itemData.item.name} products={products.filter(product => product.categoryId == itemData.item._id)} />
           )}
-          />
+          /> */}
+          <View style={{flexDirection:'row', flexWrap:'wrap',justifyContent:'center'}} >
+          {
+            products.map((item) => (
+              <View key={item._id}  >
+                <ProductCardComponent
+                onAddToCart={() => addItemToCart(item)}
+                data={item}
+                cartProduct={false}
+                onViewDetail={() => {
+                    props?.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL,{
+                      product:item,
+                      comision:comision
+                    });
+                }}
+                comision={comision}
+                />
+              </View>
+            ))
+          }
+          </View>
 
+          
+
+          <View style={{width:deviceWidth,height:deviceHeight*0.05}} />
         </ScrollView>
       </View>
     </View>
@@ -191,9 +225,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
     header:{
-      width:'100%',
-      height:80,
-      backgroundColor:Colors.primaryColor,
+      height: Platform.OS == 'ios' ? deviceHeight * 0.15  : deviceHeight * 0.10,
+      width: deviceWidth,
+      
       flexDirection:'row',
       justifyContent:'space-between',
       paddingHorizontal:20,

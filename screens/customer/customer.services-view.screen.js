@@ -19,7 +19,8 @@ const SCREEN_STATES = {
 }
 const CustomerProductsViewScreen = (props) => {
   const { width, height } = useWindowDimensions();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const [comision, setComision] = useState(0)
   const [screenStates, setScreenStates] = useState({
     [SCREEN_STATES.USER_LOCATION]: {},
     [SCREEN_STATES.PRODUCTS]:[],
@@ -43,9 +44,9 @@ const CustomerProductsViewScreen = (props) => {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
-          'title': 'Location Permission',
-          'message': 'This App needs access to your location ' +
-                     'so we can know where you are.'
+          'title': 'Permiso de ubicación',
+          'message': 'Esta aplicación necesita acceso a tu ubicación ' +
+                     'para que sepamos donde estas.'
         }
       )
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -59,7 +60,7 @@ const CustomerProductsViewScreen = (props) => {
   
     } catch(e) {
       console.log(e)
-     showToaster('Could not get current location.')
+     showToaster('No se pudo obtener la ubicación actual.')
     }
   }
   useEffect(() => {
@@ -72,14 +73,16 @@ const CustomerProductsViewScreen = (props) => {
    //Get Service to show
    const getServices = async() => {
     try {
-     const apiCall = await axios.get(customer_api_urls.get_services);
-     console.log('line 70',apiCall.data.data)
-     setServices(apiCall.data.data);
-     setCategories(apiCall.data.categories)
+      const apiCall = await axios.get(customer_api_urls.get_services);
+      const getFee = await axios.get(customer_api_urls?.get_fees);
+      
+      setComision(getFee.data.data[0]?.besseri_comission);  
+      setServices(apiCall.data.data);
+      setCategories(apiCall.data.categories)
     } catch(e) {
       alert('error here')
       console.log(e.response.data);
-       showToaster('Something went wrong please try again');
+       showToaster('No se pudo obtener la ubicación actual');
     }
   }
   useEffect(() => {
@@ -121,7 +124,7 @@ const CustomerProductsViewScreen = (props) => {
 
         <ScrollView contentContainerStyle={{ flexGrow: 1, marginTop: 20 }}>
       
-          <FlatList
+          {/* <FlatList
           data={categories}
           keyExtractor={item => item?._id}
           renderItem={itemData => (
@@ -129,7 +132,21 @@ const CustomerProductsViewScreen = (props) => {
             navigation={props.navigation}
             category={itemData.item.name} services={services.filter(service => service.categoryId == itemData.item._id)} />
           )}
-          />
+          /> */}
+          {
+            categories.map( (item) => (
+              <View key={item._id} >
+                <ServiceListing
+                navigation={props.navigation}
+                category={item.name} 
+                services={services.filter(service => service.categoryId == item._id)} 
+                comision={comision}
+                />
+              </View>
+              
+           
+            ))
+          }
 
         </ScrollView>
       </View>

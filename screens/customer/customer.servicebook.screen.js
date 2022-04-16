@@ -24,6 +24,8 @@ import moment from 'moment';
 import { useRoute } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import { initPaymentSheet, presentPaymentSheet } from '@stripe/stripe-react-native';
+import { HeaderBackground } from '../../components/Background/HeaderBackground';
+import { deviceHeight, deviceWidth } from '../../util/Dimentions';
 const CustomerServiceBook = (props) => {
     const { width, height } = useWindowDimensions();
     const { params } = useRoute();
@@ -155,19 +157,19 @@ const CustomerServiceBook = (props) => {
     const bookAppointment = async () => {
         try {
             if (!date) {
-                ValidationPopup('select date please');
+                ValidationPopup('Seleccione la fecha por favor');
             }
             if (!time) {
-                ValidationPopup('select time please');
+                ValidationPopup('Seleccione hora por favor');
             }
             if (!business) {
-                ValidationPopup('Wait for business info');
+                ValidationPopup('Esperar información comercial');
             }
             if (!service) {
-                ValidationPopup('No Service selected');
+                ValidationPopup('Ningún servicio seleccionado');
             }
             if (!user) {
-                ValidationPopup('User info not found')
+                ValidationPopup('Información de usuario no encontrada')
             }
             setLoading(true);
             const all = {
@@ -178,7 +180,7 @@ const CustomerServiceBook = (props) => {
                 time: time,
                 total_amount:`${Number(totalAmount) + 10}` 
             }
-            console.log(business)
+            
             const apiCall = await axios.post(`${customer_api_urls.book_service}`, {
                 booked_by_id: user?._id,
                 serviceId: service?._id,
@@ -192,14 +194,14 @@ const CustomerServiceBook = (props) => {
          
             setLoading(false);
             if (apiCall.status == api_statuses.success) {
-                showToaster('Booking Created');
+                showToaster('Reserva creada');
                 setBookingPlaced(true)
             } else {
-                showToaster('Something went wrong please try again :/')
+                showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
             }
         } catch (e) {
             setLoading(false)
-            showToaster('Something went wrong please try again :/')
+            showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
             refundPayment()
             console.log(e?.response?.data)
         }
@@ -270,7 +272,7 @@ const CustomerServiceBook = (props) => {
                return;
            }
          const { error } = await presentPaymentSheet();
-        console.log(error)    
+           
          if (error) {
            Alert.alert(`Error code: ${error.code}`, error.message);
          } else {
@@ -278,18 +280,20 @@ const CustomerServiceBook = (props) => {
          }
        };
      
+    //    console.log({totalServiceBook:totalAmount});
 
-
-    if (isBookingPlaced) {
+        if (isBookingPlaced) {
         return (
-            <View style={{ ...CommonStyles.flexOneCenter, backgroundColor: Colors.primaryColor }}>
+            <View style={{ ...CommonStyles.flexOneCenter, backgroundColor: Colors.terciarySolid }}>
                 <Ionicons
                     name='checkmark-circle'
                     color={Colors.white}
                     size={160}
                 />
-                <Text style={{ fontSize: 30, ...CommonStyles.fontFamily, color: Colors.white }}>Appointment booked</Text>
-                <Text style={{ fontSize: 15, fontWeight: '300', width: '75%', alignSelf: 'center', textAlign: 'center', color: Colors.white }}>Your appointment has been booked , soon you will recieve update from store.</Text>
+                <Text style={{ fontSize: 30, ...CommonStyles.fontFamily, color: Colors.white }}>Cita reservada</Text>
+                <Text style={{ fontSize: 15, fontWeight: '300', width: '75%', alignSelf: 'center', textAlign: 'center', color: Colors.white }}>
+                    Your appointment has been booked , soon you will recieve update from store.
+                </Text>
 
                 <ButtonComponent
                     handlePress={() => {
@@ -344,6 +348,7 @@ const CustomerServiceBook = (props) => {
                     <LoaderComponent
                         isVisible={loading}
                     />
+                    <HeaderBackground/>
                     <View style={styles.header}>
                         <TouchableOpacity onPress={() => props.navigation.goBack()}> 
                             <MaterialCommunityIcons
@@ -354,34 +359,28 @@ const CustomerServiceBook = (props) => {
                             />
                         </TouchableOpacity>
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={styles.headerText}>Book service</Text>
+                            <Text style={styles.headerText}>Reservar servicio</Text>
                             <Text style={{ fontSize: 13, fontWeight: '300', color: Colors.white }}>{service?.name}</Text>
                         </View>
-                        <TouchableOpacity>
-                            <MaterialCommunityIcons
-                                name='dots-vertical'
-                                color={Colors.white}
-                                size={25}
-                            />
-                        </TouchableOpacity>
+                       <View/>
                     </View>
                     <View>
 
                     </View>
 
 
-                    <ScrollView contentContainerStyle={{flexGrow:1,backgroundColor:'white'}}>
+                    <ScrollView contentContainerStyle={{flexGrow:1,backgroundColor:Colors.bgColor}}>
                         <View style={{ width: '93%', alignSelf: 'center', marginTop: '8%' }}>
                             <View style={{ ...CommonStyles.flexDirectionRow, ...CommonStyles.justifySpaceBetween }}>
-                                <Text style={{ ...CommonStyles.fontFamily, fontSize: 15 }}>Timing</Text>
+                                <Text style={{ ...CommonStyles.fontFamily, fontSize: 15 }}>Fecha</Text>
                                 <TouchableOpacity onPress={() => handleModalize('open')}>
-                                    <MaterialIcons name='edit' color={Colors.primaryColor} size={20} />
+                                    <MaterialIcons name='edit' color={Colors.terciarySolid} size={20} />
                                 </TouchableOpacity>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: width, alignSelf: 'center' }}>
                                 <ButtonComponent
                                     buttonText={date ? moment(date).format('DD-MM-YYYY') : 'Select Date'}
-                                    colorB={Colors.primaryColor}
+                                    colorB={Colors.primarySolid}
                                     width={width / 2.3}
                                     borderRadius={5}
                                     margin={10}
@@ -392,8 +391,8 @@ const CustomerServiceBook = (props) => {
                                     }}
                                 />
                                 <ButtonComponent
-                                    buttonText={time ? moment(time).format('hh:mm A') : 'Select time'}
-                                    colorB={Colors.primaryColor}
+                                    buttonText={time ? moment(time).format('hh:mm A') : 'Seleccionar hora'}
+                                    colorB={Colors.primarySolid}
                                     width={width / 2.3}
                                     borderRadius={5}
                                     margin={10}
@@ -408,9 +407,11 @@ const CustomerServiceBook = (props) => {
                         <ThinlineSeparator margin={10} />
 
                         <View style={{ width: '93%', alignSelf: 'center', marginTop: '1%' }}>
-                            <Text style={{ ...CommonStyles.fontFamily, fontSize: 15 }}>Seller info</Text>
+                            <Text style={{ ...CommonStyles.fontFamily, fontSize: 15 }}>Información del vendedor</Text>
                             <View style={{ width: '100%', margin: 10, paddingVertical: 14, backgroundColor: Colors.white, alignSelf: 'center', borderColor: Colors.gray, borderWidth: 1, borderRadius: 10 }}>
-                                <Text style={{ fontSize: 16, ...CommonStyles.fontFamily, paddingLeft: 25, marginBottom: 10 }}>{business?.store?.storeName}</Text>
+                                <Text style={{ fontSize: 16, ...CommonStyles.fontFamily, paddingLeft: 25, marginBottom: 10 }}>
+                                    {business?.store?.storeName}
+                                </Text>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                     <Entypo
                                         name='location-pin'
@@ -424,7 +425,7 @@ const CustomerServiceBook = (props) => {
                         <ThinlineSeparator margin={10} />
 
                         <View style={{ width: '93%', alignSelf: 'center', marginTop: '1%' }}>
-                            <Text style={{ ...CommonStyles.fontFamily, fontSize: 15 }}>Customer info</Text>
+                            <Text style={{ ...CommonStyles.fontFamily, fontSize: 15 }}>Información del cliente</Text>
                             <View style={{ width: '100%', margin: 10, paddingVertical: 14, backgroundColor: Colors.white, alignSelf: 'center', borderColor: Colors.gray, borderWidth: 1, borderRadius: 10 }}>
                                 <Text style={{ fontSize: 16, ...CommonStyles.fontFamily, paddingLeft: 25, marginBottom: 10 }}>{user?.name}</Text>
                                 <Text style={{ fontSize: 16, fontStyle: 'italic', fontWeight: '300', paddingLeft: 25, marginBottom: 10 }}>{user?.email}</Text>
@@ -445,8 +446,8 @@ const CustomerServiceBook = (props) => {
 
 
                         <View style={{ width: '93%', alignSelf: 'center' }}>
-                            <Text style={{ ...CommonStyles.fontFamily, fontSize: 15 }}>Service summary</Text>
-                            <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                            <Text style={{ ...CommonStyles.fontFamily, fontSize: 15 }}>Resumen del servicio</Text>
+                            <View style={{ paddingVertical:14,flexDirection: 'row', marginTop: 10,backgroundColor:Colors.white,borderColor: Colors.gray, borderWidth: 1, borderRadius: 10 }}>
                                 <Image
                                     source={{ uri: `${base_url}/${service?.coverImg}` }}
                                     style={{ width: 60, height: 60, borderRadius: 10 }}
@@ -460,14 +461,14 @@ const CustomerServiceBook = (props) => {
                         <View style={styles.detailCard}>
                             <DetailItem label={'Subtotal'} value={`${subTotal} MXN`} />
                             <DetailItem label={'Besseri Comission'} value={`${Math.round((Number(besseri_charges) * Number(service?.price)) / 100)} MXN`} />
-                            <DetailItem label={'Total Amount'} value={`${totalAmount} MXN`} />
+                            <DetailItem label={'Total'} value={`${totalAmount} MXN`} />
                         </View>
                     </ScrollView>
                     <ButtonComponent
                         handlePress={openPaymentSheet}
                         borderRadius={0}
                         buttonText={'Checkout'}
-                        colorB={Colors.brightBlue}
+                        colorB={Colors.terciarySolid}
                     />
                 </View>
             </SafeAreaView>
@@ -476,9 +477,9 @@ const CustomerServiceBook = (props) => {
 };
 const styles = StyleSheet.create({
     header: {
-        width: '100%',
-        height: 80,
-        backgroundColor: Colors.primaryColor,
+        height: Platform.OS == 'ios' ? deviceHeight * 0.13  : deviceHeight * 0.10,
+          width: deviceWidth,
+       
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: 20,

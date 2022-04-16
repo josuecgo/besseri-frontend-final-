@@ -8,8 +8,11 @@ import * as CartActions from '../../util/ReduxStore/Actions/CustomerActions/Cart
 import { useDispatch, useSelector } from 'react-redux';
 import { CUSTOMER_HOME_SCREEN_ROUTES, SHARED_ROUTES, showToaster } from '../../util/constants';
 import { base_url } from '../../util/api/api_essentials';
+import { adjust, deviceWidth } from '../../util/Dimentions';
+import LinearGradient from 'react-native-linear-gradient';
+import { moneda } from '../../util/Moneda';
 
-const ServiceListing = ({category,services,navigation}) => {
+const ServiceListing = ({category,services,navigation,comision}) => {
     const {width} = useWindowDimensions()
 //   const dispatch = useDispatch();
 //   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
@@ -28,41 +31,51 @@ const ServiceListing = ({category,services,navigation}) => {
     <View style={styles.container}>
         <View style={styles.buttonAndTextContainer}>
             <View style={{width:'60%'}}>
-            <Text style={{...CommonStyles.fontFamily,fontSize:17}}>{category}</Text>
+            <Text style={{...CommonStyles.fontFamily,fontSize:adjust(14)}}>{category}</Text>
             </View>
-            <TouchableOpacity style={styles.seeMoreButton}>
+            {/* <TouchableOpacity style={styles.seeMoreButton}>
                 <Text style={{...CommonStyles.fontFamily,color:'white'}}>See more</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </View>
 
         <FlatList
         data={services}
         contentContainerStyle={{marginTop:15,marginLeft:10}}
         horizontal
+        showsHorizontalScrollIndicator={false}
         renderItem={({item}) => (
-            <Pressable
+          <Pressable
             onPress={() => {
                 navigation.navigate(SHARED_ROUTES.SERVICE_DETAIL,{
                     service:item,
-                    isVendor:false
+                    isVendor:false,
+                    comision:comision
                 })
             }}
-            style={{alignSelf:'center',width:width-35,margin:10}}
+            style={styles.cardContainer}
             >
-                <Image
+              <Image
                 source={{uri:`${base_url}/${item?.coverImg}`}}
-                style={{width:'100%',height:150,resizeMode:'cover',borderRadius:10}}
-                />
-                <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',padding:5}}>
-                  <View>
-                  <Text style={{...CommonStyles.fontFamily,fontSize:17}}>{item?.name}</Text>
-                    <Text style={{color:'grey'}}>{item?.category?.name}</Text>
-                    {/* <R numOfStars={5} totalReviews={10}/> */}
-                    </View>
-                    <Text style={{...CommonStyles.fontFamily,fontSize:16}}>MXN {item?.price}</Text>
-                    </View>
+              style={styles.productImg} 
+            
+              />
+
+              <LinearGradient
+               colors={Colors.primaryGradient}
+               style={styles.LinearGradient}
+              >
+                <Text style={styles.productTitle}>{item?.name}</Text>
+                <Text style={styles.category}>{item?.category?.name}</Text>
+                <Text style={styles.productPrice}>MXN {moneda( Number(item?.price)+ Number(comision) *Number(item?.price) / 100 )}</Text>
+                
+               
+
+              </LinearGradient>
+
+      
+
                  
-                </Pressable>
+          </Pressable>
         )}
         />
     </View>
@@ -70,9 +83,61 @@ const ServiceListing = ({category,services,navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  container:{marginVertical:15,width:'95%'},
+  container:{
+    marginVertical:15,
+    width:'95%'
+  },
   buttonAndTextContainer:{flexDirection:'row',justifyContent:'space-between',alignItems:'center',paddingHorizontal:10},
-  seeMoreButton:{paddingHorizontal:15,backgroundColor:Colors.primaryColor,justifyContent:'center',alignItems:'center',padding:10,borderWidth:1,borderColor:Colors.primaryColor,borderRadius:30},
+  seeMoreButton:{paddingHorizontal:15,
+    backgroundColor:Colors.primaryColor,
+    justifyContent:'center',alignItems:'center',
+    padding:10,borderWidth:1,borderColor:Colors.primaryColor,
+    borderRadius:30
+  },
+  card:{
+    width: '100%', 
+    padding: 20, 
+    elevation: 12, 
+    borderBottomWidth: 0.3,
+    backgroundColor:Colors.white,
+    elevation:2
+  
+  },
+  cardContainer: {
+    width: 160,
+    // minHeight:250,
+    // borderColor: 'white',
+    margin: 5,
+    elevation:0,
+    // padding:5
+  },
+  LinearGradient: {
+    minHeight: deviceWidth * 0.24,
+    paddingHorizontal: 5,
+    justifyContent:'space-evenly'
+  },
+  category:{
+    fontSize:adjust(8),
+    color:Colors.gray,
+    textTransform:'capitalize'
+
+  },
+  productImg: {
+    width: '100%',
+    height: deviceWidth * 0.3,
+    // marginVertical:10,
+    alignSelf: 'center',
+    resizeMode:'stretch'
+  },
+  productTitle: { ...CommonStyles.fontFamily, fontSize: adjust(12), bottom: 5, color: Colors.white },
+  productPrice: { ...CommonStyles.fontFamily, fontSize: adjust(11), marginVertical: 4, color: Colors.secundarySolid },
+ 
+  wrapper:{
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    alignItems: 'center'
+     
+  }
  
 })
 

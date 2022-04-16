@@ -1,11 +1,12 @@
 import React, {useRef, useState} from 'react';
-import {useWindowDimensions, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import CustomSafeAreaViewComponent from '../components/custom-safe-area-view/custom-safe-area-view.component';
 import TopCircleComponent from '../components/top-circle/top-circle.component';
 import CommonStyles from '../util/styles/styles';
 import {
   LOGIN_SIGNUP_FORGOT_ROUTES,
   SCREEN_HORIZONTAL_MARGIN,
+  SCREEN_HORIZONTAL_MARGIN_FORM,
 } from '../util/constants';
 import Colors from '../util/styles/colors';
 import KEYBOARD_TYPES from '../util/keyboard-types';
@@ -16,16 +17,17 @@ import ButtonComponent from '../components/button/button.component';
 import { api_statuses, api_urls } from '../util/api/api_essentials';
 import axios from 'axios';
 import LoaderComponent from '../components/Loader/Loader.component';
+import { deviceHeight } from '../util/Dimentions';
 
 const CREDENTIAL_KEYS = {
-  FULL_NAME: 'Full Name',
-  EMAIL_ADDRESS: 'Email Address',
-  PHONE_NUMBER: 'Phone Number (+923XXXXXXXXX)',
-  PASSWORD: 'Password'
+  FULL_NAME: 'Nombre completo',
+  EMAIL_ADDRESS: 'Dirección de correo electrónico',
+  PHONE_NUMBER: 'Número de teléfono',
+  PASSWORD: 'Contraseña'
 };
 
 const CustomerSignUpScreen = ({navigation}) => {
-  const {width, height} = useWindowDimensions();
+ 
   
   const [showLoader,setShowLoader] = useState(false);
   const [userCredentials, setUserCredentials] = useState({
@@ -77,18 +79,18 @@ const CustomerSignUpScreen = ({navigation}) => {
     <CustomSafeAreaViewComponent>
       <LoaderComponent isVisible={showLoader}/>
       <TopCircleComponent
-        textHeading="Create Customer Account"
-        subText="Want auto parts at your door step or require services, we've got you covered"
+        textHeading="Crear cuenta de cliente"
+       
       />
       <View
         style={[
           CommonStyles.flexCenter,
           CommonStyles.justifySpaceBetween,
-          {marginTop: SCREEN_HORIZONTAL_MARGIN},
+          styles.body,
         ]}>
         <View style={CommonStyles.flexCenter}>
           <InputFieldComponent
-            icon={<Ionicons color={Colors.dark} size={20} name="person" />}
+            // icon={<Ionicons color={Colors.dark} size={20} name="person" />}
             keyboardType={KEYBOARD_TYPES.DEFAULT}
             onChangeText={inputText => {
               onChangeText(inputText, CREDENTIAL_KEYS.FULL_NAME);
@@ -100,13 +102,7 @@ const CustomerSignUpScreen = ({navigation}) => {
             returnType="next"
           />
           <InputFieldComponent
-            icon={
-              <MaterialIcons
-                color={Colors.dark}
-                size={20}
-                name="alternate-email"
-              />
-            }
+            
             keyboardType={KEYBOARD_TYPES.EMAIL_ADDRESS}
             onChangeText={inputText => {
               onChangeText(inputText, CREDENTIAL_KEYS.EMAIL_ADDRESS);
@@ -119,7 +115,7 @@ const CustomerSignUpScreen = ({navigation}) => {
             returnType="next"
           />
           <InputFieldComponent
-            icon={<Ionicons color={Colors.dark} size={20} name="person" />}
+           
             keyboardType={KEYBOARD_TYPES.PHONE_PAD}
             onChangeText={inputText => {
               onChangeText(inputText, CREDENTIAL_KEYS.PHONE_NUMBER);
@@ -130,7 +126,7 @@ const CustomerSignUpScreen = ({navigation}) => {
             ref={phoneNumberRef}
           />
            <InputFieldComponent
-            icon={<Ionicons color={Colors.dark} size={20} name="person" />}
+            
             onChangeText={inputText => {
               onChangeText(inputText, CREDENTIAL_KEYS.PASSWORD);
             }}
@@ -141,8 +137,8 @@ const CustomerSignUpScreen = ({navigation}) => {
           />
           <ButtonComponent
             marginTop={SCREEN_HORIZONTAL_MARGIN}
-            colorB={Colors.primaryColor}
-            buttonText="CREATE ACCOUNT"
+            colorB={Colors.terciarySolid}
+            buttonText="CREAR CUENTA"
             handlePress={generateOtp}
             width={200}
           />
@@ -153,3 +149,13 @@ const CustomerSignUpScreen = ({navigation}) => {
 };
 
 export default CustomerSignUpScreen;
+
+const styles = StyleSheet.create({
+  body:{
+    marginTop: deviceHeight * 0.15,
+    backgroundColor:Colors.white,
+    paddingVertical: deviceHeight * 0.10,
+    marginHorizontal: SCREEN_HORIZONTAL_MARGIN_FORM,
+    elevation:1
+  }
+})

@@ -13,11 +13,12 @@ import Colors from '../util/styles/colors';
 import ButtonComponent from '../components/button/button.component';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import BottomContentComponent from '../components/bottom-content/bottom-content.component';
+import { deviceHeight } from '../util/Dimentions';
 
 const AVAILABLE_ROLES = [
-  {roleName: ROLES.BUSINESS},
-  {roleName: ROLES.CUSTOMER},
-  {roleName: ROLES.RIDER},
+  {roleName: ROLES.BUSINESS,text:'NEGOCIO',bgColor:Colors.primarySolid},
+  {roleName: ROLES.CUSTOMER,text:'CLIENTE',bgColor:Colors.terciarySolid},
+  {roleName: ROLES.RIDER,text:'REPARTIDOR',bgColor:Colors.secundarySolid},
 ];
 
 const SignUpScreen = ({navigation}) => {
@@ -54,60 +55,87 @@ const SignUpScreen = ({navigation}) => {
   
 
   return (
-    <CustomSafeAreaViewComponent>
-      <TopCircleComponent
-        textHeading="Create an account"
-        subText="Please select an account type"
-      />
-      <View
-        style={[
-          CommonStyles.justifySpaceBetween,
-          {marginTop: SCREEN_HORIZONTAL_MARGIN},
-        ]}>
-        <View style={[CommonStyles.flexCenter]}>
-          {AVAILABLE_ROLES.map((role, index) => {
-            return (
-              <RoleTypeComponent
-                key={index}
-                isSelected={selectedRoles[role.roleName]}
-                roleName={role.roleName}
-                handlePress={handlePress}
-              />
-            );
-          })}
-          <ButtonComponent
-            icon={
-              <AntDesign size={18} color={Colors.white} name="arrowright" />
-            }
-            colorB={Colors.primaryColor}
-            width={50}
-            height={50}
-            handlePress={proceedWithSpecificScreen}
-          />
+    <View>
+
+   
+        <TopCircleComponent textHeading="Crea una cuenta" />
+
+        
+        <View
+            style={[CommonStyles.justifySpaceBetween,{marginTop:deviceHeight * 0.02,paddingVertical:20}]}
+        >
+            <View style={styles.card} >
+                <View style={{marginBottom:30}} >
+                    <Text style={styles.titulo} >¿Eres un?</Text> 
+                </View>
+
+                <View style={[CommonStyles.flexCenter]}>
+                {AVAILABLE_ROLES.map((role, index) => {
+                    return (
+                    <RoleTypeComponent
+                        key={index}
+                        isSelected={selectedRoles[role.roleName]}
+                        roleName={role.roleName}
+                        handlePress={handlePress}
+                        text={role.text}
+                        bgColor={role.bgColor}
+                    />
+                    );
+                })}
+                
+
+                <ButtonComponent
+                   
+                    icon={
+                    <AntDesign size={18} color={Colors.white} name="arrowright" />
+                    }
+                    colorB={Colors.brightBlue}
+                    width={50}
+                    height={50}
+                    handlePress={proceedWithSpecificScreen}
+                />
+                </View>
+                <BottomContentComponent>
+                    <Text style={[CommonStyles.fontFamily]}>
+                    <Text>¿Ya tienes una cuenta? </Text>
+                    <Text
+                        onPress={() => {
+                        navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN);
+                        }}
+                        style={styles.signUpText}>
+                        INICIAR SESIÓN
+                    </Text>
+                    </Text>
+                </BottomContentComponent>
+                
+            </View>
+            
+
         </View>
-      </View>
-      <BottomContentComponent>
-        <Text style={[CommonStyles.fontFamily]}>
-          <Text>Already have an account? </Text>
-          <Text
-            onPress={() => {
-              navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN);
-            }}
-            style={styles.signUpText}>
-            SIGN IN
-          </Text>
-        </Text>
-      </BottomContentComponent>
-    </CustomSafeAreaViewComponent>
-  );
+        </View>
+    // </CustomSafeAreaViewComponent> 
+
+    );
 };
 
 const styles = StyleSheet.create({
   signUpText: {
-    color: Colors.primaryColor,
+    color: Colors.primarySolid,
     width: 300,
     paddingLeft: 10,
   },
+  titulo:{
+    fontFamily:CommonStyles.fontFamily.fontFamily,
+    fontSize: 18,
+    opacity: 0.5,
+    textAlign: 'center',
+  },
+  card:{
+    backgroundColor:Colors.white,
+    marginHorizontal:10,
+    paddingVertical: deviceHeight * 0.08,
+    elevation:2
+  }
 });
 
 export default SignUpScreen;

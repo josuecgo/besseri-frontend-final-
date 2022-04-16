@@ -11,14 +11,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as CartActions from '../../util/ReduxStore/Actions/CustomerActions/CartActions';
 import ProductCardComponent from '../../components/customer-components/product-card.component';
 import RatingComponent from '../../components/Ratings/rating.component';
+import { adjust, deviceWidth } from '../../util/Dimentions';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const SCREEN_STATES = {
   USER_LOCATION:'User location',
   PRODUCTS:'Products',
   CATEGORIES:'Categories'
 }
+const CATEGORIES = {
+  TRANSMISION: require(`../../assets/images/categorias/transmision.png`),
+  FRENOS: require('../../assets/images/categorias/transmision.png'),
+
+};
 const CustomerProductsViewScreen = (props) => {
-  const { width, height } = useWindowDimensions();
-  const dispatch = useDispatch()
+  const {top} = useSafeAreaInsets()
   const [screenStates, setScreenStates] = useState({
     [SCREEN_STATES.USER_LOCATION]: {},
     [SCREEN_STATES.PRODUCTS]:[],
@@ -28,7 +34,7 @@ const CustomerProductsViewScreen = (props) => {
   const [categories,setCategories] = useState([]);
   const [services,setServices] = useState([]);
   const [userLocation,setUserLocation] = useState(null);
-  
+  const [comision, setComision] = useState(0)
   const setState = (valueToSet, key) => {
     setScreenStates({
       ...screenStates,
@@ -41,9 +47,9 @@ const CustomerProductsViewScreen = (props) => {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
-          'title': 'Location Permission',
-          'message': 'This App needs access to your location ' +
-                     'so we can know where you are.'
+          'title': 'Permiso de ubicación',
+          'message': 'Esta aplicación necesita acceso a tu ubicación ' +
+                      'para que sepamos donde estas.'
         }
       )
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -57,26 +63,28 @@ const CustomerProductsViewScreen = (props) => {
   
     } catch(e) {
       console.log(e)
-     showToaster('Could not get current location.')
+     showToaster('No se pudo obtener la ubicación actual.')
     }
   }
   useEffect(() => {
     getUserLocation();
   },[]);
   //Getting user location ends here....................
-
+  
   //Get Products to show
   const getProducts = async() => {
     try {
-     const apiCall = await axios.get(customer_api_urls.get_products);
-     console.log('line 70',apiCall.data.data)
-     setProducts(apiCall.data.data.products);
-     setCategories(apiCall.data.data.categories)
+      const apiCall = await axios.get(customer_api_urls.get_products);
+      const getFee = await axios.get(customer_api_urls?.get_fees);
+      
+      setComision(getFee.data.data[0]?.besseri_comission);  
+      setProducts(apiCall.data.data.products);
+      setCategories(apiCall.data.data.categories)
     //  setState(apiCall.data.data.products,SCREEN_STATES.PRODUCTS);
     //  setState(apiCall.data.data.categories,SCREEN_STATES.CATEGORIES);
-     console.log(screenStates)
+     
     } catch(e) {
-       showToaster('Something went wrong please try again');
+       showToaster('Algo salío mal');
     }
   }
   useEffect(() => {
@@ -88,12 +96,12 @@ const CustomerProductsViewScreen = (props) => {
    const getServices = async() => {
     try {
      const apiCall = await axios.get(customer_api_urls.get_services);
-     console.log('line 70',apiCall.data.data)
+    
      setServices(apiCall.data.data);
     } catch(e) {
       alert('error here')
-      console.log(e.response.data);
-       showToaster('Something went wrong please try again');
+     
+       showToaster('Algo salío mal');
     }
   }
   useEffect(() => {
@@ -102,9 +110,15 @@ const CustomerProductsViewScreen = (props) => {
 
   const CategoryButton = ({ category,onPress }) => {
     return (
-      <TouchableOpacity onPress={onPress} style={styles.categoryButton}>
-        <Text style={styles.categoryButtonText}>{category}</Text>
-      </TouchableOpacity>
+      <View style={{alignItems:'center'}} >
+        <TouchableOpacity onPress={onPress} style={styles.categoryButton}>
+           
+            <Image source={CATEGORIES[category]} style={{width:20,height:20}} />
+        </TouchableOpacity>
+        <Text style={{fontSize:adjust(5)}} >
+              {category}
+        </Text>
+      </View>
     )
   }
   const OfferCard = ({ img }) => {
@@ -116,7 +130,7 @@ const CustomerProductsViewScreen = (props) => {
     )
   }
   return (
-    <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.white }}>
+    <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor,top:top }}>
       <View style={{ flex: 1 }}>
         <View style={{ marginTop: '2%', backgroundColor: 'transparent', alignSelf: 'flex-start', flexDirection: 'row' }}>
          
@@ -134,46 +148,20 @@ const CustomerProductsViewScreen = (props) => {
         
 
         <ScrollView contentContainerStyle={{ flexGrow: 1, marginTop: 20 }}>
-        {/* <FlatList
-          data={services}
-          horizontal
-          keyExtractor={item => item?._id}
-          renderItem={({item}) => (
-            <Pressable
-            onPress={() => {
-                props.navigation.navigate(SHARED_ROUTES.SERVICE_DETAIL,{
-                    service:item,
-                    isVendor:false
-                })
-            }}
-            style={{alignSelf:'center',width:width-35,margin:10}}
-            >
-                <Image
-                source={{uri:`${base_url}/${item?.coverImg}`}}
-                style={{width:'100%',height:150,resizeMode:'cover',borderRadius:10}}
-                />
-                <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',padding:5}}>
-                  <View>
-                  <Text style={{...CommonStyles.fontFamily,fontSize:17}}>{item?.name}</Text>
-                    <Text style={{color:'grey'}}>{item?.category?.name}</Text>
-                    <RatingComponent numOfStars={5} totalReviews={10}/>
-                    </View>
-                    <Text style={{...CommonStyles.fontFamily,fontSize:16}}>$ {item?.price}</Text>
-                    </View>
-                 
-                </Pressable>
-          )}
-          /> */}
-          <FlatList
-          data={categories}
-          keyExtractor={item => item?._id}
-          renderItem={itemData => (
-            <ProductListing
-            navigation={props.navigation}
-            category={itemData.item.name} products={products.filter(product => product.categoryId == itemData.item._id)} />
-          )}
-          />
 
+         {
+            categories.map((item)=>(
+              <View key={item._id}>
+                <ProductListing
+                navigation={props.navigation}
+                category={item.name} 
+                products={products.filter(product => product.categoryId == item._id)} 
+                comision={comision}
+                />
+              </View>
+            ))
+          }
+        <View style={{height:deviceWidth *0.10,width:deviceWidth}} />
         </ScrollView>
       </View>
     </View>
@@ -181,14 +169,13 @@ const CustomerProductsViewScreen = (props) => {
 };
 const styles = StyleSheet.create({
   categoryButton: {
-    padding: 10,
-    backgroundColor: Colors.primaryColor,
-    borderWidth: 1,
-    borderColor: Colors.primaryColor,
+    padding: 20,
+    backgroundColor: Colors.white,
     ...CommonStyles.flexCenter,
     margin: 5,
-    borderRadius: 10,
-    paddingHorizontal: 15
+    borderRadius: 100,
+    // paddingHorizontal: 15
+    elevation:2
   },
   categoryButtonText: {
     ...CommonStyles.fontFamily,

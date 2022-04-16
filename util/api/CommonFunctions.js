@@ -9,10 +9,10 @@ export const getStoreEarnings = async(storeId) => {
      if(apiCall.status == api_statuses.success) {
        return apiCall.data.data
      } else {
-       showToaster('Something went wrong please try again');
+       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
      }
     } catch(e) {
-      showToaster('Something went wrong please try again');
+      showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
     }
   }
 
@@ -23,11 +23,11 @@ export const getStoreEarnings = async(storeId) => {
        console.log(apiCall.data.data)
        return apiCall.data.data
      } else {
-       showToaster('Something went wrong please try again');
+       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
      }
     } catch(e) {
       console.log(e?.response?.data)
-      showToaster('Something went wrong please try again');
+      showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
     }
   }  
 
@@ -38,7 +38,7 @@ export const getLocation = async() => {
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
           'title': 'Besseri',
-          'message': 'Besseri needs location to show you nearby stores'
+          'message': 'Besseri necesita ubicación para mostrarte las tiendas cercanas'
         }
       )
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -48,9 +48,9 @@ export const getLocation = async() => {
         return loc;
       } else {
         console.log("location permission denied")
-        showToaster("Location permission denied");
+        showToaster("Permiso de ubicación denegado");
       }
     } catch(e) {
-        showToaster('Couldnt get your location')
+        showToaster('No pude obtener tu ubicación')
     }
   }

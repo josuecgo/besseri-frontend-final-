@@ -4,6 +4,7 @@ import CommonStyles from '../../util/styles/styles';
 import {CustomText} from '../../screens/vendor/vendor-order-details.screen';
 import Colors from '../../util/styles/colors';
 import { base_url } from '../../util/api/api_essentials';
+import { moneda } from '../../util/Moneda';
 
 const OrderProductItemComponent = ({
   productId = 458,
@@ -21,7 +22,7 @@ const OrderProductItemComponent = ({
       />
       </View>
       <CustomText numberOfLines={1} isData={true} text={productName} />
-      <CustomText isData={true} text={productPrice} />
+      <CustomText isData={true} text={moneda( productPrice)} />
       <CustomText isData={true} text={qtyOrdered} />
     </View>
   );

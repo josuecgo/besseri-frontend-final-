@@ -22,10 +22,9 @@ const SideOptionComponent = ({navigation, keyToRoute, textAlign, text}) => {
 const styles = StyleSheet.create({
   forgotPassword: {
     backgroundColor: Colors.white,
-    color: Colors.primaryColor,
+    // color: Colors.secundarySolid,
     fontSize: 14,
     position: 'relative',
-    right: -80,
   },
 });
 

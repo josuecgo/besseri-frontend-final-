@@ -22,6 +22,15 @@ import {CUSTOMER_HOME_SCREEN_ROUTES} from '../../util/constants';
 import { useStripe } from '@stripe/stripe-react-native';
 import { StackActions, useRoute } from '@react-navigation/native';
 import { deleteItemFromCart, removeItemFromCart } from '../../util/ReduxStore/Actions/CustomerActions/CartActions';
+import { useCostos } from '../../hooks/useCostos';
+import { HeaderBackground } from '../../components/Background/HeaderBackground';
+import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
+import { moneda } from '../../util/Moneda';
+import { BackgroundImage } from '../../components/Background/BackgroundImage';
+
+
+
+
 const CustomerOrderSummary = (props) => {
     const {params} = useRoute();
     const {initPaymentSheet,presentPaymentSheet} = useStripe();
@@ -35,39 +44,52 @@ const CustomerOrderSummary = (props) => {
     const [loading,setLoading] = useState(false);
     const [addresses,setAddresses] = useState([]);
     const [stripeEssentials,setStripeEssentials] = useState(null);
+    const {costoEnvio,CalcularDistancia,distancia } =   useCostos()
+    const costoK = params.delivery_fee
+   
     const [allCharges,setallCharges] = useState({
-        delivery_charges:0,
+        delivery_charges:params.delivery_fee,
         besseri_commission:params?.comission,
         totalAmount:params?.totalAmount,
         subtotal:params?.subtotal
     })
-    const totalAmount = allCharges?.subtotal + allCharges?.delivery_charges + allCharges?.besseri_commission
+    
     const subTotal = totalAmount - (allCharges?.delivery_charges + allCharges?.besseri_commission);
     const [deliveryAddress,setDeliveryAddress] = useState(null);
-    const [deliveryDistance,setDeliveryDistance] = useState(null)
-    const handleModalize = (flag) => {
+    const [deliveryDistance,setDeliveryDistance] = useState(0)
+    const totalAmount = allCharges?.subtotal  + allCharges?.besseri_commission + costoEnvio;
+
+
+
+    // console.log({subtotal:allCharges?.subtotal  , comision: allCharges?.besseri_commission , costoEnvio});
+
+    useEffect(() => {
+        CalcularDistancia(business?.location?.longitude,business?.location?.latitude,deliveryAddress?.longitude,deliveryAddress?.latitude,costoK)
+        setDeliveryDistance(distancia)
+        
+    }, [deliveryAddress])
+    
+    
+   
+    const handleModalize = async(flag) => {
         if(flag == 'open') {
             addressListingRef?.current?.open()
         } else {
+            
+            
+            await CalcularDistancia(business?.location?.longitude,business?.location?.latitude,deliveryAddress?.longitude,deliveryAddress?.latitude)
+            setDeliveryDistance(distancia)
             addressListingRef?.current?.close();
+
         }
     }
-    // const calcTotal = async( ) => {
-    //     let totalProductsPrice = 0;
-    //     for (var a = 0; a < products?.length;a++) {
-    //         totalProductsPrice += products[a]?.price * products[a]?.quantity
-    //     }
-    //     setTotalAmount(totalProductsPrice + allCharges?.delivery_charges + allCharges?.besseri_commission);
-    //     return totalAmount;
-    // }
+
     // useEffect(() => {
-    //     calcTotal()
-    // },[]);
-    useEffect(() => {
-       if(deliveryDistance) {
-        initializePaymentSheet()
-       }
-    },[deliveryDistance]);
+    //    if(deliveryAddress) {
+    //     initializePaymentSheet()
+    //    }
+    // },[deliveryDistance]);
+
     const getUserDetails = async() => {
         setLoading(true);
         const userData = await getUser();
@@ -97,7 +119,7 @@ const CustomerOrderSummary = (props) => {
     //     initializePaymentSheet(business?.wallet_id)
     // },[]);
   
-
+   
     const DetailItem = ({label,value}) => {
         return (
             <View style={{width:'100%',height:60,borderBottomWidth:label == 'Total Charges' ? 0 : 0.3,borderColor:Colors.dark,flexDirection:'row',justifyContent:'space-between',alignItems:'center',alignSelf:'center'}}>
@@ -114,48 +136,51 @@ const CustomerOrderSummary = (props) => {
          if(apiCall.status == api_statuses.success) {
              setAddresses(apiCall.data.data);
          } else {
-             showToaster('Something went wrong please try again :/')
+             showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
          }
         } catch(e) 
         { 
             console.log(e.response)
             setLoading(false);  
-            showToaster('Something went wrong please try again :/')
+            showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
         }
     }
     const placeOrder = async() => {
+        
         try {
             setLoading(true);
             const body = {
-                ordered_by_id:user?._id,
-             products:products,
-             storeId:business?._id,
-             total_amount:allCharges?.totalAmount,
-             delivery_address:deliveryAddress,
-             ordered_on:new Date(),
-             delivery_fee:allCharges?.delivery_charges,
-             besseri_comission:allCharges?.besseri_commission,
-             intentId:stripeEssentials?.intentId
+            ordered_by_id:user?._id,
+            products:products,
+            storeId:business?._id,
+            total_amount:totalAmount,
+            delivery_address:deliveryAddress,
+            ordered_on:new Date(),
+            delivery_fee:allCharges?.delivery_charges,
+            besseri_comission:allCharges?.besseri_commission,
+            intentId:stripeEssentials?.intentId
             }
-         console.log(body)
+            
+        
          const apiCall = await axios.post(`${customer_api_urls.place_order}`,body);
          setLoading(false);
          if(apiCall.status == api_statuses.success) {
-             showToaster('Order placed');
+             showToaster('Pedido realizado');
              setOrderPlaced(true)
              for (var a=0;a<products?.length;a++) {
                  dispatch(deleteItemFromCart(products[a]?._id,products[a]?.price))
              }
          } else {
-             showToaster('Something went wrong please try again :/')
+             showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
          }
         } catch(e) 
         { 
             setLoading(false);  
-            showToaster('Something went wrong please try again :/')
+            showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
             refundPayment()
         }
     }
+    
     useEffect(() => {
         getAddresses();
     },[]);
@@ -166,30 +191,30 @@ const CustomerOrderSummary = (props) => {
             intentId:stripeEssentials?.intentId
           });
           if(apiCall?.status == 200) {
-              showToaster('Your amount has been refunded');
+              showToaster('Su cantidad ha sido reembolsada');
               return
           }
          } catch(e) {
             //  Alert.alert('Refund failed',JSON.stringify(e))
-            showToaster('something went wrong please try again')
+            showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
             console.log(e?.response?.data)
          }
      }
 
-
+     
     const fetchPaymentSheetParams = async (walletId) => {
        try {
         const customerData = await getUser();
-        console.log(params?.deliveryDistance)
+        
         const data = {
             customerId:customerData?.customerId,
             walletId:business?.wallet_id,
-            amount:allCharges?.totalAmount,
-            deliveryDistance:deliveryDistance,
+            amount:allCharges.totalAmount,
+            deliveryDistance:distancia,
             productsIds:cartProductIds,
         }
         if(!business?.wallet_id) {
-            showToaster('The store has not setup the wallet yet, so it is not possible to place order from this store');
+            showToaster('La tienda aún no ha configurado la billetera, por lo que no es posible realizar un pedido desde esta tienda');
             props.navigation.goBack()
             return;
         }
@@ -210,11 +235,12 @@ const CustomerOrderSummary = (props) => {
         };
        } catch(e) {
            console.log('line 183',e)
-           showToaster('something went wrong try again')
+           showToaster('Algo salió mal, intenta de nuevo')
        }
       };
     
       const initializePaymentSheet = async (walletId) => {
+        
         const {
           paymentIntent,
           ephemeralKey,
@@ -237,22 +263,23 @@ const CustomerOrderSummary = (props) => {
       };
     
       const openPaymentSheet = async () => {
+        await initializePaymentSheet();
         if(!deliveryAddress) {
-            showToaster('Please select delivery address');
+            showToaster('Por favor, seleccione la dirección de entrega');
             return;
         }
         if(!business) {
-            showToaster('Business hasnt been fetched yet, wait please...');
+            showToaster('Aún no se ha obtenido el negocio, espere, por favor...');
             return;
         }
         if(!products) {
-            showToaster('Cant place order when products quantity is zero :/');
+            showToaster('No se puede realizar el pedido cuando la cantidad de productos es cero :/');
             return;
         }
 
-
+        
         const { error } = await presentPaymentSheet();
-       console.log(error)    
+        
         if (error) {
           Alert.alert(`Error code: ${error.code}`, error.message);
         } else {
@@ -264,68 +291,84 @@ const CustomerOrderSummary = (props) => {
     //     initializePaymentSheet();
     //   }, []);
 
-
-
+    //   console.log({costoEnvio,Number(totalAmount)});
+    //   console.log({totalAmount});
     if(isOrderPlaced) {
         return (
-            <View style={{...CommonStyles.flexOneCenter,backgroundColor:Colors.primaryColor}}>
+            <> 
+            <BackgroundImage/>
+            <View style={{...CommonStyles.flexOneCenter}}>
+               
              <Ionicons
              name='checkmark-circle'
-             color={Colors.white} 
+             color={Colors.terciarySolid} 
              size={160}
              />
-             <Text style={{fontSize:30,...CommonStyles.fontFamily,color:Colors.white}}>Order placed</Text>
-             <Text style={{fontSize:15,fontWeight:'300',width:'75%',alignSelf:'center',textAlign:'center',color:Colors.white}}>Your order has been placed successfully, soon you will recieve your parcel</Text>
+                <Text style={{fontSize:30,...CommonStyles.fontFamily,color:Colors.white}}>Pedido realizado</Text>
+                <Text style={{fontSize:15,fontWeight:'300',width:'75%',alignSelf:'center',textAlign:'center',color:Colors.white}}>
+                Tu pedido ha sido realizado con éxito, pronto recibirás tu paquete
+                </Text>
 
              <ButtonComponent
-      handlePress={() => {
-        props.navigation.replace(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS)
-      }}
-      borderRadius={10}
-      colorT={Colors.primaryColor}
-      buttonText={'Continue'}
-      colorB={Colors.white}
-      width={200}
-      margin={30}
-      />
+            handlePress={() => {
+                props.navigation.replace(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS)
+            }}
+            borderRadius={10}
+            colorT={Colors.white}
+            buttonText={'Continuar'}
+            colorB={Colors.terciarySolid}
+            width={200}
+            margin={30}
+            />
             </View>
+            </>
+            
         )
     }
-  return (
+
+    return (
     <View style={{flex:1,backgroundColor:'white'}}>
         <AddressesListingModal
         addressListingRef={addressListingRef}
         >
-         <FlatList
+         {/* <FlatList
          data={addresses}
          keyExtractor={item => item?._id}
          renderItem={itemData => (
-             <AddressComponent
-             selected={deliveryAddress?._id == itemData.item?._id}
-             info={itemData.item.info}
-             phone={itemData.item.phone}
-             onPress={() => {
-                 setDeliveryAddress(itemData.item)
-                 const distance = Math.sqrt(
-                    Math.pow(69.1 * (Number(business?.location?.latitude) - [itemData?.item?.latitude]), 2) +
-                    Math.pow(69.1 * ([itemData?.item?.longitude] - Number(business?.location?.longitude)) * Math.cos(Number(business?.location?.latitude) / 57.3), 2));
-                    setDeliveryDistance(distance)
-                    console.log(distance)
-                    setallCharges({
-                     delivery_charges:Math.ceil((distance * params?.delivery_fee)),
-                    besseri_commission:params?.comission,
-                    totalAmount:params?.totalAmount,
-                    subtotal:params?.subtotal,
-                 })
-                 handleModalize('close')
-             }}
-             addressLine={itemData.item.addressLine} label={itemData.item.label}/>
+            
          )}
-         />
+         /> */}
+         {
+             addresses.map((item) => (
+                 <View key={item?._id}>
+                    <AddressComponent
+                    selected={deliveryAddress?._id == item?._id}
+                    info={item.info}
+                    phone={item.phone}
+                    onPress={() => {
+                    setDeliveryAddress(item)
+                        //  const distance = Math.sqrt(
+                        //     Math.pow(69.1 * (Number(business?.location?.latitude) - [itemData?.item?.latitude]), 2) +
+                        //     Math.pow(69.1 * ([itemData?.item?.longitude] - Number(business?.location?.longitude)) * Math.cos(Number(business?.location?.latitude) / 57.3), 2));
+                        //     setDeliveryDistance(distance)
+                        //     console.log(distance)
+                        //     setallCharges({
+                        //     delivery_charges:Math.ceil((distance * params?.delivery_fee)),
+                        //     besseri_commission:params?.comission,
+                        //     totalAmount:params?.totalAmount,
+                        //     subtotal:params?.subtotal,
+                        //  })
+                        handleModalize('close')
+                    }}
+                    addressLine={item.addressLine} label={item.label}/>
+                 </View>
+             ))
+         }
         </AddressesListingModal>
         <LoaderComponent
         isVisible={loading}
         />
+        <HeaderBackground/>
         <View style={styles.header}>
             <TouchableOpacity
             onPress={() => props.navigation.goBack()}
@@ -336,14 +379,8 @@ const CustomerOrderSummary = (props) => {
                 size={25}
                 />
             </TouchableOpacity>
-            <Text style={styles.headerText}>Order Summary</Text>
-            <TouchableOpacity>
-                <MaterialCommunityIcons
-                name='dots-vertical'
-                color={Colors.white}
-                size={25}
-                />
-            </TouchableOpacity>
+            <Text style={styles.headerText}>Resumen del pedido</Text>
+           <View/>
         </View>
       <View>
 
@@ -353,9 +390,9 @@ const CustomerOrderSummary = (props) => {
     <ScrollView contentContainerStyle={{flexGrow:1}}>
      <View style={{width:'93%',alignSelf:'center',marginTop:'8%'}}>
          <View style={{...CommonStyles.flexDirectionRow,...CommonStyles.justifySpaceBetween}}>
-         <Text style={{...CommonStyles.fontFamily,fontSize:15}}>Delivery Address</Text>
+         <Text style={{...CommonStyles.fontFamily,fontSize:15}}>Dirección de entrega</Text>
          <TouchableOpacity onPress={() => handleModalize('open')}>
-             <MaterialIcons name='edit' color={Colors.primaryColor} size={20}/>
+             <MaterialIcons name='edit' color={Colors.terciarySolid} size={20}/>
          </TouchableOpacity>
          </View>
          {
@@ -378,8 +415,8 @@ const CustomerOrderSummary = (props) => {
             //  </View>
              :
              <ButtonComponent
-             buttonText={'Select Delivery Address'}
-             colorB={Colors.primaryColor}
+             buttonText={'Seleccionar dirección de entrega'}
+             colorB={Colors.primarySolid}
              width={'100%'}
              borderRadius={5}
              margin={10}
@@ -394,7 +431,7 @@ const CustomerOrderSummary = (props) => {
      <ThinlineSeparator margin={10}/>
 
      <View style={{width:'93%',alignSelf:'center',marginTop:'1%'}}>
-         <Text style={{...CommonStyles.fontFamily,fontSize:15}}>Seller info</Text>
+         <Text style={{...CommonStyles.fontFamily,fontSize:15}}>Información del vendedor</Text>
          <View style={{width:'100%',margin:10,paddingVertical:14,backgroundColor:Colors.white,alignSelf:'center',borderColor:Colors.gray,borderWidth:1,borderRadius:10}}>
          <Text style={{fontSize:16,...CommonStyles.fontFamily,paddingLeft:25,marginBottom:10}}>{business?.storeName}</Text>
          <View style={{flexDirection:'row',alignItems:'center'}}>
@@ -410,7 +447,7 @@ const CustomerOrderSummary = (props) => {
      <ThinlineSeparator margin={10}/>
 
      <View style={{width:'93%',alignSelf:'center',marginTop:'1%'}}>
-         <Text style={{...CommonStyles.fontFamily,fontSize:15}}>Customer info</Text>
+         <Text style={{...CommonStyles.fontFamily,fontSize:15}}>Información del cliente</Text>
          <View style={{width:'100%',margin:10,paddingVertical:14,backgroundColor:Colors.white,alignSelf:'center',borderColor:Colors.gray,borderWidth:1,borderRadius:10}}>
          <Text style={{fontSize:16,...CommonStyles.fontFamily,paddingLeft:25,marginBottom:10}}>{user?.name}</Text>
          <Text style={{fontSize:16,fontStyle:'italic',fontWeight:'300',paddingLeft:25,marginBottom:10}}>{user?.email}</Text>
@@ -431,52 +468,57 @@ const CustomerOrderSummary = (props) => {
 
      
     <View style={{width:'93%',alignSelf:'center'}}>
-    <Text style={{...CommonStyles.fontFamily,fontSize:15}}>Products summary</Text>    
-   <FlatList
+    <Text style={{...CommonStyles.fontFamily,fontSize:15}}>Resumen de productos</Text>    
+   {/* <FlatList
     data={products}
     contentContainerStyle={{flexGrow:1,marginTop:10}}
     renderItem={itemData => (
-        <View style={{flexDirection:'row',width:'100%',alignSelf:'center',marginTop:'3%',borderBottomWidth:0.3,height:50}}>
-        <View style={{width:'65%'}}>
-            <Text style={{fontSize:14,fontWeight:'bold'}}>{itemData.item.name}</Text>
-        </View>
-        <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',width:'35%'}}>
-            <View>
-                <Text style={{fontSize:15,fontWeight:'bold'}}>{itemData.item.quantity}x</Text>
-            </View>
-            <View>
-                <Text style={{fontSize:16,fontWeight:'bold'}}>{itemData.item.quantity * itemData.item.price} MXN</Text>
-            </View>
-        </View>
-       </View>
+        
     )}
-    />
+    /> */}
+    {
+        products.map((item) => (
+            <View key={item._id} style={{flexDirection:'row',width:'100%',alignSelf:'center',marginTop:'3%',borderBottomWidth:0.3,height:50}}>
+                <View style={{width:'65%'}}>
+                    <Text style={{fontSize:14,fontWeight:'bold'}}>{item.name}</Text>
+                </View>
+                <View style={{flexDirection:'row',alignItems:'center',width:'35%'}}>
+                    <View>
+                        <Text style={{fontSize:adjust(12),fontWeight:'bold'}}>{item.quantity}x</Text>
+                    </View>
+                    <View>
+                        <Text style={{fontSize:adjust(12),fontWeight:'bold'}}>{moneda(item.quantity * item.price + allCharges?.besseri_commission)}</Text>
+                    </View>
+                </View>
+            </View>
+        ))
+    }
      
     </View>
     <ThinlineSeparator margin={10}/>
 
 
       <View style={styles.detailCard}>
-      <DetailItem label={'Sub total'} value={`${allCharges?.subtotal} MXN`}/>
-       <DetailItem label={'Delivery charges'} value={`${allCharges?.delivery_charges} MXN`}/>
-       <DetailItem label={'Commission'} value={`${allCharges?.besseri_commission} MXN`}/>
-       <DetailItem label={'Total Charges'} value={`${totalAmount} MXN`}/>
+      <DetailItem label={'Sub total'} value={`${moneda(allCharges?.subtotal)} MXN`}/>
+       <DetailItem label={'Gastos de envío'} value={deliveryAddress ? `${moneda(costoEnvio)} MXN` : 'Seleccionar direccion'}/>
+       
+       <DetailItem label={'Total Charges'} value={deliveryAddress ? `${moneda(totalAmount.toFixed(2)) } MXN` : 'Seleccionar direccion' }/>
       </View> 
     </ScrollView>
       <ButtonComponent
       handlePress={openPaymentSheet}
       borderRadius={0}
-      buttonText={'Checkout'}
-      colorB={Colors.brightBlue}
+      buttonText={'Verificar'}
+      colorB={Colors.terciarySolid}
       />
     </View>
   );
 };
 const styles = StyleSheet.create({
     header:{
-        width:'100%',
-        height:80,
-        backgroundColor:Colors.primaryColor,
+        height: Platform.OS == 'ios' ? deviceHeight * 0.13  : deviceHeight * 0.10,
+        width: deviceWidth,
+        // backgroundColor:Colors.primaryColor,
         flexDirection:'row',
         justifyContent:'space-between',
         paddingHorizontal:20,

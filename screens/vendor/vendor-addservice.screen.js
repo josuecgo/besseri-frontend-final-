@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, Text, StyleSheet, TouchableOpacity, View, ScrollView, BackHandler, FlatList,Image, ToastAndroid } from 'react-native';
+import { Dimensions, Text, StyleSheet, TouchableOpacity, View, ScrollView, Platform, FlatList,Image, ToastAndroid } from 'react-native';
 import CommonStyles from '../../util/styles/styles';
 import Colors from '../../util/styles/colors';
 import { ThinlineSeparator, MenuItem, Heading } from '../../components/CommonComponents';
@@ -20,6 +20,8 @@ import ButtonComponent from '../../components/button/button.component';
 import axios from 'axios';
 import { api_statuses, vendor_api_urls } from '../../util/api/api_essentials';
 import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
+import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
+import { HeaderBackground } from '../../components/Background/HeaderBackground';
 const { width, height } = Dimensions.get('screen');
 
 const CREDENTIAL_KEYS = {
@@ -37,27 +39,28 @@ const CREDENTIAL_KEYS = {
   PRODUCT_MAKERS_IDS:'MAKER IDS'
 };
 const SCREEN_TYPES = {
-  SERVICE_NAME: 'Service Name',
-  CHOOSE_MAKER: 'Choose Maker',
-  UPLOAD_IMAGE: 'Upload Product Image',
-  SERVICE_DESCRIPTION: 'Product Description',
-  SERVICE_PRICE: 'Service price',
-  CHOOSE_CATEGORY: 'Choose Category',
-  CHOOSE_MODEL: 'Choose Model',
-  PRODUCT_CONDITION: 'Product condition',
-  SERVICE_SUMMARY: 'Product Summary',
+  SERVICE_NAME: 'Nombre del Servicio',
+  CHOOSE_MAKER: 'Elija el fabricante',
+  UPLOAD_IMAGE: 'Subir imagen del producto',
+  SERVICE_DESCRIPTION: 'Descripción del producto',
+  SERVICE_PRICE: 'Precio del servicio',
+  CHOOSE_CATEGORY: 'Elegir la categoría',
+  CHOOSE_MODEL: 'Elige modelo',
+  PRODUCT_CONDITION: 'Condición del producto',
+  SERVICE_SUMMARY: 'Resumen del producto',
 
 }
 const HEADER_TITLE = {
-  [SCREEN_TYPES?.SERVICE_NAME]: 'Indicate your service, write the name of the service you want to sell',
-  [SCREEN_TYPES?.SERVICE_DESCRIPTION]: 'Describe your service, write the description of your service.',
-  [SCREEN_TYPES?.SERVICE_PRICE]: 'What is the price of the service which you want to sell?',
-  [SCREEN_TYPES?.CHOOSE_MAKER]: 'Which brand this service is for? i-e Wolksvagen, BMW? /n You can select multi',
-  [SCREEN_TYPES?.CHOOSE_MODEL]: 'What is the model of the product you want to sell?',
-  [SCREEN_TYPES?.CHOOSE_CATEGORY]: 'What is the category of the product which you want to sell?',
-  [SCREEN_TYPES?.PRODUCT_CONDITION]: 'What is the condition of the product?',
-  [SCREEN_TYPES?.UPLOAD_IMAGE]: 'Upload the image, which shows the product you want to sell',
-  [SCREEN_TYPES?.SERVICE_SUMMARY]: 'Service Summary',
+  [SCREEN_TYPES?.SERVICE_NAME]: 'Escriba el nombre del servicio ',
+  [SCREEN_TYPES?.SERVICE_DESCRIPTION]: 'Describa su servicio.',
+  [SCREEN_TYPES?.SERVICE_PRICE]: '¿Cuál es el precio del servicio?',
+  [SCREEN_TYPES?.CHOOSE_MAKER]: '¿Para qué marca es este servicio?',
+  [SCREEN_TYPES?.CHOOSE_MODEL]: '¿Cuál es el modelo del producto?',
+  [SCREEN_TYPES?.CHOOSE_CATEGORY]: '¿Cuál es la categoría del producto?',
+  [SCREEN_TYPES?.PRODUCT_CONDITION]: '¿Cuál es el estado del producto?',
+  [SCREEN_TYPES?.UPLOAD_IMAGE]: 'Sube una imagen del servicio',
+  [SCREEN_TYPES?.SERVICE_SUMMARY]: 'Resumen del servicio',
+  
   
 }
 const VendorAddServiceScreen = ({ navigation }) => {
@@ -201,7 +204,7 @@ const VendorAddServiceScreen = ({ navigation }) => {
 
   const commonTextStyle = {
     fontSize: 17,
-    color: Colors.white,
+    color: Colors.black,
     ...CommonStyles.fontFamily,
     paddingLeft: 5
   }
@@ -250,7 +253,7 @@ const VendorAddServiceScreen = ({ navigation }) => {
         </View>
         <Ionicons
           name={'chevron-forward'}
-          color={Colors.primaryColor}
+          color={Colors.terciarySolid}
           size={30}
         />
       </TouchableOpacity>
@@ -283,9 +286,9 @@ const VendorAddServiceScreen = ({ navigation }) => {
         type:inputValues[CREDENTIAL_KEYS.SERVICE_COVER]?.mime,
         name:'photo.jpg'
       });
-      console.log(inputValues)
+      
       const serviceUploadImg = await axios.post(vendor_api_urls.upload_service_image,imageFormData);
-      console.log('apicalled')
+     
       if(serviceUploadImg.status == api_statuses.success) {
         const apiBody = {
           name:inputValues[CREDENTIAL_KEYS.NAME],
@@ -298,42 +301,50 @@ const VendorAddServiceScreen = ({ navigation }) => {
           category:inputValues[CREDENTIAL_KEYS.PRODUCT_CATEGORY],
           price:inputValues[CREDENTIAL_KEYS.PRICE],
         }
-        console.log(apiBody);
+        
         const apiCall = await axios.post(vendor_api_urls?.create_service,apiBody);
         setShowLoader(false);
         if(apiCall.status == api_statuses.success) {
-          showToaster('Your service has been created successfully');
+          showToaster('Su servicio ha sido creado con éxito');
           navigation.navigate(BOTTOM_TAB_VENDOR_ROUTES.SERVICES)
         }
       }
        else {
-         showToaster('Something went wrong - 3, please try again');
+         showToaster('Algo salió mal - , inténtalo de nuevo');
          setShowLoader(false);
        }
      
     } catch(e) {
       console.log(e?.response)
       setShowLoader(false);
-       showToaster('Something went wrong - 4, please try again, -2')
+       showToaster('Algo salió mal - , inténtalo de nuevo')
     }
   }
 
   return (
     <View style={styles.container}>
       <Loader isVisible={showLoader} />
-      <View style={styles.header}>
+      <HeaderBackground/>
+      < View
+      style={styles.header}>
+
         <View style={{ ...CommonStyles.flexDirectionRow, ...CommonStyles.horizontalCenter }}>
           <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.pop()} style={styles.headerIcon}>
             <MaterialCommunityIcons name='keyboard-backspace' color='white' size={25} />
           </TouchableOpacity>
-          <View style={{ width: '95%' }}>
-            <Text style={commonTextStyle}>{HEADER_TITLE[currentScreen]}</Text>
+          <View style={{ width: '95%',paddingLeft:10 }}>
+            <Text style={{fontSize: adjust(15), color:Colors.white }}>Añadir Servicio</Text>
           </View>
 
         </View>
-        {
+          
+        
+       
+      </View>
+      {
           isChooseCategory || isChooseMaker?
             <View style={styles.searchBarWrapper}>
+              
               <InputFieldComponent
                 width={'90%'}
                 height={40}
@@ -350,7 +361,7 @@ const VendorAddServiceScreen = ({ navigation }) => {
                 onChangeText={inputText => {
                   onChangeText(inputText, isServiceNameScreen ? inputValues[CREDENTIAL_KEYS.NAME] : isDescriptionScreen ? inputValues[CREDENTIAL_KEYS.DESCRIPTION] : isPriceScreen ? inputValues[CREDENTIAL_KEYS.PRICE] : '');
                 }}
-                placeholderText={isServiceNameScreen ? CREDENTIAL_KEYS.NAME : isDescriptionScreen ? CREDENTIAL_KEYS?.DESCRIPTION : isPriceScreen ? CREDENTIAL_KEYS?.PRICE : ''}
+                // placeholderText={isServiceNameScreen ? CREDENTIAL_KEYS.NAME : isDescriptionScreen ? CREDENTIAL_KEYS?.DESCRIPTION : isPriceScreen ? CREDENTIAL_KEYS?.PRICE : ''}
                 secureTextEntry={false}
                 value={isServiceNameScreen ? inputValues[CREDENTIAL_KEYS.NAME] : isDescriptionScreen ? inputValues[CREDENTIAL_KEYS.DESCRIPTION] : isPriceScreen ? inputValues[CREDENTIAL_KEYS.PRICE] : ''}
                 returnType="next"
@@ -360,8 +371,6 @@ const VendorAddServiceScreen = ({ navigation }) => {
             :
             null
         }
-      </View>
-
       <View
         style={{
           width: `${progress}%`,
@@ -372,31 +381,23 @@ const VendorAddServiceScreen = ({ navigation }) => {
         }}
       />
 
+        <View style={{ width: '100%',alignItems:'center'}}>
+          <Text style={commonTextStyle}>{HEADER_TITLE[currentScreen]}</Text>
+        </View>
 
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-
+     
         <View style={styles.InputWrapper}>
           {
             isServiceNameScreen || isDescriptionScreen || isPriceScreen ?
               <InputFieldComponent
-                width={'95%'}
-                icon={
-                  isServiceNameScreen ?
-                    <MaterialIcons color={Colors.dark} size={20} name="drive-file-rename-outline" />
-                    :
-                    isDescriptionScreen ?
-                      <MaterialIcons color={Colors.dark} size={20} name="description" />
-                      :
-                      isPriceScreen ?
-                        <Fontisto color={Colors.dark} size={20} name="dollar" />
-                        :
-                        null
-                }
+                width={'89%'}
+            
                 keyboardType={KEYBOARD_TYPES.DEFAULT}
                 onChangeText={inputText => {
                   onChangeText(inputText, textinputKeys);
                 }}
-                placeholderText={isServiceNameScreen ? CREDENTIAL_KEYS.NAME : isDescriptionScreen ? CREDENTIAL_KEYS?.DESCRIPTION : isPriceScreen ? CREDENTIAL_KEYS?.PRICE : ''}
+                // placeholderText={isServiceNameScreen ? CREDENTIAL_KEYS.NAME : isDescriptionScreen ? CREDENTIAL_KEYS?.DESCRIPTION : isPriceScreen ? CREDENTIAL_KEYS?.PRICE : ''}
                 secureTextEntry={false}
                 value={textinputVal}
                 returnType="next"
@@ -430,9 +431,14 @@ const VendorAddServiceScreen = ({ navigation }) => {
                         // setInputValues({...inputValues,[CREDENTIAL_KEYS.PRODUCT_MAKER]:[...inputValues[CREDENTIAL_KEYS.PRODUCT_MAKER],itemData.item]});
                     }
                     if (isChooseCategory) setInputValues({ ...inputValues, [CREDENTIAL_KEYS.PRODUCT_CATEGORY]: itemData.item });
-                  }} name={itemData.item.name} />
+                  }} 
+                  name={itemData.item.name} 
+                  />
+
                 )}
               />
+              
+            
               :
               null
           }
@@ -442,16 +448,16 @@ const VendorAddServiceScreen = ({ navigation }) => {
           {
             isUploadImage ?
               <View style={styles.uploadImgContainer}>
-                <Entypo name='camera' color={Colors.primaryColor} size={100} />
-                <Text style={styles.uploadImgContainerHeading}>Upload the image of service</Text>
-                <Text style={styles.uploadImgContainerDescription}>The image should be very clear and should represent the service you want to sell, remember that a perfect picture attracts customers.</Text>
+                <Entypo name='camera' color={Colors.primarySolid} size={100} />
+                <Text style={styles.uploadImgContainerHeading}>Sube la imagen del servicio</Text>
+                <Text style={styles.uploadImgContainerDescription}>La imagen debe ser muy clara y debe representar el servicio que desea vender, recuerde que una imagen perfecta atrae clientes.</Text>
                 <View style={styles.buttonWrapper}>
                   <ButtonComponent
-                    buttonText={'Upload'}
-                    colorB={Colors.brightBlue}
-                    width={width / 2}
+                    buttonText={'Subir'}
+                    colorB={Colors.terciarySolid}
+                    width={width }
                     margin={15}
-                    borderRadius={10}
+                    borderRadius={1}
                     handlePress={pickServiceImage}
                   />
                 </View>
@@ -466,36 +472,36 @@ const VendorAddServiceScreen = ({ navigation }) => {
               <ProductSummaryCard
                 onPress={pickServiceImage}
                 value={inputValues[CREDENTIAL_KEYS.SERVICE_COVER]?.path}
-                label='Image'
+                label='Imagen'
                 isImageTab={true}
               />
               <ProductSummaryCard
                 onPress={() => setCurrentScreen(SCREEN_TYPES?.SERVICE_NAME)}
                 value={inputValues[CREDENTIAL_KEYS.NAME]}
-                label='Title'
+                label='Título'
               />
               <ProductSummaryCard
               onPress={() => setCurrentScreen(SCREEN_TYPES?.SERVICE_DESCRIPTION)}
                 value={inputValues[CREDENTIAL_KEYS.DESCRIPTION]}
-                label='Description'
+                label='Descripción'
               />
               <ProductSummaryCard
               onPress={() => setCurrentScreen(SCREEN_TYPES?.SERVICE_PRICE)}
                 value={`MXN ${inputValues[CREDENTIAL_KEYS.PRICE]}`}
-                label='Price'
+                label='Precio'
               />
               <ProductSummaryCard
               onPress={() => setCurrentScreen(SCREEN_TYPES?.CHOOSE_CATEGORY)}
                 value={`${inputValues[CREDENTIAL_KEYS.PRODUCT_CATEGORY]?.name}`}
-                label='Category'
+                label='Categoría'
               />
               <ProductSummaryCard
               multiText={true}
               onPress={() => setCurrentScreen(SCREEN_TYPES?.CHOOSE_MAKER)}
                 value={selectedMakers}
-                label='Makers'
+                label='Fabricante'
               />
-              <Text style={{fontSize:13,fontWeight:'300',width:'100%',padding:10,alignSelf:'center'}}>Make sure that you agree to the <Text style={{fontWeight:'bold',color:Colors.brightBlue}}>terms and policies</Text> of <Text style={{fontWeight:'bold',color:Colors.primaryColor}}>Besser </Text>before creating the product, going against the policies might get your account suspended.</Text>
+              <Text style={{fontSize:13,fontWeight:'300',width:'100%',padding:10,alignSelf:'center'}}>Asegúrese de estar de acuerdo con el <Text style={{fontWeight:'bold',color:Colors.brightBlue}}>términos y políticas</Text> de <Text style={{fontWeight:'bold',color:Colors.primaryColor}}>Besseri </Text>antes de crear el producto, ir en contra de las políticas podría suspender su cuenta.</Text>
             </View>
             :
             null
@@ -508,11 +514,11 @@ const VendorAddServiceScreen = ({ navigation }) => {
             :
             <View style={styles.buttonWrapper}>
               <ButtonComponent
-                buttonText={'Proceed'}
-                colorB={Colors.brightBlue}
-                width={width - 25}
+                buttonText={'Continuar'}
+                colorB={Colors.terciarySolid}
+                width={width}
                 margin={5}
-                borderRadius={10}
+                borderRadius={1}
                 handlePress={async() => {
                   if(isSummaryMode && isProductSummary) {
                     await createService();
@@ -545,14 +551,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white
   },
   header: {
-    width: '100%',
+    width: deviceWidth,
     minHeight: 65,
+    height: Platform.Os == 'ios' ? deviceHeight * 0.15 : deviceHeight * 0.10,
     paddingVertical: 20,
     padding: 10,
-    borderWidth: 1,
-    borderColor: Colors.primaryColor,
-    backgroundColor: Colors.primaryColor,
-    ...CommonStyles.horizontalCenter,
+    justifyContent:'center'
   },
   headerIcon: {
     // paddingHorizontal: 10

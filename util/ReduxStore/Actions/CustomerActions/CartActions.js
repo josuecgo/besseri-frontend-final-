@@ -4,8 +4,9 @@ export const DECRASE_QUANTITY = 'DECRASE_QUANTITY';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const DELETE_ITEM = 'DELETE_ITEM';
 export const RESET_CART = 'RESET_CART';
+
 export const addItemToCart = (item) => {
-    console.log('line 8',item)
+    
     return({
         type:ADD_ITEM_TO_CART,
         data:item,

@@ -12,6 +12,8 @@ import { getUserId } from '../../util/local-storage/auth_service';
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { HeaderBackground } from '../../components/Background/HeaderBackground';
+import { deviceHeight } from '../../util/Dimentions';
 const CustomerOrdersViewScreen = (props) => {
   const { width, height } = useWindowDimensions()
   const [orders, setOrders] = useState([]);
@@ -26,12 +28,12 @@ const CustomerOrdersViewScreen = (props) => {
       if (apiCall.status == api_statuses.success) {
         setOrders(apiCall.data.data)
       } else {
-        showToaster('Something went wrong please try again');
+        showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
       }
     } catch (e) {
       console.log(e)
       setLoading(false);
-      showToaster('Something went wrong please try again later')
+      showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
     }
   }
   useEffect(() => {
@@ -39,6 +41,7 @@ const CustomerOrdersViewScreen = (props) => {
   }, [isFocused]);
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <HeaderBackground/>
         <View style={styles.header}>
             <TouchableOpacity style={{alignSelf:'flex-start'}}>
                 <MaterialCommunityIcons
@@ -48,7 +51,7 @@ const CustomerOrdersViewScreen = (props) => {
                 size={25}
                 />
             </TouchableOpacity>
-            <Text style={styles.headerText}>My Orders</Text>
+            <Text style={styles.headerText}>Mis pedidos</Text>
         </View>
       <LoaderComponent isVisible={loading}/>
     
@@ -61,11 +64,11 @@ const CustomerOrdersViewScreen = (props) => {
             style={{ width: 200, height: 200, resizeMode: 'contain', bottom: 40 }}
           />
           <View style={[styles.placeOrderWrapper, { width }]}>
-          <Text style={styles.placeOrderText}>Place Order</Text>
-          <Text style={styles.placeOrderTextDetail}>Add items to cart and place order now!</Text>
+          <Text style={styles.placeOrderText}>Realizar pedido</Text>
+          <Text style={styles.placeOrderTextDetail}>Agregue artículos al carrito y haga su pedido ahora!</Text>
           <ButtonComponent
             buttonText={'Explore'}
-            colorB={Colors.primaryColor}
+            colorB={Colors.primarySolid}
             width={width / 1.5}
             margin={10}
             handlePress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS)}
@@ -74,17 +77,19 @@ const CustomerOrdersViewScreen = (props) => {
         </View>
         :
         <View>
-          <FlatList
-          data={orders}
-          keyExtractor={item => item?._id}
-          renderItem={itemData => (
-            <OrderCard onPress={() => {
-              props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_DETAIL,{
-                order:itemData.item
-              })
-            }} data={itemData.item}/>
-          )}
-          />
+          
+          {
+            orders.map((item) => (
+              <View key={item._id} >
+                 <OrderCard onPress={() => {
+                props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_DETAIL,{
+                  order:item
+                })
+              }} data={item}/>
+              </View>
+               
+            ))
+          }
           </View>
         }
       </ScrollView>
@@ -98,8 +103,8 @@ const styles = StyleSheet.create({
   placeOrderWrapper: { justifyContent: 'center', alignItems: 'center', bottom: 40 },
   header:{
     width:'100%',
-    height:80,
-    backgroundColor:Colors.primaryColor,
+    height:Platform.OS == 'ios' ? deviceHeight *0.15 : deviceHeight * 0.10, 
+    
     paddingHorizontal:20,
     alignItems:'center',
     justifyContent:'center'

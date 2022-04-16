@@ -11,22 +11,31 @@ import { getUser, logout } from '../../util/local-storage/auth_service';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import LoaderComponent from '../Loader/Loader.component';
 import { useSelector } from 'react-redux';
+import { HeaderBackground } from '../Background/HeaderBackground';
+import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
 const getIcons = ({focused, color, size, name}) => {
   const ICONS = {
-    [CUSTOMER_HOME_SCREEN_ROUTES.SERVICE]: (
-      <FontAwesome size={size} color={color} name="gears" />
+    'Servicios': (
+      <MaterialIcons name='build'  size={28} color={color} />
+      // <MaterialIcons name='home-repair-service'  size={28} color={color} />
+    
+      // <MaterialCommunityIcons name='car-cruise-control' size={28} color={color}  />
+   
+      // <MaterialCommunityIcons name='car-brake-alert' size={28} color={color}  />
     ),
-    [CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS]: (
-      <FontAwesome size={size} color={color} name="car" />
+    'Autopartes': (
+      
+      // <ImgIcon url={require('../../assets/images/iconos/autopartes.png')} />
+      <MaterialIcons name='drive-eta'  size={28} color={color} />
     ),
-    [CUSTOMER_HOME_SCREEN_ROUTES.ORDERS]: (
-      <FontAwesome size={size} color={color} name="th-list" />
+    'Pedidos': (
+      <MaterialIcons name='assignment-turned-in'  size={28} color={color} />
     ),
-    [CUSTOMER_HOME_SCREEN_ROUTES.APPOINTMENTS]: (
-      <SimpleLineIcons size={size} color={color} name="notebook" />
+    'Reservaciones': (
+      <MaterialIcons name='event'  size={28} color={color} />
     ),
-    [CUSTOMER_HOME_SCREEN_ROUTES.ADDRESSES_SCREEN]: (
-      <Ionicons name='location-sharp' color={color} size={size}/>
+    'Mi dirección': (
+      <MaterialIcons name='location-on'  size={28} color={color} />
     )
   };
   return ICONS[name];
@@ -59,20 +68,25 @@ const CustomDrawerComponent = (props) => {
 
   return (
     <DrawerContentScrollView>
-     
-      <View style={[CommonStyles.flexDirectionColumn, {padding: 20}]}>
-        <View style={styles.topDataHeader}>
-          <Text style={styles.name}>{user?.name}</Text>
-          <Text style={styles.email}>{user?.email}</Text>
-        </View>
+      <HeaderBackground/>
+      <View style={[styles.header]}>
+        {/* <View style={[CommonStyles.flexDirectionColumn]}> */}
+          <View style={styles.topDataHeader}>
+            <Text style={styles.name}>{user?.name}</Text>
+            <Text style={styles.email}>{user?.email}</Text>
+          </View>
+        {/* </View> */}
       </View>
+
+
+
       <View style={{paddingHorizontal: 10}}>
         {props.state.routeNames.map(name => {
           return (
             <DrawerItem
               key={name}
-              activeTintColor={Colors.primaryColor}
-              activeBackgroundColor={Colors.primaryColorShade}
+              activeTintColor={Colors.white}
+              activeBackgroundColor={Colors.primarySolid}
               icon={({focused, color, size}) =>
                 getIcons({focused, color, size, name})
               }
@@ -91,8 +105,9 @@ const CustomDrawerComponent = (props) => {
             props.navigation.replace('AuthStack');
           }}
           label="Logout"
-          activeTintColor={Colors.primaryColor}
+          activeTintColor={Colors.red}
           activeBackgroundColor={Colors.primaryColorShade}
+          inactiveTintColor={Colors.red}
           icon={({focused, size, color}) => (
             <MaterialIcons size={size} color={color} name="logout" />
           )}
@@ -103,22 +118,32 @@ const CustomDrawerComponent = (props) => {
 };
 
 const styles = StyleSheet.create({
-  topDataHeader: {
-    padding: 10,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: Colors.gray,
+  header: { 
+    width: deviceWidth,
+    height:Platform.OS == 'ios' ? deviceHeight * 0.15 : deviceHeight * 0.10,
+   
+    // padding: 10,
+    // borderWidth: 1,
+    // borderColor: Colors.primaryColor,
+    // backgroundColor: Colors.primaryColor,
+    // ...CommonStyles.horizontalCenter,
+    paddingHorizontal:deviceWidth * 0.1,
+    // flexDirection:'row',
+    // alignItems:'center',
+    justifyContent:'center'
+    
   },
   name: {
-    fontSize: 20,
+    fontSize: adjust(13),
     fontWeight: 'bold',
-    color: Colors.primaryColor,
+    color: Colors.white,
   },
   email: {
-    fontSize: 15,
-    color: Colors.dark,
+    fontSize: adjust(12),
+    color: Colors.lightGreen,
     fontStyle: 'italic',
   },
+
 });
 
 export default CustomDrawerComponent;

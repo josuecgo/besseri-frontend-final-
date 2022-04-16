@@ -1,7 +1,7 @@
 import { useIsFocused, useRoute } from '@react-navigation/native';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, Image, useWindowDimensions,TouchableOpacity, ScrollView, Linking, Alert } from 'react-native';
+import { Text, View, StyleSheet, Image, useWindowDimensions,TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import ButtonComponent from '../../components/button/button.component';
 import OrderCard from '../../components/customer-components/ordercard.component';
@@ -18,7 +18,11 @@ import { ThinlineSeparator } from '../../components/CommonComponents';
 import ProductCardComponent from '../../components/customer-components/product-card.component';
 import Entypo from 'react-native-vector-icons/Entypo'
 import moment from 'moment';
+import { HeaderBackground } from '../../components/Background/HeaderBackground';
+import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const CustomerBookingDetail = (props) => {
+    const {top} = useSafeAreaInsets()
     const {width,height} = useWindowDimensions()
   const [loading,setLoading] = useState(false);
   const {params} = useRoute();
@@ -28,13 +32,13 @@ const CustomerBookingDetail = (props) => {
   const cancelAppointment = async() => {
       try {
           setLoading(true);
+          alert(booking?._id)
         const apiCall = await axios.post(customer_api_urls.cancel_booking,{
             booking_id:booking?._id
         });
         setLoading(false);
         if(apiCall.status == api_statuses.success) {
             setBooking(apiCall.data.data[0]);
-            showToaster('Your booking has been cancelled and amount has been refunded')
         } else {
             showToaster('Something went wrong');
         }
@@ -53,43 +57,46 @@ const CustomerBookingDetail = (props) => {
     )
 }
   return (
-    <View style={{ flex: 1, backgroundColor: 'white' }}>
+    <View style={{ flex: 1, backgroundColor: Colors.bgColor,top:top }}>
+        <HeaderBackground/>
+        
         <View style={styles.header}>
             <TouchableOpacity 
             onPress={() => props?.navigation?.goBack()}
-            style={{alignSelf:'flex-start'}}>
+            style={{position:'absolute',left:5}}
+            >
                 <MaterialCommunityIcons
                 name='keyboard-backspace'
                 color={Colors.white}
                 size={25}
                 />
             </TouchableOpacity>
-            <View style={{...CommonStyles.flexDirectionRow,...CommonStyles.horizontalCenter,marginTop:10}}>
+            <View style={{...CommonStyles.flexDirectionRow}}>
                 <View style={{width:45,height:45,borderWidth:1,borderColor:Colors.white,backgroundColor:Colors.white,...CommonStyles.flexCenter,borderRadius:5}}>
-               <Feather name='box' size={30} color={Colors.primaryColor}/>
+               <Feather name='box' size={30} color={Colors.primarySolid}/>
                 </View>
                 <View>
-                <Text style={styles.headerText}>#{booking?.bookingId}</Text>
-                <Text style={{...CommonStyles.fontFamily,fontSize:13,paddingLeft:12,color:Colors.white}}>{moment(booking.booked_on).format('DD-MM-YYYY hh:mm A')}</Text>
+                <Text style={styles.headerText}>#{params?.booking?.bookingId}</Text>
+                <Text style={{...CommonStyles.fontFamily,fontSize:13,paddingLeft:12,color:Colors.white}}>{moment(params.booking.booked_on).format('DD-MM-YYYY hh:mm A')}</Text>
                 </View>
             </View>
         </View>
-        <ScrollView contentContainerStyle={{flexGrow:1,backgroundColor:'white',paddingBottom:'20%'}}>
+        <ScrollView contentContainerStyle={{flexGrow:1,backgroundColor:'white',paddingBottom:'30%'}}>
          <DetailItem
-         label={'Booking Status'}
-         value={booking?.booking_status}
+         label={'Estado de la reservación'}
+         value={params?.booking?.booking_status}
          orderStatus={true}
          />
          <ThinlineSeparator margin={20}/>
        <View>
            
-         <View style={{width:'95%',backgroundColor:Colors.lightPink,flexDirection:'row',justifyContent:'space-between',alignItems:'center',height:60,alignSelf:'center',paddingHorizontal:10,marginBottom:20}}>
-             <Text style={{color:'black',...CommonStyles.fontFamily}}>Booked timings</Text>
-         <Text style={{color:'black',...CommonStyles.fontFamily}}>{moment(booking?.date).format('DD-MMMM-YYYY')}-{moment(booking?.time).format('hh:mm A')}</Text>
+         <View style={{width:'100%',backgroundColor:Colors.lightPink,flexDirection:'row',justifyContent:'space-between',alignItems:'center',height:60,alignSelf:'center',paddingHorizontal:10,marginBottom:20}}>
+             <Text style={{color:'black',...CommonStyles.fontFamily,fontSize:adjust(12)}}>Horarios reservados</Text>
+         <Text style={{color:'black',...CommonStyles.fontFamily,fontSize:adjust(12)}}>{moment(booking?.date).format('DD-MM-YYYY')}-{moment(booking?.time).format('hh:mm A')}</Text>
              </View>  
 
        <View style={{ width: '93%', alignSelf: 'center' }}>
-                            <Text style={{ ...CommonStyles.fontFamily, fontSize: 15 }}>Service summary</Text>
+                            <Text style={{ ...CommonStyles.fontFamily, fontSize: 15 }}>Resumen del servicio</Text>
                             <View style={{ flexDirection: 'row', marginTop: 10 }}>
                                 <Image
                                     source={{ uri: `${base_url}/${booking?.service?.coverImg}` }}
@@ -102,13 +109,13 @@ const CustomerBookingDetail = (props) => {
         <View>
          <ThinlineSeparator margin={20}/>
 
-           <DetailItem label={'Besseri Comission'} value={`${booking?.besseri_comission.toFixed(2)} MXN`}/>
-           <DetailItem label={'Sub total'} value={`${booking?.service?.price} MXN`}/>
-           <DetailItem label={'Total Charges'} value={`${(booking?.total_amount).toFixed(2)} MXN`}/>
+           <DetailItem label={'Besseri cargos'} value={'2.00 MXN'}/>
+           <DetailItem label={'Subtotal'} value={`${totalAmount.toFixed(2)} MXN`}/>
+           <DetailItem label={'Total'} value={`${(totalAmount + 5 + 2).toFixed(2)} MXN`}/>
            <ThinlineSeparator margin={20}/>
         </View>
    <View style={{width:'93%',alignSelf:'center',marginTop:'5%'}}>
-         <Text style={{...CommonStyles.fontFamily,fontSize:15}}>Seller info</Text>
+         <Text style={{...CommonStyles.fontFamily,fontSize:15}}>Información del vendedor</Text>
          <View style={{width:'100%',margin:10,paddingVertical:14,backgroundColor:Colors.white,alignSelf:'center',borderColor:Colors.gray,borderWidth:1,borderRadius:10}}>
          <Text style={{fontSize:16,...CommonStyles.fontFamily,paddingLeft:25,marginBottom:10}}>{booking?.store?.storeName}</Text>
          <View style={{flexDirection:'row',alignItems:'center'}}>
@@ -127,35 +134,36 @@ const CustomerBookingDetail = (props) => {
       <LoaderComponent isVisible={loading}/>
       
         </ScrollView>
-        <View style={{...CommonStyles.flexDirectionRow,justifyContent:'space-around',backgroundColor:'transparent',position:'absolute',bottom:15}}>
+        <View style={{
+            ...CommonStyles.flexDirectionRow,
+            justifyContent:'space-around',
+            backgroundColor:'transparent',
+            position:'absolute',
+            bottom:15 +top
+            }}>
             <ButtonComponent
-            buttonText={'Invoice'}
-            width={booking?.booking_status_code == 'CANCELLED' ? width / 1.1 : width / 2.2}
-            colorB={Colors.primaryColor}
-            borderRadius={10}
+            buttonText={'Factura'}
+            width={width / 2.2}
+            colorB={Colors.terciarySolid}
+            borderRadius={2}
             margin={10}
             />
-            {
-                booking?.booking_status_code == 'CANCELLED' ? 
-                null 
-                :
-                <ButtonComponent
-                buttonText={'Cancel'}
-                width={width / 2.2}
-                colorB={booking?.booking_status_code == 'PENDING' ? Colors.red : Colors.primaryColor}
-                borderRadius={10}
-                margin={10}
-                handlePress={async() => {
-                    if(booking?.booking_status_code == 'PENDING') {
-                        Alert.alert('BOOKING CANCELLATION','Do you really want to cancel this appointment?',
-                        [{text:'No'},
-                    {text:'Yes',onPress:cancelAppointment}
-                    ]
-                        )
-                    }
-                }}
-                />
-            }
+             <ButtonComponent
+            buttonText={'Cancelar'}
+            width={width / 2.2}
+            colorB={booking?.booking_status_code == 'PENDING' ? Colors.red : Colors.primaryColor}
+            borderRadius={2}
+            margin={10}
+            handlePress={async() => {
+                if(booking?.booking_status_code == 'PENDING') {
+                    Alert.alert('CANCELACIÓN DE RESERVA','¿Realmente desea cancelar esta cita?',
+                    [{text:'No'},
+                {text:'Si',onPress:cancelAppointment}
+                ]
+                    )
+                }
+            }}
+            />
         </View>  
     </View>
   );
@@ -165,11 +173,12 @@ const styles = StyleSheet.create({
   placeOrderTextDetail: { fontSize: 13, fontWeight: '300', width: '90%', alignSelf: 'center', textAlign: 'center', color: Colors.dark },
   placeOrderWrapper: { justifyContent: 'center', alignItems: 'center', bottom: 40 },
   header:{
-    width:'100%',
-    minHeight:110,
-    backgroundColor:Colors.primaryColor,
-    paddingHorizontal:20,
-    justifyContent:'center'
+    height: Platform.OS == 'ios' ? deviceHeight * 0.13  : deviceHeight * 0.10,
+    width: deviceWidth,
+    justifyContent:'center',
+    flexDirection:'row',
+    alignItems:'center',
+    marginBottom:10
 },
 headerText:{...CommonStyles.fontFamily,color:Colors.white,fontSize:20,paddingLeft:10},
 })

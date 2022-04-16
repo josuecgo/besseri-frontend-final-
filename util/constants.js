@@ -1,9 +1,11 @@
 import { ToastAndroid } from "react-native";
 
 export const SCREEN_HORIZONTAL_MARGIN = 30;
+export const SCREEN_HORIZONTAL_MARGIN_FORM = 10;
 export const INCREMENT_CONSTANT = 20;
 
 export const LOGIN_SIGNUP_FORGOT_ROUTES = {
+  HOMEPAGE: 'HomePageScreen',
   LOGIN: 'LOGIN',
   SIGN_UP: 'SIGN_UP',
   FORGOT_PASSWORD: 'FORGOT_PASSWORD',
@@ -118,6 +120,7 @@ export const BOTTOM_TAB_RIDER_ROUTES = {
   DUMMY_SCREEN: 'Dummy Screen',
   RIDER_EXPLORE:'Rider Explore',
   RIDER_ORDERS:'Rider Orders',
+  RIDER_ORDERS2:'Rider Orders2', 
   RIDER_PROFILE:'Rider Profile',  
 };
 export const RIDER_STACK_ROUTES = {
@@ -131,12 +134,21 @@ export const ASYNC_STORAGE_NAMES = {
   BUSINESS_PROFILE:'BusinessProfile',
   USER_TYPE:'UserType',
   BUSINESS_STATUS:'BusinessStatus',
-  RIDER_PROFILE:'Rider Profile'
+  RIDER_PROFILE:'Rider Profile',
+  CUSTOMER_ADDRESS:'addressCustomer'
 }
 export const USER_ROLES = {
   customer:'customer',
   vendor:'vendor',
   rider:'rider'
+}
+
+export const OrderStatusCode = {
+  OUT_FOR_DELIVERY:'Fuera para entrega',
+  PARCEL_PICKED:'Pedido recogido',
+  PARCEL_DELIVERED:'Paquete entregado',
+  RIDER_ASSIGNED:'Repartidor asignado',
+  PROCESSING:'Procesando'
 }
 
 export const showToaster = (message) => {

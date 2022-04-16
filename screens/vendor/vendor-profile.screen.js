@@ -12,11 +12,17 @@ import {getBusinessProfile} from '../../util/local-storage/auth_service';
 import Loader from '../../components/Loader/Loader.component'
 import { VENDOR_DETAILS_ROUTES } from '../../util/constants';
 import { useSelector } from 'react-redux';
-const { width,height } = Dimensions.get('screen');
+import { deviceHeight } from '../../util/Dimentions';
+import { HeaderBackground } from '../../components/Background/HeaderBackground';
+import { moneda } from '../../util/Moneda';
+import TopHeader from '../../components/Background/TopHeader';
+
+
 const VendorProfileScreen = ({navigation}) => {
   const [businessProfileData,setBusinessProfileData] = useState(null);
   const [showLoader,setShowLoader] = useState(false);
   const earnings = useSelector(state => state.businessActions.earnings);
+
   const commonTextStyle = {
     fontSize:18,
    fontWeight:'bold',
@@ -33,122 +39,112 @@ const VendorProfileScreen = ({navigation}) => {
     getBusinessData();
   },[]);
   return (
-   <View style={styles.container}>
-     <Loader isVisible={showLoader}/>
-    <View style={styles.header}> 
-    <Text style={commonTextStyle}>{businessProfileData?.storeName}</Text>
-    </View>
+    <View style={[styles.container]}>
+    <Loader isVisible={showLoader} />
+    
+    <TopHeader>
+      <Text style={commonTextStyle} >{businessProfileData?.storeName}</Text>
+    </TopHeader>
+    
 
-  <ScrollView contentContainerStyle={{flexGrow:1}}>
-  <TouchableOpacity 
-   onPress={() => navigation.navigate(VENDOR_DETAILS_ROUTES.VENDOR_PROFILE_DETAIL,{data:businessProfileData})}
-   activeOpacity={0.9} style={styles.profileBtn}>
-   <Text style={commonTextStyle}>Business profile</Text>
-   </TouchableOpacity>
-   <ThinlineSeparator margin={5}/>
-   <Heading text='Earnings'/>
-   <MenuItem
-   label='Todays Earnings'
-   value={`${earnings.todays} MXN`}
-   icon={
-     <MaterialIcons
-     name='attach-money'
-     color={Colors.white}
-     size={25}
-     />
-   }
-   />
-    <MenuItem
-   label='Cancelled Earnings'
-   value={`${earnings?.cancelled} MXN`}
-   icon={
-     <Entypo
-     name='line-graph'
-     color={Colors.white}
-     size={16}
-     />
-   }
-   />
-    <MenuItem
-   label='Total Earnings'
-   value={`${earnings?.total} MXN`}
-   icon={
-     <FontAwesome5
-     name='coins'
-     color={Colors.white}
-     size={17}
-     />
-   }
-   />
-      <ThinlineSeparator margin={15}/>
-      <Heading text='Settings'/>
+   
+
+    <ScrollView contentContainerStyle={{flexGrow: 1,marginHorizontal:10}}>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate(VENDOR_DETAILS_ROUTES.VENDOR_PROFILE_DETAIL, {
+            data: businessProfileData,
+          })
+        }
+        activeOpacity={0.9}
+        style={styles.profileBtn}>
+        <Text style={commonTextStyle}>Perfil de trabajo</Text>
+      </TouchableOpacity>
+      <ThinlineSeparator margin={5} />
+      <Heading text="Ganancias" />
       <MenuItem
-      onPress={() => navigation.navigate(VENDOR_DETAILS_ROUTES.VENDOR_SETTINGS)}
-   label='App Settings'
-   icon={
-     <AntDesign
-     name='setting'
-     color={Colors.white}
-     size={25}
-     />
-   }
-   />
-   
-   
-    <MenuItem
-   label='Account Status'
-   value={'Active'}
-   icon={
-     <MaterialCommunityIcons
-     name='progress-alert'
-     color={Colors.white}
-     size={25}
-     />
-   }
-   />
-      <ThinlineSeparator margin={10}/>
-   <Heading text='Help & Support'/>
-   <MenuItem
-   label='Support'
-   onPress={() => Linking.openURL('mailto:soporte@besseri.com?subject=Customer Support Ticket')}
-   icon={
-     <MaterialIcons
-     name='support-agent'
-     color={Colors.white}
-     size={25}
-     />
-   }
-   />
-  </ScrollView>
-   </View>
-  );
+        label="Ganancias de hoy"
+        value={ moneda(earnings?.todays) + ` MXN`}
+        icon={
+          <MaterialIcons name="attach-money" color={Colors.white} size={25} />
+        }
+      />
+      <MenuItem
+        label="Ganancias canceladas"
+        value={ moneda(earnings?.cancelled) +` MXN`}
+        icon={<Entypo name="line-graph" color={Colors.white} size={16} />}
+      />
+      <MenuItem
+        label="Ganancias Totales"
+        value={ moneda(earnings?.total) +  ` MXN`}
+        icon={<FontAwesome5 name="coins" color={Colors.white} size={17} />}
+      />
+      <ThinlineSeparator margin={15} />
+      <Heading text="Ajustes" />
+      <MenuItem
+        onPress={() =>
+          navigation.navigate(VENDOR_DETAILS_ROUTES.VENDOR_SETTINGS)
+        }
+        label="App Settings"
+        icon={<AntDesign name="setting" color={Colors.white} size={25} />}
+      />
+
+      <MenuItem
+        label="Estado de la cuenta"
+        value={'Active'}
+        icon={
+          <MaterialCommunityIcons
+            name="progress-alert"
+            color={Colors.white}
+            size={25}
+          />
+        }
+      />
+      <ThinlineSeparator margin={10} />
+      <Heading text="Servicio de asistencia" />
+      <MenuItem
+        label="Soporte"
+        onPress={() =>
+          Linking.openURL(
+            'mailto:soporte@besseri.com?subject=Customer Support Ticket',
+          )
+        }
+        icon={
+          <MaterialIcons
+            name="support-agent"
+            color={Colors.white}
+            size={25}
+          />
+        }
+      />
+    </ScrollView>
+  </View>
+);
 };
 const styles = StyleSheet.create({
- container:{
-   flex:1,
-   backgroundColor:Colors.white
- },
- header:{
-   width:'100%',
-   height:65,
-   borderWidth:1,
-   borderColor:Colors.primaryColor,
-   backgroundColor:Colors.primaryColor,
-   ...CommonStyles.horizontalCenter,
-   ...CommonStyles.verticalCenter
- },
- profileBtn:{
-   width:'95%',
-   height:55,
-   borderWidth:1,
-   borderColor:Colors.brightBlue,
-   backgroundColor:Colors.brightBlue,
-   ...CommonStyles.verticalCenter,
-   ...CommonStyles.horizontalCenter,
-   borderRadius:3,
-   alignSelf:'center',
-   margin:10
- },
-
-})
+  container: {
+      flex: 1,
+      // backgroundColor: Colors.white,
+      
+  },
+  header: {
+      width: '100%',
+      height: Platform.OS == 'ios' ? deviceHeight * 0.15 : deviceHeight * 0.10,
+      //  borderWidth:1,
+      ...CommonStyles.horizontalCenter,
+      justifyContent:'center'
+  },
+  profileBtn: {
+      width: '95%',
+      height: 55,
+      borderWidth: 1,
+      borderColor: Colors.brightBlue,
+      backgroundColor: Colors.brightBlue,
+      ...CommonStyles.verticalCenter,
+      ...CommonStyles.horizontalCenter,
+      borderRadius: 3,
+      alignSelf: 'center',
+      margin: 10,
+  },
+});
 export default VendorProfileScreen;

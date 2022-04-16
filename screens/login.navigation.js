@@ -10,12 +10,19 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import RiderSignup from './rider/rider.signup.screen';
 import ChangePasswordScreen from './change-password.screen';
+import { HomePageScreen } from './HomePageScreen';
 
 const Stack = createStackNavigator();
 
 export const LSFS = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
+
+      <Stack.Screen
+        name={LOGIN_SIGNUP_FORGOT_ROUTES.HOMEPAGE}
+        component={HomePageScreen}
+      />
+
       <Stack.Screen
         name={LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN}
         component={LoginScreen}

@@ -18,19 +18,22 @@ import TopCircleComponent from '../components/top-circle/top-circle.component';
 import SideOptionComponent from '../components/top-circle/side-option.component';
 import BottomContentComponent from '../components/bottom-content/bottom-content.component';
 import {emailValidator, passwordValidator} from '../util/validations';
-import { api_statuses, api_urls, rider_api_urls, vendor_api_urls } from '../util/api/api_essentials';
+import { api_statuses, api_urls, customer_api_urls, rider_api_urls, vendor_api_urls } from '../util/api/api_essentials';
 import axios from 'axios';
 import Loader from '../components/Loader/Loader.component';
-import {saveBusinessProfile, saveBusinessStatus, saveRiderProfile, saveUserData} from '../util/local-storage/auth_service';
+import {saveAdressCustomer, saveBusinessProfile, saveBusinessStatus, saveRiderProfile, saveUserData} from '../util/local-storage/auth_service';
 import { useDispatch } from 'react-redux';
 import * as  BusinessProfileActions from '../util/ReduxStore/Actions/VendorActions/BusinessProfleActions';
+import { deviceHeight } from '../util/Dimentions';
+
+
 const CREDENTIAL_KEYS = {
-  EMAIL_ADDRESS: 'Email Address',
-  PASSWORD: 'Password',
+  EMAIL_ADDRESS: 'Correo electrónico',
+  PASSWORD: 'Contraseña',
 };
 
 const LoginScreen = ({navigation}) => {
-  const {width, height} = useWindowDimensions();
+
 
   const [userCredentials, setUserCredentials] = useState({
     [CREDENTIAL_KEYS.EMAIL_ADDRESS]: '',
@@ -53,7 +56,7 @@ const LoginScreen = ({navigation}) => {
      const apiCall = await axios.get(url);
      setShowLoader(false);
      if(apiCall.status == api_statuses.success) {
-       console.log(apiCall.data);
+       
        await saveBusinessProfile(apiCall.data.data.store[0]);
       //  if(apiCall.data.data.isBlocked) {
         //  showToaster('Your business is blocked.');
@@ -68,14 +71,14 @@ const LoginScreen = ({navigation}) => {
        //}
      }
      else {
-       Alert.alert('Something went wrong','Sorry for interruption this request was failed -1');
+       Alert.alert('Algo salió mal','Lo siento por la interrupción, esta solicitud falló');
        return;
      }
     } 
     catch(e) {
       setShowLoader(false);
       console.log(e);
-      Alert.alert('Something went wrong','Sorry for interruption this request was failed');
+      Alert.alert('Algo salió mal','Lo siento por la interrupción, esta solicitud falló');
     }
   }
 
@@ -99,14 +102,31 @@ const LoginScreen = ({navigation}) => {
      }
      else {
        console.log('this called')
-       Alert.alert('Something went wrong','Sorry for interruption this request was failed -1');
+       Alert.alert('Algo salió mal','Perdón por la interrupción, esta solicitud falló -1');
        return;
      }
     } 
     catch(e) {
       setShowLoader(false);
       console.log(e);
-      Alert.alert('Somethinxg went wrong','Sorry for interruption this request was failed');
+      Alert.alert('Algo salió mal','Lo siento por la interrupción, esta solicitud falló');
+    }
+  }
+
+  const getAddresses = async(userID) => {
+    
+    try {
+      setShowLoader(true);
+      const url = `${customer_api_urls.get_addresses}/${userID}`;
+      const apiCall = await axios.get(url);
+      setShowLoader(false);
+      
+    
+    } catch(e) 
+    { 
+        console.log({error:e})
+        
+        
     }
   }
 
@@ -118,14 +138,14 @@ const LoginScreen = ({navigation}) => {
       email:userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS],
       password:userCredentials[CREDENTIAL_KEYS.PASSWORD]
     }
-    console.log(body);
+    
     const apiCall = await axios.post(url,body);
     setShowLoader(false);
     if(apiCall?.status != api_statuses.success) {
       showToaster(apiCall?.data?.info?.message ? apiCall?.data?.info?.message : 'Something went wrong');
       return;
     }
-    console.log(apiCall?.status);
+    
     const data = apiCall.data.data[0]
     if(apiCall.status == api_statuses.success) {
       setShowLoader(false);
@@ -135,13 +155,14 @@ const LoginScreen = ({navigation}) => {
       }
       if(data.isCommonUser) {
         await saveUserData(data);
+        await getAddresses(data._id)
         navigation.replace(MAIN_ROUTES.CUSTOMER_STACK);
       }
       if(data.isRider) {
         await getRiderDetails(data?._id,data)
       }
     }
-    console.log(apiCall?.status)
+    
     } catch(e) { 
       console.log(e);
       setShowLoader(false);
@@ -152,89 +173,111 @@ const LoginScreen = ({navigation}) => {
   return (
     <CustomSafeAreaViewComponent>
       <Loader isVisible={showLoader}/>
-      <TopCircleComponent
-        textHeading="Welcome!"
-        subText="Sign in to continue"
-      />
-      <View
-        style={[
-          CommonStyles.flexCenter,
-          CommonStyles.justifySpaceBetween,
-          {marginTop: SCREEN_HORIZONTAL_MARGIN},
-        ]}>
-        <View style={CommonStyles.flexCenter}>
-          <InputFieldComponent
-            icon={
-              <MaterialIcons
-                color={Colors.dark}
-                size={20}
-                name="alternate-email"
-              />
-            }
-            keyboardType={KEYBOARD_TYPES.EMAIL_ADDRESS}
-            onChangeText={inputText => {
-              onChangeText(inputText, CREDENTIAL_KEYS.EMAIL_ADDRESS);
-            }}
-            placeholderText={CREDENTIAL_KEYS.EMAIL_ADDRESS}
-            value={userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS]}
-            secureTextEntry={false}
-            nextFieldRef={passwordRef}
-            returnType="next"
-            validator={emailValidator}
-            hintText="Please enter valid email"
-          />
-          <InputFieldComponent
-            icon={
-              <MaterialCommunityIcons
-                name="key-variant"
-                color={Colors.dark}
-                size={20}
-              />
-            }
-            keyboardType={KEYBOARD_TYPES.DEFAULT}
-            onChangeText={inputText => {
-              onChangeText(inputText, CREDENTIAL_KEYS.PASSWORD);
-            }}
-            placeholderText={CREDENTIAL_KEYS.PASSWORD}
-            value={userCredentials[CREDENTIAL_KEYS.PASSWORD]}
-            secureTextEntry={true}
-            ref={passwordRef}
-            returnType="default"
-            validator={passwordValidator}
-            hintText="Please enter valid password"
-          />
-          <SideOptionComponent
-            text="Forgot Password?"
-            textAlign="right"
-            navigation={navigation}
-            keyToRoute={LOGIN_SIGNUP_FORGOT_ROUTES.FORGOT_PASSWORD}
-          />
-          <ButtonComponent
-          width={160}
-            marginTop={20}
-            colorB={Colors.primaryColor}
-            buttonText="SIGN IN"
-            handlePress={handleSignIn}
-          />
-        </View>
-      </View>
-      <BottomContentComponent>
-        <Text style={[CommonStyles.fontFamily]}>
-          <Text>New User? </Text>
-          <Text
-            onPress={() => {
-              navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.SIGN_UP);
-            }}
-            style={styles.signUpText}>
-            SIGN UP
-          </Text>
-        </Text>
-      </BottomContentComponent>
+      <TopCircleComponent textHeading="Iniciar Sesión" />
+      <View style={[styles.content]}>
+                    <View style={styles.card} >
+
+                
+                        <View style={CommonStyles.flexCenter}>
+                            <InputFieldComponent
+                            icon={
+                                <MaterialIcons
+                                color={Colors.dark}
+                                size={24}
+                                name="alternate-email"
+                                />
+                            }
+                            keyboardType={KEYBOARD_TYPES.EMAIL_ADDRESS}
+                            onChangeText={inputText => {
+                                onChangeText(inputText, CREDENTIAL_KEYS.EMAIL_ADDRESS);
+                            }}
+                            placeholderText={CREDENTIAL_KEYS.EMAIL_ADDRESS}
+                            value={userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS]}
+                            secureTextEntry={false}
+                            nextFieldRef={passwordRef}
+                            returnType="next"
+                            validator={emailValidator}
+                            hintText="Por favor ingresa un correo valido"
+                            />
+                            <InputFieldComponent
+                            icon={
+                                <MaterialCommunityIcons
+                                name="key-variant"
+                                color={Colors.dark}
+                                size={24}
+                                />
+                            }
+                            keyboardType={KEYBOARD_TYPES.DEFAULT}
+                            onChangeText={inputText => {
+                                onChangeText(inputText, CREDENTIAL_KEYS.PASSWORD);
+                            }}
+                            placeholderText={CREDENTIAL_KEYS.PASSWORD}
+                            value={userCredentials[CREDENTIAL_KEYS.PASSWORD]}
+                            secureTextEntry={true}
+                            ref={passwordRef}
+                            returnType="default"
+                            validator={passwordValidator}
+                            hintText="Por favor ingresa una contraseña valida   "
+                            />
+
+                            <View style={{alignSelf:'flex-end'}} >
+                              <SideOptionComponent
+                              text="¿Olvidaste tu contraseña?"
+                              textAlign="right"
+                              navigation={navigation}
+                              keyToRoute={LOGIN_SIGNUP_FORGOT_ROUTES.FORGOT_PASSWORD}
+                              />
+                            </View>
+                            
+                            <ButtonComponent
+                            width={160}
+                            marginTop={20}
+                            colorB={Colors.terciarySolid}
+                            buttonText="INICIAR SESIÓN"
+                            handlePress={handleSignIn}
+                            />
+                        </View>
+                        <BottomContentComponent>
+                            <Text style={[CommonStyles.fontFamily]}>
+                            <Text>¿No tienes una cuenta? </Text>
+                            <Text
+                                onPress={() => {
+                                navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.SIGN_UP);
+                                }}
+                                style={styles.signUpText}>
+                                Regístrate
+                            </Text>
+                            </Text>
+                        </BottomContentComponent>
+
+                    </View>
+                </View>
     </CustomSafeAreaViewComponent>
   );
 };
 
 const styles = StyleSheet.create({
+  header: {
+    position: 'absolute',
+    top: 20,
+  },
+  txtHeader: {
+    color: Colors.white,
+    fontSize: 24,
+  },
+  content: {
+    flex: 1,
+    paddingHorizontal: 15,
+    justifyContent:'center',
+    paddingVertical:'22%'
+  },
+  card:{
+    justifyContent:'center',
+    alignItems:'center',
+    backgroundColor:Colors.white,
+    paddingVertical: deviceHeight * 0.15,
+    elevation:2
+  },
   topColor: {
     backgroundColor: Colors.primaryColor,
     transform: [{translateY: -150}],
@@ -248,9 +291,12 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   signUpText: {
-    color: Colors.primaryColor,
+    // color: Colors.secundarySolid,
     width: 300,
     paddingLeft: 10,
+  },
+  textoHelper: {
+    color: Colors.primarySolid,
   },
 });
 

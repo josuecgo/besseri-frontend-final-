@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
+import {View,StyleSheet} from 'react-native';
 import CustomSafeAreaViewComponent from '../components/custom-safe-area-view/custom-safe-area-view.component';
 import TopCircleComponent from '../components/top-circle/top-circle.component';
 import KEYBOARD_TYPES from '../util/keyboard-types';
@@ -9,11 +9,11 @@ import ButtonComponent from '../components/button/button.component';
 import {
   LOGIN_SIGNUP_FORGOT_ROUTES,
   SCREEN_HORIZONTAL_MARGIN,
+  SCREEN_HORIZONTAL_MARGIN_FORM,
   showToaster,
 } from '../util/constants';
 import SideOptionComponent from '../components/top-circle/side-option.component';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import CommonStyles from '../util/styles/styles';
 import BottomContentComponent from '../components/bottom-content/bottom-content.component';
 import axios from 'axios';
@@ -29,7 +29,7 @@ const CREDENTIAL_KEYS = {
 
 const ChangePasswordScreen = ({navigation}) => {
     const {params} = useRoute();
-    console.log(params)
+   
     const isResetPassword = params?.isResetPassword;
   const [loading,setLoading] = useState(false);
   const [oldPassword,setOldPassword] = useState('');
@@ -45,11 +45,11 @@ const ChangePasswordScreen = ({navigation}) => {
   const handleResetPassword = async() => {
     try {
       if(newPassword != confirmPassword) {
-          showToaster('Passwords didnt match');
+          showToaster('Las contraseñas no coinciden');
           return;
       }
       if(confirmPassword?.length < 6) {
-          showToaster('Password must be 6 characters long atleast');
+          showToaster('La contraseña debe tener al menos 6 caracteres');
           return;
       }
       setLoading(true);
@@ -59,11 +59,11 @@ const ChangePasswordScreen = ({navigation}) => {
      });
      setLoading(false);
      if(apiCall.status == api_statuses.success) {
-        showToaster('Password changed successfully');
+        showToaster('Contraseña cambiada con éxito');
         navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN);
      } else {
          console.log(e)
-       showToaster('Something went wrong')
+       showToaster('Algo salió mal')
      }
     } catch(e) {
       console.log(e)
@@ -80,14 +80,14 @@ const ChangePasswordScreen = ({navigation}) => {
      });
      setLoading(false);
      if(apiCall.status == api_statuses.success && apiCall?.data?.OTP) {
-        showToaster('Password changed successfully');
+        showToaster('Contraseña cambiada con éxito');
         navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN);
      } else {
-       showToaster('Something went wrong')
+       showToaster('Algo salió mal')
      }
     } catch(e) {
       setLoading(false);
-      showToaster(e?.response?.data?.message ?  e?.response?.data?.message :'Something went wrong')
+      showToaster(e?.response?.data?.message ?  e?.response?.data?.message :'Algo salió mal')
     }
   };
 
@@ -95,13 +95,13 @@ const ChangePasswordScreen = ({navigation}) => {
     <CustomSafeAreaViewComponent>
       <LoaderComponent isVisible={loading}/>
       <TopCircleComponent
-        textHeading="Change Your Password"
-        subText="Create a secure password"
+        textHeading="Cambia tu contraseña"
+       
       />
       <View
         style={[
           CommonStyles.flexCenter,
-          {marginTop: SCREEN_HORIZONTAL_MARGIN},
+          styles.body,
         ]}>
             {
                 !isResetPassword ?
@@ -117,7 +117,7 @@ const ChangePasswordScreen = ({navigation}) => {
                 onChangeText={inputText => {
                   setOldPassword(inputText);
                 }}
-                placeholderText={'Old Password'}
+                placeholderText={'Contraseña anterior'}
                 value={oldPassword}
                 secureTextEntry={true}
               />
@@ -136,7 +136,7 @@ const ChangePasswordScreen = ({navigation}) => {
             onChangeText={inputText2 => {
               setNewPassword(inputText2)
             }}
-            placeholderText={'New Password'}
+            placeholderText={'Nueva contraseña'}
             value={newPassword}
             secureTextEntry={true}
           />
@@ -152,7 +152,7 @@ const ChangePasswordScreen = ({navigation}) => {
             onChangeText={inputText3 => {
               setConfirmPassword(inputText3)
             }}
-            placeholderText={'Confirm Password'}
+            placeholderText={'Confirmar contraseña'}
             value={confirmPassword}
             secureTextEntry={true}
           />
@@ -160,7 +160,7 @@ const ChangePasswordScreen = ({navigation}) => {
            isResetPassword? 
            <View style={{justifyContent: 'flex-end'}}>
            <SideOptionComponent
-             text="Sign in to your account"
+             text="Iniciar sesión en su cuenta"
              textAlign="right"
              navigation={navigation}
              keyToRoute={LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN}
@@ -172,8 +172,8 @@ const ChangePasswordScreen = ({navigation}) => {
       </View>
       <BottomContentComponent>
         <ButtonComponent
-          colorB={Colors.primaryColor}
-          buttonText={isResetPassword ? 'Reset' : 'Change'}
+          colorB={Colors.terciarySolid}
+          buttonText={isResetPassword ? 'Reiniciar' : 'Cambiar'}
           handlePress={isResetPassword ? handleResetPassword : handleChangePassword}
         />
       </BottomContentComponent>
@@ -182,3 +182,14 @@ const ChangePasswordScreen = ({navigation}) => {
 };
 
 export default ChangePasswordScreen;
+
+
+const styles = StyleSheet.create({
+  body:{  
+    marginTop: SCREEN_HORIZONTAL_MARGIN - 10,
+    backgroundColor:Colors.white,
+    marginHorizontal:SCREEN_HORIZONTAL_MARGIN_FORM,
+    paddingVertical:15,
+    elevation:2
+  }
+})

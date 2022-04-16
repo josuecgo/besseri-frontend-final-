@@ -15,8 +15,8 @@ import axios from 'axios';
 import LoaderComponent from '../components/Loader/Loader.component';
 
 const CREDENTIAL_KEYS = {
-  OTP_CODE: 'Verification Code',
-  PASSWORD: 'Password',
+  OTP_CODE: 'Código de verificación',
+  PASSWORD: 'Contraseña',
 };
 const OtpPasswordScreen = ({navigation}) => {
   const route = useRoute();
@@ -55,13 +55,13 @@ const OtpPasswordScreen = ({navigation}) => {
         console.log(apiCall?.data)
         registerApiCall(apiCall?.data?.path);
       } else {
-        showToaster('Something went wrong try again-1')
+        showToaster('Algo salió mal inténtalo de nuevo')
       }
     } catch(e) {
       console.log(e)
       console.log(e?.response?.data)
       setShowLoader(false)
-       showToaster('something went wrong')
+       showToaster('Algo salió mal')
     }
   }
   const registerApiCall = async (path) => {
@@ -96,11 +96,16 @@ const OtpPasswordScreen = ({navigation}) => {
   return (
     <CustomSafeAreaViewComponent>
       <LoaderComponent isVisible={showLoader}/>
-      <TopCircleComponent textHeading="Verify your email address" />
+      <TopCircleComponent textHeading="Verifique su correo electrónico" />
       <View
         style={[
-          CommonStyles.justifySpaceBetween,
-          {height: height - (width + INCREMENT_CONSTANT * 3)},
+          {height: height - (width + INCREMENT_CONSTANT * 3),
+            marginTop:30,backgroundColor:Colors.white,
+            alignItems:'center',
+            justifyContent:'center',
+            marginHorizontal:10,
+            elevation:1
+          },
         ]}>
         <View style={[CommonStyles.flexCenter]}>
           {isEnteringOTP ? (
@@ -140,8 +145,8 @@ const OtpPasswordScreen = ({navigation}) => {
           )}
           <ButtonComponent
             marginTop={SCREEN_HORIZONTAL_MARGIN}
-            colorB={Colors.primaryColor}
-            buttonText={isEnteringOTP ? 'Verify' : 'Set Password'}
+            colorB={Colors.terciarySolid}
+            buttonText={isEnteringOTP ? 'Verificar' : 'Set Password'}
             handlePress={() => {
               if(userCredentials[CREDENTIAL_KEYS.OTP_CODE] == route.params.otp) {
                 if(route?.params?.body?.isVendor || route?.params?.body?.isRider) {

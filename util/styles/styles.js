@@ -17,7 +17,7 @@ const CommonStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   fontFamily: {
-    fontFamily: 'Arial-Rounded-MT-Bold',
+    // fontFamily: 'Arial-Rounded-MT-Bold',
   },
   flexDirectionRow: {
     flexDirection: 'row',

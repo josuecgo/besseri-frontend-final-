@@ -1,5 +1,6 @@
 export const env = 'prod';
-export const base_url = env == 'prod' ? 'https://api.besseri.mx' : env == 'dev' ?  'https://besseri-apis.herokuapp.com' : 'http://192.168.10.10:5001';
+// export const base_url = env == 'prod' ? 'https://api.besseri.mx' : env == 'dev' ?  'https://besseri-apis.herokuapp.com' : 'http://192.168.10.10:5001';
+export const base_url = 'http://192.168.1.13:3005'
 export const api_urls = {
     registration:`${base_url}/user/signup`,
     login:`${base_url}/user/login`,
@@ -18,7 +19,8 @@ export const vendor_api_urls = {
     create_product:`${base_url}/products/create-product`,
     get_models:`${base_url}/modals/get-models`,
     get_makers:`${base_url}/maker/get-makers`,
-    upload_product_image:`https://api.besseri.mx/products/upload-product-images`,
+    upload_product_image:`${base_url}/products/upload-product-images`,
+    upload_service_image:`${base_url}/services/upload-service-image`,
     out_of_stock:`${base_url}/products/out-of-stock`,
     delete_product:`${base_url}/products/delete-product`,
     inStock:`${base_url}/products/in-stock`,
@@ -28,7 +30,7 @@ export const vendor_api_urls = {
     get_categories:`${base_url}/categories/get-categories`,
     get_services:`${base_url}/services/get-my-services`,
     change_service_availability:`${base_url}/services/change-service-availiability`,
-    upload_service_image:`${base_url}/services/upload-service-image`,
+   
     create_service:`${base_url}/services/create-service`,
     delete_service:`${base_url}/services/delete-service`,
     get_store_bookings:`${base_url}/appointment/get-store-bookings`,

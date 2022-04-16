@@ -13,6 +13,9 @@ import CommonStyles from '../../util/styles/styles';
 import Colors from '../../util/styles/colors';
 import ButtonComponent from '../../components/button/button.component';
 import { useIsFocused } from '@react-navigation/native';
+import { moneda } from '../../util/Moneda';
+import TopCircleComponent from '../../components/top-circle/top-circle.component';
+import { deviceHeight } from '../../util/Dimentions';
 
 const VendorOrdersScreen = ({navigation, route}) => {
   const isFocused = useIsFocused();
@@ -71,115 +74,136 @@ const VendorOrdersScreen = ({navigation, route}) => {
   //   [ORDER_STATUSES.PACKED]: '#6c757d',
   //   [ORDER_STATUSES.CANCELLED]: '#dc3545',
   // };
-  
+  const configTexto = (e) => {
+    let texto;
+    switch (e) {
+      case 'ON_GOING':
+        return texto = 'En Curso';
+      case 'PENDING':
+        return texto = 'Pendiente';
+      case 'CANCELLED':
+        return texto = 'Cancelado';
+      case 'COMPLETED':
+        return texto = 'Terminado';
+      default:
+        return texto = 'Sin datos';
+        
+    }
+  }
 
   return (
-    <View style={{flex:1,backgroundColor:'white'}}> 
-      <View style={{flexDirection:'row',alignItems:'center',width:width}}>
-        <TouchableOpacity onPress={() => setSelectedTab('Orders')} style={{width:width/2,backgroundColor:selectedTab == 'Orders' ? Colors.primaryColor : '#dcdcdc',height:60,justifyContent:'center',alignItems:'center'}}>
-          <Text style={{fontSize:19,...CommonStyles.fontFamily}}>Orders</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => setSelectedTab('Bookings')} style={{width:width/2,backgroundColor:selectedTab == 'Bookings' ? Colors.primaryColor : '#dcdcdc',height:60,justifyContent:'center',alignItems:'center'}}>
-          <Text style={{fontSize:19,...CommonStyles.fontFamily}}>Bookings</Text>
-        </TouchableOpacity>
-      </View>
-      <LoaderComponent isVisible={loading}/>
-       <FlatList
-       data={selectedTab == 'Orders' ? orders : bookings}
-       keyExtractor={item => item?._id}
-       contentContainerStyle={{flexGrow:1,marginTop:'10%'}}
-       renderItem={({item}) => {
-         if(selectedTab == 'Orders') {
-        return (
-          <OrderComponent
-          orderId={item?.orderId}
-          orderPlacedBy={item?.user?.name}
-          orderPrice={item?.total_amount}
-          orderDate={moment(item?.ordered_on).format('DD-MM-YY hh:ss A')}
-          openOrderDetails={() => {
-            navigation.navigate(VENDOR_DETAILS_ROUTES.ORDER_DETAILS,{
-              orderId:item._id,
-              orderNumber:item.orderId
-            })
-          }}
-          orderStatus={ORDER_STATUSES[item?.order_status_code]}
-        />
+    <View style={{flex:1,backgroundColor:Colors.bgColor}}> 
+    <TopCircleComponent  />
+    <View style={{flexDirection:'row',alignItems:'center',width:width}}>
+      <TouchableOpacity onPress={() => setSelectedTab('Orders')} style={{width:width/2,backgroundColor:selectedTab == 'Orders' ? Colors.primarySolid : '#dcdcdc',height:60,justifyContent:'center',alignItems:'center'}}>
+        <Text style={{fontSize:19,...CommonStyles.fontFamily,color:selectedTab == 'Orders' ? Colors.white : Colors.primarySolid}}>Pedidos</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => setSelectedTab('Bookings')} style={{width:width/2,backgroundColor:selectedTab == 'Bookings' ? Colors.primarySolid : '#dcdcdc',height:60,justifyContent:'center',alignItems:'center'}}>
+        <Text style={{fontSize:19,...CommonStyles.fontFamily,color:selectedTab == 'Bookings' ? Colors.white : Colors.primarySolid}}>Reservaciones</Text>
+      </TouchableOpacity>
+    </View>
+
+
+    <LoaderComponent isVisible={loading}/>
+    <FlatList
+     data={selectedTab == 'Orders' ? orders : bookings}
+     keyExtractor={item => item?._id}
+     contentContainerStyle={{flexGrow:1,marginTop:'10%'}}
+     renderItem={({item}) => {
+       if(selectedTab == 'Orders') {
+      return (
+        <OrderComponent
+        orderId={item?.orderId}
+        orderPlacedBy={item?.user?.name}
+        orderPrice={item?.total_amount}
+        orderDate={moment(item?.ordered_on).format('DD-MM-YY hh:ss A')}
+        openOrderDetails={() => {
+          navigation.navigate(VENDOR_DETAILS_ROUTES.ORDER_DETAILS,{
+            orderId:item._id,
+            orderNumber:item.orderId
+          })
+        }}
+        orderStatus={ORDER_STATUSES[item?.order_status_code]}
+      />
+      )
+      } else {
+         return (
+          <View style={styles.cardContainer}>
+            <View style={{flexDirection:'row',alignItems:'center'}}>
+                <Text style={{...CommonStyles.fontFamily,fontSize:15}}>#{item?.bookingId}</Text>
+                <Text style={{...CommonStyles.fontFamily}}>{moment(item?.booked_on).format('DD-MM-YYYY hh:mm A')}</Text>
+            </View>
+            <View>
+              <Text style={{...CommonStyles.fontFamily,fontSize:15,paddingVertical:5,color:STATUSES_COLORS[item?.booking_status_code]}}>{configTexto(item?.booking_status_code)}</Text>
+                  <Text style={{...CommonStyles.fontFamily,fontSize:15,paddingVertical:5}}>Timing - {moment(item?.date).format('DD-MM-YY')}-{moment(item?.time).format('hh:mm A')}</Text>
+                  <View style={{...CommonStyles.flexDirectionRow,...CommonStyles.justifySpaceBetween,...CommonStyles.horizontalCenter}}>
+                      <Text style={{fontSize:15,...CommonStyles.fontFamily}}>service: {item?.service?.name}</Text>
+                      
+                  </View>
+                  <Text style={{...CommonStyles.fontFamily}}>Total Amount: {moneda(item?.total_amount)} MXN</Text>
+                  <View style={{marginTop:10,...CommonStyles.flexDirectionRow,...CommonStyles.justifySpaceBetween,...CommonStyles.horizontalCenter}}>
+                    <ButtonComponent
+                    handlePress={() => navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.BOOKING_DETAIL,{booking:item})}
+                    buttonText={'Detalles'}
+                    width={'80%'}
+                    colorB={Colors.primarySolid}
+                    borderRadius={100}
+                    />
+                    <Text style={{color:Colors.brightBlue,...CommonStyles.fontFamily,fontSize:17}}>{item?.order_status}</Text>
+                  </View>
+              </View>
+          </View>
         )
-         } else {
-           return (
-            <View style={styles.cardContainer}>
-    <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
-        <Text style={{...CommonStyles.fontFamily,fontSize:15}}>#{item?.bookingId}</Text>
-        <Text style={{...CommonStyles.fontFamily}}>{moment(item?.booked_on).format('DD-MM-YYYY hh:mm A')}</Text>
-    </View>
-    <View>
-    <Text style={{...CommonStyles.fontFamily,fontSize:15,paddingVertical:5,color:STATUSES_COLORS[item?.booking_status_code]}}>{item?.booking_status}</Text>
-        <Text style={{...CommonStyles.fontFamily,fontSize:15,paddingVertical:5}}>Timing - {moment(item?.date).format('DD-MM-YY')}-{moment(item?.time).format('hh:mm A')}</Text>
-        <View style={{...CommonStyles.flexDirectionRow,...CommonStyles.justifySpaceBetween,...CommonStyles.horizontalCenter}}>
-            <Text style={{fontSize:15,...CommonStyles.fontFamily}}>service: {item?.service?.name}</Text>
-            
-        </View>
-        <Text style={{...CommonStyles.fontFamily}}>Total Amount: {item?.total_amount} MXN</Text>
-        <View style={{marginTop:10,...CommonStyles.flexDirectionRow,...CommonStyles.justifySpaceBetween,...CommonStyles.horizontalCenter}}>
-          <ButtonComponent
-          handlePress={() => navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.BOOKING_DETAIL,{booking:item})}
-          buttonText={'Details'}
-          width={'80%'}
-          colorB={Colors.primaryColor}
-          borderRadius={100}
-          />
-          <Text style={{color:Colors.brightBlue,...CommonStyles.fontFamily,fontSize:17}}>{item?.order_status}</Text>
-        </View>
-    </View>
-    </View>
-           )
-         }
-       }}
-       />
-    </View>
-    // <VendorScreenContainerComponent
-    //   needFloatingActionButton={true}
-    //   screenHeading="Orders"
-    //   floatButtonHandler={floatButtonHandler}>
-    //   <View>
-      //   <LoaderComponent isVisible={loading}/>
-      //  <FlatList
-      //  data={orders}
-      //  keyExtractor={item => item?._id}
-      //  renderItem={({item}) => (
-      //   <OrderComponent
-      //   orderId={item?.orderId}
-      //   orderPlacedBy={item?.user?.name}
-      //   orderPrice={item?.total_amount}
-      //   orderDate={moment(item?.ordered_on).format('DD-MM-YY hh:ss A')}
-      //   openOrderDetails={() => {
-      //     navigation.navigate(VENDOR_DETAILS_ROUTES.ORDER_DETAILS,{
-      //       orderId:item._id,
-      //       orderNumber:item.orderId
-      //     })
-      //   }}
-      //   orderStatus={ORDER_STATUSES[item?.order_status_code]}
-      // />
-      //  )}
-      //  />
-    //   </View>
-    //   {/*<AllEmptyComponent />*/}
-    // </VendorScreenContainerComponent>
-  );
+      }
+    }}
+    ListFooterComponent={()=>(
+      <View style={{height: deviceHeight * 0.05}} />
+    )}
+    />
+  </View>
+  // <VendorScreenContainerComponent
+  //   needFloatingActionButton={true}
+  //   screenHeading="Orders"
+  //   floatButtonHandler={floatButtonHandler}>
+  //   <View>
+    //   <LoaderComponent isVisible={loading}/>
+    //  <FlatList
+    //  data={orders}
+    //  keyExtractor={item => item?._id}
+    //  renderItem={({item}) => (
+    //   <OrderComponent
+    //   orderId={item?.orderId}
+    //   orderPlacedBy={item?.user?.name}
+    //   orderPrice={item?.total_amount}
+    //   orderDate={moment(item?.ordered_on).format('DD-MM-YY hh:ss A')}
+    //   openOrderDetails={() => {
+    //     navigation.navigate(VENDOR_DETAILS_ROUTES.ORDER_DETAILS,{
+    //       orderId:item._id,
+    //       orderNumber:item.orderId
+    //     })
+    //   }}
+    //   orderStatus={ORDER_STATUSES[item?.order_status_code]}
+    // />
+    //  )}
+    //  />
+  //   </View>
+  //   {/*<AllEmptyComponent />*/}
+  // </VendorScreenContainerComponent>
+);
 };
 const styles = StyleSheet.create({
-  cardContainer:{
-    width:'95%',
-    minHeight:100,
-    borderWidth:2,
-    borderColor:Colors.white,
-    backgroundColor:'white',
-    elevation:3,
-    margin:15,
-    alignSelf:'center',
-    paddingHorizontal:15,
-    paddingVertical:15,
-    borderRadius:10
+cardContainer:{
+  // width:'95%',
+  minHeight:100,
+  borderWidth:1,
+  borderColor:Colors.white,
+  backgroundColor:'white',
+  elevation:2,
+  margin:15,
+  alignSelf:'center',
+  paddingHorizontal:15,
+  paddingVertical:15,
+  borderRadius:10
 },
 })
 

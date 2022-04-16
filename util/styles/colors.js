@@ -22,7 +22,22 @@ const Colors = {
   darkPink:'#ff8695',
   lightPink:'#ffe7ea',
   lightPrimary:'#fcf6e9',
-  lightGreen:'#e3fbe3'
+  lightGreen:'#e3fbe3',
+
+  primaryGradient: [ '#1b1464','#2e3192','#254da1'],
+  secondaryGradient: [ '#2c954a','#004c37'],
+  terciaryGradient: ['#f15a24', '#fcee21'],
+
+  primarySolid: '#453FCF',
+  secundarySolid: '#F9B410',
+  terciarySolid: '#47954A',
+
+  bgColor:'#eaedf5',
+  info:'#46ade0',
+  succes:'#47954A',
+  attention:'#F9B410',
+  alert:'#FF6D00',
+  error:'#ff0000'
 };
 
 export default Colors;

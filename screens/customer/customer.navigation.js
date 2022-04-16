@@ -39,11 +39,11 @@ export const PartsServicesFunctionsDrawer = () => {
         }}
       /> */}
       <Drawer.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS}
+        name={'Autopartes'}
         component={CustomerHomeStack}
       />
         <Drawer.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.SERVICE}
+        name={'Servicios'}
         component={CustomerServicesViewScreen}
         options={{
           headerShown: true,
@@ -53,11 +53,11 @@ export const PartsServicesFunctionsDrawer = () => {
         }}
       />
        <Drawer.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.ADDRESSES_SCREEN}
+        name={'Mi dirección'}
         component={CustomerAddressesScreen}
       />
       <Drawer.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS}
+        name={'Pedidos'}
         component={OrdersNavigator}
         // options={{
         //   headerShown: true,
@@ -67,7 +67,7 @@ export const PartsServicesFunctionsDrawer = () => {
         // }}
       />
       <Drawer.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.APPOINTMENTS}
+        name={'Reservaciones'}
         component={BookingsStack}
         options={{
           headerShown: false,
@@ -115,7 +115,7 @@ export const CustomerHomeStack = () => {
         options={{
           headerShown: true,
           header: props => (
-            <CustomHeaderComponent {...props} name="Auto Parts" />
+            <CustomHeaderComponent {...props} name="Autopartes" />
           ),
         }}
       />

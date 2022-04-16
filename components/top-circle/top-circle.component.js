@@ -1,63 +1,49 @@
 import React from 'react';
-import {StyleSheet, Text, useWindowDimensions, View} from 'react-native';
+import {StyleSheet, Text, useWindowDimensions, View,Platform} from 'react-native';
 import CommonStyles from '../../util/styles/styles';
 import Colors from '../../util/styles/colors';
 import {
   INCREMENT_CONSTANT,
   SCREEN_HORIZONTAL_MARGIN,
 } from '../../util/constants';
+import { adjust, deviceHeight } from '../../util/Dimentions';
+import { HeaderBackground } from '../Background/HeaderBackground';
 
 const TopCircleComponent = ({textHeading, subText}) => {
   const {width} = useWindowDimensions();
-  console.log('width', width);
+  
 
   return (
-    <View
+    <> 
+    <HeaderBackground/>
+      <View
       style={[
-        CommonStyles.horizontalCenter,
-        {
-          backgroundColor: Colors.white,
-          paddingHorizontal: SCREEN_HORIZONTAL_MARGIN,
-        },
+      styles.topColor,
       ]}>
-      <View style={{maxHeight: width - 100}}>
-        <View
-          style={[
-            styles.topColor,
-            CommonStyles.flexCenter,
-            {
-              width: width + INCREMENT_CONSTANT,
-              height: width + INCREMENT_CONSTANT,
-              borderRadius: (width + INCREMENT_CONSTANT) / 2,
-            },
-          ]}>
           <Text style={[CommonStyles.fontFamily, styles.brandNameTitle]}>
-            besseri
+            {textHeading}
           </Text>
-        </View>
       </View>
-      <View style={styles.greetingsContainer}>
-        <Text style={[CommonStyles.fontFamily, styles.welcome]}>
-          {textHeading}
-        </Text>
-        <Text style={[CommonStyles.fontFamily, styles.signIn]}>{subText}</Text>
-      </View>
-    </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   topColor: {
-    backgroundColor: Colors.primaryColor,
-    transform: [{translateY: -150}],
+    marginBottom:0,
+    height: Platform.OS == 'ios' ? deviceHeight * 0.15 : deviceHeight * 0.10,
+    justifyContent:'center',
+    alignItems:'center'
+
   },
   brandNameTitle: {
     color: Colors.white,
-    fontSize: 40,
-    transform: [{translateY: 120}],
+    fontSize: adjust(16),
+    
+    // transform: [{translateY: 120}],
   },
   greetingsContainer: {
-    // transform: [{translateY: -120}],
+    
   },
   welcome: {
     fontSize: 22,

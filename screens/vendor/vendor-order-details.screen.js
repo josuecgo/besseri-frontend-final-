@@ -22,8 +22,13 @@ import LoaderComponent from '../../components/Loader/Loader.component';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import TopCircleComponent from '../../components/top-circle/top-circle.component';
+import { moneda } from '../../util/Moneda';
+import { adjust } from '../../util/Dimentions';
+
+
 export const CustomText = ({text, isData = false, numberOfLines = null}) => {
-  const stylesInner = isData ? {fontSize: 16, opacity: 0.5} : {fontSize: 18};
+  const stylesInner = isData ? {fontSize: adjust(12), opacity: 0.5} : {fontSize: 13};
   
   
   return (
@@ -43,7 +48,7 @@ export const CustomText = ({text, isData = false, numberOfLines = null}) => {
 
 const VendorOrderDetailsScreen = ({navigation, route}) => {
  
-  console.log(order);
+  const {orderNumber} = route.params
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [loading,setLoading] = useState(false);
@@ -78,12 +83,12 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
      if(apiCall.status == api_statuses.success) {
         setRideRequests(apiCall.data.data);
      } else {
-       showToaster('Something went wrong please try again');
+       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
      }
     } catch(e) {
       setLoading(false);
       console.log(e?.response?.data)
-      showToaster('Something went wrong please try again');
+      showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
     }
   } 
   const AcceptRide = async(riderId,requestId) => {
@@ -97,13 +102,13 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
      if(apiCall.status == api_statuses.success) {
         getOrderDetails();
      } else {
-       showToaster('Something went wrong please try again');
+       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
        navigation.goBack()
      }
     } catch(e) {
       console.log(e?.response?.data)
       setLoading(false);
-      showToaster('Something went wrong please try again');
+      showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
       navigation.goBack()
     }
   }
@@ -117,12 +122,12 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
         setOrder(apiCall.data.data[0]);
         setOrderStatus(apiCall.data.data[0]?.order_status_code)
      } else {
-       showToaster('Something went wrong please try again');
+       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
        navigation.goBack()
      }
     } catch(e) {
       setLoading(false);
-      showToaster('Something went wrong please try again');
+      showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
       navigation.goBack()
     }
   }
@@ -147,13 +152,13 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
        console.log(apiCall.data)
         await getOrderDetails()
      } else {
-       showToaster('Something went wrong please try again');
+       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
        navigation.goBack()
      }
     } catch(e) {
       console.log(e.response.data)
       setLoading(false);
-      showToaster('Something went wrong please try again');
+      showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
       navigation.goBack()
     }
   }
@@ -165,27 +170,48 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
   
 
   return (
-    <ScrollView contentContainerStyle={{flexGrow:1}}>
-      <LoaderComponent
-      isVisible={loading}
-      />
-     
+    <ScrollView contentContainerStyle={{flexGrow: 1}}>
+      <LoaderComponent isVisible={loading} />
+      <TopCircleComponent textHeading={'Pedido #'+orderNumber} />
       <View
         style={[
           styles.orderDetailsContainer,
           CommonStyles.horizontalCenter,
-          {minHeight: height},
+          {minHeight: height,backgroundColor:Colors.bgColor},
         ]}>
-           <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',paddingHorizontal:15,width:'100%',paddingTop:10}}>
-        <Text style={{...CommonStyles.fontFamily,fontSize:16}}>
-          Order Status
-        </Text>
-        <Text style={{fontSize:14,...CommonStyles.fontFamily,color:STATUSES_COLORS[order?.order_status_code]}}>{order?.order_status}</Text>
-      </View>
-        <View style={{flex:1,width:'90%',alignSelf:'center',marginTop:30}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingHorizontal: 15,
+            width: '100%',
+            paddingTop: 10,
+          
+          }}>
+          <Text style={{...CommonStyles.fontFamily, fontSize: 16}}>
+            Estado del pedido
+          </Text>
+          <Text
+            style={{
+              fontSize: 14,
+              ...CommonStyles.fontFamily,
+              color: STATUSES_COLORS[order?.order_status_code],
+            }}>
+            {order?.order_status}
+          </Text>
+        </View>
+
+        <View
+          style={{flex: 1, width: '90%', alignSelf: 'center', marginTop: 30}}>
           <View style={CommonStyles.flexDirectionRow}>
             <View style={styles.imageContainer}>
-              <Image source={{uri:'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'}} style={styles.imageStyles} />
+              <Image
+                source={{
+                  uri: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+                }}
+                style={styles.imageStyles}
+              />
             </View>
             <View
               style={[
@@ -193,7 +219,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
                 CommonStyles.horizontalCenter,
               ]}>
               <Text style={[styles.customerHeading, CommonStyles.fontFamily]}>
-                Customer Name
+              Nombre del cliente
               </Text>
               <Text
                 style={[
@@ -204,7 +230,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
                 {order?.user?.name}
               </Text>
               <Text style={[styles.customerHeading, CommonStyles.fontFamily]}>
-                Customer phone
+              Teléfono
               </Text>
               <Text
                 style={[
@@ -215,7 +241,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
                 {order?.delivery_address?.phone}
               </Text>
               <Text style={[styles.customerHeading, CommonStyles.fontFamily]}>
-                Order Value
+                Costo
               </Text>
               <Text
                 style={[
@@ -223,11 +249,11 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
                   CommonStyles.fontFamily,
                   styles.customerHeading,
                 ]}>
-                MXN {order?.total_amount}
+                MXN {moneda(order?.total_amount)}
               </Text>
             </View>
           </View>
-          
+
           {/* <DropDownPicker
             open={open}
             value={value}
@@ -246,60 +272,65 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
                 styles.customerHeading,
                 {marginVertical: 10},
               ]}>
-              Order Details
+              Detalles del pedido
             </Text>
 
             <View style={[CommonStyles.flexDirectionRow, styles.mbTen]}>
-              <CustomText text="Image" />
-              <CustomText text="Prod. Name" />
-              <CustomText text="Prod. Price" />
-              <CustomText text="Qty Ordered" />
+              <CustomText text="Imagen" />
+              <CustomText text="Nombre" />
+              <CustomText text="Precio" />
+              <CustomText text="Cant." />
             </View>
-           <View>
-           <FlatList
-            data={order?.products}
-            keyExtractor={item => item?._id}
-            renderItem={({item}) => (
-              <OrderProductItemComponent
-              productName={item?.name}
-              productPrice={item?.price}
-              qtyOrdered={item?.quantity}
-              img={item?.productImg}
-              />
-            )}
-            />
-           </View>
-           
+            <View>
+              {/* <FlatList
+                data={order?.products}
+                keyExtractor={item => item?._id}
+                renderItem={({item}) => (
+                  
+                )}
+              /> */}
+              {
+                order?.products.map((item) => (
+                  <View key={item._id} >
+                    <OrderProductItemComponent
+                      productName={item?.name}
+                      productPrice={item?.price}
+                      qtyOrdered={item?.quantity}
+                      img={item?.productImg}
+                    />
+                  </View>
+                  
+                ))
+              }
+            </View>
 
             <View style={[styles.grandTotal]}>
               <Text style={[CommonStyles.fontFamily, styles.customerHeading]}>
-                Grand Total: MXN {order?.total_amount}
+                Total: MXN {moneda(order?.total_amount)}
               </Text>
             </View>
             <View>
-             
-              {
-                isProcessing ? 
+              {isProcessing ? (
                 <ButtonComponent
-                margin={20}
-                colorB={Colors.primaryColor}
-                buttonText={isProcessing ? 'Parcel Packed?' : ''}
-                handlePress={updateOrderStatus}
-                width={width - 60}
-              />
-              :
-              <View style={{
-                width:'90%',
-              }}>
-              {
-                rideRequets?.length > 0 || orderStatus != 'PACKED' ? 
-                null 
-                :
-                <Text>Riders are viewing your orders, they will send you ride requests.</Text>
-
-              }
+                  margin={20}
+                  colorB={Colors.primaryColor}
+                  buttonText={isProcessing ? '¿Paquete empacado?' : ''}
+                  handlePress={updateOrderStatus}
+                  width={width - 60}
+                />
+              ) : (
+                <View
+                  style={{
+                    width: '90%',
+                  }}>
+                  {rideRequets?.length > 0 || orderStatus != 'PACKED' ? null : (
+                    <Text>
+                      Los pasajeros están viendo sus pedidos, le enviarán un viaje
+                       peticiones.
+                    </Text>
+                  )}
                 </View>
-              }
+              )}
             </View>
             {/* {
       isProcessing ? 
@@ -312,65 +343,92 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
     />
     :null
     } */}
-            {
-              rideRequets?.length > 0 && orderStatus == 'PACKED'?
-              <Text style={{...CommonStyles.fontFamily,paddingVertical:10}}>Rider Requests</Text>
-              :
-              null
-            }
+            {rideRequets?.length > 0 && orderStatus == 'PACKED' ? (
+              <Text style={{...CommonStyles.fontFamily, paddingVertical: 10}}>
+                Rider Requests
+              </Text>
+            ) : null}
             <FlatList
-            data={rideRequets}
-            contentContainerStyle={{flexGrow:1,paddingBottom:'10%'}}
-            keyExtractor={item => item?._id}
-            renderItem={({item}) => (
-              <View style={{width:'95%',minHeight:100,backgroundColor:'white',elevation:5,alignSelf:'center',margin:5}}>
-               <View style={{flexDirection:'row',alignItems:'center'}}> 
-                 <Image
-                 source={{uri:`https://t4.ftcdn.net/jpg/03/36/59/07/360_F_336590777_ndbGZFO887CzLwlikwnPFybD3acfz17d.jpg`}}
-                 style={{width:40,height:40,borderRadius:40/2,paddingLeft:5,left:10}}
-                 />
-                 <View style={{paddingLeft:10,margin:10}}>
-                 <Text>{item?.rider?.riderName}</Text>
-                 <Text>{item?.rider?.email}</Text>
-                 <Text>{item?.rider?.phone_number}</Text>
-                 </View>
-                 <View>
-   
-     </View>
-                 </View>
-                 <View style={{flexDirection:'row',alignItems:'center',alignSelf:'flex-end',margin:10}}>
-                 {/* <TouchableOpacity style={{width:25,marginHorizontal:5,height:25,borderWidth:1,borderColor:'red',backgroundColor:'red',borderRadius:25/2,justifyContent:'center',alignItems:'center'}}>
+              data={rideRequets}
+              contentContainerStyle={{flexGrow: 1, paddingBottom: '10%'}}
+              keyExtractor={item => item?._id}
+              renderItem={({item}) => (
+                <View
+                  style={{
+                    width: '95%',
+                    minHeight: 100,
+                    backgroundColor: 'white',
+                    elevation: 5,
+                    alignSelf: 'center',
+                    margin: 5,
+                  }}>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Image
+                      source={{
+                        uri: `https://t4.ftcdn.net/jpg/03/36/59/07/360_F_336590777_ndbGZFO887CzLwlikwnPFybD3acfz17d.jpg`,
+                      }}
+                      style={{
+                        width: 40,
+                        height: 40,
+                        borderRadius: 40 / 2,
+                        paddingLeft: 5,
+                        left: 10,
+                      }}
+                    />
+                    <View style={{paddingLeft: 10, margin: 10}}>
+                      <Text>{item?.rider?.riderName}</Text>
+                      <Text>{item?.rider?.email}</Text>
+                      <Text>{item?.rider?.phone_number}</Text>
+                    </View>
+                    <View></View>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      alignSelf: 'flex-end',
+                      margin: 10,
+                    }}>
+                    {/* <TouchableOpacity style={{width:25,marginHorizontal:5,height:25,borderWidth:1,borderColor:'red',backgroundColor:'red',borderRadius:25/2,justifyContent:'center',alignItems:'center'}}>
                      <AntDesign name='delete' color='white' size={15}/>
                    </TouchableOpacity> */}
-                   <TouchableOpacity
-                   onPress={() => {
-                     Alert.alert('Assigning Rider','Do you want to assign this rider to order?',
-                     [
-                       {
-                         text:'No',
-                       },
-                       {
-                         text:'Yes',
-                         onPress:() => AcceptRide(item?.rider?._id,item?._id)
-                       }
-                     ]
-                     )
-                   }}
-                   style={{width:25,marginHorizontal:5,height:25,borderWidth:1,borderColor:'#0bda51',backgroundColor:'#0bda51',borderRadius:25/2,justifyContent:'center',alignItems:'center'}}>
-                     <Entypo name='check' color='white' size={15}/>
-                   </TouchableOpacity>
-                  
-                   </View>
-               </View>
-            )}
+                    <TouchableOpacity
+                      onPress={() => {
+                        Alert.alert(
+                          'Asignación de repartidor',
+                          '¿Quieres asignar este repartidor a la orden?',
+                          [
+                            {
+                              text: 'No',
+                            },
+                            {
+                              text: 'Si',
+                              onPress: () =>
+                                AcceptRide(item?.rider?._id, item?._id),
+                            },
+                          ],
+                        );
+                      }}
+                      style={{
+                        width: 25,
+                        marginHorizontal: 5,
+                        height: 25,
+                        borderWidth: 1,
+                        borderColor: '#0bda51',
+                        backgroundColor: '#0bda51',
+                        borderRadius: 25 / 2,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Entypo name="check" color="white" size={15} />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )}
             />
-               
           </View>
-          
         </View>
-     
       </View>
-  
     </ScrollView>
   );
 };
@@ -378,8 +436,8 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
 const styles = StyleSheet.create({
   orderDetailsContainer: {
     backgroundColor: Colors.white,
-    flex:1,
-    width:'100%'
+    flex: 1,
+    width: '100%',
   },
   contentContainer: {
     margin: SCREEN_HORIZONTAL_MARGIN,
@@ -405,11 +463,13 @@ const styles = StyleSheet.create({
   },
   flex1: {
     flex: 1,
+    fontSize:adjust(10)
   },
   mbTen: {marginBottom: 15},
   grandTotal: {
     alignItems: 'flex-end',
   },
 });
+
 
 export default VendorOrderDetailsScreen;

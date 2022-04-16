@@ -13,6 +13,8 @@ import ProductCardComponent from '../../components/customer-components/product-c
 import * as CartActions  from '../../util/ReduxStore/Actions/CustomerActions/CartActions';
 import { useRoute } from '@react-navigation/native';
 import ServicesCardComponent from '../../components/customer-components/ServicesCard.component';
+import { HeaderBackground } from '../../components/Background/HeaderBackground';
+import { deviceHeight, deviceWidth } from '../../util/Dimentions';
 const SCREEN_STATES = {
   USER_LOCATION:'User location',
   PRODUCTS:'Products',
@@ -31,12 +33,15 @@ const CustomerSearchScreen = (props) => {
   const [productsData,setProductsData] = useState(null);
   const [servicesData,setServicesData] = useState(null);
   const [loading,setLoading] = useState(false);
+
+  
+
   const searchCall = async(st) => {
       try 
       {
           setLoading(true);
        if(isServices) {
-             const apiCall = await axios.post(customer_api_urls?.service_search,{
+        const apiCall = await axios.post(customer_api_urls?.service_search,{
           searchText:st,
       });
       setServicesData(apiCall.data.Data);
@@ -70,13 +75,14 @@ const CustomerSearchScreen = (props) => {
   }
   return (
     <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.white }}>
-      <View style={{width:'100%',backgroundColor:'white',elevation:5}}>
+      <HeaderBackground/>
+      <View style={styles.header}>
        <View style={{flexDirection:'row',justifyContent:'space-around',alignItems:'center',padding:10}}>
            <Pressable onPress={() => props.navigation.goBack()}>
-               <MaterialCommunityIcon  name='keyboard-backspace' size={30} color={Colors.primaryColor}/>
+               <MaterialCommunityIcon  name='keyboard-backspace' size={30} color={Colors.white}/>
            </Pressable>
          <View style={{
-              width:'80%',height:45,
+              width:'85%',height:45,
               borderWidth:1,
               borderColor:'#f8f8f8',
               backgroundColor:'#f8f8f8',
@@ -92,7 +98,7 @@ const CustomerSearchScreen = (props) => {
               setSearchtext(st);
               searchCall(st)
           }}
-          placeholder={`Search for ${isServices ? 'Services' : 'Products'}`}
+          placeholder={`Buscar`}
           placeholderTextColor={'grey'}
           style={{
               paddingLeft:10,
@@ -102,7 +108,7 @@ const CustomerSearchScreen = (props) => {
          {loading ?   <SpinKit
                type='ThreeBounce'
                isVisible={loading}
-               color={Colors.primaryColor}
+               color={Colors.primarySolid}
                size={30}
                /> : null}
          </View>
@@ -135,7 +141,8 @@ const CustomerSearchScreen = (props) => {
           onViewDetail={() => {
             props?.navigation?.navigate(SHARED_ROUTES.SERVICE_DETAIL,{
               service:itemData?.item,
-              isVendor:false
+              isVendor:false,
+              comision:10
             });
           }}
            data={itemData?.item} horizontal={true}/>
@@ -145,7 +152,8 @@ const CustomerSearchScreen = (props) => {
           <ProductCardComponent
           onViewDetail={() => {
             props?.navigation?.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL,{
-              product:itemData.item
+              product:itemData.item,
+              comision:10
             });
           }}
           onAddToCart={() => addItemToCart(itemData.item)} data={itemData?.item} horizontal={true}/>
@@ -157,6 +165,15 @@ const CustomerSearchScreen = (props) => {
   );
 };
 const styles = StyleSheet.create({
+  header: {
+    height: Platform.OS == 'ios' ? deviceHeight * 0.13  : deviceHeight * 0.10,
+      width: deviceWidth,
+   
+    flexDirection: 'row',
+    // justifyContent: 'space-between',
+    // paddingHorizontal: 20,
+    // alignItems: 'center'
+},
   categoryButton: {
     padding: 10,
     backgroundColor: Colors.primaryColor,

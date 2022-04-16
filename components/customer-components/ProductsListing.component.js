@@ -7,8 +7,9 @@ import ProductCardComponent from './product-card.component';
 import * as CartActions from '../../util/ReduxStore/Actions/CustomerActions/CartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../util/constants';
+import { adjust } from '../../util/Dimentions';
 
-const ProductListing = ({category,products,navigation}) => {
+const ProductListing = ({category,products,navigation,comision}) => {
   const dispatch = useDispatch();
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
   const businessIdInCart = useSelector(state => state.cart.businessId);
@@ -19,7 +20,7 @@ const ProductListing = ({category,products,navigation}) => {
     }
     // != businessIdInCart)
     if(item?.business_id != businessIdInCart && businessIdInCart != null) {
-      showToaster('You can only add items in cart from one store at a time');
+      showToaster('Solo puede agregar artículos al carrito de una tienda a la vez');
       return;
     }
     dispatch(CartActions.addItemToCart({
@@ -28,15 +29,16 @@ const ProductListing = ({category,products,navigation}) => {
     }))
   }
   
+  
   return (
     <View style={styles.container}>
         <View style={styles.buttonAndTextContainer}>
             <View style={{width:'60%'}}>
-            <Text style={{...CommonStyles.fontFamily,fontSize:17}}>{category}</Text>
+              <Text style={{...CommonStyles.fontFamily,fontSize:adjust(14)}}>{category}</Text>
             </View>
-            <TouchableOpacity style={styles.seeMoreButton}>
+            {/* <TouchableOpacity style={styles.seeMoreButton}>
                 <Text style={{...CommonStyles.fontFamily,color:'white'}}>See more</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </View>
 
         <FlatList
@@ -47,13 +49,15 @@ const ProductListing = ({category,products,navigation}) => {
            <ProductCardComponent
            onViewDetail={() => {
              navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL,{
-               product:itemData.item
+               product:itemData.item,
+               comision
              });
            }}
            increaseQuantity={() => increaseQuantity(itemData.item?._id)}
            onAddToCart={() => addItemToCart(itemData.item)}
            data={itemData.item}
            inCart={cartProductIds.includes(itemData.item._id)}
+           comision={comision}
            />
         )}
         />

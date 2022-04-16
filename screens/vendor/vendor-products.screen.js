@@ -3,13 +3,15 @@ import VendorScreenContainerComponent from '../../components/vendor-shared/vendo
 import ProductComponent from '../../components/vendor-shared/product.component';
 import {PRODUCT_STATUS, showToaster, VENDOR_DETAILS_ROUTES} from '../../util/constants';
 import personMockImage from '../../assets/images/person-mock-image.jpeg';
-import {FlatList, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {getBusinessId, getBusinessProfile} from '../../util/local-storage/auth_service';
 import {vendor_api_urls } from '../../util/api/api_essentials';
 import axios from 'axios';
 import Loader from '../../components/Loader/Loader.component'
 import { useIsFocused } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
+import { deviceHeight } from '../../util/Dimentions';
+import Colors from '../../util/styles/colors';
 const VendorProductsScreen = ({navigation, route}) => {
   const [products,setProducts] = useState([]);
   const [showLoader,setShowLoader] = useState(false);
@@ -17,17 +19,16 @@ const VendorProductsScreen = ({navigation, route}) => {
   const [business,setBusinessDetails] = useState(null);
   const business_profile = useSelector(state => state?.businessActions);
   const floatButtonHandler = () => {
-    console.log(business.location)
     if(!business?.location?.latitude || !business?.location?.longitude || !business?.location?.city || !business?.location?.state) {
-      showToaster('Your location is not setup completetly, please set it up from settings');
+      showToaster('Su ubicación no está configurada completamente, configúrela desde la configuración');
       return
     }
     if(business?.status == 'BLOCKED') {
-      showToaster('You cant create product as your account is blocked');
+      showToaster('No puedes crear productos porque tu cuenta está bloqueada');
       return;
     }
     if(!business?.wallet_id || !business_profile?.wallet?.charges_enabled) {
-      showToaster('Setting up stripe business account is must before selling, go to dashboard and add the account');
+      showToaster('Es necesario configurar una cuenta comercial de Stripe antes de vender, vaya al panel y agregue la cuenta');
       return;
     }
     navigation.navigate(VENDOR_DETAILS_ROUTES.CREATE_PRODUCT,{
@@ -51,14 +52,14 @@ const VendorProductsScreen = ({navigation, route}) => {
     setShowLoader(false);
     if(apiCall.status == 200) {
      setProducts(apiCall.data.data);
-     console.log(businessId)
+     
      return;
     }
-    alert('something went wrong');
+    alert('Algo salió mal');
     } catch(e) {
       setShowLoader(false);
        console.log(e.response.data);
-       alert('an error occured');
+       alert('ocurrió un error');
     }
   }
   useEffect(() => {
@@ -68,12 +69,13 @@ const VendorProductsScreen = ({navigation, route}) => {
     <VendorScreenContainerComponent
       needFloatingActionButton={true}
       floatButtonHandler={floatButtonHandler}
-      screenHeading="Products">
+      screenHeading="Productos">
+      
         <Loader
         isVisible={showLoader}
         />
-      <View>
-        <FlatList
+      <View style={{marginBottom: Platform.OS == 'ios' ? 80 : 50}} >
+        {/* <FlatList
         data={products}
         keyExtractor={item => item?._id}
         renderItem={({item}) => {
@@ -88,8 +90,24 @@ const VendorProductsScreen = ({navigation, route}) => {
           />
           )
         }}
-        />
-       
+        /> */}
+        {products.map((item) => {
+          console.log(item);
+          return (
+            <View style={styles.card} key={item._id} >
+              <ProductComponent
+              data={item}
+              openProductDetails={openProductDetails}
+              // productId={item?._id}
+              // productImage={personMockImage}
+              // productStatus={PRODUCT_STATUS.IN_STOCK}
+              // openProductDetails={openProductDetails}
+              />
+            </View>
+            
+          )
+        })}
+        <View style={{height:deviceHeight * 0.11}} />
       </View>
       {/*<AllEmptyComponent />*/}
     </VendorScreenContainerComponent>
@@ -97,3 +115,10 @@ const VendorProductsScreen = ({navigation, route}) => {
 };
 
 export default VendorProductsScreen;
+
+const styles = StyleSheet.create({
+  card:{
+    backgroundColor:Colors.bgColor,
+   
+  }
+})

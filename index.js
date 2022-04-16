@@ -7,6 +7,10 @@ import App from './App';
 import {name as appName} from './app.json';
 import PushNotification from 'react-native-push-notification'
 import messaging, { firebase } from '@react-native-firebase/messaging';
+import moment from 'moment'
+import 'moment/locale/es'  // without this line it didn't work
+moment.locale('es')
+
 
 PushNotification.configure({
     // (optional) Called when Token is generated (iOS and Android)

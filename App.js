@@ -94,7 +94,7 @@ const App = () => {
   async function requestUserPermission() {
     try {
       
-      const authStatus = await messaging().requestPermission();
+    const authStatus = await messaging().requestPermission();
     const enabled =
       authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;

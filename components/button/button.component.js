@@ -8,17 +8,18 @@ import {
 } from 'react-native';
 import CommonStyles from '../../util/styles/styles';
 import Colors from '../../util/styles/colors';
+import { adjust } from '../../util/Dimentions';
 
 const ButtonComponent = ({
   icon,
   buttonText,
   handlePress,
   width = undefined,
-  colorB,
+  colorB = Colors.primarySolid ,
   disabled,
   disabledColor,
   height = 50,
-  borderRadius = 30,
+  borderRadius = 5,
   isLoading = false,
   padding,
   margin,
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontSize: 18,
+    fontSize: adjust(12),
   },
   loader: {
     marginLeft: 10,

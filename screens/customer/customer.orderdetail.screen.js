@@ -1,7 +1,7 @@
 import { useIsFocused, useRoute } from '@react-navigation/native';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet , Alert, Image, useWindowDimensions,TouchableOpacity, ScrollView, Linking } from 'react-native';
+import { Text, View, StyleSheet, Image, useWindowDimensions,TouchableOpacity, ScrollView, Linking } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import ButtonComponent from '../../components/button/button.component';
 import OrderCard from '../../components/customer-components/ordercard.component';
@@ -18,78 +18,68 @@ import { ThinlineSeparator } from '../../components/CommonComponents';
 import ProductCardComponent from '../../components/customer-components/product-card.component';
 import Entypo from 'react-native-vector-icons/Entypo'
 import moment from 'moment';
+import { HeaderBackground } from '../../components/Background/HeaderBackground';
+import { adjust, deviceHeight } from '../../util/Dimentions';
+
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 const CustomerOrderDetail = (props) => {
     const {width,height} = useWindowDimensions()
-  const [loading,setLoading] = useState(false);
-  const {params} = useRoute();
-  const [order,setOrder] = useState(params?.order);
-  const address = params.order.delivery_address;
-  const store = params.order.store;
-  const totalAmount = parseInt(params.order.total_amount);
-
-   
-  const cancelOrder = async() => {
-      try {
-        setLoading(true);
-       const apiCall = await axios.post(customer_api_urls?.cancel_order,{
-           orderId:order?._id
-       });
-       setLoading(false);
-       if(apiCall?.status == 200) {
-         setOrder(apiCall?.data?.data);
-         showToaster('Your order has been cancelled and amount has been refunded');
-       }
-      } catch(e) {
-          setLoading(false);
-         showToaster('Something went wrong, please try again');
-
-      }
-  }
- 
-
-
-  const DetailItem = ({label,value,orderStatus}) => {
+    const [loading,setLoading] = useState(false);
+    const {params} = useRoute();
+    const address = params.order.delivery_address;
+    const store = params.order.store;
+    const totalAmount = parseInt(params.order.total_amount);
+    const DetailItem = ({label,value,orderStatus}) => {
     return (
         <View style={{width:'100%',borderColor:Colors.dark,flexDirection:'row',justifyContent:'space-between',alignItems:'center',alignSelf:'center',padding:10}}>
             <Text style={{...CommonStyles.fontFamily,fontSize:13}}>{label}</Text>
             <Text style={{fontSize:16,...CommonStyles.fontFamily,color:orderStatus ? Colors.brightBlue : 'black'}}>{value}</Text>
         </View>
     )
-}
+    }
+    const {top} = useSafeAreaInsets()
+
   return (
-    <View style={{ flex: 1, backgroundColor: 'white' }}>
+    <View style={{ flex: 1, backgroundColor: Colors.bgColor }}>
+        <HeaderBackground/>
+        
         <View style={styles.header}>
-            <TouchableOpacity 
+        <TouchableOpacity 
             onPress={() => props?.navigation?.goBack()}
-            style={{alignSelf:'flex-start'}}>
+            style={{position:'absolute',left:5}}
+            >
                 <MaterialCommunityIcons
                 name='keyboard-backspace'
                 color={Colors.white}
                 size={25}
                 />
-            </TouchableOpacity>
-            <View style={{...CommonStyles.flexDirectionRow,...CommonStyles.horizontalCenter,marginTop:10}}>
+        </TouchableOpacity>
+            <View style={{...CommonStyles.flexDirectionRow}}>
                 <View style={{width:45,height:45,borderWidth:1,borderColor:Colors.white,backgroundColor:Colors.white,...CommonStyles.flexCenter,borderRadius:5}}>
-               <Feather name='box' size={30} color={Colors.primaryColor}/>
+                    <Feather name='box' size={30} color={Colors.primarySolid}/>
                 </View>
                 <View>
-                <Text style={styles.headerText}>Order #{order?.orderId}</Text>
-                <Text style={{...CommonStyles.fontFamily,fontSize:13,paddingLeft:12,color:Colors.white}}>{moment(params.order.ordered_on).format('DD-MM-YYYY hh:mm A')}</Text>
+                    <Text style={styles.headerText}>Pedido #{params?.order?.orderId}</Text>
+                    <Text style={{...CommonStyles.fontFamily,fontSize:13,paddingLeft:12,color:Colors.white}}>{moment(params.order.ordered_on).format('DD-MM-YYYY hh:mm A')}</Text>
                 </View>
             </View>
         </View>
+
+
+
         <ScrollView contentContainerStyle={{flexGrow:1,backgroundColor:'white',paddingBottom:'20%'}}>
          <DetailItem
-         label={'Order Status'}
-         value={order?.order_status}
+         label={'Status'}
+         value={params?.order?.order_status}
          orderStatus={true}
          />
-        <Text style={{...CommonStyles.fontFamily,padding:10,marginTop:10,fontSize:13}}>Products Your Ordered</Text>
+        <Text style={{...CommonStyles.fontFamily,padding:10,marginTop:10,fontSize:13}}>Productos que ha pedido</Text>
        <View>
        <View style={{width:'95%',minHeight:70,padding:5,padding:15,backgroundColor:Colors.lightPrimary,alignSelf:'center',marginVertical:20}}>
-       <Text style={{...CommonStyles.fontFamily,color:'black',fontSize:30}}>{order?.delivery_security_code}</Text>
+       <Text style={{...CommonStyles.fontFamily,color:'black',fontSize:adjust(25)}}>{params?.order?.delivery_security_code}</Text>
              <Text style={{color:'black',fontWeight:'300',fontSize:12,
-            marginTop:10}}>You have to tell this code to rider when he delivers you an order, without telling this code to the rider you might not recieve parcel</Text>
+            marginTop:10}}>Tienes que decirle este código al pasajero cuando te entregue un pedido, sin decirle este código al pasajero es posible que no recibas el paquete.</Text>
       </View>
        <FlatList
         data={params.order.products}
@@ -115,15 +105,15 @@ const CustomerOrderDetail = (props) => {
         )}
         />
         <View>
-           <DetailItem label={'Delivery Charges'} value={`${order?.delivery_fee} MXN`}/>
-           <DetailItem label={'Besseri Charges'} value={`${order?.besseri_comission} MXN`}/>
-           <DetailItem label={'Sub total'} value={`${order?.total_amount} MXN`}/>
-           <DetailItem label={'Total Charges'} value={`${order?.total_amount} MXN`}/>
+           <DetailItem label={'Envío'} value={'5.00 MXN'}/>
+           <DetailItem label={'Cargos'} value={'2.00 MXN'}/>
+           <DetailItem label={'Sub total'} value={`${totalAmount.toFixed(2)} MXN`}/>
+           <DetailItem label={'Total'} value={`${(totalAmount + 5 + 2).toFixed(2)} MXN`}/>
            <ThinlineSeparator/>
         </View>
    <View style={{width:'93%',alignSelf:'center',marginTop:'5%'}}>
-         <Text style={{...CommonStyles.fontFamily,fontSize:15}}>Seller info</Text>
-         <View style={{width:'100%',margin:10,paddingVertical:14,backgroundColor:Colors.white,alignSelf:'center',borderColor:Colors.gray,borderWidth:1,borderRadius:10}}>
+         <Text style={{...CommonStyles.fontFamily,fontSize:15}}>Información del vendedor</Text>
+         <View style={{width:'100%',margin:10,paddingVertical:14,backgroundColor:Colors.white,alignSelf:'center',borderRadius:1,elevation:1}}>
          <Text style={{fontSize:16,...CommonStyles.fontFamily,paddingLeft:25,marginBottom:10}}>{store?.storeName}</Text>
          <View style={{flexDirection:'row',alignItems:'center'}}>
          <Entypo
@@ -137,63 +127,36 @@ const CustomerOrderDetail = (props) => {
      </View>    
      <ThinlineSeparator margin={20}/>    
        </View>
-        <Text style={{...CommonStyles.fontFamily,padding:10,marginTop:10,fontSize:16}}>Delivery Address</Text>
+        <Text style={{...CommonStyles.fontFamily,padding:10,marginTop:10,fontSize:16}}>Dirección de entrega</Text>
         <AddressComponent
         label={address?.label}
         addressLine={address?.addressLine}
         info={address?.info}
         phone={address?.phone}
         />
-        <ThinlineSeparator margin={20}/>
-        <View>
-        <View style={{flexDirection:'row',padding:19}}>
-            <MaterialCommunityIcons name='cancel' color={Colors.red} size={20}/>
-            <View>
-            <Text style={{...CommonStyles.fontFamily,fontSize:15,paddingLeft:10}}>Order cancellation</Text>
-            <Text style={{fontWeight:'300',padding:10}}>You can cancel any order when its in processing mode, once the order is packed or assigned to rider the order can not be cancelled and the amount can not be refunded then.</Text>
-            {
-                order?.order_status_code == 'PROCESSING' ?
-                <TouchableOpacity
-                onPress={() => {
-                    Alert.alert('Order Cancellation','Do you really want to cancel this order?',
-                    [
-                        {
-                            text:'No',
-                        },
-                        {
-                            text:'Yes',
-                            onPress:async() => {
-                                await cancelOrder()
-                            }
-                        }
-                    ]
-                    )
-                }}
-                >
-                <Text style={{color:Colors.red,paddingLeft:10}}>I want to cancel this order?</Text>
-            </TouchableOpacity>
-            :
-            null
-            }
-            </View>
-
-       </View>
-        </View>
+        <ThinlineSeparator margin={20+top}/>
       <LoaderComponent isVisible={loading}/>
       
         </ScrollView>
-        <View style={{...CommonStyles.flexDirectionRow,justifyContent:'space-around',backgroundColor:'transparent',position:'absolute',bottom:15}}>
+        <View style={{
+           
+            ...CommonStyles.flexDirectionRow,
+            justifyContent:'space-around',
+            backgroundColor:'transparent',
+            position:'absolute',
+            bottom:15 + top}}>
             <ButtonComponent
-            buttonText={'Invoice'}
+            buttonText={'Factura'}
             width={width / 2.2}
-            colorB={Colors.primaryColor}
+            colorB={Colors.terciarySolid}
             borderRadius={10}
             margin={10}
+            handlePress={()=>console.log('Falta codigo')}
             />
              <ButtonComponent
-            buttonText={'Need Help?'}
+            buttonText={'Ayuda'}
             width={width / 2.2}
-            colorB={Colors.primaryColor}
+            colorB={Colors.info}
             borderRadius={10}
             margin={10}
             handlePress={() => {
@@ -210,10 +173,12 @@ const styles = StyleSheet.create({
   placeOrderWrapper: { justifyContent: 'center', alignItems: 'center', bottom: 40 },
   header:{
     width:'100%',
-    minHeight:110,
-    backgroundColor:Colors.primaryColor,
-    paddingHorizontal:20,
-    justifyContent:'center'
+    height:deviceHeight/ 10,
+    // paddingHorizontal:20,
+    justifyContent:'center',
+    flexDirection:'row',
+    alignItems:'center',
+    // backgroundColor:'red'
 },
 headerText:{...CommonStyles.fontFamily,color:Colors.white,fontSize:20,paddingLeft:10},
 })

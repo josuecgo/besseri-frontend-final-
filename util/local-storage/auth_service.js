@@ -8,10 +8,15 @@ export const saveUserData = async(user) => {
     await AsyncStorage.setItem(ASYNC_STORAGE_NAMES.USER,JSON.stringify(user));
     await saveUserId(user?._id);
     await saveUserType(user);
+    
 };
 export const getUserId = async() => {
     const userId = await AsyncStorage.getItem(ASYNC_STORAGE_NAMES.USER_ID);
     return userId;
+};
+export const getUserAddress = async() => {
+    const userAddress = await AsyncStorage.getItem(ASYNC_STORAGE_NAMES.CUSTOMER_ADDRESS);
+    return userAddress;
 };
 export const getUser = async() => {
     const user = await AsyncStorage.getItem(ASYNC_STORAGE_NAMES.USER);
@@ -46,6 +51,11 @@ export const saveUserType = async(user) => {
    const userType = user?.isVendor ? USER_ROLES.vendor : user?.isCommonUser ? USER_ROLES.customer : USER_ROLES.rider;
    await AsyncStorage.setItem(ASYNC_STORAGE_NAMES.USER_TYPE,userType);
 }
+
+export const saveAdressCustomer = async(userAddress) => {
+   
+    await AsyncStorage.setItem(ASYNC_STORAGE_NAMES.CUSTOMER_ADDRESS,userAddress);
+ }
 export const getUserType = async() => {
     const userType = await AsyncStorage.getItem(ASYNC_STORAGE_NAMES.USER_TYPE);
     return userType;

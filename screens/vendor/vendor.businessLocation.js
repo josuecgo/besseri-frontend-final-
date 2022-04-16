@@ -1,7 +1,7 @@
 import { useIsFocused, useRoute } from '@react-navigation/native';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, Image, useWindowDimensions,TouchableOpacity, ScrollView, PermissionsAndroid } from 'react-native';
+import { Text, View, StyleSheet, Platform, useWindowDimensions,TouchableOpacity, ScrollView, PermissionsAndroid } from 'react-native';
 import CommonStyles from '../../util/styles/styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import LoaderComponent from '../../components/Loader/Loader.component';
@@ -16,6 +16,9 @@ import { api_statuses, vendor_api_urls } from '../../util/api/api_essentials';
 import {getBusinessId,getBusinessProfile,getUserId, saveBusinessProfile} from '../../util/local-storage/auth_service'
 import { showToaster } from '../../util/constants';
 import MapView, { Circle, Marker } from 'react-native-maps';
+import { HeaderBackground } from '../../components/Background/HeaderBackground';
+import { deviceHeight } from '../../util/Dimentions';
+
 const CustomerOrdersViewScreen = (props) => {
   Geocoder.init('AIzaSyAjyGdmeJ8fyRP7eKPJ2ODtF0JEbqEbw8o');
   const { width, height } = useWindowDimensions()
@@ -32,7 +35,7 @@ const CustomerOrdersViewScreen = (props) => {
     try {
      const businessData = await getBusinessProfile();
      setLocation(businessData);
-     console.log(businessData.location)
+     
      if(businessData?.location) {
        setCity(businessData?.location?.city);
        setState(businessData?.location?.state);
@@ -153,6 +156,7 @@ const CustomerOrdersViewScreen = (props) => {
         value={addressLine}
         onDone={setUpLocation}
         getCoordinates={getUserLocation} coords={coords} showSetUpLocationRef={ShowSetUpLocationRef}/>
+        <HeaderBackground/>
         <View style={styles.header}>
             <TouchableOpacity
             onPress={() => props.navigation.goBack()}
@@ -163,7 +167,7 @@ const CustomerOrdersViewScreen = (props) => {
                 size={25}
                 />
             </TouchableOpacity>
-            <Text style={styles.headerText}>My Location</Text>
+            <Text style={styles.headerText}>Mi ubicacion</Text>
         </View>
       <LoaderComponent isVisible={loading}/>
     
@@ -171,23 +175,23 @@ const CustomerOrdersViewScreen = (props) => {
    {
       locationData?.location?.latitude && locationData?.location?.longitude ? 
       <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-         <View style={{width:'95%',marginTop:10,padding:10,backgroundColor:'#F7E3BD',borderRadius:5}}>
+         <View style={{width:'95%',marginTop:10,padding:10,backgroundColor:Colors.terciarySolid,borderRadius:5}}>
          <View style={{flexDirection:'row',alignItems:'center'}}>
-           <Entypo name='location-pin' color={Colors.primaryColor} size={20}/>
-           <Text style={{fontSize:17,fontWeight:'bold'}}>Your Business Location</Text>
+           <Entypo name='location-pin' color={Colors.primarySolid} size={20}/>
+           <Text style={{fontSize:17,fontWeight:'bold',color:Colors.white}}>Mi ubicación comercial</Text>
          </View>
        <View style={{width:'85%',alignSelf:'center'}}>
-       <Text>{locationData?.location?.address}</Text>
-         <Text>{locationData?.location?.city}</Text>
-         <Text>{locationData?.location?.state}</Text>
+       <Text style={{color:Colors.white}} >{locationData?.location?.address}</Text>
+         <Text style={{color:Colors.white}}>{locationData?.location?.city}</Text>
+         <Text style={{color:Colors.white}}>{locationData?.location?.state}</Text>
        </View>
        <TouchableOpacity
        style={{
          height:45,
          padding:10,
-         backgroundColor:Colors.primaryColor,
+         backgroundColor:Colors.primarySolid,
          borderWidth:1,
-         borderColor:Colors.lightGreen,
+         borderColor:Colors.primarySolid,
          borderRadius:3,
          justifyContent:'center',
          alignItems:'center',
@@ -199,30 +203,31 @@ const CustomerOrdersViewScreen = (props) => {
         ShowSetUpLocationRef?.current?.open();
        }}
        >
-         <Text style={{color:'#F7E3BD',...CommonStyles.fontFamily,fontSize:15}}>Edit</Text>
+         <Text style={{color:Colors.white,...CommonStyles.fontFamily,fontSize:15}}>Editar</Text>
        </TouchableOpacity>
        </View>
      {
        locationData?.location?.latitude && locationData?.location?.longitude ? 
-       <View>
-           <MapView
-       style={{height:height / 1.5,width:width,margin:10}}
-       //specify our coordinates.
-       initialRegion={{
-         latitude: Number(locationData?.location?.latitude),
-         longitude: Number(locationData?.location?.longitude),
-         latitudeDelta: 0.0922,
-         longitudeDelta: 0.0421,
-       }}
-     >
-         <Marker
-      coordinate={{
-        latitude: Number(locationData?.location?.latitude),
-         longitude: Number(locationData?.location?.longitude),
-      }}
-      title={'Your Store Location'}
-      pinColor='#F7E3BD'
-    />
+        <View>
+          <MapView
+            style={{height:height / 1.5,width:width,margin:10}}
+            //specify our coordinates.
+            showsUserLocation
+            initialRegion={{
+              latitude: Number(locationData?.location?.latitude),
+              longitude: Number(locationData?.location?.longitude),
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          >
+         {/* <Marker
+            coordinate={{
+              latitude: Number(locationData?.location?.latitude),
+              longitude: Number(locationData?.location?.longitude),
+            }}
+            title={'Ubicación de su tienda'}
+            pinColor='#F7E3BD'
+          /> */}
        </MapView>
        </View>
        :
@@ -232,7 +237,7 @@ const CustomerOrdersViewScreen = (props) => {
        :
        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
        <Entypo name='location-pin' color={Colors.red} size={100}/>
-       <Text style={{fontWeight:'bold',fontSize:19}}>Business Location</Text>
+       <Text style={{fontWeight:'bold',fontSize:19}}>Ubicación de la empresa</Text>
        <Text style={{fontWeight:'300',fontSize:13,color:'grey',textAlign:'center',width:'80%',alignSelf:'center',marginVertical:10}}>Setup your business location, that the customers can see where you are located, when you press setup your current location will be used, so setup the location when you are at store.</Text>
        <TouchableOpacity 
        onPress={() => {
@@ -260,11 +265,10 @@ const styles = StyleSheet.create({
   placeOrderTextDetail: { fontSize: 13, fontWeight: '300', width: '90%', alignSelf: 'center', textAlign: 'center', color: Colors.dark },
   placeOrderWrapper: { justifyContent: 'center', alignItems: 'center', bottom: 40 },
   header:{
-    width:'100%',
-    height:80,
-    backgroundColor:Colors.primaryColor,
-    paddingHorizontal:20,
-    alignItems:'center',
+    width: '100%',
+    height: Platform.OS == 'ios' ? deviceHeight * 0.15 : deviceHeight * 0.10,
+    //  borderWidth:1,
+    ...CommonStyles.horizontalCenter,
     justifyContent:'center'
 },
 headerText:{...CommonStyles.fontFamily,color:Colors.white,fontSize:20,position:'absolute'},

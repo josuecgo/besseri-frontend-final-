@@ -55,7 +55,7 @@ const CustomerStoreScreen = (props) => {
             setLoading(false);
             console.log(e)
             console.log(e.response.data)
-           showToaster('Something went wrong please try again');
+           showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
         }
       }
       useEffect(() => {
@@ -82,10 +82,10 @@ const CustomerStoreScreen = (props) => {
                 <View style={styles.ImageContainer}>
                     <View style={styles.header}>
                         <TouchableOpacity onPress={() => props.navigation.goBack()} style={styles.headerBackButton}>
-                            <Ionicons name='md-chevron-back' color={Colors.primaryColor} size={16} />
+                            <Ionicons name='md-chevron-back' color={Colors.primarySolid} size={16} />
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.headerBackButton}>
-                            <Ionicons name='ios-share-outline' color={Colors.primaryColor} size={16} />
+                            <Ionicons name='ios-share-outline' color={Colors.primarySolid} size={16} />
                         </TouchableOpacity>
                     </View>
                 </View>

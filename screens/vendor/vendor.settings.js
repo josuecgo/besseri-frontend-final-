@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, Text, StyleSheet, TouchableOpacity, View, Alert } from 'react-native';
+import { Platform, Text, StyleSheet, TouchableOpacity, View, Alert } from 'react-native';
 import CommonStyles from '../../util/styles/styles';
 import Colors from '../../util/styles/colors';
 import { ThinlineSeparator, MenuItem, Heading } from '../../components/CommonComponents';
@@ -11,9 +11,14 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { getBusinessProfile, logout } from '../../util/local-storage/auth_service';
 import Loader from '../../components/Loader/Loader.component'
 import { LOGIN_SIGNUP_FORGOT_ROUTES, MAIN_ROUTES, showToaster, VENDOR_DETAILS_ROUTES } from '../../util/constants';
-const { width, height } = Dimensions.get('screen');
+import { deviceHeight, deviceWidth } from '../../util/Dimentions';
+import { HeaderBackground } from '../../components/Background/HeaderBackground';
+
+
+
 const VendorSettingsScreen = ({ navigation }) => {
     const [showLoader, setShowLoader] = useState(false);
+    
     const commonTextStyle = {
         fontSize: 18,
         color: Colors.white,
@@ -21,13 +26,13 @@ const VendorSettingsScreen = ({ navigation }) => {
         paddingLeft: 5
     }
    const logoutUser = async() => {
-       Alert.alert('Are you sure?','Do you really want to logout?',
+       Alert.alert('¿Estas seguro?','¿Realmente quieres cerrar sesión?',
        [
            {
                text:'No'
            },
            {
-               text:'yes',
+               text:'Si',
                onPress:async() => {
                    setShowLoader(true);
                    const logoutUser =  await logout(); 
@@ -35,7 +40,7 @@ const VendorSettingsScreen = ({ navigation }) => {
                    if(logoutUser) {
                        navigation.replace(MAIN_ROUTES.AUTH_STACK);
                    } else {
-                       showToaster('Something went wrong please try again later :/')
+                       showToaster('Algo salió mal, inténtalo de nuevo más tarde. :/')
                    }
                }
            }
@@ -43,15 +48,22 @@ const VendorSettingsScreen = ({ navigation }) => {
        )
    }
     return (
-        <View style={styles.container}>
+        <View style={[styles.container]}>
             <Loader isVisible={showLoader} />
-            <View style={styles.header}>
-                <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.pop()} style={styles.headerIcon}>
-                    <MaterialCommunityIcons name='keyboard-backspace' color='white' size={25} />
-                </TouchableOpacity>
-                <Text style={commonTextStyle}>App Settings</Text>
+
+            <HeaderBackground/>
+            <View  style={styles.header} >
+                <View>
+                    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.pop()} style={styles.headerIcon}>
+                            <MaterialCommunityIcons name='keyboard-backspace' color='white' size={25} />
+                    </TouchableOpacity>
+                </View> 
+                <View style={{flex:1,marginLeft:deviceWidth / 5.2}}>
+                        <Text style={commonTextStyle}>App Settings</Text>
+                </View>
             </View>
 
+           
 
             <View style={styles.menusWrapper}>
                 {/* <MenuItem
@@ -83,7 +95,7 @@ const VendorSettingsScreen = ({ navigation }) => {
 
                 <MenuItem
                     onPress={() => navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.PRIVACY_POLICY)}
-                    label='Privacy Policy'
+                    label='Política de privacidad'
                     icon={
                         <MaterialIcons
                             name='privacy-tip'
@@ -94,7 +106,7 @@ const VendorSettingsScreen = ({ navigation }) => {
                 />
                 <ThinlineSeparator margin={5} width={'95%'} />
 
-                <MenuItem
+                {/* <MenuItem
                     onPress={() => navigation.navigate(VENDOR_DETAILS_ROUTES.VENDOR_SETTINGS)}
                     label='Developer Team'
                     icon={
@@ -104,11 +116,11 @@ const VendorSettingsScreen = ({ navigation }) => {
                             size={23}
                         />
                     }
-                />
-                <ThinlineSeparator margin={5} width={'95%'} />
+                /> */}
+                {/* <ThinlineSeparator margin={5} width={'95%'} /> */}
                 <MenuItem
                     onPress={() => navigation.navigate(VENDOR_DETAILS_ROUTES.BUSINESS_LOCATION)}
-                    label='Business Location'
+                    label='Ubicación de la empresa'
                     logoutBtn={false}
                     icon={
                         <Entypo name='location-pin' color='white' size={20}/>
@@ -126,23 +138,21 @@ const VendorSettingsScreen = ({ navigation }) => {
 
 
             </View>
-
         </View>
     );
 };
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+         flex: 1,
         backgroundColor: Colors.white
     },
     header: {
         width: '100%',
-        height: 65,
-        borderWidth: 1,
-        borderColor: Colors.primaryColor,
-        backgroundColor: Colors.primaryColor,
-        ...CommonStyles.horizontalCenter,
-        ...CommonStyles.flexDirectionRow
+        height: Platform.OS == 'ios' ? deviceHeight * 0.15 : deviceHeight * 0.10,
+        //  borderWidth:1,
+        flexDirection:'row',
+        justifyContent:'center',
+        alignItems:'center'
     },
     profileBtn: {
         width: '95%',

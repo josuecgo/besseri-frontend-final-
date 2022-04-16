@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import {Dimensions, Text, StyleSheet, ScrollView,TouchableOpacity, View} from 'react-native';
+import {Dimensions, Text, StyleSheet, ScrollView,Platform, View} from 'react-native';
 import Colors from '../util/styles/colors';
 import CommonStyles from '../util/styles/styles';
 const { width,height } = Dimensions.get('screen');
 import RenderHtml from 'react-native-render-html'
+import { deviceHeight } from '../util/Dimentions';
+import { HeaderBackground } from '../components/Background/HeaderBackground';
 const PrivacyPolicy = ({navigation}) => {
     var htmlCode = `  <html>
     <head>
@@ -47,9 +49,12 @@ const PrivacyPolicy = ({navigation}) => {
     </html>
 `;
   return (
-   <View style={styles.container}>
-    <View style={styles.header}> 
-    <Text style={{...CommonStyles.fontFamily}}>{'Privacy Policy'}</Text>
+    <View style={styles.container}>
+      <HeaderBackground/>
+    <View
+     style={styles.header}
+    > 
+      <Text style={{...CommonStyles.fontFamily,color:Colors.white}}>{'Privacy Policy'}</Text>
     </View>
     <ScrollView contentContainerStyle={{flexGrow:1,padding:5}}>
                 <RenderHtml
@@ -68,13 +73,11 @@ const styles = StyleSheet.create({
    backgroundColor:Colors.white
  },
  header:{
-   width:'100%',
-   height:65,
-   borderWidth:1,
-   borderColor:Colors.primaryColor,
-   backgroundColor:Colors.primaryColor,
-   ...CommonStyles.horizontalCenter,
-   ...CommonStyles.verticalCenter
+  width: '100%',
+  height: Platform.OS == 'ios' ? deviceHeight * 0.15 : deviceHeight * 0.10,
+  //  borderWidth:1,
+  ...CommonStyles.horizontalCenter,
+  justifyContent:'center'
  },
  profileBtn:{
    width:'95%',

@@ -13,6 +13,8 @@ import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment'
+import { deviceHeight, deviceWidth } from '../../util/Dimentions';
+import { HeaderBackground } from '../../components/Background/HeaderBackground';
 const CustomerBookingsView = (props) => {
   const { width, height } = useWindowDimensions()
   const [bookings, setBookings] = useState([]);
@@ -29,90 +31,95 @@ const CustomerBookingsView = (props) => {
           console.log(apiCall.data)
         setBookings(apiCall.data.data)
       } else {
-        showToaster('Something went wrong please try again');
+        showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
       }
     } catch (e) {
       console.log(e.response.data)
       setLoading(false);
-      showToaster('Something went wrong please try again later')
+      showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
     }
   }
   useEffect(() => {
     getMyBookings()
   }, [isFocused]);
   return (
-    <View style={{ flex: 1, backgroundColor: 'white' }}>
-        <View style={styles.header}>
-            <TouchableOpacity
-            onPress={() => props?.navigation?.goBack()}
-            style={{alignSelf:'flex-start'}}>
-                <MaterialCommunityIcons
-                name='keyboard-backspace'
-                color={Colors.white}
-                size={25}
-                />
-            </TouchableOpacity>
-            <Text style={styles.headerText}>My bookings</Text>
-        </View>
-      <LoaderComponent isVisible={loading}/>
-    
-      <ScrollView contentContainerStyle={{flexGrow:1,paddingBottom:'5%'}}> 
-      {
-          !loading && bookings.length == 0 ?
-          <View style={{ ...CommonStyles.flexOneCenter }}>
-          {/* <Image
-            source={require('../../assets/images/bookingss.png')}
-            style={{ width: 200, height: 200, resizeMode: 'contain', bottom: 40 }}
-          /> */}
-          <View style={[styles.placeOrderWrapper, { width }]}>
-          <Text style={styles.placeOrderText}>Place Order</Text>
-          <Text style={styles.placeOrderTextDetail}>Add items to cart and place order now!</Text>
-          <ButtonComponent
-            buttonText={'Explore'}
-            colorB={Colors.primaryColor}
-            width={width / 1.5}
-            margin={10}
-            handlePress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS)}
-          />
-        </View>
-        </View>
-        :
-        <View>
-          <FlatList
-          data={bookings}
-          keyExtractor={item => item?._id}
-          renderItem={itemData => (
-            <View style={styles.cardContainer}>
-    <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
-        <Text style={{...CommonStyles.fontFamily,fontSize:15}}>#{itemData.item?.bookingId}</Text>
-        <Text style={{...CommonStyles.fontFamily}}>{moment(itemData.item?.booked_on).format('DD-MM-YYYY hh:mm A')}</Text>
+    <View style={{ flex: 1, backgroundColor: Colors.bgColor }}>
+    <HeaderBackground/>
+    <View style={styles.header}>
+        <TouchableOpacity
+        onPress={() => props?.navigation?.goBack()}
+        style={{alignSelf:'flex-start'}}>
+            <MaterialCommunityIcons
+            name='keyboard-backspace'
+            color={Colors.white}
+            size={25}
+            />
+        </TouchableOpacity>
+        <Text style={styles.headerText}>Reservaciones</Text>
     </View>
-    <View>
-        <Text style={{...CommonStyles.fontFamily,fontSize:15,paddingVertical:5}}>{itemData.item?.store?.storeName}</Text>
-        <View style={{...CommonStyles.flexDirectionRow,...CommonStyles.justifySpaceBetween,...CommonStyles.horizontalCenter}}>
-            <Text style={{fontSize:15,...CommonStyles.fontFamily}}>service: {itemData.item?.service?.name}</Text>
-            
-        </View>
-        <Text style={{...CommonStyles.fontFamily}}>Total Amount: {itemData.item?.total_amount} MXN</Text>
-        <View style={{marginTop:10,...CommonStyles.flexDirectionRow,...CommonStyles.justifySpaceBetween,...CommonStyles.horizontalCenter}}>
-          <ButtonComponent
-          handlePress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.BOOKING_DETAIL,{booking:itemData.item})}
-          buttonText={'Details'}
-          width={'80%'}
-          colorB={Colors.primaryColor}
-          borderRadius={100}
-          />
-          <Text style={{color:Colors.brightBlue,...CommonStyles.fontFamily,fontSize:17}}>{itemData.item?.order_status}</Text>
-        </View>
-    </View>
-    </View>
-          )}
-          />
-          </View>
-        }
-      </ScrollView>
+  <LoaderComponent isVisible={loading}/>
+
+  <ScrollView contentContainerStyle={{flexGrow:1,paddingBottom:'5%'}}> 
+  {
+      !loading && bookings.length == 0 ?
      
+      <View style={{ ...CommonStyles.flexOneCenter }}>
+      {/* <Image
+        source={require('../../assets/images/bookingss.png')}
+        style={{ width: 200, height: 200, resizeMode: 'contain', bottom: 40 }}
+      /> */}
+      <View style={[styles.placeOrderWrapper, { width }]}>
+      <Text style={styles.placeOrderText}>Realizar pedido</Text>
+      <Text style={styles.placeOrderTextDetail}>Agregue artículos al carrito y haga su pedido ahora!</Text>
+      <ButtonComponent
+        buttonText={'Explore'}
+        colorB={Colors.primarySolid}
+        width={width / 1.5}
+        margin={10}
+        handlePress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS)}
+      />
     </View>
+    </View>
+    :
+    <View>
+
+
+      {
+        bookings.map((item) => (
+          <View key={item._id} style={styles.cardContainer}>
+          <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+              <Text style={{...CommonStyles.fontFamily,fontSize:15}}>#{item?.bookingId}</Text>
+              <Text style={{...CommonStyles.fontFamily}}>{moment(item?.booked_on).format('DD-MM-YYYY hh:mm A')}</Text>
+          </View>
+          <View>
+              <Text style={{...CommonStyles.fontFamily,fontSize:15,paddingVertical:5}}>{
+                item?.store?.storeName}
+              </Text>
+              <View style={{...CommonStyles.flexDirectionRow,...CommonStyles.justifySpaceBetween,...CommonStyles.horizontalCenter}}>
+                  <Text style={{fontSize:15,...CommonStyles.fontFamily}}>
+                  Servicio: {item?.service?.name}
+                  </Text>
+              </View>
+              <Text style={{...CommonStyles.fontFamily}}>Total: ${item?.total_amount} MXN</Text>
+              <View style={{marginTop:10,...CommonStyles.flexDirectionRow,...CommonStyles.justifySpaceBetween,...CommonStyles.horizontalCenter}}>
+                <ButtonComponent
+                handlePress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.BOOKING_DETAIL,{booking:item})}
+                buttonText={'Details'}
+                width={'80%'}
+                colorB={Colors.primarySolid}
+                borderRadius={100}
+                />
+                <Text style={{color:Colors.brightBlue,...CommonStyles.fontFamily,fontSize:17}}>{item?.order_status}</Text>
+              </View>
+          </View>
+        </View>
+        ))
+      }
+      </View>
+    }
+  </ScrollView>
+ 
+</View>
   );
 };
 const styles = StyleSheet.create({
@@ -120,26 +127,25 @@ const styles = StyleSheet.create({
   placeOrderTextDetail: { fontSize: 13, fontWeight: '300', width: '90%', alignSelf: 'center', textAlign: 'center', color: Colors.dark },
   placeOrderWrapper: { justifyContent: 'center', alignItems: 'center', bottom: 40 },
   header:{
-    width:'100%',
-    height:80,
-    backgroundColor:Colors.primaryColor,
+    height: Platform.OS == 'ios' ? deviceHeight * 0.15  : deviceHeight * 0.10,
+    width: deviceWidth,
+   
     paddingHorizontal:20,
     alignItems:'center',
     justifyContent:'center'
 },
 headerText:{...CommonStyles.fontFamily,color:Colors.white,fontSize:20,position:'absolute'},
 cardContainer:{
-    width:'95%',
+    // width:'95%',
     minHeight:100,
-    borderWidth:2,
-    borderColor:Colors.white,
-    backgroundColor:'white',
-    elevation:3,
+    
+    backgroundColor:Colors.white,
+    elevation:2,
     margin:15,
     alignSelf:'center',
     paddingHorizontal:15,
     paddingVertical:15,
-    borderRadius:10
+    borderRadius:1
 },
  labelCircle:{
      width:40,

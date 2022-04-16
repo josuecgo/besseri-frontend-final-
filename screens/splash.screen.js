@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {
-  ActivityIndicator,
+  Image,
   Alert,
   StyleSheet,
   Text,
@@ -21,6 +21,9 @@ import * as BusinessProfileActions from '../util/ReduxStore/Actions/VendorAction
 import { getStoreEarnings } from '../util/api/CommonFunctions';
 import messaging from '@react-native-firebase/messaging';
 import notifee from '@notifee/react-native';
+import { BackgroundImage } from '../components/Background/BackgroundImage';
+import { deviceWidth } from '../util/Dimentions';
+
 
 const SplashScreen = ({navigation}) => {
   const {width, height} = useWindowDimensions();
@@ -85,18 +88,18 @@ const SplashScreen = ({navigation}) => {
        dispatch(BusinessProfileActions.setActionMessage(apiCall.data.data.actions));
        await saveBusinessProfile(apiCall.data.data.store[0]);
        if(apiCall.data.data.isBlocked) {
-        ToastAndroid.showWithGravity('Your business is blocked.',ToastAndroid.LONG,ToastAndroid.CENTER);
+        ToastAndroid.showWithGravity('Tu negocio está bloqueado.',ToastAndroid.LONG,ToastAndroid.CENTER);
         await saveBusinessStatus(true);
        }
      }
      else {
-       Alert.alert('Something went wrong','Sorry for interruption this request was failed');
+       Alert.alert('Algo salió mal','Lo siento por la interrupción, esta solicitud falló');
        return;
      }
     } 
     catch(e) {
       console.log(e);
-      Alert.alert('Something went wrong','Sorry for interruption this request was failed');
+      Alert.alert('Algo salió mal','Lo siento por la interrupción, esta solicitud falló');
     }
   }
 
@@ -136,17 +139,16 @@ const SplashScreen = ({navigation}) => {
           CommonStyles.flexCenter,
           {width: width, height: height},
         ]}>
-        <Text style={[CommonStyles.fontFamily, styles.mainFontStyles]}>
-          <Text>bess</Text>
-          <Text style={{color: Colors.secondaryColorGreenShade}}>e</Text>
-          <Text>r</Text>
-          <Text style={{color: Colors.primaryColor}}>i</Text>
-        </Text>
-       <Spinner
-       type='Wave'
-       color={Colors.primaryColor}
-       size={50}
-       />
+        <BackgroundImage/>
+        <Image
+            source={require('../assets/images/logo1.png')}
+            style={styles.logo}
+        />
+        <Spinner
+        type='Circle'
+        color={Colors.terciarySolid}
+        size={50}
+        />
       </View>
     </CustomSafeAreaViewComponent>
   );
@@ -160,7 +162,12 @@ const styles = StyleSheet.create({
     fontSize: 70,
     color: Colors.secondaryColorBlueShade,
   },
-  layer: {},
+  logo:{
+    resizeMode:'cover',
+    height: 78,
+    //   top: 1, 
+    width: deviceWidth * 0.70,
+  }
 });
 
 export default SplashScreen;
