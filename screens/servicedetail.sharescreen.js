@@ -10,7 +10,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import moment from 'moment';
 import CommonStyles from '../util/styles/styles';
-import { api_statuses, base_url, vendor_api_urls } from '../util/api/api_essentials';
+import { api_statuses, base_url, customer_api_urls, vendor_api_urls } from '../util/api/api_essentials';
 import RatingComponent from '../components/Ratings/rating.component';
 import { BOTTOM_TAB_VENDOR_ROUTES, CUSTOMER_HOME_SCREEN_ROUTES, showToaster, VENDOR_DETAILS_ROUTES } from '../util/constants';
 import LoaderComponent from '../components/Loader/Loader.component';
@@ -27,9 +27,35 @@ const ShareServiceDetail = (props) => {
   const {top} = useSafeAreaInsets()
   const [loading,setLoading] = useState(false);
   const isVendor = params.isVendor;
-  const comision = params.comision;
+  const [comision, setComision] = useState(0)
   const [service,setService] = useState(params?.service);
 
+
+  useEffect(() => {
+    getComision();
+  }, [])
+  
+  
+  const getComision = async( ) => {
+    try {
+      setLoading(true);
+      const getFee = await axios.get(customer_api_urls?.get_fees);
+        
+      
+      
+      if(getFee.status == api_statuses.success) {
+          
+        setLoading(false);
+        setComision(getFee.data.data[0]?.besseri_comission); 
+      } else {
+        showToaster('Algo salió mal');
+      }
+    } catch (error) {
+      setLoading(false);
+      showToaster('Algo salió mal, inténtalo de nuevo más tarde');
+    }
+    
+  }
   const changeServiceAvailability = async() => {
     try {
       setLoading(true);
@@ -37,8 +63,10 @@ const ShareServiceDetail = (props) => {
          serviceId:service?._id,
          flag:!service.active
        });
+       
+
        if(apiCall.status == api_statuses.success) {
-         console.log(apiCall.data)
+         
          setLoading(false);
          setService(apiCall.data.data);
        } else {
@@ -123,7 +151,9 @@ const ShareServiceDetail = (props) => {
                   <Text style={{color:'grey'}}>{service?.category?.name}</Text>
                   {/* <RatingComponent numOfStars={5} totalReviews={10}/> */}
                   </View>
-                  <Text style={{...CommonStyles.fontFamily,fontSize:16}}> {moneda(service?.price + comision * service?.price / 100 )}</Text>
+                  <Text style={{...CommonStyles.fontFamily,fontSize:16}}> 
+                    { isVendor ? moneda(service.price) : moneda(service?.price + comision * service?.price / 100 )}
+                  </Text>
                   </View>
                   <Text style={{fontSize:12,color:'grey'}}>{service?.description}</Text>
 

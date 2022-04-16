@@ -22,7 +22,7 @@ const VendorProductDetailsScreen = ({navigation, route}) => {
   const {params} = useRoute();
   const [product,setProduct] = useState(params.data);
   const [showLoader,setShowLoader] = useState(false);
-  console.log('line 19 product',product);
+  
   const goBack = () => {
     navigation.goBack();
   };
@@ -82,10 +82,8 @@ const VendorProductDetailsScreen = ({navigation, route}) => {
   // }, [route.params?.productName, navigation]);
 
   return (
-    <ScrollView contentContainerStyle={{backgroundColor: Colors.white}} showsVerticalScrollIndicator={false} >
-    <View style={[styles.productDetailsScreen]}>
-      <LoaderComponent isVisible={showLoader} />
-      <HeaderBackground/>
+    <> 
+          <HeaderBackground/>
       <View
         style={{
           flexDirection: 'row',
@@ -111,6 +109,10 @@ const VendorProductDetailsScreen = ({navigation, route}) => {
         </View>
        
       </View>
+    <ScrollView contentContainerStyle={{backgroundColor: Colors.white}} showsVerticalScrollIndicator={false} >
+    <View style={[styles.productDetailsScreen]}>
+      <LoaderComponent isVisible={showLoader} />
+
 
       <View>
         {/* <ImageCarouselComponent /> */}
@@ -311,6 +313,8 @@ const VendorProductDetailsScreen = ({navigation, route}) => {
       </View>
     </View>
   </ScrollView>
+    </>
+   
 );
 };
 

@@ -52,7 +52,7 @@ const App = () => {
     firebaseApp.app();
   }
   const showNotification = (msg) => {
-    console.log(msg)
+    
     try {
       PushNotification.createChannel(
         {

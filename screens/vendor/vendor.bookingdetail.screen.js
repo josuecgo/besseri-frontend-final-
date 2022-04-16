@@ -48,9 +48,9 @@ const VendorBookingDetail = props => {
   
   const confirmationAlert = (head, detail, status, code) => {
     Alert.alert(head, detail, [
-      {text: 'no'},
+      {text: 'No'},
       {
-        text: 'yes',
+        text: 'Si',
         onPress: () => {
           chaneStatus(status, code);
         },

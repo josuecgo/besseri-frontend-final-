@@ -507,25 +507,18 @@ export const RiderSecurityCodeModal = ({
       modalStyle={{paddingVertical: 20}}>
       <ScrollView contentContainerStyle={{flexGrow: 1, paddingVertical: 15}}>
         <View style={styles.mainWrapper}>
-          <Text style={styles.createAddress}>Security Code</Text>
+          <Text style={styles.createAddress}>Código de seguridad</Text>
           <Text style={styles.addressDetail}>
-            The customer has security code, ask the customer to share that and
-            enter here in order to process.
+          El cliente tiene un código de seguridad, pídale que lo comparta y
+             ingrese aquí para poder procesar.
           </Text>
         </View>
         <View style={{alignSelf: 'center'}}>
           <InputFieldComponent
-            icon={
-              <MaterialCommunityIcons
-                name="security"
-                color={Colors.dark}
-                size={20}
-                style={{paddingLeft: 40}}
-              />
-            }
+            
             keyboardType={KEYBOARD_TYPES.DEFAULT}
             onChangeText={onChangeSecurityCode}
-            placeholderText={'Enter code here'}
+            placeholderText={'Ingresa el código'}
             value={securityCode}
             secureTextEntry={false}
             // ref={passwordRef}
@@ -537,7 +530,7 @@ export const RiderSecurityCodeModal = ({
         </View>
         <View style={{alignSelf: 'center'}}>
           <ButtonComponent
-            buttonText={'Proceed'}
+            buttonText={'Enviar'}
             width={width - 30}
             colorB={Colors.brightBlue}
             borderRadius={5}
