@@ -1,4 +1,4 @@
-import { ToastAndroid } from "react-native";
+import { ToastAndroid,Platform,Alert } from "react-native";
 
 export const SCREEN_HORIZONTAL_MARGIN = 30;
 export const SCREEN_HORIZONTAL_MARGIN_FORM = 10;
@@ -38,7 +38,10 @@ export const BOTTOM_TAB_VENDOR_ROUTES = {
   DASHBOARD: 'Dashboard',
   NOTIFICATION: 'Notification',
   PROFILE: 'Profile',
-  SERVICES:'Services'
+  SERVICES:'Services',
+  SERVICES2:'Services2',
+
+
 };
 
 export const VENDOR_DETAILS_ROUTES = {
@@ -152,5 +155,21 @@ export const OrderStatusCode = {
 }
 
 export const showToaster = (message) => {
-  ToastAndroid.showWithGravity(message,ToastAndroid.LONG,ToastAndroid.CENTER)
+  if (Platform.OS === 'ios') {
+    Alert.alert(
+      "",
+      message,
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+    );
+  } else {
+    ToastAndroid.showWithGravity(message,ToastAndroid.LONG,ToastAndroid.CENTER)
+  }
+  
 }

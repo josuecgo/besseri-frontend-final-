@@ -39,7 +39,8 @@ const CustomerOrderDetail = (props) => {
     )
     }
     const {top} = useSafeAreaInsets()
-
+   const  comision = params.comision;
+  
   return (
     <View style={{ flex: 1, backgroundColor: Colors.bgColor }}>
         <HeaderBackground/>
@@ -81,34 +82,33 @@ const CustomerOrderDetail = (props) => {
              <Text style={{color:'black',fontWeight:'300',fontSize:12,
             marginTop:10}}>Tienes que decirle este código al pasajero cuando te entregue un pedido, sin decirle este código al pasajero es posible que no recibas el paquete.</Text>
       </View>
-       <FlatList
-        data={params.order.products}
-        keyExtractor={item => item?._id}
-        renderItem={itemData => (
-            <View style={{flexDirection:'row',width:'100%',alignSelf:'center',marginTop:'3%',borderBottomWidth:0.3,height:50,paddingHorizontal:10}}>
-        <View style={{width:'65%',...CommonStyles.flexDirectionRow,...CommonStyles.horizontalCenter}}>
-            <Image
-            source={{uri:`${base_url}/${itemData.item.productImg}`}}
-            style={{width:40,height:40,borderRadius:40/2}}
-            />
-            <Text style={{fontSize:14,fontWeight:'bold',paddingLeft:5}}>{itemData.item.name}</Text>
-        </View>
-        <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',width:'35%'}}>
-            <View>
-                <Text style={{fontSize:15,fontWeight:'bold'}}>{itemData.item.quantity}x</Text>
+
+        {
+            params.order.products.map((item) => (
+                <View key={item._id} style={{flexDirection:'row',width:'100%',alignSelf:'center',marginTop:'3%',borderBottomWidth:0.3,height:50,paddingHorizontal:10}}>
+            <View style={{width:'65%',...CommonStyles.flexDirectionRow,...CommonStyles.horizontalCenter}}>
+                <Image
+                source={{uri:`${base_url}/${item.productImg}`}}
+                style={{width:40,height:40,borderRadius:40/2}}
+                />
+                <Text style={{fontSize:14,fontWeight:'bold',paddingLeft:5}}>{item.name}</Text>
             </View>
-            <View>
-                <Text style={{fontSize:16,fontWeight:'bold'}}>{itemData.item.quantity * itemData.item.price} MXN</Text>
+            <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',width:'35%'}}>
+                <View>
+                    <Text style={{fontSize:15,fontWeight:'bold'}}>{item.quantity}x</Text>
+                </View>
+                <View>
+                    <Text style={{fontSize:16,fontWeight:'bold'}}>{item.quantity *  (Number(item?.price) + Number( comision * item?.price / 100))  } MXN</Text>
+                </View>
             </View>
-        </View>
-       </View>
-        )}
-        />
+           </View>
+            ) )
+        }
         <View>
-           <DetailItem label={'Envío'} value={'5.00 MXN'}/>
+           {/* <DetailItem label={'Envío'} value={'5.00 MXN'}/>
            <DetailItem label={'Cargos'} value={'2.00 MXN'}/>
-           <DetailItem label={'Sub total'} value={`${totalAmount.toFixed(2)} MXN`}/>
-           <DetailItem label={'Total'} value={`${(totalAmount + 5 + 2).toFixed(2)} MXN`}/>
+           <DetailItem label={'Sub total'} value={`${totalAmount.toFixed(2)} MXN`}/> */}
+           <DetailItem label={'Total'} value={`${(totalAmount).toFixed(2)} MXN`}/>
            <ThinlineSeparator/>
         </View>
    <View style={{width:'93%',alignSelf:'center',marginTop:'5%'}}>

@@ -499,7 +499,7 @@ const CustomerOrderSummary = (props) => {
 
 
       <View style={styles.detailCard}>
-      <DetailItem label={'Sub total'} value={`${moneda(allCharges?.subtotal)} MXN`}/>
+      {/* <DetailItem label={'Sub total'} value={`${moneda(allCharges?.subtotal)} MXN`}/> */}
        <DetailItem label={'Gastos de envío'} value={deliveryAddress ? `${moneda(costoEnvio)} MXN` : 'Seleccionar direccion'}/>
        
        <DetailItem label={'Total Charges'} value={deliveryAddress ? `${moneda(totalAmount.toFixed(2)) } MXN` : 'Seleccionar direccion' }/>

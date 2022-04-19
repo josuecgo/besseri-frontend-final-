@@ -304,6 +304,7 @@ const VendorAddServiceScreen = ({ navigation }) => {
         
         const apiCall = await axios.post(vendor_api_urls?.create_service,apiBody);
         setShowLoader(false);
+       
         if(apiCall.status == api_statuses.success) {
           showToaster('Su servicio ha sido creado con éxito');
           navigation.navigate(BOTTOM_TAB_VENDOR_ROUTES.SERVICES)
@@ -315,7 +316,7 @@ const VendorAddServiceScreen = ({ navigation }) => {
        }
      
     } catch(e) {
-      console.log(e?.response)
+      console.log(e)
       setShowLoader(false);
        showToaster('Algo salió mal - , inténtalo de nuevo')
     }
@@ -385,7 +386,7 @@ const VendorAddServiceScreen = ({ navigation }) => {
           <Text style={commonTextStyle}>{HEADER_TITLE[currentScreen]}</Text>
         </View>
 
-      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+      <View style={styles.scrollViewContainer}>
      
         <View style={styles.InputWrapper}>
           {
@@ -468,6 +469,9 @@ const VendorAddServiceScreen = ({ navigation }) => {
         </View>
         {
           isProductSummary ?
+          <ScrollView>
+
+
             <View style={CommonStyles.flexOne}>
               <ProductSummaryCard
                 onPress={pickServiceImage}
@@ -503,6 +507,8 @@ const VendorAddServiceScreen = ({ navigation }) => {
               />
               <Text style={{fontSize:13,fontWeight:'300',width:'100%',padding:10,alignSelf:'center'}}>Asegúrese de estar de acuerdo con el <Text style={{fontWeight:'bold',color:Colors.brightBlue}}>términos y políticas</Text> de <Text style={{fontWeight:'bold',color:Colors.primaryColor}}>Besseri </Text>antes de crear el producto, ir en contra de las políticas podría suspender su cuenta.</Text>
             </View>
+
+            </ScrollView>
             :
             null
         }
@@ -538,7 +544,7 @@ const VendorAddServiceScreen = ({ navigation }) => {
 
 
 
-      </ScrollView>
+      </View>
 
 
 
@@ -553,7 +559,7 @@ const styles = StyleSheet.create({
   header: {
     width: deviceWidth,
     minHeight: 65,
-    height: Platform.Os == 'ios' ? deviceHeight * 0.15 : deviceHeight * 0.10,
+    height: Platform.OS == 'ios' ? deviceHeight * 0.15 : deviceHeight * 0.10,
     paddingVertical: 20,
     padding: 10,
     justifyContent:'center'

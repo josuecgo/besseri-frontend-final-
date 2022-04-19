@@ -5,6 +5,7 @@ import 'react-native-gesture-handler';
 import {AppRegistry,Platform} from 'react-native';
 import App from './App';
 import {name as appName} from './app.json';
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from 'react-native-push-notification'
 import messaging, { firebase } from '@react-native-firebase/messaging';
 import moment from 'moment'
@@ -34,9 +35,11 @@ PushNotification.configure({
       sound: true
     },
     popInitialNotification: true,
-    requestPermissions: Platform.OS == 'ios'
+    // requestPermissions: Platform.OS == 'ios'
+    requestPermissions: true,
   });
-  messaging().setBackgroundMessageHandler(async remoteMessage => {
+
+messaging().setBackgroundMessageHandler(async remoteMessage => {
     PushNotification.createChannel(
         {
           channelId: "channel-id", // (required)

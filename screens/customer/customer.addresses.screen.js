@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {Text, TouchableOpacity, View,StyleSheet, Alert, PermissionsAndroid, FlatList, ScrollView, Image, useWindowDimensions, Modal} from 'react-native';
+import {Text, TouchableOpacity, View,StyleSheet, Platform, PermissionsAndroid, FlatList, ScrollView, Image, useWindowDimensions, Modal} from 'react-native';
 import Colors from '../../util/styles/colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import CommonStyles from '../../util/styles/styles';
@@ -31,6 +31,9 @@ const CustomerAddressesScreen = (props) => {
     const [info,setInfo] = useState(editMode ? selectedAddress?.info : '');
     const [phone,setPhone] = useState(editMode ? selectedAddress?.phone : '');
     const [location,setLocation] = useState(null);
+    const [watchID, setWatchID] = useState(0);
+
+
     const [coords,setCoords] = useState({
         longitude: 0,
         latitude: 0
@@ -55,7 +58,10 @@ const CustomerAddressesScreen = (props) => {
     },[]);
 
     const getUserLocation = async() => {
-        try {
+        if (Platform.OS === 'ios') {
+            getLocation();       
+        }else{
+                   try {
           const granted = await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
             {
@@ -86,7 +92,33 @@ const CustomerAddressesScreen = (props) => {
         } catch(e) {
           console.log(e)
          showToaster('No se pudo obtener la ubicación actual.')
+        } 
         }
+
+    }
+
+    const getLocation = () => {
+        Geolocation.getCurrentPosition(
+          (position) => {
+            const currentLatitude = JSON.stringify(position.coords.latitude);
+            const currentLongitude = JSON.stringify(position.coords.longitude);
+            setCoords({
+                latitude:currentLatitude,
+                longitude:currentLongitude
+            })
+          },
+          (error) => alert(error.message),
+          { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+        );
+        const watchID = Geolocation.watchPosition((position) => {
+          const currentLatitude = JSON.stringify(position.coords.latitude);
+          const currentLongitude = JSON.stringify(position.coords.longitude);
+          setCoords({
+            latitude:currentLatitude,
+            longitude:currentLongitude
+        })
+        });
+        setWatchID(watchID);
       }
     
 

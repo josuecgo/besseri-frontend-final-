@@ -170,7 +170,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
   
 
   return (
-    <ScrollView contentContainerStyle={{flexGrow: 1}}>
+    <View contentContainerStyle={{flexGrow: 1}}>
       <LoaderComponent isVisible={loading} />
       <TopCircleComponent textHeading={'Pedido #'+orderNumber} />
       <View
@@ -282,13 +282,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
               <CustomText text="Cant." />
             </View>
             <View>
-              {/* <FlatList
-                data={order?.products}
-                keyExtractor={item => item?._id}
-                renderItem={({item}) => (
-                  
-                )}
-              /> */}
+
               {
                 order?.products.map((item) => (
                   <View key={item._id} >
@@ -313,7 +307,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
               {isProcessing ? (
                 <ButtonComponent
                   margin={20}
-                  colorB={Colors.primaryColor}
+                  colorB={Colors.terciarySolid}
                   buttonText={isProcessing ? '¿Paquete empacado?' : ''}
                   handlePress={updateOrderStatus}
                   width={width - 60}
@@ -348,12 +342,10 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
                 Rider Requests
               </Text>
             ) : null}
-            <FlatList
-              data={rideRequets}
-              contentContainerStyle={{flexGrow: 1, paddingBottom: '10%'}}
-              keyExtractor={item => item?._id}
-              renderItem={({item}) => (
-                <View
+                        {
+              rideRequets.map((item) => (
+                <View key={item._id} > 
+                  <View
                   style={{
                     width: '95%',
                     minHeight: 100,
@@ -424,12 +416,14 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
                     </TouchableOpacity>
                   </View>
                 </View>
-              )}
-            />
+              
+                </View>
+              ))
+            }
           </View>
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 

@@ -9,14 +9,13 @@ import {
   showToaster,
 } from '../util/constants';
 import CommonStyles from '../util/styles/styles';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Entypo from 'react-native-vector-icons/Entypo';
+
 import Colors from '../util/styles/colors';
 import KEYBOARD_TYPES from '../util/keyboard-types';
 import InputFieldComponent from '../components/input-field/input-field.component';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import ButtonComponent from '../components/button/button.component';
 import axios from 'axios';
 import { api_statuses, api_urls, vendor_api_urls } from '../util/api/api_essentials';
@@ -291,7 +290,8 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
           <Pressable 
           onPress={pickLogo}
           style={{width:60,height:60,borderColor:'white',borderWidth:1,borderRadius:1,borderStyle:'dashed',justifyContent:'center',alignItems:'center',marginRight:10}}>
-           <Entypo name='plus' color='white' size={25}/>
+            <Ionicons name='add-outline' color='white' size={25}/>
+
           </Pressable>
         }
         </View>

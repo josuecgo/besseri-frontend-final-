@@ -14,7 +14,34 @@ export default function CustomerMapStores(props) {
   const {width} = useWindowDimensions()
   const [stores,setstores] = useState([]);
   const [location,setLocation] = useState(null);
+
+ 
+
+  const getLocationIOS = () => {
+    Geolocation.getCurrentPosition(
+      (position) => {
+        setLocation(position.coords);
+          getStores(position.coords);
+      },
+      (error) => alert(error.message),
+    
+    );
+    const watchID = Geolocation.watchPosition((position) => {
+      const currentLatitude = JSON.stringify(position.coords.latitude);
+      const currentLongitude = JSON.stringify(position.coords.longitude);
+    //   setCoords({
+    //     latitude:currentLatitude,
+    //     longitude:currentLongitude
+    // })
+    });
+    setWatchID(watchID);
+  }
+
   const getLocation = async() => {
+    if (Platform.OS === 'ios') {
+      getLocationIOS();
+      return
+    }
     try {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,

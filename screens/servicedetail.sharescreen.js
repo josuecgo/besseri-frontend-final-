@@ -114,7 +114,7 @@ const ShareServiceDetail = (props) => {
           style={styles.header}
           >
           
-          <View style={{...CommonStyles.flexDirectionRow,marginTop:10,alignItems:'center',width:deviceWidth,paddingLeft:5}}>
+          <View style={{...CommonStyles.flexDirectionRow,alignItems:'center',width:deviceWidth,paddingLeft:5}}>
             <View>
               <TouchableOpacity 
               onPress={() => props.navigation.goBack()}

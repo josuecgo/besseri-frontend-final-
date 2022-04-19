@@ -18,12 +18,19 @@ const CustomerOrdersViewScreen = (props) => {
   const { width, height } = useWindowDimensions()
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [comision, setComision] = useState(0);
+  const [delivery, setDelivery] = useState(0)
+
   const isFocused = useIsFocused();
   const getMyOrders = async (id) => {
     try {
       setLoading(true);
       const userId = await getUserId();
       const apiCall = await axios.get(`${customer_api_urls.get_my_orders}/${userId}`);
+      const getFee = await axios.get(customer_api_urls?.get_fees);
+      
+      setComision(getFee.data.data[0]?.besseri_comission);
+      setDelivery(getFee.data.data[0]?.delivery_fee);
       setLoading(false);
       if (apiCall.status == api_statuses.success) {
         setOrders(apiCall.data.data)
@@ -83,7 +90,9 @@ const CustomerOrdersViewScreen = (props) => {
               <View key={item._id} >
                  <OrderCard onPress={() => {
                 props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_DETAIL,{
-                  order:item
+                  order:item,
+                  comision,
+                  delivery
                 })
               }} data={item}/>
               </View>

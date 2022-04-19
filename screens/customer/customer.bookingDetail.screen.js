@@ -57,7 +57,7 @@ const CustomerBookingDetail = (props) => {
     )
 }
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.bgColor,top:top }}>
+    <View style={{ flex: 1, backgroundColor: Colors.bgColor }}>
         <HeaderBackground/>
         
         <View style={styles.header}>
@@ -109,9 +109,8 @@ const CustomerBookingDetail = (props) => {
         <View>
          <ThinlineSeparator margin={20}/>
 
-           <DetailItem label={'Besseri cargos'} value={'2.00 MXN'}/>
-           <DetailItem label={'Subtotal'} value={`${totalAmount.toFixed(2)} MXN`}/>
-           <DetailItem label={'Total'} value={`${(totalAmount + 5 + 2).toFixed(2)} MXN`}/>
+          
+           <DetailItem label={'Total'} value={`${(totalAmount ).toFixed(2)} MXN`}/>
            <ThinlineSeparator margin={20}/>
         </View>
    <View style={{width:'93%',alignSelf:'center',marginTop:'5%'}}>

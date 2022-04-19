@@ -27,6 +27,7 @@ const ButtonComponent = ({
   ...styleProps
   
 }) => {
+
   return (
     <TouchableOpacity
       activeOpacity={0.7}

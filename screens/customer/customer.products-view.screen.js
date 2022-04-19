@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet, Image, ScrollView, useWindowDimensions, PermissionsAndroid, FlatList, Pressable } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, Image, ScrollView, Platform, PermissionsAndroid, FlatList, Pressable } from 'react-native';
 import ProductListing from '../../components/customer-components/ProductsListing.component';
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
@@ -33,7 +33,12 @@ const CustomerProductsViewScreen = (props) => {
   const [products,setProducts] = useState([]);
   const [categories,setCategories] = useState([]);
   const [services,setServices] = useState([]);
-  const [userLocation,setUserLocation] = useState(null);
+  const [userLocation,setUserLocation] = useState(null);    
+  const [coords,setCoords] = useState({
+    longitude: 0,
+    latitude: 0
+});
+
   const [comision, setComision] = useState(0)
   const setState = (valueToSet, key) => {
     setScreenStates({
@@ -43,7 +48,10 @@ const CustomerProductsViewScreen = (props) => {
   };
   //Fetching user location..............................
   const getUserLocation = async() => {
-    try {
+    if (Platform.OS === 'ios') {
+      getLocation()
+    }else{
+       try {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
@@ -65,7 +73,35 @@ const CustomerProductsViewScreen = (props) => {
       console.log(e)
      showToaster('No se pudo obtener la ubicación actual.')
     }
+    }
+   
   }
+
+  const getLocation = () => {
+    Geolocation.getCurrentPosition(
+      (position) => {
+        const currentLatitude = JSON.stringify(position.coords.latitude);
+        const currentLongitude = JSON.stringify(position.coords.longitude);
+        setCoords({
+            latitude:currentLatitude,
+            longitude:currentLongitude
+        })
+      },
+      (error) => alert(error.message),
+    
+    );
+    const watchID = Geolocation.watchPosition((position) => {
+      const currentLatitude = JSON.stringify(position.coords.latitude);
+      const currentLongitude = JSON.stringify(position.coords.longitude);
+      setCoords({
+        latitude:currentLatitude,
+        longitude:currentLongitude
+    })
+    });
+    setWatchID(watchID);
+  }
+
+
   useEffect(() => {
     getUserLocation();
   },[]);
@@ -130,9 +166,9 @@ const CustomerProductsViewScreen = (props) => {
     )
   }
   return (
-    <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor,top:top }}>
+    <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor }}>
       <View style={{ flex: 1 }}>
-        <View style={{ marginTop: '2%', backgroundColor: 'transparent', alignSelf: 'flex-start', flexDirection: 'row' }}>
+        <View style={{ paddingVertical: 20, backgroundColor: 'transparent', alignSelf: 'flex-start', flexDirection: 'row' }}>
          
           <FlatList
           data={categories}
@@ -147,7 +183,7 @@ const CustomerProductsViewScreen = (props) => {
         </View>
         
 
-        <ScrollView contentContainerStyle={{ flexGrow: 1, marginTop: 20 }}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1, marginTop: 5 }}>
 
          {
             categories.map((item)=>(
@@ -161,7 +197,7 @@ const CustomerProductsViewScreen = (props) => {
               </View>
             ))
           }
-        <View style={{height:deviceWidth *0.10,width:deviceWidth}} />
+        <View style={{height:deviceWidth *0.10,width:deviceWidth,marginBottom:30}} />
         </ScrollView>
       </View>
     </View>

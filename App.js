@@ -51,6 +51,8 @@ const App = () => {
   } else {
     firebaseApp.app();
   }
+
+  
   const showNotification = (msg) => {
     
     try {

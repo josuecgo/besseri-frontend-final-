@@ -120,17 +120,15 @@ const CustomDrawerComponent = (props) => {
 const styles = StyleSheet.create({
   header: { 
     width: deviceWidth,
-    height:Platform.OS == 'ios' ? deviceHeight * 0.15 : deviceHeight * 0.10,
+    height:Platform.OS == 'ios' ? deviceHeight * 0.10 : deviceHeight * 0.10,
    
-    // padding: 10,
+     paddingHorizontal: 10,
     // borderWidth: 1,
     // borderColor: Colors.primaryColor,
-    // backgroundColor: Colors.primaryColor,
+     //backgroundColor: Colors.primaryColor,
     // ...CommonStyles.horizontalCenter,
-    paddingHorizontal:deviceWidth * 0.1,
-    // flexDirection:'row',
-    // alignItems:'center',
-    justifyContent:'center'
+ 
+
     
   },
   name: {

@@ -49,7 +49,7 @@ const CustomerServiceBook = (props) => {
 
 
     const onChange = (event, selectedDate) => {
-        console.log('line 38', selectedDate)
+      
         if (mode == 'date') {
             const currentDate = selectedDate || date;
             setShow(Platform.OS === 'ios');
@@ -58,6 +58,7 @@ const CustomerServiceBook = (props) => {
             setShow(Platform.OS === 'ios');
             setTime(selectedDate);
         }
+        setShow(false);
     };
 
     const fetchFees = async () => {
@@ -312,19 +313,11 @@ const CustomerServiceBook = (props) => {
     }
     return (
         <>
-            <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-                <View style={{ flex: 1, backgroundColor: 'white' }}>
-
-                    {show && (
-                        <DateTimePicker
-                            testID="dateTimePicker"
-                            value={date}
-                            mode={mode}
-                            is24Hour={true}
-                            display="default"
-                            onChange={onChange}
-                        />
-                    )}
+            <View style={{ flex: 1 }}>
+                <View style={{ flex: 1 }}>
+               
+                    
+                   
 
                     <AddressesListingModal
                         addressListingRef={addressListingRef}
@@ -373,10 +366,25 @@ const CustomerServiceBook = (props) => {
                         <View style={{ width: '93%', alignSelf: 'center', marginTop: '8%' }}>
                             <View style={{ ...CommonStyles.flexDirectionRow, ...CommonStyles.justifySpaceBetween }}>
                                 <Text style={{ ...CommonStyles.fontFamily, fontSize: 15 }}>Fecha</Text>
-                                <TouchableOpacity onPress={() => handleModalize('open')}>
+                                {/* <TouchableOpacity onPress={() => handleModalize('open')}>
                                     <MaterialIcons name='edit' color={Colors.terciarySolid} size={20} />
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
                             </View>
+
+                            {show && (
+                    <View style={{zIndex:999}} >
+                        <DateTimePicker
+                            testID="dateTimePicker"
+                            value={date}
+                            mode={mode}
+                            is24Hour={true}
+                            display="default"
+                            onChange={onChange}
+                        />
+                    </View>
+
+                    )}
+
                             <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: width, alignSelf: 'center' }}>
                                 <ButtonComponent
                                     buttonText={date ? moment(date).format('DD-MM-YYYY') : 'Select Date'}
@@ -459,8 +467,8 @@ const CustomerServiceBook = (props) => {
 
 
                         <View style={styles.detailCard}>
-                            <DetailItem label={'Subtotal'} value={`${subTotal} MXN`} />
-                            <DetailItem label={'Besseri Comission'} value={`${Math.round((Number(besseri_charges) * Number(service?.price)) / 100)} MXN`} />
+                            {/* <DetailItem label={'Subtotal'} value={`${subTotal} MXN`} />
+                            <DetailItem label={'Besseri Comission'} value={`${Math.round((Number(besseri_charges) * Number(service?.price)) / 100)} MXN`} /> */}
                             <DetailItem label={'Total'} value={`${totalAmount} MXN`} />
                         </View>
                     </ScrollView>
@@ -471,7 +479,10 @@ const CustomerServiceBook = (props) => {
                         colorB={Colors.terciarySolid}
                     />
                 </View>
-            </SafeAreaView>
+
+              
+
+            </View>
         </>
     );
 };

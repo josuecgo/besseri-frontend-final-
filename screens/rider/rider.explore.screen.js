@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
+  Platform,
   useWindowDimensions,
   View,
 } from 'react-native';
@@ -41,7 +41,28 @@ export default function RiderExplore(props) {
     const [loading, setLoading] = useState(false);
     const rider_wallet = useSelector(state => state?.rider?.wallet);
     const [riderProfile, setRiderProfile] = useState(null);
-    const getLocation = async () => {
+
+    const getLocationIos = () => {
+      Geolocation.getCurrentPosition(
+        (position) => {
+          setLocation(position.coords);
+         
+        },
+        (error) => alert(error.message),
+       
+      );
+      const watchID = Geolocation.watchPosition((position) => {
+        setLocation(position.coords);
+       
+      });
+    
+    }
+
+    const getLocation = async () => { 
+      if (Platform.OS ==='ios') {
+        getLocationIos();
+        return;
+      }
         try {
         const granted = await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
@@ -127,6 +148,7 @@ export default function RiderExplore(props) {
     }, [location]);
 
   const OrderCard = ({data}) => {
+    console.log(data);
     return (
       <View
         style={{

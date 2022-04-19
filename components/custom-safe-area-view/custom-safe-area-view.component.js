@@ -2,7 +2,7 @@ import React from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
+  View,
   ScrollView,
   useColorScheme,
   useWindowDimensions,
@@ -22,12 +22,12 @@ const CustomSafeAreaViewComponent = ({children}) => {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <View style={backgroundStyle}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <ScrollView>{children}</ScrollView>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </View>
   );
 };
 

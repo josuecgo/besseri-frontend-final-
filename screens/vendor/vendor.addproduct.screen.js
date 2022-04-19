@@ -51,6 +51,7 @@ import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 import {useRoute} from '@react-navigation/native';
 import {adjust, deviceHeight, deviceWidth} from '../../util/Dimentions';
 import {HeaderBackground} from '../../components/Background/HeaderBackground';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const {width, height} = Dimensions.get('screen');
 
 
@@ -97,7 +98,7 @@ const HEADER_TITLE = {
 };
 const VendorAddProductScreen = ({navigation}) => {
   const {params} = useRoute();
-  
+  const {top} = useSafeAreaInsets()
   const isEditMode = params?.isEdit;
   const toBeEditedProduct = params?.product;
   const [inputValues, setInputValues] = useState({
@@ -647,8 +648,10 @@ const VendorAddProductScreen = ({navigation}) => {
 
         </View>
         
+      {/* cambio scroll */}
+      {/* <View contentContainerStyle={styles.scrollViewContainer}> */}
+       <View style={{flex:1}} >
 
-      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
         <View style={styles.InputWrapper}>
           {isProductNameScreen || isDescriptionScreen || isPriceScreen ? (
             <InputFieldComponent
@@ -861,7 +864,10 @@ const VendorAddProductScreen = ({navigation}) => {
           ) : null}
         </View>
         {isProductSummary ? (
-          <View style={CommonStyles.flexOne}>
+          <ScrollView contentContainerStyle={styles.scrollViewContainer} >
+
+        
+          <View style={styles.InputWrapper} >
             <ProductSummaryCard
               onPress={pickProductImg}
               value={inputValues[CREDENTIAL_KEYS.PRODUCT_IMAGE]}
@@ -937,6 +943,11 @@ const VendorAddProductScreen = ({navigation}) => {
                su cuenta suspendida.
             </Text>
           </View>
+         
+<View style={{flex:1,width:deviceWidth,height:top + 5}} />
+
+          </ScrollView>
+
         ) : null}
 
         {isUploadImage ? null : (
@@ -997,7 +1008,10 @@ const VendorAddProductScreen = ({navigation}) => {
             />
           </View>
         )}
-      </ScrollView>
+
+      </View>
+      {/* Fin scroll */}
+      
     </View>
   );
 };
@@ -1033,7 +1047,7 @@ const styles = StyleSheet.create({
   },
   scrollViewContainer: {
     flexGrow: 1,
-    paddingVertical: 15,
+    paddingVertical: 5,
     
   },
   buttonWrapper: {

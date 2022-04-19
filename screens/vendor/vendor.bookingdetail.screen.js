@@ -274,14 +274,14 @@ const VendorBookingDetail = props => {
           <View>
             <ThinlineSeparator margin={20} />
 
-            <DetailItem label={'Besseri Cargos'} value={'2.00 MXN'} />
+            {/* <DetailItem label={'Besseri Cargos'} value={'2.00 MXN'} />
             <DetailItem
               label={'Subtotal'}
               value={`${totalAmount.toFixed(2)} MXN`}
-            />
+            /> */}
             <DetailItem
               label={'Total'}
-              value={`${(totalAmount + 5 + 2).toFixed(2)} MXN`}
+              value={`${(totalAmount).toFixed(2)} MXN`}
             />
             <ThinlineSeparator margin={20} />
           </View>

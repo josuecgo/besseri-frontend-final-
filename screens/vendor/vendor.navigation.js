@@ -175,7 +175,7 @@ const ServiceNavigator = () => {
     <ServicesStack.Navigator
       initialRouteName={BOTTOM_TAB_VENDOR_ROUTES.ServiceNavigator}>
       <ServicesStack.Screen
-        name={BOTTOM_TAB_VENDOR_ROUTES.SERVICES}
+        name={BOTTOM_TAB_VENDOR_ROUTES.SERVICES2}
         component={VendorServicesScreen}
         options={{
           headerShown: false,

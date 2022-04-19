@@ -320,7 +320,7 @@ const CustomerCartScreen = (props) => {
       }
      {
        products?.length > 0 ?
-       <View style={{ position: 'absolute', bottom: 0, width: '100%' }}>
+       <View style={{ position: 'absolute', bottom: 0, width: '100%',zIndex:9999 }}>
        <ButtonComponent
          buttonText={'Ordenar ahora'}
          colorB={Colors.terciarySolid}
@@ -345,6 +345,7 @@ const CustomerCartScreen = (props) => {
            })
           } else {
             showToaster('You cant order from this store at the moment.')
+            console.log('else');
           }
          }}
        />
