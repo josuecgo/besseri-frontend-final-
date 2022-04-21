@@ -8,7 +8,7 @@ import { CreateAddressModal, ThinlineSeparator } from '../../components/CommonCo
 import { getUser, getUserId } from '../../util/local-storage/auth_service';
 import axios from 'axios';
 import { api_statuses, customer_api_urls, vendor_api_urls } from '../../util/api/api_essentials';
-import { showToaster } from '../../util/constants';
+import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../util/constants';
 import LoaderComponent from '../../components/Loader/Loader.component';
 import AddressComponent from '../../components/customer-components/customer.addresscard.component';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -45,6 +45,7 @@ const CustomerAddressesScreen = (props) => {
             createAddressRef.current.close();
         }
     }
+    
     const getUserDetails = async() => {
         setLoading(true);
         const userData = await getUser();
@@ -216,8 +217,19 @@ const CustomerAddressesScreen = (props) => {
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
         }
     }
+    const crearDireccion = () =>{ 
+        if (user) {
+             createAddressRef.current.open()
+        } else {
+            props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR) 
+        }
+       
+    }
+
+
+
     
-  return (
+    return (
     <View style={{flex:1,backgroundColor:'white'}}>
         <CreateAddressModal
         onClose={() => {
@@ -278,7 +290,7 @@ const CustomerAddressesScreen = (props) => {
           colorB={Colors.terciarySolid}
           width={width / 1.5}
           margin={10}
-          handlePress={() => createAddressRef.current.open()}
+          handlePress={crearDireccion}
           />
          </View>
          </View>

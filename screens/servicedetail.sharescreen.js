@@ -29,7 +29,7 @@ const ShareServiceDetail = (props) => {
   const isVendor = params.isVendor;
   const [comision, setComision] = useState(0)
   const [service,setService] = useState(params?.service);
-
+  const [isLogin, setIsLogin] = useState(false)
 
   useEffect(() => {
     getComision();
@@ -37,10 +37,12 @@ const ShareServiceDetail = (props) => {
   
   
   const getComision = async( ) => {
+
     try {
       setLoading(true);
       const getFee = await axios.get(customer_api_urls?.get_fees);
-        
+      
+      
       
       
       if(getFee.status == api_statuses.success) {
@@ -50,8 +52,11 @@ const ShareServiceDetail = (props) => {
       } else {
         showToaster('Algo salió mal');
       }
+      const getUser = await getUserId();
+      setIsLogin(getUser)
     } catch (error) {
       setLoading(false);
+      console.log(error);
       showToaster('Algo salió mal, inténtalo de nuevo más tarde');
     }
     
@@ -103,6 +108,19 @@ const ShareServiceDetail = (props) => {
         showToaster('Algo salió mal, inténtalo de nuevo más tarde');
     }
   }
+  
+  const goReservar = () => {
+  
+    if (isLogin) {
+      props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.BOOK_SERVICE,{
+      service:service
+      });
+    }else{
+      props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR)
+    }
+
+  }
+ 
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -198,19 +216,15 @@ const ShareServiceDetail = (props) => {
       isVendor ? 
       null:
       <View style={{bottom:top + 20}} >
-         <ButtonComponent
+        <ButtonComponent
           buttonText={'Reservar ahora'}
           width={width - 20}
           colorB={Colors.brightBlue}
           borderRadius={5}
           margin={10}
-          handlePress={() => {
-          props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.BOOK_SERVICE,{
-          service:service
-          });
-    }}
+          handlePress={goReservar}
     
-    />
+        />
       </View>
      
     )

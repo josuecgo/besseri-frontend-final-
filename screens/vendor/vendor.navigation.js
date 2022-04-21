@@ -94,7 +94,7 @@ export const VendorNavigation = () => {
         }}
       />
       <BottomTab.Screen
-        name={BOTTOM_TAB_VENDOR_ROUTES.ORDERS}
+        name={BOTTOM_TAB_VENDOR_ROUTES.ORDERS2}
         component={OrderNavigator}
         options={{
           title: 'Pedidos'

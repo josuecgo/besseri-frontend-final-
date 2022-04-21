@@ -38,12 +38,22 @@
 	<key>NSCameraUsageDescription</key>
 	<string>This app requires access to the photo library.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
+<<<<<<< HEAD
 	<string>Solicita Ubicacion</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app requires access to the photo library.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires access to the photo library.</string>
 	<key>UIAppFonts</key>
+=======
+	<string>Tu Ubicacion es necesaria para mostrar las tiendas mas cercanas de tu ubicacion y poder entragar tus pedidos</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>El acceso a las fotos es para poder mostrar tus productos.</string>
+  <key>NSCameraUsageDescription</key>
+  <string>El acceso a las fotos es para poder mostrar tus productos.</string>
+ 
+  <key>UIAppFonts</key>
+>>>>>>> 1b3b4cf63ba4b7201ccc3f3fec033d291b5224c4
 	<array>
 		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>

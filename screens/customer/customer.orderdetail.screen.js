@@ -39,9 +39,10 @@ const CustomerOrderDetail = (props) => {
     )
     }
     const {top} = useSafeAreaInsets()
-   const  comision = params.comision;
-  
-  return (
+    const  comision = params.comision;
+    
+    
+    return (
     <View style={{ flex: 1, backgroundColor: Colors.bgColor }}>
         <HeaderBackground/>
         
@@ -146,12 +147,14 @@ const CustomerOrderDetail = (props) => {
             position:'absolute',
             bottom:15 + top}}>
             <ButtonComponent
-            buttonText={'Factura'}
+             buttonText={'¿Factura?'}
             width={width / 2.2}
             colorB={Colors.terciarySolid}
             borderRadius={10}
             margin={10}
-            handlePress={()=>console.log('Falta codigo')}
+            handlePress={() => {
+                Linking.openURL(`mailto:${store?.email}?subject=Solicitud de Facura`)
+            }}
             />
              <ButtonComponent
             buttonText={'Ayuda'}

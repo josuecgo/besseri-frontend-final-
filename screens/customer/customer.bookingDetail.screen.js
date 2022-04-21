@@ -1,7 +1,7 @@
 import { useIsFocused, useRoute } from '@react-navigation/native';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, Image, useWindowDimensions,TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { Text, View, StyleSheet, Image, useWindowDimensions,TouchableOpacity, ScrollView, Alert,Linking } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import ButtonComponent from '../../components/button/button.component';
 import OrderCard from '../../components/customer-components/ordercard.component';
@@ -141,11 +141,14 @@ const CustomerBookingDetail = (props) => {
             bottom:15 +top
             }}>
             <ButtonComponent
-            buttonText={'Factura'}
+            buttonText={'¿Factura?'}
             width={width / 2.2}
             colorB={Colors.terciarySolid}
             borderRadius={2}
             margin={10}
+            handlePress={() => {
+                Linking.openURL(`mailto:${store?.email}?subject=Solicitud de Facura`)
+            }}
             />
              <ButtonComponent
             buttonText={'Cancelar'}

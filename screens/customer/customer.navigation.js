@@ -1,5 +1,5 @@
 import React from 'react';
-import {CUSTOMER_HOME_SCREEN_ROUTES} from '../../util/constants';
+import {CUSTOMER_HOME_SCREEN_ROUTES, LOGIN_SIGNUP_FORGOT_ROUTES} from '../../util/constants';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import CustomerHomeViewScreen from './customer.home-view.screen';
@@ -21,6 +21,9 @@ import CustomerServiceBook from './customer.servicebook.screen';
 import CustomerBookingDetail from './customer.bookingDetail.screen';
 import CustomerSearchScreen from './customer.search.screen';
 import CustomerProductDetailScreen from './customer.productdetail.screen';
+import { iniciar } from './customer.iniciar.screen';
+import LoginScreen from '../login.screen';
+import SignUpScreen from '../sign-up.screen';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -155,6 +158,20 @@ export const CustomerHomeStack = () => {
        <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SERVICE}
         component={CustomerServicesViewScreen}
+      />
+
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.INICIAR}
+        component={iniciar}
+      />
+      <Stack.Screen
+        name={LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN}
+        component={LoginScreen}
+      />
+
+      <Stack.Screen
+        name={LOGIN_SIGNUP_FORGOT_ROUTES.SIGN_UP}
+        component={SignUpScreen}
       />
     </Stack.Navigator>
   );
