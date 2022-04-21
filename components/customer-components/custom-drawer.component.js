@@ -13,6 +13,7 @@ import LoaderComponent from '../Loader/Loader.component';
 import { useSelector } from 'react-redux';
 import { HeaderBackground } from '../Background/HeaderBackground';
 import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
+
 const getIcons = ({focused, color, size, name}) => {
   const ICONS = {
     'Servicios': (
@@ -24,7 +25,6 @@ const getIcons = ({focused, color, size, name}) => {
       // <MaterialCommunityIcons name='car-brake-alert' size={28} color={color}  />
     ),
     'Autopartes': (
-      
       // <ImgIcon url={require('../../assets/images/iconos/autopartes.png')} />
       <MaterialIcons name='drive-eta'  size={28} color={color} />
     ),
@@ -51,7 +51,6 @@ const CustomDrawerComponent = (props) => {
   
   const getUserData = async() => {
     const user = await getUser();
-    console.log(user)
     setUser(user)
     // setUser(user);
   }
@@ -66,6 +65,7 @@ const CustomDrawerComponent = (props) => {
   //   getUserDetails();
   // },[]);
 
+  
   return (
     <DrawerContentScrollView>
       <HeaderBackground/>
@@ -98,7 +98,9 @@ const CustomDrawerComponent = (props) => {
             />
           );
         })}
-        <DrawerItem
+        {
+          user ? (
+            <DrawerItem
           onPress={async() => {
             
             await logout();
@@ -112,6 +114,23 @@ const CustomDrawerComponent = (props) => {
             <MaterialIcons size={size} color={color} name="logout" />
           )}
         />
+        ):(
+          <DrawerItem
+          onPress={async() => {
+            
+            await logout();
+            props.navigation.replace('AuthStack');
+          }}
+          label="Iniciar sesión"
+          activeTintColor={Colors.terciarySolid}
+          activeBackgroundColor={Colors.primaryColorShade}
+          inactiveTintColor={Colors.terciarySolid}
+          icon={({focused, size, color}) => (
+            <MaterialIcons size={size} color={color} name="login" />
+          )}
+        />
+        )
+        }
       </View>
     </DrawerContentScrollView>
   );

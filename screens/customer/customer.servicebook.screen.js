@@ -68,7 +68,7 @@ const CustomerServiceBook = (props) => {
           setBesseriCharges(getFee.data.data[0]?.besseri_comission);
         } catch (e) {
           console.log(e?.response);
-          showToaster('something went wrong');
+          showToaster('Algo salió mal');
         }
       }
       useEffect(() => {
@@ -80,13 +80,7 @@ const CustomerServiceBook = (props) => {
         setMode(currentMode);
     };
 
-    const showDatepicker = () => {
-        showMode('date');
-    };
-
-    const showTimepicker = () => {
-        showMode('time');
-    };
+   
     const handleModalize = (flag) => {
         if (flag == 'open') {
             addressListingRef?.current?.open()
@@ -113,11 +107,11 @@ const CustomerServiceBook = (props) => {
                 console.log(apiCall.data.data)
                 initializePaymentSheet(apiCall.data.data?.store?.wallet_id)
             } else {
-                showToaster('Something went wrong please try again');
+                showToaster('Algo salió mal, inténtalo de nuevo más tarde.');
             }
         } catch (e) {
             setLoading(false);
-            showToaster('Something went wrong please try again later')
+            showToaster('Algo salió mal, inténtalo de nuevo más tarde.')
         }
     }
     useEffect(() => {
@@ -145,12 +139,12 @@ const CustomerServiceBook = (props) => {
            intentId:stripeEssentials?.intentId
          });
          if(apiCall?.status == 200) {
-             showToaster('Your amount has been refunded');
+             showToaster('Su cantidad ha sido reembolsada');
              return
          }
         } catch(e) {
            //  Alert.alert('Refund failed',JSON.stringify(e))
-           showToaster('something went wrong please try again')
+           showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
            console.log(e?.response?.data)
         }
     }
@@ -237,7 +231,7 @@ const CustomerServiceBook = (props) => {
          };
         } catch(e) {
             console.log('line 192',e?.response?.data)
-            showToaster('something went wrong try again')
+            showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
         }
        };
      
@@ -265,11 +259,11 @@ const CustomerServiceBook = (props) => {
      
        const openPaymentSheet = async () => {
            if(!time) {
-               showToaster('Please select timings');
+               showToaster('Por favor seleccione la hora');
                return;
            }
            if(!date) {
-               showToaster('Please select date');
+               showToaster('Por favor seleccione la fecha');
                return;
            }
          const { error } = await presentPaymentSheet();
@@ -303,7 +297,7 @@ const CustomerServiceBook = (props) => {
                     }}
                     borderRadius={10}
                     colorT={Colors.primaryColor}
-                    buttonText={'Continue'}
+                    buttonText={'Continuar'}
                     colorB={Colors.white}
                     width={200}
                     margin={30}

@@ -36,13 +36,12 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Solicita Ubicacion</string>
+	<string>Tu Ubicacion es necesaria para mostrar las tiendas mas cercanas de tu ubicacion y poder entragar tus pedidos</string>
   <key>NSPhotoLibraryUsageDescription</key>
-  <string>This app requires access to the photo library.</string>
+  <string>El acceso a las fotos es para poder mostrar tus productos.</string>
   <key>NSCameraUsageDescription</key>
-  <string>This app requires access to the photo library.</string>
-  <key>NSMicrophoneUsageDescription</key>
-  <string>This app requires access to the photo library.</string>
+  <string>El acceso a las fotos es para poder mostrar tus productos.</string>
+ 
   <key>UIAppFonts</key>
 	<array>
     <string>AntDesign.ttf</string>

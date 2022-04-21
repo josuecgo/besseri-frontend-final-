@@ -37,23 +37,46 @@ const CustomerCartScreen = (props) => {
   const [totalDeliveryFee, setTotalDeliveryFee] = useState(null);
   const [billComission, setBillComission] = useState()
   const [deliveryDistance,setDeliveryDistance] = useState(null);
+  const [isLogin , setIsLogin  ] = useState(false)
   let businessIds = [];
   
   
  
   useEffect(async() => {
     const user = await getUserId();
-    getAddresses(user);
-  }, [])
+    setIsLogin(user)
+    getComision();
+    if (user) {
+      getAddresses(user);
+    }
+    
+    
+   
+  }, [isLogin])
+
+
+  const getComision = async() => {
+    try {
+      
+     
+      const getFee = await axios.get(customer_api_urls?.get_fees);
+      
+      setBillComission(getFee.data.data[0]?.besseri_comission); 
+
+    } catch(e) 
+    { 
+        console.log({error:e})
+        
+        showToaster('Error')
+    }
+  }
   
   const getAddresses = async(userID) => {
     
     try {
       
       const apiCall = await axios.get(`${customer_api_urls.get_addresses}/${userID}`);
-      const getFee = await axios.get(customer_api_urls?.get_fees);
-      
-      setBillComission(getFee.data.data[0]?.besseri_comission); 
+     
       if(apiCall.status == api_statuses.success) {
           setDireccion({
             long:apiCall.data.data[0].longitude,
@@ -84,7 +107,7 @@ const CustomerCartScreen = (props) => {
       calculateDelivery()
     } catch (e) {
       console.log(e?.response);
-      showToaster('something went wrong');
+      showToaster('Algo salió mal');
     }
   }
   
@@ -96,6 +119,34 @@ const CustomerCartScreen = (props) => {
     
     setTotalDeliveryFee(Math.round(distance) * delivery_fee);
     setDeliveryDistance(Math.round(distance));
+  }
+
+  const goPurchase = () => {
+    if (isLogin) {
+      if(businessProfiles[0]?.wallet_id && !businessProfiles[0]?.isBlocked) {
+        let allProducts = products?.filter(prod => prod?.business_id == businessProfiles[0]?._id);
+        let totalProductsPrice = 0;
+        for (var a = 0; a < allProducts?.length; a++) {
+          totalProductsPrice += allProducts[a]?.price * allProducts[a]?.quantity
+        }
+        props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_SUMMARY, {
+          deliveryDistance:deliveryDistance,
+          storeId: businessProfiles[0]?._id,
+          products: allProducts,
+          business: businessProfiles[0],
+          totalAmount: Math.round(totalProductsPrice + Math.round((Number(comission) * Number(totalAmount)) / 100)),
+          comission:Math.round((Number(comission) * Number(totalAmount)) / 100),
+          delivery_fee:delivery_fee,
+          subtotal:totalAmount,
+          comision:comission
+        })
+       } else {
+         showToaster('You cant order from this store at the moment.')
+         console.log('else');
+       }
+    } else {
+      props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR)
+    }
   }
 
 
@@ -205,7 +256,7 @@ const CustomerCartScreen = (props) => {
                       subtotal:totalAmount,
                     })
                   } else {
-                    showToaster('This store hasnt setup their account properly, so it will not be possible to order from here.')
+                    showToaster('Esta tienda no ha configurado su cuenta correctamente, por lo que no será posible realizar pedidos desde aquí.')
                   }
                 }}
                 style={{ flexDirection: 'row', backgroundColor: 'white', padding: 10, elevation: 2, alignItems: 'center', width: '95%', alignSelf: 'center', marginVertical: 10 }}>
@@ -310,7 +361,7 @@ const CustomerCartScreen = (props) => {
               <View style={styles.detailCard}>
                   {/* <DetailItem label={'Comisión'} value={`${(Number(comission) * Number(totalAmount)) / 100} MXN`} /> */}
                   {/* <DetailItem label={'Delivery Charges'} distance={true} distanceLabel={`${deliveryDistance} km away`} value={`${Math.round(totalDeliveryFee)} MXN`} /> */}
-                  <DetailItem label={'Total'} value={`${totalAmount + (billComission * totalAmount / 100) } MXN`} />
+                  <DetailItem label={'Total'} value={ `${totalAmount + (billComission * totalAmount / 100) } MXN`} />
                   {/* <DetailItem label={'Total Charges'} value={`${Math.round(totalAmount + totalDeliveryFee + (Number(comission) * Number(totalAmount)) / 100)} MXN`} /> */}
                   <Text style={{margin:5}}>Se aplicarán gastos de envío en función del número de kilómetros</Text>
                 </View>
@@ -325,29 +376,7 @@ const CustomerCartScreen = (props) => {
          buttonText={'Ordenar ahora'}
          colorB={Colors.terciarySolid}
          borderRadius={0}
-         handlePress={() => {
-          if(businessProfiles[0]?.wallet_id && !businessProfiles[0]?.isBlocked) {
-           let allProducts = products?.filter(prod => prod?.business_id == businessProfiles[0]?._id);
-           let totalProductsPrice = 0;
-           for (var a = 0; a < allProducts?.length; a++) {
-             totalProductsPrice += allProducts[a]?.price * allProducts[a]?.quantity
-           }
-           props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_SUMMARY, {
-             deliveryDistance:deliveryDistance,
-             storeId: businessProfiles[0]?._id,
-             products: allProducts,
-             business: businessProfiles[0],
-             totalAmount: Math.round(totalProductsPrice + Math.round((Number(comission) * Number(totalAmount)) / 100)),
-             comission:Math.round((Number(comission) * Number(totalAmount)) / 100),
-             delivery_fee:delivery_fee,
-             subtotal:totalAmount,
-             comision:comission
-           })
-          } else {
-            showToaster('You cant order from this store at the moment.')
-            console.log('else');
-          }
-         }}
+         handlePress={goPurchase}
        />
      </View>
      :

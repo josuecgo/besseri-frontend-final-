@@ -17,6 +17,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import ProductCardComponent from '../../components/customer-components/product-card.component';
 import { HeaderBackground } from '../../components/Background/HeaderBackground';
 import { deviceHeight, deviceWidth } from '../../util/Dimentions';
+import { getUserId } from '../../util/local-storage/auth_service';
 const SCREEN_STATES = {
   USER_LOCATION:'User location',
   PRODUCTS:'Products',
@@ -37,6 +38,7 @@ const CustomerMoreProductsScreen = (props) => {
   const [userLocation,setUserLocation] = useState(null);
   const cartProductIds = useSelector(state => state.cart.cart_item_ids);
   const cart_items = useSelector(state => state?.cart?.cart_items);
+  const [isLogin, setIsLogin] = useState(false)
   const setState = (valueToSet, key) => {
     setScreenStates({
       ...screenStates,
@@ -76,11 +78,13 @@ const CustomerMoreProductsScreen = (props) => {
   //Get Products to show
   const getProducts = async() => {
     try {
-     const apiCall = await axios.get(`${customer_api_urls.get_category_products}/${params?.category?._id}`);
-     const getFee = await axios.get(customer_api_urls?.get_fees);
-      
+      const apiCall = await axios.get(`${customer_api_urls.get_category_products}/${params?.category?._id}`);
+      const getFee = await axios.get(customer_api_urls?.get_fees);
+      const getUser = await getUserId()
+
+      setIsLogin(getUser);
       setComision(getFee.data.data[0]?.besseri_comission);
-     setProducts(apiCall.data.data);
+      setProducts(apiCall.data.data);
     //  setState(apiCall.data.data.products,SCREEN_STATES.PRODUCTS);
     //  setState(apiCall.data.data.categories,SCREEN_STATES.CATEGORIES);
      
@@ -103,6 +107,9 @@ const CustomerMoreProductsScreen = (props) => {
     }))
 
   }
+  const goCart = () => {
+    props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK)
+  }
   
   return (
     <View style={{ ...CommonStyles.flexOne }}>
@@ -118,10 +125,10 @@ const CustomerMoreProductsScreen = (props) => {
                 size={25}
                 />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK)}>
-                  <TouchableOpacity onPress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK)} >
-          <MaterialCommunityIcons color={Colors.white} size={30} name="cart" />
-        </TouchableOpacity>
+            <TouchableOpacity onPress={goCart}>
+                  {/* <TouchableOpacity onPress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK)} > */}
+                    <MaterialCommunityIcons color={Colors.white} size={30} name="cart" />
+                  {/* </TouchableOpacity> */}
                  {
                    cart_items.length > 0 ?
                    <View style={styles.cartItemsLengthWrapper}>
@@ -130,7 +137,7 @@ const CustomerMoreProductsScreen = (props) => {
                  :
                  null
                  }
-                  </TouchableOpacity>
+            </TouchableOpacity>
         </View>
        <View style={{width:'95%',height:45,borderWidth:1,borderColor:Colors.light,backgroundColor:Colors.light,alignSelf:'center',margin:20,...CommonStyles.flexDirectionRow,...CommonStyles.horizontalCenter}}>
        <Ionicons

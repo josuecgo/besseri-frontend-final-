@@ -27,12 +27,7 @@ export default function CustomerMapStores(props) {
     
     );
     const watchID = Geolocation.watchPosition((position) => {
-      const currentLatitude = JSON.stringify(position.coords.latitude);
-      const currentLongitude = JSON.stringify(position.coords.longitude);
-    //   setCoords({
-    //     latitude:currentLatitude,
-    //     longitude:currentLongitude
-    // })
+     
     });
     setWatchID(watchID);
   }
@@ -47,7 +42,7 @@ export default function CustomerMapStores(props) {
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
           'title': 'Besseri',
-          'message': 'Besseri needs location to show you nearby stores'
+          'message': 'Besseri necesita ubicación para mostrarte las tiendas cercanas'
         }
       )
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -57,10 +52,10 @@ export default function CustomerMapStores(props) {
         })
       } else {
         console.log("location permission denied")
-        showToaster("Location permission denied");
+        showToaster("Permiso de ubicación denegado");
       }
     } catch(e) {
-        showToaster('Couldnt get your location')
+        showToaster('No pude obtener tu ubicación')
     }
   }
   const getStores = async(location) => {
@@ -74,11 +69,11 @@ export default function CustomerMapStores(props) {
         console.log(apiCall.data.data)
        setstores(apiCall.data.data);
       } else {
-        showToaster('something went wrong');
+        showToaster('algo salió mal');
       }
     
     } catch(e) {
-       showToaster('Something went wrong please try again');
+       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
     }
   }
   useEffect(() => {

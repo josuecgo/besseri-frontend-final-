@@ -20,28 +20,50 @@ const CustomerBookingsView = (props) => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(false);
   const isFocused = useIsFocused();
+  const [isLogin, setIsLogin] = useState(false);
+
   const getMyBookings = async (id) => {
-    try {
-      setLoading(true);
-      const userId = await getUserId();
-      const apiCall = await axios.get(`${customer_api_urls.get_my_bookings}/${userId}`);
-      console.log(userId)
-      setLoading(false);
-      if (apiCall.status == api_statuses.success) {
-          console.log(apiCall.data)
-        setBookings(apiCall.data.data)
-      } else {
-        showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
+    const userId = await getUserId();
+    setIsLogin(userId);
+    if (userId) {
+      try {
+        setLoading(true);
+        
+        const apiCall = await axios.get(`${customer_api_urls.get_my_bookings}/${userId}`);
+        
+        setLoading(false);
+        if (apiCall.status == api_statuses.success) {
+           
+          setBookings(apiCall.data.data)
+        } else {
+          showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
+        }
+      } catch (e) {
+        console.log(e.response.data)
+        setLoading(false);
+        showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
       }
-    } catch (e) {
-      console.log(e.response.data)
-      setLoading(false);
-      showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
     }
+    
   }
+
+  const goExplore = () => {
+    if (isLogin) {
+      props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS)
+    }else{
+      props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR)
+    }
+   
+  }
+
+
+
   useEffect(() => {
     getMyBookings()
   }, [isFocused]);
+
+
+
   return (
     <View style={{ flex: 1, backgroundColor: Colors.bgColor }}>
     <HeaderBackground/>
@@ -76,7 +98,7 @@ const CustomerBookingsView = (props) => {
         colorB={Colors.primarySolid}
         width={width / 1.5}
         margin={10}
-        handlePress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS)}
+        handlePress={goExplore}
       />
     </View>
     </View>

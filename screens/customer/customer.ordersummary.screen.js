@@ -309,7 +309,7 @@ const CustomerOrderSummary = (props) => {
                 Tu pedido ha sido realizado con éxito, pronto recibirás tu paquete
                 </Text>
 
-             <ButtonComponent
+            <ButtonComponent
             handlePress={() => {
                 props.navigation.replace(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS)
             }}

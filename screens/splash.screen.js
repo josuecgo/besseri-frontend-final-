@@ -104,7 +104,6 @@ const SplashScreen = ({navigation}) => {
   }
 
   const check_auth = async() => {
-  
     const user_id = await getUserId();
     const userType = await getUserType();
     if(user_id && userType) {
@@ -124,7 +123,9 @@ const SplashScreen = ({navigation}) => {
         navigation.replace(MAIN_ROUTES.RIDER_STACK)
       }
     } else {
-      navigation.replace(MAIN_ROUTES.AUTH_STACK);
+      // navigation.replace(MAIN_ROUTES.AUTH_STACK);
+      navigation.replace(MAIN_ROUTES.CUSTOMER_STACK);
+
     }
   }
   useEffect(() => {

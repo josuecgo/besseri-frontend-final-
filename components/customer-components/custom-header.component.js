@@ -18,10 +18,24 @@ import {useSelector} from 'react-redux';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {adjust, deviceHeight, deviceWidth} from '../../util/Dimentions';
 import {HeaderBackground} from '../Background/HeaderBackground';
+import { getUserId } from '../../util/local-storage/auth_service';
 const CustomHeaderComponent = props => {
   const [searchValue, setSearchValue] = useState('');
   const cart_items = useSelector(state => state.cart.cart_items);
   const searchRef = useRef();
+  
+
+ 
+  const goCart = async() => {
+    const user_id = await getUserId();
+    
+    if (user_id) {
+      props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK) 
+    }else{
+      props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR) 
+    }
+    
+}
   return (
     <>
       <HeaderBackground hios={0.23} handroid={0.18} />
@@ -51,11 +65,7 @@ const CustomHeaderComponent = props => {
               props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK)
             }>
             <TouchableOpacity
-              onPress={() =>
-                props.navigation.navigate(
-                  CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK,
-                )
-              }>
+              onPress={goCart}>
               <MaterialCommunityIcons
                 color={Colors.white}
                 size={30}

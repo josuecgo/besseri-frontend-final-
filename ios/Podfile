@@ -13,18 +13,6 @@ target 'Besseri' do
   )
 
 
-
-
-
-
-
-
-
-
-
-
-
-
   target 'BesseriTests' do
     inherit! :complete
     # Pods for testing
