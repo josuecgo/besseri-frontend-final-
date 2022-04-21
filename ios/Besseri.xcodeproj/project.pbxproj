@@ -42,6 +42,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Besseri/main.m; sourceTree = "<group>"; };
 		41C631DE2024A7F14F19E7A5 /* Pods-Besseri.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Besseri.debug.xcconfig"; path = "Target Support Files/Pods-Besseri/Pods-Besseri.debug.xcconfig"; sourceTree = "<group>"; };
 		4CF8D9C2806A4E8084178DE8 /* Arial-Rounded-MT-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Arial-Rounded-MT-Bold.ttf"; path = "../assets/fonts/Arial-Rounded-MT-Bold.ttf"; sourceTree = "<group>"; };
+		4D912DF12811AA1800EE49E7 /* Besseri.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Besseri.entitlements; path = Besseri/Besseri.entitlements; sourceTree = "<group>"; };
 		4DD1EE68280DCFA900FA39AF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4DD1EE6C280DD6E200FA39AF /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Regular.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		4DD1EE6D280DD6E200FA39AF /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Entypo.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
@@ -111,6 +112,7 @@
 		13B07FAE1A68108700A75B9A /* Besseri */ = {
 			isa = PBXGroup;
 			children = (
+				4D912DF12811AA1800EE49E7 /* Besseri.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -590,8 +592,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Besseri/Besseri.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7KDU7DZ6XT;
+				DEVELOPMENT_TEAM = 68MC32N55Z;
 				ENABLE_BITCODE = NO;
 				EXCLUDED_ARCHS = i386;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
@@ -610,7 +613,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.josue.oropeza.refacciones.besseri;
 				PRODUCT_NAME = Besseri;
 				SWIFT_OBJC_BRIDGING_HEADER = /Users/josuegarcia/Downloads/pruebareactnative/BesseriDev/app/besseriFinal/Besseri/ios/Besseri/AppDelegate.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -627,8 +630,11 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Besseri/Besseri.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7KDU7DZ6XT;
+				DEVELOPMENT_TEAM = 68MC32N55Z;
 				EXCLUDED_ARCHS = i386;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				INFOPLIST_FILE = Besseri/Info.plist;
@@ -646,8 +652,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.josue.oropeza.refacciones.besseri;
 				PRODUCT_NAME = Besseri;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = /Users/josuegarcia/Downloads/pruebareactnative/BesseriDev/app/besseriFinal/Besseri/ios/Besseri/AppDelegate.h;
 				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "arm64 x86_64";

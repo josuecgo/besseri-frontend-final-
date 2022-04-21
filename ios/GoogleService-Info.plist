@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>817083462769-b8vhdivmsli19ndf26rp9289rfvp6him.apps.googleusercontent.com</string>
+	<string>817083462769-9vuhjobm91g34gd8h0sjaamcm9k9cnd5.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.817083462769-b8vhdivmsli19ndf26rp9289rfvp6him</string>
+	<string>com.googleusercontent.apps.817083462769-9vuhjobm91g34gd8h0sjaamcm9k9cnd5</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDf-G0oNRM9fs-PjuDouz2RLhCCoxmwYY0</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>org.reactjs.native.example.Besseri</string>
+	<string>org.josue.oropeza.refacciones.besseri</string>
 	<key>PROJECT_ID</key>
 	<string>besseri-334619</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:817083462769:ios:b659a8fd9945d4fe2297d0</string>
+	<string>1:817083462769:ios:53b87e32d23a37902297d0</string>
 	<key>DATABASE_URL</key>
 	<string>https://besseri-334619-default-rtdb.firebaseio.com</string>
 </dict>
