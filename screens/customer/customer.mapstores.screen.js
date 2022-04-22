@@ -35,7 +35,7 @@ export default function CustomerMapStores(props) {
   const getLocation = async() => {
     if (Platform.OS === 'ios') {
       getLocationIOS();
-      return
+      return;
     }
     try {
       const granted = await PermissionsAndroid.request(

@@ -60,7 +60,8 @@ const CustomerAddressesScreen = (props) => {
 
     const getUserLocation = async() => {
         if (Platform.OS === 'ios') {
-            getLocation();       
+            getLocation();    
+            return;   
         }else{
                    try {
           const granted = await PermissionsAndroid.request(

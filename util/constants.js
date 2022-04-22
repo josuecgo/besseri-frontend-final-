@@ -1,4 +1,4 @@
-import { ToastAndroid } from "react-native";
+import { ToastAndroid,Platform,Alert } from "react-native";
 
 export const SCREEN_HORIZONTAL_MARGIN = 30;
 export const SCREEN_HORIZONTAL_MARGIN_FORM = 10;
@@ -154,6 +154,10 @@ export const OrderStatusCode = {
 }
 
 export const showToaster = (message) => {
-  
-  ToastAndroid.showWithGravity(message,ToastAndroid.LONG,ToastAndroid.CENTER)
+  if (Platform.OS === 'ios') {
+    Alert.alert(message)
+  }else{
+    ToastAndroid.showWithGravity(message,ToastAndroid.LONG,ToastAndroid.CENTER)
+
+  }
 }

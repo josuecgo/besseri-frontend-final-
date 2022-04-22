@@ -76,9 +76,10 @@ const CustomerProductsViewScreen = (props) => {
     }
    
   }
+  console.log(coords);
 
-  const getLocation = () => {
-    Geolocation.getCurrentPosition(
+  const getLocation = async() => {
+    await Geolocation.getCurrentPosition(
       (position) => {
         const currentLatitude = JSON.stringify(position.coords.latitude);
         const currentLongitude = JSON.stringify(position.coords.longitude);
@@ -87,10 +88,10 @@ const CustomerProductsViewScreen = (props) => {
             longitude:currentLongitude
         })
       },
-      (error) => alert(error.message),
+      (error) => console.log('error.message'),
     
     );
-    const watchID = Geolocation.watchPosition((position) => {
+    const watchID = await Geolocation.watchPosition((position) => {
       const currentLatitude = JSON.stringify(position.coords.latitude);
       const currentLongitude = JSON.stringify(position.coords.longitude);
       setCoords({

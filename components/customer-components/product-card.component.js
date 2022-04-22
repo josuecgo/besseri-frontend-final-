@@ -14,7 +14,7 @@ const ProductCardComponent = ({comision,cartProduct,inCart,data,onAddToCart,incr
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
 
   
-  console.log({comision});
+
 
   if(horizontal) {
     const horizontalCardStyles = {

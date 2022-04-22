@@ -39,6 +39,10 @@ const CustomerMoreProductsScreen = (props) => {
   const cartProductIds = useSelector(state => state.cart.cart_item_ids);
   const cart_items = useSelector(state => state?.cart?.cart_items);
   const [isLogin, setIsLogin] = useState(false)
+  const [coords,setCoords] = useState({
+    longitude: 0,
+    latitude: 0
+});
   const setState = (valueToSet, key) => {
     setScreenStates({
       ...screenStates,
@@ -47,13 +51,16 @@ const CustomerMoreProductsScreen = (props) => {
   };
   //Fetching user location..............................
   const getUserLocation = async() => {
+   if (condition) {
+     getLocation();
+   } else {
     try {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
-          'title': 'Location Permission',
-          'message': 'This App needs access to your location ' +
-                     'so we can know where you are.'
+          'title': 'Permiso de ubicación',
+          'message': 'Esta aplicación necesita acceso a tu ubicación' +
+         ' para que podamos saber dónde estás.'
         }
       )
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -67,9 +74,35 @@ const CustomerMoreProductsScreen = (props) => {
   
     } catch(e) {
       console.log(e)
-     showToaster('Could not get current location.')
+     showToaster('No se pudo obtener la ubicación actual.')
     }
+   }
   }
+
+  const getLocation = () => {
+    Geolocation.getCurrentPosition(
+      (position) => {
+        const currentLatitude = JSON.stringify(position.coords.latitude);
+        const currentLongitude = JSON.stringify(position.coords.longitude);
+        setCoords({
+            latitude:currentLatitude,
+            longitude:currentLongitude
+        })
+      },
+      (error) => alert(error.message),
+    
+    );
+    const watchID = Geolocation.watchPosition((position) => {
+      const currentLatitude = JSON.stringify(position.coords.latitude);
+      const currentLongitude = JSON.stringify(position.coords.longitude);
+      setCoords({
+        latitude:currentLatitude,
+        longitude:currentLongitude
+    })
+    });
+    setWatchID(watchID);
+  }
+
   useEffect(() => {
     getUserLocation();
   },[]);
