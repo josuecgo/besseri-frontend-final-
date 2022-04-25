@@ -23,25 +23,28 @@ const CustomerOrdersViewScreen = (props) => {
 
   const isFocused = useIsFocused();
   const getMyOrders = async (id) => {
-    try {
-      setLoading(true);
-      const userId = await getUserId();
-      const apiCall = await axios.get(`${customer_api_urls.get_my_orders}/${userId}`);
-      const getFee = await axios.get(customer_api_urls?.get_fees);
-      
-      setComision(getFee.data.data[0]?.besseri_comission);
-      setDelivery(getFee.data.data[0]?.delivery_fee);
-      setLoading(false);
-      if (apiCall.status == api_statuses.success) {
-        setOrders(apiCall.data.data)
-      } else {
-        showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
+    const userId = await getUserId();
+    if (userId) {
+      try {
+        setLoading(true);
+        
+        const apiCall = await axios.get(`${customer_api_urls.get_my_orders}/${userId}`);
+        const getFee = await axios.get(customer_api_urls?.get_fees);
+        
+        setComision(getFee.data.data[0]?.besseri_comission);
+        setDelivery(getFee.data.data[0]?.delivery_fee);
+        setLoading(false);
+        if (apiCall.status == api_statuses.success) {
+          setOrders(apiCall.data.data)
+        } else {
+          showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
+        }
+      } catch (e) {
+        console.log(e)
+        setLoading(false);
+        showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
       }
-    } catch (e) {
-      console.log(e)
-      setLoading(false);
-      showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
-    }
+    } 
   }
   useEffect(() => {
     getMyOrders()

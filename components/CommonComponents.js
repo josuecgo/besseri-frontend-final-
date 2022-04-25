@@ -450,7 +450,7 @@ export const SetUpLocationModal = ({
             multiline={true}
           />
           <Text>
-            Coordenadas - {coords?.latitude} - {coords?.longitude}
+            Coordenadas  {coords?.latitude},  {coords?.longitude}
           </Text>
           <View style={{marginVertical: 8}}>
             <ButtonComponent

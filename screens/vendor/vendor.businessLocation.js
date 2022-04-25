@@ -18,6 +18,7 @@ import { showToaster } from '../../util/constants';
 import MapView, { Circle, Marker } from 'react-native-maps';
 import { HeaderBackground } from '../../components/Background/HeaderBackground';
 import { deviceHeight } from '../../util/Dimentions';
+import { useLocation } from '../../hooks/useLocation';
 
 const CustomerOrdersViewScreen = (props) => {
   Geocoder.init('AIzaSyAjyGdmeJ8fyRP7eKPJ2ODtF0JEbqEbw8o');
@@ -31,6 +32,8 @@ const CustomerOrdersViewScreen = (props) => {
   const [coords,setCoords] = useState(null);
   const [editMode,setEditMode] = useState(false);
   const [locationData,setLocation] = useState()
+  const {getLocationHook,userLocation} = useLocation()
+
   const getBusiness = async() => {
     try {
      const businessData = await getBusinessProfile();
@@ -47,68 +50,39 @@ const CustomerOrdersViewScreen = (props) => {
      }
      
     } catch(e) {
-      showToaster('something went wrong')
+      showToaster('Algo salió mal')
     }
   }
   useEffect(() => {
     getBusiness()
+    // getLocationHook()
   },[]);
   const getUserLocation = async() => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          'title': 'Location Permission',
-          'message': 'This App needs access to your location ' +
-                     'so we can know where you are.'
-        }
-      )
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        await Geolocation.getCurrentPosition(res => {
-          setCoords({
-            latitude:res?.coords?.latitude,
-            longitude:res?.coords?.longitude
-          });
-          // Geocoder.from(res.coords?.latitude,res?.coords?.longitude).then(response => {
-          //     setCity(response.results[0]?.address_components[2]?.long_name);
-          //     setAddressLine(response?.results[0]?.formatted_address)
-          //     setState(response.results[0]?.address_components[5]?.long_name)
-          // }).catch(e => {
-          //     console.log(e)
-          // })
-          // setState(res.coords,SCREEN_STATES.USER_LOCATION);
-        });
-      } else {
-        console.log("Location permission denied")
-      }
-  
-    } catch(e) {
-      console.log(e)
-     showToaster('Could not get current location.')
-    }
+      setCoords(userLocation)
+   
   }
   const setUpLocation = async() => {
     try {
       setLoading(true);
       if(!city) {
-        showToaster('please provide city');
+        showToaster('Por favor proporcione la ciudad');
         return;
       }
       if(!state) {
-        showToaster('please provide state');
+        showToaster('Por favor proporcione el estado');
         return;
       }
       if(!addressLine) {
-        showToaster('please provide address');
+        showToaster('Por favor proporcione la dirección');
         return;
       }
       
       if(!coords?.latitude) {
-        showToaster('please provide latitude')
+        showToaster('Por favor proporcione latitud')
         return;
       }
       if(!coords?.longitude) {
-        showToaster('please provide longitude')
+        showToaster('Por favor proporcione la longitud')
         return;
       }
       const userId = await getUserId();
@@ -132,12 +106,12 @@ const CustomerOrdersViewScreen = (props) => {
          showToaster('Location set up.');
          ShowSetUpLocationRef?.current?.close();
       } else {
-        showToaster('Something went wrong please try again.')
+        showToaster('Algo salió mal. Por favor, vuelva a intentarlo.')
       }
   
     } catch(e) {
       setLoading(false);
-     showToaster('Something went wrong please try again');
+     showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
      console.log(e?.response?.data)
     }
   }
@@ -235,24 +209,27 @@ const CustomerOrdersViewScreen = (props) => {
      }
       </View>
        :
-       <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-       <Entypo name='location-pin' color={Colors.red} size={100}/>
-       <Text style={{fontWeight:'bold',fontSize:19}}>Ubicación de la empresa</Text>
-       <Text style={{fontWeight:'300',fontSize:13,color:'grey',textAlign:'center',width:'80%',alignSelf:'center',marginVertical:10}}>Setup your business location, that the customers can see where you are located, when you press setup your current location will be used, so setup the location when you are at store.</Text>
-       <TouchableOpacity 
-       onPress={() => {
-         if(locationData) {
-           setCity(locationData?.location?.city);
-           setState(locationData?.location?.state);
-           setAddressLine(locationData?.location?.address)
-         }
-           console.log(ShowSetUpLocationRef);
-         ShowSetUpLocationRef?.current?.open();
-       }}
-       style={{width:150,height:50,borderWidth:1,borderColor:Colors.lightRed,backgroundColor:Colors.lightRed,justifyContent:'center',alignItems:'center',borderRadius:5,alignSelf:'center'}}>
-           <Text style={{fontSize:15,fontWeight:'bold',color:'red'}}>SET UP</Text>
-       </TouchableOpacity>
-   </View>
+        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+        <Entypo name='location-pin' color={Colors.red} size={100}/>
+        <Text style={{fontWeight:'bold',fontSize:19}}>Ubicación de la empresa</Text>
+        <Text style={{fontWeight:'300',fontSize:13,color:'grey',textAlign:'center',width:'80%',alignSelf:'center',marginVertical:10}}>
+        Configure la ubicación de su negocio, para que los clientes puedan ver dónde se encuentra, cuando presione configurar, su ubicación actual aparecerá
+          ser utilizado, así que configure la ubicación cuando esté en la tienda.
+        </Text>
+          <TouchableOpacity 
+          onPress={() => {
+            if(locationData) {
+              setCity(locationData?.location?.city);
+              setState(locationData?.location?.state);
+              setAddressLine(locationData?.location?.address)
+            }
+              console.log(ShowSetUpLocationRef);
+            ShowSetUpLocationRef?.current?.open();
+          }}
+          style={{width:150,height:50,borderWidth:1,borderColor:Colors.lightRed,backgroundColor:Colors.lightRed,justifyContent:'center',alignItems:'center',borderRadius:5,alignSelf:'center'}}>
+              <Text style={{fontSize:15,fontWeight:'bold',color:'red'}}>SET UP</Text>
+          </TouchableOpacity>
+      </View>
     }
       </ScrollView>
       

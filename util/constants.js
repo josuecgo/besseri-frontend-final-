@@ -153,6 +153,12 @@ export const OrderStatusCode = {
   PROCESSING:'Procesando'
 }
 
+export const KeysStripe = {
+  LIVE_KEY:'pk_live_51K6fAwEZl12SIefHa7w6LJCVzATHV5n253Xlw2TcAxFrOkwEElIHpoWM9gilgxRey62ACrQMLir0SY6C7Uwdgx1M00ukntyd5k',
+  TEST_KEY:'pk_test_51K6fAwEZl12SIefHDB3dMygU6FJQ79Q81wCsNeaIbYlP3jqmOAUi7b9XdRkfOqrAK7Na8EgjEp6gJuacFtP4oMRa00lcje6la4ssssss',
+ 
+}
+
 export const showToaster = (message) => {
   if (Platform.OS === 'ios') {
     Alert.alert(message)

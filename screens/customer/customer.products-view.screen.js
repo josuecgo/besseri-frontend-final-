@@ -70,13 +70,13 @@ const CustomerProductsViewScreen = (props) => {
       }
   
     } catch(e) {
-      console.log(e)
+      
      showToaster('No se pudo obtener la ubicación actual.')
     }
     }
    
   }
-  console.log(coords);
+  
 
   const getLocation = async() => {
     await Geolocation.getCurrentPosition(

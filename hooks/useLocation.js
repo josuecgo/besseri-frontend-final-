@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef,Platform } from 'react';
 
 import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
@@ -43,7 +43,7 @@ export const useLocation = () => {
     
 
     useEffect(() => {
-
+        getLocationHook()
         getCurrentLocation()
             .then( location => {
 
@@ -116,6 +116,50 @@ export const useLocation = () => {
             showToaster('Something went wrong please try again :/')
         }
     }
+
+    const getLocationHook = async() => {
+        if (Platform.OS === 'ios') {
+           
+            Geolocation.getCurrentPosition(
+            (position) => {
+                const currentLatitude = JSON.stringify(position.coords.latitude);
+                const currentLongitude = JSON.stringify(position.coords.longitude);
+                return setUserLocation({
+                        latitude:currentLatitude,
+                        longitude:currentLongitude
+                })
+                }
+            );
+ 
+              
+        }else{
+            try {
+            const granted = await PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+              {
+                'title': 'Permiso de ubicación',
+                'message': 'Esta aplicación necesita acceso a tu ubicación ' +
+                           'para que sepamos donde estas.'
+              }
+            )
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+              await Geolocation.getCurrentPosition(res => {
+                return setUserLocation({
+                  latitude:res?.coords?.latitude,
+                  longitude:res?.coords?.longitude
+                });
+              });
+            } else {
+              console.log("Location permission denied")
+            }
+        
+          } catch(e) {
+            console.log(e)
+           showToaster('No se pudo obtener la ubicación actual.')
+          }
+        }
+        
+    }
    
 
 
@@ -132,6 +176,7 @@ export const useLocation = () => {
         routeLines,
         direccion,
         user,
-        getAddresses
+        getAddresses,
+        getLocationHook
     }
 }

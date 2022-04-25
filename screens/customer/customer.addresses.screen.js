@@ -176,26 +176,7 @@ const CustomerAddressesScreen = (props) => {
                 showToaster('No olvides ingresar tus coordenadas')
             }
             
-        //     const location = Geolocation.getCurrentPosition(async(position) => {
-        //     const apiCall = await axios.post(customer_api_urls.create_address,{
-        //         label:selectedAddressType,
-        //         address:addressLine,
-        //         userId:user?._id,
-        //         created_on:new Date(),
-        //         phone:phone,
-        //         info:info,
-        //         latitude:position?.coords?.latitude,
-        //         longitude:position?.coords?.longitude
-        //     });
-        //     handleModalize('close')
-        //     setLoading(false);
-        //     if(apiCall.status == api_statuses.success) {
-        //         showToaster('Dirección creada con éxito');
-        //         await getAddresses()
-        //     } else {
-        //         showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
-        //     }
-        //  })
+      
        
         
     }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Button, View, Alert, Text, StatusBar,useColorScheme } from 'react-native';
-import SplashScreen from './screens/splash.screen';
-import { ROLES } from './util/constants';
+import {  StatusBar,useColorScheme } from 'react-native';
+
+import { KeysStripe, ROLES } from './util/constants';
 import { NavigationContainer } from '@react-navigation/native';
 import { USER_ROLE } from './util/local-storage';
 import { VendorNavigation } from './screens/vendor/vendor.navigation';
@@ -23,6 +23,7 @@ import { getUserId } from './util/local-storage/auth_service';
 import axios from 'axios';
 import { api_urls, base_url } from './util/api/api_essentials';
 import PushNotification from 'react-native-push-notification';
+
 
 const getComponent = {
   [ROLES.UNSET]: <LSFS />,
@@ -157,7 +158,7 @@ const App = () => {
   return (
   
     <StripeProvider
-      publishableKey="pk_test_51K6fAwEZl12SIefHDB3dMygU6FJQ79Q81wCsNeaIbYlP3jqmOAUi7b9XdRkfOqrAK7Na8EgjEp6gJuacFtP4oMRa00lcje6la4"
+      publishableKey={KeysStripe.LIVE_KEY}
     // urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
     // merchantIdentifier="merchant.com.{{YOUR_APP_NAME}}" // required for Apple Pay
     >
