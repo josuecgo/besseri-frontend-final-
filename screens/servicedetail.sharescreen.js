@@ -89,7 +89,7 @@ const ShareServiceDetail = (props) => {
       setLoading(true);
       const businessId = await getBusinessId();
       const userId = await getUserId();
-      console.log(businessId,userId,service?._id)
+     
        const apiCall = await axios.post(vendor_api_urls.delete_service,{
          serviceId:service?._id,
          businessId:businessId,
@@ -98,7 +98,7 @@ const ShareServiceDetail = (props) => {
        setLoading(false);
        if(apiCall.status == api_statuses.success) {
          showToaster('Servicio eliminado con éxito');
-         props.navigation.navigate(BOTTOM_TAB_VENDOR_ROUTES.SERVICES);
+         props.navigation.goBack();
        } else {
          showToaster('Algo salió mal');
        }

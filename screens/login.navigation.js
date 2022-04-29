@@ -11,6 +11,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import RiderSignup from './rider/rider.signup.screen';
 import ChangePasswordScreen from './change-password.screen';
 import { HomePageScreen } from './HomePageScreen';
+import SignUpScreenCustomer from './sign-up.screen-customer';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,10 @@ export const LSFS = () => {
       <Stack.Screen
         name={LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN}
         component={LoginScreen}
+      />
+      <Stack.Screen
+        name={LOGIN_SIGNUP_FORGOT_ROUTES.SIGN_UP_CUSTOMER}
+        component={SignUpScreenCustomer}
       />
       <Stack.Screen
         name={LOGIN_SIGNUP_FORGOT_ROUTES.SIGN_UP}

@@ -146,7 +146,7 @@ const CustomerOrderSummary = (props) => {
         }
     }
     const placeOrder = async() => {
-        
+       
         try {
             setLoading(true);
             const body = {
@@ -171,12 +171,12 @@ const CustomerOrderSummary = (props) => {
                  dispatch(deleteItemFromCart(products[a]?._id,products[a]?.price))
              }
          } else {
-             showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
+             showToaster('Algo salió mal. Por favor, vuelva a intentarlo 1 :/')
          }
         } catch(e) 
         { 
             setLoading(false);  
-            showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
+            showToaster('Algo salió mal. Por favor, vuelva a intentarlo 2 :/')
             refundPayment()
         }
     }
@@ -203,6 +203,7 @@ const CustomerOrderSummary = (props) => {
 
      
     const fetchPaymentSheetParams = async (walletId) => {
+      
        try {
         const customerData = await getUser();
         
@@ -213,12 +214,14 @@ const CustomerOrderSummary = (props) => {
             deliveryDistance:distancia,
             productsIds:cartProductIds,
         }
+        
         if(!business?.wallet_id) {
             showToaster('La tienda aún no ha configurado la billetera, por lo que no es posible realizar un pedido desde esta tienda');
             props.navigation.goBack()
             return;
         }
-        const response = await axios.post(customer_api_urls?.create_payment_sheet,data);    
+        const response = await axios.post(customer_api_urls?.create_payment_sheet,data); 
+        console.log({response});
         const apiResponse = {
             paymentIntent:response?.data?.paymentIntent,
             ephemeralKey:response?.data?.ephemeralKey,
@@ -247,7 +250,7 @@ const CustomerOrderSummary = (props) => {
           customer,
           publishableKey,
         } = await fetchPaymentSheetParams(walletId);
-    
+ 
         const { error } = await initPaymentSheet({
           customerId: customer,
           customerEphemeralKeySecret: ephemeralKey,
@@ -287,12 +290,7 @@ const CustomerOrderSummary = (props) => {
         }
       };
     
-    //   useEffect(() => {
-    //     initializePaymentSheet();
-    //   }, []);
-
-    //   console.log({costoEnvio,Number(totalAmount)});
-    //   console.log({totalAmount});
+    
     if(isOrderPlaced) {
         return (
             <> 

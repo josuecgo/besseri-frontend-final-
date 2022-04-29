@@ -14,7 +14,7 @@ export const HomePageScreen = ({navigation}) => {
 
 
     const goSignUp = () => {
-        navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.SIGN_UP);
+        navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.SIGN_UP_CUSTOMER);
     }
 
     const goLogin = () => {

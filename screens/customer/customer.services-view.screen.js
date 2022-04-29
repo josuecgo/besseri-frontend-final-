@@ -89,37 +89,11 @@ const CustomerProductsViewScreen = (props) => {
     getServices()
   },[]);
 
-  const CategoryButton = ({ category,onPress }) => {
-    return (
-      <TouchableOpacity onPress={onPress} style={styles.categoryButton}>
-        <Text style={styles.categoryButtonText}>{category}</Text>
-      </TouchableOpacity>
-    )
-  }
-  const OfferCard = ({ img }) => {
-    return (
-      <Image
-        source={{ uri: img }}
-        style={styles.offerCardImg}
-      />
-    )
-  }
+
   return (
     <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.white }}>
       <View style={{ flex: 1 }}>
-        {/* <View style={{ marginTop: '2%', backgroundColor: 'transparent', alignSelf: 'flex-start', flexDirection: 'row' }}>
-         
-          <FlatList
-          data={categories}
-          horizontal
-          keyExtractor={item => item?._id}
-          renderItem={({item}) => (
-            <CategoryButton
-            onPress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.MORE_PRODUCTS,{category:item})}
-            category={item.name} />
-          )}
-          />
-        </View> */}
+       
         
 
         <ScrollView contentContainerStyle={{ flexGrow: 1, marginTop: 20 }}>

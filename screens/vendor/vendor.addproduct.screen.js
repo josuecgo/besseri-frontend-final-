@@ -52,10 +52,11 @@ import {useRoute} from '@react-navigation/native';
 import {adjust, deviceHeight, deviceWidth} from '../../util/Dimentions';
 import {HeaderBackground} from '../../components/Background/HeaderBackground';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { screenFocus, screenFocusProduct, stringIsEmpty } from '../../util/helpers/StatusText';
 const {width, height} = Dimensions.get('screen');
 
 
-const CREDENTIAL_KEYS = {
+export const CREDENTIAL_KEYS = {
   NAME: 'Product name',
   STOCK: 'Product stock',
   DESCRIPTION: 'Description',
@@ -69,7 +70,7 @@ const CREDENTIAL_KEYS = {
   PRODUCT_CATEGORY: 'Product Category',
   PRODUCT_BRAND: 'Product Brand',
 };
-const SCREEN_TYPES = {
+export const SCREEN_TYPES = {
   PRODUCT_NAME: 'Nombre del producto',
   CHOOSE_MAKER: 'Elija el fabricante',
   UPLOAD_IMAGE: 'Subir imagen',
@@ -143,8 +144,7 @@ const VendorAddProductScreen = ({navigation}) => {
   const [selectedSubCategory, setSelectedSubCategory] = useState();
   const [currentScreen, setCurrentScreen] = useState(SCREEN_TYPES.PRODUCT_NAME);
   const isProductNameScreen = currentScreen == SCREEN_TYPES?.PRODUCT_NAME;
-  const isDescriptionScreen =
-    currentScreen == SCREEN_TYPES?.PRODUCT_DESCRIPTION;
+  const isDescriptionScreen = currentScreen == SCREEN_TYPES?.PRODUCT_DESCRIPTION;
   const isPriceScreen = currentScreen == SCREEN_TYPES?.PRODUCT_PRICE;
   const isChooseMaker = currentScreen == SCREEN_TYPES?.CHOOSE_MAKER;
   const isChooseModel = currentScreen == SCREEN_TYPES?.CHOOSE_MODEL;
@@ -174,26 +174,7 @@ const VendorAddProductScreen = ({navigation}) => {
   const onChangeText = (inputText, key) => {
     setInputValues({...inputValues, [key]: inputText});
   };
-  function previousItem() {
-    let object = SCREEN_TYPES;
-    let str = currentScreen;
-    console.log(object, str);
-    let lastKey = '';
-
-    for (const key in object) {
-      if (object.hasOwnProperty(key)) {
-        if (key == str) {
-          lastKey = lastKey || key;
-          let obj = {};
-          obj[lastKey] = object[lastKey];
-          return obj;
-        } else {
-          lastKey = key;
-        }
-      }
-    }
-  }
-
+  
   //Create Brand
 
   const createBrand = async () => {
@@ -319,7 +300,6 @@ const VendorAddProductScreen = ({navigation}) => {
   }, []);
 
   // GETTING MAKERS FOR CREATING PRODUCTS
-
   const getMakers = async () => {
     try {
       setShowLoader(true);
@@ -339,25 +319,6 @@ const VendorAddProductScreen = ({navigation}) => {
     getMakers();
   }, []);
 
-  // useEffect(() => {
-  //   BackHandler.addEventListener('hardwareBackPress', () => {
-  //     if(isUploadImage) setCurrentScreen(SCREEN_TYPES?.PRODUCT_CONDITION);
-  //     if(isProductCondition) setCurrentScreen(SCREEN_TYPES?.CHOOSE_CATEGORY);
-  //     if(isChooseCategory) setCurrentScreen(SCREEN_TYPES?.CHOOSE_MODEL);
-  //     if(isChooseModel) setCurrentScreen(SCREEN_TYPES?.CHOOSE_MAKER);
-  //     if(isChooseMaker) setCurrentScreen(SCREEN_TYPES?.PRODUCT_PRICE);
-  //     if(isPriceScreen) setCurrentScreen(SCREEN_TYPES?.PRODUCT_DESCRIPTION);
-  //     if(isDescriptionScreen) setCurrentScreen(SCREEN_TYPES?.PRODUCT_NAME);
-  //     // if(isProductNameScreen) navigation.goBack()
-  //     // const previousScreen = previousItem();
-  //     // console.log(previousScreen);
-  //     return true
-  //     // setCurrentScreen(previousScreen);
-  //     // return true
-  //   });
-  // }, [])
-
-  //
 
   const commonTextStyle = {
     fontSize: adjust(14),
@@ -369,6 +330,7 @@ const VendorAddProductScreen = ({navigation}) => {
 
   // Creating In screen components here
   const ListCard = ({name, onPress, backgroundColor, selected}) => {
+    
     return (
       <TouchableOpacity
         onPress={onPress}
@@ -433,7 +395,7 @@ const VendorAddProductScreen = ({navigation}) => {
       setCurrentScreen(SCREEN_TYPES?.PRODUCT_SUMMARY);
       setisSummaryMode(true);
       // setUri(image.path);
-      props.onChange?.(image);
+      // props.onChange?.(image);
     });
   };
 
@@ -560,6 +522,43 @@ const VendorAddProductScreen = ({navigation}) => {
     }
   };
 
+  const [pantallaSelect, setpantallaSelect] = useState('')
+    useEffect(() => {
+        setpantallaSelect(screenFocusProduct(currentScreen))
+    }, [currentScreen])
+    
+   
+    const nextPage = () => {
+       
+        if (stringIsEmpty(inputValues[pantallaSelect]) ){
+          setCurrentScreen(
+            isProductNameScreen
+              ? SCREEN_TYPES?.PRODUCT_DESCRIPTION
+              : isDescriptionScreen
+              ? SCREEN_TYPES?.PRODUCT_PRICE
+              : isPriceScreen
+              ? SCREEN_TYPES?.CHOOSE_MAKER
+              : isChooseMaker
+              ? SCREEN_TYPES?.CHOOSE_MODEL
+              : isChooseModel
+              ? SCREEN_TYPES?.CHOOSE_CATEGORY
+              : isChooseCategory
+              ? SCREEN_TYPES?.CHOOSE_SUB_CATEGORY
+              : isSubCategory
+              ? SCREEN_TYPES?.PRODUCT_BRAND
+              : isBrandScreen
+              ? SCREEN_TYPES?.PRODUCT_CONDITION
+              : isProductCondition
+              ? SCREEN_TYPES?.UPLOAD_IMAGE
+              : null,
+          );
+          setProgress(progress + 100 / 8);
+        }else{
+            showToaster('Rellena el campo')
+        }
+  
+    }
+
   return (
     <View style={styles.container}>
       <AddBrandModal
@@ -591,46 +590,6 @@ const VendorAddProductScreen = ({navigation}) => {
           </View>
         </View>
       </View>
-      {/* <View style={styles.header}>
-        <View style={{ ...CommonStyles.flexDirectionRow, ...CommonStyles.horizontalCenter }}>
-          <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.pop()} style={styles.headerIcon}>
-            <MaterialCommunityIcons name='keyboard-backspace' color='white' size={25} />
-          </TouchableOpacity>
-          <View style={{ width: '95%' }}>
-            <Text style={commonTextStyle}>{HEADER_TITLE[currentScreen]}</Text>
-          </View>
-
-        </View>
-        {/* {
-          isChooseCategory || isChooseMaker || isChooseModel || isSubCategory || isBrandScreen ?
-            <View style={styles.searchBarWrapper}>
-              <InputFieldComponent
-                width={'90%'}
-                height={40}
-                marginTop={20}
-                borderRadius={10}
-                icon={
-                  <MaterialIcons
-                    name='search'
-                    size={25}
-                    color={Colors.darker}
-                  />
-                }
-                keyboardType={KEYBOARD_TYPES.DEFAULT}
-                onChangeText={inputText => {
-                  onChangeText(inputText, isProductNameScreen ? inputValues[CREDENTIAL_KEYS.NAME] : isDescriptionScreen ? inputValues[CREDENTIAL_KEYS.DESCRIPTION] : isPriceScreen ? inputValues[CREDENTIAL_KEYS.PRICE] : '');
-                }}
-                placeholderText={isProductNameScreen ? CREDENTIAL_KEYS.NAME : isDescriptionScreen ? CREDENTIAL_KEYS?.DESCRIPTION : isPriceScreen ? CREDENTIAL_KEYS?.PRICE : ''}
-                secureTextEntry={false}
-                value={isProductNameScreen ? inputValues[CREDENTIAL_KEYS.NAME] : isDescriptionScreen ? inputValues[CREDENTIAL_KEYS.DESCRIPTION] : isPriceScreen ? inputValues[CREDENTIAL_KEYS.PRICE] : ''}
-                returnType="next"
-                color={Colors.dark}
-              />
-            </View>
-            :
-            null
-        } */}
-      {/* </View>  */}
       <View
             style={{
             width: `${progress}%`,
@@ -773,6 +732,11 @@ const VendorAddProductScreen = ({navigation}) => {
                       }
                       if (isBrandScreen) {
                         setselectedBrand(itemData?.item);
+                        setInputValues({
+                          ...inputValues,
+                          [CREDENTIAL_KEYS.PRODUCT_BRAND]:
+                            itemData.item,
+                        });
                       }
                     }}
                     name={itemData.item.name}
@@ -786,7 +750,7 @@ const VendorAddProductScreen = ({navigation}) => {
             <View>
               <ListCard
                 selected={
-                  inputValues[CREDENTIAL_KEYS.PRODUCT_CONDITION] == 'Nuevo'
+                  inputValues[CREDENTIAL_KEYS.PRODUCT_CONDITION] == 'New'
                 }
                 onPress={() => {
                   onChangeText('New', CREDENTIAL_KEYS.PRODUCT_CONDITION);
@@ -795,7 +759,7 @@ const VendorAddProductScreen = ({navigation}) => {
               />
               <ListCard
                 selected={
-                  inputValues[CREDENTIAL_KEYS.PRODUCT_CONDITION] == 'Usado'
+                  inputValues[CREDENTIAL_KEYS.PRODUCT_CONDITION] == 'Used'
                 }
                 onPress={() => {
                   onChangeText('Used', CREDENTIAL_KEYS.PRODUCT_CONDITION);
@@ -805,7 +769,7 @@ const VendorAddProductScreen = ({navigation}) => {
               <ListCard
                 selected={
                   inputValues[CREDENTIAL_KEYS.PRODUCT_CONDITION] ==
-                  'Reacondicionado'
+                  'Reconditioned'
                 }
                 onPress={() => {
                   onChangeText(
@@ -981,28 +945,7 @@ const VendorAddProductScreen = ({navigation}) => {
                   if (currentScreen == SCREEN_TYPES?.CHOOSE_SUB_CATEGORY) {
                     getSubCategories();
                   }
-                  setCurrentScreen(
-                    isProductNameScreen
-                      ? SCREEN_TYPES?.PRODUCT_DESCRIPTION
-                      : isDescriptionScreen
-                      ? SCREEN_TYPES?.PRODUCT_PRICE
-                      : isPriceScreen
-                      ? SCREEN_TYPES?.CHOOSE_MAKER
-                      : isChooseMaker
-                      ? SCREEN_TYPES?.CHOOSE_MODEL
-                      : isChooseModel
-                      ? SCREEN_TYPES?.CHOOSE_CATEGORY
-                      : isChooseCategory
-                      ? SCREEN_TYPES?.CHOOSE_SUB_CATEGORY
-                      : isSubCategory
-                      ? SCREEN_TYPES?.PRODUCT_BRAND
-                      : isBrandScreen
-                      ? SCREEN_TYPES?.PRODUCT_CONDITION
-                      : isProductCondition
-                      ? SCREEN_TYPES?.UPLOAD_IMAGE
-                      : null,
-                  );
-                  setProgress(progress + 100 / 8);
+                  nextPage()
                 }
               }}
             />

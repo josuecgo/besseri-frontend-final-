@@ -1,6 +1,6 @@
 export const env = 'prod';
-export const base_url = env == 'prod' ? 'https://api.besseri.mx' : env == 'dev' ?  'https://besseri-apis.herokuapp.com' : 'http://192.168.10.10:5001';
-// export const base_url = 'http://192.168.1.13:3005'
+// export const base_url = env == 'prod' ? 'https://api.besseri.mx' : env == 'dev' ?  'https://besseri-apis.herokuapp.com' : 'http://192.168.10.10:5001';
+export const base_url = 'http://192.168.1.18:3005'
 export const api_urls = {
     registration:`${base_url}/user/signup`,
     login:`${base_url}/user/login`,
@@ -15,6 +15,7 @@ export const paymentApis = {
 }
 export const vendor_api_urls = {
     business_profile:`${base_url}/business/get-mystore`,
+    business_profile_detail:`${base_url}/business/get-business-details`,
     get_products:`${base_url}/products/get-my-products`,
     create_product:`${base_url}/products/create-product`,
     get_models:`${base_url}/modals/get-models`,
@@ -77,6 +78,7 @@ export const rider_api_urls = {
     change_order_status:`${base_url}/rider/change-order-status`,
     get_earnings:`${base_url}/rider/get-rider-earnings`,
     create_stripe_account:`${base_url}/payments/create-rider-account`
+
 }
 export const api_statuses = {
     success:200

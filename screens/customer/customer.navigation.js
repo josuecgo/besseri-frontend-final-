@@ -24,6 +24,7 @@ import CustomerProductDetailScreen from './customer.productdetail.screen';
 import { iniciar } from './customer.iniciar.screen';
 import LoginScreen from '../login.screen';
 import SignUpScreen from '../sign-up.screen';
+import SignUpScreenCustomer from '../sign-up.screen-customer';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -51,7 +52,7 @@ export const PartsServicesFunctionsDrawer = () => {
         options={{
           headerShown: true,
           header: props => (
-            <CustomHeaderComponent {...props} name="Services" isService={true} showSearch={true} />
+            <CustomHeaderComponent {...props} name="Servicios" isService={true} showSearch={true} />
           ),
         }}
       />
@@ -172,6 +173,10 @@ export const CustomerHomeStack = () => {
       <Stack.Screen
         name={LOGIN_SIGNUP_FORGOT_ROUTES.SIGN_UP}
         component={SignUpScreen}
+      />
+      <Stack.Screen
+        name={LOGIN_SIGNUP_FORGOT_ROUTES.SIGN_UP_CUSTOMER}
+        component={SignUpScreenCustomer}
       />
     </Stack.Navigator>
   );

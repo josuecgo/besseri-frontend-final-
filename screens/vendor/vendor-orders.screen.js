@@ -16,6 +16,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { moneda } from '../../util/Moneda';
 import TopCircleComponent from '../../components/top-circle/top-circle.component';
 import { deviceHeight } from '../../util/Dimentions';
+import { TranslateStatus } from '../../util/helpers/StatusText';
 
 const VendorOrdersScreen = ({navigation, route}) => {
   const isFocused = useIsFocused();
@@ -74,22 +75,7 @@ const VendorOrdersScreen = ({navigation, route}) => {
   //   [ORDER_STATUSES.PACKED]: '#6c757d',
   //   [ORDER_STATUSES.CANCELLED]: '#dc3545',
   // };
-  const configTexto = (e) => {
-    let texto;
-    switch (e) {
-      case 'ON_GOING':
-        return texto = 'En Curso';
-      case 'PENDING':
-        return texto = 'Pendiente';
-      case 'CANCELLED':
-        return texto = 'Cancelado';
-      case 'COMPLETED':
-        return texto = 'Terminado';
-      default:
-        return texto = 'Sin datos';
-        
-    }
-  }
+
 
   return (
     <View style={{flex:1,backgroundColor:Colors.bgColor}}> 
@@ -134,7 +120,7 @@ const VendorOrdersScreen = ({navigation, route}) => {
                 <Text style={{...CommonStyles.fontFamily}}>{moment(item?.booked_on).format('DD-MM-YYYY hh:mm A')}</Text>
             </View>
             <View>
-              <Text style={{...CommonStyles.fontFamily,fontSize:15,paddingVertical:5,color:STATUSES_COLORS[item?.booking_status_code]}}>{configTexto(item?.booking_status_code)}</Text>
+              <Text style={{...CommonStyles.fontFamily,fontSize:15,paddingVertical:5,color:STATUSES_COLORS[item?.booking_status_code]}}>{TranslateStatus(item?.booking_status_code)}</Text>
                   <Text style={{...CommonStyles.fontFamily,fontSize:15,paddingVertical:5}}>Timing - {moment(item?.date).format('DD-MM-YY')}-{moment(item?.time).format('hh:mm A')}</Text>
                   <View style={{...CommonStyles.flexDirectionRow,...CommonStyles.justifySpaceBetween,...CommonStyles.horizontalCenter}}>
                       <Text style={{fontSize:15,...CommonStyles.fontFamily}}>service: {item?.service?.name}</Text>

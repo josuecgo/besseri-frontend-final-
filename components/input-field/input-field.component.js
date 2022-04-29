@@ -29,7 +29,7 @@ const InputFieldComponent = forwardRef(
   ) => {
     const [isFocused, setFocused] = useState();
     const [isValidated, setIsValidated] = useState(true);
-
+    
     const onBlur = () => {
       if (!validator) {
         return;

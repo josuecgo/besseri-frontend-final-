@@ -17,7 +17,7 @@ import CustomSafeAreaViewComponent from '../components/custom-safe-area-view/cus
 import TopCircleComponent from '../components/top-circle/top-circle.component';
 import SideOptionComponent from '../components/top-circle/side-option.component';
 import BottomContentComponent from '../components/bottom-content/bottom-content.component';
-import {emailValidator, passwordValidator} from '../util/validations';
+import {emailValidator,generalNonEmptyValidator} from '../util/validations';
 import { api_statuses, api_urls, customer_api_urls, rider_api_urls, vendor_api_urls } from '../util/api/api_essentials';
 import axios from 'axios';
 import Loader from '../components/Loader/Loader.component';
@@ -216,8 +216,8 @@ const LoginScreen = ({navigation}) => {
                             secureTextEntry={true}
                             ref={passwordRef}
                             returnType="default"
-                            validator={passwordValidator}
-                            hintText="Por favor ingresa una contraseña valida   "
+                            validator={generalNonEmptyValidator}
+                            hintText="Por favor ingresa una contraseña valida"
                             />
 
                             <View style={{alignSelf:'flex-end'}} >
@@ -242,7 +242,7 @@ const LoginScreen = ({navigation}) => {
                             <Text>¿No tienes una cuenta? </Text>
                             <Text
                                 onPress={() => {
-                                navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.SIGN_UP);
+                                navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.SIGN_UP_CUSTOMER);
                                 }}
                                 style={styles.signUpText}>
                                 Regístrate

@@ -8,6 +8,7 @@ export const LOGIN_SIGNUP_FORGOT_ROUTES = {
   HOMEPAGE: 'HomePageScreen',
   LOGIN: 'LOGIN',
   SIGN_UP: 'SIGN_UP',
+  SIGN_UP_CUSTOMER: 'SIGN_UP_CUSTOMER',
   FORGOT_PASSWORD: 'FORGOT_PASSWORD',
   VENDOR_SIGN_UP: 'Business',
   SERVICE_PROVIDER_SIGN_UP: 'Service Provider',
@@ -50,6 +51,7 @@ export const VENDOR_DETAILS_ROUTES = {
   VENDOR_PROFILE:'Vendor Profile',
   VENDOR_PROFILE_DETAIL:'Vendor Profile Detail',
   VENDOR_SETTINGS:'Vendor Setting',
+  VENDOR_EDIT_PROFILE:'Vendor Edit Profile',
   CREATE_PRODUCT:'Create Product',
   CREATE_SERVICE:'Create Service',
   BUSINESS_LOCATION:'Business Location'
@@ -163,7 +165,7 @@ export const showToaster = (message) => {
   if (Platform.OS === 'ios') {
     Alert.alert(message)
   }else{
-    ToastAndroid.showWithGravity(message,ToastAndroid.LONG,ToastAndroid.CENTER)
+    ToastAndroid.showWithGravity(message,ToastAndroid.SHORT,ToastAndroid.CENTER)
 
   }
 }

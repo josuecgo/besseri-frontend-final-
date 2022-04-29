@@ -13,7 +13,7 @@ import {vendor_api_urls} from '../../util/api/api_essentials';
 import LoaderComponent from '../../components/Loader/Loader.component';
 import { getBusinessId, getUserId } from '../../util/local-storage/auth_service';
 import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import { HeaderBackground } from '../../components/Background/HeaderBackground';
 import { moneda } from '../../util/Moneda';
 

@@ -24,8 +24,8 @@ const CustomHeaderComponent = props => {
   const cart_items = useSelector(state => state.cart.cart_items);
   const searchRef = useRef();
   
-
- 
+  
+  
   const goCart = async() => {
     const user_id = await getUserId();
     
@@ -86,7 +86,7 @@ const CustomHeaderComponent = props => {
         <InputFieldComponent
           ref={searchRef}
           onFocus={() =>
-            props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES?.SEARCH)
+            props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES?.SEARCH,{isService:props.isService})
           }
           icon={
             <Ionicons

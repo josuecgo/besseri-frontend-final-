@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import CommonStyles from '../../util/styles/styles';
+
 import Colors from '../../util/styles/colors';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
-import {CUSTOMER_HOME_SCREEN_ROUTES} from '../../util/constants';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import {CUSTOMER_HOME_SCREEN_ROUTES , showToaster} from '../../util/constants';
+
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { getUser, logout } from '../../util/local-storage/auth_service';
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import LoaderComponent from '../Loader/Loader.component';
-import { useSelector } from 'react-redux';
+
 import { HeaderBackground } from '../Background/HeaderBackground';
 import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
 
@@ -51,12 +48,13 @@ const CustomDrawerComponent = (props) => {
   
   const getUserData = async() => {
     const user = await getUser();
+
     setUser(user)
     // setUser(user);
   }
   useEffect(() => {
     getUserData()
-  },[]);
+  },[user]);
   // const getUserDetails = async() => {
   //   const userData = await getUser();
   //   setUser(userData);
@@ -65,6 +63,23 @@ const CustomDrawerComponent = (props) => {
   //   getUserDetails();
   // },[]);
 
+  const goDrawer = (name) => {
+    if (user) {
+      navigation.navigate(name);
+    } else {
+      switch (name) {
+      case 'Pedidos':
+        return navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR);
+       
+      case 'Reservaciones' :
+        return navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR);
+      default:
+        return navigation.navigate(name);
+        
+    }
+    }
+    
+  }
   
   return (
     <DrawerContentScrollView>
@@ -92,7 +107,7 @@ const CustomDrawerComponent = (props) => {
               }
               label={name}
               onPress={() => {
-                navigation.navigate(name);
+                goDrawer(name);
               }}
               focused={focusedRoute === name}
             />
@@ -104,7 +119,8 @@ const CustomDrawerComponent = (props) => {
           onPress={async() => {
             
             await logout();
-            props.navigation.replace('AuthStack');
+            props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS,{reload:true});
+            showToaster('Cerraste sesión')
           }}
           label="Logout"
           activeTintColor={Colors.red}

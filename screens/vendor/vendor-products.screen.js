@@ -18,6 +18,7 @@ const VendorProductsScreen = ({navigation, route}) => {
   const isFocused = useIsFocused();
   const [business,setBusinessDetails] = useState(null);
   const business_profile = useSelector(state => state?.businessActions);
+
   const floatButtonHandler = () => {
     if(!business?.location?.latitude || !business?.location?.longitude || !business?.location?.city || !business?.location?.state) {
       showToaster('Su ubicación no está configurada completamente, configúrela desde la configuración');
@@ -75,33 +76,14 @@ const VendorProductsScreen = ({navigation, route}) => {
         isVisible={showLoader}
         />
       <View style={{marginBottom: Platform.OS == 'ios' ? 80 : 50}} >
-        {/* <FlatList
-        data={products}
-        keyExtractor={item => item?._id}
-        renderItem={({item}) => {
-          return (
-            <ProductComponent
-            data={item}
-            openProductDetails={openProductDetails}
-            // productId={item?._id}
-            // productImage={personMockImage}
-            // productStatus={PRODUCT_STATUS.IN_STOCK}
-            // openProductDetails={openProductDetails}
-          />
-          )
-        }}
-        /> */}
+    
         {products.map((item) => {
-          console.log(item);
+          
           return (
             <View style={styles.card} key={item._id} >
               <ProductComponent
               data={item}
               openProductDetails={openProductDetails}
-              // productId={item?._id}
-              // productImage={personMockImage}
-              // productStatus={PRODUCT_STATUS.IN_STOCK}
-              // openProductDetails={openProductDetails}
               />
             </View>
             
@@ -109,7 +91,7 @@ const VendorProductsScreen = ({navigation, route}) => {
         })}
         <View style={{height:deviceHeight * 0.11}} />
       </View>
-      {/*<AllEmptyComponent />*/}
+     
     </VendorScreenContainerComponent>
   );
 };

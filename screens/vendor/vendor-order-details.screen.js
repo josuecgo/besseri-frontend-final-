@@ -25,6 +25,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import TopCircleComponent from '../../components/top-circle/top-circle.component';
 import { moneda } from '../../util/Moneda';
 import { adjust } from '../../util/Dimentions';
+import { TranslateStatus } from '../../util/helpers/StatusText';
 
 
 export const CustomText = ({text, isData = false, numberOfLines = null}) => {
@@ -168,7 +169,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
     setorderStatusCode(val);
   }
   
-
+  console.log(order?.order_status_code);
   return (
     <View contentContainerStyle={{flexGrow: 1}}>
       <LoaderComponent isVisible={loading} />
@@ -198,8 +199,9 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
               ...CommonStyles.fontFamily,
               color: STATUSES_COLORS[order?.order_status_code],
             }}>
-            {order?.order_status}
+            {TranslateStatus(order?.order_status_code)}
           </Text>
+          
         </View>
 
         <View

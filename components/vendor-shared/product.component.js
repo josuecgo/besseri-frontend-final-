@@ -8,6 +8,7 @@ import { base_url } from '../../util/api/api_essentials';
 import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
 import { moneda } from '../../util/Moneda';
 
+
 const ProductComponent = ({ data,openProductDetails }) => {
   return (
     <Pressable

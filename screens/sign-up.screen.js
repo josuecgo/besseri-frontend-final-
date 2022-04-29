@@ -17,7 +17,7 @@ import { deviceHeight } from '../util/Dimentions';
 
 const AVAILABLE_ROLES = [
   {roleName: ROLES.BUSINESS,text:'NEGOCIO',bgColor:Colors.primarySolid},
-  {roleName: ROLES.CUSTOMER,text:'CLIENTE',bgColor:Colors.terciarySolid},
+  // {roleName: ROLES.CUSTOMER,text:'CLIENTE',bgColor:Colors.terciarySolid},
   {roleName: ROLES.RIDER,text:'REPARTIDOR',bgColor:Colors.secundarySolid},
 ];
 

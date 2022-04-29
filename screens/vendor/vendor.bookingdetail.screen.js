@@ -39,6 +39,9 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import moment from 'moment';
 import {adjust, deviceHeight} from '../../util/Dimentions';
 import {HeaderBackground} from '../../components/Background/HeaderBackground';
+import { TranslateStatus } from '../../util/helpers/StatusText';
+
+
 const VendorBookingDetail = props => {
   const {width, height} = useWindowDimensions();
   const [loading, setLoading] = useState(false);
@@ -46,6 +49,8 @@ const VendorBookingDetail = props => {
   const totalAmount = Number(params.booking.total_amount);
   const [booking, setBooking] = useState(params.booking);
   
+  
+
   const confirmationAlert = (head, detail, status, code) => {
     Alert.alert(head, detail, [
       {text: 'No'},
@@ -71,7 +76,7 @@ const VendorBookingDetail = props => {
       }
     } catch (e) {
       setLoading(false);
-      showToaster('Something went wrong');
+      showToaster('Algo salió mal');
       console.log(e.response);
     }
   };
@@ -96,21 +101,7 @@ const VendorBookingDetail = props => {
     }
   };
 
-  const configTexto = e => {
-    let texto;
-    switch (e) {
-      case 'On Going':
-        return (texto = 'En Curso');
-      case 'Pending':
-        return (texto = 'Pendiente');
-      case 'Cancelled':
-        return (texto = 'Cancelado');
-      case 'Completed':
-        return (texto = 'Terminado');
-      default:
-        return (texto = 'Sin datos');
-    }
-  };
+  
 
   const DetailItem = ({label, value, orderStatus}) => {
     return (
@@ -164,7 +155,7 @@ const VendorBookingDetail = props => {
               ? STATUSES_COLORS[booking?.booking_status_code]
               : 'black',
           }}>
-          {configTexto(value)}
+          {TranslateStatus(value)}
         </Text>
       </View>
     );
@@ -381,6 +372,8 @@ const VendorBookingDetail = props => {
                   'Completed',
                   'COMPLETED',
                 );
+              }else{
+                 Linking.openURL(`mailto:${booking.user.email}?subject=Envio de Facura`)
               }
             }}
             buttonText={

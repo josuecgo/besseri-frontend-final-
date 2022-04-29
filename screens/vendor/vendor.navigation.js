@@ -28,6 +28,7 @@ const BottomTab = createBottomTabNavigator();
 import ShareServiceDetail from '../servicedetail.sharescreen';
 import VendorBookingDetail from './vendor.bookingdetail.screen';
 import VendorLocationScreen from './vendor.businessLocation'
+import { EditProfile } from './vendor-edit-profile';
 export const VendorNavigation = () => {
   return (
     <BottomTab.Navigator
@@ -159,6 +160,14 @@ const ProfileNavigator = () => {
        <ProfileStack.Screen
         name={VENDOR_DETAILS_ROUTES.BUSINESS_LOCATION}
         component={VendorLocationScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <ProfileStack.Screen
+        name={VENDOR_DETAILS_ROUTES.VENDOR_EDIT_PROFILE}
+        component={EditProfile}
         options={{
           headerShown: false,
         }}

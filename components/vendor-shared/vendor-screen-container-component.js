@@ -1,37 +1,34 @@
 import React from 'react';
 import {
-  Image,
   ScrollView,
   StyleSheet,
   Text,
-  useWindowDimensions,
+
   View,
 } from 'react-native';
 import {SCREEN_HORIZONTAL_MARGIN} from '../../util/constants';
 import CommonStyles from '../../util/styles/styles';
 import Colors from '../../util/styles/colors';
 import FloatingActionButtonComponent from '../button/floating-action-button.component';
-import { base_url } from '../../util/api/api_essentials';
+
 import { HeaderBackground } from '../Background/HeaderBackground';
 import { adjust, deviceHeight } from '../../util/Dimentions';
-import TopHeader from '../Background/TopHeader';
 
 const VendorScreenContainerComponent = ({
   date,
   screenHeading,
-  showHeader,
-  imageSource,
+ 
   children,
   floatButtonHandler,
   needFloatingActionButton = false,
-  business
+  
 }) => {
-  const {height} = useWindowDimensions();
+  
 
   return (
-    <View style={[CommonStyles.flexDirectionColumn,{borderRadius:0,flex:1,backgroundColor:Colors.bgColor}]}>
+    <View style={[CommonStyles.flexDirectionColumn,{borderRadius:0,flex:1}]}>
       <HeaderBackground/>
-      <View>
+      <View style={{flex:1}} >
 
             <View style={{
               alignItems:'center',
@@ -50,7 +47,9 @@ const VendorScreenContainerComponent = ({
 
 
         {needFloatingActionButton ? (
+          
           <FloatingActionButtonComponent handler={floatButtonHandler} />
+         
         ) : null}
          <ScrollView showsVerticalScrollIndicator={false} >{children}</ScrollView> 
       </View>
@@ -72,6 +71,11 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 50 / 2,
   },
+  btnFloat:{
+   
+    flex:1
+  }
+ 
 });
 
 export default VendorScreenContainerComponent;

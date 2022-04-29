@@ -13,20 +13,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import { moneda } from '../../util/Moneda';
 
 const ServiceListing = ({category,services,navigation,comision}) => {
-    const {width} = useWindowDimensions()
-//   const dispatch = useDispatch();
-//   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
-//   const addItemToCart = (item) => {
-//     if(cartProductIds.includes(item?._id)) {
-//       dispatch(CartActions.removeItemFromCart(item));
-//       return;
-//     }
-//     dispatch(CartActions.addItemToCart({
-//       ...item,
-//       quantity:1
-//     }))
-//   }
-  
+
+    console.log(services[0]);
   return (
     <View style={styles.container}>
         <View style={styles.buttonAndTextContainer}>
@@ -65,6 +53,7 @@ const ServiceListing = ({category,services,navigation,comision}) => {
                style={styles.LinearGradient}
               >
                 <Text style={styles.productTitle}>{item?.name}</Text>
+                <Text style={styles.productTitle}>{item?.makers[0].name}</Text>
                 <Text style={styles.category}>{item?.category?.name}</Text>
                 <Text style={styles.productPrice}>MXN {moneda( Number(item?.price)+ Number(comision) *Number(item?.price) / 100 )}</Text>
                 

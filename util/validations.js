@@ -16,7 +16,7 @@ export const generalNonEmptyValidator = text => {
 };
 
 export const passwordValidator = password => {
-  const regex =
-    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$/;
+  const regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$/;
+  
   return regex.test(password);
 };

@@ -4,6 +4,7 @@ import {ORDER_STATUSES, PRODUCT_STATUS} from '../../util/constants';
 import CommonStyles from '../../util/styles/styles';
 import Colors from '../../util/styles/colors';
 import { adjust } from '../../util/Dimentions';
+import { TranslateStatus } from '../../util/helpers/StatusText';
 
 const STATUSES_COLORS = {
   [ORDER_STATUSES.PROCESSING]: '#007bff',
@@ -13,22 +14,7 @@ const STATUSES_COLORS = {
 };
 
 const VendorBadgeComponent = ({orderStatus}) => {
-  const configText = (e) => {
-    let text;
-
-    switch (e) {
-      case 'PARCEL DELIVERED':
-        return text = 'PAQUETE ENTREGADO';
-      case 'PACKED':
-          return text = 'EMPACADO';
-
-      case undefined:
-        return text = 'Sin datos'
-      default:
-        return text = 'Sin datos'
-        
-    }
-  }
+  
 
   return (
     <View
@@ -37,7 +23,7 @@ const VendorBadgeComponent = ({orderStatus}) => {
         CommonStyles.flexCenter,
         {backgroundColor: STATUSES_COLORS[orderStatus]},
       ]}>
-      <Text style={[styles.text, CommonStyles.fontFamily]}>{configText(orderStatus)}</Text>
+      <Text style={[styles.text, CommonStyles.fontFamily]}>{TranslateStatus(orderStatus)}</Text>
     </View>
   );
 };
@@ -48,10 +34,11 @@ const styles = StyleSheet.create({
     minWidth: 110,
     minHeight: 30,
     borderRadius: 20,
+    
   },
   text: {
     color: Colors.white,
-    fontSize: adjust(10),
+    fontSize: adjust(9),
   },
 });
 

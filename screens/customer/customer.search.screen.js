@@ -25,7 +25,8 @@ const CustomerSearchScreen = (props) => {
   const dispatch = useDispatch()
   const [selectedTab,setSelectedTab] = useState('Products');
   const {params} = useRoute();
-  const isServices = params?.isServices;
+  // const isServices = props.route.params.isService;
+  const isServices = false;
   const isProductTab = selectedTab == 'Products';
   const isServicesTab  = selectedTab == 'Services';
   const isStoresTab = selectedTab == 'Stores';
@@ -33,13 +34,26 @@ const CustomerSearchScreen = (props) => {
   const [productsData,setProductsData] = useState(null);
   const [servicesData,setServicesData] = useState(null);
   const [loading,setLoading] = useState(false);
-
+  const [comision, setComision] = useState(0)
   
+  
+  useEffect(() => {
+    getComision();
+  }, [])
+  
+ 
+  const getComision = async() => {
+    const getFee = await axios.get(customer_api_urls?.get_fees);
+      
+    setComision(getFee.data.data[0]?.besseri_comission);
+
+  }
 
   const searchCall = async(st) => {
+      
       try 
       {
-          setLoading(true);
+      setLoading(true);
        if(isServices) {
         const apiCall = await axios.post(customer_api_urls?.service_search,{
           searchText:st,
@@ -47,7 +61,7 @@ const CustomerSearchScreen = (props) => {
       setServicesData(apiCall.data.Data);
       setLoading(false);
 
-       } else {
+      } else {
         const apiCall = await axios.post(customer_api_urls?.search_api,{
           searchText:st,
       });
@@ -73,6 +87,7 @@ const CustomerSearchScreen = (props) => {
       quantity:1
     }))
   }
+
   return (
     <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.white }}>
       <HeaderBackground/>
@@ -113,23 +128,7 @@ const CustomerSearchScreen = (props) => {
                /> : null}
          </View>
        </View>
-       {/* <View style={{flexDirection:'row',alignItems:'center',marginTop:'7%'}}>
-           <Pressable onPress={() => setSelectedTab('Products')} style={[styles.tabStyle,{
-               borderBottomColor:isProductTab ? Colors.primaryColor : 'white'
-           }]}>
-               <Text>Products</Text>
-           </Pressable>
-           <Pressable onPress={() => setSelectedTab('Services')} style={[styles.tabStyle,{
-               borderBottomColor:isServicesTab ? Colors.primaryColor : 'white'
-           }]}>
-               <Text>Services</Text>
-           </Pressable>
-           <Pressable onPress={() => setSelectedTab('Stores')} style={[styles.tabStyle,{
-               borderBottomColor:isStoresTab ? Colors.primaryColor : 'white'
-           }]}>
-               <Text>Stores</Text>
-           </Pressable>
-       </View> */}
+
       </View>
       <FlatList
       data={isServices ? servicesData : productsData}
@@ -142,7 +141,7 @@ const CustomerSearchScreen = (props) => {
             props?.navigation?.navigate(SHARED_ROUTES.SERVICE_DETAIL,{
               service:itemData?.item,
               isVendor:false,
-              comision:10
+              comision:comision
             });
           }}
            data={itemData?.item} horizontal={true}/>
@@ -153,7 +152,7 @@ const CustomerSearchScreen = (props) => {
           onViewDetail={() => {
             props?.navigation?.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL,{
               product:itemData.item,
-              comision:10
+              comision:comision
             });
           }}
           onAddToCart={() => addItemToCart(itemData.item)} data={itemData?.item} horizontal={true}/>

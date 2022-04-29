@@ -3,7 +3,7 @@ import {Dimensions, Image,Text, StyleSheet, TouchableOpacity, View} from 'react-
 import CommonStyles from '../../util/styles/styles';
 import Colors from '../../util/styles/colors';
 import { ThinlineSeparator,MenuItem, Heading, OrderCard } from '../../components/CommonComponents';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -16,6 +16,7 @@ import { adjust, deviceHeight } from '../../util/Dimentions';
 
 
 import { HeaderBackground } from '../../components/Background/HeaderBackground';
+import { VENDOR_DETAILS_ROUTES } from '../../util/constants';
 
 const VendorProfileDetailScreen = ({navigation, route}) => {
   const [showLoader,setShowLoader] = useState(false);
@@ -42,7 +43,7 @@ const VendorProfileDetailScreen = ({navigation, route}) => {
     <View
       style={styles.header}
     > 
-      <View style={{flexDirection:'row',flex:1,paddingLeft:10}} >
+      <View style={{flexDirection:'row'}} >
         <TouchableOpacity onPress={() => navigation.pop()}>
             <MaterialCommunityIcons name='keyboard-backspace' color={Colors.white} size={30}/>
         </TouchableOpacity>
@@ -53,49 +54,37 @@ const VendorProfileDetailScreen = ({navigation, route}) => {
         
       </View>
 
-      <View style={{flex:2}}>
-        <Text style={{color:Colors.white, fontSize:adjust(17), marginLeft:20}} >Perfil</Text>
+      <View>
+        <Text style={{color:Colors.white, fontSize:adjust(17)}} >Perfil</Text>
       </View>
+      <TouchableOpacity onPress={() => navigation.navigate(VENDOR_DETAILS_ROUTES.VENDOR_EDIT_PROFILE,{business})}>
+        <AntDesign name='setting' color={Colors.white} size={27}/>
+      </TouchableOpacity>
     
     </View>
 
-    <View style={styles.profileBgBanner}>
+    <View>
      <Image
      source={{uri:`${base_url}/${business?.logo}`}}
-     style={styles.profileImg}
+     style={styles.profileBgBanner}
      />
+    
     </View>
 
     <View style={styles.bottomBodyWrapper}>
         <Text style={styles.storeNameText}>{profile?.storeName}</Text>
-        {/* <Text style={styles.description}>We are an autoparts selling company, selling autoparts since 1990, we have proven that we provide quality product in a resonable price, our return policies and customer trust is known in world.</Text> */}
         <View>
-            {/* <ThinlineSeparator margin={15} width={'95%'}/>
-           <View style={styles.ordersCardsWrapper}>
-           <OrderCard
-            label='Pending'
-            count='5'
-            />
-            <OrderCard
-            label='Current'
-            count='5'
-            />
-            <OrderCard
-            label='Cancelled'
-            count='5'
-            />
-           </View> */}
-           <ThinlineSeparator margin={15} width={'95%'}/>
-           <Heading
+          <ThinlineSeparator margin={15} width={'95%'}/>
+          <Heading
            text='Datos de contacto'
-           />
-           <Text style={commonTextStyle}>{profile?.email}</Text>
-           <ThinlineSeparator margin={15} width={'95%'}/>
-           <Heading text='Dirección del sitio'/>
+          />
+          <Text style={commonTextStyle}>{profile?.email}</Text>
+          <ThinlineSeparator margin={15} width={'95%'}/>
+          <Heading text='Dirección del sitio'/>
           
           <View style={styles.locationBox}>
-           <Entypo name='location-pin' color='red' size={30}/>
-           <Text style={CommonStyles.fontWeight300}>{profile?.address}</Text>
+            <Entypo name='location-pin' color='red' size={30}/>
+            <Text style={CommonStyles.fontWeight300}>{profile?.address}</Text>
           </View> 
 
            
@@ -119,9 +108,9 @@ const styles = StyleSheet.create({
    width:'100%',
    height:Platform.OS == 'ios' ? deviceHeight *0.15 : deviceHeight * 0.10,   
    ...CommonStyles.flexDirectionRow,
-  //  ...CommonStyles.justifySpaceBetween,
+   ...CommonStyles.justifySpaceBetween,
    ...CommonStyles.horizontalCenter,
-  //  paddingHorizontal:10
+   paddingHorizontal:10
 
  },
  profileBtn:{
@@ -152,13 +141,13 @@ const styles = StyleSheet.create({
      borderWidth:1,
      borderColor:'transparent',
      borderRadius:100/2,
-     position:'absolute',
-     bottom:-40,
+    //  position:'absolute',
+    //  bottom:-40,
      alignSelf:'center',
      resizeMode:'cover'
  },
  storeNameText:{
-     fontSize:17,
+     fontSize:adjust(17),
      ...CommonStyles.fontFamily,
      textAlign:'center'
  },

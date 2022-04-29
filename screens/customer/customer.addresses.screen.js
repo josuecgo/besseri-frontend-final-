@@ -109,8 +109,7 @@ const CustomerAddressesScreen = (props) => {
                 longitude:currentLongitude
             })
           },
-          (error) => alert(error.message),
-          { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+          
         );
         const watchID = Geolocation.watchPosition((position) => {
           const currentLatitude = JSON.stringify(position.coords.latitude);
@@ -209,7 +208,7 @@ const CustomerAddressesScreen = (props) => {
     }
 
 
-
+    
     
     return (
     <View style={{flex:1,backgroundColor:'white'}}>
@@ -277,21 +276,37 @@ const CustomerAddressesScreen = (props) => {
          </View>
          </View>
          :
-         <FlatList
-         data={addresses}
-         keyExtractor={item => item?._id}
-         renderItem={itemData => (
-             <AddressComponent
-             info={itemData.item.info}
-             phone={itemData.item.phone}
-             onPress={() => {
-                 setEditMode(true);
-                 setSelectedAddress(itemData.item)
-                 handleModalize('open')
-             }}
-             addressLine={itemData.item.addressLine} label={itemData.item.label}/>
-         )}
-         />
+        //  <FlatList
+        //  data={addresses}
+        //  keyExtractor={item => item?._id}
+        //  renderItem={itemData => (
+            // <AddressComponent
+            // info={itemData.item.info}
+            // phone={itemData.item.phone}
+            // onPress={() => {
+            //     setEditMode(true);
+            //     setSelectedAddress(itemData.item)
+            //     handleModalize('open')
+            // }}
+            // addressLine={itemData.item.addressLine} label={itemData.item.label}/>
+        //  )}
+        //  />
+        addresses.map((item) => (
+            <View key={item._id} >
+                <AddressComponent
+                info={item.info}
+                phone={item.phone}
+                onPress={() => {
+                    setEditMode(true);
+                    setSelectedAddress(item)
+                    handleModalize('open')
+                }}
+                addressLine={item.addressLine} label={item.label}/>
+            </View>
+        ))
+        
+        
+        
      }
      </ScrollView>
       
