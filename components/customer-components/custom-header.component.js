@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -19,11 +19,29 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {adjust, deviceHeight, deviceWidth} from '../../util/Dimentions';
 import {HeaderBackground} from '../Background/HeaderBackground';
 import { getUserId } from '../../util/local-storage/auth_service';
+import axios from 'axios';
+import { customer_api_urls } from '../../util/api/api_essentials';
 const CustomHeaderComponent = props => {
   const [searchValue, setSearchValue] = useState('');
   const cart_items = useSelector(state => state.cart.cart_items);
   const searchRef = useRef();
+  const [comision, setComision] = useState(0)
+
+  useEffect(() => {
+    let abortController = new AbortController();  
+    getComision(); 
+    return () => {  
+    abortController.abort();  
+    }  
+  }, [])
   
+ 
+  const getComision = async() => {
+    const getFee = await axios.get(customer_api_urls?.get_fees);
+      
+    setComision(getFee.data.data[0]?.besseri_comission);
+
+  }
   
   
   const goCart = async() => {
@@ -86,7 +104,7 @@ const CustomHeaderComponent = props => {
         <InputFieldComponent
           ref={searchRef}
           onFocus={() =>
-            props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES?.SEARCH,{isService:props.isService})
+            props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES?.SEARCH,{isService:props.isService,comision})
           }
           icon={
             <Ionicons

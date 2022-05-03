@@ -11,6 +11,7 @@ import Colors from '../../util/styles/colors';
 import { adjust } from '../../util/Dimentions';
 
 const ButtonComponent = ({
+  
   icon,
   buttonText,
   handlePress,

@@ -34,8 +34,12 @@ const VendorProfileDetailScreen = ({navigation, route}) => {
     setBusiness(profile);
   }
   useEffect(() => {
-    getBusinessData()
+    navigation.addListener('focus', () => {
+      getBusinessData();
+    });
+    
   },[]);
+  
   return (
     <View style={[styles.container]}>
      <Loader isVisible={showLoader}/>
@@ -72,19 +76,19 @@ const VendorProfileDetailScreen = ({navigation, route}) => {
     </View>
 
     <View style={styles.bottomBodyWrapper}>
-        <Text style={styles.storeNameText}>{profile?.storeName}</Text>
+        <Text style={styles.storeNameText}>{business?.storeName}</Text>
         <View>
           <ThinlineSeparator margin={15} width={'95%'}/>
           <Heading
            text='Datos de contacto'
           />
-          <Text style={commonTextStyle}>{profile?.email}</Text>
+          <Text style={commonTextStyle}>{business?.email}</Text>
           <ThinlineSeparator margin={15} width={'95%'}/>
           <Heading text='Dirección del sitio'/>
           
           <View style={styles.locationBox}>
             <Entypo name='location-pin' color='red' size={30}/>
-            <Text style={CommonStyles.fontWeight300}>{profile?.address}</Text>
+            <Text style={CommonStyles.fontWeight300}>{business?.address}</Text>
           </View> 
 
            

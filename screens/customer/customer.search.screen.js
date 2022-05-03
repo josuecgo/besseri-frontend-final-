@@ -21,12 +21,11 @@ const SCREEN_STATES = {
   CATEGORIES:'Categories'
 }
 const CustomerSearchScreen = (props) => {
-  const { width, height } = useWindowDimensions();
   const dispatch = useDispatch()
   const [selectedTab,setSelectedTab] = useState('Products');
   const {params} = useRoute();
-  // const isServices = props.route.params.isService;
-  const isServices = false;
+  const isServices = props.route.params.isService;
+  // const isServices = false;
   const isProductTab = selectedTab == 'Products';
   const isServicesTab  = selectedTab == 'Services';
   const isStoresTab = selectedTab == 'Stores';
@@ -34,21 +33,12 @@ const CustomerSearchScreen = (props) => {
   const [productsData,setProductsData] = useState(null);
   const [servicesData,setServicesData] = useState(null);
   const [loading,setLoading] = useState(false);
-  const [comision, setComision] = useState(0)
+  const comision = props.route.params.comision;
   
   
-  useEffect(() => {
-    getComision();
-  }, [])
   
+
  
-  const getComision = async() => {
-    const getFee = await axios.get(customer_api_urls?.get_fees);
-      
-    setComision(getFee.data.data[0]?.besseri_comission);
-
-  }
-
   const searchCall = async(st) => {
       
       try 

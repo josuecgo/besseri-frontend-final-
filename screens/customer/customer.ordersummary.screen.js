@@ -27,7 +27,7 @@ import { HeaderBackground } from '../../components/Background/HeaderBackground';
 import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
 import { moneda } from '../../util/Moneda';
 import { BackgroundImage } from '../../components/Background/BackgroundImage';
-
+import SpinKit from 'react-native-spinkit';
 
 
 
@@ -53,7 +53,7 @@ const CustomerOrderSummary = (props) => {
         totalAmount:params?.totalAmount,
         subtotal:params?.subtotal
     })
-    
+    const [isVisible, setIsVisible] = useState(false);
     const subTotal = totalAmount - (allCharges?.delivery_charges + allCharges?.besseri_commission);
     const [deliveryAddress,setDeliveryAddress] = useState(null);
     const [deliveryDistance,setDeliveryDistance] = useState(0)
@@ -61,7 +61,6 @@ const CustomerOrderSummary = (props) => {
 
 
 
-    // console.log({subtotal:allCharges?.subtotal  , comision: allCharges?.besseri_commission , costoEnvio});
 
     useEffect(() => {
         CalcularDistancia(business?.location?.longitude,business?.location?.latitude,deliveryAddress?.longitude,deliveryAddress?.latitude,costoK)
@@ -203,7 +202,7 @@ const CustomerOrderSummary = (props) => {
 
      
     const fetchPaymentSheetParams = async (walletId) => {
-      
+        
        try {
         const customerData = await getUser();
         
@@ -240,6 +239,7 @@ const CustomerOrderSummary = (props) => {
            console.log('line 183',e)
            showToaster('Algo salió mal, intenta de nuevo')
        }
+       setIsVisible(false);
       };
     
       const initializePaymentSheet = async (walletId) => {
@@ -266,6 +266,7 @@ const CustomerOrderSummary = (props) => {
       };
     
       const openPaymentSheet = async () => {
+        setIsVisible(true);
         await initializePaymentSheet();
         if(!deliveryAddress) {
             showToaster('Por favor, seleccione la dirección de entrega');
@@ -503,12 +504,26 @@ const CustomerOrderSummary = (props) => {
        <DetailItem label={'Total Charges'} value={deliveryAddress ? `${moneda(totalAmount.toFixed(2)) } MXN` : 'Seleccionar direccion' }/>
       </View> 
     </ScrollView>
-      <ButtonComponent
-      handlePress={openPaymentSheet}
-      borderRadius={0}
-      buttonText={'Verificar'}
-      colorB={Colors.terciarySolid}
-      />
+    {
+        isVisible ? (
+            <SpinKit
+               type='Circle'
+               isVisible={isVisible}
+               color={Colors.terciarySolid}
+               size={30}
+            />
+        )
+        : (
+            <ButtonComponent
+            handlePress={openPaymentSheet}
+            borderRadius={0}
+            buttonText={'Verificar'}
+            colorB={Colors.terciarySolid}
+            disabled={isVisible}
+          />
+        )
+    }
+    
     </View>
   );
 };
@@ -516,7 +531,6 @@ const styles = StyleSheet.create({
     header:{
         height: Platform.OS == 'ios' ? deviceHeight * 0.13  : deviceHeight * 0.10,
         width: deviceWidth,
-        // backgroundColor:Colors.primaryColor,
         flexDirection:'row',
         justifyContent:'space-between',
         paddingHorizontal:20,

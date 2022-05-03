@@ -11,16 +11,27 @@ import {HeaderBackground} from '../../components/Background/HeaderBackground';
 import CommonStyles from '../../util/styles/styles';
 import InputFieldComponent from '../../components/input-field/input-field.component';
 import { useForm } from '../../hooks/useForm';
+import ButtonComponent from '../../components/button/button.component';
+import { api_statuses, vendor_api_urls } from '../../util/api/api_essentials';
+import axios from 'axios';
+import { saveBusinessProfile } from '../../util/local-storage/auth_service';
 
 export const EditProfile = ({navigation, route}) => {
     const [showLoader, setShowLoader] = useState(false);
-    const {address,city,country,email,location,logo,state,storeName,account_id} = route.params.business;
+    const {address,city,country,email,location,logo,state,storeName,account_id,_id} = route.params.business;
     const {form, onChange} = useForm({
+        id:_id,
         address: address ? address : '',
-        city:city ? city :  '' ,
+        city: city ? city :  '' ,
         country: country ? country : '',
         email : email ? email : '',
-        location: location ? location : '',
+        // location: location ? {
+        //   latitude: location?.latitude,
+        //   longitude: location?.longitude,
+        //   address: address,
+        //   city: city,
+        //   state: country
+        // } : '',
         logo : logo ? logo : '',
         state: state ? state : '',
         storeName: storeName ? storeName : '' ,
@@ -36,7 +47,7 @@ export const EditProfile = ({navigation, route}) => {
     {
         value: form.city,
         label: 'Ciudad',
-        inp:city,
+        inp:'city',
         id: 2,
     },
     {
@@ -65,12 +76,34 @@ export const EditProfile = ({navigation, route}) => {
     },
     
     ];
+    
+    const onChangeForm = async() => {
+      try {
+        // await onChange({
+        //   latitude: location?.latitude,
+        //   longitude: location?.longitude,
+        //   address: form.location.address,
+        //   city: form.location.city,
+        //   state: form.location.country
+        // },'location');
 
-    const onChangeForm = () => {
-
+        console.log(form);
+        const url = `${vendor_api_urls.edit_business_profile}/${form.account_id}`;
+      
+        const apiCall = await axios.put(url,form);
+        
+        if (apiCall.status == api_statuses.success) {
+          await saveBusinessProfile(apiCall.data.data.store);
+          navigation.goBack();
+          
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      
     }
 
-    console.log(form);
+   
 
     return (
     <>
@@ -107,30 +140,11 @@ export const EditProfile = ({navigation, route}) => {
             </View>
           ))}
         </View>
-        {/* <InputFieldComponent
-         
-         keyboardType={KEYBOARD_TYPES.DEFAULT}
-         onChangeText={inputText => {
-           onChangeText(inputText, CREDENTIAL_KEYS.FULL_NAME);
-         }}
-         placeholderText={CREDENTIAL_KEYS.FULL_NAME}
-         secureTextEntry={false}
-         value={inputValues[CREDENTIAL_KEYS.FULL_NAME]}
-         nextFieldRef={emailRef}
-         returnType="next"
-       />
-       <InputFieldComponent
-         keyboardType={KEYBOARD_TYPES.EMAIL_ADDRESS}
-         onChangeText={inputText => {
-           onChangeText(inputText, CREDENTIAL_KEYS.WORK_EMAIL);
-         }}
-         placeholderText={CREDENTIAL_KEYS.WORK_EMAIL}
-         secureTextEntry={false}
-         value={inputValues[CREDENTIAL_KEYS.WORK_EMAIL]}
-         nextFieldRef={phoneRef}
-         ref={emailRef}
-         returnType="next"
-       /> */}
+        <ButtonComponent 
+        buttonText={'Editar'}
+        borderRadius={0}
+        handlePress={onChangeForm}
+        />
       </View>
     </>
   );

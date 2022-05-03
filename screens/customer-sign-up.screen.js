@@ -7,23 +7,26 @@ import {
   LOGIN_SIGNUP_FORGOT_ROUTES,
   SCREEN_HORIZONTAL_MARGIN,
   SCREEN_HORIZONTAL_MARGIN_FORM,
+  showToaster,
 } from '../util/constants';
 import Colors from '../util/styles/colors';
 import KEYBOARD_TYPES from '../util/keyboard-types';
 import InputFieldComponent from '../components/input-field/input-field.component';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 import ButtonComponent from '../components/button/button.component';
 import { api_statuses, api_urls } from '../util/api/api_essentials';
 import axios from 'axios';
 import LoaderComponent from '../components/Loader/Loader.component';
 import { deviceHeight } from '../util/Dimentions';
+import { ButtonIconoInput } from '../components/button/ButtonIconoInput';
+import { comparaText } from '../util/helpers/StatusText';
 
 const CREDENTIAL_KEYS = {
   FULL_NAME: 'Nombre completo',
   EMAIL_ADDRESS: 'Dirección de correo electrónico',
   PHONE_NUMBER: 'Número de teléfono',
-  PASSWORD: 'Contraseña'
+  PASSWORD: 'Contraseña',
+  PASSWORDCONFIRM: 'Confirmar contraseña'
 };
 
 const CustomerSignUpScreen = ({navigation}) => {
@@ -34,46 +37,57 @@ const CustomerSignUpScreen = ({navigation}) => {
     [CREDENTIAL_KEYS.FULL_NAME]: '',
     [CREDENTIAL_KEYS.EMAIL_ADDRESS]: '',
     [CREDENTIAL_KEYS.PHONE_NUMBER]: '',
-    [CREDENTIAL_KEYS.PASSWORD] : ''
+    [CREDENTIAL_KEYS.PASSWORD] : '',
+    [CREDENTIAL_KEYS.CONFIRMPASSWORD] : '',
   });
-
+  const [showPass, setShowPass] = useState(false);
+  const [showPass2, setShowPass2] = useState(false);
   const emailAddressRef = useRef();
   const phoneNumberRef = useRef();
   const passwordRef = useRef();
+  const passwordConfirmRef = useRef();
   const onChangeText = (inputText, key) => {
     setUserCredentials({
       ...userCredentials,
       [key]: inputText,
     });
   };
+  
+
   const generateOtp = async () => {
-    try {
-      setShowLoader(true);
-      const url = api_urls.generate_otp;
-      const body = {
-        email: userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS],
-        name: userCredentials[CREDENTIAL_KEYS.FULL_NAME],
-        phone: userCredentials[CREDENTIAL_KEYS.PHONE_NUMBER],
-        password: userCredentials[CREDENTIAL_KEYS.PASSWORD],
-        isCommonUser:true,
-        isVendor:false,
-        isRider:false
-      }
-      const apiCall = await axios.post(url,body);
-      if (apiCall.status == api_statuses.success && apiCall.data.success == true) {
+    if (comparaText(userCredentials[CREDENTIAL_KEYS.CONFIRMPASSWORD],userCredentials[CREDENTIAL_KEYS.PASSWORD])) {
+      try {
+        setShowLoader(true);
+        const url = api_urls.generate_otp;
+        const body = {
+          email: userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS],
+          name: userCredentials[CREDENTIAL_KEYS.FULL_NAME],
+          phone: userCredentials[CREDENTIAL_KEYS.PHONE_NUMBER],
+          password: userCredentials[CREDENTIAL_KEYS.PASSWORD],
+         
+          isCommonUser:true,
+          isVendor:false,
+          isRider:false
+        }
+        const apiCall = await axios.post(url,body);
+        if (apiCall.status == api_statuses.success && apiCall.data.success == true) {
+          setShowLoader(false);
+          console.log(apiCall.data)
+          navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.OTP_PASSWORD, {
+            otp: apiCall.data.otp,
+            body:body
+          });
+        }
+      } catch (e) {
+        console.log(e)
+        console.log(e.response.data)
+        alert(e.response.data.message)
         setShowLoader(false);
-        console.log(apiCall.data)
-        navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.OTP_PASSWORD, {
-          otp: apiCall.data.otp,
-          body:body
-        });
       }
-    } catch (e) {
-      console.log(e)
-      console.log(e.response.data)
-      alert(e.response.data.message)
-      setShowLoader(false);
+    }else{
+      showToaster('Contraseñas no coinciden')
     }
+    
   }
   return (
     <CustomSafeAreaViewComponent>
@@ -125,16 +139,35 @@ const CustomerSignUpScreen = ({navigation}) => {
             value={userCredentials[CREDENTIAL_KEYS.PHONE_NUMBER]}
             ref={phoneNumberRef}
           />
-           <InputFieldComponent
+          
+          <InputFieldComponent
             
             onChangeText={inputText => {
               onChangeText(inputText, CREDENTIAL_KEYS.PASSWORD);
             }}
             placeholderText={CREDENTIAL_KEYS.PASSWORD}
-            secureTextEntry={true}
+            secureTextEntry={showPass}
             value={userCredentials[CREDENTIAL_KEYS.PASSWORD]}
             ref={passwordRef}
+            showPass={
+              <ButtonIconoInput name={showPass ?'eye-slash' : 'eye'} size={16} onPress={() => setShowPass(!showPass) } />
+            }
           />
+
+          <InputFieldComponent
+            
+            onChangeText={inputText => {
+              onChangeText(inputText, CREDENTIAL_KEYS.CONFIRMPASSWORD);
+            }}
+            placeholderText={'Confirmar contraseña'}
+            secureTextEntry={showPass2}
+            value={userCredentials[CREDENTIAL_KEYS.CONFIRMPASSWORD]}
+            ref={passwordConfirmRef}
+            showPass={
+              <ButtonIconoInput name={showPass2 ? 'eye-slash' : 'eye'} size={16} onPress={() => setShowPass2(!showPass2) } />
+            }
+          />
+
           <ButtonComponent
             marginTop={SCREEN_HORIZONTAL_MARGIN}
             colorB={Colors.terciarySolid}

@@ -28,16 +28,7 @@ const CustomerStoreScreen = (props) => {
     const [loading,setLoading] = useState(false);
     const [minimumPrice,setMinimumPrice] = useState('loading');
     const cart_item_ids = useSelector(state => state?.cart?.cart_items_ids);
-    const CATEGORIES = [
-        {
-            name:'Products',
-            id:`products-1`
-        },
-        {
-            name:'Services',
-            id:`services-2`
-        }
-    ]
+   
     const store = params.data;
     const getStore = async() => {
         try {

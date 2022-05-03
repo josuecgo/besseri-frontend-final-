@@ -133,3 +133,11 @@ export const stringIsEmpty  = (v) => {
         return false;
     }
 }
+
+export const comparaText = (t1,t2) => {
+    if (t1 === t2) {
+        return true;
+    } else {
+        return false;
+    }
+}

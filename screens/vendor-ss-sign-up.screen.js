@@ -22,6 +22,8 @@ import { api_statuses, api_urls, vendor_api_urls } from '../util/api/api_essenti
 import LoaderComponent from '../components/Loader/Loader.component';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import { deviceHeight, deviceWidth } from '../util/Dimentions';
+import { ButtonIconoInput } from '../components/button/ButtonIconoInput';
+import { comparaText } from '../util/helpers/StatusText';
 const CREDENTIAL_KEYS = {
   WORK_EMAIL: 'Correo electrónico del trabajo',
   STORE_NAME: 'Nombre de la tienda',
@@ -32,7 +34,8 @@ const CREDENTIAL_KEYS = {
   STATE: 'Estado',
   CITY: 'Ciudad',
   COUNTRY: 'País',
-  PASSWORD: 'Contraseña'
+  PASSWORD: 'Contraseña',
+  PASSWORDCONFIRM: 'Confirmar contraseña'
 };
 
 // text to render based on the role type
@@ -44,7 +47,8 @@ const TEXT_TO_RENDER = {
 };
 
 const VendorSsSignUpScreen = ({ navigation, route }) => {
-  const { width, height } = useWindowDimensions();
+  const [showPass, setShowPass] = useState(true);
+  const [showPass2, setShowPass2] = useState(true);
   const getTextObject = TEXT_TO_RENDER[route.params?.role];
   const [logo,setLogo] = useState('');
   const [inputValues, setInputValues] = useState({
@@ -58,6 +62,7 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
     [CREDENTIAL_KEYS.CITY]: '',
     [CREDENTIAL_KEYS.COUNTRY]: '',
     [CREDENTIAL_KEYS.PASSWORD]: '',
+    [CREDENTIAL_KEYS.CONFIRMPASSWORD] : '',
   });
   const [showLoader, setShowLoader] = useState(false);
 
@@ -70,42 +75,47 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
   const cityRef = useRef();
   const countryRef = useRef();
   const passwordRef = useRef();
+  const passwordConfirmRef = useRef();
   const onChangeText = (inputText, key) => {
     setInputValues({ ...inputValues, [key]: inputText });
   };
 
   const generateOtp = async () => {
-    try {
-      setShowLoader(true);
-      const url = api_urls.generate_otp;
-      const body = {
-        email: inputValues[CREDENTIAL_KEYS.WORK_EMAIL],
-        name: inputValues[CREDENTIAL_KEYS.FULL_NAME],
-        phone: inputValues[CREDENTIAL_KEYS.PHONE_NUMBER],
-        storeName: inputValues[CREDENTIAL_KEYS.STORE_NAME],
-        Address: inputValues[CREDENTIAL_KEYS.ADDRESS_LINE_ONE] + " " + inputValues[CREDENTIAL_KEYS.ADDRESS_LINE_TWO],
-        state: inputValues[CREDENTIAL_KEYS.STATE],
-        country: inputValues[CREDENTIAL_KEYS.COUNTRY],
-        city: inputValues[CREDENTIAL_KEYS.CITY],
-        password: inputValues[CREDENTIAL_KEYS.PASSWORD],
-        isCommonUser:false,
-        isVendor:true,
-        isRider:false
-      }
-      const apiCall = await axios.post(url,body);
-      if (apiCall.status == api_statuses.success && apiCall.data.success == true) {
+    if (comparaText(inputValues[CREDENTIAL_KEYS.CONFIRMPASSWORD],inputValues[CREDENTIAL_KEYS.PASSWORD])) {
+      try {
+        setShowLoader(true);
+        const url = api_urls.generate_otp;
+        const body = {
+          email: inputValues[CREDENTIAL_KEYS.WORK_EMAIL],
+          name: inputValues[CREDENTIAL_KEYS.FULL_NAME],
+          phone: inputValues[CREDENTIAL_KEYS.PHONE_NUMBER],
+          storeName: inputValues[CREDENTIAL_KEYS.STORE_NAME],
+          Address: inputValues[CREDENTIAL_KEYS.ADDRESS_LINE_ONE] + " " + inputValues[CREDENTIAL_KEYS.ADDRESS_LINE_TWO],
+          state: inputValues[CREDENTIAL_KEYS.STATE],
+          country: inputValues[CREDENTIAL_KEYS.COUNTRY],
+          city: inputValues[CREDENTIAL_KEYS.CITY],
+          password: inputValues[CREDENTIAL_KEYS.PASSWORD],
+          isCommonUser:false,
+          isVendor:true,
+          isRider:false
+        }
+        const apiCall = await axios.post(url,body);
+        if (apiCall.status == api_statuses.success && apiCall.data.success == true) {
+          setShowLoader(false);
+          console.log(apiCall.data)
+          navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.OTP_PASSWORD, {
+            otp: apiCall.data.otp,
+            body:body,
+            logo:logo
+          });
+        }
+      } catch (e) {
+        alert(e.response.data.message)
+        console.log(e.response.data)
         setShowLoader(false);
-        console.log(apiCall.data)
-        navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.OTP_PASSWORD, {
-          otp: apiCall.data.otp,
-          body:body,
-          logo:logo
-        });
       }
-    } catch (e) {
-      alert(e.response.data.message)
-      console.log(e.response.data)
-      setShowLoader(false);
+    }else{
+      showToaster('Contraseñas no coinciden')
     }
   }
   const pickLogo = () => {
@@ -257,10 +267,28 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
             onChangeText(inputText, CREDENTIAL_KEYS.PASSWORD);
           }}
           placeholderText={CREDENTIAL_KEYS.PASSWORD}
-          secureTextEntry={true}
+          secureTextEntry={showPass}
           value={inputValues[CREDENTIAL_KEYS.PASSWORD]}
           ref={passwordRef}
+          showPass={
+            <ButtonIconoInput name={showPass ?'eye-slash' : 'eye'} size={16} onPress={() => setShowPass(!showPass) } />
+          }
         />
+
+        <InputFieldComponent
+            
+            onChangeText={inputText => {
+              onChangeText(inputText, CREDENTIAL_KEYS.CONFIRMPASSWORD);
+            }}
+            placeholderText={'Confirmar contraseña'}
+            secureTextEntry={showPass2}
+            value={inputValues[CREDENTIAL_KEYS.CONFIRMPASSWORD]}
+            ref={passwordConfirmRef}
+            showPass={
+              <ButtonIconoInput name={showPass2 ? 'eye-slash' : 'eye'} size={16} onPress={() => setShowPass2(!showPass2) } />
+            }
+        />
+
         <View style={{
           width:'80%',
           borderWidth:1,

@@ -1,14 +1,16 @@
-import { useEffect, useState, useRef,Platform } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import {  Platform,  PermissionsAndroid } from 'react-native';
 
 import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
 import { showToaster } from '../util/constants';
+import Geocoder from 'react-native-geocoding';
 
 
 
 export const useLocation = () => {
     const [user, setUser] = useState([])
-
+    Geocoder.init('AIzaSyAjyGdmeJ8fyRP7eKPJ2ODtF0JEbqEbw8o');
    
     
     
@@ -74,34 +76,11 @@ export const useLocation = () => {
         });
     }
 
-    const followUserLocation = () => {
-        watchId.current = Geolocation.watchPosition(
-            ({ coords }) => {
 
-                if( !isMounted.current ) return;
-
-
-                const location = {
-                    latitude: coords.latitude,
-                    longitude: coords.longitude
-                }
-
-                setUserLocation( location );
-                setRouteLines( routes => [ ...routes, location ]);
-
-            },
-            (err) => console.log(err), { enableHighAccuracy: true, distanceFilter: 10 }
-        );
-    }
-
-    const stopFollowUserLocation = () => {
-        if( watchId.current )
-            Geolocation.clearWatch( watchId.current );
-    }
 
     const getAddresses = async() => {
         try {
-            ;
+       
          const apiCall = await axios.get(`${customer_api_urls.get_addresses}/${user?._id}`);
         
          if(apiCall.status == api_statuses.success) {
@@ -118,18 +97,23 @@ export const useLocation = () => {
     }
 
     const getLocationHook = async() => {
+       
         if (Platform.OS === 'ios') {
+            try {
+                Geolocation.getCurrentPosition(
+                    (position) => {
+                        const currentLatitude = JSON.stringify(position.coords.latitude);
+                        const currentLongitude = JSON.stringify(position.coords.longitude);
+                        return setUserLocation({
+                                latitude:currentLatitude,
+                                longitude:currentLongitude
+                        })
+                        }
+                    );
+            } catch (error) {
+                console.log(error);
+            }
            
-            Geolocation.getCurrentPosition(
-            (position) => {
-                const currentLatitude = JSON.stringify(position.coords.latitude);
-                const currentLongitude = JSON.stringify(position.coords.longitude);
-                return setUserLocation({
-                        latitude:currentLatitude,
-                        longitude:currentLongitude
-                })
-                }
-            );
  
               
         }else{
@@ -170,8 +154,7 @@ export const useLocation = () => {
         hasLocation,
         initialPosition,
         getCurrentLocation,
-        followUserLocation,
-        stopFollowUserLocation,
+        
         userLocation,
         routeLines,
         direccion,

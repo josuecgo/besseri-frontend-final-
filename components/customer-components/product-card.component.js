@@ -38,8 +38,11 @@ const ProductCardComponent = ({
   
 
   useEffect(() => {
-    getComision();
-  }, [])
+    if (data?.name.length > 0) {
+      getComision();
+    }
+   
+  }, [data])
   
  
   const getComision = async() => {
@@ -54,7 +57,7 @@ const ProductCardComponent = ({
 
   }
   
-  console.log(Number(data?.price) + Number((comision * data?.price) / 100));
+  // console.log(Number(data?.price) + Number((comision * data?.price) / 100));
   if (horizontal) {
     const horizontalCardStyles = {
       cardContainer: {

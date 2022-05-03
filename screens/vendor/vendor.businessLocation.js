@@ -32,8 +32,8 @@ const CustomerOrdersViewScreen = (props) => {
   const [coords,setCoords] = useState(null);
   const [editMode,setEditMode] = useState(false);
   const [locationData,setLocation] = useState()
-  const {getLocationHook,userLocation} = useLocation()
-
+  const {userLocation} = useLocation()
+  
   const getBusiness = async() => {
     try {
      const businessData = await getBusinessProfile();
@@ -55,7 +55,7 @@ const CustomerOrdersViewScreen = (props) => {
   }
   useEffect(() => {
     getBusiness()
-    // getLocationHook()
+   
   },[]);
   const getUserLocation = async() => {
       setCoords(userLocation)
@@ -246,7 +246,8 @@ const styles = StyleSheet.create({
     height: Platform.OS == 'ios' ? deviceHeight * 0.15 : deviceHeight * 0.10,
     //  borderWidth:1,
     ...CommonStyles.horizontalCenter,
-    justifyContent:'center'
+    justifyContent:'center',
+    paddingHorizontal:10
 },
 headerText:{...CommonStyles.fontFamily,color:Colors.white,fontSize:20,position:'absolute'},
 })

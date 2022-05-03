@@ -38,7 +38,7 @@ const VendorSettingsScreen = ({ navigation }) => {
                    const logoutUser =  await logout(); 
                    setShowLoader(false);
                    if(logoutUser) {
-                       navigation.replace(MAIN_ROUTES.AUTH_STACK);
+                       navigation.replace(MAIN_ROUTES.CUSTOMER_STACK);
                    } else {
                        showToaster('Algo salió mal, inténtalo de nuevo más tarde. :/')
                    }

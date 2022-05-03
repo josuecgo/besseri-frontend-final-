@@ -23,7 +23,8 @@ const InputFieldComponent = forwardRef(
       borderRadius,
       height,
       multiline,
-      onFocus
+      onFocus,
+      showPass
     },
     ref,
   ) => {
@@ -97,6 +98,7 @@ const InputFieldComponent = forwardRef(
                 }
               }}
             />
+            {showPass}
           </View>
         </View>
 
@@ -120,6 +122,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     marginBottom: 10,
     backgroundColor: Colors.gray,
+    alignItems:'center'
   },
   hintText: {
     color: 'red',

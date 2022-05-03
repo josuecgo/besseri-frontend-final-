@@ -36,7 +36,10 @@ const VendorProfileScreen = ({navigation}) => {
   }
   
   useEffect(() => {
-    getBusinessData();
+   
+    navigation.addListener('focus', () => {
+      getBusinessData();
+    });
   },[]);
   return (
     <View style={[styles.container]}>
