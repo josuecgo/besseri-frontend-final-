@@ -70,7 +70,7 @@ const CustomerProductsViewScreen = (props) => {
       }
   
     } catch(e) {
-      
+      console.log(e)
      showToaster('No se pudo obtener la ubicación actual.')
     }
     }
@@ -91,15 +91,15 @@ const CustomerProductsViewScreen = (props) => {
       (error) => console.log('error.message'),
     
     );
-    const watchID = await Geolocation.watchPosition((position) => {
-      const currentLatitude = JSON.stringify(position.coords.latitude);
-      const currentLongitude = JSON.stringify(position.coords.longitude);
-      setCoords({
-        latitude:currentLatitude,
-        longitude:currentLongitude
-    })
-    });
-    setWatchID(watchID);
+    // const watchID = await Geolocation.watchPosition((position) => {
+    //   const currentLatitude = JSON.stringify(position.coords.latitude);
+    //   const currentLongitude = JSON.stringify(position.coords.longitude);
+    //   setCoords({
+    //     latitude:currentLatitude,
+    //     longitude:currentLongitude
+    // })
+    // });
+    // setWatchID(watchID);
   }
 
 

@@ -12,6 +12,7 @@ import * as CartActions from '../../util/ReduxStore/Actions/CustomerActions/Cart
 import ProductCardComponent from '../../components/customer-components/product-card.component';
 import RatingComponent from '../../components/Ratings/rating.component';
 import ServiceListing from '../../components/customer-components/ServiceListing';
+import { useLocation } from '../../hooks/useLocation';
 const SCREEN_STATES = {
   USER_LOCATION:'User location',
   PRODUCTS:'Products',
@@ -29,8 +30,10 @@ const CustomerProductsViewScreen = (props) => {
   const [products,setProducts] = useState([]);
   const [categories,setCategories] = useState([]);
   const [services,setServices] = useState([]);
-  const [userLocation,setUserLocation] = useState(null);
+ 
   const cartProductIds = useSelector(state => state.cart.cart_item_ids);
+  const {userLocation :coords} = useLocation()
+  const [userLocation,setUserLocation] = useState(coords);
   
   const setState = (valueToSet, key) => {
     setScreenStates({
@@ -40,6 +43,7 @@ const CustomerProductsViewScreen = (props) => {
   };
   //Fetching user location..............................
   const getUserLocation = async() => {
+
     try {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
@@ -64,7 +68,7 @@ const CustomerProductsViewScreen = (props) => {
     }
   }
   useEffect(() => {
-    getUserLocation();
+    //getUserLocation();
   },[]);
   //Getting user location ends here....................
 

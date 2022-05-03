@@ -40,8 +40,8 @@ const CustomerSignUpScreen = ({navigation}) => {
     [CREDENTIAL_KEYS.PASSWORD] : '',
     [CREDENTIAL_KEYS.CONFIRMPASSWORD] : '',
   });
-  const [showPass, setShowPass] = useState(false);
-  const [showPass2, setShowPass2] = useState(false);
+  const [showPass, setShowPass] = useState(true);
+  const [showPass2, setShowPass2] = useState(true);
   const emailAddressRef = useRef();
   const phoneNumberRef = useRef();
   const passwordRef = useRef();

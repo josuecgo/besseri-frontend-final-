@@ -110,7 +110,7 @@ export const useLocation = () => {
                         })
                         }
                     );
-            } catch (error) {
+            } catch (error) {   
                 console.log(error);
             }
            
