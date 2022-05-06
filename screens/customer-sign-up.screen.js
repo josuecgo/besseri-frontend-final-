@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View,Text} from 'react-native';
 import CustomSafeAreaViewComponent from '../components/custom-safe-area-view/custom-safe-area-view.component';
 import TopCircleComponent from '../components/top-circle/top-circle.component';
 import CommonStyles from '../util/styles/styles';
@@ -20,6 +20,8 @@ import LoaderComponent from '../components/Loader/Loader.component';
 import { deviceHeight } from '../util/Dimentions';
 import { ButtonIconoInput } from '../components/button/ButtonIconoInput';
 import { comparaText } from '../util/helpers/StatusText';
+import RoleTypeComponent from '../components/role-type/role-type.component';
+import CheckboxTerms from '../components/button/CheckboxTerms';
 
 const CREDENTIAL_KEYS = {
   FULL_NAME: 'Nombre completo',
@@ -40,6 +42,7 @@ const CustomerSignUpScreen = ({navigation}) => {
     [CREDENTIAL_KEYS.PASSWORD] : '',
     [CREDENTIAL_KEYS.CONFIRMPASSWORD] : '',
   });
+  const [isSelected, setIsSelected] = useState(false);
   const [showPass, setShowPass] = useState(true);
   const [showPass2, setShowPass2] = useState(true);
   const emailAddressRef = useRef();
@@ -55,40 +58,54 @@ const CustomerSignUpScreen = ({navigation}) => {
   
 
   const generateOtp = async () => {
-    if (comparaText(userCredentials[CREDENTIAL_KEYS.CONFIRMPASSWORD],userCredentials[CREDENTIAL_KEYS.PASSWORD])) {
-      try {
-        setShowLoader(true);
-        const url = api_urls.generate_otp;
-        const body = {
-          email: userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS],
-          name: userCredentials[CREDENTIAL_KEYS.FULL_NAME],
-          phone: userCredentials[CREDENTIAL_KEYS.PHONE_NUMBER],
-          password: userCredentials[CREDENTIAL_KEYS.PASSWORD],
-         
-          isCommonUser:true,
-          isVendor:false,
-          isRider:false
-        }
-        const apiCall = await axios.post(url,body);
-        if (apiCall.status == api_statuses.success && apiCall.data.success == true) {
+
+    if (comparaText(userCredentials[CREDENTIAL_KEYS.CONFIRMPASSWORD],userCredentials[CREDENTIAL_KEYS.PASSWORD]) && userCredentials[CREDENTIAL_KEYS.PASSWORD].length > 0) {
+      if (isSelected) {
+        try {
+          setShowLoader(true);
+          const url = api_urls.generate_otp;
+          const body = {
+            email: userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS],
+            name: userCredentials[CREDENTIAL_KEYS.FULL_NAME],
+            phone: userCredentials[CREDENTIAL_KEYS.PHONE_NUMBER],
+            password: userCredentials[CREDENTIAL_KEYS.PASSWORD],
+           
+            isCommonUser:true,
+            isVendor:false,
+            isRider:false
+          }
+          const apiCall = await axios.post(url,body);
+          if (apiCall.status == api_statuses.success && apiCall.data.success == true) {
+            setShowLoader(false);
+            console.log(apiCall.data)
+            navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.OTP_PASSWORD, {
+              otp: apiCall.data.otp,
+              body:body
+            });
+          }
+        } catch (e) {
+          console.log(e)
+          console.log(e.response.data)
+          alert(e.response.data.message)
           setShowLoader(false);
-          console.log(apiCall.data)
-          navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.OTP_PASSWORD, {
-            otp: apiCall.data.otp,
-            body:body
-          });
         }
-      } catch (e) {
-        console.log(e)
-        console.log(e.response.data)
-        alert(e.response.data.message)
-        setShowLoader(false);
+      } else {
+        showToaster('Acepta términos y condiciones de uso')
       }
     }else{
       showToaster('Contraseñas no coinciden')
     }
     
   }
+  
+
+  const handlePress = () => {
+    
+    setIsSelected(!isSelected)
+    
+
+  };
+
   return (
     <CustomSafeAreaViewComponent>
       <LoaderComponent isVisible={showLoader}/>
@@ -167,6 +184,16 @@ const CustomerSignUpScreen = ({navigation}) => {
               <ButtonIconoInput name={showPass2 ? 'eye-slash' : 'eye'} size={16} onPress={() => setShowPass2(!showPass2) } />
             }
           />
+
+          <CheckboxTerms 
+          isSelected={isSelected}
+          roleName={'terminos'} 
+          text={'He leído y acepto los términos y condiciones de uso'} 
+          txtColor='black' 
+          handlePress={handlePress} 
+          
+          />
+         
 
           <ButtonComponent
             marginTop={SCREEN_HORIZONTAL_MARGIN}

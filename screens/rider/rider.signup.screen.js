@@ -34,6 +34,7 @@ import {
 import {deviceHeight} from '../../util/Dimentions';
 import { comparaText } from '../../util/helpers/StatusText';
 import { ButtonIconoInput } from '../../components/button/ButtonIconoInput';
+import CheckboxTerms from '../../components/button/CheckboxTerms';
 const CREDENTIAL_KEYS = {
   WORK_EMAIL: 'Correo electrónico del trabajo',
   STORE_NAME: 'Nombre de la tienda',
@@ -87,48 +88,61 @@ const RiderSignup = ({navigation, route}) => {
   const onChangeText = (inputText, key) => {
     setInputValues({...inputValues, [key]: inputText});
   };
+  const [isSelected, setIsSelected] = useState(false);
+
+  const handlePress = () => {
+    
+    setIsSelected(!isSelected)
+    
+
+  };
 
   const generateOtp = async () => {
-    if (comparaText(inputValues[CREDENTIAL_KEYS.CONFIRMPASSWORD],inputValues[CREDENTIAL_KEYS.PASSWORD])) {
-      try {
-        setShowLoader(true);
-        const url = api_urls.generate_otp;
-        const body = {
-          email: inputValues[CREDENTIAL_KEYS.WORK_EMAIL],
-          name: inputValues[CREDENTIAL_KEYS.FULL_NAME],
-          phone: inputValues[CREDENTIAL_KEYS.PHONE_NUMBER],
-          Address:
-            inputValues[CREDENTIAL_KEYS.ADDRESS_LINE_ONE] +
-            ' ' +
-            inputValues[CREDENTIAL_KEYS.ADDRESS_LINE_TWO],
-          state: inputValues[CREDENTIAL_KEYS.STATE],
-          country: inputValues[CREDENTIAL_KEYS.COUNTRY],
-          city: inputValues[CREDENTIAL_KEYS.CITY],
-          password: inputValues[CREDENTIAL_KEYS.PASSWORD],
-          isCommonUser: false,
-          isVendor: false,
-          isRider: true,
-        };
-        console.log(body);
-        const apiCall = await axios.post(url, body);
-        if (
-          apiCall.status == api_statuses.success &&
-          apiCall.data.success == true
-        ) {
+    if (comparaText(inputValues[CREDENTIAL_KEYS.CONFIRMPASSWORD],inputValues[CREDENTIAL_KEYS.PASSWORD]) && inputValues[CREDENTIAL_KEYS.PASSWORD].length > 0) {
+      if (isSelected) {
+        
+        try {
+          setShowLoader(true);
+          const url = api_urls.generate_otp;
+          const body = {
+            email: inputValues[CREDENTIAL_KEYS.WORK_EMAIL],
+            name: inputValues[CREDENTIAL_KEYS.FULL_NAME],
+            phone: inputValues[CREDENTIAL_KEYS.PHONE_NUMBER],
+            Address:
+              inputValues[CREDENTIAL_KEYS.ADDRESS_LINE_ONE] +
+              ' ' +
+              inputValues[CREDENTIAL_KEYS.ADDRESS_LINE_TWO],
+            state: inputValues[CREDENTIAL_KEYS.STATE],
+            country: inputValues[CREDENTIAL_KEYS.COUNTRY],
+            city: inputValues[CREDENTIAL_KEYS.CITY],
+            password: inputValues[CREDENTIAL_KEYS.PASSWORD],
+            isCommonUser: false,
+            isVendor: false,
+            isRider: true,
+          };
+          
+          const apiCall = await axios.post(url, body);
+          if (
+            apiCall.status == api_statuses.success &&
+            apiCall.data.success == true
+          ) {
+            setShowLoader(false);
+            console.log(apiCall.data);
+            navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.OTP_PASSWORD, {
+              otp: apiCall.data.otp,
+              body: body,
+              logo: logo,
+            });
+          }
+        } catch (e) {
           setShowLoader(false);
-          console.log(apiCall.data);
-          navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.OTP_PASSWORD, {
-            otp: apiCall.data.otp,
-            body: body,
-            logo: logo,
-          });
+         
+          alert(e.response.data.message);
+          console.log(e.response.data);
+          setShowLoader(false);
         }
-      } catch (e) {
-        setShowLoader(false);
-        console.log(e);
-        alert(e.response.data.message);
-        console.log(e.response.data);
-        setShowLoader(false);
+      } else {
+        showToaster('Acepta términos y condiciones de uso')
       }
     }else{
       showToaster('Contraseñas no coinciden');
@@ -337,6 +351,14 @@ const RiderSignup = ({navigation, route}) => {
                 </Pressable>
             )}
             </View>
+            <CheckboxTerms 
+            isSelected={isSelected}
+            roleName={'terminos'} 
+            text={'He leído y acepto los términos y condiciones de uso'} 
+            txtColor='black' 
+            handlePress={handlePress} 
+            
+            />
         
         
             <ButtonComponent

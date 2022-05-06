@@ -24,6 +24,7 @@ import ImageCropPicker from 'react-native-image-crop-picker';
 import { deviceHeight, deviceWidth } from '../util/Dimentions';
 import { ButtonIconoInput } from '../components/button/ButtonIconoInput';
 import { comparaText } from '../util/helpers/StatusText';
+import CheckboxTerms from '../components/button/CheckboxTerms';
 const CREDENTIAL_KEYS = {
   WORK_EMAIL: 'Correo electrónico del trabajo',
   STORE_NAME: 'Nombre de la tienda',
@@ -64,7 +65,16 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
     [CREDENTIAL_KEYS.PASSWORD]: '',
     [CREDENTIAL_KEYS.CONFIRMPASSWORD] : '',
   });
+  
   const [showLoader, setShowLoader] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
+
+  const handlePress = () => {
+    
+    setIsSelected(!isSelected)
+    
+
+  };
 
   const emailRef = useRef();
   const phoneRef = useRef();
@@ -81,7 +91,8 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
   };
 
   const generateOtp = async () => {
-    if (comparaText(inputValues[CREDENTIAL_KEYS.CONFIRMPASSWORD],inputValues[CREDENTIAL_KEYS.PASSWORD])) {
+    if (comparaText(inputValues[CREDENTIAL_KEYS.CONFIRMPASSWORD],inputValues[CREDENTIAL_KEYS.PASSWORD]) && inputValues[CREDENTIAL_KEYS.PASSWORD].length > 0 ) {
+     if (isSelected) {
       try {
         setShowLoader(true);
         const url = api_urls.generate_otp;
@@ -102,7 +113,7 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
         const apiCall = await axios.post(url,body);
         if (apiCall.status == api_statuses.success && apiCall.data.success == true) {
           setShowLoader(false);
-          console.log(apiCall.data)
+          
           navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.OTP_PASSWORD, {
             otp: apiCall.data.otp,
             body:body,
@@ -114,6 +125,9 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
         console.log(e.response.data)
         setShowLoader(false);
       }
+     }else{
+      showToaster('Acepta términos y condiciones de uso')
+     }
     }else{
       showToaster('Contraseñas no coinciden')
     }
@@ -323,6 +337,16 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
           </Pressable>
         }
         </View>
+
+
+        <CheckboxTerms 
+          isSelected={isSelected}
+          roleName={'terminos'} 
+          text={'He leído y acepto los términos y condiciones de uso'} 
+          txtColor='black' 
+          handlePress={handlePress} 
+          
+          />
         <ButtonComponent
           marginTop={0}
           colorB={Colors.terciarySolid}

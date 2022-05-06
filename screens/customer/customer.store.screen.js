@@ -16,10 +16,11 @@ import axios from 'axios';
 import { base_url, customer_api_urls } from '../../util/api/api_essentials';
 import LoaderComponent from '../../components/Loader/Loader.component';
 import ServicesCardComponent from '../../components/customer-components/ServicesCard.component';
+import { deviceWidth } from '../../util/Dimentions';
+import { useCart } from '../../hooks/useCart';
 
 const CustomerStoreScreen = (props) => {
-    const dispatch = useDispatch();
-    const cartProductIds = useSelector(state => state.cart.cart_items_ids);
+   
     const {params} = useRoute();
     const [products,setProducts] = useState([]);
     const [categories,setCategories] = useState([]);
@@ -28,13 +29,14 @@ const CustomerStoreScreen = (props) => {
     const [loading,setLoading] = useState(false);
     const [minimumPrice,setMinimumPrice] = useState('loading');
     const cart_item_ids = useSelector(state => state?.cart?.cart_items_ids);
-   
+    const {addItemToCart} = useCart()
+    const [comision, setComision] = useState(10)
     const store = params.data;
     const getStore = async() => {
         try {
             setLoading(true);
          const apiCall = await axios.get(`${customer_api_urls.get_store_data}/${store?._id}`);
-        console.log(apiCall.data);
+        
         setCategories(apiCall.data.data.categories);
         setProducts(apiCall.data.data.products);
         setMinimumPrice(apiCall.data.data.minPrice);
@@ -48,21 +50,35 @@ const CustomerStoreScreen = (props) => {
             console.log(e.response.data)
            showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
         }
-      }
-      useEffect(() => {
-        getStore()
-      },[]);
-      const addItemToCart = (item) => {
-        if(cartProductIds.includes(item?._id)) {
-          console.log(cartProductIds);
-          dispatch(CartActions.deleteItemFromCart(item?._id));
-          return;
-        }
-        dispatch(CartActions.addItemToCart({
-          ...item,
-          quantity:1
-        }))
     }
+
+    const getComision = async() => {
+        try {
+        setLoading(true);
+        const getFee = await axios.get(customer_api_urls?.get_fees);
+      
+        setComision(getFee.data.data[0]?.besseri_comission);  
+        
+       
+        setLoading(false);
+        //  setState(apiCall.data.data.products,SCREEN_STATES.PRODUCTS);
+        //  setState(apiCall.data.data.categories,SCREEN_STATES.CATEGORIES);
+        } catch(e) {
+            setLoading(false);
+        
+           showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
+        }
+    }
+
+    useEffect(() => {
+        getStore()
+    },[]);
+
+    useEffect(() => {
+        getComision();
+    }, [])
+    
+
     return (
         <View style={styles.container}>
             <LoaderComponent isVisible={loading}/>
@@ -84,7 +100,7 @@ const CustomerStoreScreen = (props) => {
             </ImageBackground>
             <View style={{margin:10}}>
                 <Text style={{ ...CommonStyles.fontFamily, fontSize: 20 }}>{store?.storeName}</Text>
-                <Text style={{ color: 'grey', fontSize: 12 }}>0.3 km away | <Text style={{ fontWeight: 'bold' }}>${minimumPrice} minimum</Text></Text>
+                <Text style={{ color: 'grey', fontSize: 12 }}>a 0.3 km  | <Text style={{ fontWeight: 'bold' }}> ${minimumPrice} minimum</Text></Text>
                 {/* <RatingComponent numOfStars={4}/> */}
                 <View style={{...CommonStyles.flexDirectionRow,...CommonStyles.horizontalCenter}}>
                     <Ionicons name='location-sharp' color={Colors.primaryColor} size={20}/>
@@ -93,39 +109,23 @@ const CustomerStoreScreen = (props) => {
             </View>
 
            <View style={{elevation:5}}>
-               <View style={{flexDirection:'row'}}> 
-               <TouchableOpacity
-                onPress={() => {
-                    setSelectedCategoryId('products');
-                }}
-                style={{padding:10,borderBottomWidth:3,height:50,borderBottomColor:selectedCategoryId == 'products' ? Colors.primaryColor : 'white'}}>
-                    <Text style={{...CommonStyles.fontFamily,color:selectedCategoryId == 'products' ? Colors.primaryColor :'black'}}>{'Products'}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                onPress={() => {
-                    setSelectedCategoryId('services');
-                }}
-                style={{padding:10,borderBottomWidth:3,height:50,borderBottomColor:selectedCategoryId == 'services' ? Colors.primaryColor : 'white'}}>
-                    <Text style={{...CommonStyles.fontFamily,color:selectedCategoryId == 'services' ? Colors.primaryColor :'black'}}>{'Services'}</Text>
-                </TouchableOpacity>
-               </View>
-{/*             
-           <FlatList
-            data={CATEGORIES}
-            horizontal
-            contentContainerStyle={{marginTop:10}}
-            renderItem={({item,index}) => (
-                <TouchableOpacity
-                onPress={() => {
-                    setSelectedCategoryId(item?.id);
-                    alert(selectedCategoryId)
-                }}
-                style={{padding:10,borderBottomWidth:3,height:50,borderBottomColor:selectedCategoryId == item?._id ? Colors.primaryColor : 'white'}}>
-                    <Text style={{...CommonStyles.fontFamily,color:selectedCategoryId == item?._id ? Colors.primaryColor :'black'}}>{item?.name}</Text>
-                </TouchableOpacity>
-            )}
-            /> */}
-            {/* <ScrollView contentContainerStyle={{flexGrow:1}}> */}
+                <View style={{flexDirection:'row'}}> 
+                    <TouchableOpacity
+                    onPress={() => {
+                        setSelectedCategoryId('products');
+                    }}
+                    style={{width:deviceWidth / 2,alignItems:'center',padding:10,borderBottomWidth:3,height:50,borderBottomColor:selectedCategoryId == 'products' ? Colors.primarySolid : 'white'}}>
+                        <Text style={{...CommonStyles.fontFamily,color:selectedCategoryId == 'products' ? Colors.primarySolid :'black'}}>{'Productos'}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                    onPress={() => {
+                        setSelectedCategoryId('services');
+                    }}
+                    style={{width:deviceWidth / 2,alignItems:'center',padding:10,borderBottomWidth:3,height:50,borderBottomColor:selectedCategoryId == 'services' ? Colors.primarySolid : 'white'}}>
+                        <Text style={{...CommonStyles.fontFamily,color:selectedCategoryId == 'services' ? Colors.primarySolid :'black'}}>{'Servicios'}</Text>
+                    </TouchableOpacity>
+                </View>
+
             <FlatList
             data={selectedCategoryId == 'products' ? products : services}
             contentContainerStyle={{marginTop:10,flexGrow:1}}
@@ -136,7 +136,8 @@ const CustomerStoreScreen = (props) => {
                         <ProductCardComponent
                         onViewDetail={() => {
                           props?.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL,{
-                             product:item
+                             product:item,
+                             comision
                            });
                         }}
                         onAddToCart={() => {
@@ -152,7 +153,8 @@ const CustomerStoreScreen = (props) => {
                     onViewDetail={() => {
                         props?.navigation?.navigate(SHARED_ROUTES.SERVICE_DETAIL,{
                             service:item,
-                            isVendor:false
+                            isVendor:false,
+                            comision
                           });
                     }}
                     onAddToCart={() => {

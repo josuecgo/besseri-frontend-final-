@@ -117,7 +117,7 @@ export default function RiderExplore(props) {
         startlat: location?.latitude,
         startlng: location?.longitude,
         // rango de distancia
-        range: 10000,
+        range: 30,
         riderId: riderId,
       });
       setLoading(false);

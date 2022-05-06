@@ -36,7 +36,7 @@ const CustomerSearchScreen = (props) => {
   const comision = props.route.params.comision;
   
   
-  
+  console.log(productsData);
 
  
   const searchCall = async(st) => {

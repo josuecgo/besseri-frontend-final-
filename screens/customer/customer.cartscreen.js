@@ -94,7 +94,7 @@ const CustomerCartScreen = (props) => {
     }
   }
   
-  // console.log({lat:direccion?.latitude,long:direccion?.longitude});
+  
  
 
   const fetchBusinessDetails = async () => {
@@ -150,16 +150,7 @@ const CustomerCartScreen = (props) => {
   }
 
 
-  // console.log('Negocio');
-  // console.log({lat:businessProfiles[0]?.location?.latitude,long:businessProfiles[0]?.location?.longitude});
-  // console.log('**************************************************************');
-  // console.log('Cliente');
-  // console.log({lat:direccion?.lat,long:direccion?.long});
-  // console.log('**************************************************************');
-  // console.log('Distancia');
-  // console.log(deliveryDistance);
-  // console.log('**************************************************************');
-  // console.log({delivereFee: delivery_fee})
+
 
   useEffect(() => {
     if(businessProfiles && delivery_fee) {

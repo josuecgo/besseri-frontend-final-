@@ -14,7 +14,7 @@ import { moneda } from '../../util/Moneda';
 
 const ServiceListing = ({category,services,navigation,comision}) => {
 
-    console.log(services[1].model.name);
+
   return (
     <View style={styles.container}>
         <View style={styles.buttonAndTextContainer}>

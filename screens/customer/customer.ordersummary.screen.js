@@ -3,7 +3,7 @@ import {Text, TouchableOpacity, View,StyleSheet, FlatList, ScrollView, Alert} fr
 import Colors from '../../util/styles/colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import Entypo from 'react-native-vector-icons/Entypo'
 import CommonStyles from '../../util/styles/styles';
 import ProductCardComponent from '../../components/customer-components/product-card.component';
@@ -28,6 +28,7 @@ import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
 import { moneda } from '../../util/Moneda';
 import { BackgroundImage } from '../../components/Background/BackgroundImage';
 import SpinKit from 'react-native-spinkit';
+import { OrderSuccessful } from './customer.order-successful';
 
 
 
@@ -44,6 +45,7 @@ const CustomerOrderSummary = (props) => {
     const [loading,setLoading] = useState(false);
     const [addresses,setAddresses] = useState([]);
     const [stripeEssentials,setStripeEssentials] = useState(null);
+    const stripeE = useRef(null)
     const {costoEnvio,CalcularDistancia,distancia } =   useCostos()
     const costoK = params.delivery_fee
    
@@ -83,11 +85,15 @@ const CustomerOrderSummary = (props) => {
         }
     }
 
-    // useEffect(() => {
-    //    if(deliveryAddress) {
-    //     initializePaymentSheet()
-    //    }
-    // },[deliveryDistance]);
+    useEffect(() => {
+        getAddresses();
+    },[]);
+
+    useEffect(async() => {
+       if(deliveryAddress) {
+        await initializePaymentSheet()
+       }
+    },[deliveryDistance]);
 
     const getUserDetails = async() => {
         setLoading(true);
@@ -135,17 +141,24 @@ const CustomerOrderSummary = (props) => {
          if(apiCall.status == api_statuses.success) {
              setAddresses(apiCall.data.data);
          } else {
-             showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
+             showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 1')
          }
+         setIsVisible(false);
         } catch(e) 
         { 
             console.log(e.response)
-            setLoading(false);  
-            showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
+            setIsVisible(false); 
+            showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 2')
         }
     }
+    
+
     const placeOrder = async() => {
-       
+        
+        if (!stripeEssentials?.intentId) {
+            await initializePaymentSheet()
+           
+        }
         try {
             setLoading(true);
             const body = {
@@ -163,28 +176,33 @@ const CustomerOrderSummary = (props) => {
         
          const apiCall = await axios.post(`${customer_api_urls.place_order}`,body);
          setLoading(false);
+         
          if(apiCall.status == api_statuses.success) {
-             showToaster('Pedido realizado');
-             setOrderPlaced(true)
-             for (var a=0;a<products?.length;a++) {
-                 dispatch(deleteItemFromCart(products[a]?._id,products[a]?.price))
-             }
+            // setOrderPlaced(true)
+            for (var a=0;a<products?.length;a++) {
+                dispatch(deleteItemFromCart(products[a]?._id,products[a]?.price))
+            }
+            showToaster('Pedido realizado');
+            props.navigation.replace('OrderSuccessful',props.navigation)
+             
          } else {
-             showToaster('Algo salió mal. Por favor, vuelva a intentarlo 1 :/')
+             showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 3')
          }
         } catch(e) 
         { 
+            setLoading(false);
+            console.log({code4:e});
             setLoading(false);  
-            showToaster('Algo salió mal. Por favor, vuelva a intentarlo 2 :/')
+            showToaster('Algo salió mal. Por favor, vuelva a intentarlo 2 code: 4')
             refundPayment()
+
         }
+          
     }
     
-    useEffect(() => {
-        getAddresses();
-    },[]);
-
-     const refundPayment = async() => {
+ 
+    
+    const refundPayment = async() => {
          try {
           const apiCall = await axios.post(paymentApis?.refundPayment,{
             intentId:stripeEssentials?.intentId
@@ -195,14 +213,14 @@ const CustomerOrderSummary = (props) => {
           }
          } catch(e) {
             //  Alert.alert('Refund failed',JSON.stringify(e))
-            showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
+            showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 5')
             console.log(e?.response?.data)
          }
-     }
+    }
 
-     
+    
     const fetchPaymentSheetParams = async (walletId) => {
-        
+       
        try {
         const customerData = await getUser();
         
@@ -220,7 +238,7 @@ const CustomerOrderSummary = (props) => {
             return;
         }
         const response = await axios.post(customer_api_urls?.create_payment_sheet,data); 
-        console.log({response});
+       
         const apiResponse = {
             paymentIntent:response?.data?.paymentIntent,
             ephemeralKey:response?.data?.ephemeralKey,
@@ -229,6 +247,7 @@ const CustomerOrderSummary = (props) => {
             intentId:response?.data?.intentId
         }
         setStripeEssentials(apiResponse)
+        
         return {
             paymentIntent:response?.data?.paymentIntent,
             ephemeralKey:response?.data?.ephemeralKey,
@@ -237,89 +256,80 @@ const CustomerOrderSummary = (props) => {
         };
        } catch(e) {
            console.log('line 183',e)
-           showToaster('Algo salió mal, intenta de nuevo')
+           showToaster('Algo salió mal, intenta de nuevo code: 6')
        }
        setIsVisible(false);
       };
     
       const initializePaymentSheet = async (walletId) => {
         
-        const {
-          paymentIntent,
-          ephemeralKey,
-          customer,
-          publishableKey,
-        } = await fetchPaymentSheetParams(walletId);
- 
-        const { error } = await initPaymentSheet({
-          customerId: customer,
-          customerEphemeralKeySecret: ephemeralKey,
-          paymentIntentClientSecret: paymentIntent,
-          // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
-          //methods that complete payment after a delay, like SEPA Debit and Sofort.
-          allowsDelayedPaymentMethods: true,
-          merchantDisplayName:'Besseri'
-        });
-        if (!error) {
-          console.log(error)
+   
+        try {
+            const {
+                paymentIntent,
+                ephemeralKey,
+                customer,
+                publishableKey,
+              } = await fetchPaymentSheetParams(walletId);
+            const { error } = await initPaymentSheet({
+            customerId: customer,
+            customerEphemeralKeySecret: ephemeralKey,
+            paymentIntentClientSecret: paymentIntent,
+            // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
+            //methods that complete payment after a delay, like SEPA Debit and Sofort.
+            allowsDelayedPaymentMethods: true,
+            merchantDisplayName:'Besseri'
+            });
+            if (!error) {
+            console.log({initializePay:error})
+            }
+        } catch (error) {
+            console.log({init:error});
         }
+        
       };
     
       const openPaymentSheet = async () => {
         setIsVisible(true);
-        await initializePaymentSheet();
-        if(!deliveryAddress) {
-            showToaster('Por favor, seleccione la dirección de entrega');
-            return;
-        }
-        if(!business) {
-            showToaster('Aún no se ha obtenido el negocio, espere, por favor...');
-            return;
-        }
-        if(!products) {
-            showToaster('No se puede realizar el pedido cuando la cantidad de productos es cero :/');
-            return;
-        }
-
         
-        const { error } = await presentPaymentSheet();
-        
-        if (error) {
-          Alert.alert(`Error code: ${error.code}`, error.message);
-        } else {
-          placeOrder()
-        }
+            await initializePaymentSheet();
+            if(!deliveryAddress) {
+                showToaster('Por favor, seleccione la dirección de entrega');
+                setIsVisible(false);
+                return;
+            }
+            if(!business) {
+                showToaster('Aún no se ha obtenido el negocio, espere, por favor...');
+                setIsVisible(false);
+                return;
+            }
+            if(!products) {
+                showToaster('No se puede realizar el pedido cuando la cantidad de productos es cero :/');
+                setIsVisible(false);
+                return;
+            }
+            if (!stripeEssentials) {
+                showToaster('Intente de otra vez');
+                setIsVisible(false);
+                return;
+            }
+    
+            
+            const { error } = await presentPaymentSheet();
+            
+            if (error) {
+              Alert.alert(`Error code: ${error.code}`, error.message);
+            } else {
+              placeOrder()
+            }
+       
       };
     
     
     if(isOrderPlaced) {
         return (
             <> 
-            <BackgroundImage/>
-            <View style={{...CommonStyles.flexOneCenter}}>
-               
-             <Ionicons
-             name='checkmark-circle'
-             color={Colors.terciarySolid} 
-             size={160}
-             />
-                <Text style={{fontSize:30,...CommonStyles.fontFamily,color:Colors.white}}>Pedido realizado</Text>
-                <Text style={{fontSize:15,fontWeight:'300',width:'75%',alignSelf:'center',textAlign:'center',color:Colors.white}}>
-                Tu pedido ha sido realizado con éxito, pronto recibirás tu paquete
-                </Text>
-
-            <ButtonComponent
-            handlePress={() => {
-                props.navigation.replace(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS)
-            }}
-            borderRadius={10}
-            colorT={Colors.white}
-            buttonText={'Continuar'}
-            colorB={Colors.terciarySolid}
-            width={200}
-            margin={30}
-            />
-            </View>
+                <OrderSuccessful props={props}  />
             </>
             
         )
@@ -403,15 +413,6 @@ const CustomerOrderSummary = (props) => {
              phone={deliveryAddress?.phone}
              info={deliveryAddress?.info}
              />
-            //  <View style={{width:'100%',margin:10,height:100,backgroundColor:Colors.lightPink,alignSelf:'center',borderColor:Colors.darkPink,borderWidth:1,borderRadius:10,flexDirection:'row',alignItems:'center'}}>
-            //  <Entypo
-            //  name='location-pin'
-            //  color={Colors.darkPink}
-            //  size={40}
-            //  />
-            //  <Text style={{...CommonStyles.fontFamily,fontSize:13,width:'92%'}}>{deliveryAddress?.addressLine}</Text>
-            //  <Text style={{...CommonStyles.fontFamily,fontSize:13,width:'92%'}}>{deliveryAddress?.addressLine}</Text>
-            //  </View>
              :
              <ButtonComponent
              buttonText={'Seleccionar dirección de entrega'}
@@ -450,16 +451,7 @@ const CustomerOrderSummary = (props) => {
          <View style={{width:'100%',margin:10,paddingVertical:14,backgroundColor:Colors.white,alignSelf:'center',borderColor:Colors.gray,borderWidth:1,borderRadius:10}}>
          <Text style={{fontSize:16,...CommonStyles.fontFamily,paddingLeft:25,marginBottom:10}}>{user?.name}</Text>
          <Text style={{fontSize:16,fontStyle:'italic',fontWeight:'300',paddingLeft:25,marginBottom:10}}>{user?.email}</Text>
-         {/* <Text style={{fontSize:16,paddingLeft:25,fontWeight:'300',marginBottom:10}}>{user?.phone}</Text> */}
-
-         {/* <View style={{flexDirection:'row',alignItems:'center'}}>
-         <Entypo
-         name='location-pin'
-         color={Colors.darkPink}
-         size={30}
-         />
-         <Text style={{fontSize:13,width:'92%'}}>A#79 Happy Homes Qasimabad Hyderabad Sindh Pakistan</Text>
-         </View> */}
+       
          </View>
      </View>
   
@@ -505,19 +497,22 @@ const CustomerOrderSummary = (props) => {
       </View> 
     </ScrollView>
     {
-        isVisible ? (
-            <SpinKit
+        isVisible  ? (
+            <View style={{width:deviceWidth,alignItems:'center',justifyContent:'center'}} >
+                <SpinKit
                type='Circle'
                isVisible={isVisible}
                color={Colors.terciarySolid}
                size={30}
-            />
+                />
+            </View>
+            
         )
         : (
             <ButtonComponent
             handlePress={openPaymentSheet}
             borderRadius={0}
-            buttonText={'Verificar'}
+            buttonText={ stripeEssentials ? 'Verificar' : 'Cargando'}
             colorB={Colors.terciarySolid}
             disabled={isVisible}
           />
@@ -547,3 +542,5 @@ const styles = StyleSheet.create({
 })
 
 export default CustomerOrderSummary;
+
+

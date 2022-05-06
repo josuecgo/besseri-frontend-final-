@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import CustomSafeAreaViewComponent from '../components/custom-safe-area-view/custom-safe-area-view.component';
 import TopCircleComponent from '../components/top-circle/top-circle.component';
-import {useWindowDimensions, View} from 'react-native';
+import {useWindowDimensions, View,Text} from 'react-native';
 import {INCREMENT_CONSTANT, LOGIN_SIGNUP_FORGOT_ROUTES, MAIN_ROUTES, SCREEN_HORIZONTAL_MARGIN, showToaster} from '../util/constants';
 import CommonStyles from '../util/styles/styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -13,6 +13,7 @@ import { useRoute } from '@react-navigation/core';
 import { api_statuses, api_urls, vendor_api_urls } from '../util/api/api_essentials';
 import axios from 'axios';
 import LoaderComponent from '../components/Loader/Loader.component';
+import { deviceWidth } from '../util/Dimentions';
 
 const CREDENTIAL_KEYS = {
   OTP_CODE: 'Código de verificación',
@@ -21,6 +22,7 @@ const CREDENTIAL_KEYS = {
 const OtpPasswordScreen = ({navigation}) => {
   const route = useRoute();
   const logo = route?.params?.logo;
+  const correo = route.params.body.email;
   const {width, height} = useWindowDimensions();
   const [isEnteringOTP, setEnteringOTP] = useState(true);
   const [showLoader,setShowLoader] = useState(false);
@@ -35,6 +37,7 @@ const OtpPasswordScreen = ({navigation}) => {
       [key]: inputText,
     });
   };
+  
   const uploadLogo = async() => {
     try {
       if(route.params.body.isCommonUser) {
@@ -109,39 +112,55 @@ const OtpPasswordScreen = ({navigation}) => {
         ]}>
         <View style={[CommonStyles.flexCenter]}>
           {isEnteringOTP ? (
-            <InputFieldComponent
-              icon={
-                <MaterialCommunityIcons
-                  name="key-variant"
-                  color={Colors.dark}
-                  size={20}
-                />
-              }
-              keyboardType={KEYBOARD_TYPES.NUMERIC}
-              onChangeText={inputText => {
-                onChangeText(inputText, CREDENTIAL_KEYS.OTP_CODE);
-              }}
-              placeholderText={CREDENTIAL_KEYS.OTP_CODE}
-              value={userCredentials[CREDENTIAL_KEYS.OTP_CODE]}
-              secureTextEntry={false}
-            />
+            <>
+              <View style={{alignItems:'center',width:deviceWidth,marginVertical:15}} >
+                <Text>Se ha enviado un codigo a  </Text>
+                <Text style={{fontWeight:'bold'}} >
+                {correo}
+                </Text>
+              </View>
+              <InputFieldComponent
+                icon={
+                  <MaterialCommunityIcons
+                    name="key-variant"
+                    color={Colors.dark}
+                    size={20}
+                  />
+                }
+                keyboardType={KEYBOARD_TYPES.NUMERIC}
+                onChangeText={inputText => {
+                  onChangeText(inputText, CREDENTIAL_KEYS.OTP_CODE);
+                }}
+                placeholderText={CREDENTIAL_KEYS.OTP_CODE}
+                value={userCredentials[CREDENTIAL_KEYS.OTP_CODE]}
+                secureTextEntry={false}
+              />
+            </>
+            
           ) : (
-            <InputFieldComponent
-              icon={
-                <MaterialCommunityIcons
-                  name="key-variant"
-                  color={Colors.dark}
-                  size={20}
-                />
-              }
-              keyboardType={KEYBOARD_TYPES.DEFAULT}
-              onChangeText={inputText => {
-                onChangeText(inputText, CREDENTIAL_KEYS.PASSWORD);
-              }}
-              placeholderText={CREDENTIAL_KEYS.PASSWORD}
-              value={userCredentials[CREDENTIAL_KEYS.PASSWORD]}
-              secureTextEntry={true}
-            />
+            <>
+            <View style={{alignItems:'center'}} >
+              <Text>Se ha enviado un codigo a  {correo}</Text>
+            </View>
+              
+              <InputFieldComponent
+                icon={
+                  <MaterialCommunityIcons
+                    name="key-variant"
+                    color={Colors.dark}
+                    size={20}
+                  />
+                }
+                keyboardType={KEYBOARD_TYPES.DEFAULT}
+                onChangeText={inputText => {
+                  onChangeText(inputText, CREDENTIAL_KEYS.PASSWORD);
+                }}
+                placeholderText={CREDENTIAL_KEYS.PASSWORD}
+                value={userCredentials[CREDENTIAL_KEYS.PASSWORD]}
+                secureTextEntry={true}
+              />
+            </>
+            
           )}
           <ButtonComponent
             marginTop={SCREEN_HORIZONTAL_MARGIN}
@@ -155,7 +174,7 @@ const OtpPasswordScreen = ({navigation}) => {
                   registerApiCall()
                 }
               } else {
-                showToaster('Invalid otp code');
+                showToaster('Invalid code');
                 return;
               }
             }}

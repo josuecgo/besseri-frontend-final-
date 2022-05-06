@@ -25,6 +25,7 @@ import { iniciar } from './customer.iniciar.screen';
 import LoginScreen from '../login.screen';
 import SignUpScreen from '../sign-up.screen';
 import SignUpScreenCustomer from '../sign-up.screen-customer';
+import { OrderSuccessful } from './customer.order-successful';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -177,6 +178,10 @@ export const CustomerHomeStack = () => {
       <Stack.Screen
         name={LOGIN_SIGNUP_FORGOT_ROUTES.SIGN_UP_CUSTOMER}
         component={SignUpScreenCustomer}
+      />
+      <Stack.Screen
+        name={'OrderSuccessful'}
+        component={OrderSuccessful}
       />
     </Stack.Navigator>
   );

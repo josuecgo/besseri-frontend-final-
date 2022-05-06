@@ -8,26 +8,16 @@ import * as CartActions from '../../util/ReduxStore/Actions/CustomerActions/Cart
 import { useDispatch, useSelector } from 'react-redux';
 import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../util/constants';
 import { adjust } from '../../util/Dimentions';
+import { useCart } from '../../hooks/useCart';
 
 const ProductListing = ({category,products,navigation,comision}) => {
-  const dispatch = useDispatch();
+  
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
-  const businessIdInCart = useSelector(state => state.cart.businessId);
-  const addItemToCart = (item) => {
-    if(cartProductIds.includes(item?._id)) {
-      dispatch(CartActions.removeItemFromCart(item));
-      return;
-    }
-    // != businessIdInCart)
-    if(item?.business_id != businessIdInCart && businessIdInCart != null) {
-      showToaster('Solo puede agregar artículos al carrito de una tienda a la vez');
-      return;
-    }
-    dispatch(CartActions.addItemToCart({
-      ...item,
-      quantity:1
-    }))
-  }
+
+  const {addItemToCart} = useCart()
+  
+
+  
   
   
   return (

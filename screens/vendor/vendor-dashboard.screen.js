@@ -54,7 +54,7 @@ const VendorDashboardScreen = ({navigation, route}) => {
       const earnings = await getStoreEarnings(businessData?._id);
       dispatch(setEarnings(earnings));
     } catch(e) {
-      console.log(e)
+      console.log({earningsAndData:e})
        showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
     }
   }
@@ -103,13 +103,7 @@ const VendorDashboardScreen = ({navigation, route}) => {
   useEffect(() => {
     getWalletDetails();
   },[businessDetails]);
-  // const getBusinessProfile = async() => {
-  //   try {
-  //   const apiCall = await axios
-  //   } catch(e) {
 
-  //   }
-  // }
   return (
     <VendorScreenContainerComponent
     date={getFormattedDate()}

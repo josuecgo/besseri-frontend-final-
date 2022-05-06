@@ -35,7 +35,8 @@ const ProductCardComponent = ({
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
 
   const [comision, setComision] = useState(0)
-  
+
+
 
   useEffect(() => {
     if (data?.name.length > 0) {

@@ -10,7 +10,7 @@ export default (state = initialState, action) => {
     switch (action.type) {
  
         case ADD_ITEM_TO_CART:
-            console.log(action.data.price);
+            
             return {
                 ...state,
                 cart_items: state.cart_items.concat(action.data),
@@ -25,8 +25,17 @@ export default (state = initialState, action) => {
                 ...state,
                 cart_items:state?.cart_items?.filter(item => item?._id != action?.data),
                 cart_items_ids:state?.cart_items_ids?.filter(item => item != action?.data),
-                total_amount:state?.total_amount - productAmount
+                total_amount:state?.total_amount - productAmount,
+                businessId:null
                 
+            }  
+        case REMOVE_ITEM:
+            
+            const removeItem = state?.cart_items?.filter(item => item?._id != action?.data._id)
+            
+            return {
+                ...state
+                    
             }  
         case RESET_CART:
             return {

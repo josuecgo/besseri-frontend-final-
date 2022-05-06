@@ -24,7 +24,7 @@ const CATEGORIES = {
 
 };
 const CustomerProductsViewScreen = (props) => {
-  const {top} = useSafeAreaInsets()
+
   const [screenStates, setScreenStates] = useState({
     [SCREEN_STATES.USER_LOCATION]: {},
     [SCREEN_STATES.PRODUCTS]:[],

@@ -206,11 +206,7 @@ const CustomerServiceBook = (props) => {
     const fetchPaymentSheetParams = async (walletId) => {
         try {
          const customerData = await getUser();
-         console.log({
-            customerId:customerData?.customerId,
-            walletId:walletId,
-            serviceId:service?._id
-         })
+
          const response = await axios.post(customer_api_urls?.create_payment_sheet_services,{
              customerId:customerData?.customerId,
              walletId:walletId,

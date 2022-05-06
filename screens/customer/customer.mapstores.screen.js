@@ -10,12 +10,13 @@ import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from "../../util/constants";
 import CommonStyles from '../../util/styles/styles';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Geolocation from "@react-native-community/geolocation";
+import { useCart } from "../../hooks/useCart";
 export default function CustomerMapStores(props) {
   const {width} = useWindowDimensions()
   const [stores,setstores] = useState([]);
   const [location,setLocation] = useState(null);
 
- 
+  const {} = useCart()
 
   const getLocationIOS = () => {
     Geolocation.getCurrentPosition(
@@ -80,6 +81,7 @@ export default function CustomerMapStores(props) {
     getLocation()
   },[]);
   const StoreCard = ({data}) => {
+    
     return (
       <View style={{width:width - 20,minHeight:250,padding:10,borderRadius:10,backgroundColor:'white',alignSelf:'center',marginHorizontal:10}}>
         <View style={{...CommonStyles.flexDirectionRow,...CommonStyles.horizontalCenter}}>
@@ -96,27 +98,36 @@ export default function CustomerMapStores(props) {
         </View>
 
         <View style={{paddingLeft:5,marginTop:15}}>
-            <Text style={{color:'grey',fontSize:13}}>{'Email'}</Text>
-            <Text style={{...CommonStyles.fontFamily,color:'black'}}>{data?.email}</Text>
-            </View>
+          <Text style={{color:'grey',fontSize:13}}>{'Email'}</Text>
+          <Text style={{...CommonStyles.fontFamily,color:'black'}}>{data?.email}</Text>
+        </View>
 
         <View style={{paddingLeft:5,marginTop:10}}>
-            <Text style={{color:'grey',fontSize:13}}>{'Address'}</Text>
-            <Text style={{...CommonStyles.fontFamily,color:'black'}}>{data?.address}</Text>
-            </View>
+          <Text style={{color:'grey',fontSize:13}}>{'Dirección'}</Text>
+          <Text style={{...CommonStyles.fontFamily,color:'black'}}>{data?.address}</Text>
+        </View>
 
-            <View style={{flex:1}}>
-              <TouchableOpacity
-                        onPress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.STORE_SCREEN,{data:data})}
-              style={{alignSelf:'flex-end',position:'absolute',bottom:5,margin:10,width:35,height:35,borderWidth:1,borderColor:Colors.brightBlue,backgroundColor:Colors.brightBlue,justifyContent:'center',alignItems:'center',borderRadius:35/2}}
-              >
-                <Ionicons
-                name='navigate'
-                color={Colors.white}
-                size={15}
-                />
-              </TouchableOpacity>
-            </View>
+        <View style={{paddingLeft:5,marginTop:10}}>
+          <Text style={{color:'grey',fontSize:13}}>{'Ciudad'}</Text>
+          <Text style={{...CommonStyles.fontFamily,color:'black'}}>{data?.city}</Text>
+        </View>
+        <View style={{paddingLeft:5,marginTop:10}}>
+          <Text style={{color:'grey',fontSize:13}}>{'Estado'}</Text>
+          <Text style={{...CommonStyles.fontFamily,color:'black'}}>{data?.state}</Text>
+        </View>
+
+        <View style={{flex:1}}>
+          <TouchableOpacity
+          onPress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.STORE_SCREEN,{data:data})}
+          style={{alignSelf:'flex-end',position:'absolute',bottom:5,margin:10,width:35,height:35,borderWidth:1,borderColor:Colors.brightBlue,backgroundColor:Colors.brightBlue,justifyContent:'center',alignItems:'center',borderRadius:35/2}}
+          >
+            <Ionicons
+            name='navigate'
+            color={Colors.white}
+            size={15}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
@@ -150,42 +161,7 @@ export default function CustomerMapStores(props) {
         null
       }
       <View style={{flex:1,width:'100%'}}>
-      {/* <View
-      style={{
-        width:'90%',
-        height:55,
-        backgroundColor:'white',
-        borderWidth:1,
-        borderColor:'white',
-        alignSelf:'center',
-        marginTop:'10%',
-        borderRadius:5,
-        flexDirection:'row',
-        alignItems:'center',
-        justifyContent:'space-between'
-      }}
-      >
-       <View style={{flexDirection:'row',alignItems:'center'}}>
-       <TouchableOpacity
-       onPress={() => {
-         props.navigation.goBack()
-       }}
-       >
-          <MaterialCommunityIcons
-          name='keyboard-backspace'
-          color='black'
-          size={25}
-          style={{paddingLeft:10}}
-          />
-        </TouchableOpacity>
-      <TextInput
-       placeholder="Search"
-       placeholderTextColor={'black'}
-       style={{color:'black',paddingLeft:10,fontSize:15}}
-       />
-       </View>
-       
-      </View> */}
+
       <View style={{flex:1,position:'absolute',bottom:10,alignSelf:'center',paddingLeft:5}}>
         <FlatList
         contentContainerStyle={{flexGrow:1}}
