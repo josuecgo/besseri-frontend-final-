@@ -122,7 +122,7 @@ export default function RiderExplore(props) {
       });
       setLoading(false);
       if (apiCall.status == api_statuses.success) {
-        console.log(apiCall.data.data);
+       
         setOrders(apiCall.data.data);
       } else {
         Alert.alert('apic', JSON.stringify(apiCall?.data));
@@ -141,7 +141,7 @@ export default function RiderExplore(props) {
   }, [location]);
 
   
-
+ 
 
   return (
     <View style={styles.container}>
@@ -197,7 +197,7 @@ export default function RiderExplore(props) {
                     horizontal
                     keyExtractor={item => item?._id}
                     // renderItem={itemData => <OrderCard data={itemData.item} />}
-                    renderItem={itemData => <CardOrders data={itemData.item} />}
+                    renderItem={itemData => <CardOrders data={itemData.item} requestRide={requestRide} />}
                     
                 /> 
                 

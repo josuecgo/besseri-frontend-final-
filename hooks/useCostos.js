@@ -16,7 +16,7 @@ export const useCostos = () => {
 
 
     const CalcularDistancia = (longBusiness,latBusiness,longCustomer,latCustomer,costoK) => {
-    
+       
         const distance = Math.sqrt(
           Math.pow(69.1 * (Number(latBusiness) - [latCustomer]), 2) +
           Math.pow(69.1 * ([longCustomer] - Number(longBusiness)) * Math.cos(Number(latBusiness) / 57.3), 2));

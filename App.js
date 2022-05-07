@@ -158,7 +158,7 @@ const App = () => {
   return (
   
     <StripeProvider
-      publishableKey={KeysStripe.TEST_KEY}
+      publishableKey={KeysStripe.LIVE_KEY}
     // urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
     // merchantIdentifier="merchant.com.{{YOUR_APP_NAME}}" // required for Apple Pay
     >

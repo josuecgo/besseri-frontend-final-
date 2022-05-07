@@ -29,12 +29,12 @@ const SignUpScreenCustomer = ({navigation}) => {
   });
 
   const handlePress = key => {
-    setSelectedRoles({
-      [ROLES.BUSINESS]: false,
-      [ROLES.CUSTOMER]: false,
-      [ROLES.RIDER]: false,
-      [key]: true,
-    });
+    // setSelectedRoles({
+    //   [ROLES.BUSINESS]: false,
+    //   [ROLES.CUSTOMER]: false,
+    //   [ROLES.RIDER]: false,
+    //   [key]: true,
+    // });
   };
 
   const proceedWithSpecificScreen = () => {

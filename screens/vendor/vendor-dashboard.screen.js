@@ -90,7 +90,7 @@ const VendorDashboardScreen = ({navigation, route}) => {
       dispatch(BusinessProfileActions.setWalletDetails(apiCall.data.Data));
     }
     else {
-      showToaster('Perdón por la interrupción, esta solicitud falló')
+      showToaster('Es necesario configurar tu cuenta de stripe para poder vender')
       return;
     }
    }

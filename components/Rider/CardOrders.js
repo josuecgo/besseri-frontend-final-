@@ -7,12 +7,16 @@ import ButtonComponent from '../button/button.component';
 
 import {base_url, vendor_api_urls} from '../../util/api/api_essentials';
 import LoaderComponent from '../Loader/Loader.component';
+import { useCostos } from '../../hooks/useCostos';
 
-export const CardOrders = ({data}) => {
+export const CardOrders = ({data,requestRide}) => {
     const [store, setStore] = useState(false);
-    
+    const { CalcularDistancia, costoEnvio   } = useCostos()
+   // console.log(store.location);
+   //console.log(data.delivery_address)
     useEffect(() => {
-        nameStore(data.storeId)
+       nameStore(data.storeId);
+      
     }, [])
     
     const nameStore = id => {
@@ -20,10 +24,26 @@ export const CardOrders = ({data}) => {
         fetch(`${vendor_api_urls.business_profile_detail}/${id}`)
             .then(response => response.json())
             .then(data => setStore(data.data.store));
-
+       
+       
     };
     
+    const delivery = () =>  {
+
+      const latB = store.location?.latitude;
+      const lngB = store.location?.longitude;
+      const latC = data.delivery_address?.latitude;
+      const lngC = data.delivery_address?.longitude;
+      const costoDelivery = data.delivery_fee;
+      CalcularDistancia(parseFloat(lngB),parseFloat(latB),lngC,latC,costoDelivery)
+
+    }
+
+    useEffect(() => {
+      delivery()
+    }, [store])
     
+   
 
     if (!store)  return (<LoaderComponent isVisible={!store} />)
     
@@ -40,7 +60,7 @@ export const CardOrders = ({data}) => {
                 <Text style={styles.orderCardTitle}>{store.storeName}</Text>
             </View>
             <Text style={styles.orderCardDeliveryFee}>
-            {data?.delivery_fee} MXN
+            {costoEnvio} MXN
             </Text>
         </View>
         <Text style={styles.orderCardDeliveryFee}>#{data?.orderId}</Text>

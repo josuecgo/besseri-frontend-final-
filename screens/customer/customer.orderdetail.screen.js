@@ -1,7 +1,7 @@
 import { useIsFocused, useRoute } from '@react-navigation/native';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, Image, useWindowDimensions,TouchableOpacity, ScrollView, Linking } from 'react-native';
+import { Text, View, StyleSheet, Image, useWindowDimensions,TouchableOpacity, ScrollView, Linking,Platform } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import ButtonComponent from '../../components/button/button.component';
 import OrderCard from '../../components/customer-components/ordercard.component';
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   placeOrderWrapper: { justifyContent: 'center', alignItems: 'center', bottom: 40 },
   header:{
     width:'100%',
-    height:deviceHeight/ 10,
+    height: Platform.OS == 'ios' ? deviceHeight * 0.15 : deviceHeight * 0.10,
     // paddingHorizontal:20,
     justifyContent:'center',
     flexDirection:'row',

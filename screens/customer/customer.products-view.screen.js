@@ -20,7 +20,7 @@ const SCREEN_STATES = {
 }
 const CATEGORIES = {
   TRANSMISION: require(`../../assets/images/categorias/transmision.png`),
-  FRENOS: require('../../assets/images/categorias/transmision.png'),
+  FRENOS: require('../../assets/images/categorias/frenos.jpg'),
 
 };
 const CustomerProductsViewScreen = (props) => {
@@ -37,7 +37,11 @@ const CustomerProductsViewScreen = (props) => {
   const [coords,setCoords] = useState({
     longitude: 0,
     latitude: 0
-});
+  });
+  const [currentLongitude, setCurrentLongitude ] = useState('...');
+  const [ currentLatitude, setCurrentLatitude ] = useState('...');
+  const [ locationStatus, setLocationStatus ] = useState('');
+
 
   const [comision, setComision] = useState(0)
   const setState = (valueToSet, key) => {
@@ -49,7 +53,8 @@ const CustomerProductsViewScreen = (props) => {
   //Fetching user location..............................
   const getUserLocation = async() => {
     if (Platform.OS === 'ios') {
-      getLocation()
+      getLocation();
+      subscribeLocationLocation();
     }else{
        try {
       const granted = await PermissionsAndroid.request(
@@ -79,7 +84,9 @@ const CustomerProductsViewScreen = (props) => {
   
 
   const getLocation = async() => {
-    await Geolocation.getCurrentPosition(
+   
+   try {
+      await Geolocation.getCurrentPosition(
       (position) => {
         const currentLatitude = JSON.stringify(position.coords.latitude);
         const currentLongitude = JSON.stringify(position.coords.longitude);
@@ -88,19 +95,52 @@ const CustomerProductsViewScreen = (props) => {
             longitude:currentLongitude
         })
       },
-      (error) => console.log('error.message'),
+      (error) => {
+        // See error code charts below.
+        console.log(error.code, error.message);
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+  
     
-    );
-    // const watchID = await Geolocation.watchPosition((position) => {
-    //   const currentLatitude = JSON.stringify(position.coords.latitude);
-    //   const currentLongitude = JSON.stringify(position.coords.longitude);
-    //   setCoords({
-    //     latitude:currentLatitude,
-    //     longitude:currentLongitude
-    // })
-    // });
-    // setWatchID(watchID);
+   );
+   } catch (error) {
+     console.log({cathc:error});
+   }
   }
+
+  const subscribeLocationLocation = () => {
+    watchID = Geolocation.watchPosition(
+      (position) => {
+        //Will give you the location on location change
+        
+        setLocationStatus('You are Here');
+        console.log(position);
+ 
+        //getting the Longitude from the location json        
+        const currentLongitude = JSON.stringify(position.coords.longitude);
+ 
+        //getting the Latitude from the location json
+        const currentLatitude =  JSON.stringify(position.coords.latitude);
+ 
+        //Setting Longitude state
+        setCurrentLongitude(currentLongitude);
+ 
+        //Setting Latitude state
+        setCurrentLatitude(currentLatitude);
+      },
+      (error) => {
+        setLocationStatus(error.message);
+      },
+      {
+        enableHighAccuracy: false,
+        maximumAge: 1000
+      },
+    );
+  };
+
+
+
+
 
 
   useEffect(() => {
@@ -121,13 +161,16 @@ const CustomerProductsViewScreen = (props) => {
     //  setState(apiCall.data.data.categories,SCREEN_STATES.CATEGORIES);
      
     } catch(e) {
-       showToaster('Algo salío mal');
+      console.log({products:e})
+       showToaster('No hay conexion con el servidor');
+
     }
   }
   useEffect(() => {
     getProducts()
   },[]);
-   
+  
+  
 
    //Get Service to show
    const getServices = async() => {
@@ -136,9 +179,9 @@ const CustomerProductsViewScreen = (props) => {
     
      setServices(apiCall.data.data);
     } catch(e) {
-      alert('error here')
-     
-       showToaster('Algo salío mal');
+      console.log({services:e})
+      
+      showToaster('Algo salío mal - code 1');
     }
   }
   useEffect(() => {

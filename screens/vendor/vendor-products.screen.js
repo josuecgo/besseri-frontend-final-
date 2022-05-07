@@ -46,17 +46,16 @@ const VendorProductsScreen = ({navigation, route}) => {
       setShowLoader(true);
       const profile = await getBusinessProfile();
       setBusinessDetails(profile);
-      console.log(profile)
-    const businessId = await getBusinessId();
-    const url = `${vendor_api_urls.get_products}/${businessId}`
-    const apiCall = await axios.get(url);
-    setShowLoader(false);
-    if(apiCall.status == 200) {
-     setProducts(apiCall.data.data);
      
-     return;
-    }
-    alert('Algo salió mal');
+      const businessId = await getBusinessId();
+      const url = `${vendor_api_urls.get_products}/${businessId}`
+      const apiCall = await axios.get(url);
+      setShowLoader(false);
+      if(apiCall.status == 200) {
+        setProducts(apiCall.data.data);
+        return;
+      }
+    alert('No hay conexion con el servidor');
     } catch(e) {
       setShowLoader(false);
        console.log(e.response.data);
