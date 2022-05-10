@@ -7,7 +7,7 @@ import ProductCardComponent from './product-card.component';
 import * as CartActions from '../../util/ReduxStore/Actions/CustomerActions/CartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../util/constants';
-import { adjust } from '../../util/Dimentions';
+import { adjust, deviceWidth } from '../../util/Dimentions';
 import { useCart } from '../../hooks/useCart';
 
 const ProductListing = ({category,products,navigation,comision}) => {
@@ -33,7 +33,7 @@ const ProductListing = ({category,products,navigation,comision}) => {
 
         <FlatList
         data={products}
-        contentContainerStyle={{marginTop:15,marginLeft:10}}
+        contentContainerStyle={{marginTop:15,paddingHorizontal:5}}
         horizontal
         renderItem={itemData => (
            <ProductCardComponent
@@ -56,7 +56,7 @@ const ProductListing = ({category,products,navigation,comision}) => {
 };
 
 const styles = StyleSheet.create({
-  container:{marginVertical:15,width:'95%'},
+  container:{marginVertical:15,width:deviceWidth},
   buttonAndTextContainer:{flexDirection:'row',justifyContent:'space-between',alignItems:'center',paddingHorizontal:10},
   seeMoreButton:{paddingHorizontal:15,backgroundColor:Colors.primaryColor,justifyContent:'center',alignItems:'center',padding:10,borderWidth:1,borderColor:Colors.primaryColor,borderRadius:30},
  

@@ -21,7 +21,6 @@ import axios from 'axios';
 
 
 const ProductCardComponent = ({
-  
   cartProduct,
   inCart,
   data,
@@ -216,16 +215,16 @@ const ProductCardComponent = ({
 };
 const styles = StyleSheet.create({
   cardContainer: {
-    width: 160,
-    // minHeight:250,
-    // borderColor: 'white',
-    margin: 5,
+    width: deviceWidth / 2.2,
+   
+    marginHorizontal: 3,
     elevation: 1,
     // padding:5
+   
     
   },
   LinearGradient: {
-    minHeight: deviceWidth * 0.24,
+    minHeight: deviceWidth * 0.30,
     paddingHorizontal: 5,
     justifyContent: 'space-evenly',
     paddingVertical: 5,

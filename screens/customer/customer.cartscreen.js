@@ -90,7 +90,7 @@ const CustomerCartScreen = (props) => {
     { 
         console.log({error:e})
         
-        showToaster('Error al obtener su direccion 2 :/')
+        showToaster('Recuerde que para comprar necesitas tener dada de alta tu direccion ')
     }
   }
   

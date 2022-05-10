@@ -11,13 +11,17 @@ import CommonStyles from '../../util/styles/styles';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Geolocation from "@react-native-community/geolocation";
 import { useCart } from "../../hooks/useCart";
+
+
+
+
 export default function CustomerMapStores(props) {
   const {width} = useWindowDimensions()
   const [stores,setstores] = useState([]);
   const [location,setLocation] = useState(null);
 
   const {} = useCart()
-
+ 
   const getLocationIOS = () => {
     Geolocation.getCurrentPosition(
       (position) => {

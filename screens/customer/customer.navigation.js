@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useCallback} from 'react';
 import {CUSTOMER_HOME_SCREEN_ROUTES, LOGIN_SIGNUP_FORGOT_ROUTES} from '../../util/constants';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -26,13 +26,14 @@ import LoginScreen from '../login.screen';
 import SignUpScreen from '../sign-up.screen';
 import SignUpScreenCustomer from '../sign-up.screen-customer';
 import { OrderSuccessful } from './customer.order-successful';
+import { SearchScreen } from './SearchScreen';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 export const PartsServicesFunctionsDrawer = () => {
   return (
     <Drawer.Navigator
-      drawerContent={props => <CustomDrawerComponent {...props} />}
+      drawerContent={(props) => <CustomDrawerComponent {...props} /> }
       initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
       screenOptions={{headerShown: false}}>
       {/* <Drawer.Screen
@@ -80,7 +81,7 @@ export const PartsServicesFunctionsDrawer = () => {
       />
     </Drawer.Navigator>
   );
-};
+}
 const OrdersNavigator = () => {
   return (
     <Stack.Navigator
@@ -153,11 +154,18 @@ export const CustomerHomeStack = () => {
         name={CUSTOMER_HOME_SCREEN_ROUTES.BOOK_SERVICE}
         component={CustomerServiceBook}
       />
-       <Stack.Screen
+      
+      {/* <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SEARCH}
         component={CustomerSearchScreen}
+      /> */}
+
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.SEARCH}
+        component={SearchScreen}
       />
-       <Stack.Screen
+      
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SERVICE}
         component={CustomerServicesViewScreen}
       />

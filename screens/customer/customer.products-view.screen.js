@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View, StyleSheet, Image, ScrollView, Platform, PermissionsAndroid, FlatList, Pressable } from 'react-native';
 import ProductListing from '../../components/customer-components/ProductsListing.component';
 import Colors from '../../util/styles/colors';
@@ -23,7 +23,7 @@ const CATEGORIES = {
   FRENOS: require('../../assets/images/categorias/frenos.jpg'),
 
 };
-const CustomerProductsViewScreen = (props) => {
+const CustomerProductsViewScreen = React.memo((props) => {
 
   const [screenStates, setScreenStates] = useState({
     [SCREEN_STATES.USER_LOCATION]: {},
@@ -38,20 +38,13 @@ const CustomerProductsViewScreen = (props) => {
     longitude: 0,
     latitude: 0
   });
-  const [currentLongitude, setCurrentLongitude ] = useState('...');
-  const [ currentLatitude, setCurrentLatitude ] = useState('...');
-  const [ locationStatus, setLocationStatus ] = useState('');
 
 
+ 
   const [comision, setComision] = useState(0)
-  const setState = (valueToSet, key) => {
-    setScreenStates({
-      ...screenStates,
-      [key]: valueToSet,
-    });
-  };
+
   //Fetching user location..............................
-  const getUserLocation = async() => {
+  const getUserLocation = useCallback(async() => {
     if (Platform.OS === 'ios') {
       getLocation();
       subscribeLocationLocation();
@@ -80,33 +73,38 @@ const CustomerProductsViewScreen = (props) => {
     }
     }
    
-  }
+  },[setUserLocation])
+ 
+
+  
+  const getLocation = useCallback(
+    async() => {
+      try {
+         await Geolocation.getCurrentPosition(
+         (position) => {
+           const currentLatitude = JSON.stringify(position.coords.latitude);
+           const currentLongitude = JSON.stringify(position.coords.longitude);
+           setCoords({
+               latitude:currentLatitude,
+               longitude:currentLongitude
+           })
+         },
+         (error) => {
+           // See error code charts below.
+           console.log(error.code, error.message);
+           },
+           { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+     
+       
+      );
+      } catch (error) {
+        console.log({cathc:error});
+      }
+     },
+    [setCoords]
+  )
   
 
-  const getLocation = async() => {
-   
-   try {
-      await Geolocation.getCurrentPosition(
-      (position) => {
-        const currentLatitude = JSON.stringify(position.coords.latitude);
-        const currentLongitude = JSON.stringify(position.coords.longitude);
-        setCoords({
-            latitude:currentLatitude,
-            longitude:currentLongitude
-        })
-      },
-      (error) => {
-        // See error code charts below.
-        console.log(error.code, error.message);
-        },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-  
-    
-   );
-   } catch (error) {
-     console.log({cathc:error});
-   }
-  }
 
   const subscribeLocationLocation = () => {
     watchID = Geolocation.watchPosition(
@@ -149,23 +147,26 @@ const CustomerProductsViewScreen = (props) => {
   //Getting user location ends here....................
   
   //Get Products to show
-  const getProducts = async() => {
-    try {
-      const apiCall = await axios.get(customer_api_urls.get_products);
-      const getFee = await axios.get(customer_api_urls?.get_fees);
-      
-      setComision(getFee.data.data[0]?.besseri_comission);  
-      setProducts(apiCall.data.data.products);
-      setCategories(apiCall.data.data.categories)
-    //  setState(apiCall.data.data.products,SCREEN_STATES.PRODUCTS);
-    //  setState(apiCall.data.data.categories,SCREEN_STATES.CATEGORIES);
-     
-    } catch(e) {
-      console.log({products:e})
-       showToaster('No hay conexion con el servidor');
+  const getProducts = useCallback(
+    async() => {
+      try {
+        const apiCall = await axios.get(customer_api_urls.get_products);
+        const getFee = await axios.get(customer_api_urls?.get_fees);
+        
+        setComision(getFee.data.data[0]?.besseri_comission);  
+        setProducts(apiCall.data.data.products);
+        setCategories(apiCall.data.data.categories)
+      //  setState(apiCall.data.data.products,SCREEN_STATES.PRODUCTS);
+      //  setState(apiCall.data.data.categories,SCREEN_STATES.CATEGORIES);
+       
+      } catch(e) {
+        console.log({products:e})
+         showToaster('No hay conexion con el servidor');
+  
+      }
+    },[setCategories])
+  
 
-    }
-  }
   useEffect(() => {
     getProducts()
   },[]);
@@ -173,7 +174,7 @@ const CustomerProductsViewScreen = (props) => {
   
 
    //Get Service to show
-   const getServices = async() => {
+   const getServices =  useCallback(async() => {
     try {
      const apiCall = await axios.get(customer_api_urls.get_services);
     
@@ -183,7 +184,9 @@ const CustomerProductsViewScreen = (props) => {
       
       showToaster('Algo salío mal - code 1');
     }
-  }
+  })
+
+
   useEffect(() => {
     getServices()
   },[]);
@@ -201,14 +204,7 @@ const CustomerProductsViewScreen = (props) => {
       </View>
     )
   }
-  const OfferCard = ({ img }) => {
-    return (
-      <Image
-        source={{ uri: img }}
-        style={styles.offerCardImg}
-      />
-    )
-  }
+
   return (
     <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor }}>
       <View style={{ flex: 1 }}>
@@ -231,7 +227,7 @@ const CustomerProductsViewScreen = (props) => {
 
          {
             categories.map((item)=>(
-              <View key={item._id}>
+              <View key={item._id} >
                 <ProductListing
                 navigation={props.navigation}
                 category={item.name} 
@@ -246,7 +242,7 @@ const CustomerProductsViewScreen = (props) => {
       </View>
     </View>
   );
-};
+})
 const styles = StyleSheet.create({
   categoryButton: {
     padding: 20,

@@ -38,14 +38,14 @@ const getIcons = ({focused, color, size, name}) => {
   return ICONS[name];
 };
 
-const CustomDrawerComponent = (props) => {
+const CustomDrawerComponent = React.memo((props) => {
   const [user,setUser] = useState(null);
   const {state, navigation} = props;
   const {routes, index} = state;
   // const [user,setUser] = useState(null);
   const focusedRoute = routes[index].name;
 
-  
+
   const getUserData = async() => {
     const user = await getUser();
 
@@ -150,7 +150,7 @@ const CustomDrawerComponent = (props) => {
       </View>
     </DrawerContentScrollView>
   );
-};
+})
 
 const styles = StyleSheet.create({
   header: { 

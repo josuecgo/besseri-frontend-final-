@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet, Image, ScrollView, useWindowDimensions, PermissionsAndroid, FlatList, TextInput } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, Platform, ScrollView, useWindowDimensions, PermissionsAndroid, FlatList, TextInput } from 'react-native';
 import ProductListing from '../../components/customer-components/ProductsListing.component';
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
@@ -24,7 +24,7 @@ const SCREEN_STATES = {
   CATEGORIES:'Categories'
 }
 const CustomerMoreProductsScreen = (props) => {
-  const { width, height } = useWindowDimensions();
+
   const {params} = useRoute()
   const dispatch = useDispatch()
   const [screenStates, setScreenStates] = useState({
@@ -43,15 +43,10 @@ const CustomerMoreProductsScreen = (props) => {
     longitude: 0,
     latitude: 0
 });
-  const setState = (valueToSet, key) => {
-    setScreenStates({
-      ...screenStates,
-      [key]: valueToSet,
-    });
-  };
+
   //Fetching user location..............................
   const getUserLocation = async() => {
-   if (condition) {
+   if (Platform.OS === 'ios') {
      getLocation();
    } else {
     try {
@@ -69,7 +64,7 @@ const CustomerMoreProductsScreen = (props) => {
           // setState(res.coords,SCREEN_STATES.USER_LOCATION);
         });
       } else {
-        console.log("Location permission denied")
+        console.log("Permiso de ubicación denegado")
       }
   
     } catch(e) {
@@ -112,22 +107,38 @@ const CustomerMoreProductsScreen = (props) => {
   const getProducts = async() => {
     try {
       const apiCall = await axios.get(`${customer_api_urls.get_category_products}/${params?.category?._id}`);
-      const getFee = await axios.get(customer_api_urls?.get_fees);
+    
       const getUser = await getUserId()
 
       setIsLogin(getUser);
-      setComision(getFee.data.data[0]?.besseri_comission);
+     
       setProducts(apiCall.data.data);
     //  setState(apiCall.data.data.products,SCREEN_STATES.PRODUCTS);
     //  setState(apiCall.data.data.categories,SCREEN_STATES.CATEGORIES);
      
     } catch(e) {
-       showToaster('Something went wrong please try again');
+       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
     }
+  }
+
+  const getComision = async() => {
+    try {
+      const getFee = await axios.get(customer_api_urls?.get_fees);
+      setComision(getFee.data.data[0]?.besseri_comission);
+    } catch (error) {
+      console.log(error);
+    }
+   
+
   }
   useEffect(() => {
     getProducts()
   },[]);
+
+  useEffect(() => {
+    getComision();
+  }, [])
+  
    
   const addItemToCart = (item) => {
     if(cartProductIds?.includes(item?._id)) {
@@ -143,6 +154,10 @@ const CustomerMoreProductsScreen = (props) => {
   const goCart = () => {
     props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK)
   }
+
+  
+  
+  
   
   return (
     <View style={{ ...CommonStyles.flexOne }}>
@@ -173,17 +188,18 @@ const CustomerMoreProductsScreen = (props) => {
             </TouchableOpacity>
         </View>
        <View style={{width:'95%',height:45,borderWidth:1,borderColor:Colors.light,backgroundColor:Colors.light,alignSelf:'center',margin:20,...CommonStyles.flexDirectionRow,...CommonStyles.horizontalCenter}}>
-       <Ionicons
-              style={{marginLeft: 10,left:5}}
-              color={Colors.dark}
-              size={25}
-              name="search"
-            />
-            <TextInput
-            placeholder='Buscar producto'
-            placeholderTextColor={'black'}
-            style={{paddingLeft:10}}
-            />
+          <Ionicons
+          style={{marginLeft: 10,left:5}}
+            color={Colors.dark}
+          size={25}
+          name="search"
+          />
+          <TextInput
+          placeholder='Buscar producto'
+          placeholderTextColor={'black'}
+          style={{paddingLeft:10,color:Colors.black}}
+
+          />
        </View>
        <Text style={{fontSize:15,...CommonStyles.fontFamily,paddingLeft:10,bottom:10}}>
          Productos por : {params?.category?.name}
@@ -192,26 +208,7 @@ const CustomerMoreProductsScreen = (props) => {
         </View>
 
         <ScrollView contentContainerStyle={{ flexGrow: 1, marginTop: 20 }}>
-          {/* <FlatList
-          data={products}
-          numColumns={2}
-          contentContainerStyle={{flexGrow:1,margin:10}}
-          renderItem={itemData => (
-            <ProductCardComponent
-            onAddToCart={() => addItemToCart(itemData.item)}
-            data={itemData.item}
-            cartProduct={false}
-            onViewDetail={() => {
-                props?.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL,{
-                  product:itemData.item,
-                  comision:comision
-                });
-            }}
-            comision={comision}
-            />
-            // <ProductListing category={itemData.item.name} products={products.filter(product => product.categoryId == itemData.item._id)} />
-          )}
-          /> */}
+         
           <View style={{flexDirection:'row', flexWrap:'wrap',justifyContent:'center'}} >
           {
             products.map((item) => (

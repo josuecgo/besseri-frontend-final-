@@ -1,4 +1,6 @@
+import axios from 'axios';
 import { useEffect, useState, useRef } from 'react';
+import { customer_api_urls } from '../util/api/api_essentials';
 
 
 
@@ -6,7 +8,8 @@ import { useEffect, useState, useRef } from 'react';
 
 export const useCostos = () => {
     const [costoEnvio, setCostoEnvio] = useState(0)
-    const [distancia, setDistancia] = useState(0)
+    const [distancia, setDistancia] = useState(0);
+    const [comision, setComision] = useState(10)
     const CalcularEnvio = (distancia,costoK) => {
         let total = Math.ceil(distancia * costoK)
         
@@ -27,6 +30,15 @@ export const useCostos = () => {
        
     }
 
+    const getComision = async() => {
+        const getFee = await axios.get(customer_api_urls?.get_fees);
+        
+        setComision(getFee.data.data[0]?.besseri_comission); 
+    }
+
+    useEffect(() => {
+        getComision();
+    }, [])
     
     
 
@@ -34,6 +46,7 @@ export const useCostos = () => {
         CalcularEnvio,
         CalcularDistancia,
         costoEnvio,
-        distancia
+        distancia,
+        comision
     }
 }
