@@ -6,28 +6,23 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
-  BackHandler,
+
   FlatList,
   Image,
-  ToastAndroid,
-  Alert,
+
 } from 'react-native';
 import CommonStyles from '../../util/styles/styles';
 import Colors from '../../util/styles/colors';
 import {
-  ThinlineSeparator,
-  MenuItem,
-  Heading,
+
   AddBrandModal,
 } from '../../components/CommonComponents';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 import Entypo from 'react-native-vector-icons/Entypo';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   getBusinessId,
-  getBusinessProfile,
 } from '../../util/local-storage/auth_service';
 import Loader from '../../components/Loader/Loader.component';
 import {
@@ -38,8 +33,6 @@ import {
 import InputFieldComponent from '../../components/input-field/input-field.component';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import KEYBOARD_TYPES from '../../util/keyboard-types';
-import Feather from 'react-native-vector-icons/Feather';
-import Fontisto from 'react-native-vector-icons/Fontisto';
 import ButtonComponent from '../../components/button/button.component';
 import axios from 'axios';
 import {
@@ -52,7 +45,7 @@ import {useRoute} from '@react-navigation/native';
 import {adjust, deviceHeight, deviceWidth} from '../../util/Dimentions';
 import {HeaderBackground} from '../../components/Background/HeaderBackground';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { screenFocus, screenFocusProduct, stringIsEmpty } from '../../util/helpers/StatusText';
+import { screenFocusProduct, stringIsEmpty } from '../../util/helpers/StatusText';
 const {width, height} = Dimensions.get('screen');
 
 
