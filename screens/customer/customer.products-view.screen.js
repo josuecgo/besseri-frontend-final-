@@ -1,30 +1,35 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet, Image, ScrollView, Platform, PermissionsAndroid, FlatList, Pressable } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, Image, ScrollView, Platform, PermissionsAndroid, FlatList } from 'react-native';
 import ProductListing from '../../components/customer-components/ProductsListing.component';
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
 import Geolocation from '@react-native-community/geolocation';
-import { CUSTOMER_HOME_SCREEN_ROUTES, SHARED_ROUTES, showToaster } from '../../util/constants';
+import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../util/constants';
 import axios from 'axios';
-import { base_url, customer_api_urls } from '../../util/api/api_essentials';
-import { useDispatch, useSelector } from 'react-redux';
-import * as CartActions from '../../util/ReduxStore/Actions/CustomerActions/CartActions';
-import ProductCardComponent from '../../components/customer-components/product-card.component';
-import RatingComponent from '../../components/Ratings/rating.component';
+import {  customer_api_urls } from '../../util/api/api_essentials';
+import { deleteNotification, getNotification, getUser, getUserId } from '../../util/local-storage/auth_service';
+
 import { adjust, deviceWidth } from '../../util/Dimentions';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 const SCREEN_STATES = {
   USER_LOCATION:'User location',
   PRODUCTS:'Products',
   CATEGORIES:'Categories'
 }
-const CATEGORIES = {
-  TRANSMISION: require(`../../assets/images/categorias/transmision.png`),
-  FRENOS: require('../../assets/images/categorias/frenos.jpg'),
 
-};
+const SelectImgCategory = (category) => {
+  switch (category) {
+    case 'TRANSMISION':
+      return require(`../../assets/images/categorias/transmision.png`);
+    case 'FRENOS':
+      return require('../../assets/images/categorias/frenos.jpg');
+       
+  
+    default:
+      return require('../../assets/images/categorias/frenos.jpg');
+  }
+}
 const CustomerProductsViewScreen = React.memo((props) => {
-
   const [screenStates, setScreenStates] = useState({
     [SCREEN_STATES.USER_LOCATION]: {},
     [SCREEN_STATES.PRODUCTS]:[],
@@ -32,16 +37,21 @@ const CustomerProductsViewScreen = React.memo((props) => {
   });
   const [products,setProducts] = useState([]);
   const [categories,setCategories] = useState([]);
-  const [services,setServices] = useState([]);
   const [userLocation,setUserLocation] = useState(null);    
   const [coords,setCoords] = useState({
     longitude: 0,
     latitude: 0
   });
 
-
- 
   const [comision, setComision] = useState(0)
+  const [notification, setNotification] = useState([])
+  useEffect(async() => {
+    const n  = await getNotification()
+    setNotification(n)
+  }, [])
+  
+  
+  
 
   //Fetching user location..............................
   const getUserLocation = useCallback(async() => {
@@ -76,7 +86,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
   },[setUserLocation])
  
 
-  
+ 
   const getLocation = useCallback(
     async() => {
       try {
@@ -103,8 +113,6 @@ const CustomerProductsViewScreen = React.memo((props) => {
      },
     [setCoords]
   )
-  
-
 
   const subscribeLocationLocation = () => {
     watchID = Geolocation.watchPosition(
@@ -136,16 +144,10 @@ const CustomerProductsViewScreen = React.memo((props) => {
     );
   };
 
-
-
-
-
-
   useEffect(() => {
     getUserLocation();
   },[]);
-  //Getting user location ends here....................
-  
+
   //Get Products to show
   const getProducts = useCallback(
     async() => {
@@ -171,32 +173,23 @@ const CustomerProductsViewScreen = React.memo((props) => {
     getProducts()
   },[]);
   
+  const verNotification = async() => {
+    const n  = await getNotification();
+    console.log({n});
+  }
+  const clear = async() => {
+    await deleteNotification();
+  }
+
+
   
-
-   //Get Service to show
-   const getServices =  useCallback(async() => {
-    try {
-     const apiCall = await axios.get(customer_api_urls.get_services);
-    
-     setServices(apiCall.data.data);
-    } catch(e) {
-      console.log({services:e})
-      
-      showToaster('Algo salío mal - code 1');
-    }
-  })
-
-
-  useEffect(() => {
-    getServices()
-  },[]);
 
   const CategoryButton = ({ category,onPress }) => {
     return (
       <View style={{alignItems:'center'}} >
         <TouchableOpacity onPress={onPress} style={styles.categoryButton}>
            
-            <Image source={CATEGORIES[category]} style={{width:20,height:20}} />
+            <Image source={SelectImgCategory(category)} style={{width:20,height:20}} />
         </TouchableOpacity>
         <Text style={{fontSize:adjust(5)}} >
               {category}
@@ -208,7 +201,11 @@ const CustomerProductsViewScreen = React.memo((props) => {
   return (
     <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor }}>
       <View style={{ flex: 1 }}>
-        <View style={{ paddingVertical: 20, backgroundColor: 'transparent', alignSelf: 'flex-start', flexDirection: 'row' }}>
+        
+
+
+          
+        <View style={{ paddingVertical: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', flexDirection: 'row' }}>
          
           <FlatList
           data={categories}

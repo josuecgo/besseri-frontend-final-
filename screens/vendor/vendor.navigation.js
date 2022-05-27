@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View} from 'react-native';
 import Colors from '../../util/styles/colors';
 import VendorOrdersScreen from './vendor-orders.screen';
@@ -29,7 +29,15 @@ import ShareServiceDetail from '../servicedetail.sharescreen';
 import VendorBookingDetail from './vendor.bookingdetail.screen';
 import VendorLocationScreen from './vendor.businessLocation'
 import { EditProfile } from './vendor-edit-profile';
+import { Badge } from '../../components/Badge';
+import { NotificationContext } from '../../util/context/NotificationContext';
 export const VendorNavigation = () => {
+
+  const {count} = useContext(NotificationContext);
+
+
+  
+
   return (
     <BottomTab.Navigator
       initialRouteName={BOTTOM_TAB_VENDOR_ROUTES.DASHBOARD}
@@ -55,7 +63,7 @@ export const VendorNavigation = () => {
                 break;
 
                 case BOTTOM_TAB_VENDOR_ROUTES.DASHBOARD:
-                iconName = 'attach-money'
+                iconName = 'notifications'
                 break;
 
 
@@ -67,14 +75,20 @@ export const VendorNavigation = () => {
     
             return  (
                 <View>
+                  {
+                    route?.name === BOTTOM_TAB_VENDOR_ROUTES.DASHBOARD && (
+                      <Badge count={count} />
+                    )
+                  }
+                   
                     <MaterialIcons name={iconName}  size={size} color={color} />   
                 </View>
                 
             )
         },
         
-    })
-    }
+      })
+      }
       >
       <BottomTab.Screen
         name={BOTTOM_TAB_VENDOR_ROUTES.PRODUCTS}
@@ -103,9 +117,9 @@ export const VendorNavigation = () => {
       />
       <BottomTab.Screen
         name={BOTTOM_TAB_VENDOR_ROUTES.DASHBOARD}
-        component={VendorDashboardScreen}
+        component={NotificationNavigator}
         options={{
-          title: 'Ganacias',
+          title: 'News',
           
         }}
       />
@@ -173,6 +187,32 @@ const ProfileNavigator = () => {
         }}
       />
     </ProfileStack.Navigator>
+  );
+};
+
+const NotificationStack = createStackNavigator();
+
+const NotificationNavigator = () => {
+  return (
+    <NotificationStack.Navigator
+      initialRouteName={'NotificationScreen'}
+      >
+      <NotificationStack.Screen
+         name={'NotificationScreen'}
+         component={VendorDashboardScreen}
+         options={{
+          headerShown:false
+         }}
+      />
+      <NotificationStack.Screen
+         name={'NotificationDetail'}
+         component={VendorOrderDetailsScreen}
+         options={{
+           headerShown: false,
+         }}
+      />
+     
+    </NotificationStack.Navigator>
   );
 };
 

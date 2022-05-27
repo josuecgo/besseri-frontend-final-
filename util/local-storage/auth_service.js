@@ -10,6 +10,18 @@ export const saveUserData = async(user) => {
     await saveUserType(user);
     
 };
+
+export const saveNotification = async(notifications) => {
+    await AsyncStorage.setItem(ASYNC_STORAGE_NAMES.NOTIFICATION_STORAGE,JSON.stringify(notifications)); 
+};
+export const getNotification = async() => {
+    const notification = await AsyncStorage.getItem(ASYNC_STORAGE_NAMES.NOTIFICATION_STORAGE);
+    return JSON.parse(notification);
+} 
+
+export const deleteNotification = async() => {
+    await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.NOTIFICATION_STORAGE);
+}
 export const getUserId = async() => {
     const userId = await AsyncStorage.getItem(ASYNC_STORAGE_NAMES.USER_ID);
     return userId;

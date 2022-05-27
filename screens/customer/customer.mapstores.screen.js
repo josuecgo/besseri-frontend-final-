@@ -1,9 +1,7 @@
 import React, { useState,useEffect } from "react";
-import { FlatList, Image, PermissionsAndroid, StyleSheet, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native";
-import MapView,{Circle} from "react-native-maps";
-import Feather from 'react-native-vector-icons/Feather'
+import { FlatList, Image, PermissionsAndroid, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native";
+import MapView,{Marker,Polyline} from "react-native-maps";
 import Colors from '../../util/styles/colors';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { api_statuses, base_url, customer_api_urls } from "../../util/api/api_essentials";
 import axios from "axios";
 import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from "../../util/constants";
@@ -11,12 +9,14 @@ import CommonStyles from '../../util/styles/styles';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Geolocation from "@react-native-community/geolocation";
 import { useCart } from "../../hooks/useCart";
+import { StoreCard } from "../../components/Customer/StoreCard";
+import { SearchComponent } from "../../components/Customer/SearchComponent";
 
 
 
 
 export default function CustomerMapStores(props) {
-  const {width} = useWindowDimensions()
+
   const [stores,setstores] = useState([]);
   const [location,setLocation] = useState(null);
 
@@ -68,10 +68,10 @@ export default function CustomerMapStores(props) {
       const apiCall = await axios.post(`${customer_api_urls.get_stores}`,{
         startlat:location?.latitude,
         startlng:location?.longitude,
-        range:30
+        range:1000
       });
       if(apiCall.status == api_statuses.success) {
-        console.log(apiCall.data.data)
+        
        setstores(apiCall.data.data);
       } else {
         showToaster('algo salió mal');
@@ -84,101 +84,59 @@ export default function CustomerMapStores(props) {
   useEffect(() => {
     getLocation()
   },[]);
-  const StoreCard = ({data}) => {
-    
-    return (
-      <View style={{width:width - 20,minHeight:250,padding:10,borderRadius:10,backgroundColor:'white',alignSelf:'center',marginHorizontal:10}}>
-        <View style={{...CommonStyles.flexDirectionRow,...CommonStyles.horizontalCenter}}>
-          <Image
-          source={{uri:`${base_url}/${data?.logo}`}}
-          style={{width:45,height:45,borderRadius:45/2}}
-          />
-          <TouchableOpacity activeOpacity={0.8} 
-          onPress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.STORE_SCREEN,{data:data})}
-          style={{paddingLeft:15}}>
-            <Text style={{...CommonStyles.fontFamily,color:'black'}}>{data?.storeName}</Text>
-            <Text style={{fontWeight:'300',color:'grey',fontSize:13}}>{'Autoparts store'}</Text>
-          </TouchableOpacity>
-        </View>
 
-        <View style={{paddingLeft:5,marginTop:15}}>
-          <Text style={{color:'grey',fontSize:13}}>{'Email'}</Text>
-          <Text style={{...CommonStyles.fontFamily,color:'black'}}>{data?.email}</Text>
-        </View>
-
-        <View style={{paddingLeft:5,marginTop:10}}>
-          <Text style={{color:'grey',fontSize:13}}>{'Dirección'}</Text>
-          <Text style={{...CommonStyles.fontFamily,color:'black'}}>{data?.address}</Text>
-        </View>
-
-        <View style={{paddingLeft:5,marginTop:10}}>
-          <Text style={{color:'grey',fontSize:13}}>{'Ciudad'}</Text>
-          <Text style={{...CommonStyles.fontFamily,color:'black'}}>{data?.city}</Text>
-        </View>
-        <View style={{paddingLeft:5,marginTop:10}}>
-          <Text style={{color:'grey',fontSize:13}}>{'Estado'}</Text>
-          <Text style={{...CommonStyles.fontFamily,color:'black'}}>{data?.state}</Text>
-        </View>
-
-        <View style={{flex:1}}>
-          <TouchableOpacity
-          onPress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.STORE_SCREEN,{data:data})}
-          style={{alignSelf:'flex-end',position:'absolute',bottom:5,margin:10,width:35,height:35,borderWidth:1,borderColor:Colors.brightBlue,backgroundColor:Colors.brightBlue,justifyContent:'center',alignItems:'center',borderRadius:35/2}}
-          >
-            <Ionicons
-            name='navigate'
-            color={Colors.white}
-            size={15}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
-    )
-  }
+  console.log(stores);
+  
   return (
     <View style={styles.container}>
     {/*Render our MapView*/}
       {
-        location?.latitude && location?.longitude ? 
+        location?.latitude && location?.longitude && stores  ? 
         <MapView
         style={styles.map}
         //specify our coordinates.
         initialRegion={{
-          latitude:location?.latitude,
-          longitude: location?.longitude,
+          latitude:19.485297844903283,
+          longitude: -99.22777616792496,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
       >
-        <Circle 
-        radius={600}
-        center={{
-          latitude:location?.latitude,
-          longitude: location?.longitude,
-        }}
-        fillColor={Colors.primaryColor}
-        strokeColor={'#F7E3BD'}
-        strokeWidth={10}
-        />
+         
+        {
+          stores.map((item) => (
+           
+            <Marker
+            coordinate={{ latitude : parseFloat(item.location?.latitude) , longitude : parseFloat(item.location?.longitude) }}
+            // image={{uri: 'custom_pin'}}
+            key={item._id}
+            title={item.storeName}
+            />
+
+          
+          ))
+        }
         </MapView>
         :
         null
       }
       <View style={{flex:1,width:'100%'}}>
-
-      <View style={{flex:1,position:'absolute',bottom:10,alignSelf:'center',paddingLeft:5}}>
-        <FlatList
-        contentContainerStyle={{flexGrow:1}}
-        data={stores}
-        horizontal
-        keyExtractor={item => item?._id}
-        renderItem={itemData => (
-          <StoreCard
-          data={itemData.item}
+        
+        <View style={{flex:1,position:'absolute',bottom:10,alignSelf:'center',paddingLeft:5}}>
+          <FlatList
+          contentContainerStyle={{flexGrow:1}}
+          data={stores}
+          horizontal
+          keyExtractor={item => item?._id}
+          renderItem={itemData => (
+            <StoreCard
+            data={itemData.item}
+            goStore={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.STORE_SCREEN,{data:itemData.item})}
+            />
+          )}
+          
           />
-        )}
-        />
-      </View>
+        </View>
       </View>
     </View>
   );

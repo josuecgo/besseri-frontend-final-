@@ -235,6 +235,7 @@ const VendorAddProductScreen = ({navigation}) => {
     getModels();
   }, []);
 
+
   //GETTING CATEGORIES FOR CREATING PRODUCTS
   const getCategories = async () => {
     try {
@@ -298,6 +299,7 @@ const VendorAddProductScreen = ({navigation}) => {
       setShowLoader(true);
       const apiCall = await axios.get(vendor_api_urls.get_makers);
       setShowLoader(false);
+      
       if (apiCall?.status == api_statuses?.success) {
         setMakers(apiCall.data.data);
       }
@@ -521,7 +523,7 @@ const VendorAddProductScreen = ({navigation}) => {
     }, [currentScreen])
     
    
-    const nextPage = () => {
+  const nextPage = () => {
        
         if (stringIsEmpty(inputValues[pantallaSelect]) ){
           setCurrentScreen(
@@ -550,8 +552,10 @@ const VendorAddProductScreen = ({navigation}) => {
             showToaster('Rellena el campo')
         }
   
-    }
+  }
 
+
+  console.log(makers);
   return (
     <View style={styles.container}>
       <AddBrandModal

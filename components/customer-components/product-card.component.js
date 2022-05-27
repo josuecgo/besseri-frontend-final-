@@ -51,7 +51,7 @@ const ProductCardComponent = ({
       
       setComision(getFee.data.data[0]?.besseri_comission);
     } catch (error) {
-      console.log(error);
+      console.log({comision:error});
     }
     
 

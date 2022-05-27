@@ -5,6 +5,8 @@ import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
 import { showToaster } from '../util/constants';
 import Geocoder from 'react-native-geocoding';
+import { rider_api_urls } from '../util/api/api_essentials';
+import { getRiderId } from '../util/local-storage/auth_service';
 
 
 
@@ -46,16 +48,7 @@ export const useLocation = () => {
 
     useEffect(() => {
         getLocationHook()
-        getCurrentLocation()
-            .then( location => {
-
-                if( !isMounted.current ) return;
-
-                setInitialPosition(location);
-                setUserLocation(location);
-                setRouteLines( routes => [ ...routes, location ])
-                setHasLocation(true);
-            });
+       
 
     }, []);
 
@@ -144,6 +137,23 @@ export const useLocation = () => {
         }
         
     }
+
+    const updateUbication = async () => {
+    
+        try {
+            const riderId = await getRiderId();
+            await axios.put(`${rider_api_urls.update_coords}`, {
+                lat: userLocation?.latitude,
+                lng: userLocation?.longitude,
+                riderId
+             });
+    
+         
+    
+        } catch (error) {
+          console.log({updateUbication:error});
+        }
+    }
    
 
 
@@ -154,12 +164,12 @@ export const useLocation = () => {
         hasLocation,
         initialPosition,
         getCurrentLocation,
-        
         userLocation,
         routeLines,
         direccion,
         user,
         getAddresses,
-        getLocationHook
+        getLocationHook,
+        updateUbication
     }
 }

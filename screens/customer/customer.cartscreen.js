@@ -30,7 +30,7 @@ const CustomerCartScreen = (props) => {
     label:''
   })
 
-  
+  const businessSelectRef = useRef();
   const [businessProfiles, setBusinessProfiles] = useState([]);
   const [comission, setComission] = useState();
   const [delivery_fee, setDeliveryFee] = useState();
@@ -213,7 +213,7 @@ const CustomerCartScreen = (props) => {
       </View>
     )
   }
-  const businessSelectRef = useRef();
+  
 
  
   return (

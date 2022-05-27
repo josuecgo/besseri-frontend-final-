@@ -111,7 +111,7 @@ const SplashScreen = ({navigation}) => {
         await getBusinessDetails(user_id);
         const businessId = await getBusinessId();
         const earnings = await getStoreEarnings(businessId);
-        console.log('earnings line 56',earnings)
+        // console.log('earnings line 56',earnings)
         dispatch(BusinessProfileActions.setEarnings(earnings));
         navigation.navigate(MAIN_ROUTES.VENDOR_STACK);
 

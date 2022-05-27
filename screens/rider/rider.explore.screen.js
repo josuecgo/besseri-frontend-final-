@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   Alert,
   FlatList,
@@ -20,6 +20,7 @@ import Geolocation from '@react-native-community/geolocation';
 import {showToaster} from '../../util/constants';
 import {
   api_statuses,
+  api_urls,
   base_url,
   rider_api_urls,
   vendor_api_urls,
@@ -35,14 +36,17 @@ import LoaderComponent from '../../components/Loader/Loader.component';
 import {useSelector} from 'react-redux';
 import {deviceWidth} from '../../util/Dimentions';
 import { CardOrders } from '../../components/Rider/CardOrders';
+import { NotificationContext } from '../../util/context/NotificationContext';
 
 export default function RiderExplore(props) {
+  const {getNotificaciones} = useContext(NotificationContext);
   const [orders, setOrders] = useState([]);
   const [location, setLocation] = useState(null);
   const [loading, setLoading] = useState(false);
   const rider_wallet = useSelector(state => state?.rider?.wallet);
   const [riderProfile, setRiderProfile] = useState(null);
-
+  const item = props.route.params ? props?.route?.params.item : false;
+  
   const getLocationIos = () => {
     Geolocation.getCurrentPosition(position => {
       setLocation(position.coords);
@@ -79,7 +83,10 @@ export default function RiderExplore(props) {
   useEffect(() => {
     getLocation();
   }, []);
+
   const requestRide = async orderId => {
+    viewItem(orderId);
+    getNotificaciones();
     try {
       setLoading(true);
 
@@ -98,8 +105,8 @@ export default function RiderExplore(props) {
       }
     } catch (e) {
       setLoading(false);
-      console.log(e);
-      console.log(e?.response?.data);
+      // console.log(e);
+      console.log({xplorerRider:e?.response?.data});
       showToaster(
         e?.response?.data?.message
           ? e?.response?.data?.message
@@ -130,18 +137,45 @@ export default function RiderExplore(props) {
       }
     } catch (e) {
       setLoading(false);
-      alert('error');
-      console.log(e);
+    
       console.log(e?.response?.data);
       showToaster('Algo salió mal, inténtalo de nuevo');
     }
   };
+
+  const viewItem = async() => {
+
+    try {
+      
+      await axios.post(`${api_urls.viewNotification}/${item._id}`,{user:'rider'});
+     
+     
+    } catch(e) {
+     console.log({detail:e});
+    }
+  }
+
+ 
+  
+
+  
+
+  
+  useEffect(() => {
+   
+    if (item?._id && !item?.viewRider ) {
+
+      viewItem();
+     
+    }
+    getNotificaciones();
+  }, [])
+  
   useEffect(() => {
     getNearbyOrders();
   }, [location]);
 
-  
- 
+
 
   return (
     <View style={styles.container}>
@@ -158,7 +192,7 @@ export default function RiderExplore(props) {
             longitudeDelta: 0.0421,
           }}>
           <Circle
-            radius={500}
+            radius={100}
             center={{
               latitude: location?.latitude,
               longitude: location?.longitude,

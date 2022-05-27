@@ -21,8 +21,10 @@ const CREDENTIAL_KEYS = {
 };
 const OtpPasswordScreen = ({navigation}) => {
   const route = useRoute();
+  const mensajero = route.params.body?.msj;
   const logo = route?.params?.logo;
   const correo = route.params.body.email;
+  const phone = route.params.body.phone;
   const {width, height} = useWindowDimensions();
   const [isEnteringOTP, setEnteringOTP] = useState(true);
   const [showLoader,setShowLoader] = useState(false);
@@ -30,6 +32,7 @@ const OtpPasswordScreen = ({navigation}) => {
     [CREDENTIAL_KEYS.OTP_CODE]: '',
     [CREDENTIAL_KEYS.PASSWORD]: '',
   });
+ 
 
   const onChangeText = (inputText, key) => {
     setUserCredentials({
@@ -50,7 +53,7 @@ const OtpPasswordScreen = ({navigation}) => {
         type:logo?.mime,
         name:'logo.jpg'
       })
-      console.log(logo?.mime)
+      
       setShowLoader(true);
       const apiCall = await axios.post(vendor_api_urls?.upload_business_logo,imageData);
       setShowLoader(false);
@@ -95,6 +98,7 @@ const OtpPasswordScreen = ({navigation}) => {
       console.log(e)
     }
   }
+ 
 
   return (
     <CustomSafeAreaViewComponent>
@@ -114,11 +118,13 @@ const OtpPasswordScreen = ({navigation}) => {
           {isEnteringOTP ? (
             <>
               <View style={{alignItems:'center',width:deviceWidth,marginVertical:15}} >
-                <Text>Se ha enviado un codigo a  </Text>
+                <Text>{ mensajero === 'email' ? 'Se ha enviado un correo a' : mensajero === 'sms' ? 'Se ha enviado un SMS con un codigo a' : 'Se ha enviado un Whatsapp con un codigo a' }  </Text>
                 <Text style={{fontWeight:'bold'}} >
-                {correo}
+                { mensajero === 'email' ? correo : phone}
                 </Text>
+                { mensajero === 'email' && <Text style={{opacity:0.5}} >Revise su bandeja de correo no deseado</Text> }
               </View>
+              
               <InputFieldComponent
                 icon={
                   <MaterialCommunityIcons

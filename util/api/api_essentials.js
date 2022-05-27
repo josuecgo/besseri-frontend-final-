@@ -8,7 +8,9 @@ export const api_urls = {
     get_order_details:`${base_url}/orders/get-order-details`,
     forget_password:`${base_url}/forgot-password/generatecode`,
     reset_password:`${base_url}/forgot-password/resetpassword`,
-    save_fcm_token:`${base_url}/fcm/save-fcm-token`
+    save_fcm_token:`${base_url}/fcm/save-fcm-token`,
+    getNotification:`${base_url}/user/getNotification`,
+    viewNotification:`${base_url}/user/viewNotification`,
 }
 export const paymentApis = {
     refundPayment:`${base_url}/payments/refund-amount`
@@ -78,7 +80,9 @@ export const rider_api_urls = {
     get_myorders:`${base_url}/rider/get-my-orders`,
     change_order_status:`${base_url}/rider/change-order-status`,
     get_earnings:`${base_url}/rider/get-rider-earnings`,
-    create_stripe_account:`${base_url}/payments/create-rider-account`
+    create_stripe_account:`${base_url}/payments/create-rider-account`,
+    update_coords:`${base_url}/rider/update-coords`,
+    
 
 }
 export const api_statuses = {

@@ -1,4 +1,4 @@
-import React,{useCallback} from 'react';
+import React,{useCallback, useContext} from 'react';
 import {CUSTOMER_HOME_SCREEN_ROUTES, LOGIN_SIGNUP_FORGOT_ROUTES} from '../../util/constants';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -27,28 +27,30 @@ import SignUpScreen from '../sign-up.screen';
 import SignUpScreenCustomer from '../sign-up.screen-customer';
 import { OrderSuccessful } from './customer.order-successful';
 import { SearchScreen } from './SearchScreen';
+import { customer_api_urls } from '../../util/api/api_essentials';
+import { color } from 'react-native-reanimated';
+import { CustomerNotificationViewScreen } from './customer.notificaciones';
+import { NotificationContext } from '../../util/context/NotificationContext';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 export const PartsServicesFunctionsDrawer = () => {
+  const {countCustomer,getNotificaciones} = useContext(NotificationContext);
+
+
   return (
     <Drawer.Navigator
-      drawerContent={(props) => <CustomDrawerComponent {...props} /> }
+      drawerContent={(props) => <CustomDrawerComponent {...props} countCustomer={countCustomer} getNotificaciones={getNotificaciones} /> }
       initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
-      screenOptions={{headerShown: false}}>
-      {/* <Drawer.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.SERVICE}
-        component={CustomerServicesViewScreen}
-        options={{
-          headerShown: true,
-          header: props => <CustomHeaderComponent {...props} name="Service" />,
-        }}
-      /> */}
+      screenOptions={{
+        headerShown: false,
+      }}>
+     
       <Drawer.Screen
         name={'Autopartes'}
         component={CustomerHomeStack}
       />
-        <Drawer.Screen
+      <Drawer.Screen
         name={'Servicios'}
         component={CustomerServicesViewScreen}
         options={{
@@ -58,19 +60,18 @@ export const PartsServicesFunctionsDrawer = () => {
           ),
         }}
       />
-       <Drawer.Screen
+      <Drawer.Screen
+        name={'Notificaciones'}
+        component={CustomerNotificationStack}
+      />
+      <Drawer.Screen
         name={'Mi dirección'}
         component={CustomerAddressesScreen}
       />
       <Drawer.Screen
         name={'Pedidos'}
         component={OrdersNavigator}
-        // options={{
-        //   headerShown: true,
-        //   header: props => (
-        //     <CustomHeaderComponent {...props} name="My Orders" />
-        //   ),
-        // }}
+        
       />
       <Drawer.Screen
         name={'Reservaciones'}
@@ -103,13 +104,46 @@ const OrderStack = () => {
         name={CUSTOMER_HOME_SCREEN_ROUTES.CART}
         component={CustomerCartScreen}
       />
-       <Stack.Screen
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_SUMMARY}
         component={CustomerOrderSummaryScreen}
+      />
+      <Stack.Screen
+        name={'OrderSuccessful'}
+        component={OrderSuccessful}
       />
     </Stack.Navigator>
   )
 }
+
+export const CustomerNotificationStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{headerShown: false}}
+      >
+      <Stack.Screen
+        name={'NotificacionesHome'}
+        component={CustomerNotificationViewScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <CustomHeaderComponent {...props} name="Notificaciones" />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name={'OrdersHome'}
+        component={CustomerHomeStack}
+        
+      />
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_DETAIL}
+        component={CustomerOrderDetail}
+      />
+
+    </Stack.Navigator>
+  );
+};
 export const CustomerHomeStack = () => {
   return (
     <Stack.Navigator
@@ -187,10 +221,10 @@ export const CustomerHomeStack = () => {
         name={LOGIN_SIGNUP_FORGOT_ROUTES.SIGN_UP_CUSTOMER}
         component={SignUpScreenCustomer}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name={'OrderSuccessful'}
         component={OrderSuccessful}
-      />
+      /> */}
     </Stack.Navigator>
   );
 };

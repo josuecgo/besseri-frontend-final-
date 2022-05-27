@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { useWindowDimensions, View,Text, Pressable, ImageBackground,StyleSheet,ScrollView } from 'react-native';
+import { useWindowDimensions, View,Text, Pressable, ImageBackground,StyleSheet,ScrollView,Alert } from 'react-native';
 import CustomSafeAreaViewComponent from '../components/custom-safe-area-view/custom-safe-area-view.component';
 import TopCircleComponent from '../components/top-circle/top-circle.component';
 import {
@@ -92,44 +92,67 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
 
   const generateOtp = async () => {
     if (comparaText(inputValues[CREDENTIAL_KEYS.CONFIRMPASSWORD],inputValues[CREDENTIAL_KEYS.PASSWORD]) && inputValues[CREDENTIAL_KEYS.PASSWORD].length > 0 ) {
-     if (isSelected) {
-      try {
-        setShowLoader(true);
-        const url = api_urls.generate_otp;
-        const body = {
-          email: inputValues[CREDENTIAL_KEYS.WORK_EMAIL],
-          name: inputValues[CREDENTIAL_KEYS.FULL_NAME],
-          phone: inputValues[CREDENTIAL_KEYS.PHONE_NUMBER],
-          storeName: inputValues[CREDENTIAL_KEYS.STORE_NAME],
-          Address: inputValues[CREDENTIAL_KEYS.ADDRESS_LINE_ONE] + " " + inputValues[CREDENTIAL_KEYS.ADDRESS_LINE_TWO],
-          state: inputValues[CREDENTIAL_KEYS.STATE],
-          country: inputValues[CREDENTIAL_KEYS.COUNTRY],
-          city: inputValues[CREDENTIAL_KEYS.CITY],
-          password: inputValues[CREDENTIAL_KEYS.PASSWORD],
-          isCommonUser:false,
-          isVendor:true,
-          isRider:false
-        }
-        const apiCall = await axios.post(url,body);
-        if (apiCall.status == api_statuses.success && apiCall.data.success == true) {
-          setShowLoader(false);
-          
-          navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.OTP_PASSWORD, {
-            otp: apiCall.data.otp,
-            body:body,
-            logo:logo
-          });
-        }
-      } catch (e) {
-        alert(e.response.data.message)
-        console.log(e.response.data)
-        setShowLoader(false);
+      if (isSelected) {
+        Alert.alert(
+          "Código de verificación",
+          "¿Porque medio desea recibir su código de verificación?",
+          [
+            {
+              text: "Correo",
+              onPress: () => sendCode('email')
+            },
+            {
+              text: "SMS",
+              onPress: () => sendCode('sms'),
+              
+            },
+            { text: "Whatsapp", onPress: () => sendCode('whatsapp') }
+          ]
+        );
+      }else{
+       showToaster('Acepta términos y condiciones de uso')
       }
      }else{
-      showToaster('Acepta términos y condiciones de uso')
+       showToaster('Contraseñas no coinciden')
      }
-    }else{
-      showToaster('Contraseñas no coinciden')
+    
+  }
+
+  const sendCode = async(msj) => {
+
+
+     try {
+      setShowLoader(true);
+      const url = api_urls.generate_otp;
+      const body = {
+        email: inputValues[CREDENTIAL_KEYS.WORK_EMAIL],
+        name: inputValues[CREDENTIAL_KEYS.FULL_NAME],
+        phone: inputValues[CREDENTIAL_KEYS.PHONE_NUMBER],
+        storeName: inputValues[CREDENTIAL_KEYS.STORE_NAME],
+        Address: inputValues[CREDENTIAL_KEYS.ADDRESS_LINE_ONE] + " " + inputValues[CREDENTIAL_KEYS.ADDRESS_LINE_TWO],
+        state: inputValues[CREDENTIAL_KEYS.STATE],
+        country: inputValues[CREDENTIAL_KEYS.COUNTRY],
+        city: inputValues[CREDENTIAL_KEYS.CITY],
+        password: inputValues[CREDENTIAL_KEYS.PASSWORD],
+        isCommonUser:false,
+        isVendor:true,
+        isRider:false,
+        msj
+      }
+      const apiCall = await axios.post(url,body);
+      if (apiCall.status == api_statuses.success && apiCall.data.success == true) {
+        setShowLoader(false);
+        
+        navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.OTP_PASSWORD, {
+          otp: apiCall.data.otp,
+          body:body,
+          logo:logo
+        });
+      }
+    } catch (e) {
+      alert(e.response.data.message)
+      console.log(e.response.data)
+      setShowLoader(false);
     }
   }
   const pickLogo = () => {

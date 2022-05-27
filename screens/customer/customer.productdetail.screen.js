@@ -7,9 +7,8 @@ import CommonStyles from '../../util/styles/styles';
 import ProductCardComponent from '../../components/customer-components/product-card.component';
 import ButtonComponent from '../../components/button/button.component';
 import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../util/constants';
-// import { useDispatch, useSelector } from 'react-redux';
-import * as CartActions from '../../util/ReduxStore/Actions/CustomerActions/CartActions';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { useRoute } from '@react-navigation/native';
 import { api_statuses, base_url, customer_api_urls, vendor_api_urls } from '../../util/api/api_essentials';
 import axios from 'axios';
@@ -51,10 +50,10 @@ const CustomerProductDetailScreen = (props) => {
        setBusiness(businessDetailsAPi.data.data.store);
        
      } else {
-       showToaster('something went wrong')
+       showToaster('Algo salio mal')
      }
     } catch(e) {
-        showToaster('something went wrong')
+        showToaster('Algo salio mal')
     }
   }
   useEffect(() => {
@@ -62,23 +61,24 @@ const CustomerProductDetailScreen = (props) => {
   },[]);
 
 
-  const DetailItem = ({label, value}) => {
+  const DetailItem = ({label, value,size = 15,sizeValue = 13}) => {
     return (
-      <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+      <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',flexWrap:'wrap'}}>
         <Text
           style={{
             ...CommonStyles.fontFamily,
-            fontSize: adjust(15),
+            fontSize: adjust(size),
             color: Colors.primarySolid,
           }}>
           {label}
         </Text>
-        <Text style={{...CommonStyles.fontFamily, fontSize: adjust(13)}}> {value}</Text>
+        <Text style={{...CommonStyles.fontFamily, fontSize: adjust(sizeValue)}}> {value}</Text>
       </View>
     );
   };
 
-  console.log({p:product.price,comision});
+
+
   return (
     <ScrollView contentContainerStyle={{flexGrow:1,backgroundColor:Colors.bgColor}}>
         <View style={{flex:1}}>
@@ -99,6 +99,16 @@ const CustomerProductDetailScreen = (props) => {
               <View style={{width:23,height:30}} />
             </View>
 
+            
+
+
+
+
+
+
+
+
+
             <View style={{backgroundColor:Colors.white,elevation:1,marginBottom:10}} >
                       <Image
                       source={{uri: `${base_url}/${product?.productImg}`}}
@@ -112,10 +122,16 @@ const CustomerProductDetailScreen = (props) => {
             </View>
 
             <View style={{backgroundColor:Colors.white,marginHorizontal:15,paddingVertical:10,elevation:1}} >
+                     
                       
                       <DetailItem label={product?.name} />
+                      <DetailItem label={'Marca: '} value={product?.brand.name} size={12} sizeValue={13} />
                       <ThinlineSeparator margin={5} width={'95%'} />
-                      <DetailItem label={'Precio: '} value={`${moneda(Number(product?.price) + Number( comision * product?.price / 100))} MXN`} />
+                      <DetailItem 
+                      label={'Precio: '} 
+                      value={`${moneda(Number(product?.price) + Number( comision * product?.price / 100))} MXN`}
+                      size={12} sizeValue={13}
+                      />
                       
                       {/* <DetailItem label={'Modelo: '} value={`${product?.model?.name}`} />
                       <DetailItem label={'Marca: '} value={`${product?.maker?.name}`} />
@@ -128,8 +144,7 @@ const CustomerProductDetailScreen = (props) => {
               <Text
                   style={{
                   ...CommonStyles.fontFamily,
-                
-                  fontSize: 17,
+                  fontSize: adjust(15),
                   }}>
                   DESCRIPCIÓN
               </Text>
@@ -138,7 +153,7 @@ const CustomerProductDetailScreen = (props) => {
                   ...CommonStyles.fontFamily,
                   color: 'grey',
                   marginVertical: 20,
-                  fontSize: 16,
+                  fontSize: adjust(13),
                   }}>
                   {product?.description}
               </Text>

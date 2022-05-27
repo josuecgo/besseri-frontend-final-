@@ -3,20 +3,58 @@ import { useState,useEffect } from 'react';
 import { customer_api_urls, vendor_api_urls } from '../util/api/api_essentials';
 import { showToaster } from '../util/constants';
 
-export const useSearch = (  ) => {
+export const useSearchStore = ( store ) => {
     
     const [ isLoading, setIsLoading ] = useState(true);
     const [ marcas, setMarcas ] = useState([]);
     const [modelo, setModelo] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [productsData,setProductsData] = useState(null);
-    const [servicesData,setServicesData] = useState(null);
+    const [dataFilter,setDataFilter] = useState([]);
+    const [servicesData,setServicesData] = useState([]);
     const [productFilter, setProductFilter] = useState([]);
     const [valueMaker, setValueMaker] = useState(null);
     const [valueModel, setValueModel] = useState(null);
+    const [valueCategorias, setValueCategorias] = useState(null);
     const [servicios, setServicios] = useState(false)
+    const [minimumPrice, setMinimumPrice] = useState('loading');
+    const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [services, setServices] = useState([]);
+    const [productsData, setProductsData] = useState([])
+    const [comision, setComision] = useState(10);
 
-    
+    const getStore = async () => {
+        
+        try {
+            setIsLoading(true);
+            const apiCall = await axios.get(
+            `${customer_api_urls.get_store_data}/${store?._id}`);
+            let cate = apiCall.data?.data?.categories;
+          
+           
+            let result  = cate.filter((elem, index) => {
+                const firstIndex = cate.findIndex(({ _id, name }) => {
+                    return _id === elem._id && name === elem.name
+                });
+                return firstIndex === index
+            });
+            
+
+            setCategories(result);
+            setProductsData(apiCall.data.data.products);
+            setMinimumPrice(apiCall.data.data.minPrice);
+            setServices(apiCall?.data?.data?.services);
+            setIsLoading(false);
+            //  setState(apiCall.data.data.products,SCREEN_STATES.PRODUCTS);
+            //  setState(apiCall.data.data.categories,SCREEN_STATES.CATEGORIES);
+        } catch (e) {
+          setIsLoading(false);
+          console.log(e);
+          console.log(e.response.data);
+          showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
+        }
+      };
+
     const getMarcas = async () => {
         
         try {
@@ -31,91 +69,44 @@ export const useSearch = (  ) => {
             console.log(error);
             setMarcas([])
         }
-        setIsLoading( false );
+       
     }
 
     const getModelo = async(id) => {
         
         try {
             
-            setIsLoading( true );
+            
             const apiCall = await axios.get(`${vendor_api_urls.get_models}/${id}`,);
-            setIsLoading( false );
+            
             if (apiCall?.status == 200) {
                 setModelo(apiCall.data.data);
             }
             
             } catch (e) {
-                setIsLoading( false );
+                
               alert('Algo salió mal');
             }
         
     }
 
 
-    const searchCall = async(st,isServices) => {
-        setServicios(isServices)
-        try 
-        {
-            setLoading(true);
-            if(isServices) {
-                const apiCall = await axios.post(customer_api_urls?.service_search,{
-                searchText:st,
-            });
-            
-                setProductsData(apiCall.data.Data);
-                setLoading(false);
-                
-
-            } else {
-                const apiCall = await axios.post(customer_api_urls?.search_api,{searchText:st});
-           
-                setProductsData(apiCall.data.Data);
-               
-                
-                
-                setLoading(false);
-
-            }
-            
-        } catch(e) {
-            console.log(e?.response?.data)
-            setLoading(false);
-            showToaster('No hay conexion con el servidor')
-        }
-    }
 
     const searchCallStore = async(st,isServices) => {
-        setServicios(isServices)
-        try 
-        {
-            setLoading(true);
-            if(isServices) {
-                const apiCall = await axios.post(customer_api_urls?.service_search,{
-                searchText:st,
-            });
-            
-                setProductsData(apiCall.data.Data);
-                setLoading(false);
-                
-
-            } else {
-                const apiCall = await axios.post(customer_api_urls?.search_api,{searchText:st});
+        setServicios(isServices);
+        
+        let itemData;
+        let itemModel;
+        const name = productsData.filter((item) => {
+            itemData = item.name ? item?.name.toLowerCase() : ''.toLowerCase();
+            let searchTextData = st;
            
-                setProductsData(apiCall.data.Data);
-               
-                
-                
-                setLoading(false);
+            return itemData.indexOf(searchTextData) > -1;
+        });
 
-            }
-            
-        } catch(e) {
-            console.log(e?.response?.data)
-            setLoading(false);
-            showToaster('No hay conexion con el servidor')
-        }
+        setProductFilter(name);
     }  
+    
 
     const makerFilter = () => {
         if (servicios) {
@@ -124,7 +115,9 @@ export const useSearch = (  ) => {
         }
 
         
-       
+        
+        // setModelo(false);
+        
         if (valueMaker) {
             if (valueModel) {
                
@@ -145,8 +138,10 @@ export const useSearch = (  ) => {
                     return itemModel.indexOf(searchTextData) > -1;
                 })
 
+
+
                 setProductFilter(modelo ? modelo : []);
-               
+                
                
             } else {
                 setValueModel(null);
@@ -157,14 +152,19 @@ export const useSearch = (  ) => {
                 })
                 
                 setProductFilter(marca ? marca : []);
+               
             }
-
-            
-          
         }else{  
-           
-            setProductFilter(productsData)
+            
+            setProductFilter(productsData);
+            
         }
+        
+        // if (valueCategorias) {
+        //     categoriaFilter(productFilter)
+        // }
+
+       
        
     };
 
@@ -211,16 +211,83 @@ export const useSearch = (  ) => {
         }
     }
 
+    const categoriaFilter = (data) => {
+        
+
+        let categoria = [];
+        if (data) {
+            categoria =  data.filter((item) => {
+               
+                let itemData = item.categoryId ? item?.categoryId : '';
+                let searchTextData = valueCategorias;
+                return itemData.indexOf(searchTextData) > -1;
+            });
+        }else {
+            categoria =  productFilter.filter((item) => {
+               
+                let itemData = item.categoryId ? item?.categoryId : '';
+                let searchTextData = valueCategorias;
+                return itemData.indexOf(searchTextData) > -1;
+            });
+        }
+       
+    
+       
+        
+        
+        setProductFilter(categoria ? categoria : []);
+       
+    }
+
+    const resetFiltros = () => {
+        setProductFilter(productsData);
+        setValueCategorias(null);
+        setValueMaker(null);
+        setValueModel(null);
+
+        getStore();
+        
+
+    }
+
+
+    const getComision = async () => {
+        try {
+          setIsLoading(true);
+          const getFee = await axios.get(customer_api_urls?.get_fees);
+    
+          setComision(getFee.data.data[0]?.besseri_comission);
+    
+          setIsLoading(false);
+          //  setState(apiCall.data.data.products,SCREEN_STATES.PRODUCTS);
+          //  setState(apiCall.data.data.categories,SCREEN_STATES.CATEGORIES);
+        } catch (e) {
+          setIsLoading(false);
+    
+          showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
+        }
+       
+    };
+
+    useEffect(() => {
+        getComision();
+    }, [productsData]);
+
+
+
+
     useEffect(() => {
       makerFilter()
     }, [productsData,valueMaker,valueModel])
     
-   
+    useEffect(() => {
+        categoriaFilter(productFilter);
+    }, [valueCategorias])
+    
+    
    
     useEffect(() => {
-        // now_playing
         getMarcas();
-
     }, [])
 
     useEffect(() => {
@@ -229,15 +296,19 @@ export const useSearch = (  ) => {
             
         }
     }, [valueMaker]);
+   
+    useEffect(() => {
+        getStore();
+    }, []);
 
-
+    
+    
     return {
         isLoading,
         marcas,
         setMarcas,
         modelo,
         setModelo,
-        searchCall,
         productsData,
         servicesData,
         loading,
@@ -247,7 +318,15 @@ export const useSearch = (  ) => {
         valueMaker, 
         setValueMaker,
         valueModel, 
-        setValueModel
+        setValueModel,
+        dataFilter,
+        searchCallStore,
+        minimumPrice,
+        products,
+        categories,
+        services,
+        valueCategorias, setValueCategorias,
+        setCategories,resetFiltros,comision
 
     }
 

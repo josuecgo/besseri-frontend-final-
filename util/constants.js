@@ -125,7 +125,8 @@ export const BOTTOM_TAB_RIDER_ROUTES = {
   RIDER_EXPLORE:'Rider Explore',
   RIDER_ORDERS:'Rider Orders',
   RIDER_ORDERS2:'Rider Orders2', 
-  RIDER_PROFILE:'Rider Profile',  
+  RIDER_PROFILE:'Rider Profile', 
+  RIDER_NOTIFICATION:'Rider Notification',   
 };
 export const RIDER_STACK_ROUTES = {
   RIDER_ORDER_DETAIL:'Rider Order Detail'
@@ -139,7 +140,8 @@ export const ASYNC_STORAGE_NAMES = {
   USER_TYPE:'UserType',
   BUSINESS_STATUS:'BusinessStatus',
   RIDER_PROFILE:'Rider Profile',
-  CUSTOMER_ADDRESS:'addressCustomer'
+  CUSTOMER_ADDRESS:'addressCustomer',
+  NOTIFICATION_STORAGE:'notificationStorage'
 }
 export const USER_ROLES = {
   customer:'customer',

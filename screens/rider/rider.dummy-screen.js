@@ -20,6 +20,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
+    getRiderId,
     getRiderProfile,
     saveRiderProfile,
 } from '../../util/local-storage/auth_service';
@@ -42,6 +43,8 @@ import TopCircleComponent from '../../components/top-circle/top-circle.component
 import { HeaderBackground } from '../../components/Background/HeaderBackground';
 import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useLocation } from '../../hooks/useLocation';
+import LoaderComponent from '../../components/Loader/Loader.component';
 
 const RiderDummyScreen = props => {
     const { width } = useWindowDimensions();
@@ -96,13 +99,16 @@ const RiderDummyScreen = props => {
             },
         },
     ];
+    const {updateUbication} = useLocation();
+
     const geyMyEarningsAndData = async () => {
         try {
             const riderProfile = await getRiderProfile();
             setRiderProfile(riderProfile);
             const earnings = await getRiderEarnings(riderProfile?._id);
             dispatch(setEarnings(earnings));
-            console.log('line 511', earnings);
+            
+            
         } catch (e) {
             console.log(e);
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo - 1');
@@ -111,10 +117,11 @@ const RiderDummyScreen = props => {
     useEffect(() => {
         geyMyEarningsAndData();
     }, [reloadEarnings]);
-
+   
     const getWalletDetails = async () => {
         try {
             const riderData = await getRiderProfile();
+            
             if (!riderData || !riderData?.wallet_id) {
                 return;
             } else {
@@ -127,7 +134,7 @@ const RiderDummyScreen = props => {
                     return;
                 }
             }
-            console.log('line 57', rider_wallet?.charges_enabled);
+            // console.log('line 57', rider_wallet?.charges_enabled);
         } catch (e) {
             console.log('line 38', e);
             showToaster('Perdón por la interrupción, esta solicitud falló');
@@ -165,6 +172,36 @@ const RiderDummyScreen = props => {
             showToaster('Algo salió mal, intenta de nuevo');
         }
     };
+
+    // const updateUbication = async () => {
+    
+    //     try {
+    //         const riderId = await getRiderId();
+    //         await axios.put(`${rider_api_urls.update_coords}`, {
+    //             lat: userLocation?.latitude,
+    //             lng: userLocation?.longitude,
+    //             riderId
+    //          });
+    
+         
+    
+    //     } catch (error) {
+    //       console.log({updateUbication:error});
+    //     }
+    // }
+
+    const location = async( ) => {
+        const p = await getRiderProfile();
+        if (p.location.latitude == 0) {
+          updateUbication()
+        }
+      }
+      useEffect(() => {
+        location();
+      }, [])
+  
+    
+    // if(!rider_wallet?.charges_enabled) return <LoaderComponent loader={true} />
     return (
         <View style={[styles.container]}>
             
@@ -176,16 +213,9 @@ const RiderDummyScreen = props => {
                     flexDirection: 'row',
                     justifyContent:'space-around',
                     width:deviceWidth,
-                    marginVertical:20
+                    marginVertical:20,
+                    flexWrap:'wrap'
                 }}>
-                <View>
-                    <Text style={{ fontSize: adjust(20)}}>
-                        Bienvenido {riderProfile?.riderName}
-                    </Text>
-                    <Text style={{ fontSize: adjust(10), }}>
-                        Revisa los nuevos pedidos cercanos
-                    </Text>
-                </View>
                 <Image
                     source={{ uri: `${base_url}/${riderProfile?.profile}` }}
                     style={{
@@ -196,6 +226,15 @@ const RiderDummyScreen = props => {
                         borderColor: Colors.white,
                     }}
                 />
+                <View>
+                    <Text style={{ fontSize: adjust(18)}}>
+                        Bienvenido {riderProfile?.riderName}
+                    </Text>
+                    <Text style={{ fontSize: adjust(10), }}>
+                        Revisa los nuevos pedidos cercanos
+                    </Text>
+                </View>
+                
             </View>
 
             {rider_wallet?.charges_enabled && riderProfile?.wallet_id ? null : (

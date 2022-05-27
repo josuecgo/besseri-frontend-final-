@@ -1,17 +1,16 @@
 import React, {useRef, useState} from 'react';
 import {
-  useWindowDimensions,
+  Alert,
   View,
   Text,
   Pressable,
   ImageBackground,
   StyleSheet,
 } from 'react-native';
-import SpinKit from 'react-native-spinkit';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import axios from 'axios';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import CommonStyles from '../../util/styles/styles';
@@ -100,52 +99,73 @@ const RiderSignup = ({navigation, route}) => {
   const generateOtp = async () => {
     if (comparaText(inputValues[CREDENTIAL_KEYS.CONFIRMPASSWORD],inputValues[CREDENTIAL_KEYS.PASSWORD]) && inputValues[CREDENTIAL_KEYS.PASSWORD].length > 0) {
       if (isSelected) {
+        Alert.alert(
+          "Código de verificación",
+          "¿Porque medio desea recibir su código de verificación?",
+          [
+            {
+              text: "Correo",
+              onPress: () => sendCode('email')
+            },
+            {
+              text: "SMS",
+              onPress: () => sendCode('sms'),
+              
+            },
+            { text: "Whatsapp", onPress: () => sendCode('whatsapp') }
+          ]
+        );
         
-        try {
-          setShowLoader(true);
-          const url = api_urls.generate_otp;
-          const body = {
-            email: inputValues[CREDENTIAL_KEYS.WORK_EMAIL],
-            name: inputValues[CREDENTIAL_KEYS.FULL_NAME],
-            phone: inputValues[CREDENTIAL_KEYS.PHONE_NUMBER],
-            Address:
-              inputValues[CREDENTIAL_KEYS.ADDRESS_LINE_ONE] +
-              ' ' +
-              inputValues[CREDENTIAL_KEYS.ADDRESS_LINE_TWO],
-            state: inputValues[CREDENTIAL_KEYS.STATE],
-            country: inputValues[CREDENTIAL_KEYS.COUNTRY],
-            city: inputValues[CREDENTIAL_KEYS.CITY],
-            password: inputValues[CREDENTIAL_KEYS.PASSWORD],
-            isCommonUser: false,
-            isVendor: false,
-            isRider: true,
-          };
-          
-          const apiCall = await axios.post(url, body);
-          if (
-            apiCall.status == api_statuses.success &&
-            apiCall.data.success == true
-          ) {
-            setShowLoader(false);
-            console.log(apiCall.data);
-            navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.OTP_PASSWORD, {
-              otp: apiCall.data.otp,
-              body: body,
-              logo: logo,
-            });
-          }
-        } catch (e) {
-          setShowLoader(false);
-         
-          alert(e.response.data.message);
-          console.log(e.response.data);
-          setShowLoader(false);
-        }
       } else {
         showToaster('Acepta términos y condiciones de uso')
       }
     }else{
       showToaster('Contraseñas no coinciden');
+    }
+    
+  }
+  const sendCode = async (msj) => {
+
+    try {
+      setShowLoader(true);
+      const url = api_urls.generate_otp;
+      const body = {
+        email: inputValues[CREDENTIAL_KEYS.WORK_EMAIL],
+        name: inputValues[CREDENTIAL_KEYS.FULL_NAME],
+        phone: inputValues[CREDENTIAL_KEYS.PHONE_NUMBER],
+        Address:
+          inputValues[CREDENTIAL_KEYS.ADDRESS_LINE_ONE] +
+          ' ' +
+          inputValues[CREDENTIAL_KEYS.ADDRESS_LINE_TWO],
+        state: inputValues[CREDENTIAL_KEYS.STATE],
+        country: inputValues[CREDENTIAL_KEYS.COUNTRY],
+        city: inputValues[CREDENTIAL_KEYS.CITY],
+        password: inputValues[CREDENTIAL_KEYS.PASSWORD],
+        isCommonUser: false,
+        isVendor: false,
+        isRider: true,
+        msj
+      };
+      
+      const apiCall = await axios.post(url, body);
+      if (
+        apiCall.status == api_statuses.success &&
+        apiCall.data.success == true
+      ) {
+        setShowLoader(false);
+        
+        navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.OTP_PASSWORD, {
+          otp: apiCall.data.otp,
+          body: body,
+          logo: logo,
+        });
+      }
+    } catch (e) {
+      setShowLoader(false);
+     
+      Alert.alert(e.response.data.message);
+      console.log(e.response.data);
+      setShowLoader(false);
     }
     
   };

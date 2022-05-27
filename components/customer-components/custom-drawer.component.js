@@ -1,25 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
 import Colors from '../../util/styles/colors';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
-import {CUSTOMER_HOME_SCREEN_ROUTES , showToaster} from '../../util/constants';
+import {CUSTOMER_HOME_SCREEN_ROUTES , LOGIN_SIGNUP_FORGOT_ROUTES, showToaster} from '../../util/constants';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { getUser, logout } from '../../util/local-storage/auth_service';
 
 import { HeaderBackground } from '../Background/HeaderBackground';
 import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
+import { Badge } from '../Badge';
 
-const getIcons = ({focused, color, size, name}) => {
+
+const getIcons = ({focused, color, size, name,count}) => {
   const ICONS = {
     'Servicios': (
       <MaterialIcons name='build'  size={28} color={color} />
-      // <MaterialIcons name='home-repair-service'  size={28} color={color} />
-    
-      // <MaterialCommunityIcons name='car-cruise-control' size={28} color={color}  />
-   
-      // <MaterialCommunityIcons name='car-brake-alert' size={28} color={color}  />
+
     ),
     'Autopartes': (
       // <ImgIcon url={require('../../assets/images/iconos/autopartes.png')} />
@@ -33,6 +31,16 @@ const getIcons = ({focused, color, size, name}) => {
     ),
     'Mi dirección': (
       <MaterialIcons name='location-on'  size={28} color={color} />
+    ),
+    'Notificaciones' : (
+      <>
+      <View style={{position:'absolute',right:10}} > 
+        <Badge count={count} />
+      </View>
+       
+        <MaterialIcons name='notifications'  size={28} color={color} />
+      </>
+     
     )
   };
   return ICONS[name];
@@ -42,10 +50,11 @@ const CustomDrawerComponent = React.memo((props) => {
   const [user,setUser] = useState(null);
   const {state, navigation} = props;
   const {routes, index} = state;
-  // const [user,setUser] = useState(null);
+  const count = props.countCustomer;
+  const getNotificaciones = props.getNotificaciones;
   const focusedRoute = routes[index].name;
-
-
+ 
+ 
   const getUserData = async() => {
     const user = await getUser();
 
@@ -103,13 +112,14 @@ const CustomDrawerComponent = React.memo((props) => {
               activeTintColor={Colors.white}
               activeBackgroundColor={Colors.primarySolid}
               icon={({focused, color, size}) =>
-                getIcons({focused, color, size, name})
+                getIcons({focused, color, size, name,count})
               }
               label={name}
               onPress={() => {
                 goDrawer(name);
               }}
               focused={focusedRoute === name}
+
             />
           );
         })}
@@ -133,8 +143,9 @@ const CustomDrawerComponent = React.memo((props) => {
         ):(
           <DrawerItem
           onPress={async() => {
-            
+           
             await logout();
+            getNotificaciones()
             props.navigation.replace('AuthStack');
           }}
           label="Iniciar sesión"

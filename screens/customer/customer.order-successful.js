@@ -10,7 +10,7 @@ import ButtonComponent from '../../components/button/button.component'
 export const OrderSuccessful = (props) => {
     
     
-
+    const navigation = props.route.params;
     // useEffect(() => {
     //     deleteCart();
     // }, [])
@@ -38,8 +38,11 @@ export const OrderSuccessful = (props) => {
 
             <ButtonComponent
             handlePress={() => {
-                props.navigation.replace(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS)
                 
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS }],
+                  });
             }}
             borderRadius={10}
             colorT={Colors.white}

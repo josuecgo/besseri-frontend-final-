@@ -18,6 +18,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import KEYBOARD_TYPES from '../util/keyboard-types';
 import ButtonComponent from './button/button.component';
 import {adjust} from '../util/Dimentions';
+
+
+
 export const ThinlineSeparator = ({margin, width}) => {
   const style = {
     width: width ? width : '100%',
@@ -360,9 +363,9 @@ export const AddressesListingModal = ({
       modalStyle={{paddingVertical: 20}}>
       <ScrollView contentContainerStyle={{flexGrow: 1, paddingVertical: 15}}>
         <View style={styles.mainWrapper}>
-          <Text style={styles.createAddress}>Delivery Address</Text>
+          <Text style={styles.createAddress}>Dirección de entrega</Text>
           <Text style={styles.addressDetail}>
-            Choose the delivery address for your order
+            Elige la dirección de entrega de tu pedido
           </Text>
         </View>
         {children}
@@ -593,6 +596,37 @@ export const AddBrandModal = ({
             handlePress={onProceed}
           />
         </View>
+      </ScrollView>
+    </Modalize>
+  );
+};
+
+
+export const EnvioCodeModal = ({
+  onClose,
+  codeRef,
+  children,
+}) => {
+  
+  const styles = {
+    mainWrapper: {width: '95%', alignSelf: 'center', margin: 10, left: 5},
+    createAddress: {fontSize: 20, ...CommonStyles.fontFamily},
+    addressDetail: {fontSize: 13, fontWeight: '300', color: Colors.dark},
+  };
+  return (
+    <Modalize
+      onClose={onClose}
+      adjustToContentHeight={true}
+      ref={codeRef}
+      modalStyle={{paddingVertical: 20}}>
+      <ScrollView contentContainerStyle={{flexGrow: 1, paddingVertical: 15}}>
+        <View style={styles.mainWrapper}>
+          <Text style={styles.createAddress}>Delivery Address</Text>
+          <Text style={styles.addressDetail}>
+            Choose the delivery address for your order
+          </Text>
+        </View>
+        {children}
       </ScrollView>
     </Modalize>
   );

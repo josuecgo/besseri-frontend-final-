@@ -58,6 +58,7 @@ const LoginScreen = ({navigation}) => {
      if(apiCall.status == api_statuses.success) {
        
        await saveBusinessProfile(apiCall.data.data.store[0]);
+       
       //  if(apiCall.data.data.isBlocked) {
         //  showToaster('Your business is blocked.');
         dispatch(BusinessProfileActions.setActionMessage(apiCall.data.data.actions));
@@ -146,23 +147,25 @@ const LoginScreen = ({navigation}) => {
       return;
     }
     
-    const data = apiCall.data.data[0]
+    const data = apiCall.data.data[0];
+    
     if(apiCall.status == api_statuses.success) {
       setShowLoader(false);
       if(data.isVendor) {
         await getBusinessDetails(data?._id,data);
-      
+        
       }
       if(data.isCommonUser) {
         await saveUserData(data);
-        await getAddresses(data._id)
+        await getAddresses(data._id);
+        // await saveNotification(data.notification);
         navigation.replace(MAIN_ROUTES.CUSTOMER_STACK);
       }
       if(data.isRider) {
         await getRiderDetails(data?._id,data)
       }
     }
-    
+
     } catch(e) { 
       console.log(e);
       setShowLoader(false);

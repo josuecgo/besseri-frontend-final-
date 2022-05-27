@@ -30,6 +30,20 @@ const CustomerOrderDetail = (props) => {
     const address = params.order.delivery_address;
     const store = params.order.store;
     const totalAmount = parseInt(params.order.total_amount);
+
+    console.log(params.order);
+
+
+
+
+
+
+
+
+
+
+
+
     const DetailItem = ({label,value,orderStatus}) => {
     return (
         <View style={{width:'100%',borderColor:Colors.dark,flexDirection:'row',justifyContent:'space-between',alignItems:'center',alignSelf:'center',padding:10}}>
@@ -186,3 +200,7 @@ const styles = StyleSheet.create({
 headerText:{...CommonStyles.fontFamily,color:Colors.white,fontSize:20,paddingLeft:10},
 })
 export default CustomerOrderDetail;
+
+
+
+

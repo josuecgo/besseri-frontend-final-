@@ -1,4 +1,5 @@
-import React from 'react';
+import React,{useContext, useEffect} from 'react';
+import { View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {BOTTOM_TAB_RIDER_ROUTES, RIDER_STACK_ROUTES} from '../../util/constants';
@@ -12,58 +13,107 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import RiderOrderDetail from './rider.orderdetails.screen';
 import { deviceHeight } from '../../util/Dimentions';
+import { RiderNotification } from './rider.notification';
+import { Badge } from '../../components/Badge';
+import { NotificationContext } from '../../util/context/NotificationContext';
+
+
+
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 export const RiderNavigation = () => {
+
+  const {countRider} = useContext(NotificationContext);
+
+  
+  
+  // console.log({countRider,notificaciones});
   return (
     <BottomTab.Navigator
       initialRouteName={BOTTOM_TAB_RIDER_ROUTES.DUMMY_SCREEN}
-      screenOptions={{
-        tabBarActiveTintColor: Colors.primarySolid,
-        tabBarShowLabel: true,
-        tabBarActiveBackgroundColor: Colors.white,
-        tabBarItemStyle: { margin: 1},
+      screenOptions={ ({route}) => ({
         headerShown: false,
-        tabBarInactiveTintColor:Colors.primarySolid,
+        tabBarActiveTintColor: Colors.primarySolid,
+        // tabBarInactiveTintColor: Colors.primarySolid,
+        // tabBarActiveBackgroundColor:Colors.primarySolid,
         
-      }}>
+        tabBarIcon: ({color,focused,size}) => {
+            
+            let iconName  = '';
+    
+            switch (route.name) {
+                case BOTTOM_TAB_RIDER_ROUTES.DUMMY_SCREEN:
+                iconName = 'two-wheeler';
+                break;
+                case BOTTOM_TAB_RIDER_ROUTES.RIDER_EXPLORE:
+                iconName = 'explore';
+                break;
+                case BOTTOM_TAB_RIDER_ROUTES.RIDER_NOTIFICATION:
+                iconName = 'notifications'
+                break;
+
+                case BOTTOM_TAB_RIDER_ROUTES.RIDER_ORDERS:
+                iconName = 'list-alt'
+                break;
+
+                case BOTTOM_TAB_RIDER_ROUTES.RIDER_PROFILE:
+                iconName = 'person'
+                break;
+
+                
+                default:
+                    iconName = 'person'
+                    break;
+            }
+    
+            return  (
+                <View>
+                  {
+                    route?.name === BOTTOM_TAB_RIDER_ROUTES.RIDER_NOTIFICATION && (
+                      <Badge count={countRider} />
+                    )
+                  }
+                   
+                    <MaterialIcons name={iconName}  size={size} color={color} />   
+                </View>
+                
+            )
+        },
+        
+      })
+      }
+
+      
+      >
       <BottomTab.Screen
         name={BOTTOM_TAB_RIDER_ROUTES.DUMMY_SCREEN}
         component={RiderDummyScreen}
         options={{
           title:'Repartidor',
-          tabBarIcon: ({focused, color, size}) => (
-            <MaterialCommunityIcons
-              name="motorbike"
-              color={color}
-              size={size}
-            />
-          ),
+  
         }}
       />
-          <BottomTab.Screen
+      <BottomTab.Screen
         name={BOTTOM_TAB_RIDER_ROUTES.RIDER_EXPLORE}
         component={RiderExplore}
         options={{
           title:'Explore',
-          tabBarIcon: ({focused, color, size}) => (
-            <MaterialIcons name='explore' color={color} size={size}/>
           
-          ),
         }}
       />
-       <BottomTab.Screen
+      <BottomTab.Screen
+        name={BOTTOM_TAB_RIDER_ROUTES.RIDER_NOTIFICATION}
+        component={RiderNotification}
+        options={{
+          title:'News'
+        }}
+      />
+      <BottomTab.Screen
         name={BOTTOM_TAB_RIDER_ROUTES.RIDER_ORDERS}
         component={OrdersNavigator}
         options={{
           title:'Pedidos',
-          tabBarIcon: ({focused, color, size}) => (
-            <FontAwesome5Icon
-              name="tasks"
-              color={color}
-              size={size}
-            />
-          ),
+          
         }}
       />
         <BottomTab.Screen
@@ -71,13 +121,7 @@ export const RiderNavigation = () => {
         component={RiderProfileScreen}
         options={{
           title: 'Perfil',
-          tabBarIcon: ({focused, color, size}) => (
-            <FontAwesome5Icon
-              name="user-alt"
-              color={color}
-              size={size}
-            />
-          ),
+      
         }}
       />
     </BottomTab.Navigator>

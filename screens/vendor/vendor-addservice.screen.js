@@ -161,7 +161,7 @@ const VendorAddServiceScreen = ({navigation}) => {
     }, []);
 
     // GETTING MAKERS FOR CREATING PRODUCTS
-
+    
     const getMakers = async () => {
         try {
         setShowLoader(true);

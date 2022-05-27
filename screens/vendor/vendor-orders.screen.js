@@ -76,7 +76,7 @@ const VendorOrdersScreen = ({navigation, route}) => {
   //   [ORDER_STATUSES.CANCELLED]: '#dc3545',
   // };
 
-
+  
   return (
     <View style={{flex:1,backgroundColor:Colors.bgColor}}> 
     <TopCircleComponent  />
@@ -147,34 +147,7 @@ const VendorOrdersScreen = ({navigation, route}) => {
     )}
     />
   </View>
-  // <VendorScreenContainerComponent
-  //   needFloatingActionButton={true}
-  //   screenHeading="Orders"
-  //   floatButtonHandler={floatButtonHandler}>
-  //   <View>
-    //   <LoaderComponent isVisible={loading}/>
-    //  <FlatList
-    //  data={orders}
-    //  keyExtractor={item => item?._id}
-    //  renderItem={({item}) => (
-    //   <OrderComponent
-    //   orderId={item?.orderId}
-    //   orderPlacedBy={item?.user?.name}
-    //   orderPrice={item?.total_amount}
-    //   orderDate={moment(item?.ordered_on).format('DD-MM-YY hh:ss A')}
-    //   openOrderDetails={() => {
-    //     navigation.navigate(VENDOR_DETAILS_ROUTES.ORDER_DETAILS,{
-    //       orderId:item._id,
-    //       orderNumber:item.orderId
-    //     })
-    //   }}
-    //   orderStatus={ORDER_STATUSES[item?.order_status_code]}
-    // />
-    //  )}
-    //  />
-  //   </View>
-  //   {/*<AllEmptyComponent />*/}
-  // </VendorScreenContainerComponent>
+  
 );
 };
 const styles = StyleSheet.create({

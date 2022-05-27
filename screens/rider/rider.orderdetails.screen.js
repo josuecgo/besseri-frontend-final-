@@ -1,6 +1,6 @@
 import {useIsFocused, useRoute} from '@react-navigation/native';
 import axios from 'axios';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
   Text,
   View,
@@ -19,6 +19,7 @@ import OrderCard from '../../components/customer-components/ordercard.component'
 import LoaderComponent from '../../components/Loader/Loader.component';
 import {
   api_statuses,
+  api_urls,
   base_url,
   customer_api_urls,
   rider_api_urls,
@@ -47,6 +48,7 @@ import {useDispatch} from 'react-redux';
 import {adjust, deviceHeight, deviceWidth} from '../../util/Dimentions';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {HeaderBackground} from '../../components/Background/HeaderBackground';
+import { NotificationContext } from '../../util/context/NotificationContext';
 
 const RiderOrderDetail = props => {
   const dispatch = useDispatch();
@@ -62,7 +64,7 @@ const RiderOrderDetail = props => {
   const {top} = useSafeAreaInsets();
   const totalAmount = Number(order?.total_amount);
   const [direccion, setDireccion] = useState(null);
-
+  const {getNotificaciones} = useContext(NotificationContext);
   useEffect(() => {
     if (order?.user._id) {
       getMyAddress();
@@ -165,6 +167,24 @@ const RiderOrderDetail = props => {
 
     Linking.openURL(url);
   };
+
+  const viewItem = async() => {
+
+    try {
+      
+      await axios.post(`${api_urls.viewNotification}/${order._id}`,{user:'rider'});
+     
+     
+    } catch(e) {
+     console.log({detail:e});
+    }
+  }
+
+  useEffect(() => {
+    viewItem();
+    getNotificaciones();
+  }, [])
+
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>

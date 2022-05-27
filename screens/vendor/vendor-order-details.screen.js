@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState,useEffect} from 'react';
+import React, {useLayoutEffect, useState,useEffect, useContext} from 'react';
 import {
   Alert,
   FlatList,
@@ -26,6 +26,7 @@ import TopCircleComponent from '../../components/top-circle/top-circle.component
 import { moneda } from '../../util/Moneda';
 import { adjust } from '../../util/Dimentions';
 import { TranslateStatus } from '../../util/helpers/StatusText';
+import { NotificationContext } from '../../util/context/NotificationContext';
 
 
 export const CustomText = ({text, isData = false, numberOfLines = null}) => {
@@ -48,8 +49,8 @@ export const CustomText = ({text, isData = false, numberOfLines = null}) => {
 };
 
 const VendorOrderDetailsScreen = ({navigation, route}) => {
- 
-  const {orderNumber} = route.params
+  const {getNotificaciones} = useContext(NotificationContext);
+  const {orderNumber,orderId} = route.params
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [loading,setLoading] = useState(false);
@@ -69,7 +70,8 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
   );
 
   const {height,width} = useWindowDimensions();
-
+  
+  
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: `Order ID: #${route.params?.orderNumber}`,
@@ -132,6 +134,16 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
       navigation.goBack()
     }
   }
+  const viewItem = async() => {
+    try {
+      console.log('estopy');
+      const apiCall = await axios.post(`${api_urls.viewNotification}/${orderId}`);
+     
+      console.log(apiCall.status);
+    } catch(e) {
+     console.log({detail:e});
+    }
+  }
 
   useEffect(() => {
     getOrderDetails();
@@ -168,10 +180,20 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
     setOrderStatus(STATUS_LABELS[val]);
     setorderStatusCode(val);
   }
+
+  useEffect(() => {
+    if (!order?.view) {
+      getNotificaciones();
+      viewItem();
+    }
+    
+  }, [])
+ 
   
-  console.log(order?.order_status_code);
+  
+  
   return (
-    <View contentContainerStyle={{flexGrow: 1}}>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}>
       <LoaderComponent isVisible={loading} />
       <TopCircleComponent textHeading={'Pedido #'+orderNumber} />
       <View
@@ -425,7 +447,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
           </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

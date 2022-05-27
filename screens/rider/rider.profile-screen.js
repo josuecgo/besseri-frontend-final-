@@ -47,7 +47,7 @@ const RiderProfileScreen = ({ navigation }) => {
     const [riderProfile, setRiderProfile] = useState(null);
     const rider_wallet = useSelector(state => state?.rider?.wallet);
     const earnigns = useSelector(state => state?.rider?.earnings);
-    console.log(earnigns);
+    
     const TABS = [
         {
             label: 'Orders',
@@ -77,6 +77,7 @@ const RiderProfileScreen = ({ navigation }) => {
     }, []);
     const getWalletDetails = async () => {
         try {
+            console.log({riderProfile,wallet:riderProfile?.wallet_id});
             if (!riderProfile || !riderProfile?.wallet_id) {
                 return;
             } else {
@@ -89,7 +90,7 @@ const RiderProfileScreen = ({ navigation }) => {
                     return;
                 }
             }
-            console.log('line 57', rider_wallet?.charges_enabled);
+            // console.log('line 57', rider_wallet?.charges_enabled);
         } catch (e) {
             console.log('line 38', e);
             showToaster('Perdón por la interrupción, esta solicitud falló');
@@ -204,7 +205,7 @@ const RiderProfileScreen = ({ navigation }) => {
                                     fontSize: adjust(20),
                                     marginTop: 5,
                                 }}>
-                                {earnigns?.todays.toFixed(2)} MXN
+                                {earnigns?.todays?.toFixed(2)} MXN
                             </Text>
                         </View>
                     </View>

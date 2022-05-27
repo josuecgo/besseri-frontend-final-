@@ -1,10 +1,12 @@
 import { ADD_ITEM_TO_CART, INCREASE_QUANTITY,DECRASE_QUANTITY, REMOVE_ITEM,RESET_CART,DELETE_ITEM } from "../../Actions/CustomerActions/CartActions"
+import { ADD_NOTIFICATION } from "../../Actions/NotificationActions"
 
 const initialState = {
     cart_items: [],
     cart_items_ids: [],
     total_amount:0,
     businessId:null,
+    notifications:[]
 }
 export default (state = initialState, action) => {
     switch (action.type) {
@@ -18,6 +20,7 @@ export default (state = initialState, action) => {
                 total_amount:state.total_amount + parseInt(action.data.price),
                 businessId:action?.data?.business_id,
             }
+
         case DELETE_ITEM:
             const selectedItem = state.cart_items.filter(item => item?._id == action.data);
             const productAmount = Number(selectedItem[0]?.price) * selectedItem[0]?.quantity; 

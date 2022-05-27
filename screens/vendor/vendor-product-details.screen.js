@@ -149,6 +149,7 @@ const VendorProductDetailsScreen = ({navigation, route}) => {
                 width: width - SCREEN_HORIZONTAL_MARGIN * 2,
                 marginTop: deviceHeight * 0.03,
                 justifyContent:'space-between',
+                flexWrap:'wrap'
                 // backgroundColor:'red'
               },
             ]}>
@@ -167,7 +168,7 @@ const VendorProductDetailsScreen = ({navigation, route}) => {
                 // {flex: 1, alignItems: 'flex-end'},
               ]}>
               <Text style={[CommonStyles.fontFamily, styles.price]}>
-                MXN {moneda(product?.price) }
+                {moneda(product?.price) } MXN
               </Text>
             </View>
           </View>

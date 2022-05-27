@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -18,18 +18,25 @@ import {useSelector} from 'react-redux';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {adjust, deviceHeight, deviceWidth} from '../../util/Dimentions';
 import {HeaderBackground} from '../Background/HeaderBackground';
-import { getUserId } from '../../util/local-storage/auth_service';
+import { getUser, getUserId } from '../../util/local-storage/auth_service';
 import axios from 'axios';
 import { customer_api_urls } from '../../util/api/api_essentials';
+import { useNotification } from '../../hooks/useNotification';
+import { Badge } from '../Badge';
+import { NotificationContext } from '../../util/context/NotificationContext';
 const CustomHeaderComponent = props => {
   const [searchValue, setSearchValue] = useState('');
   const cart_items = useSelector(state => state.cart.cart_items);
   const searchRef = useRef();
   const [comision, setComision] = useState(0)
+  
+  const {countCustomer,getNotificaciones} = useContext(NotificationContext);
+
 
   useEffect(() => {
     let abortController = new AbortController();  
     getComision(); 
+    getNotificaciones();
     return () => {  
     abortController.abort();  
     }  
@@ -53,15 +60,21 @@ const CustomHeaderComponent = props => {
       props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR) 
     }
     
-}
+  }
+
+  
+
+ 
   return (
     <>
       <HeaderBackground hios={0.23} handroid={0.18} />
       <View style={[styles.header]}>
+      
         <Pressable
           onPress={() => {
             props.navigation.openDrawer();
           }}>
+          <Badge count={countCustomer} />
           <Ionicons color={Colors.white} size={30} name="menu" />
         </Pressable>
 

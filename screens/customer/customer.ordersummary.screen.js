@@ -159,6 +159,7 @@ const CustomerOrderSummary = (props) => {
             await initializePaymentSheet()
            
         }
+        
         try {
             setLoading(true);
             const body = {
@@ -176,14 +177,14 @@ const CustomerOrderSummary = (props) => {
         
          const apiCall = await axios.post(`${customer_api_urls.place_order}`,body);
          setLoading(false);
-         
+         setIsVisible(false)
          if(apiCall.status == api_statuses.success) {
             // setOrderPlaced(true)
             for (var a=0;a<products?.length;a++) {
                 dispatch(deleteItemFromCart(products[a]?._id,products[a]?.price))
             }
             showToaster('Pedido realizado');
-            props.navigation.replace('OrderSuccessful',props.navigation)
+            props.navigation.navigate('OrderSuccessful',props.navigation)
              
          } else {
              showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 3')
@@ -195,8 +196,9 @@ const CustomerOrderSummary = (props) => {
             setLoading(false);  
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo 2 code: 4')
             refundPayment()
-
+            setIsVisible(false)
         }
+       
           
     }
     
@@ -259,9 +261,10 @@ const CustomerOrderSummary = (props) => {
            showToaster('Algo salió mal, intenta de nuevo code: 6')
        }
        setIsVisible(false);
-      };
+    };
     
-      const initializePaymentSheet = async (walletId) => {
+
+    const initializePaymentSheet = async (walletId) => {
         
    
         try {
@@ -280,8 +283,9 @@ const CustomerOrderSummary = (props) => {
             allowsDelayedPaymentMethods: true,
             merchantDisplayName:'Besseri'
             });
+
             if (!error) {
-            console.log({initializePay:error})
+            // console.log({initializePay:error})
             }
         } catch (error) {
             console.log({init:error});
