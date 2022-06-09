@@ -119,6 +119,7 @@ export const SearchScreen = props => {
                     containerStyle={styles.picker}
                     placeholder="Marca"
                     schema={{ label: 'name', value: '_id', testID: '_id' }}
+                    style={{borderColor:'white'}}
                 />
 
                 {modelo ? (
@@ -132,6 +133,7 @@ export const SearchScreen = props => {
                         containerStyle={styles.picker}
                         placeholder="Modelo"
                         schema={{ label: 'name', value: '_id', testID: '_id' }}
+                        style={{borderColor:'white'}}
                     />
                 ) : (
                     <View style={styles.picker} />

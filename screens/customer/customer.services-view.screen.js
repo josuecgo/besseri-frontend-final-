@@ -1,101 +1,117 @@
-import React, { useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet, Image, ScrollView, useWindowDimensions, PermissionsAndroid, FlatList, Pressable } from 'react-native';
-import ProductListing from '../../components/customer-components/ProductsListing.component';
+import React, { useContext, useEffect, useState } from 'react';
+import {  View, StyleSheet,  ScrollView, TouchableOpacity,Text } from 'react-native';
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
-import Geolocation from '@react-native-community/geolocation';
-import { CUSTOMER_HOME_SCREEN_ROUTES, SHARED_ROUTES, showToaster } from '../../util/constants';
-import axios from 'axios';
-import { base_url, customer_api_urls } from '../../util/api/api_essentials';
-import { useDispatch, useSelector } from 'react-redux';
-import * as CartActions from '../../util/ReduxStore/Actions/CustomerActions/CartActions';
-import ProductCardComponent from '../../components/customer-components/product-card.component';
-import RatingComponent from '../../components/Ratings/rating.component';
+import DropDownPicker from 'react-native-dropdown-picker';
+
+
 import ServiceListing from '../../components/customer-components/ServiceListing';
 import { useLocation } from '../../hooks/useLocation';
+import { useFiltrado } from '../../hooks/useFiltrado';
+import { deviceWidth } from '../../util/Dimentions';
+import { ProductContext } from '../../util/context/Product/ProductContext';
+
+
 const SCREEN_STATES = {
   USER_LOCATION:'User location',
   PRODUCTS:'Products',
   CATEGORIES:'Categories'
 }
 const CustomerProductsViewScreen = (props) => {
-  const { width, height } = useWindowDimensions();
-  const dispatch = useDispatch();
-  const [comision, setComision] = useState(0)
-  const [screenStates, setScreenStates] = useState({
-    [SCREEN_STATES.USER_LOCATION]: {},
-    [SCREEN_STATES.PRODUCTS]:[],
-    [SCREEN_STATES.CATEGORIES]:[]
-  });
-  const [products,setProducts] = useState([]);
-  const [categories,setCategories] = useState([]);
-  const [services,setServices] = useState([]);
- 
-  const cartProductIds = useSelector(state => state.cart.cart_item_ids);
+  const [open, setOpen] = useState(false);
+  const [openModel, setOpenModel] = useState(false);
   const {userLocation :coords} = useLocation()
-  const [userLocation,setUserLocation] = useState(coords);
-  
-  const setState = (valueToSet, key) => {
-    setScreenStates({
-      ...screenStates,
-      [key]: valueToSet,
-    });
-  };
+  // const [userLocation,setUserLocation] = useState(coords);
   //Fetching user location..............................
-  const getUserLocation = async() => {
+  // const getUserLocation = async() => {
 
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          'title': 'Permiso de ubicación',
-          'message': 'Esta aplicación necesita acceso a tu ubicación ' +
-                     'para que sepamos donde estas.'
-        }
-      )
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        await Geolocation.getCurrentPosition(res => {
-          setUserLocation(res.coords);
-          // setState(res.coords,SCREEN_STATES.USER_LOCATION);
-        });
-      } else {
-        console.log("Location permission denied")
-      }
+  //   try {
+  //     const granted = await PermissionsAndroid.request(
+  //       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+  //       {
+  //         'title': 'Permiso de ubicación',
+  //         'message': 'Esta aplicación necesita acceso a tu ubicación ' +
+  //                    'para que sepamos donde estas.'
+  //       }
+  //     )
+  //     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+  //       await Geolocation.getCurrentPosition(res => {
+  //         setUserLocation(res.coords);
+  //         // setState(res.coords,SCREEN_STATES.USER_LOCATION);
+  //       });
+  //     } else {
+  //       console.log("Location permission denied")
+  //     }
   
-    } catch(e) {
-      console.log(e)
-     showToaster('No se pudo obtener la ubicación actual.')
-    }
-  }
-  useEffect(() => {
-    //getUserLocation();
-  },[]);
-  //Getting user location ends here....................
+  //   } catch(e) {
+  //     console.log(e)
+  //    showToaster('No se pudo obtener la ubicación actual.')
+  //   }
+  // }
+  const {
+    categorias,
+    comision,modelo,
+    setModelo,marcas,
+    setMarcas,valueMaker, setValueMaker,
+    valueModel, setValueModel,resetFiltro
+  } = useContext(ProductContext)
+
+  const {serviciosFiltrados} = useFiltrado(props?.route?.name)
+ 
 
 
-
-   //Get Service to show
-   const getServices = async() => {
-    try {
-      const apiCall = await axios.get(customer_api_urls.get_services);
-      const getFee = await axios.get(customer_api_urls?.get_fees);
-      
-      setComision(getFee.data.data[0]?.besseri_comission);  
-      setServices(apiCall.data.data);
-      setCategories(apiCall.data.categories)
-    } catch(e) {
-      alert('error here')
-      console.log(e.response.data);
-       showToaster('No se pudo obtener la ubicación actual');
-    }
-  }
-  useEffect(() => {
-    getServices()
-  },[]);
-
+  
+  
 
   return (
-    <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.white }}>
+    <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor,paddingTop:15 }}>
+      <View style={styles.filterContainer}>
+        <DropDownPicker
+          open={open}
+          value={valueMaker}
+          items={marcas}
+          setOpen={setOpen}
+          setValue={setValueMaker}
+          setItems={setMarcas}
+          containerStyle={styles.picker}
+          style={{borderColor:'white'}}
+          placeholder="Marca"
+          schema={{label: 'name', value: '_id', testID: '_id'}}
+        />
+
+        {modelo ? (
+          <DropDownPicker
+            open={openModel}
+            value={valueModel}
+            items={modelo}
+            setOpen={setOpenModel}
+            setValue={setValueModel}
+            setItems={setModelo}
+            containerStyle={styles.picker}
+            style={{borderColor:'white'}}
+            placeholder="Modelo"
+            schema={{label: 'name', value: '_id', testID: '_id'}}
+          />
+        ) : (
+          <View style={styles.picker} />
+        )}
+      </View>
+      <View style={styles.reset} >
+        {
+          modelo && (
+            <TouchableOpacity 
+            onPress={resetFiltro}
+            style={styles.btnReset} 
+            >
+              <Text style={styles.txtReset} >Limpiar filtros</Text>
+            </TouchableOpacity>
+            
+          )
+          
+        }
+        
+      </View>
+      
       <View style={{ flex: 1 }}>
        
         
@@ -103,21 +119,21 @@ const CustomerProductsViewScreen = (props) => {
         <ScrollView contentContainerStyle={{ flexGrow: 1, marginTop: 20 }}>
       
           {/* <FlatList
-          data={categories}
+          data={categorias}
           keyExtractor={item => item?._id}
           renderItem={itemData => (
             <ServiceListing
             navigation={props.navigation}
-            category={itemData.item.name} services={services.filter(service => service.categoryId == itemData.item._id)} />
+            category={itemData.item.name} services={servicesFilter.filter(service => service.categoryId == itemData.item._id)} />
           )}
           /> */}
           {
-            categories.map( (item) => (
+            categorias.map( (item) => (
               <View key={item._id} >
                 <ServiceListing
                 navigation={props.navigation}
                 category={item.name} 
-                services={services.filter(service => service.categoryId == item._id)} 
+                services={serviciosFiltrados.filter(service => service.categoryId == item._id)} 
                 comision={comision}
                 />
               </View>
@@ -153,6 +169,27 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'transparent',
     borderRadius: 10
+  },
+  picker: {
+    width: deviceWidth / 2.2,
+    
+  },
+  filterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 10,
+  },
+  reset:{
+    alignItems:'flex-end',
+    marginHorizontal:10
+  },
+  btnReset:{
+    // borderBottomWidth:1
+  },
+  txtReset:{
+    borderBottomWidth:1,
+    color:Colors.primarySolid,
+    borderColor:Colors.primarySolid
   }
 })
 export default CustomerProductsViewScreen;

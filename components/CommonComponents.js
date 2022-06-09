@@ -92,40 +92,7 @@ export const Heading = ({text}) => {
   return <Text style={heading}>{text}</Text>;
 };
 
-// export const Header = ({showBackIcon,children,text}) => {
-//     const header = {
-//             width:'100%',
-//             height:65,
-//             borderWidth:1,
-//             borderColor:Colors.primaryColor,
-//             backgroundColor:Colors.primaryColor,
-//             ...CommonStyles.flexDirectionRow,
-//             ...CommonStyles.justifySpaceBetween,
-//             ...CommonStyles
-//     }
-//     const icon = {
-//         margin:5
-//     }
-//     const commonTextStyle = {
-//         fontSize:18,
-//    fontWeight:'bold',
-//    color:Colors.white
-//     }
-//     return (
-//         <View style={header}>
-//         {
-//             showBackIcon ?
-//             <TouchableOpacity style={icon}>
-//              <MaterialCommunityIcons name='keyboard-backspace' color='white' size={20}/>
-//             </TouchableOpacity>
-//             :
-//             null
-//         }
-//         <Text style={commonTextStyle}>{text}</Text>
-//         {children}
-//         </View>
-//     )
-// }
+
 
 export const OrderCard = ({label, count}) => {
   const container = {
@@ -627,6 +594,36 @@ export const EnvioCodeModal = ({
           </Text>
         </View>
         {children}
+      </ScrollView>
+    </Modalize>
+  );
+};
+
+
+export const EnvioModal = ({
+  onClose,
+  codeRef,
+}) => {
+  
+  const styles = {
+    mainWrapper: {width: '95%', alignSelf: 'center', margin: 10, left: 5},
+    createAddress: {fontSize: 20, ...CommonStyles.fontFamily},
+    addressDetail: {fontSize: 13, fontWeight: '300', color: Colors.dark},
+  };
+  return (
+    <Modalize
+      onClose={onClose}
+      adjustToContentHeight={true}
+      ref={codeRef}
+      modalStyle={{paddingVertical: 20}}>
+      <ScrollView contentContainerStyle={{flexGrow: 1, paddingVertical: 15}}>
+        <View style={styles.mainWrapper}>
+          <Text style={styles.createAddress}>Delivery Address</Text>
+          <Text style={styles.addressDetail}>
+          Elige la dirección de entrega de tu pedido
+          </Text>
+        </View>
+       
       </ScrollView>
     </Modalize>
   );

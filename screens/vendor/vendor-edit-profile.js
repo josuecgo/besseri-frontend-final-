@@ -18,25 +18,35 @@ import { saveBusinessProfile } from '../../util/local-storage/auth_service';
 
 export const EditProfile = ({navigation, route}) => {
     const [showLoader, setShowLoader] = useState(false);
-    const {address,city,country,email,location,logo,state,storeName,account_id,_id} = route.params.business;
+    // const {address,city,country,email,location,logo,state,storeName,account_id,_id,kmFree} = route.params.business;
+    const {business} = route.params;
+    let km = Math.round(business?.kmFree * 1.609)
     const {form, onChange} = useForm({
-        id:_id,
-        address: address ? address : '',
-        city: city ? city :  '' ,
-        country: country ? country : '',
-        email : email ? email : '',
-        // location: location ? {
-        //   latitude: location?.latitude,
-        //   longitude: location?.longitude,
-        //   address: address,
-        //   city: city,
-        //   state: country
-        // } : '',
-        logo : logo ? logo : '',
-        state: state ? state : '',
-        storeName: storeName ? storeName : '' ,
-        account_id: account_id ? account_id : ''
-    })
+      id:business?._id,
+      address: business?.address ,
+      city: business?.city ,
+      country: business?.country ,
+      email : business?.email ,
+      kmFree: km.toString(),
+      logo : business?.logo ,
+      state: business?.state ,
+      storeName: business?.storeName ,
+      account_id: business?.account_id 
+  })
+    // const {form, onChange} = useForm({
+    //     id:business?._id,
+    //     address: address ? address : '',
+    //     city: city ? city :  '' ,
+    //     country: country ? country : '',
+    //     email : email ? email : '',
+    //     kmFree: kmFree ? kmFree : '',
+    //     logo : logo ? logo : '',
+    //     state: state ? state : '',
+    //     storeName: storeName ? storeName : '' ,
+    //     account_id: account_id ? account_id : ''
+    // })
+    
+    
     const data = [
     {
         value: form.address,
@@ -73,24 +83,18 @@ export const EditProfile = ({navigation, route}) => {
         label: 'Tienda',
         inp:'storeName',
         id: 6,
-    },
-    
+    }
     ];
     
     const onChangeForm = async() => {
       try {
-        // await onChange({
-        //   latitude: location?.latitude,
-        //   longitude: location?.longitude,
-        //   address: form.location.address,
-        //   city: form.location.city,
-        //   state: form.location.country
-        // },'location');
-
-        console.log(form);
+        
         const url = `${vendor_api_urls.edit_business_profile}/${form.account_id}`;
-      
-        const apiCall = await axios.put(url,form);
+        let k = form.kmFree / 1.609
+        const apiCall = await axios.put(url,{
+          ...form,
+          kmFree:parseFloat(k).toFixed(1)
+        });
         
         if (apiCall.status == api_statuses.success) {
           await saveBusinessProfile(apiCall.data.data.store);
@@ -103,8 +107,8 @@ export const EditProfile = ({navigation, route}) => {
       
     }
 
-   
-
+    
+    
     return (
     <>
       <View style={[styles.container]}>
@@ -139,6 +143,16 @@ export const EditProfile = ({navigation, route}) => {
               />
             </View>
           ))}
+
+            <InputFieldComponent
+              onChangeText={inputText => {
+                onChange(inputText, 'kmFree');
+              }}
+              placeholderText={'Kilometros gratis'}
+              value={form.kmFree}
+              returnType="next"
+              
+            />
         </View>
         <ButtonComponent 
         buttonText={'Editar'}

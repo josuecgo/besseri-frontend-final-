@@ -85,37 +85,7 @@ export const useSearch = (  ) => {
         }
     }
 
-    const searchCallStore = async(st,isServices) => {
-        setServicios(isServices)
-        try 
-        {
-            setLoading(true);
-            if(isServices) {
-                const apiCall = await axios.post(customer_api_urls?.service_search,{
-                searchText:st,
-            });
-            
-                setProductsData(apiCall.data.Data);
-                setLoading(false);
-                
-
-            } else {
-                const apiCall = await axios.post(customer_api_urls?.search_api,{searchText:st});
-           
-                setProductsData(apiCall.data.Data);
-               
-                
-                
-                setLoading(false);
-
-            }
-            
-        } catch(e) {
-            console.log(e?.response?.data)
-            setLoading(false);
-            showToaster('No hay conexion con el servidor')
-        }
-    }  
+ 
 
     const makerFilter = () => {
         if (servicios) {

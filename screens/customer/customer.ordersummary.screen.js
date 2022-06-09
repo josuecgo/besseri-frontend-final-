@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {Text, TouchableOpacity, View,StyleSheet, FlatList, ScrollView, Alert} from 'react-native';
+import {Text, TouchableOpacity, View,StyleSheet, LogBox, ScrollView, Alert} from 'react-native';
 import Colors from '../../util/styles/colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -30,7 +30,9 @@ import { BackgroundImage } from '../../components/Background/BackgroundImage';
 import SpinKit from 'react-native-spinkit';
 import { OrderSuccessful } from './customer.order-successful';
 
-
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+]);
 
 const CustomerOrderSummary = (props) => {
     const {params} = useRoute();
@@ -45,7 +47,7 @@ const CustomerOrderSummary = (props) => {
     const [loading,setLoading] = useState(false);
     const [addresses,setAddresses] = useState([]);
     const [stripeEssentials,setStripeEssentials] = useState(null);
-    const stripeE = useRef(null)
+ 
     const {costoEnvio,CalcularDistancia,distancia } =   useCostos()
     const costoK = params.delivery_fee
    
@@ -63,9 +65,11 @@ const CustomerOrderSummary = (props) => {
 
 
 
-
+ 
     useEffect(() => {
-        CalcularDistancia(business?.location?.longitude,business?.location?.latitude,deliveryAddress?.longitude,deliveryAddress?.latitude,costoK)
+        // CalcularDistancia(business?.location?.longitude,business?.location?.latitude,deliveryAddress?.longitude,deliveryAddress?.latitude,costoK)
+        CalcularDistancia(business,deliveryAddress,costoK)
+       
         setDeliveryDistance(distancia)
         
     }, [deliveryAddress])
@@ -78,7 +82,7 @@ const CustomerOrderSummary = (props) => {
         } else {
             
             
-            await CalcularDistancia(business?.location?.longitude,business?.location?.latitude,deliveryAddress?.longitude,deliveryAddress?.latitude)
+            await CalcularDistancia(business,deliveryAddress)
             setDeliveryDistance(distancia)
             addressListingRef?.current?.close();
 
@@ -424,7 +428,7 @@ const CustomerOrderSummary = (props) => {
              width={'100%'}
              borderRadius={5}
              margin={10}
-             padding={0}
+             padding={10}
              handlePress={() => {
                  getAddresses();
                  addressListingRef?.current?.open()
@@ -464,13 +468,7 @@ const CustomerOrderSummary = (props) => {
      
     <View style={{width:'93%',alignSelf:'center'}}>
     <Text style={{...CommonStyles.fontFamily,fontSize:15}}>Resumen de productos</Text>    
-   {/* <FlatList
-    data={products}
-    contentContainerStyle={{flexGrow:1,marginTop:10}}
-    renderItem={itemData => (
-        
-    )}
-    /> */}
+  
     {
         products.map((item) => (
             <View key={item._id} style={{flexDirection:'row',width:'100%',alignSelf:'center',marginTop:'3%',borderBottomWidth:0.3,height:50}}>
@@ -495,9 +493,12 @@ const CustomerOrderSummary = (props) => {
 
       <View style={styles.detailCard}>
       {/* <DetailItem label={'Sub total'} value={`${moneda(allCharges?.subtotal)} MXN`}/> */}
-       <DetailItem label={'Gastos de envío'} value={deliveryAddress ? `${moneda(costoEnvio)} MXN` : 'Seleccionar direccion'}/>
+       <DetailItem 
+       label={'Gastos de envío'} 
+       value={deliveryAddress ? costoEnvio == 0 ? 'Envio Gratis' : `${moneda(costoEnvio)} MXN` : 'Seleccionar direccion'}
+       />
        
-       <DetailItem label={'Total Charges'} value={deliveryAddress ? `${moneda(totalAmount.toFixed(2)) } MXN` : 'Seleccionar direccion' }/>
+       <DetailItem label={'Total'} value={deliveryAddress ? `${moneda(totalAmount.toFixed(2)) } MXN` : 'Seleccionar direccion' }/>
       </View> 
     </ScrollView>
     {
@@ -516,9 +517,10 @@ const CustomerOrderSummary = (props) => {
             <ButtonComponent
             handlePress={openPaymentSheet}
             borderRadius={0}
-            buttonText={ stripeEssentials ? 'Verificar' : 'Cargando'}
+            buttonText={ stripeEssentials ? 'Comprar' : 'Cargando'}
             colorB={Colors.terciarySolid}
             disabled={isVisible}
+            padding={5}
           />
         )
     }
@@ -546,5 +548,3 @@ const styles = StyleSheet.create({
 })
 
 export default CustomerOrderSummary;
-
-

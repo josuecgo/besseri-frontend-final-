@@ -129,7 +129,7 @@ const CustomerCartScreen = (props) => {
         for (var a = 0; a < allProducts?.length; a++) {
           totalProductsPrice += allProducts[a]?.price * allProducts[a]?.quantity
         }
-        props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_SUMMARY, {
+        props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ENVIO, {
           deliveryDistance:deliveryDistance,
           storeId: businessProfiles[0]?._id,
           products: allProducts,

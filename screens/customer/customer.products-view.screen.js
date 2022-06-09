@@ -1,15 +1,18 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View, StyleSheet, Image, ScrollView, Platform, PermissionsAndroid, FlatList } from 'react-native';
-import ProductListing from '../../components/customer-components/ProductsListing.component';
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
 import Geolocation from '@react-native-community/geolocation';
-import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../util/constants';
-import axios from 'axios';
-import {  customer_api_urls } from '../../util/api/api_essentials';
-import { deleteNotification, getNotification, getUser, getUserId } from '../../util/local-storage/auth_service';
-
+import {  CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../util/constants';
+import ProductListing from '../../components/customer-components/ProductsListing.component';
 import { adjust, deviceWidth } from '../../util/Dimentions';
+import DropDownPicker from 'react-native-dropdown-picker';
+import axios from 'axios';
+import { customer_api_urls } from '../../util/api/api_essentials';
+import { ProductContext } from '../../util/context/Product/ProductContext';
+import { useFiltrado } from '../../hooks/useFiltrado';
+
+
 
 const SCREEN_STATES = {
   USER_LOCATION:'User location',
@@ -35,23 +38,25 @@ const CustomerProductsViewScreen = React.memo((props) => {
     [SCREEN_STATES.PRODUCTS]:[],
     [SCREEN_STATES.CATEGORIES]:[]
   });
-  const [products,setProducts] = useState([]);
-  const [categories,setCategories] = useState([]);
+
   const [userLocation,setUserLocation] = useState(null);    
   const [coords,setCoords] = useState({
     longitude: 0,
     latitude: 0
   });
+  const [open, setOpen] = useState(false);
+  const [openModel, setOpenModel] = useState(false);
 
-  const [comision, setComision] = useState(0)
-  const [notification, setNotification] = useState([])
-  useEffect(async() => {
-    const n  = await getNotification()
-    setNotification(n)
-  }, [])
-  
-  
-  
+
+  const {
+    categorias,
+    comision,modelo,
+    setModelo,marcas,
+    setMarcas,valueMaker, setValueMaker,
+    valueModel, setValueModel,resetFiltro
+  } = useContext(ProductContext)
+
+  const {productFilter} = useFiltrado(props?.route?.name)
 
   //Fetching user location..............................
   const getUserLocation = useCallback(async() => {
@@ -148,38 +153,6 @@ const CustomerProductsViewScreen = React.memo((props) => {
     getUserLocation();
   },[]);
 
-  //Get Products to show
-  const getProducts = useCallback(
-    async() => {
-      try {
-        const apiCall = await axios.get(customer_api_urls.get_products);
-        const getFee = await axios.get(customer_api_urls?.get_fees);
-        
-        setComision(getFee.data.data[0]?.besseri_comission);  
-        setProducts(apiCall.data.data.products);
-        setCategories(apiCall.data.data.categories)
-      //  setState(apiCall.data.data.products,SCREEN_STATES.PRODUCTS);
-      //  setState(apiCall.data.data.categories,SCREEN_STATES.CATEGORIES);
-       
-      } catch(e) {
-        console.log({products:e})
-         showToaster('No hay conexion con el servidor');
-  
-      }
-    },[setCategories])
-  
-
-  useEffect(() => {
-    getProducts()
-  },[]);
-  
-  const verNotification = async() => {
-    const n  = await getNotification();
-    console.log({n});
-  }
-  const clear = async() => {
-    await deleteNotification();
-  }
 
 
   
@@ -199,16 +172,64 @@ const CustomerProductsViewScreen = React.memo((props) => {
   }
 
   return (
-    <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor }}>
+    <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor,paddingTop:15 }}>
+            
+     
+      
       <View style={{ flex: 1 }}>
         
+      <View style={styles.filterContainer}>
+        <DropDownPicker
+          open={open}
+          value={valueMaker}
+          items={marcas}
+          setOpen={setOpen}
+          setValue={setValueMaker}
+          setItems={setMarcas}
+          containerStyle={styles.picker}
+          style={{borderColor:'white'}}
+          placeholder="Marca"
+          schema={{label: 'name', value: '_id', testID: '_id'}}
+        />
 
+        {modelo ? (
+          <DropDownPicker
+            open={openModel}
+            value={valueModel}
+            items={modelo}
+            setOpen={setOpenModel}
+            setValue={setValueModel}
+            setItems={setModelo}
+            containerStyle={styles.picker}
+            style={{borderColor:'white'}}
+            placeholder="Modelo"
+            schema={{label: 'name', value: '_id', testID: '_id'}}
+          />
+        ) : (
+          <View style={styles.picker} />
+        )}
+      </View>
+      <View style={styles.reset} >
+        {
+          modelo && (
+            <TouchableOpacity 
+            onPress={resetFiltro}
+            style={styles.btnReset} 
+            >
+              <Text style={styles.txtReset} >Limpiar filtros</Text>
+            </TouchableOpacity>
+            
+          )
+          
+        }
+        
+      </View>
 
           
         <View style={{ paddingVertical: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', flexDirection: 'row' }}>
          
           <FlatList
-          data={categories}
+          data={categorias}
           horizontal
           keyExtractor={item => item?._id}
           renderItem={({item}) => (
@@ -223,12 +244,12 @@ const CustomerProductsViewScreen = React.memo((props) => {
         <ScrollView contentContainerStyle={{ flexGrow: 1, marginTop: 5 }}>
 
          {
-            categories.map((item)=>(
+            categorias.map((item)=>(
               <View key={item._id} >
                 <ProductListing
                 navigation={props.navigation}
                 category={item.name} 
-                products={products.filter(product => product.categoryId == item._id)} 
+                products={productFilter.filter(product => product.categoryId == item._id)} 
                 comision={comision}
                 />
               </View>
@@ -261,6 +282,30 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'transparent',
     borderRadius: 10
+  },
+  picker: {
+    width: deviceWidth / 2.2,
+    
+  },
+  filterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 10,
+  
+  },
+  reset:{
+    
+    alignItems:'flex-end',
+    marginHorizontal:10
+  },
+  btnReset:{
+    // borderBottomWidth:1
+  },
+  txtReset:{
+    borderBottomWidth:1,
+    color:Colors.primarySolid,
+    borderColor:Colors.primarySolid,
+    fontSize:adjust(10)
   }
 })
 export default CustomerProductsViewScreen;

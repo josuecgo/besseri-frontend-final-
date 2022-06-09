@@ -107,6 +107,7 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   DRAWER: 'Drawer',
   CART:'Cart',
   ORDER_SUMMARY:'Order Summary',
+  ORDER_SUMMARY_FREE:'Order Summary Free',
   MAP_STORES:'Map Stores',
   ADDRESSES_SCREEN:'Addresses',
   ORDER_DETAIL:'Order Detail',
@@ -117,7 +118,8 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   SEARCH:'Search',
   PRODUCT_DETAIL:'Product detail',
   ORDER_STACK:'ORDER_STACK',
-  INICIAR:'Iniciar'
+  INICIAR:'Iniciar',
+  ENVIO: 'Envio'
 };
 
 export const BOTTOM_TAB_RIDER_ROUTES = {

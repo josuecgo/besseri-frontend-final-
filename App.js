@@ -25,6 +25,8 @@ import { api_urls, base_url } from './util/api/api_essentials';
 import PushNotification from 'react-native-push-notification';
 import { useNotification } from './hooks/useNotification';
 import { NotificationContext, NotificationProvider } from './util/context/NotificationContext';
+import ProductCardComponent from './components/customer-components/product-card.component';
+import { ProductProvider } from './util/context/Product/ProductContext';
 
 
 const getComponent = {
@@ -68,10 +70,14 @@ const App = () => {
   // merchantIdentifier="merchant.com.{{YOUR_APP_NAME}}" // required for Apple Pay
   >
     <Provider store={reduxStore}>
-    <NotificationProvider>
-
-      <App2/>
-    </NotificationProvider>
+   
+      <NotificationProvider>
+        <ProductProvider>
+        <App2/>
+        </ProductProvider>
+      
+      </NotificationProvider>
+    
     </Provider>
   </StripeProvider>
   )

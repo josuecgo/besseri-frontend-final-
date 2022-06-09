@@ -91,16 +91,23 @@ export const NotificationProvider = ({children}) => {
     const getNotificaciones = async() => {
         try {
             const id = await getUserId();
-            
-            const url = `${api_urls.getNotification}/${id}`;
+            if (id) {
+              const url = `${api_urls.getNotification}/${id}`;
 
-            const apiCall = await axios.get(url);
-            const data = apiCall?.data?.data;
+              const apiCall = await axios.get(url);
+              const data = apiCall?.data?.data;
+              
+              setNotificaciones(data)
+              setCount(apiCall?.data?.count)
+              setCountRider(apiCall?.data?.countRider)
+              setCountCustomer(apiCall?.data?.countCustomer)
+            }else{
+              setNotificaciones([])
+              setCount(0)
+              setCountRider(0)
+              setCountCustomer(0)
+            }
             
-            setNotificaciones(data)
-            setCount(apiCall?.data?.count)
-            setCountRider(apiCall?.data?.countRider)
-            setCountCustomer(apiCall?.data?.countCustomer)
            
         } catch (e) {
             console.log({ getNot: e })

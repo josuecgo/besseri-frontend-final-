@@ -2,20 +2,19 @@ export const notificationReducer = (state, action) => {
 
 
     switch (action.type) {
-        case 'addNotification':
+        case 'getProductos' : 
             return {
                 ...state,
-                notification: action.payload,
-                view: false,
-             
-            };
-
-        case 'removeNotification':
+                errorMessage:'',
+                productos: action.payload.productos
+            }
+        case 'getServicios' : 
             return {
                 ...state,
-                view: true,
-            };
-      
+                errorMessage:'',
+                servicios: action.payload.servicios
+            }
+        
         default:
             return state;
     }

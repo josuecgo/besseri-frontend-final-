@@ -1,4 +1,4 @@
-import React,{useCallback, useContext} from 'react';
+import React,{ useContext} from 'react';
 import {CUSTOMER_HOME_SCREEN_ROUTES, LOGIN_SIGNUP_FORGOT_ROUTES} from '../../util/constants';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -7,7 +7,7 @@ import CustomerProductsViewScreen from './customer.products-view.screen';
 import CustomerServicesViewScreen from './customer.services-view.screen';
 import CustomHeaderComponent from '../../components/customer-components/custom-header.component';
 import CustomDrawerComponent from '../../components/customer-components/custom-drawer.component';
-import CustomerAppointmentsViewScreen from './customer.appointments-view.screen';
+
 import CustomerOrdersViewScreen from './customer.orders-view.screen';
 import CustomerCartScreen from '../customer/customer.cartscreen';
 import CustomerOrderSummaryScreen from '../customer/customer.ordersummary.screen';
@@ -19,7 +19,7 @@ import CustomerStoreScreen from './customer.store.screen';
 import CustomerAppointments from './customer.bookings.screen';
 import CustomerServiceBook from './customer.servicebook.screen';
 import CustomerBookingDetail from './customer.bookingDetail.screen';
-import CustomerSearchScreen from './customer.search.screen';
+
 import CustomerProductDetailScreen from './customer.productdetail.screen';
 import { iniciar } from './customer.iniciar.screen';
 import LoginScreen from '../login.screen';
@@ -27,10 +27,11 @@ import SignUpScreen from '../sign-up.screen';
 import SignUpScreenCustomer from '../sign-up.screen-customer';
 import { OrderSuccessful } from './customer.order-successful';
 import { SearchScreen } from './SearchScreen';
-import { customer_api_urls } from '../../util/api/api_essentials';
-import { color } from 'react-native-reanimated';
+
 import { CustomerNotificationViewScreen } from './customer.notificaciones';
 import { NotificationContext } from '../../util/context/NotificationContext';
+import { EnvioScreen } from './customer.envio.screen';
+import CustomerOrderSummaryFree from './customer.orderSummaryFree.screen';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -105,8 +106,16 @@ const OrderStack = () => {
         component={CustomerCartScreen}
       />
       <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.ENVIO}
+        component={EnvioScreen}
+      />
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_SUMMARY}
         component={CustomerOrderSummaryScreen}
+      />
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_SUMMARY_FREE}
+        component={CustomerOrderSummaryFree}
       />
       <Stack.Screen
         name={'OrderSuccessful'}

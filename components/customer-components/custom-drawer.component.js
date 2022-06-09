@@ -129,6 +129,7 @@ const CustomDrawerComponent = React.memo((props) => {
           onPress={async() => {
             
             await logout();
+            getNotificaciones()
             props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS,{reload:true});
             showToaster('Cerraste sesión')
           }}

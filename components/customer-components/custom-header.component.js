@@ -7,50 +7,40 @@ import {
   Pressable,
   Platform,
 } from 'react-native';
+import SpinKit from 'react-native-spinkit';
 import CommonStyles from '../../util/styles/styles';
 import Colors from '../../util/styles/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import InputFieldComponent from '../input-field/input-field.component';
-import KEYBOARD_TYPES from '../../util/keyboard-types';
 import {CUSTOMER_HOME_SCREEN_ROUTES} from '../../util/constants';
 import {useSelector} from 'react-redux';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {adjust, deviceHeight, deviceWidth} from '../../util/Dimentions';
 import {HeaderBackground} from '../Background/HeaderBackground';
-import { getUser, getUserId } from '../../util/local-storage/auth_service';
-import axios from 'axios';
-import { customer_api_urls } from '../../util/api/api_essentials';
-import { useNotification } from '../../hooks/useNotification';
+import {  getUserId } from '../../util/local-storage/auth_service';
+
 import { Badge } from '../Badge';
 import { NotificationContext } from '../../util/context/NotificationContext';
+import { SearchInput } from './SearchInput';
+import { ProductContext } from '../../util/context/Product/ProductContext';
+
+
+
+
 const CustomHeaderComponent = props => {
-  const [searchValue, setSearchValue] = useState('');
+
   const cart_items = useSelector(state => state.cart.cart_items);
-  const searchRef = useRef();
-  const [comision, setComision] = useState(0)
-  
+  const [searchText, setSearchText] = useState('')
+  let screenName = props?.route?.name;
   const {countCustomer,getNotificaciones} = useContext(NotificationContext);
+  const {
+    searchCall,
+    loading,
+    resetFiltro
+  } = useContext(ProductContext)
 
-
-  useEffect(() => {
-    let abortController = new AbortController();  
-    getComision(); 
-    getNotificaciones();
-    return () => {  
-    abortController.abort();  
-    }  
-  }, [])
-  
  
-  const getComision = async() => {
-    const getFee = await axios.get(customer_api_urls?.get_fees);
-      
-    setComision(getFee.data.data[0]?.besseri_comission);
 
-  }
-  
-  
   const goCart = async() => {
     const user_id = await getUserId();
     
@@ -62,6 +52,31 @@ const CustomHeaderComponent = props => {
     
   }
 
+
+  
+  useEffect(() => {
+    let abortController = new AbortController();  
+    // getComision(); 
+    getNotificaciones();
+    return () => {  
+    abortController.abort();  
+    }  
+  }, [])
+
+ 
+  useEffect(() => {
+    if (searchText.length > 1) {
+        searchCall(searchText, props?.route?.name);
+    }else{
+      resetFiltro();
+    }
+  }, [searchText]);
+ 
+
+  
+  
+  
+
   
 
  
@@ -69,7 +84,6 @@ const CustomHeaderComponent = props => {
     <>
       <HeaderBackground hios={0.23} handroid={0.18} />
       <View style={[styles.header]}>
-      
         <Pressable
           onPress={() => {
             props.navigation.openDrawer();
@@ -95,8 +109,7 @@ const CustomHeaderComponent = props => {
             onPress={() =>
               props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK)
             }>
-            <TouchableOpacity
-              onPress={goCart}>
+            <TouchableOpacity onPress={goCart}>
               <MaterialCommunityIcons
                 color={Colors.white}
                 size={30}
@@ -112,9 +125,19 @@ const CustomHeaderComponent = props => {
             ) : null}
           </TouchableOpacity>
         </View>
+
       </View>
-      <View style={[{marginTop: 0, marginBottom: 20,alignItems:'center'}]}>
-        <InputFieldComponent
+      <View style={styles.top}>
+        <SearchInput onDebounce={value => setSearchText(value)} />
+        {loading ? (
+          <SpinKit
+            type="ThreeBounce"
+            isVisible={loading}
+            color={Colors.primarySolid}
+            size={30}
+          />
+        ) : null}
+        {/* <InputFieldComponent
           ref={searchRef}
           onFocus={() =>
             props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES?.SEARCH,{isService:props.isService,comision})
@@ -135,7 +158,7 @@ const CustomHeaderComponent = props => {
             setSearchValue(text);
           }}
           width={'86%'}
-        />
+        /> */}
       </View>
     </>
   );
@@ -144,7 +167,7 @@ const CustomHeaderComponent = props => {
 const styles = StyleSheet.create({
   header: {
     width: deviceWidth,
-    height: Platform.OS == 'ios' ? deviceHeight * 0.15 : deviceHeight * 0.1,
+    height: Platform.OS == 'ios' ? deviceHeight * 0.16 : deviceHeight * 0.11,
 
     // padding: 10,
     // borderWidth: 1,
@@ -182,6 +205,28 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: 'bold',
     color: 'white',
+  },
+  top: {
+    width: deviceWidth - 20,
+    height: 45,
+    borderWidth: 1,
+    borderColor: '#f8f8f8',
+    backgroundColor: '#f8f8f8',
+    borderRadius: 5,
+    paddingLeft: 10,
+    color: 'grey',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal:10
+  },
+  filterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 10,
+    width:deviceWidth/2,
+    paddingHorizontal:10,
+    zIndex:99999
   },
 });
 

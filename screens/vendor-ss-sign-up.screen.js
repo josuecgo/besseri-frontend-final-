@@ -28,6 +28,7 @@ import CheckboxTerms from '../components/button/CheckboxTerms';
 const CREDENTIAL_KEYS = {
   WORK_EMAIL: 'Correo electrónico del trabajo',
   STORE_NAME: 'Nombre de la tienda',
+  KM_FREE: 'Kilometros de envío gratis',
   FULL_NAME: 'Nombre completo',
   PHONE_NUMBER: 'Número de teléfono',
   ADDRESS_LINE_ONE: 'Dirección Línea Uno',
@@ -79,6 +80,7 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
   const emailRef = useRef();
   const phoneRef = useRef();
   const storeNameRef = useRef();
+  const kmFreeRef = useRef(0);
   const addressLineOneRef = useRef();
   const addressLineTwoRef = useRef();
   const stateRef = useRef();
@@ -129,6 +131,7 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
         name: inputValues[CREDENTIAL_KEYS.FULL_NAME],
         phone: inputValues[CREDENTIAL_KEYS.PHONE_NUMBER],
         storeName: inputValues[CREDENTIAL_KEYS.STORE_NAME],
+        kmFree: parseFloat(inputValues[CREDENTIAL_KEYS.KM_FREE]),
         Address: inputValues[CREDENTIAL_KEYS.ADDRESS_LINE_ONE] + " " + inputValues[CREDENTIAL_KEYS.ADDRESS_LINE_TWO],
         state: inputValues[CREDENTIAL_KEYS.STATE],
         country: inputValues[CREDENTIAL_KEYS.COUNTRY],
@@ -139,6 +142,7 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
         isRider:false,
         msj
       }
+      
       const apiCall = await axios.post(url,body);
       if (apiCall.status == api_statuses.success && apiCall.data.success == true) {
         setShowLoader(false);
@@ -161,7 +165,7 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
       height: 400,
       cropping: true,
     }).then(res => {
-      console.log(res);
+      // console.log(res);
       setLogo(res);
     }).catch(e => {
       showToaster('Algo salio mal')
@@ -231,8 +235,21 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
           placeholderText={CREDENTIAL_KEYS.STORE_NAME}
           secureTextEntry={false}
           ref={storeNameRef}
-          nextFieldRef={addressLineOneRef}
+          nextFieldRef={kmFreeRef}
           value={inputValues[CREDENTIAL_KEYS.STORE_NAME]}
+          returnType="next"
+        />
+        <InputFieldComponent
+          // icon={<FontAwesome5 color={Colors.dark} size={20} name="store-alt" />}
+          keyboardType={KEYBOARD_TYPES.NUMBER_PAD}
+          onChangeText={inputText => {
+            onChangeText(inputText, CREDENTIAL_KEYS.KM_FREE);
+          }}
+          placeholderText={CREDENTIAL_KEYS.KM_FREE}
+          secureTextEntry={false}
+          ref={storeNameRef}
+          nextFieldRef={addressLineOneRef}
+          value={inputValues[CREDENTIAL_KEYS.KM_FREE]}
           returnType="next"
         />
         <InputFieldComponent

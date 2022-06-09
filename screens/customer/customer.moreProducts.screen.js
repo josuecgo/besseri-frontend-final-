@@ -43,12 +43,6 @@ const SCREEN_STATES = {
 const CustomerMoreProductsScreen = props => {
     const { addItemToCart } = useCart();
     const { params } = useRoute();
-    const dispatch = useDispatch();
-    const [screenStates, setScreenStates] = useState({
-        [SCREEN_STATES.USER_LOCATION]: {},
-        [SCREEN_STATES.PRODUCTS]: [],
-        [SCREEN_STATES.CATEGORIES]: [],
-    });
     const [isLoading, setIsLoading] = useState(true);
     const [products, setProducts] = useState([]);
     const [comision, setComision] = useState(0);
@@ -169,6 +163,8 @@ const CustomerMoreProductsScreen = props => {
     useEffect(() => {
         if (searchText.length > 1) {
             searchCategoria();
+        }else{
+            getProducts()
         }
     }, [searchText]);
 
