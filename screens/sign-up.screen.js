@@ -22,7 +22,7 @@ const AVAILABLE_ROLES = [
 ];
 
 const SignUpScreen = ({navigation}) => {
-  const {width, height} = useWindowDimensions();
+  
 
   const [selectedRoles, setSelectedRoles] = useState({
     [ROLES.BUSINESS]: true,

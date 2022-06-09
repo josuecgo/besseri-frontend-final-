@@ -112,7 +112,7 @@ const RiderSignup = ({navigation, route}) => {
               onPress: () => sendCode('sms'),
               
             },
-            { text: "Whatsapp", onPress: () => sendCode('whatsapp') }
+            // { text: "Whatsapp", onPress: () => sendCode('whatsapp') }
           ]
         );
         
