@@ -10,9 +10,7 @@ import { adjust, deviceHeight } from '../../util/Dimentions';
 import { HeaderBackground } from '../Background/HeaderBackground';
 
 const TopCircleComponent = ({textHeading, subText}) => {
-  const {width} = useWindowDimensions();
   
-
   return (
     <> 
     <HeaderBackground/>

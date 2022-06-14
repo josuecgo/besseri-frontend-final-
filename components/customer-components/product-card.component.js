@@ -63,10 +63,11 @@ const ProductCardComponent = ({
       cardContainer: {
         width: '100%',
         padding: 20,
-        elevation: 12,
+       
         borderBottomWidth: 0.3,
         backgroundColor: Colors.white,
         elevation: 2,
+        zIndex:1
       },
       img: {
         width: 50,

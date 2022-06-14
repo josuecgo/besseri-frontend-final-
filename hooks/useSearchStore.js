@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { useState,useEffect } from 'react';
+import { useState,useEffect, useContext } from 'react';
 import { customer_api_urls, vendor_api_urls } from '../util/api/api_essentials';
 import { showToaster } from '../util/constants';
+import { ProductContext } from '../util/context/Product/ProductContext';
 
 export const useSearchStore = ( store ) => {
     
@@ -22,6 +23,11 @@ export const useSearchStore = ( store ) => {
     const [services, setServices] = useState([]);
     const [productsData, setProductsData] = useState([])
     const [comision, setComision] = useState(10);
+
+    const {
+        productos,
+
+    } = useContext(ProductContext)
 
     const getStore = async () => {
         
@@ -53,7 +59,7 @@ export const useSearchStore = ( store ) => {
           console.log(e.response.data);
           showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
         }
-      };
+    };
 
     const getMarcas = async () => {
         
@@ -108,6 +114,71 @@ export const useSearchStore = ( store ) => {
     }  
     
 
+    // const makerFilter = () => {
+    //     if (servicios) {
+    //         servicesFilter();
+    //         return;
+    //     }
+
+        
+        
+       
+        
+    //     if (valueMaker) {
+    //         if (valueModel) {
+               
+    //             let itemData;
+    //             let itemModel;
+    //             const marca = productos.filter((item) => {
+    //                 itemData = item.maker ? item?.maker?._id : '';
+    //                 let searchTextData = valueMaker;
+                   
+    //                 return itemData.indexOf(searchTextData) > -1;
+    //             })
+                
+    //             const modelo = marca.filter((item) => {
+                    
+    //                 itemModel = item.model ? item?.model?._id : '';
+    //                 let searchTextData = valueModel;
+                   
+    //                 return itemModel.indexOf(searchTextData) > -1;
+    //             })
+
+
+
+    //             setProductFilter(modelo ? modelo : []);
+                
+               
+    //         } else {
+    //             setValueModel(null);
+    //             const marca = productos.filter((item) => {
+    //                 let itemData = item.maker ? item?.maker?._id : '';
+    //                 let searchTextData = valueMaker;
+    //                 return itemData.indexOf(searchTextData) > -1;
+    //             })
+               
+    //             setProductFilter(marca ? marca : []);
+               
+    //         }
+    //     }else{  
+            
+    //         setProductFilter(productos);
+            
+    //     }
+        
+
+    //     if (valueCategorias) {
+    //         if (valueMaker) {
+    //             categoriaFilter(productFilter);
+    //         } else {
+    //             categoriaFilter();
+    //         }
+            
+    //     }
+       
+    // };
+
+
     const makerFilter = () => {
         if (servicios) {
             servicesFilter();
@@ -115,15 +186,12 @@ export const useSearchStore = ( store ) => {
         }
 
         
-        
-        // setModelo(false);
-        
         if (valueMaker) {
             if (valueModel) {
                
                 let itemData;
                 let itemModel;
-                const marca = productsData.filter((item) => {
+                const marca = productos.filter((item) => {
                     itemData = item.maker ? item?.maker?._id : '';
                     let searchTextData = valueMaker;
                    
@@ -141,28 +209,33 @@ export const useSearchStore = ( store ) => {
 
 
                 setProductFilter(modelo ? modelo : []);
-                
+                if (valueCategorias) {
+                    categoriaFilter(modelo ? modelo : []);
+                }
                
             } else {
                 setValueModel(null);
-                const marca = productsData.filter((item) => {
+               
+                const marca = productos.filter((item) => {
                     let itemData = item.maker ? item?.maker?._id : '';
                     let searchTextData = valueMaker;
                     return itemData.indexOf(searchTextData) > -1;
                 })
-                
-                setProductFilter(marca ? marca : []);
                
+                setProductFilter(marca ? marca : []);
+                if (valueCategorias) {
+                    categoriaFilter(marca ? marca : []);
+                }
             }
         }else{  
             
-            setProductFilter(productsData);
-            
+            setProductFilter(productos);
+            if (valueCategorias) {
+                categoriaFilter();
+            }
+           
         }
         
-        // if (valueCategorias) {
-        //     categoriaFilter(productFilter)
-        // }
 
        
        
@@ -211,41 +284,40 @@ export const useSearchStore = ( store ) => {
         }
     }
 
-    const categoriaFilter = (data) => {
+    const categoriaFilter = async (data) => {
         
-
+        // setValueMaker(null);
+        // setValueModel(null);
+        // await getStore()
         let categoria = [];
-        // if (data) {
-        //     categoria =  data.filter((item) => {
+        if (data) {
+            
+            categoria =  data.filter((item) => {
                
-        //         let itemData = item.categoryId ? item?.categoryId : '';
-        //         let searchTextData = valueCategorias;
-        //         return itemData.indexOf(searchTextData) > -1;
-        //     });
-        // }else {
-        //     categoria =  productFilter.filter((item) => {
+                let itemData = item.categoryId ? item?.categoryId : '';
+                let searchTextData = valueCategorias;
+                return itemData.indexOf(searchTextData) > -1;
+            });
+        }else {
+            categoria =  productos.filter((item) => {
                
-        //         let itemData = item.categoryId ? item?.categoryId : '';
-        //         let searchTextData = valueCategorias;
-        //         return itemData.indexOf(searchTextData) > -1;
-        //     });
-        // }
-        console.log(valueCategorias);
-        categoria =  productsData.filter((item) => {
-               
-            let itemData = item.categoryId ? item?.categoryId : '';
-            let searchTextData = valueCategorias;
-            return itemData.indexOf(searchTextData) > -1;
-        });
+                let itemData = item.categoryId ? item?.categoryId : '';
+                let searchTextData = valueCategorias;
+                return itemData.indexOf(searchTextData) > -1;
+            });
+        }
+       
        
         
         
         setProductFilter(categoria ? categoria : []);
+
+        
        
     }
 
     const resetFiltros = () => {
-        setProductFilter(productsData);
+        setProductFilter(productos);
         setValueCategorias(null);
         setValueMaker(null);
         setValueModel(null);
@@ -282,14 +354,17 @@ export const useSearchStore = ( store ) => {
 
 
     useEffect(() => {
-      makerFilter()
-    }, [productsData,valueMaker,valueModel])
+       
+      makerFilter();
+    //   if (valueCategorias) {
+    //     categoriaFilter(productsData);
+    //   }
+      
+    }, [productsData,valueMaker,valueModel,valueCategorias])
     
     useEffect(() => {
-        setProductFilter(productsData);
-        setValueMaker(null);
-        setValueModel(null);
-        categoriaFilter(productsData);
+       
+        
 
     }, [valueCategorias])
     

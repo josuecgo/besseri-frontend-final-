@@ -7,7 +7,6 @@ import { ProductContext } from '../util/context/Product/ProductContext';
 export const useFiltrado = ( isServicios ) => {
     
     
-    const [loading, setLoading] = useState(false);
 
     const [productFilter, setProductFilter] = useState([]);
     const [serviciosFiltrados, setServiciosFiltrados] = useState([])
@@ -16,14 +15,8 @@ export const useFiltrado = ( isServicios ) => {
         valueMaker, 
         valueModel,
         servicios
-      } = useContext(ProductContext)
-    
-
-
-    
-    
-
-
+    } = useContext(ProductContext)
+   
     const makerFilter = () => {
         if (isServicios === 'Servicios') {
             servicesFilter();
@@ -121,8 +114,6 @@ export const useFiltrado = ( isServicios ) => {
     }
 
    
-
-
     useEffect(() => {
       makerFilter();
     }, [productos,valueMaker,valueModel,servicios])
