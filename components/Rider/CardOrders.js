@@ -30,12 +30,8 @@ export const CardOrders = ({data,requestRide}) => {
     
     const delivery = () =>  {
 
-      const latB = store.location?.latitude;
-      const lngB = store.location?.longitude;
-      const latC = data.delivery_address?.latitude;
-      const lngC = data.delivery_address?.longitude;
       const costoDelivery = data.delivery_fee;
-      CalcularDistancia(parseFloat(lngB),parseFloat(latB),lngC,latC,costoDelivery)
+      CalcularDistancia(store,data?.delivery_address,costoDelivery)
 
     }
 
@@ -46,6 +42,7 @@ export const CardOrders = ({data,requestRide}) => {
    
 
     if (!store)  return (<LoaderComponent isVisible={!store} />)
+    
     
     return (
     <View style={styles.orderCard}>

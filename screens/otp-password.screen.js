@@ -81,6 +81,7 @@ const OtpPasswordScreen = ({navigation}) => {
           ...(route.params?.body?.isVendor ? {logo:path} : {}),
           ...(route.params?.body?.isRider ? {profile:path} : {}),
         });
+        
         if (apiCall.status == api_statuses.success) {
           setShowLoader(false);
           navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN);
@@ -97,6 +98,7 @@ const OtpPasswordScreen = ({navigation}) => {
       setShowLoader(false);
       console.log(e)
     }
+    setShowLoader(false);
   }
  
 

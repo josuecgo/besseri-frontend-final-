@@ -75,11 +75,6 @@ const VendorProductDetailsScreen = ({navigation, route}) => {
       showToaster('Algo salió mal, inténtalo de nuevo más tarde.');
     }
   }
-  // useLayoutEffect(() => {
-  //   navigation.setOptions({
-  //     headerTitle: route.params?.productName.toString().toUpperCase(),
-  //   });
-  // }, [route.params?.productName, navigation]);
 
   return (
     <> 

@@ -53,7 +53,7 @@ const RiderDummyScreen = props => {
     const dispatch = useDispatch();
     const reloadEarnings = useSelector(state => state?.rider?.reloadEarnings);
     const rider_wallet = useSelector(state => state?.rider?.wallet);
-    const { top } = useSafeAreaInsets();
+   
     const TABS = [
         {
             label: 'Pedidos',

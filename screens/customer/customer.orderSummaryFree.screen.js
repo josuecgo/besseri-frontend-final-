@@ -49,6 +49,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
   const {initPaymentSheet, presentPaymentSheet} = useStripe();
 
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
+  const cartProduct = useSelector(state => state.cart);
   const dispatch = useDispatch();
   const products = params?.products;
   const business = params?.business;
@@ -128,9 +129,10 @@ const CustomerOrderSummaryFree = React.memo((props) => {
         total_amount: tienda ? totalSinEnvio : totalAmount,
         delivery_address: deliveryAddress,
         ordered_on: new Date(),
-        delivery_fee: tienda ? 0 : allCharges?.delivery_charges,
+        delivery_fee: 0,
         besseri_comission: allCharges?.besseri_commission,
         intentId: stripeEssentials?.intentId,
+        storePickup:true
       };
 
       const apiCall = await axios.post(
@@ -176,6 +178,17 @@ const CustomerOrderSummaryFree = React.memo((props) => {
   };
   
   const fetchPaymentSheetParams = async walletId => {
+   
+    let ids = [];
+
+    cartProduct?.cart_items.map((item) => {
+      
+      for (let index = 0; index < item.quantity; index++) {
+        console.log(item._id)
+        ids.push(item._id);
+      }
+    })
+
     try {
       const customerData = await getUser();
 
@@ -184,7 +197,8 @@ const CustomerOrderSummaryFree = React.memo((props) => {
         walletId: business?.wallet_id,
         amount: allCharges.totalAmount,
         deliveryDistance:  0 ,
-        productsIds: cartProductIds,
+        productsIds: ids,
+
       };
 
       if (!business?.wallet_id) {
@@ -495,6 +509,67 @@ const CustomerOrderSummaryFree = React.memo((props) => {
     </View>
   );
 });
+
+const d = [
+  [
+    {
+      __v: 0,
+      _id: '62a383e55dd6f06c1cccea7d',
+      brand: {
+        __v: 0,
+        _id: '624efb111aff1d51ecc78cb6',
+        created_on: '2022-04-07T14:54:09.441Z',
+        disabled: false,
+        name: 'Besser autoparts',
+      },
+      brandId: '624efb111aff1d51ecc78cb6',
+      business_id: '62a37f725dd6f06c1cccea23',
+      category: {
+        __v: 0,
+        _id: '6228eca7bcc02d0004fb1fb3',
+        created_on: '2022-03-09T18:06:31.340Z',
+        disabled: false,
+        name: 'TRANSMISION',
+      },
+      categoryId: '6228eca7bcc02d0004fb1fb3',
+      condition: 'Used',
+      description: 'Hs',
+      inStock: true,
+      isBlocked: false,
+      maker: {
+        __v: 0,
+        _id: '61fd5caae1253c00049ab3e5',
+        created_on: '2022-02-04T17:04:42.685Z',
+        disabled: false,
+        name: 'Nissan',
+      },
+      model: {
+        __v: 0,
+        _id: '6262a91fc7d98e7fb61b3288',
+        created_on: '2022-04-22T13:09:51.509Z',
+        disabled: false,
+        maker: [Object],
+        makerId: '61fd5caae1253c00049ab3e5',
+        name: 'March 1.6',
+      },
+      name: 'Balatas Chevrolet',
+      price: '100',
+      productImg: 'uploads/productImages/63770059965photo.jpg',
+      quantity: 2,
+      status: 'Active',
+      subCategory: {
+        __v: 0,
+        _id: '6228ecb8bcc02d0004fb1fba',
+        created_on: '2022-03-09T18:06:48.207Z',
+        disabled: false,
+        mainCategory: [Object],
+        mainCategoryId: '6228eca7bcc02d0004fb1fb3',
+        name: 'CLUTCH',
+      },
+      subCategoryId: '6228ecb8bcc02d0004fb1fba',
+    },
+  ],
+];
 
 const styles = StyleSheet.create({
   header: {

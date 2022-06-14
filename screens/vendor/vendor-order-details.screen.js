@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState,useEffect, useContext} from 'react';
+import React, {useLayoutEffect, useState,useEffect, useContext,useRef} from 'react';
 import {
   Alert,
   FlatList,
@@ -8,8 +8,8 @@ import {
   Text,
   useWindowDimensions,
   View,
+  
 } from 'react-native';
-import personMockImage from '../../assets/images/person-mock-image.jpeg';
 import CommonStyles from '../../util/styles/styles';
 import Colors from '../../util/styles/colors';
 import {ORDER_STATUSES, SCREEN_HORIZONTAL_MARGIN, showToaster, STATUSES_COLORS, STATUS_LABELS} from '../../util/constants';
@@ -21,12 +21,12 @@ import axios from 'axios';
 import LoaderComponent from '../../components/Loader/Loader.component';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Entypo from 'react-native-vector-icons/Entypo';
-import AntDesign from 'react-native-vector-icons/AntDesign'
 import TopCircleComponent from '../../components/top-circle/top-circle.component';
 import { moneda } from '../../util/Moneda';
 import { adjust } from '../../util/Dimentions';
 import { TranslateStatus } from '../../util/helpers/StatusText';
 import { NotificationContext } from '../../util/context/NotificationContext';
+import { RiderSecurityCodeModal } from '../../components/CommonComponents';
 
 
 export const CustomText = ({text, isData = false, numberOfLines = null}) => {
@@ -59,7 +59,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
   const [orderStatusCode,setorderStatusCode] = useState('')
   const [rideRequets,setRideRequests] = useState([]);
   const isProcessing = order?.order_status_code == 'PROCESSING';
-  const isPacked = order?.order_status_code == 'PACKED';
+  const isParcel = order?.order_status_code == 'PARCEL_DELIVERED';
   const [items, setItems] = useState(
     Object.keys(ORDER_STATUSES).map(orderStatusTypeKey => {
       return {
@@ -68,7 +68,8 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
       };
     }),
   );
-
+  const securityCodeModalRef = useRef(null);
+  const [delivery_security_code, setDelivery_security_code] = useState('');
   const {height,width} = useWindowDimensions();
   
   
@@ -134,16 +135,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
       navigation.goBack()
     }
   }
-  const viewItem = async() => {
-    try {
-      console.log('estopy');
-      const apiCall = await axios.post(`${api_urls.viewNotification}/${orderId}`);
-     
-      console.log(apiCall.status);
-    } catch(e) {
-     console.log({detail:e});
-    }
-  }
+
 
   useEffect(() => {
     getOrderDetails();
@@ -175,11 +167,65 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
       navigation.goBack()
     }
   }
-  const setStatusValue = (val) => {
-    setValue(val);
-    setOrderStatus(STATUS_LABELS[val]);
-    setorderStatusCode(val);
+
+  const updateOrderStatusPickup = async() => {
+    try {
+      setLoading(true);
+     const apiCall = await axios.post(`${vendor_api_urls.update_order_pickup}`,{
+      status:'Out for delivery',
+      status_code:'OUT_FOR_DELIVERY',
+       orderId:route.params.orderId
+     });
+     setLoading(false);
+     if(apiCall.status == api_statuses.success) {
+       console.log(apiCall.data)
+        await getOrderDetails()
+     } else {
+       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
+       navigation.goBack()
+     }
+    } catch(e) {
+      console.log(e.response.data)
+      setLoading(false);
+      showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
+      navigation.goBack()
+    }
   }
+  const changeOrderStatus = async(status,statusCode) => {
+    try {
+      setLoading(true);
+     const apiCall = await axios.post(`${vendor_api_urls.update_order_pickup}`,{
+      status:status,
+      status_code:statusCode,
+      orderId:route.params.orderId,
+      
+     });
+     setLoading(false);
+     if(apiCall.status == api_statuses.success) {
+       console.log(apiCall.data)
+        await getOrderDetails()
+     } else {
+       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
+       navigation.goBack()
+     }
+    } catch(e) {
+      console.log(e.response.data)
+      setLoading(false);
+      showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
+      navigation.goBack()
+    }
+  }
+  const viewItem = async() => {
+    try {
+     
+       await axios.post(`${api_urls.viewNotification}/${orderId}`);
+     
+      
+    } catch(e) {
+     console.log({detail:e});
+    }
+  }
+
 
   useEffect(() => {
     if (!order?.view) {
@@ -196,6 +242,39 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
     <ScrollView contentContainerStyle={{flexGrow: 1}}>
       <LoaderComponent isVisible={loading} />
       <TopCircleComponent textHeading={'Pedido #'+orderNumber} />
+      <RiderSecurityCodeModal
+        RiderSecurityCodeModalRef={securityCodeModalRef}
+        securityCode={delivery_security_code}
+        onChangeSecurityCode={dc => setDelivery_security_code(dc)}
+        
+        onProceed={() => {
+          if (!delivery_security_code) {
+            showToaster('Por favor ingrese el código de seguridad de entrega');
+            return;
+          }
+          if (delivery_security_code == order?.delivery_security_code) {
+            Alert.alert(
+              '¿Paquete entregado?',
+              '¿Has entregado el paquete? si continúa, cambiará el estado del pedido a pedido entregado.',
+              [
+                {
+                  text: 'No',
+                },
+                {
+                  text: 'Sí',
+                  onPress: () => {
+                    changeOrderStatus('Parcel Delivered', 'PARCEL_DELIVERED');
+                    securityCodeModalRef?.current?.close();
+                  },
+                },
+              ],
+            );
+          } else {
+            showToaster('Ha introducido un código de seguridad no válido');
+            securityCodeModalRef?.current?.close();
+          }
+        }}
+      />
       <View
         style={[
           styles.orderDetailsContainer,
@@ -203,15 +282,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
           {minHeight: height,backgroundColor:Colors.bgColor},
         ]}>
         <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            paddingHorizontal: 15,
-            width: '100%',
-            paddingTop: 10,
-          
-          }}>
+          style={styles.estado}>
           <Text style={{...CommonStyles.fontFamily, fontSize: 16}}>
             Estado del pedido
           </Text>
@@ -278,17 +349,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
             </View>
           </View>
 
-          {/* <DropDownPicker
-            open={open}
-            value={value}
-            items={items}
-            setOpen={setOpen}
-            setValue={setValue}
-            setItems={setItems}
-            placeholder={value ? value : "Select Order Status"}
-            dropDownContainerStyle={{borderColor: Colors.light}}
-            style={{borderColor: Colors.light}}
-          /> */}
+
           <View>
             <Text
               style={[
@@ -327,40 +388,63 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
                 Total: MXN {moneda(order?.total_amount)}
               </Text>
             </View>
-            <View>
-              {isProcessing ? (
-                <ButtonComponent
-                  margin={20}
-                  colorB={Colors.terciarySolid}
-                  buttonText={isProcessing ? '¿Paquete empacado?' : ''}
-                  handlePress={updateOrderStatus}
-                  width={width - 60}
-                />
-              ) : (
-                <View
-                  style={{
-                    width: '90%',
-                  }}>
-                  {rideRequets?.length > 0 || orderStatus != 'PACKED' ? null : (
-                    <Text>
-                      Los pasajeros están viendo sus pedidos, le enviarán un viaje
-                       peticiones.
-                    </Text>
-                  )}
+            {
+              order?.storePickup ? (
+
+                <View>
+
+                  {isProcessing ? (
+                    <ButtonComponent
+                      margin={20}
+                      colorB={Colors.terciarySolid}
+                      buttonText={isProcessing ? '¿Paquete empacado?' : ''}
+                      handlePress={updateOrderStatusPickup}
+                      width={width - 60}
+                    />
+                  ) : !isParcel ? (
+                    <ButtonComponent
+                    buttonText={'¿Paquete entregado?'}
+                    // width={width - 20}
+                    colorB={Colors.brightBlue}
+                    borderRadius={10}
+                    margin={10}
+                    handlePress={()=>securityCodeModalRef?.current?.open()}
+                    padding={10}
+                  />
+                  ):(
+                    <View></View>
+                  )
+                }
                 </View>
-              )}
-            </View>
-            {/* {
-      isProcessing ? 
-      <ButtonComponent
-      margin={20}
-      colorB={Colors.primaryColor}
-      buttonText={isProcessing ? 'Parcel Packed?' : isPacked ? '' :' '}
-      handlePress={updateOrderStatus}
-      width={width - 60}
-    />
-    :null
-    } */}
+
+
+              ):(
+              <View>
+                {isProcessing ? (
+                  <ButtonComponent
+                    margin={20}
+                    colorB={Colors.terciarySolid}
+                    buttonText={isProcessing ? '¿Paquete empacado?' : ''}
+                    handlePress={updateOrderStatus}
+                    width={width - 60}
+                  />
+                ) : (
+                  <View
+                    style={{
+                      width: '90%',
+                    }}>
+                    {rideRequets?.length > 0 || orderStatus != 'PACKED' ? null : (
+                      <Text>
+                        Los pasajeros están viendo sus pedidos, le enviarán un viaje
+                        peticiones.
+                      </Text>
+                    )}
+                  </View>
+                )}
+              </View>
+              )
+            }
+
             {rideRequets?.length > 0 && orderStatus == 'PACKED' ? (
               <Text style={{...CommonStyles.fontFamily, paddingVertical: 10}}>
                 Rider Requests
@@ -459,6 +543,15 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     margin: SCREEN_HORIZONTAL_MARGIN,
+  },
+  estado:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 15,
+    width: '100%',
+    paddingTop: 10,
+  
   },
   imageContainer: {
     flex: 1,

@@ -65,7 +65,7 @@ const CustomHeaderComponent = props => {
 
  
   useEffect(() => {
-    if (searchText.length > 1) {
+    if (searchText.length > 0) {
         searchCall(searchText, props?.route?.name);
     }else{
       resetFiltro();

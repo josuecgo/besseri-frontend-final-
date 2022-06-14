@@ -255,7 +255,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
               </View>
             ))
           }
-        <View style={{height:deviceWidth *0.10,width:deviceWidth,marginBottom:30}} />
+        <View style={{height:deviceWidth *0.05,width:deviceWidth,marginBottom:0}} />
         </ScrollView>
       </View>
     </View>

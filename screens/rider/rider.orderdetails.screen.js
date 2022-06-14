@@ -390,12 +390,7 @@ const RiderOrderDetail = props => {
             );
           })}
           <View>
-            {/* <DetailItem label={'Gastos de envío'} value={'5.00 MXN'} />
-                        <DetailItem label={'Cargos Besseri'} value={'2.00 MXN'} />
-                        <DetailItem
-                            label={'Sub total'}
-                            value={`${totalAmount.toFixed(2)} MXN`}
-                        /> */}
+            
             <DetailItem
               label={'Totales'}
               value={`${totalAmount.toFixed(2)} MXN`}
@@ -581,16 +576,6 @@ const RiderOrderDetail = props => {
             }}
           />
         )}
-        {/* <ButtonComponent
-            buttonText={'Need Help?'}
-            width={width / 2.2}
-            colorB={Colors.primaryColor}
-            borderRadius={10}
-            margin={10}
-            handlePress={() => {
-                Linking.openURL(`mailto:${store?.email}`)
-            }}
-            /> */}
       </View>
     </View>
   );

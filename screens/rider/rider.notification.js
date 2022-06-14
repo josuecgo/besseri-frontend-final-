@@ -10,6 +10,7 @@ import { getRiderProfile } from '../../util/local-storage/auth_service';
 import { useLocation } from '../../hooks/useLocation';
 import { ScrollView } from 'react-native-gesture-handler';
 import { deviceHeight, deviceWidth } from '../../util/Dimentions';
+import { NotificationEmpty } from '../../components/NotificationEmpty';
 
 export const RiderNotification = ({navigation}) => {
   const {notificaciones,getNotificaciones} = useContext(NotificationContext);
@@ -59,7 +60,7 @@ export const RiderNotification = ({navigation}) => {
           })
         ) : (
           <View>
-            <Text>Sin notificaciones</Text>
+            <NotificationEmpty/>
           </View>
         )}
 

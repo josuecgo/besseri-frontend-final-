@@ -39,7 +39,8 @@ const CustomerOrderSummary = (props) => {
     const {initPaymentSheet,presentPaymentSheet} = useStripe();
     const [isOrderPlaced,setOrderPlaced] = useState(false);
     const addressListingRef = useRef(null);
-    const cartProductIds = useSelector(state => state.cart.cart_items_ids);
+   
+    const cartProduct = useSelector(state => state.cart);
     const dispatch = useDispatch();
     const products = params?.products;
     const business = params?.business;
@@ -58,12 +59,14 @@ const CustomerOrderSummary = (props) => {
         subtotal:params?.subtotal
     })
     const [isVisible, setIsVisible] = useState(false);
-    const subTotal = totalAmount - (allCharges?.delivery_charges + allCharges?.besseri_commission);
+    
     const [deliveryAddress,setDeliveryAddress] = useState(null);
     const [deliveryDistance,setDeliveryDistance] = useState(0)
     const totalAmount = allCharges?.subtotal  + allCharges?.besseri_commission + costoEnvio;
 
+    
 
+    
 
  
     useEffect(() => {
@@ -226,16 +229,24 @@ const CustomerOrderSummary = (props) => {
 
     
     const fetchPaymentSheetParams = async (walletId) => {
-       
+        let ids = [];
+
+        cartProduct?.cart_items.map((item) => {
+          
+          for (let index = 0; index < item.quantity; index++) {
+            console.log(item._id)
+            ids.push(item._id);
+          }
+        })
        try {
         const customerData = await getUser();
         
         const data = {
             customerId:customerData?.customerId,
             walletId:business?.wallet_id,
-            amount:allCharges.totalAmount,
+            amount:totalAmount,
             deliveryDistance:distancia,
-            productsIds:cartProductIds,
+            productsIds:ids,
         }
         
         if(!business?.wallet_id) {

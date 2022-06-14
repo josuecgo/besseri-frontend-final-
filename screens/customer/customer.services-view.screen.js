@@ -141,7 +141,7 @@ const CustomerProductsViewScreen = (props) => {
            
             ))
           }
-
+        <View style={{height:deviceWidth *0.05,width:deviceWidth,marginBottom:0}} />
         </ScrollView>
       </View>
     </View>

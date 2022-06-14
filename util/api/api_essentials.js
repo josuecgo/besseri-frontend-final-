@@ -1,6 +1,6 @@
 export const env = 'prod';
 //  export const base_url = env == 'prod' ? 'https://api.besseri.mx' : env == 'dev' ?  'https://besseri-apis.herokuapp.com' : 'http://192.168.10.10:5001';
-export const base_url = false ? 'https://besseri-back.herokuapp.com' : 'http://192.168.1.18:3005'
+export const base_url = true ? 'https://besseri-back.herokuapp.com' : 'http://192.168.1.18:3005'
 
 export const api_urls = {
     registration:`${base_url}/user/signup`,
@@ -31,6 +31,7 @@ export const vendor_api_urls = {
     inStock:`${base_url}/products/in-stock`,
     get_orders:`${base_url}/business/business-orders`,
     update_order:`${base_url}/business/update-order-status`,
+    update_order_pickup:`${base_url}/business//update-order-status-pickup`,
     get_earnings:`${base_url}/business/get-earnings`,
     get_categories:`${base_url}/categories/get-categories`,
     get_services:`${base_url}/services/get-my-services`,

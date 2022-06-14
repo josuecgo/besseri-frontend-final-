@@ -19,6 +19,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import { NotificationCard } from '../../components/NotificationCard';
 import { useNotification } from '../../hooks/useNotification';
 import { NotificationContext } from '../../util/context/NotificationContext';
+import { NotificationEmpty } from '../../components/NotificationEmpty';
 
 const VendorDashboardScreen = ({ navigation, route }) => {
     const [loader, setLoader] = useState(false);
@@ -61,7 +62,7 @@ const VendorDashboardScreen = ({ navigation, route }) => {
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
         }
     }
-   
+    
     const createAccount = async () => {
         try {
             setLoader(true);
@@ -98,7 +99,7 @@ const VendorDashboardScreen = ({ navigation, route }) => {
         }
         catch (e) {
             console.log('line 38', e?.response?.data);
-            showToaster('Perdón por la interrupción, esta solicitud falló')
+            // showToaster('Perdón por la interrupción, esta solicitud falló')
         }
     }
 
@@ -112,9 +113,6 @@ const VendorDashboardScreen = ({ navigation, route }) => {
         setStorageNotification(d);
     }
 
-    const clear = async() => {
-        await deleteNotification();
-    }
 
     const orderDetail = (_id,orderId) => {
         navigation.navigate('NotificationDetail',{
@@ -144,10 +142,33 @@ const VendorDashboardScreen = ({ navigation, route }) => {
     return (
         <VendorScreenContainerComponent
             date={getFormattedDate()}
-            screenHeading="Dashboard"
+            screenHeading="Notificaciones"
             business={businessDetails}
             imageSource={personMockImage}
         >
+            <View style={{ alignItems: 'center' }}>
+
+            {business_profile?.wallet?.charges_enabled &&
+                businessDetails?.wallet_id ? null : (
+                <View style={styles.actionBg}>
+                    <Text style={styles.actionText}>
+                        {
+                            'Configure su cuenta comercial de Stripe para que pueda recibir pagos.'
+                        }
+                    </Text>
+                    <TouchableOpacity
+                        onPress={createAccount}
+                        style={styles.actionButton}>
+                        {loader ? (
+                            <ActivityIndicator size={'small'} color="black" />
+                        ) : (
+                            <Text style={styles.actionButtonText}>Setup</Text>
+                        )}
+                    </TouchableOpacity>
+                </View>
+            )}
+
+            </View>
         
            
             <View>
@@ -169,7 +190,7 @@ const VendorDashboardScreen = ({ navigation, route }) => {
                     })
                     ) : (
                         <View>
-                            <Text>Sin notificaciones</Text>
+                            <NotificationEmpty/>
                         </View>
                     )
                 }
@@ -178,41 +199,7 @@ const VendorDashboardScreen = ({ navigation, route }) => {
 
 
 
-            <View style={{ alignItems: 'center' }}>
-
-                {business_profile?.wallet?.charges_enabled &&
-                    businessDetails?.wallet_id ? null : (
-                    <View style={styles.actionBg}>
-                        <Text style={styles.actionText}>
-                            {
-                                'Configure su cuenta comercial de Stripe para que pueda recibir pagos.'
-                            }
-                        </Text>
-                        <TouchableOpacity
-                            onPress={createAccount}
-                            style={styles.actionButton}>
-                            {loader ? (
-                                <ActivityIndicator size={'small'} color="black" />
-                            ) : (
-                                <Text style={styles.actionButtonText}>Setup</Text>
-                            )}
-                        </TouchableOpacity>
-                    </View>
-                )}
-                {paths.map((card, index) => {
-                    return (
-                        <GraphComponent
-                            key={index}
-                            fillColor={card.fillColor}
-                            pathString={card.path}
-                            cardColor={card.cardColor}
-                            textColor={card.textColor}
-                            text={card.text}
-                            earning={card.figure}
-                        />
-                    );
-                })}
-            </View>
+            
         </VendorScreenContainerComponent>
     );
 };

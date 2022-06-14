@@ -13,6 +13,7 @@ import { adjust, deviceWidth } from '../../util/Dimentions';
 import { NotificationContext } from '../../util/context/NotificationContext';
 import TopCircleComponent from '../../components/top-circle/top-circle.component';
 import { NotificationCard } from '../../components/NotificationCard';
+import { NotificationEmpty } from '../../components/NotificationEmpty';
 
 
 export const CustomerNotificationViewScreen = React.memo((props) => {
@@ -46,12 +47,7 @@ export const CustomerNotificationViewScreen = React.memo((props) => {
         }
     }
 
-    const geComission = async() => {
-        const getFee = await axios.get(customer_api_urls?.get_fees);
-        
-        setComision(getFee.data.data[0]?.besseri_comission);
-        setDelivery(getFee.data.data[0]?.delivery_fee);
-    }
+   
   
     return (
         <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor }}>
@@ -76,7 +72,7 @@ export const CustomerNotificationViewScreen = React.memo((props) => {
                     })
                     ) : (
                         <View>
-                            <Text>Sin notificaciones</Text>
+                           <NotificationEmpty/>
                         </View>
                     )
                 }
