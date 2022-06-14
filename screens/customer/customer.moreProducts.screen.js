@@ -449,6 +449,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         marginTop: 10,
+        zIndex:2
     },
     picker: {
         width: deviceWidth / 2.2,

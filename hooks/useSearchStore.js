@@ -215,23 +215,28 @@ export const useSearchStore = ( store ) => {
         
 
         let categoria = [];
-        if (data) {
-            categoria =  data.filter((item) => {
+        // if (data) {
+        //     categoria =  data.filter((item) => {
                
-                let itemData = item.categoryId ? item?.categoryId : '';
-                let searchTextData = valueCategorias;
-                return itemData.indexOf(searchTextData) > -1;
-            });
-        }else {
-            categoria =  productFilter.filter((item) => {
+        //         let itemData = item.categoryId ? item?.categoryId : '';
+        //         let searchTextData = valueCategorias;
+        //         return itemData.indexOf(searchTextData) > -1;
+        //     });
+        // }else {
+        //     categoria =  productFilter.filter((item) => {
                
-                let itemData = item.categoryId ? item?.categoryId : '';
-                let searchTextData = valueCategorias;
-                return itemData.indexOf(searchTextData) > -1;
-            });
-        }
-       
-    
+        //         let itemData = item.categoryId ? item?.categoryId : '';
+        //         let searchTextData = valueCategorias;
+        //         return itemData.indexOf(searchTextData) > -1;
+        //     });
+        // }
+        console.log(valueCategorias);
+        categoria =  productsData.filter((item) => {
+               
+            let itemData = item.categoryId ? item?.categoryId : '';
+            let searchTextData = valueCategorias;
+            return itemData.indexOf(searchTextData) > -1;
+        });
        
         
         
@@ -281,7 +286,11 @@ export const useSearchStore = ( store ) => {
     }, [productsData,valueMaker,valueModel])
     
     useEffect(() => {
-        categoriaFilter(productFilter);
+        setProductFilter(productsData);
+        setValueMaker(null);
+        setValueModel(null);
+        categoriaFilter(productsData);
+
     }, [valueCategorias])
     
     

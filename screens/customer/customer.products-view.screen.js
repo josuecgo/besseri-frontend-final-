@@ -33,6 +33,7 @@ const SelectImgCategory = (category) => {
   }
 }
 const CustomerProductsViewScreen = React.memo((props) => {
+  const [locationStatus, setLocationStatus] = useState(null)
   const [screenStates, setScreenStates] = useState({
     [SCREEN_STATES.USER_LOCATION]: {},
     [SCREEN_STATES.PRODUCTS]:[],
@@ -46,8 +47,8 @@ const CustomerProductsViewScreen = React.memo((props) => {
   });
   const [open, setOpen] = useState(false);
   const [openModel, setOpenModel] = useState(false);
-
-
+  const [currentLongitude, setCurrentLongitude] = useState('')
+  const [currentLatitude, setCurrentLatitude] = useState('')
   const {
     categorias,
     comision,modelo,
@@ -187,7 +188,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
           setValue={setValueMaker}
           setItems={setMarcas}
           containerStyle={styles.picker}
-          style={{borderColor:'white'}}
+          style={{borderColor:'white', zIndex:990}}
           placeholder="Marca"
           schema={{label: 'name', value: '_id', testID: '_id'}}
         />
@@ -226,7 +227,12 @@ const CustomerProductsViewScreen = React.memo((props) => {
       </View>
 
           
-        <View style={{ paddingVertical: 5, backgroundColor: 'transparent', alignSelf: 'flex-start', flexDirection: 'row' }}>
+        <View style={{ 
+          paddingVertical: 5,
+          backgroundColor: 'transparent',
+          alignSelf: 'flex-start', flexDirection: 'row' ,
+          zIndex:1
+        }}>
          
           <FlatList
           data={categorias}
@@ -285,13 +291,13 @@ const styles = StyleSheet.create({
   },
   picker: {
     width: deviceWidth / 2.2,
-    
+   
   },
   filterContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: 10,
-  
+    zIndex:2
   },
   reset:{
     

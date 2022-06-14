@@ -5,7 +5,7 @@ import {
     View,
     StyleSheet,
     Image,
-    ScrollView,
+    Platform,
     ImageBackground,
     FlatList,
     Alert,
@@ -81,7 +81,11 @@ const CustomerStoreScreen = props => {
     useEffect(() => {
         searchCallStore(searchText, isServices);
     }, [searchText]);
-
+    console.log(props.navigation);
+    const goArrowBack = () => {
+        
+        props.navigation.pop()
+    }
     return (
         <View style={styles.container}>
             {/* <LoaderComponent isVisible={isLoading} /> */}
@@ -91,7 +95,7 @@ const CustomerStoreScreen = props => {
                 <View style={styles.ImageContainer}>
                     <View style={styles.header}>
                         <TouchableOpacity
-                            onPress={() => props.navigation.goBack()}
+                            onPress={goArrowBack}
                             style={styles.headerBackButton}>
                             <Ionicons
                                 name="md-chevron-back"
@@ -189,6 +193,7 @@ const CustomerStoreScreen = props => {
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 margin: 10,
+                                zIndex:23
                             }}>
                             <SearchComponent setSearchText={setSearchText} />
 
@@ -264,11 +269,11 @@ const CustomerStoreScreen = props => {
                                 <Text>Restablecer filtros</Text>
                             </TouchableOpacity>
                         </View>
-
-                        <FlatList
+                        <View style={{zIndex:1}} >
+                           <FlatList
                             ListEmptyComponent={<Empty/>}
                             data={selectedCategoryId == 'products' ? productFilter : services}
-                            contentContainerStyle={{ marginTop: 10, flexGrow: 1 }}
+                            contentContainerStyle={{ marginTop: 10, flexGrow: 1 , zIndex:1 }}
                             renderItem={({ item, index }) => {
                                 if (selectedCategoryId == 'products') {
                                     return (
@@ -313,7 +318,9 @@ const CustomerStoreScreen = props => {
                                     );
                                 }
                             }}
-                        />
+                        /> 
+                        </View>
+                        
 
                 {/* </ScrollView> */}
             </View>
@@ -330,7 +337,9 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.white,
         ...CommonStyles.flexCenter,
         borderRadius: 35 / 2,
-        margin: 10,
+        marginHorizontal: Platform.OS === 'ios' ? 20 : 14,
+        marginVertical: Platform.OS === 'ios' ? 35 : 14,
+        zIndex:20
     },
     header: {
         ...CommonStyles.flexDirectionRow,
@@ -342,6 +351,7 @@ const styles = StyleSheet.create({
     filterContent: {
         flexDirection: 'row',
         marginVertical: 5,
+        zIndex:20
     },
     picker: {
         width: deviceWidth / 3.5,
