@@ -213,6 +213,7 @@ const CustomerStoreScreen = props => {
               labelProps={{
                 numberOfLines: 1,
               }}
+              zIndex={1000}
             />
 
             <DropDownPicker
@@ -234,6 +235,7 @@ const CustomerStoreScreen = props => {
               labelProps={{
                 numberOfLines: 1,
               }}
+              zIndex={1000}
             />
 
             {modelo ? (
@@ -256,6 +258,7 @@ const CustomerStoreScreen = props => {
                 labelProps={{
                   numberOfLines: 1,
                 }}
+                zIndex={1000}
               />
             ) : (
               <View style={styles.picker} />

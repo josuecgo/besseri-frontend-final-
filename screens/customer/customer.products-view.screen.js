@@ -7,8 +7,7 @@ import {  CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../util/constants'
 import ProductListing from '../../components/customer-components/ProductsListing.component';
 import { adjust, deviceWidth } from '../../util/Dimentions';
 import DropDownPicker from 'react-native-dropdown-picker';
-import axios from 'axios';
-import { customer_api_urls } from '../../util/api/api_essentials';
+
 import { ProductContext } from '../../util/context/Product/ProductContext';
 import { useFiltrado } from '../../hooks/useFiltrado';
 
@@ -177,7 +176,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
             
      
       
-      <View style={{ flex: 1 }}>
+      <View>
         
       <View style={styles.filterContainer}>
         <DropDownPicker
@@ -188,9 +187,10 @@ const CustomerProductsViewScreen = React.memo((props) => {
           setValue={setValueMaker}
           setItems={setMarcas}
           containerStyle={styles.picker}
-          style={{borderColor:'white', zIndex:990}}
+          style={{borderColor:'white'}}
           placeholder="Marca"
           schema={{label: 'name', value: '_id', testID: '_id'}}
+          zIndex={1000}
         />
 
         {modelo ? (
@@ -205,6 +205,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
             style={{borderColor:'white'}}
             placeholder="Modelo"
             schema={{label: 'name', value: '_id', testID: '_id'}}
+            zIndex={1000}
           />
         ) : (
           <View style={styles.picker} />
@@ -231,7 +232,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
           paddingVertical: 5,
           backgroundColor: 'transparent',
           alignSelf: 'flex-start', flexDirection: 'row' ,
-          zIndex:1
+         
         }}>
          
           <FlatList
@@ -297,7 +298,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: 10,
-    zIndex:2
+    // zIndex:2
   },
   reset:{
     
