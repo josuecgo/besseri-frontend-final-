@@ -64,7 +64,8 @@ export const NotificationProvider = ({children}) => {
        
         getNotificaciones();
        // notificationListener();
-       console.log({msg});
+       notificationIos()
+       
         
         try {
           
@@ -80,48 +81,65 @@ export const NotificationProvider = ({children}) => {
             },
             (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
           );
-           PushNotification.localNotification({
+          PushNotification.localNotification({
              title:msg?.data?.title,
              message:msg?.data?.message,
              channelId:'channel-id'
-           })
-    
+          });
+
+         
           
         } catch(e) {
           alert('errr');
           console.log(e)
         }
 
+
        
     }
 
     const notificationListener = async() => {
 
-      // messaging().onNotificationOpenedApp(remoteMessage => {
-      //   console.log(
-      //     'Notification caused app to open from background state:',
-      //     remoteMessage.notification,
-      //   );
-      //   navigation.navigate(remoteMessage.data.type);
-      // });
+      messaging().onNotificationOpenedApp(remoteMessage => {
+        console.log(
+          'Notification caused app to open from background state:',
+          remoteMessage.notification,
+        );
+        navigation.navigate(remoteMessage.data.type);
+      });
       
-      // messaging().onMessage(async remoteMessage => {
-      //   console.log('recived', remoteMessage);
-      // })
+      messaging().onMessage(async remoteMessage => {
+        console.log('recived', remoteMessage);
+      })
   
-      // // Check whether an initial notification is available
-      // messaging()
-      //   .getInitialNotification()
-      //   .then(remoteMessage => {
-      //     if (remoteMessage) {
-      //       console.log(
-      //         'Notification caused app to open from quit state:',
-      //         remoteMessage.notification,
-      //       );
-      //       setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
-      //     }
+      // Check whether an initial notification is available
+      messaging()
+        .getInitialNotification()
+        .then(remoteMessage => {
+          if (remoteMessage) {
+            console.log(
+              'Notification caused app to open from quit state:',
+              remoteMessage.notification,
+            );
+            setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
+          }
           
-      //   });
+        });
+    }
+    const notificationIos = (msg) => {
+        PushNotificationIOS.addNotificationRequest({
+          id: 'test',
+          title: 'title',
+          subtitle: 'subtitle',
+          body: 'body',
+          category: 'test',
+          threadId: 'thread-id',
+          fireDate: new Date(new Date().valueOf() + 2000),
+          repeats: true,
+          userInfo: {
+            image: 'https://www.github.com/Naturalclar.png',
+          },
+        });
     }
 
     const getNotificaciones = async() => {
@@ -176,10 +194,24 @@ export const NotificationProvider = ({children}) => {
         } catch(e) {
           alert('error')
         }
+
       }
     
       const getToken = async() => {
         const permission = await requestUserPermission();
+        // PushNotificationIOS.requestPermissions({
+        //   alert: true,
+        //   badge: true,
+        //   sound: true,
+        //   critical: true,
+        // }).then(
+        //   (data) => {
+        //     console.log('PushNotificationIOS.requestPermissions', data);
+        //   },
+        //   (data) => {
+        //     console.log('PushNotificationIOS.requestPermissions failed', data);
+        //   },
+        // );
         if(permission) {
           const fcmToken =  await firebase.messaging().getToken();
           const userId = await getUserId();
@@ -189,11 +221,11 @@ export const NotificationProvider = ({children}) => {
               token:fcmToken,
               userId:userId
             })
-            console.log('line 78',r?.data)
+            
     
           }
         } else {
-          alert('no permsio')
+          alert('Active permiso para recibir notificaciones')
         }
       }
      
