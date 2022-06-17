@@ -1,5 +1,10 @@
 import axios from "axios";
 import React,{ createContext, useEffect, useReducer,useState } from "react";
+import {
+
+  Platform,
+
+} from 'react-native';
 import { api_urls } from "../api/api_essentials";
 import { showToaster } from "../constants";
 import { getUserId } from "../local-storage/auth_service";
@@ -10,7 +15,7 @@ import firebaseApp from "@react-native-firebase/app";
 import messaging, { firebase } from '@react-native-firebase/messaging';
 
 import PushNotification from 'react-native-push-notification';
-
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 
 
@@ -56,9 +61,11 @@ export const NotificationProvider = ({children}) => {
 
    
     const showNotification = async(msg) => {
-  
+       
         getNotificaciones();
-
+       // notificationListener();
+       console.log({msg});
+        
         try {
           
           
@@ -86,6 +93,35 @@ export const NotificationProvider = ({children}) => {
         }
 
        
+    }
+
+    const notificationListener = async() => {
+
+      // messaging().onNotificationOpenedApp(remoteMessage => {
+      //   console.log(
+      //     'Notification caused app to open from background state:',
+      //     remoteMessage.notification,
+      //   );
+      //   navigation.navigate(remoteMessage.data.type);
+      // });
+      
+      // messaging().onMessage(async remoteMessage => {
+      //   console.log('recived', remoteMessage);
+      // })
+  
+      // // Check whether an initial notification is available
+      // messaging()
+      //   .getInitialNotification()
+      //   .then(remoteMessage => {
+      //     if (remoteMessage) {
+      //       console.log(
+      //         'Notification caused app to open from quit state:',
+      //         remoteMessage.notification,
+      //       );
+      //       setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
+      //     }
+          
+      //   });
     }
 
     const getNotificaciones = async() => {
@@ -129,6 +165,8 @@ export const NotificationProvider = ({children}) => {
         const enabled =
           authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
           authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+        
+          
         if (enabled) {
          
           return true
@@ -151,7 +189,7 @@ export const NotificationProvider = ({children}) => {
               token:fcmToken,
               userId:userId
             })
-            // console.log('line 78',r?.data)
+            console.log('line 78',r?.data)
     
           }
         } else {
@@ -163,6 +201,7 @@ export const NotificationProvider = ({children}) => {
 
     useEffect(() => {
         getToken();
+        notificationListener();
     }, [])
 
     

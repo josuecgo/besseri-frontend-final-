@@ -176,9 +176,9 @@ const CustomerProductsViewScreen = React.memo((props) => {
             
      
       
-      <View>
+      <View style={{flex:1}} >
         
-      <View style={styles.filterContainer}>
+      <View style={Platform.OS === 'ios' ? styles.filterContainer : styles.filterContainer2}>
         <DropDownPicker
           open={open}
           value={valueMaker}
@@ -294,11 +294,18 @@ const styles = StyleSheet.create({
     width: deviceWidth / 2.2,
    
   },
-  filterContainer: {
+  filterContainer2: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: 10,
     // zIndex:2
+  },
+  filterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 10,
+    zIndex:2,
+    
   },
   reset:{
     

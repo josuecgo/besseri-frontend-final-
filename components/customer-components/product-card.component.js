@@ -66,8 +66,7 @@ const ProductCardComponent = ({
        
         borderBottomWidth: 0.3,
         backgroundColor: Colors.white,
-        elevation: 2,
-        zIndex:1
+        
       },
       img: {
         width: 50,
@@ -139,7 +138,7 @@ const ProductCardComponent = ({
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: 'white',
-            elevation: 10,
+           
           }}>
           <AntDesign name="delete" color="red" size={18} />
         </TouchableOpacity>
@@ -219,7 +218,7 @@ const styles = StyleSheet.create({
     width: deviceWidth / 2.2,
    
     marginHorizontal: 3,
-    elevation: 1,
+    
     // padding:5
    
     

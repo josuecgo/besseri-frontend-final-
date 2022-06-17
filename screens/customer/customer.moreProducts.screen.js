@@ -330,7 +330,7 @@ const CustomerMoreProductsScreen = props => {
                 </Text>
 
                 
-                <View style={styles.filterContainer}>
+                <View style={Platform.OS === 'ios' ? styles.filterContainer : styles.filterContainer2}  >
                     <DropDownPicker
                         open={open}
                         value={valueMaker}
@@ -445,12 +445,21 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white',
     },
-    filterContainer: {
+    filterContainer2: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         marginTop: 10,
-        zIndex:2
-    },
+        // zIndex:2
+       
+      },
+      filterContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginTop: 10,
+        zIndex:20,
+        
+        
+      },
     picker: {
         width: deviceWidth / 2.2,
     },

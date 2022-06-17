@@ -184,16 +184,10 @@ const CustomerStoreScreen = props => {
           </TouchableOpacity>
         </View>
 
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            margin: 10,
-            
-          }}>
+ 
           <SearchComponent setSearchText={setSearchText} />
 
-          <View style={styles.filterContent}>
+          <View style={Platform.OS === 'ios' ? styles.filterContainer : styles.filterContainer2}>
             <DropDownPicker
               open={openCategorias}
               value={valueCategorias}
@@ -265,15 +259,15 @@ const CustomerStoreScreen = props => {
             )}
           </View>
           <TouchableOpacity
-            style={{justifyContent: 'flex-end', right: 5}}
+            style={{justifyContent: 'flex-end', alignItems:'flex-end',right:5}}
             onPress={resetFiltros}>
             <Text>Restablecer filtros</Text>
           </TouchableOpacity>
-        </View>
+        
 
         <View style={{marginTop:3}}>
           <FlatList
-            style={{zIndex: 1}}
+            
             ListEmptyComponent={<Empty />}
             data={selectedCategoryId == 'products' ? productFilter : services}
             contentContainerStyle={{marginTop: 20, flexGrow: 1}}
@@ -341,7 +335,7 @@ const styles = StyleSheet.create({
     borderRadius: 35 / 2,
     marginHorizontal: Platform.OS === 'ios' ? 20 : 14,
     marginVertical: Platform.OS === 'ios' ? 35 : 14,
-    zIndex: 20,
+    //zIndex: 20,
   },
   header: {
     ...CommonStyles.flexDirectionRow,
@@ -350,10 +344,18 @@ const styles = StyleSheet.create({
   },
   img: {width: '100%', height: 100},
   ImageContainer: {flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'},
-  filterContent: {
+  filterContainer2: {
     flexDirection: 'row',
-    marginVertical: 5,
+    justifyContent: 'space-around',
+    marginTop: 10,
     // zIndex:2
+   
+  },
+  filterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 10,
+    zIndex:20,
   },
   picker: {
     width: deviceWidth / 3.5,

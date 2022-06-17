@@ -14,20 +14,33 @@ moment.locale('es')
 
 
 PushNotification.configure({
-    // (optional) Called when Token is generated (iOS and Android)
-    onRegister: function(token) {
-      console.log("TOKEN:", token);
-    },
-  
-    // // (required) Called when a remote or local notification is opened or received
-    // onNotification: function(notification) {
-    //   console.log("NOTIFICATION:", notification);
-  
-    //   // process the notification here
-  
-    //   // required on iOS only 
-    // },
-    // Android only
+  // (optional) Called when Token is generated (iOS and Android)
+  onRegister: function (token) {
+    console.log("TOKEN:", token);
+  },
+
+  // (required) Called when a remote is received or opened, or local notification is opened
+  onNotification: function (notification) {
+    console.log("NOTIFICATION:", notification);
+
+    // process the notification
+
+    // (required) Called when a remote is received or opened, or local notification is opened
+    notification.finish(PushNotificationIOS.FetchResult.NoData);
+  },
+
+  // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
+  onAction: function (notification) {
+    console.log("ACTION:", notification.action);
+    console.log("NOTIFICATION:", notification);
+
+    // process the action
+  },
+
+  // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
+  onRegistrationError: function(err) {
+    console.error(err.message, err);
+  },
     // iOS only
     permissions: {
       alert: true,
@@ -37,9 +50,10 @@ PushNotification.configure({
     popInitialNotification: true,
     // requestPermissions: Platform.OS == 'ios'
     requestPermissions: true,
-  });
+});
 
 messaging().setBackgroundMessageHandler(async remoteMessage => {
+    console.log({remoteMessage});
     PushNotification.createChannel(
         {
           channelId: "channel-id", // (required)
@@ -51,10 +65,13 @@ messaging().setBackgroundMessageHandler(async remoteMessage => {
         },
         (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
       );
-       PushNotification.localNotification({
+      PushNotification.localNotification({
          title:remoteMessage?.data?.title,
          message:remoteMessage?.data?.message,
          channelId:'channel-id'
-       })
+      })
+      
+
   });
+
 AppRegistry.registerComponent(appName, () => App);
