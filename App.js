@@ -96,7 +96,7 @@ const App2 = () => {
 
   useEffect(() => {
     messaging().setBackgroundMessageHandler(async remoteMessage => {
-      console.log({remoteMessage});
+      
       showNotification(remoteMessage)
       
     });
@@ -107,7 +107,7 @@ const App2 = () => {
     //   alert('ms')
     // })
     messaging().onMessage(msg => {
-      console.log({onMessage:msg});
+     
       showNotification(msg)
     })
 

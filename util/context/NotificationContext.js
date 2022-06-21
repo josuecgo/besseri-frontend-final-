@@ -65,7 +65,7 @@ export const NotificationProvider = ({children}) => {
         getNotificaciones();
        // notificationListener();
       
-       
+       console.log(msg);
         
         try {
           
@@ -81,6 +81,7 @@ export const NotificationProvider = ({children}) => {
             },
             (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
           );
+          
           PushNotification.localNotification({
              title:msg?.data?.title,
              message:msg?.data?.message,
