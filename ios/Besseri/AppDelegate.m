@@ -1,11 +1,13 @@
 #import "AppDelegate.h"
 
+#import <UserNotifications/UserNotifications.h>
+#import <RNCPushNotificationIOS.h>
+
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-#import <RNCPushNotificationIOS.h>
+
 #import <Firebase.h>
-#import <UserNotifications/UserNotifications.h>
 #import <FirebaseCore/FIRApp.h>
 #ifdef FB_SONARKIT_ENABLED
 

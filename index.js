@@ -18,22 +18,11 @@ PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: function (token) {
     console.log("TOKEn:", token);
-    // const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-    // if (status != 'granted') {
-    //   const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-    //   // finalStatus = status;
-    // }
-    // if (status !== 'granted') {
-    //   alert('Failed to get push token for push notification!');
-    //   return;
-    // }
+    
   },
-
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification: function (notification) {
     console.log("NOTIFICATION:", notification);
-
-    // process the notification
 
     // (required) Called when a remote is received or opened, or local notification is opened
     notification.finish(PushNotificationIOS.FetchResult.NoData);
@@ -46,7 +35,6 @@ PushNotification.configure({
 
     // process the action
   },
-
   // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
   onRegistrationError: function(err) {
     console.error(err.message, err);

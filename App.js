@@ -27,6 +27,8 @@ import { useNotification } from './hooks/useNotification';
 import { NotificationContext, NotificationProvider } from './util/context/NotificationContext';
 import ProductCardComponent from './components/customer-components/product-card.component';
 import { ProductProvider } from './util/context/Product/ProductContext';
+import PushNotificationManager from './util/context/PushNotificationManager';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 
 const getComponent = {
@@ -70,13 +72,15 @@ const App = () => {
   // merchantIdentifier="merchant.com.{{YOUR_APP_NAME}}" // required for Apple Pay
   >
     <Provider store={reduxStore}>
-   
-      <NotificationProvider>
-        <ProductProvider>
-        <App2/>
-        </ProductProvider>
+      <PushNotificationManager>
+        <NotificationProvider>
+          <ProductProvider>
+          <App2/>
+          </ProductProvider>
+        
+        </NotificationProvider>
+      </PushNotificationManager>
       
-      </NotificationProvider>
     
     </Provider>
   </StripeProvider>
@@ -84,7 +88,7 @@ const App = () => {
 }
 const App2 = () => {
  
-  const {showNotification} = useContext(NotificationContext);
+  const {showNotification  } = useContext(NotificationContext);
 
 
   
@@ -92,6 +96,7 @@ const App2 = () => {
 
   useEffect(() => {
     messaging().setBackgroundMessageHandler(async remoteMessage => {
+      console.log({remoteMessage});
       showNotification(remoteMessage)
       
     });
@@ -102,6 +107,7 @@ const App2 = () => {
     //   alert('ms')
     // })
     messaging().onMessage(msg => {
+      console.log({onMessage:msg});
       showNotification(msg)
     })
 
@@ -121,11 +127,13 @@ const App2 = () => {
   
    
       <NavigationContainer>
-      
-       
-          <StatusBar barStyle={isDarkMode ? 'dark-content' : 'light-content'} />
+        
+        
+           <StatusBar barStyle={isDarkMode ? 'dark-content' : 'light-content'} />
           {/* {showSplashScreen ? <SplashScreen /> : <MainNavigation />} */}
           <MainNavigation />
+      
+         
        
       </NavigationContainer>
 

@@ -64,7 +64,7 @@ export const NotificationProvider = ({children}) => {
        
         getNotificaciones();
        // notificationListener();
-       notificationIos()
+      
        
         
         try {
@@ -98,49 +98,7 @@ export const NotificationProvider = ({children}) => {
        
     }
 
-    const notificationListener = async() => {
 
-      messaging().onNotificationOpenedApp(remoteMessage => {
-        console.log(
-          'Notification caused app to open from background state:',
-          remoteMessage.notification,
-        );
-        navigation.navigate(remoteMessage.data.type);
-      });
-      
-      messaging().onMessage(async remoteMessage => {
-        console.log('recived', remoteMessage);
-      })
-  
-      // Check whether an initial notification is available
-      messaging()
-        .getInitialNotification()
-        .then(remoteMessage => {
-          if (remoteMessage) {
-            console.log(
-              'Notification caused app to open from quit state:',
-              remoteMessage.notification,
-            );
-            setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
-          }
-          
-        });
-    }
-    const notificationIos = (msg) => {
-        PushNotificationIOS.addNotificationRequest({
-          id: 'test',
-          title: 'title',
-          subtitle: 'subtitle',
-          body: 'body',
-          category: 'test',
-          threadId: 'thread-id',
-          fireDate: new Date(new Date().valueOf() + 2000),
-          repeats: true,
-          userInfo: {
-            image: 'https://www.github.com/Naturalclar.png',
-          },
-        });
-    }
 
     const getNotificaciones = async() => {
         try {
@@ -183,8 +141,9 @@ export const NotificationProvider = ({children}) => {
         const enabled =
           authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
           authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
         
-          
+
         if (enabled) {
          
           return true
@@ -198,24 +157,12 @@ export const NotificationProvider = ({children}) => {
       }
     
       const getToken = async() => {
-        const permission = await requestUserPermission();
-        // PushNotificationIOS.requestPermissions({
-        //   alert: true,
-        //   badge: true,
-        //   sound: true,
-        //   critical: true,
-        // }).then(
-        //   (data) => {
-        //     console.log('PushNotificationIOS.requestPermissions', data);
-        //   },
-        //   (data) => {
-        //     console.log('PushNotificationIOS.requestPermissions failed', data);
-        //   },
-        // );
+        const permission =  Platform.OS === 'android' ? await  requestUserPermission() : PushNotificationIOS.requestPermissions()
+       
         if(permission) {
           const fcmToken =  await firebase.messaging().getToken();
           const userId = await getUserId();
-          
+          console.log({fcmToken,device:Platform.OS});
           if(fcmToken && userId) {
             const r = await axios.post(api_urls?.save_fcm_token,{
               token:fcmToken,
@@ -229,11 +176,22 @@ export const NotificationProvider = ({children}) => {
         }
       }
      
+      async function pushIos(msg){
+        
+        const unsubscribe = await messaging().onMessage(async (remoteMsg) => {
+        ;
+          PushNotificationIOS.presentLocalNotification({
+            alertTitle:remoteMsg.data.title,
+            alertBody:remoteMsg.data.message
+          })
+        })
 
+        return unsubscribe
+      }
 
     useEffect(() => {
         getToken();
-        notificationListener();
+       
     }, [])
 
     
@@ -250,7 +208,8 @@ export const NotificationProvider = ({children}) => {
             countRider,
             countCustomer,
             getToken,
-            showNotification
+            showNotification,
+            pushIos
         }}
         >
             {children}
