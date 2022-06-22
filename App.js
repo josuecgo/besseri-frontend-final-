@@ -72,14 +72,17 @@ const App = () => {
   // merchantIdentifier="merchant.com.{{YOUR_APP_NAME}}" // required for Apple Pay
   >
     <Provider store={reduxStore}>
-      <PushNotificationManager>
-        <NotificationProvider>
+    
+        <NotificationProvider>  
+          
           <ProductProvider>
-          <App2/>
+           
+              <App2/>
+          
           </ProductProvider>
-        
+       
         </NotificationProvider>
-      </PushNotificationManager>
+      
       
     
     </Provider>
@@ -88,7 +91,7 @@ const App = () => {
 }
 const App2 = () => {
  
-  const {showNotification  } = useContext(NotificationContext);
+  const {showNotification,  getNotificaciones  } = useContext(NotificationContext);
 
 
   
@@ -98,7 +101,7 @@ const App2 = () => {
     messaging().setBackgroundMessageHandler(async remoteMessage => {
       
       showNotification(remoteMessage)
-      
+    
     });
   },[])
 
@@ -107,8 +110,11 @@ const App2 = () => {
     //   alert('ms')
     // })
     messaging().onMessage(msg => {
-     
+      
       showNotification(msg)
+     
+
+
     })
 
     
@@ -125,17 +131,19 @@ const App2 = () => {
 
   return (
   
+    //<PushNotificationManager getNotificaciones={getNotificaciones} >
+            <NavigationContainer>
+        
+        
+        <StatusBar barStyle={isDarkMode ? 'dark-content' : 'light-content'} />
+       {/* {showSplashScreen ? <SplashScreen /> : <MainNavigation />} */}
+       <MainNavigation />
    
-      <NavigationContainer>
-        
-        
-           <StatusBar barStyle={isDarkMode ? 'dark-content' : 'light-content'} />
-          {/* {showSplashScreen ? <SplashScreen /> : <MainNavigation />} */}
-          <MainNavigation />
-      
-         
-       
       </NavigationContainer>
+    
+  
+    //</PushNotificationManager>
+
 
 
   );

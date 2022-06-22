@@ -65,7 +65,7 @@ export const NotificationProvider = ({children}) => {
         getNotificaciones();
        // notificationListener();
       
-       console.log(msg);
+      
         
         try {
           
@@ -113,7 +113,9 @@ export const NotificationProvider = ({children}) => {
               setNotificaciones(data)
               setCount(apiCall?.data?.count)
               setCountRider(apiCall?.data?.countRider)
-              setCountCustomer(apiCall?.data?.countCustomer)
+              setCountCustomer(apiCall?.data?.countCustomer);
+              PushNotificationIOS.setApplicationIconBadgeNumber(data.length);
+
             }else{
               setNotificaciones([])
               setCount(0)
@@ -129,7 +131,7 @@ export const NotificationProvider = ({children}) => {
             setCountRider(0)
             setCountCustomer(0)
         }
-
+       // PushNotificationIOS.addEventListener('localNotification',pushIos);
        
     }
 
@@ -163,7 +165,7 @@ export const NotificationProvider = ({children}) => {
         if(permission) {
           const fcmToken =  await firebase.messaging().getToken();
           const userId = await getUserId();
-          console.log({fcmToken,device:Platform.OS});
+          
           if(fcmToken && userId) {
             const r = await axios.post(api_urls?.save_fcm_token,{
               token:fcmToken,
@@ -177,26 +179,52 @@ export const NotificationProvider = ({children}) => {
         }
       }
      
-      async function pushIos(msg){
-        
+      async function pushIos(){
+       
         const unsubscribe = await messaging().onMessage(async (remoteMsg) => {
-        ;
-          PushNotificationIOS.presentLocalNotification({
+          PushNotificationIOS.addNotificationRequest({
             alertTitle:remoteMsg.data.title,
             alertBody:remoteMsg.data.message
           })
+
         })
+        getNotificaciones();
 
         return unsubscribe
       }
 
+      const iosPermisoss = () => {
+        PushNotificationIOS.requestPermissions()
+        PushNotificationIOS.addEventListener('localNotification',pushIos);
+        PushNotificationIOS.addEventListener('notification', pushIos )
+      }
+
     useEffect(() => {
+        if (Platform.OS === 'ios') {
+          iosPermisoss()
+        }
         getToken();
-       
+        
     }, [])
 
-    
-    
+    useEffect(() => {
+      const type = 'notification';
+      PushNotificationIOS.addEventListener(type, onRemoteNotification);
+      return () => {
+        PushNotificationIOS.removeEventListener(type);
+      };
+    });
+  
+    const onRemoteNotification = (notification) => {
+      const isClicked = notification.getData().userInteraction === 1;
+      
+      if (isClicked) {
+        getNotificaciones();
+      } else {
+        getNotificaciones();
+      }
+    };
+
 
     return (
         <NotificationContext.Provider
