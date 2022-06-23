@@ -114,7 +114,10 @@ export const NotificationProvider = ({children}) => {
               setCount(apiCall?.data?.count)
               setCountRider(apiCall?.data?.countRider)
               setCountCustomer(apiCall?.data?.countCustomer);
-              PushNotificationIOS.setApplicationIconBadgeNumber(data.length);
+              if (Platform.OS === 'ios') {
+                PushNotificationIOS.setApplicationIconBadgeNumber(data.length);
+              }
+              
 
             }else{
               setNotificaciones([])

@@ -284,18 +284,7 @@ const VendorAddServiceScreen = ({navigation}) => {
     };
 
     const createService = async () => {
-    // const apiBody = {
-    //   name: inputValues[CREDENTIAL_KEYS.NAME],
-    //   // business_id: businessId,
-    //   description: inputValues[CREDENTIAL_KEYS.DESCRIPTION],
-    //   makersIds: inputValues[CREDENTIAL_KEYS.PRODUCT_MAKER]._id,
-    //   modelId:inputValues[CREDENTIAL_KEYS.PRODUCT_MODEL]._id,
-    //   isBlocked: false,
-    //   // coverImg: serviceUploadImg.data.data,
-    //   categoryId: inputValues[CREDENTIAL_KEYS.PRODUCT_CATEGORY]?._id,
-    //   category: inputValues[CREDENTIAL_KEYS.PRODUCT_CATEGORY],
-    //   price: inputValues[CREDENTIAL_KEYS.PRICE],
-    // };
+
    
         try {
             setShowLoader(true);
@@ -374,8 +363,28 @@ const VendorAddServiceScreen = ({navigation}) => {
         }
   
     }
+    const backPage = () => {
+        setCurrentScreen(
+            isServiceNameScreen
+            ? navigation.pop()
+            : isDescriptionScreen
+            ? SCREEN_TYPES?.SERVICE_NAME
+            : isPriceScreen
+            ? SCREEN_TYPES?.CHOOSE_MAKER
+            : isChooseMaker
+            ? SCREEN_TYPES?.CHOOSE_MODEL
+            : isChooseModel
+            ? SCREEN_TYPES?.CHOOSE_CATEGORY
+            : isChooseCategory
+            ? SCREEN_TYPES?.UPLOAD_IMAGE
+            : null,
+        );
+
+      
+          setProgress(progress + 100 / 5);
+      }
    
-  
+      console.log(currentScreen);
     return (
     <View style={styles.container}>
         <Loader isVisible={showLoader} />
@@ -388,7 +397,7 @@ const VendorAddServiceScreen = ({navigation}) => {
             }}>
             <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.pop()}
+                onPress={backPage}
                 style={styles.headerIcon}>
                 <MaterialCommunityIcons
                 name="keyboard-backspace"

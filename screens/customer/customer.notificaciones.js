@@ -61,7 +61,7 @@ export const CustomerNotificationViewScreen = React.memo((props) => {
                               <TouchableOpacity  
                               onPress={() => orderDetail(item?.body)} 
                               activeOpacity={0.2}
-                              style={[styles.card,{opacity: item.body?.viewCustomer ?  1:  1}]}
+                              style={[styles.card,{opacity: item.body?.viewCustomer ?  0.5 :  1}]}
                               >
                                 <NotificationCard item={item}  orderDetail={orderDetail} />
                               </TouchableOpacity>

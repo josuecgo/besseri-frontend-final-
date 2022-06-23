@@ -554,8 +554,35 @@ const VendorAddProductScreen = ({navigation}) => {
   
   }
 
-
-  console.log(makers);
+  const backPage = () => {
+    setCurrentScreen(
+      isProductNameScreen
+        ? navigation.pop()
+        : isDescriptionScreen
+        ? SCREEN_TYPES?.PRODUCT_NAME
+        : isPriceScreen
+        ? SCREEN_TYPES?.PRODUCT_DESCRIPTION
+        : isChooseMaker
+        ? SCREEN_TYPES?.PRODUCT_PRICE
+        : isChooseModel
+        ? SCREEN_TYPES?.CHOOSE_MAKER
+        : isChooseCategory
+        ? SCREEN_TYPES?.CHOOSE_MODEL
+        : isSubCategory
+        ? SCREEN_TYPES?.CHOOSE_CATEGORY
+        : isBrandScreen
+        ? SCREEN_TYPES?.CHOOSE_SUB_CATEGORY
+        : isProductCondition 
+        ? SCREEN_TYPES?.PRODUCT_BRAND
+        : isUploadImage
+        ? SCREEN_TYPES?.PRODUCT_CONDITION
+        : isProductSummary
+        ? SCREEN_TYPES?.UPLOAD_IMAGE
+        : null
+    );
+    setProgress(progress - 100 / 8);
+  }
+  
   return (
     <View style={styles.container}>
       <AddBrandModal
@@ -572,7 +599,7 @@ const VendorAddProductScreen = ({navigation}) => {
           <View style={{marginLeft: 10}}>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.pop()}
+              onPress={backPage}
               style={styles.headerIcon}>
               <MaterialCommunityIcons
                 name="keyboard-backspace"

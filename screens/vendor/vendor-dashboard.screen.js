@@ -177,7 +177,7 @@ const VendorDashboardScreen = ({ navigation, route }) => {
                     notificaciones && notificaciones?.length > 0 ? ( notificaciones.map((item,index) => {
                         
                         return (
-                            <View key={item._id} style={[styles.card,{opacity: item.body?.view ?  0.9:  1}]} >
+                            <View key={item._id} style={[styles.card,{opacity: item.body?.view ?  0.5:  1}]} >
                                  <TouchableOpacity  
                               onPress={() => orderDetail(item?.body._id,item?.body.orderId)} 
                               activeOpacity={0.2}

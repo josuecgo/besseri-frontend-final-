@@ -47,7 +47,7 @@ export const RiderNotification = ({navigation}) => {
                   activeOpacity={0.2}
                   style={[
                     styles.card,
-                    {opacity: item.body?.viewRider ? 0.9 : 1},
+                    {opacity: item.body?.viewRider ? 0.5 : 1},
                   ]}>
                   <NotificationCard
                     item={item}
