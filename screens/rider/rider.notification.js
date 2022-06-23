@@ -47,7 +47,7 @@ export const RiderNotification = ({navigation}) => {
                   activeOpacity={0.2}
                   style={[
                     styles.card,
-                    {opacity: item.body?.viewRider ? 0.5 : 1},
+                    {backgroundColor: item.body?.viewRider ?  Colors.white :  '#E8F1FE'},
                   ]}>
                   <NotificationCard
                     item={item}
@@ -78,10 +78,10 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 5,
     elevation: 2,
-    backgroundColor: Colors.white,
+   
     flexDirection:'row',
     flexWrap:'wrap',
     // height:deviceWidth / 2
-    opacity:0.7
+   
   },
 })

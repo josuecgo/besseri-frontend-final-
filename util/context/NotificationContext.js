@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { api_urls } from "../api/api_essentials";
 import { showToaster } from "../constants";
-import { getUserId } from "../local-storage/auth_service";
+import { getUser, getUserId } from "../local-storage/auth_service";
 
 import { notificationReducer } from "./notificationReducer";
 
@@ -104,6 +104,9 @@ export const NotificationProvider = ({children}) => {
     const getNotificaciones = async() => {
         try {
             const id = await getUserId();
+            const userType = await getUser();
+
+            console.log(userType);
             if (id) {
               const url = `${api_urls.getNotification}/${id}`;
 
@@ -114,8 +117,22 @@ export const NotificationProvider = ({children}) => {
               setCount(apiCall?.data?.count)
               setCountRider(apiCall?.data?.countRider)
               setCountCustomer(apiCall?.data?.countCustomer);
+              
               if (Platform.OS === 'ios') {
-                PushNotificationIOS.setApplicationIconBadgeNumber(data.length);
+               
+                let c = null;
+                if (userType.isCommonUser) {
+                 c = data.filter(item =>  item?.body?.viewCustomer == false );
+                }
+                if (userType.isVendor) {
+                 
+                  c = data.filter(item => item?.body?.view == false );
+              } 
+              if (userType.isRider) {
+                  
+                  c = data.filter(item => item?.body?.viewRider == false ); 
+              }
+                PushNotificationIOS.setApplicationIconBadgeNumber(c.length);
               }
               
 

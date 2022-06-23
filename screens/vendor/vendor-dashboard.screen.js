@@ -177,7 +177,7 @@ const VendorDashboardScreen = ({ navigation, route }) => {
                     notificaciones && notificaciones?.length > 0 ? ( notificaciones.map((item,index) => {
                         
                         return (
-                            <View key={item._id} style={[styles.card,{opacity: item.body?.view ?  0.5:  1}]} >
+                            <View key={item._id} style={[styles.card,{backgroundColor: item.body?.view ?  Colors.white :  '#E8F1FE'}]} >
                                  <TouchableOpacity  
                               onPress={() => orderDetail(item?.body._id,item?.body.orderId)} 
                               activeOpacity={0.2}
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
         padding: 10,
         marginVertical: 5,
         elevation: 2,
-        backgroundColor: Colors.white,
+        
         flexDirection:'row',
         flexWrap:'wrap',
         // height:deviceWidth / 2

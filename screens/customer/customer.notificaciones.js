@@ -61,7 +61,7 @@ export const CustomerNotificationViewScreen = React.memo((props) => {
                               <TouchableOpacity  
                               onPress={() => orderDetail(item?.body)} 
                               activeOpacity={0.2}
-                              style={[styles.card,{opacity: item.body?.viewCustomer ?  0.5 :  1}]}
+                              style={[styles.card, {backgroundColor: item.body?.viewCustomer ?  Colors.white :  '#E8F2FD'} ]}
                               >
                                 <NotificationCard item={item}  orderDetail={orderDetail} />
                               </TouchableOpacity>
@@ -87,12 +87,12 @@ const styles = StyleSheet.create({
       marginHorizontal: 10,
       padding: 10,
       marginVertical: 5,
-      elevation: 2,
-      backgroundColor: Colors.white,
+      
+   
       flexDirection:'row',
       flexWrap:'wrap',
       // height:deviceWidth / 2
-      opacity:0.7
+      
     },
   })
 
