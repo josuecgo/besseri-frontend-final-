@@ -370,21 +370,25 @@ const VendorAddServiceScreen = ({navigation}) => {
             : isDescriptionScreen
             ? SCREEN_TYPES?.SERVICE_NAME
             : isPriceScreen
-            ? SCREEN_TYPES?.CHOOSE_MAKER
+            ? SCREEN_TYPES?.SERVICE_DESCRIPTION
             : isChooseMaker
-            ? SCREEN_TYPES?.CHOOSE_MODEL
+            ? SCREEN_TYPES?.SERVICE_PRICE
             : isChooseModel
-            ? SCREEN_TYPES?.CHOOSE_CATEGORY
+            ? SCREEN_TYPES?.CHOOSE_MAKER
             : isChooseCategory
+            ? SCREEN_TYPES?.CHOOSE_MODEL
+            : isUploadImage
+            ? SCREEN_TYPES?.CHOOSE_CATEGORY
+            : isProductSummary 
             ? SCREEN_TYPES?.UPLOAD_IMAGE
-            : null,
+            : null
         );
 
       
           setProgress(progress + 100 / 5);
       }
    
-      console.log(currentScreen);
+      
     return (
     <View style={styles.container}>
         <Loader isVisible={showLoader} />
