@@ -1,4 +1,4 @@
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useRoute } from '@react-navigation/native';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, Image, useWindowDimensions,TouchableOpacity, ScrollView,Platform } from 'react-native';
@@ -18,11 +18,12 @@ import { HeaderBackground } from '../../components/Background/HeaderBackground';
 
 
 const RidersOrdersViewScreen = (props) => {
-  const { width, height } = useWindowDimensions()
+  const { width } = useWindowDimensions()
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const isFocused = useIsFocused();
   const { top } = useSafeAreaInsets();
+
 
   const getMyOrders = async (id) => {
     try {
@@ -42,6 +43,8 @@ const RidersOrdersViewScreen = (props) => {
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
     }
   }
+
+
   useEffect(() => {
     getMyOrders()
   }, [isFocused]);

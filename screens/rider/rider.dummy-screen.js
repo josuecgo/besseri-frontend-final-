@@ -173,22 +173,7 @@ const RiderDummyScreen = props => {
         }
     };
 
-    // const updateUbication = async () => {
-    
-    //     try {
-    //         const riderId = await getRiderId();
-    //         await axios.put(`${rider_api_urls.update_coords}`, {
-    //             lat: userLocation?.latitude,
-    //             lng: userLocation?.longitude,
-    //             riderId
-    //          });
-    
-         
-    
-    //     } catch (error) {
-    //       console.log({updateUbication:error});
-    //     }
-    // }
+
 
     const location = async( ) => {
         const p = await getRiderProfile();
@@ -201,7 +186,6 @@ const RiderDummyScreen = props => {
       }, [])
   
     
-    // if(!rider_wallet?.charges_enabled) return <LoaderComponent loader={true} />
     return (
         <View style={[styles.container]}>
             

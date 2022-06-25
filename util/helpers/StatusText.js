@@ -3,15 +3,8 @@ import { CREDENTIAL_KEYS, SCREEN_TYPES } from "../../screens/vendor/vendor-addse
 import { SCREEN_TYPES as ProductScreen, CREDENTIAL_KEYS as KEYS_PRODUCT } from '../../screens/vendor/vendor.addproduct.screen'
 import { LOGIN_SIGNUP_FORGOT_ROUTES } from "../constants";
 export const TranslateStatus = (value) => {
-    // [ORDER_STATUSES.PENDING]: '#0bda51',
-    // [ORDER_STATUSES.PROCESSING]: '#007bff',
-    // [ORDER_STATUSES.PACKED]: '#6c757d',
-    // [ORDER_STATUSES.CANCELLED]: '#dc3545',
-    // [ORDER_STATUSES.COMPLETED]: 'green',
-    // [ORDER_STATUSES.ON_GOING]:'orange',
-    // [ORDER_STATUSES.PARCEL_DELIVERED]:'green'
-
     
+
     let texto;
         switch (value) {
             case 'PARCEL DELIVERED':
@@ -29,11 +22,13 @@ export const TranslateStatus = (value) => {
             case 'COMPLETED':
                 return texto = 'Terminado';
             case 'PROCESSING':
-                return texto = 'PROCESANDO';
+                return texto = 'Procesando';
             case 'ORDER_ONGOING':
-                return texto = 'PEDIDO EN CURSO';   
+                return texto = 'Pedido en curso';   
             case 'COMPLETION_REQUEST_PENDING':
                  return texto = 'SOLICITUD DE FINALIZACIÓN PENDIENTE';
+            case 'RIDER_ASSIGNED':
+                return texto = 'Repartidor asignado';
                  
             default:
                 return texto = 'Sin datos';

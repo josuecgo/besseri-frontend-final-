@@ -63,10 +63,7 @@ export const NotificationProvider = ({children}) => {
     const showNotification = async(msg) => {
        
         getNotificaciones();
-       // notificationListener();
-      
-      
-        
+
         try {
           
           
@@ -106,33 +103,21 @@ export const NotificationProvider = ({children}) => {
             const id = await getUserId();
             const userType = await getUser();
 
-            console.log(userType);
+           
             if (id) {
               const url = `${api_urls.getNotification}/${id}`;
 
               const apiCall = await axios.get(url);
               const data = apiCall?.data?.data;
+              const count = apiCall?.data?.count;
               
               setNotificaciones(data)
-              setCount(apiCall?.data?.count)
-              setCountRider(apiCall?.data?.countRider)
-              setCountCustomer(apiCall?.data?.countCustomer);
+              setCount(count)
+              setCountRider(count)
+              setCountCustomer(count);
               
               if (Platform.OS === 'ios') {
-               
-                let c = null;
-                if (userType.isCommonUser) {
-                 c = data.filter(item =>  item?.body?.viewCustomer == false );
-                }
-                if (userType.isVendor) {
-                 
-                  c = data.filter(item => item?.body?.view == false );
-              } 
-              if (userType.isRider) {
-                  
-                  c = data.filter(item => item?.body?.viewRider == false ); 
-              }
-                PushNotificationIOS.setApplicationIconBadgeNumber(c.length);
+                PushNotificationIOS.setApplicationIconBadgeNumber(count);
               }
               
 

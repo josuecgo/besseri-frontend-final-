@@ -22,24 +22,26 @@ export const CustomerNotificationViewScreen = React.memo((props) => {
     const [delivery, setDelivery] = useState(0)
     const {notificaciones,getNotificaciones} = useContext(NotificationContext);
   
-    const orderDetail = (body) => {
+    const orderDetail = (body,item) => {
         // const {orderNumber,orderId} = route.params
         
         props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_DETAIL,
             {order:body, 
                 comision,
-                delivery})
+                delivery,
+                item
+            })
         
-        if (body?._id && !body?.viewCustomer)  {
-            viewItem(body._id);
+        if (!item?.isView)  {
+            viewItem(item._id);
             
         }
     }
 
-    const viewItem = async(orderId) => {
+    const viewItem = async(id) => {
         try {
           
-            await axios.post(`${api_urls.viewNotification}/${orderId}`,{user:'customer'});
+            await axios.post(`${api_urls.viewNotification}/${id}`,{user:'customer'});
             getNotificaciones();
         //   console.log(apiCall.status);
         } catch(e) {
@@ -55,13 +57,13 @@ export const CustomerNotificationViewScreen = React.memo((props) => {
             <ScrollView contentContainerStyle={{ flexGrow: 1, marginTop: 5 }}>
             {
                     notificaciones && notificaciones?.length > 0 ? ( notificaciones.map((item,index) => {
-                       
+                        
                         return (
                             <View key={item._id}  >
                               <TouchableOpacity  
-                              onPress={() => orderDetail(item?.body)} 
+                              onPress={() => orderDetail(item?.body,item)} 
                               activeOpacity={0.2}
-                              style={[styles.card, {backgroundColor: item.body?.viewCustomer ?  Colors.white :  '#E8F2FD'} ]}
+                              style={[styles.card, {backgroundColor: item?.isView ?  Colors.white :  '#E8F2FD'} ]}
                               >
                                 <NotificationCard item={item}  orderDetail={orderDetail} />
                               </TouchableOpacity>

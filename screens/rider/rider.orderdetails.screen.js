@@ -57,6 +57,7 @@ const RiderOrderDetail = props => {
   const [delivery_security_code, setDelivery_security_code] = useState('');
   const RiderSecurityCodeModalRef = useRef(null);
   const {params} = useRoute();
+  // console.log(params);
   const [order, setOrder] = useState(params?.order);
   const address = order.delivery_address;
   const user = order?.user;
@@ -185,7 +186,7 @@ const RiderOrderDetail = props => {
     getNotificaciones();
   }, [])
 
-
+  
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <LoaderComponent isVisible={loading} />
@@ -247,9 +248,6 @@ const RiderOrderDetail = props => {
             style={{
               width: deviceWidth * 0.14,
               height: deviceWidth * 0.14,
-              // borderWidth: 1,
-              // borderColor: Colors.white,
-              // backgroundColor: Colors.white,
               ...CommonStyles.flexCenter,
               borderRadius: 5,
 
@@ -571,7 +569,23 @@ const RiderOrderDetail = props => {
                   ],
                 );
               } else if (order?.order_status_code == 'OUT_FOR_DELIVERY') {
-                RiderSecurityCodeModalRef?.current?.open();
+                
+                Alert.alert(
+                  'Entregar paquete',
+                  order?.chargeId === 'cash' ? `Recuerda recibir el pago del producto $${order?.total_amount }` : '¿Estás entregando el paquete?',
+                  [
+                    {
+                      text: 'No',
+                    },
+                    {
+                      text: 'Si',
+                      onPress: () => {
+                        RiderSecurityCodeModalRef?.current?.open();
+                      },
+                    },
+                  ],
+                );
+                
               }
             }}
           />
@@ -580,6 +594,9 @@ const RiderOrderDetail = props => {
     </View>
   );
 };
+
+
+
 const styles = StyleSheet.create({
   placeOrderText: {...CommonStyles.fontFamily, fontSize: adjust(12)},
   placeOrderTextDetail: {
@@ -631,62 +648,4 @@ const styles = StyleSheet.create({
 });
 export default RiderOrderDetail;
 
-// const d = [
-//   {
-//     __v: 0,
-//     _id: '62670a06c2a294090973916d',
-//     assigned_to_rider_on: null,
-//     besseri_comission: 100,
-//     chargeId: 'pi_3KsYt0EZl12SIefH0JW4rVf8',
-//     delivered_on: null,
-//     delivery_address: {
-//       __v: 0,
-//       _id: '6266ca8fc7d98e7fb61b367a',
-//       addressLine: 'Valle de oaxaca 50',
-//       created_on: '2022-04-25T16:21:35.235Z',
-//       info: 'Casa gris en esquina',
-//       label: 'Home',
-//       latitude: 19.48539674457428,
-//       longitude: -99.26442745407137,
-//       phone: '5531458760',
-//       userId: '6266c9f7c7d98e7fb61b3655',
-//     },
-//     delivery_fee: 12.02,
-//     delivery_security_code: 'ma8mv',
-//     orderId: 'BESS-2',
-//     order_status: 'Packed',
-//     order_status_code: 'PACKED',
-//     ordered_by_id: '6266c9f7c7d98e7fb61b3655',
-//     ordered_on: '2022-04-25T20:52:22.138Z',
-//     products: [
-//       {
-//         __v: 0,
-//         _id: '6266d25fc7d98e7fb61b372e',
-//         brand: [Object],
-//         brandId: '624efb111aff1d51ecc78cb6',
-//         business_id: '6266cbdac7d98e7fb61b3698',
-//         category: [Object],
-//         categoryId: '6228eca7bcc02d0004fb1fb3',
-//         condition: 'New',
-//         description: 'Plato, disco collarin y grasa',
-//         inStock: true,
-//         isBlocked: false,
-//         maker: [Object],
-//         model: [Object],
-//         name: 'Kit clutch chevy 1.6',
-//         price: '999',
-//         productImg: 'uploads/productImages/69631459214photo.jpg',
-//         quantity: 1,
-//         status: 'Active',
-//         subCategory: [Object],
-//         subCategoryId: '6228ecb8bcc02d0004fb1fba',
-//       },
-//     ],
-//     rating: null,
-//     review: null,
-//     riderId: null,
-//     storeId: '6266cbdac7d98e7fb61b3698',
-//     to_deliver_on: null,
-//     total_amount: 1128,
-//   },
-// ];
+

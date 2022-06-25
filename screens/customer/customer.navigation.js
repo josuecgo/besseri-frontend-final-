@@ -32,6 +32,7 @@ import { CustomerNotificationViewScreen } from './customer.notificaciones';
 import { NotificationContext } from '../../util/context/NotificationContext';
 import { EnvioScreen } from './customer.envio.screen';
 import CustomerOrderSummaryFree from './customer.orderSummaryFree.screen';
+import { MetodoScreen } from './customer.metodoscreen';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -108,6 +109,10 @@ const OrderStack = () => {
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ENVIO}
         component={EnvioScreen}
+      />
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.METODO}
+        component={MetodoScreen}
       />
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_SUMMARY}

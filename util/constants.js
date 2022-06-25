@@ -119,7 +119,8 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   PRODUCT_DETAIL:'Product detail',
   ORDER_STACK:'ORDER_STACK',
   INICIAR:'Iniciar',
-  ENVIO: 'Envio'
+  ENVIO: 'Envio',
+  METODO: 'Metodo de pago'
 };
 
 export const BOTTOM_TAB_RIDER_ROUTES = {

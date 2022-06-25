@@ -27,6 +27,7 @@ import { adjust } from '../../util/Dimentions';
 import { TranslateStatus } from '../../util/helpers/StatusText';
 import { NotificationContext } from '../../util/context/NotificationContext';
 import { RiderSecurityCodeModal } from '../../components/CommonComponents';
+import { getUserId } from '../../util/local-storage/auth_service';
 
 
 export const CustomText = ({text, isData = false, numberOfLines = null}) => {
@@ -50,9 +51,8 @@ export const CustomText = ({text, isData = false, numberOfLines = null}) => {
 
 const VendorOrderDetailsScreen = ({navigation, route}) => {
   const {getNotificaciones} = useContext(NotificationContext);
-  const {orderNumber,orderId} = route.params
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
+  const {orderNumber} = route.params
+  
   const [loading,setLoading] = useState(false);
   const [order,setOrder] = useState(null);
   const [orderStatus,setOrderStatus] = useState(ORDER_STATUSES[order?.status_code]);
@@ -60,14 +60,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
   const [rideRequets,setRideRequests] = useState([]);
   const isProcessing = order?.order_status_code == 'PROCESSING';
   const isParcel = order?.order_status_code == 'PARCEL_DELIVERED';
-  const [items, setItems] = useState(
-    Object.keys(ORDER_STATUSES).map(orderStatusTypeKey => {
-      return {
-        label: ORDER_STATUSES[orderStatusTypeKey],
-        value: orderStatusTypeKey,
-      };
-    }),
-  );
+ 
   const securityCodeModalRef = useRef(null);
   const [delivery_security_code, setDelivery_security_code] = useState('');
   const {height,width} = useWindowDimensions();
@@ -215,25 +208,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
       navigation.goBack()
     }
   }
-  const viewItem = async() => {
-    try {
-     
-       await axios.post(`${api_urls.viewNotification}/${orderId}`);
-     
-      
-    } catch(e) {
-     console.log({detail:e});
-    }
-  }
 
-
-  useEffect(() => {
-    if (!order?.view) {
-      getNotificaciones();
-      viewItem();
-    }
-    
-  }, [])
  
   
   
@@ -435,7 +410,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
                     }}>
                     {rideRequets?.length > 0 || orderStatus != 'PACKED' ? null : (
                       <Text>
-                        Los pasajeros están viendo sus pedidos, le enviarán un viaje
+                        Los riders están viendo sus pedidos, le enviarán un viaje
                         peticiones.
                       </Text>
                     )}

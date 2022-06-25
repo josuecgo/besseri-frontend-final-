@@ -114,11 +114,30 @@ const VendorDashboardScreen = ({ navigation, route }) => {
     }
 
 
-    const orderDetail = (_id,orderId) => {
+    const orderDetail = (_id,orderId,item) => {
         navigation.navigate('NotificationDetail',{
           orderId:_id,
-          orderNumber:orderId
+          orderNumber:orderId,
+         
         })
+
+        if (!item?.isView)  {
+            viewItem(item._id);
+            
+        }
+    }
+
+   
+
+    const viewItem = async(id) => {
+        try {
+          
+            await axios.post(`${api_urls.viewNotification}/${id}`,{user:'customer'});
+            getNotificaciones();
+      
+        } catch(e) {
+         console.log({detail:e});
+        }
     }
 
 
@@ -177,9 +196,9 @@ const VendorDashboardScreen = ({ navigation, route }) => {
                     notificaciones && notificaciones?.length > 0 ? ( notificaciones.map((item,index) => {
                         
                         return (
-                            <View key={item._id} style={[styles.card,{backgroundColor: item.body?.view ?  Colors.white :  '#E8F1FE'}]} >
+                            <View key={item._id} style={[styles.card,{backgroundColor: item?.isView ?  Colors.white :  '#E8F1FE'}]} >
                                  <TouchableOpacity  
-                              onPress={() => orderDetail(item?.body._id,item?.body.orderId)} 
+                              onPress={() => orderDetail(item?.body._id,item?.body.orderId,item)} 
                               activeOpacity={0.2}
                               >
                                 <NotificationCard item={item} navigation={navigation} orderDetail={orderDetail} />
@@ -236,7 +255,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         flexWrap:'wrap',
         // height:deviceWidth / 2
-        opacity:0.7
+        
       },
 })
 

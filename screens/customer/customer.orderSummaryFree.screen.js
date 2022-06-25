@@ -20,6 +20,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../util/local-storage/auth_service';
 import axios from 'axios';
+import DropDownPicker from 'react-native-dropdown-picker';
 import {
   api_statuses,
   customer_api_urls,
@@ -47,20 +48,18 @@ const CustomerOrderSummaryFree = React.memo((props) => {
  
   const {params} = useRoute();
   const {initPaymentSheet, presentPaymentSheet} = useStripe();
-
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
   const cartProduct = useSelector(state => state.cart);
   const dispatch = useDispatch();
+  const pago = params?.pago;
   const products = params?.products;
   const business = params?.business;
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [addresses, setAddresses] = useState([]);
   const [stripeEssentials, setStripeEssentials] = useState(null);
- 
   const { CalcularDistancia, distancia} = useCostos();
   const costoK = params.delivery_fee;
-
   const [allCharges, setallCharges] = useState({
     delivery_charges: params.delivery_fee,
     besseri_commission: params?.comission,
@@ -68,7 +67,6 @@ const CustomerOrderSummaryFree = React.memo((props) => {
     subtotal: params?.subtotal,
   });
   const [isVisible, setIsVisible] = useState(false);
-
   const [deliveryAddress, setDeliveryAddress] = useState(true);
   const [deliveryDistance, setDeliveryDistance] = useState(0);
   const totalAmount =allCharges?.subtotal + allCharges?.besseri_commission ;
@@ -77,6 +75,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
 
  
 
+ 
 
 
   const getUserDetails = async () => {
@@ -132,6 +131,47 @@ const CustomerOrderSummaryFree = React.memo((props) => {
         delivery_fee: 0,
         besseri_comission: allCharges?.besseri_commission,
         intentId: stripeEssentials?.intentId,
+        storePickup:true
+      };
+
+      const apiCall = await axios.post(
+        `${customer_api_urls.place_order}`,
+        body,
+      );
+      setLoading(false);
+      setIsVisible(false);
+      if (apiCall.status == api_statuses.success) {
+        // setOrderPlaced(true)
+        for (var a = 0; a < products?.length; a++) {
+          dispatch(deleteItemFromCart(products[a]?._id, products[a]?.price));
+        }
+        showToaster('Pedido realizado');
+        props.navigation.navigate('OrderSuccessful', props.navigation);
+      } else {
+        showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 3');
+      }
+    } catch (e) {
+      setLoading(false);
+      console.log({code4: e});
+      setLoading(false);
+      showToaster('Algo salió mal. Por favor, vuelva a intentarlo 2 code: 4');
+      refundPayment();
+      setIsVisible(false);
+    }
+  };
+  const comprar = async () => {
+    try {
+      setLoading(true);
+      const body = {
+        ordered_by_id: user?._id,
+        products: products,
+        storeId: business?._id,
+        total_amount: tienda ? totalSinEnvio : totalAmount,
+        delivery_address: deliveryAddress,
+        ordered_on: new Date(),
+        delivery_fee: 0,
+        besseri_comission: allCharges?.besseri_commission,
+        intentId: pago,
         storePickup:true
       };
 
@@ -308,7 +348,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
   }, []);
 
   useEffect(async () => {
-    if (deliveryAddress) {
+    if (deliveryAddress && pago === 'card' ) {
       await initializePaymentSheet();
     }
   }, [deliveryDistance]);
@@ -351,7 +391,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
         <Text style={styles.headerText}>Resumen del pedido</Text>
         <View />
       </View>
-      <View></View>
+      
 
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
 
@@ -360,66 +400,37 @@ const CustomerOrderSummaryFree = React.memo((props) => {
             Información del vendedor
           </Text>
           <View
-            style={{
-              width: '100%',
-              margin: 10,
-              paddingVertical: 14,
-              backgroundColor: Colors.white,
-              alignSelf: 'center',
-              borderColor: Colors.gray,
-              borderWidth: 1,
-              borderRadius: 10,
-            }}>
+            style={styles.card}>
             <Text
-              style={{
-                fontSize: 16,
-                ...CommonStyles.fontFamily,
-                paddingLeft: 25,
-                marginBottom: 10,
-              }}>
+              style={styles.titulo}>
               {business?.storeName}
             </Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Entypo name="location-pin" color={Colors.darkPink} size={30} />
-              <Text style={{ fontSize: 13, width: '92%' }}>
+              <Text style={styles.subtitulo}>
                 {business?.address}
               </Text>
             </View>
           </View>
         </View>
         <ThinlineSeparator margin={10} />
-
+       
+       
         <View style={{ width: '93%', alignSelf: 'center', marginTop: '1%' }}>
           <Text style={{ ...CommonStyles.fontFamily, fontSize: 15 }}>
             Información del cliente
           </Text>
-          <View style={{
-            width: '100%',
-            margin: 10,
-            paddingVertical: 14,
-            backgroundColor: Colors.white,
-            alignSelf: 'center',
-            borderColor: Colors.gray,
-            borderWidth: 1,
-            borderRadius: 10,
-          }}>
+          <View style={styles.card}>
             <Text
-              style={{
-                fontSize: 16,
-                ...CommonStyles.fontFamily,
-                paddingLeft: 25,
-                marginBottom: 10,
-              }}>
+              style={styles.titulo}>
               {user?.name}
             </Text>
             <Text
-              style={{
-                fontSize: 16,
+              style={[{fontSize: adjust(10),
                 fontStyle: 'italic',
                 fontWeight: '300',
                 paddingLeft: 25,
-                marginBottom: 10,
-              }}>
+                marginBottom: 10,}]}>
               {user?.email}
             </Text>
           </View>
@@ -440,7 +451,6 @@ const CustomerOrderSummaryFree = React.memo((props) => {
                 width: '100%',
                 alignSelf: 'center',
                 marginTop: '3%',
-                borderBottomWidth: 0.3,
                 height: 50,
               }}>
               <View style={{ width: '65%' }}>
@@ -453,6 +463,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
                   flexDirection: 'row',
                   alignItems: 'center',
                   width: '35%',
+                  justifyContent:'center'
                 }}>
                 <View>
                   <Text style={{ fontSize: adjust(12), fontWeight: 'bold' }}>
@@ -475,13 +486,16 @@ const CustomerOrderSummaryFree = React.memo((props) => {
 
         <View style={styles.detailCard}>
           <DetailItem
-            label={'Total Charges'}
+            label={'Total'}
             value={`${moneda(totalSinEnvio.toFixed(2))} MXN`}
           />
 
 
         </View>
+        
       </ScrollView>
+
+      {/* <ThinlineSeparator margin={10} /> */}
       {isVisible ? (
         <View
           style={{
@@ -498,7 +512,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
         </View>
       ) : (
         <ButtonComponent
-          handlePress={openPaymentSheet}
+          handlePress={pago === 'cash' ? comprar : openPaymentSheet}
           borderRadius={0}
           buttonText={'Verificar'}
           colorB={Colors.terciarySolid}
@@ -510,66 +524,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
   );
 });
 
-const d = [
-  [
-    {
-      __v: 0,
-      _id: '62a383e55dd6f06c1cccea7d',
-      brand: {
-        __v: 0,
-        _id: '624efb111aff1d51ecc78cb6',
-        created_on: '2022-04-07T14:54:09.441Z',
-        disabled: false,
-        name: 'Besser autoparts',
-      },
-      brandId: '624efb111aff1d51ecc78cb6',
-      business_id: '62a37f725dd6f06c1cccea23',
-      category: {
-        __v: 0,
-        _id: '6228eca7bcc02d0004fb1fb3',
-        created_on: '2022-03-09T18:06:31.340Z',
-        disabled: false,
-        name: 'TRANSMISION',
-      },
-      categoryId: '6228eca7bcc02d0004fb1fb3',
-      condition: 'Used',
-      description: 'Hs',
-      inStock: true,
-      isBlocked: false,
-      maker: {
-        __v: 0,
-        _id: '61fd5caae1253c00049ab3e5',
-        created_on: '2022-02-04T17:04:42.685Z',
-        disabled: false,
-        name: 'Nissan',
-      },
-      model: {
-        __v: 0,
-        _id: '6262a91fc7d98e7fb61b3288',
-        created_on: '2022-04-22T13:09:51.509Z',
-        disabled: false,
-        maker: [Object],
-        makerId: '61fd5caae1253c00049ab3e5',
-        name: 'March 1.6',
-      },
-      name: 'Balatas Chevrolet',
-      price: '100',
-      productImg: 'uploads/productImages/63770059965photo.jpg',
-      quantity: 2,
-      status: 'Active',
-      subCategory: {
-        __v: 0,
-        _id: '6228ecb8bcc02d0004fb1fba',
-        created_on: '2022-03-09T18:06:48.207Z',
-        disabled: false,
-        mainCategory: [Object],
-        mainCategoryId: '6228eca7bcc02d0004fb1fb3',
-        name: 'CLUTCH',
-      },
-      subCategoryId: '6228ecb8bcc02d0004fb1fba',
-    },
-  ],
-];
+
 
 const styles = StyleSheet.create({
   header: {
@@ -588,6 +543,26 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     padding: 20,
   },
+  card:{
+    width: '100%',
+    margin: 10,
+    paddingVertical: 14,
+    backgroundColor: Colors.white,
+    alignSelf: 'center',
+    borderColor: Colors.gray,
+    borderWidth: 1,
+    borderRadius: 10,
+  },
+  titulo:{
+    fontSize: 16,
+    ...CommonStyles.fontFamily,
+    paddingLeft: 25,
+    marginBottom: 10,
+  },
+  subtitulo:{ 
+    fontSize: adjust(10), 
+    width: '92%' 
+  }
 });
 
 export default CustomerOrderSummaryFree;

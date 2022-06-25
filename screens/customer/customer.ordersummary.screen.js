@@ -36,10 +36,10 @@ LogBox.ignoreLogs([
 
 const CustomerOrderSummary = (props) => {
     const {params} = useRoute();
+    const pago = params?.pago;
     const {initPaymentSheet,presentPaymentSheet} = useStripe();
     const [isOrderPlaced,setOrderPlaced] = useState(false);
     const addressListingRef = useRef(null);
-   
     const cartProduct = useSelector(state => state.cart);
     const dispatch = useDispatch();
     const products = params?.products;
@@ -48,10 +48,8 @@ const CustomerOrderSummary = (props) => {
     const [loading,setLoading] = useState(false);
     const [addresses,setAddresses] = useState([]);
     const [stripeEssentials,setStripeEssentials] = useState(null);
- 
     const {costoEnvio,CalcularDistancia,distancia } =   useCostos()
     const costoK = params.delivery_fee
-   
     const [allCharges,setallCharges] = useState({
         delivery_charges:params.delivery_fee,
         besseri_commission:params?.comission,
@@ -59,26 +57,10 @@ const CustomerOrderSummary = (props) => {
         subtotal:params?.subtotal
     })
     const [isVisible, setIsVisible] = useState(false);
-    
     const [deliveryAddress,setDeliveryAddress] = useState(null);
     const [deliveryDistance,setDeliveryDistance] = useState(0)
     const totalAmount = allCharges?.subtotal  + allCharges?.besseri_commission + costoEnvio;
 
-    
-
-    
-
- 
-    useEffect(() => {
-        // CalcularDistancia(business?.location?.longitude,business?.location?.latitude,deliveryAddress?.longitude,deliveryAddress?.latitude,costoK)
-        CalcularDistancia(business,deliveryAddress,costoK)
-       
-        setDeliveryDistance(distancia)
-        
-    }, [deliveryAddress])
-    
-    
-   
     const handleModalize = async(flag) => {
         if(flag == 'open') {
             addressListingRef?.current?.open()
@@ -92,15 +74,7 @@ const CustomerOrderSummary = (props) => {
         }
     }
 
-    useEffect(() => {
-        getAddresses();
-    },[]);
-
-    useEffect(async() => {
-       if(deliveryAddress) {
-        await initializePaymentSheet()
-       }
-    },[deliveryDistance]);
+   
 
     const getUserDetails = async() => {
         setLoading(true);
@@ -108,38 +82,11 @@ const CustomerOrderSummary = (props) => {
         setUser(userData);
         setLoading(false);
     }
-    useEffect(() => {
-        getUserDetails();
-    },[]);
-    // const getBusinessDetails = async(id) => {
-    //     try {
-    //         setLoading(true);
-    //      const apiCall = await axios.get(`${customer_api_urls.get_business_details}/${id}`);
-    //      setLoading(false);
-    //      if(apiCall.status == api_statuses.success) {
-    //        setBusiness(apiCall.data.data);
-    //        initializePaymentSheet(apiCall?.data?.data?.store?.wallet_id)
-    //      } else {
-    //          showToaster('Something went wrong please try again');
-    //      }
-    //     }catch(e) {
-    //         setLoading(false);
-    //        showToaster('Something went wrong please try again later')
-    //     }
-    // }
-    // useEffect(() => {
-    //     initializePaymentSheet(business?.wallet_id)
-    // },[]);
+
+
   
    
-    const DetailItem = ({label,value}) => {
-        return (
-            <View style={{width:'100%',height:60,borderBottomWidth:label == 'Total Charges' ? 0 : 0.3,borderColor:Colors.dark,flexDirection:'row',justifyContent:'space-between',alignItems:'center',alignSelf:'center'}}>
-                <Text style={{...CommonStyles.fontFamily,fontSize:16}}>{label}</Text>
-                <Text style={{fontSize:16}}>{value}</Text>
-            </View>
-        )
-    }
+    
     const getAddresses = async() => {
         try {
             setLoading(true);
@@ -209,7 +156,47 @@ const CustomerOrderSummary = (props) => {
           
     }
     
- 
+    const comprar = async () => {
+        try {
+          setLoading(true);
+          const body = {
+            ordered_by_id:user?._id,
+            products:products,
+            storeId:business?._id,
+            total_amount:totalAmount,
+            delivery_address:deliveryAddress,
+            ordered_on:new Date(),
+            delivery_fee:allCharges?.delivery_charges,
+            besseri_comission:allCharges?.besseri_commission,
+            intentId: pago,
+           
+          };
+    
+          const apiCall = await axios.post(
+            `${customer_api_urls.place_order}`,
+            body,
+          );
+          setLoading(false);
+          setIsVisible(false);
+          if (apiCall.status == api_statuses.success) {
+            // setOrderPlaced(true)
+            for (var a = 0; a < products?.length; a++) {
+              dispatch(deleteItemFromCart(products[a]?._id, products[a]?.price));
+            }
+            showToaster('Pedido realizado');
+            props.navigation.navigate('OrderSuccessful', props.navigation);
+          } else {
+            showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 3');
+          }
+        } catch (e) {
+          setLoading(false);
+          console.log({code4: e});
+          setLoading(false);
+          showToaster('Algo salió mal. Por favor, vuelva a intentarlo 2 code: 4');
+          refundPayment();
+          setIsVisible(false);
+        }
+      };
     
     const refundPayment = async() => {
          try {
@@ -306,9 +293,9 @@ const CustomerOrderSummary = (props) => {
             console.log({init:error});
         }
         
-      };
+    };
     
-      const openPaymentSheet = async () => {
+    const openPaymentSheet = async () => {
         setIsVisible(true);
         
             await initializePaymentSheet();
@@ -342,8 +329,29 @@ const CustomerOrderSummary = (props) => {
               placeOrder()
             }
        
-      };
+    };
+
+    useEffect(() => {
+        getAddresses();
+    },[]);
+
+    useEffect(async() => {
+       if(deliveryAddress && pago === 'card') {
+        await initializePaymentSheet()
+       }
+    },[deliveryDistance]);
     
+    useEffect(() => {
+        getUserDetails();
+    },[]);
+
+    useEffect(() => {
+        // CalcularDistancia(business?.location?.longitude,business?.location?.latitude,deliveryAddress?.longitude,deliveryAddress?.latitude,costoK)
+        CalcularDistancia(business,deliveryAddress,costoK)
+       
+        setDeliveryDistance(distancia)
+        
+    }, [deliveryAddress])
     
     if(isOrderPlaced) {
         return (
@@ -354,18 +362,22 @@ const CustomerOrderSummary = (props) => {
         )
     }
 
+
+    const DetailItem = ({label,value}) => {
+        return (
+            <View style={{width:'100%',height:60,borderBottomWidth:label == 'Total Charges' ? 0 : 0.3,borderColor:Colors.dark,flexDirection:'row',justifyContent:'space-between',alignItems:'center',alignSelf:'center'}}>
+                <Text style={{...CommonStyles.fontFamily,fontSize:16}}>{label}</Text>
+                <Text style={{fontSize:16}}>{value}</Text>
+            </View>
+        )
+    }
+
     return (
     <View style={{flex:1,backgroundColor:'white'}}>
         <AddressesListingModal
         addressListingRef={addressListingRef}
         >
-         {/* <FlatList
-         data={addresses}
-         keyExtractor={item => item?._id}
-         renderItem={itemData => (
-            
-         )}
-         /> */}
+        
          {
              addresses.map((item) => (
                  <View key={item?._id}>
@@ -375,17 +387,7 @@ const CustomerOrderSummary = (props) => {
                     phone={item.phone}
                     onPress={() => {
                     setDeliveryAddress(item)
-                        //  const distance = Math.sqrt(
-                        //     Math.pow(69.1 * (Number(business?.location?.latitude) - [itemData?.item?.latitude]), 2) +
-                        //     Math.pow(69.1 * ([itemData?.item?.longitude] - Number(business?.location?.longitude)) * Math.cos(Number(business?.location?.latitude) / 57.3), 2));
-                        //     setDeliveryDistance(distance)
-                        //     console.log(distance)
-                        //     setallCharges({
-                        //     delivery_charges:Math.ceil((distance * params?.delivery_fee)),
-                        //     besseri_commission:params?.comission,
-                        //     totalAmount:params?.totalAmount,
-                        //     subtotal:params?.subtotal,
-                        //  })
+                        
                         handleModalize('close')
                     }}
                     addressLine={item.addressLine} label={item.label}/>
@@ -524,16 +526,32 @@ const CustomerOrderSummary = (props) => {
             </View>
             
         )
-        : (
-            <ButtonComponent
-            handlePress={openPaymentSheet}
-            borderRadius={0}
-            buttonText={ stripeEssentials ? 'Comprar' : 'Cargando'}
-            colorB={Colors.terciarySolid}
-            disabled={isVisible}
-            padding={5}
-          />
-        )
+        : (pago === 'card') ? (
+                
+                    <ButtonComponent
+                    handlePress={openPaymentSheet}
+                    borderRadius={0}
+                    buttonText={ stripeEssentials ? 'Comprar' : 'Cargando'}
+                    colorB={Colors.terciarySolid}
+                    disabled={isVisible}
+                    padding={5}
+                  />
+                
+            )
+            :
+            (
+                
+                    <ButtonComponent
+                    handlePress={comprar}
+                    borderRadius={0}
+                    buttonText={'Comprar' }
+                    colorB={Colors.terciarySolid}
+                    disabled={isVisible}
+                    padding={5}
+                  />
+                
+            )
+        
     }
     
     </View>

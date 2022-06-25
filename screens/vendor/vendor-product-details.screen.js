@@ -116,25 +116,9 @@ const VendorProductDetailsScreen = ({navigation, route}) => {
           style={styles.productImg}
         />
       </View>
-      {/* <ButtonComponent
-      icon={<Ionicons size={20} color={Colors.black} name="star" />}
-      colorB={Colors.white}
-      width={30}
-      height={30}
-      handlePress={goBack}
-      borderRadius={30 / 2}
-      zIndex={2}
-      position="absolute"
-      top={20}
-      left={20}
-      
-    /> */}
+    
       <View
-        style={[
-          // {margin: SCREEN_HORIZONTAL_MARGIN},
-          styles.contentContainer,
-          // CommonStyles.horizontalCenter,
-        ]}>
+        style={[ styles.contentContainer]}>
         {/* Detalles del producto */}
         <View style={{justifyContent: 'center', alignItems: 'center',top:4,margin:deviceWidth * 0.03,elevation:1,backgroundColor:Colors.white}}>
           <View
@@ -145,7 +129,6 @@ const VendorProductDetailsScreen = ({navigation, route}) => {
                 marginTop: deviceHeight * 0.03,
                 justifyContent:'space-between',
                 flexWrap:'wrap'
-                // backgroundColor:'red'
               },
             ]}>
               <View>

@@ -31,6 +31,7 @@ import ButtonComponent from '../../components/button/button.component';
 import {
   getRiderId,
   getRiderProfile,
+  getUserId,
 } from '../../util/local-storage/auth_service';
 import LoaderComponent from '../../components/Loader/Loader.component';
 import {useSelector} from 'react-redux';
@@ -124,7 +125,7 @@ export default function RiderExplore(props) {
         startlat: location?.latitude,
         startlng: location?.longitude,
         // rango de distancia
-        range: 30,
+        range: 3000,
         riderId: riderId,
       });
       setLoading(false);
@@ -143,33 +144,7 @@ export default function RiderExplore(props) {
     }
   };
 
-  const viewItem = async() => {
-
-    try {
-      
-      await axios.post(`${api_urls.viewNotification}/${item._id}`,{user:'rider'});
-     
-     
-    } catch(e) {
-     console.log({detail:e});
-    }
-  }
-
- 
   
-
-  
-
-  
-  useEffect(() => {
-   
-    if (item?._id && !item?.viewRider ) {
-
-      viewItem();
-     
-    }
-    getNotificaciones();
-  }, [])
   
   useEffect(() => {
     getNearbyOrders();

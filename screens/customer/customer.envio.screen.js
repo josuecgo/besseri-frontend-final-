@@ -9,11 +9,17 @@ export const EnvioScreen = (props) => {
   const {navigation,route} = props;
   
   const goOrderFree = () => {
-    navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_SUMMARY_FREE,route?.params)
+    navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.METODO,{
+      ...route?.params,
+      pickup:true
+    })
   }
   
   const goOrder = () => {
-    navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_SUMMARY,route?.params)
+    navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.METODO,{
+      ...route?.params,
+      pickup:false
+    })
   }
   
   return (

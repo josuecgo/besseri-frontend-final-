@@ -141,7 +141,7 @@ const CustomerCartScreen = (props) => {
           comision:comission
         })
        } else {
-         showToaster('You cant order from this store at the moment.')
+         showToaster('No puedes hacer pedidos en esta tienda en este momento.')
          console.log('else');
        }
     } else {

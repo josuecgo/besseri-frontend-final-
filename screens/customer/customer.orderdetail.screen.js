@@ -47,10 +47,8 @@ const CustomerOrderDetail = props => {
   const totalAmount = parseInt(params.order.total_amount);
   const {top} = useSafeAreaInsets();
   const comision = params.comision;
-  // console.log(params.order);
   const [storeId, setStoreId] = useState(null);
 
-  // console.log(params?.order.storeId);
 
   const getStore = async () => {
     const url = `${customer_api_urls.get_store_data}/${params?.order.storeId}`;
@@ -187,7 +185,7 @@ const CustomerOrderDetail = props => {
             </Text>
           </View>
 
-          {params.order.products.map(item => (
+          {/* {params.order.products.map(item => (
             <View
               key={item._id}
               style={{
@@ -236,7 +234,7 @@ const CustomerOrderDetail = props => {
                 </View>
               </View>
             </View>
-          ))}
+          ))} */}
           <View>
             {/* <DetailItem label={'Envío'} value={'5.00 MXN'}/>
            <DetailItem label={'Cargos'} value={'2.00 MXN'}/>
