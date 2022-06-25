@@ -103,7 +103,7 @@ export const RiderNavigation = () => {
       />
       <BottomTab.Screen
         name={BOTTOM_TAB_RIDER_ROUTES.RIDER_NOTIFICATION}
-        component={RiderNotification}
+        component={NotificationNavigator}
         options={{
           title:'News'
         }}
@@ -133,6 +133,20 @@ const OrdersNavigator = () => {
     <Stack.Navigator screenOptions={{headerShown:false}}>
       <Stack.Screen name={BOTTOM_TAB_RIDER_ROUTES.RIDER_ORDERS2}
         component={RidersOrdersViewScreen}
+      />
+      <Stack.Screen name={RIDER_STACK_ROUTES.RIDER_ORDER_DETAIL}
+      component={RiderOrderDetail}/
+      >
+    </Stack.Navigator>
+  )
+}
+
+const NotificationNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{headerShown:false}}>
+      <Stack.Screen  
+      name={'Notificaciones'}
+      component={RiderNotification}
       />
       <Stack.Screen name={RIDER_STACK_ROUTES.RIDER_ORDER_DETAIL}
       component={RiderOrderDetail}/

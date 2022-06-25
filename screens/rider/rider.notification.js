@@ -26,7 +26,8 @@ export const RiderNotification = ({navigation}) => {
               
     }
 
-    if (body?.order_status_code === 'RIDER_ASSIGNED') {
+    
+    if (body?.order_status_code === 'RIDER_ASSIGNED' || body?.order_status_code === 'OUT_FOR_DELIVERY') {
 
         try {
           
