@@ -152,7 +152,7 @@ export const useSearch = (  ) => {
                 })
                 
                 const modelo = marca.filter((item) => {
-                    console.log(item.model._id);
+                 
                     itemModel = item.model ? item?.model?._id : '';
                     let searchTextData = valueModel;
                    
@@ -164,7 +164,7 @@ export const useSearch = (  ) => {
                
             } else {
                 const marca = productsData.filter((item) => {
-                    console.log({marca:item.makersIds});
+                   
                     let itemData = item.makersIds ? item?.makersIds : '';
                     let searchTextData = valueMaker;
                     return itemData.indexOf(searchTextData) > -1;

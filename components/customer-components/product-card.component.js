@@ -57,7 +57,7 @@ const ProductCardComponent = ({
 
   }
   
-  // console.log(Number(data?.price) + Number((comision * data?.price) / 100));
+  
   if (horizontal) {
     const horizontalCardStyles = {
       cardContainer: {
@@ -120,6 +120,9 @@ const ProductCardComponent = ({
       </Pressable>
     );
   }
+
+
+
   return (
     <Pressable onPress={onViewDetail} style={styles.cardContainer}>
       {cartProduct ? (
@@ -159,9 +162,14 @@ const ProductCardComponent = ({
         style={styles.LinearGradient}>
         <Text style={styles.productTitle}>{data?.name}</Text>
         <View style={styles.productSubTitle} > 
-          <Text style={styles.textSub} > {data.maker.name} </Text>
-          <Text style={styles.textSub} > {data.model.name} </Text>
+          <Text style={styles.textSub} >{data.maker.name} </Text>
+          <Text style={styles.textSub} >{data.model.name} </Text>
         </View>
+        {
+          data?.estimatedDelivery && (
+            <Text style={styles.textSub} >{`Entrega ${data?.estimatedDelivery} días aprox.`} </Text>
+          )
+        }
         
         <View
           style={{

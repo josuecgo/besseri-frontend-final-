@@ -56,6 +56,7 @@ export const CREDENTIAL_KEYS = {
   FROM_YEAR: 'From year',
   TO_YEAR: 'To year',
   PRICE: 'Price',
+  ESTIMATED_DELIVERY: 'Estimated Delivery',
   PRODUCT_IMAGE: 'Product Image',
   PRODUCT_MODEL: 'Product Model',
   PRODUCT_CONDITION: 'Product Conditon',
@@ -69,6 +70,7 @@ export const SCREEN_TYPES = {
   UPLOAD_IMAGE: 'Subir imagen',
   PRODUCT_DESCRIPTION: 'Descripción del producto',
   PRODUCT_PRICE: 'Precio del producto',
+  ESTIMATED_DELIVERY: 'Tiempo de entrega',
   CHOOSE_CATEGORY: 'Elegir la categoría',
   CHOOSE_MODEL: 'Elegir modelo',
   PRODUCT_CONDITION: 'Condición del producto',
@@ -80,6 +82,7 @@ const HEADER_TITLE = {
   [SCREEN_TYPES?.PRODUCT_NAME]: 'Nombre del producto',
   [SCREEN_TYPES?.PRODUCT_DESCRIPTION]: 'Descripcion del producto.',
   [SCREEN_TYPES?.PRODUCT_PRICE]: '¿Cuál es el precio del producto?',
+  [SCREEN_TYPES?.ESTIMATED_DELIVERY]: '¿Tiempo de entrega del producto?',
   [SCREEN_TYPES?.CHOOSE_MAKER]: '¿Quién es el fabricante del producto?',
   [SCREEN_TYPES?.CHOOSE_MODEL]: '¿Cuál es el modelo del producto?',
   [SCREEN_TYPES?.CHOOSE_CATEGORY]: '¿Cuál es la categoría del producto?',
@@ -87,8 +90,7 @@ const HEADER_TITLE = {
   [SCREEN_TYPES?.PRODUCT_CONDITION]: '¿Cuál es el estado del producto?',
   [SCREEN_TYPES?.UPLOAD_IMAGE]: 'Sube la imagen, que muestra el producto',
   [SCREEN_TYPES?.PRODUCT_SUMMARY]: 'Resumen del producto',
-  [SCREEN_TYPES?.PRODUCT_BRAND]:
-    '¿Cuál es la marca del producto que está creando?',
+  [SCREEN_TYPES?.PRODUCT_BRAND]:'¿Cuál es la marca del producto que está creando?',
 };
 const VendorAddProductScreen = ({navigation}) => {
   const {params} = useRoute();
@@ -104,6 +106,7 @@ const VendorAddProductScreen = ({navigation}) => {
     [CREDENTIAL_KEYS.FROM_YEAR]: isEditMode ? toBeEditedProduct?.fromyear : '',
     [CREDENTIAL_KEYS.TO_YEAR]: isEditMode ? toBeEditedProduct?.toyear : '',
     [CREDENTIAL_KEYS.PRICE]: isEditMode ? toBeEditedProduct?.price : '',
+    [CREDENTIAL_KEYS.ESTIMATED_DELIVERY]: isEditMode ? toBeEditedProduct?.estimatedDelivery : '',
     [CREDENTIAL_KEYS.PRODUCT_IMAGE]: isEditMode
       ? `${base_url}/${toBeEditedProduct?.productImg}`
       : '',
@@ -139,6 +142,7 @@ const VendorAddProductScreen = ({navigation}) => {
   const isProductNameScreen = currentScreen == SCREEN_TYPES?.PRODUCT_NAME;
   const isDescriptionScreen = currentScreen == SCREEN_TYPES?.PRODUCT_DESCRIPTION;
   const isPriceScreen = currentScreen == SCREEN_TYPES?.PRODUCT_PRICE;
+  const isDeliveryScreen = currentScreen == SCREEN_TYPES?.ESTIMATED_DELIVERY;
   const isChooseMaker = currentScreen == SCREEN_TYPES?.CHOOSE_MAKER;
   const isChooseModel = currentScreen == SCREEN_TYPES?.CHOOSE_MODEL;
   const isChooseCategory = currentScreen == SCREEN_TYPES?.CHOOSE_CATEGORY;
@@ -146,28 +150,39 @@ const VendorAddProductScreen = ({navigation}) => {
   const isUploadImage = currentScreen == SCREEN_TYPES?.UPLOAD_IMAGE;
   const isProductSummary = currentScreen == SCREEN_TYPES?.PRODUCT_SUMMARY;
   const isBrandScreen = currentScreen == SCREEN_TYPES?.PRODUCT_BRAND;
+  
   const textinputVal = isProductNameScreen
     ? inputValues[CREDENTIAL_KEYS.NAME]
     : isDescriptionScreen
     ? inputValues[CREDENTIAL_KEYS.DESCRIPTION]
     : isPriceScreen
     ? inputValues[CREDENTIAL_KEYS.PRICE]
+    : isDeliveryScreen
+    ? inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY]
     : '';
+
+  // console.log(isDeliveryScreen);
   const textinputKeys = isProductNameScreen
     ? CREDENTIAL_KEYS.NAME
     : isDescriptionScreen
     ? CREDENTIAL_KEYS.DESCRIPTION
     : isPriceScreen
     ? CREDENTIAL_KEYS.PRICE
+    : isDeliveryScreen
+    ? CREDENTIAL_KEYS.ESTIMATED_DELIVERY
     : '';
+  
+  
   const isSubCategory = currentScreen == SCREEN_TYPES?.CHOOSE_SUB_CATEGORY;
   const addbrandModelRef = useRef();
   const [brandName, setBrandName] = useState('');
 
   const onChangeText = (inputText, key) => {
     setInputValues({...inputValues, [key]: inputText});
+ 
   };
   
+  // console.log(inputValues);
   //Create Brand
 
   const createBrand = async () => {
@@ -446,6 +461,7 @@ const VendorAddProductScreen = ({navigation}) => {
           subCategory: selectedSubCategory,
           brand: selectedBrand,
           brandId: selectedBrand?._id,
+          estimatedDelivery: inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY]
         };
         
         const apiCall = await axios.post(
@@ -524,7 +540,7 @@ const VendorAddProductScreen = ({navigation}) => {
     
    
   const nextPage = () => {
-       
+        
         if (stringIsEmpty(inputValues[pantallaSelect]) ){
           setCurrentScreen(
             isProductNameScreen
@@ -532,6 +548,8 @@ const VendorAddProductScreen = ({navigation}) => {
               : isDescriptionScreen
               ? SCREEN_TYPES?.PRODUCT_PRICE
               : isPriceScreen
+              ? SCREEN_TYPES?.ESTIMATED_DELIVERY
+              : isDeliveryScreen
               ? SCREEN_TYPES?.CHOOSE_MAKER
               : isChooseMaker
               ? SCREEN_TYPES?.CHOOSE_MODEL
@@ -545,7 +563,7 @@ const VendorAddProductScreen = ({navigation}) => {
               ? SCREEN_TYPES?.PRODUCT_CONDITION
               : isProductCondition
               ? SCREEN_TYPES?.UPLOAD_IMAGE
-              : null,
+              : null
           );
           setProgress(progress + 100 / 8);
         }else{
@@ -636,7 +654,7 @@ const VendorAddProductScreen = ({navigation}) => {
        <View style={{flex:1}} >
 
         <View style={styles.InputWrapper}>
-          {isProductNameScreen || isDescriptionScreen || isPriceScreen ? (
+          {isProductNameScreen || isDescriptionScreen || isPriceScreen || isDeliveryScreen ? (
             <InputFieldComponent
               width={'95%'}
               
@@ -644,15 +662,7 @@ const VendorAddProductScreen = ({navigation}) => {
               onChangeText={inputText => {
                 onChangeText(inputText, textinputKeys);
               }}
-            //   placeholderText={
-            //     isProductNameScreen
-            //       ? CREDENTIAL_KEYS.NAME
-            //       : isDescriptionScreen
-            //       ? CREDENTIAL_KEYS?.DESCRIPTION
-            //       : isPriceScreen
-            //       ? CREDENTIAL_KEYS?.PRICE
-            //       : ''
-            //   }
+
               secureTextEntry={false}
               value={textinputVal}
               returnType="next"
@@ -878,6 +888,11 @@ const VendorAddProductScreen = ({navigation}) => {
               onPress={() => setCurrentScreen(SCREEN_TYPES?.PRODUCT_PRICE)}
               value={`MXN ${inputValues[CREDENTIAL_KEYS.PRICE]}`}
               label="Precio"
+            />
+            <ProductSummaryCard
+              onPress={() => setCurrentScreen(SCREEN_TYPES?.ESTIMATED_DELIVERY)}
+              value={`${inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY]}`}
+              label="Tiempo de entrega"
             />
             <ProductSummaryCard
               onPress={() => setCurrentScreen(SCREEN_TYPES?.CHOOSE_CATEGORY)}

@@ -90,7 +90,7 @@ const LoginScreen = ({navigation}) => {
      const apiCall = await axios.get(url);
      setShowLoader(false);
      if(apiCall.status == api_statuses.success) {
-       console.log(apiCall.data);
+       
        await saveRiderProfile(apiCall.data.data);
         //  showToaster('Your profile is blocked.');
         await saveUserData(userData);

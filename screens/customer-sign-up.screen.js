@@ -80,7 +80,7 @@ const CustomerSignUpScreen = ({navigation}) => {
       const apiCall = await axios.post(url,body);
       if (apiCall.status == api_statuses.success && apiCall.data.success == true) {
         setShowLoader(false);
-        console.log(apiCall.data)
+       
         navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.OTP_PASSWORD, {
           otp: apiCall.data.otp,
           body:body

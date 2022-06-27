@@ -6,11 +6,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import CommonStyles from '../../util/styles/styles';
 import ProductCardComponent from '../../components/customer-components/product-card.component';
 import ButtonComponent from '../../components/button/button.component';
-import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../util/constants';
-import { useDispatch, useSelector } from 'react-redux';
+import { showToaster } from '../../util/constants';
+
 
 import { useRoute } from '@react-navigation/native';
-import { api_statuses, base_url, customer_api_urls, vendor_api_urls } from '../../util/api/api_essentials';
+import { api_statuses, base_url, customer_api_urls } from '../../util/api/api_essentials';
 import axios from 'axios';
 import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
 import { HeaderBackground } from '../../components/Background/HeaderBackground';
@@ -26,8 +26,6 @@ const CustomerProductDetailScreen = (props) => {
   const [enCarrito, setEnCarrito] = useState(false)
   const product = params?.product;
   const comision = params?.comision;
-  
-  // const cartProductIds = useSelector(state => state.cart.cart_items_ids);
   const {top} = useSafeAreaInsets()
   const {addItemToCart,inTheCart,inCart} = useCart()
   const isChange = useRef(false);
@@ -78,7 +76,7 @@ const CustomerProductDetailScreen = (props) => {
   };
 
 
-
+ 
   return (
     <ScrollView contentContainerStyle={{flexGrow:1,backgroundColor:Colors.bgColor}}>
         <View style={{flex:1}}>
@@ -130,6 +128,11 @@ const CustomerProductDetailScreen = (props) => {
                       <DetailItem 
                       label={'Precio: '} 
                       value={`${moneda(Number(product?.price) + Number( comision * product?.price / 100))} MXN`}
+                      size={12} sizeValue={13}
+                      />
+                      <DetailItem 
+                      label={'Tiempo de entrega: '} 
+                      value={`${product?.estimatedDelivery} días aprox.`}
                       size={12} sizeValue={13}
                       />
                       

@@ -62,7 +62,7 @@ const ForgotPasswordScreen = ({navigation}) => {
   };
   const verifyOtp = () => {
     if(userCredentials[CREDENTIAL_KEYS.OTP_CODE] == recievedOtp ) {
-    console.log(email)
+    
       navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.CHANGE_PASSWORD,{
         email:email,
         isResetPassword:true

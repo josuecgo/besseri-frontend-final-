@@ -167,7 +167,11 @@ const VendorProductDetailsScreen = ({navigation, route}) => {
             <Text style={[CommonStyles.fontFamily, {marginBottom: 10}]}>
               <Text style={{fontSize: 16}}>{product?.description}</Text>
             </Text>
-
+            <Text style={[CommonStyles.fontFamily, {marginBottom: 10}]}>
+              <Text style={{fontSize: adjust(13),}}>Tiempo de entrega: </Text>
+              <Text style={{fontSize: 16}}>{product?.estimatedDelivery} días</Text>
+            </Text>
+           
             <Text style={[CommonStyles.fontFamily, {marginBottom: 10}]}>
               <Text style={{fontSize: 16}}>Modelo: </Text>
               <Text style={{fontSize: adjust(13),}}>{product?.model?.name}</Text>

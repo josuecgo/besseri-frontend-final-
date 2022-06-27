@@ -83,6 +83,8 @@ export const screenFocusProduct = (value) => {
             
         case ProductScreen.PRODUCT_PRICE:
             return KEYS_PRODUCT.PRICE;
+        case ProductScreen.ESTIMATED_DELIVERY:
+            return KEYS_PRODUCT.ESTIMATED_DELIVERY;
             
         case ProductScreen.CHOOSE_MAKER:
             return KEYS_PRODUCT.PRODUCT_MAKER;
