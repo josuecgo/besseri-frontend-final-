@@ -86,7 +86,7 @@ export default function RiderExplore(props) {
   }, []);
 
   const requestRide = async orderId => {
-    viewItem(orderId);
+    
     getNotificaciones();
     try {
       setLoading(true);

@@ -17,7 +17,7 @@ import InputFieldComponent from './input-field/input-field.component';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import KEYBOARD_TYPES from '../util/keyboard-types';
 import ButtonComponent from './button/button.component';
-import {adjust} from '../util/Dimentions';
+import {adjust, deviceHeight, deviceWidth} from '../util/Dimentions';
 
 
 
@@ -474,7 +474,7 @@ export const RiderSecurityCodeModal = ({
       onClose={onClose}
       adjustToContentHeight={true}
       ref={RiderSecurityCodeModalRef}
-      modalStyle={{paddingVertical: 20}}>
+      modalStyle={{paddingVertical: 20,position:'absolute',bottom: deviceHeight / 2, width:deviceWidth}}>
       <ScrollView contentContainerStyle={{flexGrow: 1, paddingVertical: 15}}>
         <View style={styles.mainWrapper}>
           <Text style={styles.createAddress}>Código de seguridad</Text>
