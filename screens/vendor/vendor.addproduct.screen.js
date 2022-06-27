@@ -150,6 +150,23 @@ const VendorAddProductScreen = ({navigation}) => {
   const isUploadImage = currentScreen == SCREEN_TYPES?.UPLOAD_IMAGE;
   const isProductSummary = currentScreen == SCREEN_TYPES?.PRODUCT_SUMMARY;
   const isBrandScreen = currentScreen == SCREEN_TYPES?.PRODUCT_BRAND;
+  const optionDelivery = [
+    {
+      _id:1,
+      name:'1-2 horas'
+    },{
+      _id:2,
+      name:'2-4 horas'
+    },
+    {
+      _id:3,
+      name:'5-6 horas'
+    },
+    {
+      _id:4,
+      name:'Dia siguiente'
+    },
+  ]
   
   const textinputVal = isProductNameScreen
     ? inputValues[CREDENTIAL_KEYS.NAME]
@@ -157,8 +174,6 @@ const VendorAddProductScreen = ({navigation}) => {
     ? inputValues[CREDENTIAL_KEYS.DESCRIPTION]
     : isPriceScreen
     ? inputValues[CREDENTIAL_KEYS.PRICE]
-    : isDeliveryScreen
-    ? inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY]
     : '';
 
   // console.log(isDeliveryScreen);
@@ -168,8 +183,6 @@ const VendorAddProductScreen = ({navigation}) => {
     ? CREDENTIAL_KEYS.DESCRIPTION
     : isPriceScreen
     ? CREDENTIAL_KEYS.PRICE
-    : isDeliveryScreen
-    ? CREDENTIAL_KEYS.ESTIMATED_DELIVERY
     : '';
   
   
@@ -461,7 +474,7 @@ const VendorAddProductScreen = ({navigation}) => {
           subCategory: selectedSubCategory,
           brand: selectedBrand,
           brandId: selectedBrand?._id,
-          estimatedDelivery: inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY]
+          estimatedDelivery: inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY].name
         };
         
         const apiCall = await axios.post(
@@ -511,6 +524,7 @@ const VendorAddProductScreen = ({navigation}) => {
         category: selectedCategory,
         price: inputValues[CREDENTIAL_KEYS.PRICE],
         condition: inputValues[CREDENTIAL_KEYS.PRODUCT_CONDITION],
+        estimatedDelivery: inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY].name
       };
       const apiCall = await axios.patch(vendor_api_urls?.edit_product, apiBody);
       setShowLoader(false);
@@ -656,7 +670,7 @@ const VendorAddProductScreen = ({navigation}) => {
        <View style={{flex:1}} >
 
         <View style={styles.InputWrapper}>
-          {isProductNameScreen || isDescriptionScreen || isPriceScreen || isDeliveryScreen ? (
+          {isProductNameScreen || isDescriptionScreen || isPriceScreen  ? (
             <InputFieldComponent
               width={'95%'}
               
@@ -676,7 +690,8 @@ const VendorAddProductScreen = ({navigation}) => {
           isChooseMaker ||
           isChooseCategory ||
           isSubCategory ||
-          isBrandScreen ? (
+          isBrandScreen ||
+          isDeliveryScreen ? (
             <View style={{flex: 1}}>
               {isChooseModel ? (
                 <Text
@@ -722,13 +737,18 @@ const VendorAddProductScreen = ({navigation}) => {
                     ? subcategories
                     : isBrandScreen
                     ? brands
+                    : isDeliveryScreen
+                    ? optionDelivery
                     : []
                 }
                 keyExtractor={item => item?._id}
                 renderItem={itemData => (
                   <ListCard
                     selected={
-                      isChooseMaker
+                      isDeliveryScreen 
+                      ? inputValues[CREDENTIAL_KEYS?.ESTIMATED_DELIVERY]?._id ==
+                      itemData.item._id
+                      : isChooseMaker
                         ? inputValues[CREDENTIAL_KEYS?.PRODUCT_MAKER]?._id ==
                           itemData.item._id
                         : isChooseModel
@@ -744,6 +764,11 @@ const VendorAddProductScreen = ({navigation}) => {
                         : false
                     }
                     onPress={() => {
+                      if (isDeliveryScreen)
+                        setInputValues({
+                          ...inputValues,
+                          [CREDENTIAL_KEYS.ESTIMATED_DELIVERY]: itemData.item,
+                        });
                       if (isChooseMaker)
                         setInputValues({
                           ...inputValues,
@@ -893,7 +918,7 @@ const VendorAddProductScreen = ({navigation}) => {
             />
             <ProductSummaryCard
               onPress={() => setCurrentScreen(SCREEN_TYPES?.ESTIMATED_DELIVERY)}
-              value={`${inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY]}`}
+              value={`${inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY].name}`}
               label="Tiempo de entrega"
             />
             <ProductSummaryCard

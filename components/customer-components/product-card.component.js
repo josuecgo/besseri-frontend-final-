@@ -167,7 +167,7 @@ const ProductCardComponent = ({
         </View>
         {
           data?.estimatedDelivery && (
-            <Text style={styles.textSub} >{`Entrega ${data?.estimatedDelivery} días aprox.`} </Text>
+            <Text style={styles.textSub} >{`Entrega ${data?.estimatedDelivery} aprox.`} </Text>
           )
         }
         

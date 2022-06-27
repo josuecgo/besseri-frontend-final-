@@ -132,7 +132,7 @@ const CustomerProductDetailScreen = (props) => {
                       />
                       <DetailItem 
                       label={'Tiempo de entrega: '} 
-                      value={`${product?.estimatedDelivery} días aprox.`}
+                      value={`${product?.estimatedDelivery} aprox.`}
                       size={12} sizeValue={13}
                       />
                       
