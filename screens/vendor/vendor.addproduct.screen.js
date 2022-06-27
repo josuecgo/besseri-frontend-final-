@@ -580,8 +580,10 @@ const VendorAddProductScreen = ({navigation}) => {
         ? SCREEN_TYPES?.PRODUCT_NAME
         : isPriceScreen
         ? SCREEN_TYPES?.PRODUCT_DESCRIPTION
+        :isDeliveryScreen
+        ?SCREEN_TYPES?.PRODUCT_PRICE
         : isChooseMaker
-        ? SCREEN_TYPES?.PRODUCT_PRICE
+        ? SCREEN_TYPES?.ESTIMATED_DELIVERY
         : isChooseModel
         ? SCREEN_TYPES?.CHOOSE_MAKER
         : isChooseCategory
