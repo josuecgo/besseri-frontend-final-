@@ -49,7 +49,19 @@ const CustomerOrderDetail = props => {
   const comision = params.comision;
   const [storeId, setStoreId] = useState(null);
 
+  const openMapa = () => {
+    const scheme = Platform.select({ios: 'maps:0,0?q=', android: 'geo:0,0?q='});
+    const latLng = `${store?.location?.latitude},${store?.location?.longitude}`;
+    const label = store?.storeName;
+    const url = Platform.select({
+      ios: `${scheme}${label}@${latLng}`,
+      android: `${scheme}${latLng}(${label})`,
+    });
 
+    Linking.openURL(url);
+  };
+
+console.log(store?.location);
   const getStore = async () => {
     const url = `${customer_api_urls.get_store_data}/${params?.order.storeId}`;
     const apiCall = await axios.get(url);
@@ -57,6 +69,8 @@ const CustomerOrderDetail = props => {
 
     setStoreId(apiCall?.data?.data?.profile);
   };
+
+
 
   useEffect(() => {
     if (!store) {
@@ -279,7 +293,10 @@ const CustomerOrderDetail = props => {
           </View>
           <ThinlineSeparator margin={20} />
         </View>
-        <Text
+
+        {address?.label ? (
+          <>          
+              <Text
           style={{
             ...CommonStyles.fontFamily,
             padding: 10,
@@ -287,16 +304,32 @@ const CustomerOrderDetail = props => {
             fontSize: 16,
           }}>
           Dirección de entrega
-        </Text>
-        {address?.label ? (
+        </Text>   
           <AddressComponent
             label={address?.label}
             addressLine={address?.addressLine}
             info={address?.info}
             phone={address?.phone}
           />
+          </>
+
         ) : (
-          <Text style={{textAlign: 'center'}}>Recoger en tienda</Text>
+          <>      
+          <Text
+          style={{
+            ...CommonStyles.fontFamily,
+            padding: 10,
+            marginTop: 10,
+            fontSize: 16,
+          }}>
+          Dirección de tienda
+        </Text>
+          <TouchableOpacity onPress={openMapa} style={styles.btnMap}>
+              <Text style={styles.textMap}>Abrir Mapa</Text>
+              <Feather name="navigation" size={20} color={Colors.white} />
+            </TouchableOpacity>
+          </>
+    
         )}
         <ThinlineSeparator margin={20 + top} />
         <LoaderComponent isVisible={loading} />
@@ -364,6 +397,20 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 20,
     paddingLeft: 10,
+  },
+  btnMap: {
+    backgroundColor: Colors.primarySolid,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 20,
+    marginVertical: 5,
+    // width:deviceWidth / 2
+    flexDirection: 'row',
+  },
+  textMap: {
+    fontSize: adjust(12),
+    color: Colors.white,
+    right: 5,
   },
 });
 export default CustomerOrderDetail;

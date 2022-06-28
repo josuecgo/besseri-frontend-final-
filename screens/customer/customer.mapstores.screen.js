@@ -68,7 +68,7 @@ export default function CustomerMapStores(props) {
       const apiCall = await axios.post(`${customer_api_urls.get_stores}`,{
         startlat:location?.latitude,
         startlng:location?.longitude,
-        range:3000
+        range:30
       });
       if(apiCall.status == api_statuses.success) {
         
