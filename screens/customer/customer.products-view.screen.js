@@ -59,99 +59,99 @@ const CustomerProductsViewScreen = React.memo((props) => {
   const {productFilter} = useFiltrado(props?.route?.name)
 
   //Fetching user location..............................
-  const getUserLocation = useCallback(async() => {
-    if (Platform.OS === 'ios') {
-      getLocation();
-      subscribeLocationLocation();
-    }else{
-       try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          'title': 'Permiso de ubicación',
-          'message': 'Esta aplicación necesita acceso a tu ubicación ' +
-                      'para que sepamos donde estas.'
-        }
-      )
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        await Geolocation.getCurrentPosition(res => {
-          setUserLocation(res.coords);
-          // setState(res.coords,SCREEN_STATES.USER_LOCATION);
-        });
-      } else {
-        console.log("Location permission denied")
-      }
+  // const getUserLocation = useCallback(async() => {
+  //   if (Platform.OS === 'ios') {
+  //     getLocation();
+  //     subscribeLocationLocation();
+  //   }else{
+  //      try {
+  //     const granted = await PermissionsAndroid.request(
+  //       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+  //       {
+  //         'title': 'Permiso de ubicación',
+  //         'message': 'Esta aplicación necesita acceso a tu ubicación ' +
+  //                     'para que sepamos donde estas.'
+  //       }
+  //     )
+  //     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+  //       await Geolocation.getCurrentPosition(res => {
+  //         setUserLocation(res.coords);
+  //         // setState(res.coords,SCREEN_STATES.USER_LOCATION);
+  //       });
+  //     } else {
+  //       console.log("Location permission denied")
+  //     }
   
-    } catch(e) {
-      console.log(e)
-     showToaster('No se pudo obtener la ubicación actual.')
-    }
-    }
+  //   } catch(e) {
+  //     console.log(e)
+  //    showToaster('No se pudo obtener la ubicación actual.')
+  //   }
+  //   }
    
-  },[setUserLocation])
+  // },[setUserLocation])
  
 
  
-  const getLocation = useCallback(
-    async() => {
-      try {
-         await Geolocation.getCurrentPosition(
-         (position) => {
-           const currentLatitude = JSON.stringify(position.coords.latitude);
-           const currentLongitude = JSON.stringify(position.coords.longitude);
-           setCoords({
-               latitude:currentLatitude,
-               longitude:currentLongitude
-           })
-         },
-         (error) => {
-           // See error code charts below.
-           console.log(error.code, error.message);
-           },
-           { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+  // const getLocation = useCallback(
+  //   async() => {
+  //     try {
+  //        await Geolocation.getCurrentPosition(
+  //        (position) => {
+  //          const currentLatitude = JSON.stringify(position.coords.latitude);
+  //          const currentLongitude = JSON.stringify(position.coords.longitude);
+  //          setCoords({
+  //              latitude:currentLatitude,
+  //              longitude:currentLongitude
+  //          })
+  //        },
+  //        (error) => {
+  //          // See error code charts below.
+  //          console.log(error.code, error.message);
+  //          },
+  //          { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
      
        
-      );
-      } catch (error) {
-        console.log({cathc:error});
-      }
-     },
-    [setCoords]
-  )
+  //     );
+  //     } catch (error) {
+  //       console.log({cathc:error});
+  //     }
+  //    },
+  //   [setCoords]
+  // )
 
-  const subscribeLocationLocation = () => {
-    watchID = Geolocation.watchPosition(
-      (position) => {
-        //Will give you the location on location change
+  // const subscribeLocationLocation = () => {
+  //   watchID = Geolocation.watchPosition(
+  //     (position) => {
+  //       //Will give you the location on location change
         
-        setLocationStatus('You are Here');
-        console.log(position);
+  //       setLocationStatus('You are Here');
+  //       console.log(position);
  
-        //getting the Longitude from the location json        
-        const currentLongitude = JSON.stringify(position.coords.longitude);
+  //       //getting the Longitude from the location json        
+  //       const currentLongitude = JSON.stringify(position.coords.longitude);
  
-        //getting the Latitude from the location json
-        const currentLatitude =  JSON.stringify(position.coords.latitude);
+  //       //getting the Latitude from the location json
+  //       const currentLatitude =  JSON.stringify(position.coords.latitude);
  
-        //Setting Longitude state
-        setCurrentLongitude(currentLongitude);
+  //       //Setting Longitude state
+  //       setCurrentLongitude(currentLongitude);
  
-        //Setting Latitude state
-        setCurrentLatitude(currentLatitude);
-      },
-      (error) => {
-        setLocationStatus(error.message);
-      },
-      {
-        enableHighAccuracy: false,
-        maximumAge: 1000
-      },
-    );
-  };
+  //       //Setting Latitude state
+  //       setCurrentLatitude(currentLatitude);
+  //     },
+  //     (error) => {
+  //       setLocationStatus(error.message);
+  //     },
+  //     {
+  //       enableHighAccuracy: false,
+  //       maximumAge: 1000
+  //     },
+  //   );
+  // };
 
-  useEffect(() => {
-    getUserLocation();
-  },[]);
+  // useEffect(() => {
+  //   getUserLocation();
+  // },[]);
 
 
 

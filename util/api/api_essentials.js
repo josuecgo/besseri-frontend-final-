@@ -1,6 +1,6 @@
 export const env = 'prod';
-  export const base_url = env == 'prod' ? 'https://api.besseri.mx' : env == 'dev' ?  'https://besseri-apis.herokuapp.com' : 'http://192.168.10.10:5001';
-//export const base_url = true ? 'http://192.168.100.72:3005' : 'http://192.168.1.18:3005'
+//   export const base_url = env == 'prod' ? 'https://api.besseri.mx' : env == 'dev' ?  'https://besseri-apis.herokuapp.com' : 'http://192.168.10.10:5001';
+export const base_url = false ? 'http://192.168.100.72:3005' : 'http://192.168.1.18:3005'
 
 export const api_urls = {
     registration:`${base_url}/user/signup`,
@@ -12,9 +12,12 @@ export const api_urls = {
     save_fcm_token:`${base_url}/fcm/save-fcm-token`,
     getNotification:`${base_url}/user/getNotification`,
     viewNotification:`${base_url}/user/viewNotification`,
+    createAccountOpenpay:`${base_url}/openpay/create-openpay`,
 }
 export const paymentApis = {
-    refundPayment:`${base_url}/payments/refund-amount`
+    refundPayment:`${base_url}/payments/refund-amount`,
+    getCardsOpenpay:`${base_url}/openpay/get-cards-openpay`
+
 }
 export const vendor_api_urls = {
     business_profile:`${base_url}/business/get-mystore`,

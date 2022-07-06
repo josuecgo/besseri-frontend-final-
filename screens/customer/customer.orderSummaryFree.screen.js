@@ -89,7 +89,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
     getUserDetails();
   }, []);
 
-
+ 
 
 
   const getAddresses = async () => {

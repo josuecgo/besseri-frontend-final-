@@ -73,6 +73,7 @@ const OtpPasswordScreen = ({navigation}) => {
   const registerApiCall = async (path) => {
     try {
       const url = api_urls.registration;
+      
       const body = route.params.body;
       // if((route.params?.body?.isRider || route.params?.body?.isVendor || route.params.body.isCommonUser) && path) {
         setShowLoader(true);
@@ -83,23 +84,27 @@ const OtpPasswordScreen = ({navigation}) => {
         });
         
         if (apiCall.status == api_statuses.success) {
+          
+          console.log(apiCall?.data?.data);
           setShowLoader(false);
           navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN);
         } else {
           alert('error')
           setShowLoader(false)
         }
-        console.log(apiCall.data)
+       
         setShowLoader(false)
       //}
      
       
     } catch (e) {
       setShowLoader(false);
-      console.log(e)
+      console.log({e})
     }
     setShowLoader(false);
   }
+
+
  
 
   return (

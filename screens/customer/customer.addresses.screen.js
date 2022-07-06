@@ -276,21 +276,6 @@ const CustomerAddressesScreen = (props) => {
          </View>
          </View>
          :
-        //  <FlatList
-        //  data={addresses}
-        //  keyExtractor={item => item?._id}
-        //  renderItem={itemData => (
-            // <AddressComponent
-            // info={itemData.item.info}
-            // phone={itemData.item.phone}
-            // onPress={() => {
-            //     setEditMode(true);
-            //     setSelectedAddress(itemData.item)
-            //     handleModalize('open')
-            // }}
-            // addressLine={itemData.item.addressLine} label={itemData.item.label}/>
-        //  )}
-        //  />
         addresses.map((item) => (
             <View key={item._id} >
                 <AddressComponent

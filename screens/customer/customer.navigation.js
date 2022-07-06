@@ -33,6 +33,8 @@ import { NotificationContext } from '../../util/context/NotificationContext';
 import { EnvioScreen } from './customer.envio.screen';
 import CustomerOrderSummaryFree from './customer.orderSummaryFree.screen';
 import { MetodoScreen } from './customer.metodoscreen';
+import { CustomerCardsScreen } from './customer.cards.screen';
+
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -66,6 +68,12 @@ export const PartsServicesFunctionsDrawer = () => {
         name={'Notificaciones'}
         component={CustomerNotificationStack}
       />
+
+      <Drawer.Screen
+        name={'Mis Tarjetas'}
+        component={CustomerCardsScreen}
+      />
+
       <Drawer.Screen
         name={'Mi dirección'}
         component={CustomerAddressesScreen}

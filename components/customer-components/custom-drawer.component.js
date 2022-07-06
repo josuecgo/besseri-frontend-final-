@@ -29,6 +29,9 @@ const getIcons = ({focused, color, size, name,count}) => {
     'Reservaciones': (
       <MaterialIcons name='event'  size={28} color={color} />
     ),
+    'Mis Tarjetas': (
+      <MaterialIcons name='credit-card'  size={28} color={color} />
+    ),
     'Mi dirección': (
       <MaterialIcons name='location-on'  size={28} color={color} />
     ),
