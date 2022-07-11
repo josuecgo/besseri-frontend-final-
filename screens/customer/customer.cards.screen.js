@@ -9,10 +9,15 @@ import { deviceHeight } from '../../util/Dimentions';
 import CommonStyles from '../../util/styles/styles';
 import { useCompras } from '../../hooks/useCompras';
 import { BankCard } from '../../components/Customer/BankCard';
+import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants';
 
 export const CustomerCardsScreen = (props) => {
     const {cards} = useCompras()
 
+
+    const createCard = () => {
+        props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.CREATE_CARD)
+    }
     
     return (
     <View style={{flex:1}} >
@@ -42,7 +47,7 @@ export const CustomerCardsScreen = (props) => {
         />
          
         <View style={styles.footer} >
-            <TouchableOpacity onPress={() => console.log('click') } style={styles.btn}>
+            <TouchableOpacity onPress={ createCard } style={styles.btn}>
                 <View style={styles.btnText} >
                     <AntDesign name='plus' color={Colors.white} size={24}/>
                     <Text style={{fontSize:18,color:Colors.white}} >Agregar una nueva tarjeta</Text>

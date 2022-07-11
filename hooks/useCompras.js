@@ -1,23 +1,24 @@
 import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
-import { customer_api_urls, paymentApis } from '../util/api/api_essentials';
-import { useStripe } from '@stripe/stripe-react-native';
+import { paymentApis } from '../util/api/api_essentials';
+
 import { getUser } from '../util/local-storage/auth_service';
-import { useSelector } from 'react-redux';
+
 import { showToaster } from '../util/constants';
 
 
 
 
 export const useCompras = () => {
-    
+    const [isLoading, setLoading] = useState(false)
     const [cards, setCards] = useState([])
-
-
+   
     const getCards = useCallback(
-        async () => {
+        async() => {
             try {
                 const user = await getUser();
+                
+              
                 const apiCall = await axios.get(`${paymentApis.getCardsOpenpay}/${user?.customerId}`,);
                 setCards(apiCall?.data?.data);
                 
@@ -28,6 +29,31 @@ export const useCompras = () => {
             }
         }, 
     []);
+
+    const saveCards = useCallback(
+        async (form) => {
+            setLoading(true)
+            try {
+                const user = await getUser();
+                
+
+                const apiCall = await axios.post(`${paymentApis.saveCardsOpenpay}/${user?.customerId}`,form);
+               
+                getCards();
+                setLoading(false)
+                return apiCall.data?.success;
+
+            } catch (e) {
+                
+                setLoading(false);
+                showToaster(e.response.data?.error);
+                return false;
+            }
+        }, 
+    []);
+    
+
+    
     
     useEffect(() => {
         getCards()
@@ -38,6 +64,7 @@ export const useCompras = () => {
 
     return {
         cards,
-        
+        saveCards,
+        isLoading
     }
 }

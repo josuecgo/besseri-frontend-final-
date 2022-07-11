@@ -120,7 +120,9 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   ORDER_STACK:'ORDER_STACK',
   INICIAR:'Iniciar',
   ENVIO: 'Envio',
-  METODO: 'Metodo de pago'
+  METODO: 'Metodo de pago',
+  CARDS: 'Tarjetas',
+  CREATE_CARD: 'Guardar Tarjeta'
 };
 
 export const BOTTOM_TAB_RIDER_ROUTES = {

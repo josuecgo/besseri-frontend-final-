@@ -16,7 +16,8 @@ export const api_urls = {
 }
 export const paymentApis = {
     refundPayment:`${base_url}/payments/refund-amount`,
-    getCardsOpenpay:`${base_url}/openpay/get-cards-openpay`
+    getCardsOpenpay:`${base_url}/openpay/get-cards-openpay`,
+    saveCardsOpenpay:`${base_url}/openpay/create-card-openpay`,
 
 }
 export const vendor_api_urls = {

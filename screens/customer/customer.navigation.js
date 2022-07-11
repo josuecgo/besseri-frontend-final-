@@ -34,6 +34,7 @@ import { EnvioScreen } from './customer.envio.screen';
 import CustomerOrderSummaryFree from './customer.orderSummaryFree.screen';
 import { MetodoScreen } from './customer.metodoscreen';
 import { CustomerCardsScreen } from './customer.cards.screen';
+import { CreateCardScreen } from './customer.createCard.screen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -71,7 +72,7 @@ export const PartsServicesFunctionsDrawer = () => {
 
       <Drawer.Screen
         name={'Mis Tarjetas'}
-        component={CustomerCardsScreen}
+        component={CardsNavigator}
       />
 
       <Drawer.Screen
@@ -100,6 +101,16 @@ const OrdersNavigator = () => {
     >
       <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS} component={CustomerOrdersViewScreen}/>
       <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_DETAIL} component={CustomerOrderDetail}/>
+    </Stack.Navigator>
+  )
+}
+const CardsNavigator = () => {
+  return (
+    <Stack.Navigator
+    screenOptions={{headerShown: false}}
+    >
+      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.CARDS} component={CustomerCardsScreen}/>
+      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.CREATE_CARD} component={CreateCardScreen}/>
     </Stack.Navigator>
   )
 }
