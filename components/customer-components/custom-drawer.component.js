@@ -43,8 +43,10 @@ const getIcons = ({focused, color, size, name,count}) => {
        
         <MaterialIcons name='notifications'  size={28} color={color} />
       </>
-     
-    )
+    ),
+    'Términos y condiciones': (
+      <MaterialIcons name='info'  size={28} color={color} />
+    ),
   };
   return ICONS[name];
 };
@@ -94,7 +96,7 @@ const CustomDrawerComponent = React.memo((props) => {
   }
   
   return (
-    <DrawerContentScrollView>
+    <DrawerContentScrollView >
       <HeaderBackground/>
       <View style={[styles.header]}>
         {/* <View style={[CommonStyles.flexDirectionColumn]}> */}
@@ -107,7 +109,7 @@ const CustomDrawerComponent = React.memo((props) => {
 
 
 
-      <View style={{paddingHorizontal: 10}}>
+      <View style={{paddingHorizontal:  0}}>
         {props.state.routeNames.map(name => {
           return (
             <DrawerItem
@@ -122,7 +124,7 @@ const CustomDrawerComponent = React.memo((props) => {
                 goDrawer(name);
               }}
               focused={focusedRoute === name}
-
+              labelStyle={{fontSize:adjust(10)}}
             />
           );
         })}

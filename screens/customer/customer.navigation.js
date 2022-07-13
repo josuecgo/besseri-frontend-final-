@@ -35,6 +35,7 @@ import CustomerOrderSummaryFree from './customer.orderSummaryFree.screen';
 import { MetodoScreen } from './customer.metodoscreen';
 import { CustomerCardsScreen } from './customer.cards.screen';
 import { CreateCardScreen } from './customer.createCard.screen';
+import PrivacyPolicy from '../privacypolicy.screen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -87,6 +88,13 @@ export const PartsServicesFunctionsDrawer = () => {
       <Drawer.Screen
         name={'Reservaciones'}
         component={BookingsStack}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Drawer.Screen
+        name={'Términos y condiciones'}
+        component={PrivacyPolicy}
         options={{
           headerShown: false,
         }}

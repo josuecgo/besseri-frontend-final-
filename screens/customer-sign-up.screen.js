@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {StyleSheet, View,Text,Alert} from 'react-native';
+import {StyleSheet, View,Text,Alert, Linking} from 'react-native';
 import CustomSafeAreaViewComponent from '../components/custom-safe-area-view/custom-safe-area-view.component';
 import TopCircleComponent from '../components/top-circle/top-circle.component';
 import CommonStyles from '../util/styles/styles';
@@ -17,11 +17,12 @@ import ButtonComponent from '../components/button/button.component';
 import { api_statuses, api_urls } from '../util/api/api_essentials';
 import axios from 'axios';
 import LoaderComponent from '../components/Loader/Loader.component';
-import { deviceHeight } from '../util/Dimentions';
+import { adjust, deviceHeight } from '../util/Dimentions';
 import { ButtonIconoInput } from '../components/button/ButtonIconoInput';
 import { comparaText } from '../util/helpers/StatusText';
 
 import CheckboxTerms from '../components/button/CheckboxTerms';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 
@@ -125,12 +126,33 @@ const CustomerSignUpScreen = ({navigation}) => {
   
 
   const handlePress = () => {
-    
-    setIsSelected(!isSelected)
-    
+
+    if (isSelected) {
+      setIsSelected(!isSelected)
+    }else{
+      Alert.alert(
+        "",
+        "Aceptar terminos y condiciones",
+        [
+          {
+            text: "Leer terminos y condiciones",
+            onPress: () => navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.PRIVACY_POLICY),
+           
+          },
+          { text: "Si acepto", onPress: () => setIsSelected(!isSelected) }
+        ]
+      );
+    }
+
 
   };
 
+  const goPoliticas = async() => {
+
+    await Linking.openURL('https://besserimx.com/');
+
+  }
+ 
   return (
     <CustomSafeAreaViewComponent>
       <LoaderComponent isVisible={showLoader}/>
@@ -220,6 +242,11 @@ const CustomerSignUpScreen = ({navigation}) => {
           handlePress={handlePress} 
           
           />
+         
+          <TouchableOpacity onPress={goPoliticas } >
+            <Text style={{fontSize:adjust(8),borderBottomWidth:1}} >Politicas de privacidad</Text>
+          </TouchableOpacity>
+          
          
 
           <ButtonComponent

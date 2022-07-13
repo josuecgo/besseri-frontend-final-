@@ -19,18 +19,18 @@ const SCREEN_STATES = {
   CATEGORIES:'Categories'
 }
 
-const SelectImgCategory = (category) => {
-  switch (category) {
-    case 'TRANSMISION':
-      return require(`../../assets/images/categorias/transmision.png`);
-    case 'FRENOS':
-      return require('../../assets/images/categorias/frenos.jpg');
+// const SelectImgCategory = (category) => {
+//   switch (category) {
+//     case 'TRANSMISION':
+//       return require(`../../assets/images/categorias/transmision.png`);
+//     case 'FRENOS':
+//       return require('../../assets/images/categorias/frenos.jpg');
        
   
-    default:
-      return require('../../assets/images/categorias/frenos.jpg');
-  }
-}
+//     default:
+//       return require('../../assets/images/categorias/frenos.jpg');
+//   }
+// }
 const CustomerProductsViewScreen = React.memo((props) => {
   const [locationStatus, setLocationStatus] = useState(null)
   const [screenStates, setScreenStates] = useState({
@@ -39,15 +39,9 @@ const CustomerProductsViewScreen = React.memo((props) => {
     [SCREEN_STATES.CATEGORIES]:[]
   });
 
-  const [userLocation,setUserLocation] = useState(null);    
-  const [coords,setCoords] = useState({
-    longitude: 0,
-    latitude: 0
-  });
   const [open, setOpen] = useState(false);
   const [openModel, setOpenModel] = useState(false);
-  const [currentLongitude, setCurrentLongitude] = useState('')
-  const [currentLatitude, setCurrentLatitude] = useState('')
+
   const {
     categorias,
     comision,modelo,
@@ -58,115 +52,19 @@ const CustomerProductsViewScreen = React.memo((props) => {
 
   const {productFilter} = useFiltrado(props?.route?.name)
 
-  //Fetching user location..............................
-  // const getUserLocation = useCallback(async() => {
-  //   if (Platform.OS === 'ios') {
-  //     getLocation();
-  //     subscribeLocationLocation();
-  //   }else{
-  //      try {
-  //     const granted = await PermissionsAndroid.request(
-  //       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-  //       {
-  //         'title': 'Permiso de ubicación',
-  //         'message': 'Esta aplicación necesita acceso a tu ubicación ' +
-  //                     'para que sepamos donde estas.'
-  //       }
-  //     )
-  //     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-  //       await Geolocation.getCurrentPosition(res => {
-  //         setUserLocation(res.coords);
-  //         // setState(res.coords,SCREEN_STATES.USER_LOCATION);
-  //       });
-  //     } else {
-  //       console.log("Location permission denied")
-  //     }
-  
-  //   } catch(e) {
-  //     console.log(e)
-  //    showToaster('No se pudo obtener la ubicación actual.')
-  //   }
-  //   }
-   
-  // },[setUserLocation])
- 
-
- 
-  // const getLocation = useCallback(
-  //   async() => {
-  //     try {
-  //        await Geolocation.getCurrentPosition(
-  //        (position) => {
-  //          const currentLatitude = JSON.stringify(position.coords.latitude);
-  //          const currentLongitude = JSON.stringify(position.coords.longitude);
-  //          setCoords({
-  //              latitude:currentLatitude,
-  //              longitude:currentLongitude
-  //          })
-  //        },
-  //        (error) => {
-  //          // See error code charts below.
-  //          console.log(error.code, error.message);
-  //          },
-  //          { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-     
-       
-  //     );
-  //     } catch (error) {
-  //       console.log({cathc:error});
-  //     }
-  //    },
-  //   [setCoords]
-  // )
-
-  // const subscribeLocationLocation = () => {
-  //   watchID = Geolocation.watchPosition(
-  //     (position) => {
-  //       //Will give you the location on location change
-        
-  //       setLocationStatus('You are Here');
-  //       console.log(position);
- 
-  //       //getting the Longitude from the location json        
-  //       const currentLongitude = JSON.stringify(position.coords.longitude);
- 
-  //       //getting the Latitude from the location json
-  //       const currentLatitude =  JSON.stringify(position.coords.latitude);
- 
-  //       //Setting Longitude state
-  //       setCurrentLongitude(currentLongitude);
- 
-  //       //Setting Latitude state
-  //       setCurrentLatitude(currentLatitude);
-  //     },
-  //     (error) => {
-  //       setLocationStatus(error.message);
-  //     },
-  //     {
-  //       enableHighAccuracy: false,
-  //       maximumAge: 1000
-  //     },
-  //   );
-  // };
-
-  // useEffect(() => {
-  //   getUserLocation();
-  // },[]);
 
 
-
-  
 
   const CategoryButton = ({ category,onPress }) => {
     return (
       <View style={{alignItems:'center'}} >
         <TouchableOpacity onPress={onPress} style={styles.categoryButton}>
-           
-            <Image source={SelectImgCategory(category)} style={{width:20,height:20}} />
+          <Text style={{fontSize:adjust(9)}} >
+                {category}
+          </Text>
+            
         </TouchableOpacity>
-        <Text style={{fontSize:adjust(5)}} >
-              {category}
-        </Text>
+       
       </View>
     )
   }
@@ -270,13 +168,15 @@ const CustomerProductsViewScreen = React.memo((props) => {
 })
 const styles = StyleSheet.create({
   categoryButton: {
-    padding: 20,
+    padding: 8,
     backgroundColor: Colors.white,
     ...CommonStyles.flexCenter,
     margin: 5,
     borderRadius: 100,
     // paddingHorizontal: 15
-    elevation:2
+    elevation:2,
+    // width:50,
+    // height:50
   },
   categoryButtonText: {
     ...CommonStyles.fontFamily,

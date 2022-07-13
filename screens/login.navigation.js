@@ -12,6 +12,7 @@ import RiderSignup from './rider/rider.signup.screen';
 import ChangePasswordScreen from './change-password.screen';
 import { HomePageScreen } from './HomePageScreen';
 import SignUpScreenCustomer from './sign-up.screen-customer';
+import PrivacyPolicy from './privacypolicy.screen';
 
 const Stack = createStackNavigator();
 
@@ -58,9 +59,13 @@ export const LSFS = () => {
         name={LOGIN_SIGNUP_FORGOT_ROUTES.OTP_PASSWORD}
         component={OtpPasswordScreen}
       />
-         <Stack.Screen
+      <Stack.Screen
         name={LOGIN_SIGNUP_FORGOT_ROUTES.CHANGE_PASSWORD}
         component={ChangePasswordScreen}
+      />
+      <Stack.Screen
+        name={LOGIN_SIGNUP_FORGOT_ROUTES.PRIVACY_POLICY}
+        component={PrivacyPolicy}
       />
     </Stack.Navigator>
   );
