@@ -208,25 +208,46 @@ export const ProductProvider = ({children}) => {
     
     
     useEffect(() => {
+        let abortController = new AbortController();  
         getProducts()
+        return () => {  
+            abortController.abort();  
+        }  
+       
     }, [])
 
     useEffect(() => {
-      getComision()
+        let abortController = new AbortController();
+        getComision()
+        return () => {  
+            abortController.abort();  
+        } 
     }, [])
 
     useEffect(() => {
+        let abortController = new AbortController();
         getMarcas();
+        return () => {  
+            abortController.abort();  
+        } 
     }, [])
 
     useEffect(() => {
+        let abortController = new AbortController();
         getServices();
+        return () => {  
+            abortController.abort();  
+        } 
     }, [])
     
     useEffect(() => {
+        let abortController = new AbortController();
         if (valueMaker) {
             getModelo(valueMaker); 
         }
+        return () => {  
+            abortController.abort();  
+        } 
     }, [valueMaker])
     
     

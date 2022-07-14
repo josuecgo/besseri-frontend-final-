@@ -130,12 +130,12 @@ const App2 = () => {
   return (
   
     //<PushNotificationManager getNotificaciones={getNotificaciones} >
-            <NavigationContainer>
+      <NavigationContainer>
         
         
         <StatusBar barStyle={isDarkMode ? 'dark-content' : 'light-content'} />
-       {/* {showSplashScreen ? <SplashScreen /> : <MainNavigation />} */}
-       <MainNavigation />
+        {/* {showSplashScreen ? <SplashScreen /> : <MainNavigation />} */}
+        <MainNavigation />
    
       </NavigationContainer>
     
