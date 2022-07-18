@@ -19,7 +19,7 @@ import { StripeProvider } from '@stripe/stripe-react-native';
 import RiderReducer from './util/ReduxStore/Reducers/RiderReducers/RiderReducer';
 import firebaseApp from "@react-native-firebase/app";
 import messaging, { firebase } from '@react-native-firebase/messaging';
-
+import { NativeBaseProvider, Text, Box } from 'native-base';
 import axios from 'axios';
 import { api_urls, base_url } from './util/api/api_essentials';
 import PushNotification from 'react-native-push-notification';
@@ -74,9 +74,9 @@ const App = () => {
         <NotificationProvider>  
           
           <ProductProvider>
-           
+            <NativeBaseProvider>
               <App2/>
-          
+            </NativeBaseProvider>
           </ProductProvider>
        
         </NotificationProvider>

@@ -40,7 +40,8 @@ export const BOTTOM_TAB_VENDOR_ROUTES = {
   NOTIFICATION: 'Notification',
   PROFILE: 'Profile',
   SERVICES:'Services',
-  SERVICES2:'Services2'
+  SERVICES2:'Services2',
+  CUPON:'Cupon'
 };
 
 export const VENDOR_DETAILS_ROUTES = {
@@ -55,6 +56,10 @@ export const VENDOR_DETAILS_ROUTES = {
   CREATE_PRODUCT:'Create Product',
   CREATE_SERVICE:'Create Service',
   BUSINESS_LOCATION:'Business Location'
+};
+
+export const CUPON_ROUTES = {
+  HOME_CUPON:'Home Cupon'
 };
 
 export const SHARED_ROUTES = {

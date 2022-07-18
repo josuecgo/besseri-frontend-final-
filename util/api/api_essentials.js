@@ -55,7 +55,10 @@ export const vendor_api_urls = {
     get_sub_categories:`${base_url}/categories/get-subcategories`,
     get_multiple_stores:`${base_url}/business/get-multiple-stores`,
     create_brand:`${base_url}/brands/create-brand`,
-    get_brands:`${base_url}/brands/get-brands`
+    get_brands:`${base_url}/brands/get-brands`,
+    get_cupones:`${base_url}/cupon/get-cupon`,
+    delete_cupones:`${base_url}/cupon/delete-cupon`,
+    create_cupones:`${base_url}/cupon/create-cupon`
 }
 export const customer_api_urls = {
     get_products:`${base_url}/products/get-products`,

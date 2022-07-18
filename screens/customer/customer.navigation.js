@@ -71,10 +71,10 @@ export const PartsServicesFunctionsDrawer = () => {
         component={CustomerNotificationStack}
       />
 
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name={'Mis Tarjetas'}
         component={CardsNavigator}
-      />
+      /> */}
 
       <Drawer.Screen
         name={'Mi dirección'}

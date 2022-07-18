@@ -7,6 +7,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import VendorProductsScreen from './vendor-products.screen';
 import {
   BOTTOM_TAB_VENDOR_ROUTES,
+  CUPON_ROUTES,
   CUSTOMER_HOME_SCREEN_ROUTES,
   SHARED_ROUTES,
   VENDOR_DETAILS_ROUTES,
@@ -15,7 +16,7 @@ import VendorDashboardScreen from './vendor-dashboard.screen';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import VendorNotificationsScreen from './vendor-notifications.screen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import {createStackNavigator} from '@react-navigation/stack';
 import VendorProductDetailsScreen from './vendor-product-details.screen';
 import VendorOrderDetailsScreen from './vendor-order-details.screen';
@@ -31,6 +32,7 @@ import VendorLocationScreen from './vendor.businessLocation'
 import { EditProfile } from './vendor-edit-profile';
 import { Badge } from '../../components/Badge';
 import { NotificationContext } from '../../util/context/NotificationContext';
+import { HomeScreen } from './vendor-home.screen';
 export const VendorNavigation = () => {
 
   const {count} = useContext(NotificationContext);
@@ -63,10 +65,12 @@ export const VendorNavigation = () => {
                 break;
 
                 case BOTTOM_TAB_VENDOR_ROUTES.DASHBOARD:
-                iconName = 'notifications'
+                  iconName = 'notifications'
                 break;
-
-
+                
+                case BOTTOM_TAB_VENDOR_ROUTES.CUPON:
+                  iconName = 'local-offer'
+                break;
                 
                 default:
                     iconName = 'person'
@@ -109,6 +113,13 @@ export const VendorNavigation = () => {
         }}
       />
       <BottomTab.Screen
+        name={BOTTOM_TAB_VENDOR_ROUTES.CUPON}
+        component={CuponNavigator}
+        options={{
+          title: 'Cupón'
+        }}
+      />
+      <BottomTab.Screen
         name={BOTTOM_TAB_VENDOR_ROUTES.ORDERS2}
         component={OrderNavigator}
         options={{
@@ -123,16 +134,6 @@ export const VendorNavigation = () => {
           
         }}
       />
-      {/* <BottomTab.Screen
-        name={BOTTOM_TAB_VENDOR_ROUTES.NOTIFICATION}
-        component={VendorNotificationsScreen}
-        options={{
-          title: BOTTOM_TAB_VENDOR_ROUTES.NOTIFICATION,
-          tabBarIcon: ({focused, color, size}) => (
-            <AntDesign name="notification" size={size} color={color} />
-          ),
-        }}
-      /> */}
       <BottomTab.Screen
         name={BOTTOM_TAB_VENDOR_ROUTES.PROFILE}
         component={ProfileNavigator}
@@ -308,5 +309,23 @@ const OrderNavigator = () => {
         }}
       />
     </OrderStack.Navigator>
+  );
+};
+
+const CuponStack = createStackNavigator();
+
+const CuponNavigator = () => {
+
+  return (
+    <CuponStack.Navigator>
+      <CuponStack.Screen
+        name={CUPON_ROUTES.HOME_CUPON}
+        component={HomeScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+    </CuponStack.Navigator>
   );
 };

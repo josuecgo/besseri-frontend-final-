@@ -14,7 +14,9 @@ export const HeaderTitle = ({nav,titulo,iconName='keyboard-backspace'}) => {
     <>
       	<HeaderBackground/>
         <View style={styles.header}>
-            <TouchableOpacity
+          {
+            nav && (
+               <TouchableOpacity
             onPress={nav}
             style={{alignSelf:'flex-start'}}>
                 <MaterialCommunityIcons
@@ -23,6 +25,9 @@ export const HeaderTitle = ({nav,titulo,iconName='keyboard-backspace'}) => {
                 size={25}
                 />
             </TouchableOpacity>
+            )
+          }
+           
             <Text style={styles.headerText}>{titulo}</Text>
         </View>
     </>
