@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
 import { paymentApis, vendor_api_urls } from '../util/api/api_essentials';
 
-import { getUser } from '../util/local-storage/auth_service';
+import { getUser, getUserId } from '../util/local-storage/auth_service';
 
 import { showToaster } from '../util/constants';
 
@@ -58,25 +58,53 @@ export const useCompras = () => {
     []);
 
     const createCupones = useCallback(
-        async (id) => {
+        async (data) => {
             setLoading(true)
             try {
+              
                 
-                const apiCall = await axios.post(`${vendor_api_urls.create_cupones}`);
+                const apiCall = await axios.post(`${vendor_api_urls.create_cupones}`,data);
                
-                getCupones()
-                showToaster('Cupon eliminado correctamente');
+
+                if (apiCall?.status == 200) {
+                    getCupones()
+                    showToaster('Cupon creado correctamente');
+                }
+               
                 setLoading(false)
-                
+                return apiCall?.status
             } catch (e) {
-                
+                console.log(e?.response?.status);
                 setLoading(false);
-                showToaster(e.response.data?.error);
+                showToaster(e?.response?.data?.message);
                 
-               
+               return e?.response?.status
             }
         }, 
     []);
+
+    const aplicarCupones = useCallback(
+        async (name) => {
+            setLoading(true)
+            try {
+             
+                const id = await getUserId();
+                const apiCall = await axios.post(`${vendor_api_urls.aplicar_cupones}/${id}`,{name});
+               
+                setLoading(false)
+                return {cupon:apiCall.data,status:apiCall.status}
+            } catch (e) {
+                console.log(e?.response?.status);
+                setLoading(false);
+                showToaster(e?.response?.data?.message);
+                
+               return {status:e?.response?.status}
+            }
+        }, 
+    []);
+
+
+    
 
     
 
@@ -101,6 +129,7 @@ export const useCompras = () => {
         isLoading,
         cupones,
         deleteCupones,
-        createCupones
+        createCupones,
+        aplicarCupones
     }
 }

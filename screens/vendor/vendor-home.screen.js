@@ -6,13 +6,14 @@ import Colors from '../../util/styles/colors';
 import { HeaderTitle } from '../../components/Customer/HeaderTitle';
 import { useCompras } from '../../hooks/useCompras';
 import { CuponCard } from '../../components/Vendor/CuponCard';
+import { CUPON_ROUTES } from '../../util/constants';
 
 
 export const HomeScreen = (props) => {
     const {cupones,deleteCupones} = useCompras()
    
     const createCupon = () => {
-        props?.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.CREATE_CARD)
+        props?.navigation.navigate(CUPON_ROUTES.EDIT_CREATE)
     }
 
     const editarCupon = (data) => {

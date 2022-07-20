@@ -38,6 +38,8 @@ import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
 import { moneda } from '../../util/Moneda';
 import SpinKit from 'react-native-spinkit';
 import { useCostos } from '../../hooks/useCostos';
+import { Cupon } from '../../components/Customer/Cupon';
+import { useCompras } from '../../hooks/useCompras';
 
 
 LogBox.ignoreLogs([
@@ -73,8 +75,8 @@ const CustomerOrderSummaryFree = React.memo((props) => {
   const totalSinEnvio = allCharges?.subtotal + allCharges?.besseri_commission ;
   const [tienda, setTienda] = useState(false);
 
+  
  
-
  
 
 
@@ -85,9 +87,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
     setLoading(false);
   };
 
-  useEffect(() => {
-    getUserDetails();
-  }, []);
+
 
  
 
@@ -331,6 +331,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
 
 
   useEffect(() => {
+    let abortController = new AbortController();
     CalcularDistancia(
       business?.location?.longitude,
       business?.location?.latitude,
@@ -339,19 +340,39 @@ const CustomerOrderSummaryFree = React.memo((props) => {
       costoK,
     );
     setDeliveryDistance(distancia);
+    return () => {  
+      abortController.abort();  
+    } 
   }, [deliveryAddress]);
 
 
 
   useEffect(() => {
+    let abortController = new AbortController();
     getAddresses();
+      return () => {  
+        abortController.abort();  
+      } 
   }, []);
 
   useEffect(async () => {
+    let abortController = new AbortController();
     if (deliveryAddress && pago === 'card' ) {
       await initializePaymentSheet();
     }
+    return () => {  
+      abortController.abort();  
+    } 
   }, [deliveryDistance]);
+
+  useEffect(() => {
+    let abortController = new AbortController();
+    getUserDetails();
+    return () => {  
+      abortController.abort();  
+    } 
+  }, []);
+
 
 
   const DetailItem = ({label, value}) => {
@@ -373,8 +394,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
     );
   };
 
-
-
+  
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
 
@@ -435,6 +455,8 @@ const CustomerOrderSummaryFree = React.memo((props) => {
             </Text>
           </View>
         </View>
+       
+        
 
         <ThinlineSeparator margin={10} />
 
@@ -514,7 +536,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
         <ButtonComponent
           handlePress={pago === 'cash' ? comprar : openPaymentSheet}
           borderRadius={0}
-          buttonText={'Verificar'}
+          buttonText={'Comprar'}
           colorB={Colors.terciarySolid}
           disabled={isVisible}
           padding={5}

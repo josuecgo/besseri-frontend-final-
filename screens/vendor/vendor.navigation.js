@@ -33,6 +33,7 @@ import { EditProfile } from './vendor-edit-profile';
 import { Badge } from '../../components/Badge';
 import { NotificationContext } from '../../util/context/NotificationContext';
 import { HomeScreen } from './vendor-home.screen';
+import { CrearEditCuponScreen } from './Cupon/CrearEditCuponScreen';
 export const VendorNavigation = () => {
 
   const {count} = useContext(NotificationContext);
@@ -321,6 +322,14 @@ const CuponNavigator = () => {
       <CuponStack.Screen
         name={CUPON_ROUTES.HOME_CUPON}
         component={HomeScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <CuponStack.Screen
+        name={CUPON_ROUTES.EDIT_CREATE}
+        component={CrearEditCuponScreen}
         options={{
           headerShown: false,
         }}

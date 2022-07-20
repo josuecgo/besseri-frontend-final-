@@ -59,7 +59,8 @@ export const VENDOR_DETAILS_ROUTES = {
 };
 
 export const CUPON_ROUTES = {
-  HOME_CUPON:'Home Cupon'
+  HOME_CUPON:'Home Cupon',
+  EDIT_CREATE: 'Craer/Editar Cupon'
 };
 
 export const SHARED_ROUTES = {

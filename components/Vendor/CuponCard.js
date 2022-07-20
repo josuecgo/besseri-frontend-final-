@@ -32,9 +32,9 @@ export const CuponCard = ({ data,editarCupon,eliminarCupon }) => {
                     </Pressable>;
             }}>
 
-                <Menu.Item onPress={() => editarCupon(data)} >
+                {/* <Menu.Item onPress={() => editarCupon(data)} >
                     Editar
-                </Menu.Item>
+                </Menu.Item> */}
                 <Menu.Item onPress={()=> eliminarCupon(data)} >
                     Eliminar
                 </Menu.Item>

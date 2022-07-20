@@ -17,6 +17,8 @@ import { HeaderBackground } from '../../components/Background/HeaderBackground';
 import { deviceHeight, deviceWidth } from '../../util/Dimentions';
 import { useLocation } from '../../hooks/useLocation';
 import { getUserAddress, getUserId } from '../../util/local-storage/auth_service';
+import { Cupon } from '../../components/Customer/Cupon';
+import { descuento } from '../../util/helpers/Descuento';
 
 
 const CustomerCartScreen = (props) => {
@@ -40,9 +42,10 @@ const CustomerCartScreen = (props) => {
   const [isLogin , setIsLogin  ] = useState(false)
   let businessIds = [];
   
-  
+  const [cupon, setCupon] = useState(false)
  
   useEffect(async() => {
+    let abortController = new AbortController();
     const user = await getUserId();
     setIsLogin(user)
     getComision();
@@ -50,7 +53,9 @@ const CustomerCartScreen = (props) => {
       getAddresses(user);
     }
     
-    
+    return () => {  
+      abortController.abort();  
+    } 
    
   }, [isLogin])
 
@@ -129,15 +134,17 @@ const CustomerCartScreen = (props) => {
         for (var a = 0; a < allProducts?.length; a++) {
           totalProductsPrice += allProducts[a]?.price * allProducts[a]?.quantity
         }
+        let subtotal = descuento(totalAmount);
+
         props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ENVIO, {
           deliveryDistance:deliveryDistance,
           storeId: businessProfiles[0]?._id,
           products: allProducts,
           business: businessProfiles[0],
-          totalAmount: Math.round(totalProductsPrice + Math.round((Number(comission) * Number(totalAmount)) / 100)),
-          comission:Math.round((Number(comission) * Number(totalAmount)) / 100),
+          totalAmount: Math.round(totalProductsPrice + Math.round((Number(comission) * Number(subtotal)) / 100)),
+          comission:Math.round((Number(comission) * Number(subtotal)) / 100),
           delivery_fee:delivery_fee,
-          subtotal:totalAmount,
+          subtotal:subtotal,
           comision:comission
         })
        } else {
@@ -152,10 +159,15 @@ const CustomerCartScreen = (props) => {
 
 
 
+
   useEffect(() => {
+    let abortController = new AbortController();
     if(businessProfiles && delivery_fee) {
       calculateDelivery()
     }
+    return () => {  
+      abortController.abort();  
+    } 
   },[businessProfiles,delivery_fee,direccion])
 
   const fetchFees = async () => {
@@ -171,9 +183,15 @@ const CustomerCartScreen = (props) => {
     }
   }
   useEffect(() => {
+    let abortController = new AbortController();
     fetchFees();
+    return () => {  
+      abortController.abort();  
+    } 
   }, []);
   useEffect(() => {
+    let abortController = new AbortController();
+
     for (var a = 0; a < products?.length; a++) {
       if (businessIds?.includes(products[a]?.business_id)) {
         return;
@@ -181,10 +199,17 @@ const CustomerCartScreen = (props) => {
         businessIds?.push(products[a]?.business_id);
       }
     }
+    return () => {  
+      abortController.abort();  
+    } 
 
   }, [products])
   useEffect(() => {
+    let abortController = new AbortController();
     fetchBusinessDetails()
+    return () => {  
+      abortController.abort();  
+    } 
   }, [businessId]);
   const increaseQuantity = (id, price) => {
     dispatch(CartActions.increaseQuantity(id, price));
@@ -214,7 +239,7 @@ const CustomerCartScreen = (props) => {
     )
   }
   
-
+  console.log(cupon?.cupon?.data);
  
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -349,7 +374,10 @@ const CustomerCartScreen = (props) => {
 
                 
               </ScrollView>
+             
               <View style={styles.detailCard}>
+                  
+                  <Cupon setCupon={setCupon} />
                   {/* <DetailItem label={'Comisión'} value={`${(Number(comission) * Number(totalAmount)) / 100} MXN`} /> */}
                   {/* <DetailItem label={'Delivery Charges'} distance={true} distanceLabel={`${deliveryDistance} km away`} value={`${Math.round(totalDeliveryFee)} MXN`} /> */}
                   <DetailItem label={'Total'} value={ `${totalAmount + (billComission * totalAmount / 100) } MXN`} />
@@ -360,6 +388,8 @@ const CustomerCartScreen = (props) => {
           </>
 
       }
+
+      
      {
        products?.length > 0 ?
        <View style={{ position: 'absolute', bottom: 0, width: '100%',zIndex:9999 }}>
