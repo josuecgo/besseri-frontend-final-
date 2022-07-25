@@ -67,7 +67,7 @@ const App = () => {
   
   return(
     <StripeProvider
-    publishableKey={KeysStripe.LIVE_KEY}
+    publishableKey={KeysStripe.TEST_KEY}
     >
     <Provider store={reduxStore}>
     

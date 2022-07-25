@@ -59,7 +59,7 @@ export const vendor_api_urls = {
     get_cupones:`${base_url}/cupon/get-cupon`,
     delete_cupones:`${base_url}/cupon/delete-cupon`,
     create_cupones:`${base_url}/cupon/create-cupon`,
-    aplicar_cupones:`${base_url}/cupon/aplicar-cupon`
+    search_cupones:`${base_url}/cupon/search-cupon`
 }
 export const customer_api_urls = {
     get_products:`${base_url}/products/get-products`,

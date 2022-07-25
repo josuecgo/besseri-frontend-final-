@@ -89,7 +89,7 @@ export const useCompras = () => {
             try {
              
                 const id = await getUserId();
-                const apiCall = await axios.post(`${vendor_api_urls.aplicar_cupones}/${id}`,{name});
+                const apiCall = await axios.post(`${vendor_api_urls.search_cupones}/${id}`,{name});
                
                 setLoading(false)
                 return {cupon:apiCall.data,status:apiCall.status}

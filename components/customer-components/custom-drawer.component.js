@@ -64,18 +64,11 @@ const CustomDrawerComponent = React.memo((props) => {
     const user = await getUser();
 
     setUser(user)
-    // setUser(user);
+   
   }
   useEffect(() => {
     getUserData()
   },[user]);
-  // const getUserDetails = async() => {
-  //   const userData = await getUser();
-  //   setUser(userData);
-  // }
-  // useEffect(() => {
-  //   getUserDetails();
-  // },[]);
 
   const goDrawer = (name) => {
     if (user) {

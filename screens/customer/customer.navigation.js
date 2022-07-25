@@ -36,6 +36,7 @@ import { MetodoScreen } from './customer.metodoscreen';
 import { CustomerCardsScreen } from './customer.cards.screen';
 import { CreateCardScreen } from './customer.createCard.screen';
 import PrivacyPolicy from '../privacypolicy.screen';
+import { CartScreen } from './Cart/CartScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -129,9 +130,10 @@ const OrderStack = () => {
     screenOptions={{headerShown: false}}
       initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
     >
-       <Stack.Screen
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.CART}
         component={CustomerCartScreen}
+        // component={CartScreen}
       />
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ENVIO}

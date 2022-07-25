@@ -19,19 +19,23 @@ import { useLocation } from '../../hooks/useLocation';
 import { getUserAddress, getUserId } from '../../util/local-storage/auth_service';
 import { Cupon } from '../../components/Customer/Cupon';
 import { descuento } from '../../util/helpers/Descuento';
+import { ExploreScreen } from './Cart/ExploreScreen';
+import { useCart } from '../../hooks/useCart';
 
 
 const CustomerCartScreen = (props) => {
   const dispatch = useDispatch();
   const products = useSelector(state => state.cart.cart_items);
   const totalAmount = useSelector(state => state.cart.total_amount);
+  const descuento = useSelector(state => state.cart.descuento);
+  const idDesc = useSelector(state => state.cart.idDesc);
   const businessId = useSelector(state => state?.cart?.businessId);
   const [direccion, setDireccion] = useState({
     long:0,
     lat:0,
     label:''
   })
-
+  // const {totalAmount} = useCart()
   const businessSelectRef = useRef();
   const [businessProfiles, setBusinessProfiles] = useState([]);
   const [comission, setComission] = useState();
@@ -41,8 +45,8 @@ const CustomerCartScreen = (props) => {
   const [deliveryDistance,setDeliveryDistance] = useState(null);
   const [isLogin , setIsLogin  ] = useState(false)
   let businessIds = [];
-  
-  const [cupon, setCupon] = useState(false)
+  const {cupon} = useCart()
+
  
   useEffect(async() => {
     let abortController = new AbortController();
@@ -104,7 +108,7 @@ const CustomerCartScreen = (props) => {
 
   const fetchBusinessDetails = async () => {
     try {
-      
+      console.log(businessId);
       const getBusinessDetails = await axios.post(vendor_api_urls?.get_multiple_stores, {
         businessIds: [businessId]
       });
@@ -126,6 +130,7 @@ const CustomerCartScreen = (props) => {
     setDeliveryDistance(Math.round(distance));
   }
 
+  
   const goPurchase = () => {
     if (isLogin) {
       if(businessProfiles[0]?.wallet_id && !businessProfiles[0]?.isBlocked) {
@@ -134,8 +139,8 @@ const CustomerCartScreen = (props) => {
         for (var a = 0; a < allProducts?.length; a++) {
           totalProductsPrice += allProducts[a]?.price * allProducts[a]?.quantity
         }
-        let subtotal = descuento(totalAmount);
-
+        let subtotal = totalAmount -  descuento;
+       
         props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ENVIO, {
           deliveryDistance:deliveryDistance,
           storeId: businessProfiles[0]?._id,
@@ -145,11 +150,12 @@ const CustomerCartScreen = (props) => {
           comission:Math.round((Number(comission) * Number(subtotal)) / 100),
           delivery_fee:delivery_fee,
           subtotal:subtotal,
-          comision:comission
+          comision:comission,
+          cupon:idDesc
         })
        } else {
          showToaster('No puedes hacer pedidos en esta tienda en este momento.')
-         console.log('else');
+         
        }
     } else {
       props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR)
@@ -157,8 +163,7 @@ const CustomerCartScreen = (props) => {
   }
 
 
-
-
+   
 
   useEffect(() => {
     let abortController = new AbortController();
@@ -189,6 +194,7 @@ const CustomerCartScreen = (props) => {
       abortController.abort();  
     } 
   }, []);
+
   useEffect(() => {
     let abortController = new AbortController();
 
@@ -211,6 +217,7 @@ const CustomerCartScreen = (props) => {
       abortController.abort();  
     } 
   }, [businessId]);
+
   const increaseQuantity = (id, price) => {
     dispatch(CartActions.increaseQuantity(id, price));
   }
@@ -239,7 +246,6 @@ const CustomerCartScreen = (props) => {
     )
   }
   
-  console.log(cupon?.cupon?.data);
  
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -298,30 +304,9 @@ const CustomerCartScreen = (props) => {
       </Modalize>
       {
         products.length == 0 ?
-          <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-            <View style={{
-              width:200,
-              height:200,
-              borderWidth:1,
-              borderColor:Colors.lightPrimary,
-              backgroundColor:Colors.bgColor,
-              justifyContent:'center',
-              alignItems:'center',
-              borderRadius:200/2
-            }}>
-            <FontAwesome5 name='shopping-cart' color={Colors.info} size={70}/>
-            </View>
-            <Text style={{...CommonStyles.fontFamily,fontSize:25,color:Colors.info}}>Tu carrito está vacío :/</Text>
-            <Text style={{...CommonStyles.fontFamily,color:'grey',marginVertical:5}}>Explora productos y añádelos al carrito</Text>
-            <ButtonComponent
-              buttonText={'Explore'}
-              colorB={Colors.terciarySolid}
-              borderRadius={10}
-              width={200}
-              margin={20}
-              handlePress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS)}
-              />
-          </View>
+         (
+          <ExploreScreen {...props} />
+         )
           :
           <>
           <HeaderBackground/>
@@ -375,15 +360,24 @@ const CustomerCartScreen = (props) => {
                 
               </ScrollView>
              
-              <View style={styles.detailCard}>
+             {
+              totalAmount == NaN ? (
+                <View/>
+              ):(
+                <View style={styles.detailCard}>
                   
-                  <Cupon setCupon={setCupon} />
-                  {/* <DetailItem label={'Comisión'} value={`${(Number(comission) * Number(totalAmount)) / 100} MXN`} /> */}
-                  {/* <DetailItem label={'Delivery Charges'} distance={true} distanceLabel={`${deliveryDistance} km away`} value={`${Math.round(totalDeliveryFee)} MXN`} /> */}
-                  <DetailItem label={'Total'} value={ `${totalAmount + (billComission * totalAmount / 100) } MXN`} />
+                  <Cupon  />
+                 
+                  
+                  <DetailItem 
+                  label={'Total'}  
+                  value={ `${totalAmount + (billComission * totalAmount / 100) - descuento} MXN`} 
+                  />
                   {/* <DetailItem label={'Total Charges'} value={`${Math.round(totalAmount + totalDeliveryFee + (Number(comission) * Number(totalAmount)) / 100)} MXN`} /> */}
                   <Text style={{margin:5}}>Se aplicarán gastos de envío en función del número de kilómetros</Text>
                 </View>
+              )
+             }
             </ScrollView>
           </>
 

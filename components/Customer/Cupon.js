@@ -6,20 +6,14 @@ import { Button, Input } from 'native-base';
 import { useCompras } from '../../hooks/useCompras';
 import { adjust } from '../../util/Dimentions';
 import Colors from '../../util/styles/colors';
+import { useCart } from '../../hooks/useCart';
 
-export const Cupon = ({setCupon}) => {
+export const Cupon = () => {
     const {aplicarCupones,isLoading} = useCompras()
     const [txtCupon, setTxtCupon] = useState('')
-    const [aplicado, setAplicado] = useState('')
-    const aplicar = async () => {
-        const result = await aplicarCupones(txtCupon);
-        
-        setCupon(result)
-        if (result?.status == 200) {
-            setAplicado(result?.cupon?.data?.name)
-        }
-        
-    }
+    const {aplicar,aplicado} = useCart();
+
+
   
     return (
     <>
@@ -30,11 +24,13 @@ export const Cupon = ({setCupon}) => {
             onChangeText={(txt) => setTxtCupon(txt)}
             />
 
-            <Button size="xs" onPress={aplicar}>Aplicar</Button>
+            <Button size="xs" onPress={() => aplicar(txtCupon)}>Aplicar</Button>
 
         </View>
         <View style={styles.aplicado} >
-            <Text style={styles.cupon} >{aplicado}</Text>
+           
+                    <Text style={styles.cupon} >{aplicado?.name}</Text>
+  
         </View>
         
     </>

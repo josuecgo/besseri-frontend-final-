@@ -1,4 +1,5 @@
 export const ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART';
+export const DESCUENTO = 'Descuento';
 export const INCREASE_QUANTITY = 'INCREASE_QUANTITY';
 export const DECRASE_QUANTITY = 'DECRASE_QUANTITY';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
@@ -11,6 +12,16 @@ export const addItemToCart = (item) => {
         type:ADD_ITEM_TO_CART,
         data:item,
         _id:item?._id
+    })
+}
+
+
+export const descuentoToCart = (item,name) => {
+    
+    return({
+        type:DESCUENTO,
+        descuento:item,
+        id:name?._id
     })
 }
 

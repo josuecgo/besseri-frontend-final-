@@ -52,6 +52,8 @@ const CustomerOrderSummaryFree = React.memo((props) => {
   const {initPaymentSheet, presentPaymentSheet} = useStripe();
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
   const cartProduct = useSelector(state => state.cart);
+  const desc = useSelector(state => state.cart.descuento);
+ 
   const dispatch = useDispatch();
   const pago = params?.pago;
   const products = params?.products;
@@ -77,7 +79,6 @@ const CustomerOrderSummaryFree = React.memo((props) => {
 
   
  
- 
 
 
   const getUserDetails = async () => {
@@ -89,7 +90,6 @@ const CustomerOrderSummaryFree = React.memo((props) => {
 
 
 
- 
 
 
   const getAddresses = async () => {
@@ -172,7 +172,8 @@ const CustomerOrderSummaryFree = React.memo((props) => {
         delivery_fee: 0,
         besseri_comission: allCharges?.besseri_commission,
         intentId: pago,
-        storePickup:true
+        storePickup:true,
+        cupon: params?.cupon
       };
 
       const apiCall = await axios.post(
@@ -238,7 +239,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
         amount: allCharges.totalAmount,
         deliveryDistance:  0 ,
         productsIds: ids,
-
+        cupon:desc
       };
 
       if (!business?.wallet_id) {

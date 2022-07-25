@@ -36,6 +36,8 @@ LogBox.ignoreLogs([
 
 const CustomerOrderSummary = (props) => {
     const {params} = useRoute();
+
+  const desc = useSelector(state => state.cart.descuento);
     const pago = params?.pago;
     const {initPaymentSheet,presentPaymentSheet} = useStripe();
     const [isOrderPlaced,setOrderPlaced] = useState(false);
@@ -60,7 +62,7 @@ const CustomerOrderSummary = (props) => {
     const [deliveryAddress,setDeliveryAddress] = useState(null);
     const [deliveryDistance,setDeliveryDistance] = useState(0)
     const totalAmount = allCharges?.subtotal  + allCharges?.besseri_commission + costoEnvio;
-
+    
     const handleModalize = async(flag) => {
         if(flag == 'open') {
             addressListingRef?.current?.open()
@@ -125,7 +127,8 @@ const CustomerOrderSummary = (props) => {
             ordered_on:new Date(),
             delivery_fee:allCharges?.delivery_charges,
             besseri_comission:allCharges?.besseri_commission,
-            intentId:stripeEssentials?.intentId
+            intentId:stripeEssentials?.intentId,
+            cupon: params?.cupon
             }
             
         
@@ -169,6 +172,7 @@ const CustomerOrderSummary = (props) => {
             delivery_fee:allCharges?.delivery_charges,
             besseri_comission:allCharges?.besseri_commission,
             intentId: pago,
+            cupon: params?.cupon
            
           };
     
@@ -234,6 +238,7 @@ const CustomerOrderSummary = (props) => {
             amount:totalAmount,
             deliveryDistance:distancia,
             productsIds:ids,
+            cupon:desc
         }
         
         if(!business?.wallet_id) {
