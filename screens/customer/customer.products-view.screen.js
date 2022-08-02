@@ -32,12 +32,7 @@ const SCREEN_STATES = {
 //   }
 // }
 const CustomerProductsViewScreen = React.memo((props) => {
-  const [locationStatus, setLocationStatus] = useState(null)
-  const [screenStates, setScreenStates] = useState({
-    [SCREEN_STATES.USER_LOCATION]: {},
-    [SCREEN_STATES.PRODUCTS]:[],
-    [SCREEN_STATES.CATEGORIES]:[]
-  });
+
 
   const [open, setOpen] = useState(false);
   const [openModel, setOpenModel] = useState(false);

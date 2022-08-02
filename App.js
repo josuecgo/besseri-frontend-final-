@@ -29,6 +29,7 @@ import ProductCardComponent from './components/customer-components/product-card.
 import { ProductProvider } from './util/context/Product/ProductContext';
 import PushNotificationManager from './util/context/PushNotificationManager';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import { ChatProvider } from './util/context/Chat/ChatContext';
 
 
 const getComponent = {
@@ -74,9 +75,11 @@ const App = () => {
         <NotificationProvider>  
           
           <ProductProvider>
-            <NativeBaseProvider>
-              <App2/>
-            </NativeBaseProvider>
+            <ChatProvider>
+              <NativeBaseProvider>
+                <App2/>
+              </NativeBaseProvider>
+            </ChatProvider>
           </ProductProvider>
        
         </NotificationProvider>

@@ -61,7 +61,7 @@ const CustomerOrderDetail = props => {
     Linking.openURL(url);
   };
 
-console.log(store?.location);
+
   const getStore = async () => {
     const url = `${customer_api_urls.get_store_data}/${params?.order.storeId}`;
     const apiCall = await axios.get(url);
@@ -199,60 +199,9 @@ console.log(store?.location);
             </Text>
           </View>
 
-          {/* {params.order.products.map(item => (
-            <View
-              key={item._id}
-              style={{
-                flexDirection: 'row',
-                width: '100%',
-                alignSelf: 'center',
-                marginTop: '3%',
-                borderBottomWidth: 0.3,
-                height: 50,
-                paddingHorizontal: 10,
-              }}>
-              <View
-                style={{
-                  width: '65%',
-                  ...CommonStyles.flexDirectionRow,
-                  ...CommonStyles.horizontalCenter,
-                }}>
-                <Image
-                  source={{uri: `${base_url}/${item.productImg}`}}
-                  style={{width: 40, height: 40, borderRadius: 40 / 2}}
-                />
-                <Text
-                  style={{fontSize: 14, fontWeight: 'bold', paddingLeft: 5}}>
-                  {item.name}
-                </Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  width: '35%',
-                }}>
-                <View>
-                  <Text style={{fontSize: 15, fontWeight: 'bold'}}>
-                    {item.quantity}x
-                  </Text>
-                </View>
-                <View>
-                  <Text style={{fontSize: 16, fontWeight: 'bold'}}>
-                    {item.quantity *
-                      (Number(item?.price) +
-                        Number((comision * item?.price) / 100))}{' '}
-                    MXN
-                  </Text>
-                </View>
-              </View>
-            </View>
-          ))} */}
+      
           <View>
-            {/* <DetailItem label={'Envío'} value={'5.00 MXN'}/>
-           <DetailItem label={'Cargos'} value={'2.00 MXN'}/>
-           <DetailItem label={'Sub total'} value={`${totalAmount.toFixed(2)} MXN`}/> */}
+         
             <DetailItem
               label={'Total'}
               value={`${totalAmount.toFixed(2)} MXN`}

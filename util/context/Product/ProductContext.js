@@ -36,9 +36,39 @@ export const ProductProvider = ({children}) => {
     const [servicios, setServicios] = useState(false)
     const [loading, setLoading] = useState(false)
     
-    const getProducts = useCallback(
-        async() => {
-          try {
+    // const getProducts = useCallback(
+    //     async() => {
+    //       try {
+    //         const apiCall = await axios.get(customer_api_urls.get_products);
+            
+            
+            
+    //         dispatch({
+    //             type:'getProductos',
+    //             payload: {
+    //                 productos: apiCall.data.data.products,
+    //                 categorias: apiCall.data.data.categories
+    //             }
+    //         });
+    //         dispatch({
+    //             type:'getCategorias',
+    //             payload: {
+                   
+    //                 categorias: apiCall.data.data.categories
+    //             }
+    //         });
+          
+          
+           
+    //       } catch(e) {
+    //         console.log({getProducts:e})
+    //         showToaster('No hay conexion con el servidor ');
+           
+    //       }
+    // },[])
+
+    const getProducts = async() => {
+        try {
             const apiCall = await axios.get(customer_api_urls.get_products);
             
             
@@ -65,7 +95,7 @@ export const ProductProvider = ({children}) => {
             showToaster('No hay conexion con el servidor ');
            
           }
-    },[])
+    }
 
     const getServices = useCallback(
         async() => {

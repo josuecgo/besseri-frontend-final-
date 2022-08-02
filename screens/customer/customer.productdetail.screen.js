@@ -6,7 +6,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import CommonStyles from '../../util/styles/styles';
 import ProductCardComponent from '../../components/customer-components/product-card.component';
 import ButtonComponent from '../../components/button/button.component';
-import { showToaster } from '../../util/constants';
+import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../util/constants';
 
 
 import { useRoute } from '@react-navigation/native';
@@ -76,7 +76,7 @@ const CustomerProductDetailScreen = (props) => {
   };
 
 
- 
+
   return (
     <ScrollView contentContainerStyle={{flexGrow:1,backgroundColor:Colors.bgColor}}>
         <View style={{flex:1}}>
@@ -96,17 +96,6 @@ const CustomerProductDetailScreen = (props) => {
 
               <View style={{width:23,height:30}} />
             </View>
-
-            
-
-
-
-
-
-
-
-
-
             <View style={{backgroundColor:Colors.white,elevation:1,marginBottom:10}} >
                       <Image
                       source={{uri: `${base_url}/${product?.productImg}`}}
@@ -167,13 +156,14 @@ const CustomerProductDetailScreen = (props) => {
           <View style={{position: 'absolute', bottom: 10 + top}}>
               <TouchableOpacity
                 onPress={() => {
-                  Linking.openURL(`mailto:${business?.email}`);
+                  props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.CHAT_SCREEN,product)
                 }}>
                 <Text
                   style={{fontSize: 18, textAlign: 'center', marginBottom: 20, textDecorationLine:'underline',}}>
                   Quiero contactar al vendedor.
                 </Text>
               </TouchableOpacity>
+
               <ButtonComponent
                 buttonText={
                   enCarrito

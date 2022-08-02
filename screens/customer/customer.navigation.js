@@ -37,6 +37,7 @@ import { CustomerCardsScreen } from './customer.cards.screen';
 import { CreateCardScreen } from './customer.createCard.screen';
 import PrivacyPolicy from '../privacypolicy.screen';
 import { CartScreen } from './Cart/CartScreen';
+import { ChatScreen } from './Chat/ChatScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -264,10 +265,10 @@ export const CustomerHomeStack = () => {
         name={LOGIN_SIGNUP_FORGOT_ROUTES.SIGN_UP_CUSTOMER}
         component={SignUpScreenCustomer}
       />
-      {/* <Stack.Screen
-        name={'OrderSuccessful'}
-        component={OrderSuccessful}
-      /> */}
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.CHAT_SCREEN}
+        component={ChatScreen}
+      />
     </Stack.Navigator>
   );
 };
