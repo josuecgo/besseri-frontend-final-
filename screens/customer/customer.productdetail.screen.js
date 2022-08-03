@@ -78,8 +78,8 @@ const CustomerProductDetailScreen = (props) => {
 
 
   return (
-    <ScrollView contentContainerStyle={{flexGrow:1,backgroundColor:Colors.bgColor}}>
-        <View style={{flex:1}}>
+    <>
+        <View style={{flex:1,backgroundColor:Colors.bgColor}}>
           <HeaderBackground/>
           
             <View style={styles.header} >
@@ -96,7 +96,7 @@ const CustomerProductDetailScreen = (props) => {
 
               <View style={{width:23,height:30}} />
             </View>
-            <View style={{backgroundColor:Colors.white,elevation:1,marginBottom:10}} >
+            <View style={{backgroundColor:Colors.white,elevation:1,marginBottom:5}} >
                       <Image
                       source={{uri: `${base_url}/${product?.productImg}`}}
                       style={{
@@ -108,9 +108,13 @@ const CustomerProductDetailScreen = (props) => {
                       />    
             </View>
 
-            <View style={{backgroundColor:Colors.white,marginHorizontal:15,paddingVertical:10,elevation:1}} >
-                     
+          <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{flexGrow:1}}
+          >
+            <View style={{backgroundColor:Colors.white,marginHorizontal:10,paddingVertical:10,elevation:1}} >
                       
+                        
                       <DetailItem label={product?.name} />
                       <DetailItem label={'Marca: '} value={product?.brand.name} size={12} sizeValue={13} />
                       <ThinlineSeparator margin={5} width={'95%'} />
@@ -131,38 +135,43 @@ const CustomerProductDetailScreen = (props) => {
                   
                   
             </View>
-          
-          <View style={{backgroundColor:Colors.white,elevation:2,marginHorizontal:15,marginTop:10,padding:10}} >
-              <Text
-                  style={{
-                  ...CommonStyles.fontFamily,
-                  fontSize: adjust(15),
-                  }}>
-                  DESCRIPCIÓN
-              </Text>
-              <Text
-                  style={{
-                  ...CommonStyles.fontFamily,
-                  color: 'grey',
-                  marginVertical: 20,
-                  fontSize: adjust(13),
-                  }}>
-                  {product?.description}
-              </Text>
-          </View>
-
-
-
-          <View style={{position: 'absolute', bottom: 10 + top}}>
-              <TouchableOpacity
-                onPress={() => {
-                  props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.CHAT_SCREEN,product)
-                }}>
+            <View style={{backgroundColor:Colors.white,elevation:2,marginHorizontal:10,marginTop:10,padding:10}} >
                 <Text
-                  style={{fontSize: 18, textAlign: 'center', marginBottom: 20, textDecorationLine:'underline',}}>
-                  Quiero contactar al vendedor.
+                    style={{
+                    ...CommonStyles.fontFamily,
+                    fontSize: adjust(15),
+                    }}>
+                    DESCRIPCIÓN
                 </Text>
-              </TouchableOpacity>
+                <Text
+                    style={{
+                    ...CommonStyles.fontFamily,
+                    color: 'grey',
+                    marginVertical: 20,
+                    fontSize: adjust(13),
+                    }}>
+                    {product?.description}
+                </Text>
+            </View>
+
+            <TouchableOpacity
+            onPress={() => {
+                    props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.CHAT_SCREEN,product)
+            }}
+            style={{
+              marginVertical:10,
+              marginBottom:50 + top
+            }}
+            >
+              <Text
+              style={{fontSize: adjust(15), textAlign: 'center', marginBottom: 20, textDecorationLine:'underline',}}>
+                Quiero contactar al vendedor.
+              </Text>
+            </TouchableOpacity>
+          </ScrollView>
+
+          <View style={{position:'absolute',bottom:0}} >
+
 
               <ButtonComponent
                 buttonText={
@@ -175,10 +184,10 @@ const CustomerProductDetailScreen = (props) => {
                 width={width}
                 handlePress={handleChange}
               />
-            </View>
+          </View>
 
       </View>
-    </ScrollView>
+    </>
   );
 };
 const styles = StyleSheet.create({
@@ -188,7 +197,7 @@ const styles = StyleSheet.create({
       //  borderWidth:1,
       // ...CommonStyles.horizontalCenter,
       justifyContent:'space-between',
-      marginBottom:10,
+      marginBottom:1,
       flexDirection:'row',
       alignItems:'center'
     },

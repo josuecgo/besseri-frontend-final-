@@ -117,7 +117,6 @@ const CustomerMoreProductsScreen = props => {
     useEffect(() => {
         getUserLocation();
     }, []);
-    //Getting user location ends here....................
 
     //Get Products to show
     const getProducts = async () => {
@@ -211,11 +210,8 @@ const CustomerMoreProductsScreen = props => {
                     let searchTextData = valueMaker;
                     return itemData.indexOf(searchTextData) > -1;
                 })
-                
                 setProductFilter(marca ? marca : []);
             }
-            
-          
         }else{  
            
             setProductFilter(products)

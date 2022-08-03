@@ -23,8 +23,6 @@ export const useFiltrado = ( isServicios ) => {
             return;
         }
 
-        
-       
         if (valueMaker) {
             if (valueModel) {
                
