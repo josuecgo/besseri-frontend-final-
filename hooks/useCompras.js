@@ -11,19 +11,20 @@ import { showToaster } from '../util/constants';
 
 export const useCompras = () => {
     const [isLoading, setLoading] = useState(false)
-    const [cards, setCards] = useState([])
     const [cupones, setCupones] = useState([])
    
-    const getCupones = useCallback(
-        async () => {
+    const getCupones = async () => {
             setLoading(true)
             try {
                 
                 const user = await getUser();
                 
-                const apiCall = await axios.get(`${vendor_api_urls.get_cupones}/${user?._id}`);
+                if (user) {
+                    const apiCall = await axios.get(`${vendor_api_urls.get_cupones}/${user?._id}`);
                
-                setCupones(apiCall?.data?.data);
+                    setCupones(apiCall?.data?.data);
+                }
+               
                 setLoading(false)
                 
             } catch (e) {
@@ -33,11 +34,9 @@ export const useCompras = () => {
                 
                
             }
-        }, 
-    []);
+    }
 
-    const deleteCupones = useCallback(
-        async (id) => {
+    const deleteCupones = async (id) => {
             setLoading(true)
             try {
                 const user = await getUser();
@@ -54,11 +53,9 @@ export const useCompras = () => {
                 
                
             }
-        }, 
-    []);
+        }
 
-    const createCupones = useCallback(
-        async (data) => {
+    const createCupones = async (data) => {
             setLoading(true)
             try {
               
@@ -80,14 +77,11 @@ export const useCompras = () => {
                 
                return e?.response?.status
             }
-        }, 
-    []);
-
-    const aplicarCupones = useCallback(
-        async (name) => {
+    }
+    const aplicarCupones = async (name) => {
             setLoading(true)
             try {
-             
+                console.log(name);
                 const id = await getUserId();
                 const apiCall = await axios.post(`${vendor_api_urls.search_cupones}/${id}`,{name});
                
@@ -100,8 +94,7 @@ export const useCompras = () => {
                 
                return {status:e?.response?.status}
             }
-        }, 
-    []);
+    }
 
 
     

@@ -30,6 +30,13 @@
             {
               "client_id": "817083462769-b3rhdm4d6k4ie94cubhq22plmaf71ssr.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "817083462769-9vuhjobm91g34gd8h0sjaamcm9k9cnd5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.josue.oropeza.refacciones.besseri"
+              }
             }
           ]
         }

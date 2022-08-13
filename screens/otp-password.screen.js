@@ -57,12 +57,9 @@ const OtpPasswordScreen = ({navigation}) => {
       setShowLoader(true);
       const apiCall = await axios.post(vendor_api_urls?.upload_business_logo,imageData);
       setShowLoader(false);
-      if(apiCall?.status == api_statuses?.success) {
-        console.log(apiCall?.data)
-        registerApiCall(apiCall?.data?.path);
-      } else {
-        showToaster('Algo salió mal inténtalo de nuevo')
-      }
+     
+      registerApiCall(apiCall?.data?.path);
+      
     } catch(e) {
       console.log(e)
       console.log(e?.response?.data)
@@ -82,18 +79,11 @@ const OtpPasswordScreen = ({navigation}) => {
           ...(route.params?.body?.isVendor ? {logo:path} : {}),
           ...(route.params?.body?.isRider ? {profile:path} : {}),
         });
-        
-        if (apiCall.status == api_statuses.success) {
-          
-          console.log(apiCall?.data?.data);
+        console.log({a:apiCall.status,d:api_statuses.success});
+      
           setShowLoader(false);
           navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN);
-        } else {
-          alert('error')
-          setShowLoader(false)
-        }
        
-        setShowLoader(false)
       //}
      
       

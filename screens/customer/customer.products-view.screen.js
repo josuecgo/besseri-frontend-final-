@@ -19,18 +19,7 @@ const SCREEN_STATES = {
   CATEGORIES:'Categories'
 }
 
-// const SelectImgCategory = (category) => {
-//   switch (category) {
-//     case 'TRANSMISION':
-//       return require(`../../assets/images/categorias/transmision.png`);
-//     case 'FRENOS':
-//       return require('../../assets/images/categorias/frenos.jpg');
-       
-  
-//     default:
-//       return require('../../assets/images/categorias/frenos.jpg');
-//   }
-// }
+
 const CustomerProductsViewScreen = React.memo((props) => {
 
 
@@ -47,8 +36,8 @@ const CustomerProductsViewScreen = React.memo((props) => {
 
   const {productFilter} = useFiltrado(props?.route?.name)
 
-
-
+ 
+ 
 
   const CategoryButton = ({ category,onPress }) => {
     return (
@@ -71,54 +60,54 @@ const CustomerProductsViewScreen = React.memo((props) => {
       
       <View style={{flex:1}} >
         
-      <View style={Platform.OS === 'ios' ? styles.filterContainer : styles.filterContainer2}>
-        <DropDownPicker
-          open={open}
-          value={valueMaker}
-          items={marcas}
-          setOpen={setOpen}
-          setValue={setValueMaker}
-          setItems={setMarcas}
-          containerStyle={styles.picker}
-          style={{borderColor:'white'}}
-          placeholder="Marca"
-          schema={{label: 'name', value: '_id', testID: '_id'}}
-          zIndex={1000}
-        />
-
-        {modelo ? (
+        <View style={Platform.OS === 'ios' ? styles.filterContainer : styles.filterContainer2}>
           <DropDownPicker
-            open={openModel}
-            value={valueModel}
-            items={modelo}
-            setOpen={setOpenModel}
-            setValue={setValueModel}
-            setItems={setModelo}
+            open={open}
+            value={valueMaker}
+            items={marcas}
+            setOpen={setOpen}
+            setValue={setValueMaker}
+            setItems={setMarcas}
             containerStyle={styles.picker}
             style={{borderColor:'white'}}
-            placeholder="Modelo"
+            placeholder="Marca"
             schema={{label: 'name', value: '_id', testID: '_id'}}
             zIndex={1000}
           />
-        ) : (
-          <View style={styles.picker} />
-        )}
-      </View>
-      <View style={styles.reset} >
-        {
-          modelo && (
-            <TouchableOpacity 
-            onPress={resetFiltro}
-            style={styles.btnReset} 
-            >
-              <Text style={styles.txtReset} >Limpiar filtros</Text>
-            </TouchableOpacity>
+
+          {modelo ? (
+            <DropDownPicker
+              open={openModel}
+              value={valueModel}
+              items={modelo}
+              setOpen={setOpenModel}
+              setValue={setValueModel}
+              setItems={setModelo}
+              containerStyle={styles.picker}
+              style={{borderColor:'white'}}
+              placeholder="Modelo"
+              schema={{label: 'name', value: '_id', testID: '_id'}}
+              zIndex={1000}
+            />
+          ) : (
+            <View style={styles.picker} />
+          )}
+        </View>
+        <View style={styles.reset} >
+          {
+            modelo && (
+              <TouchableOpacity 
+              onPress={resetFiltro}
+              style={styles.btnReset} 
+              >
+                <Text style={styles.txtReset} >Limpiar filtros</Text>
+              </TouchableOpacity>
+              
+            )
             
-          )
+          }
           
-        }
-        
-      </View>
+        </View>
 
           
         <View style={{ 
@@ -161,6 +150,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
     </View>
   );
 })
+
 const styles = StyleSheet.create({
   categoryButton: {
     padding: 8,

@@ -1,10 +1,12 @@
 import React, { useEffect, useState,useRef } from 'react';
-import {Text, TouchableOpacity, View,StyleSheet, Platform, ScrollView,Image, useWindowDimensions, Linking} from 'react-native';
+import {Text, TouchableOpacity, View,StyleSheet, Platform, ScrollView,Image, useWindowDimensions, Linking, Modal} from 'react-native';
+import ImageViewer from 'react-native-image-zoom-viewer';
+
 import Colors from '../../util/styles/colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import AntDesign from 'react-native-vector-icons/AntDesign'
+
 import CommonStyles from '../../util/styles/styles';
-import ProductCardComponent from '../../components/customer-components/product-card.component';
+
 import ButtonComponent from '../../components/button/button.component';
 import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../util/constants';
 
@@ -29,7 +31,7 @@ const CustomerProductDetailScreen = (props) => {
   const {top} = useSafeAreaInsets()
   const {addItemToCart,inTheCart,inCart} = useCart()
   const isChange = useRef(false);
-
+  const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     setEnCarrito(inTheCart(product))
@@ -76,7 +78,11 @@ const CustomerProductDetailScreen = (props) => {
   };
 
 
-
+  const images = [{
+    url: `${base_url}/${product?.productImg}`,
+    width: deviceWidth,
+    height: 240,
+  }]
   return (
     <>
         <View style={{flex:1,backgroundColor:Colors.bgColor}}>
@@ -97,15 +103,30 @@ const CustomerProductDetailScreen = (props) => {
               <View style={{width:23,height:30}} />
             </View>
             <View style={{backgroundColor:Colors.white,elevation:1,marginBottom:5}} >
-                      <Image
-                      source={{uri: `${base_url}/${product?.productImg}`}}
-                      style={{
-                          width: deviceWidth,
-                          height: 240,
-                          // borderRadius: 10,
-                      }}
-                      resizeMode='stretch'
-                      />    
+              <Modal 
+              visible={isOpen} 
+              transparent={true}
+              onRequestClose={() => setIsOpen(false)}
+              >
+                <ImageViewer 
+                imageUrls={images}
+                onDoubleClick={()=>setIsOpen(false)}
+                />
+              </Modal>
+              <TouchableOpacity
+              onPress={()=> setIsOpen(true) }
+              >
+                <Image
+                source={{uri: `${base_url}/${product?.productImg}`}}
+                style={{
+                width: deviceWidth,
+                height: 240,
+
+                }}
+                resizeMode='contain'
+                />    
+              </TouchableOpacity>
+              
             </View>
 
           <ScrollView
@@ -123,15 +144,18 @@ const CustomerProductDetailScreen = (props) => {
                       value={`${moneda(Number(product?.price) + Number( comision * product?.price / 100))} MXN`}
                       size={12} sizeValue={13}
                       />
-                      <DetailItem 
-                      label={'Tiempo de entrega: '} 
-                      value={`${product?.estimatedDelivery} aprox.`}
-                      size={12} sizeValue={13}
-                      />
+                      {
+                        product?.estimatedDelivery && (
+                        <DetailItem 
+                        label={'Tiempo de entrega: '} 
+                        value={`${product?.estimatedDelivery} aprox.`}
+                        size={12} sizeValue={13}
+                        />
+                        )
+                      }
                       
-                      {/* <DetailItem label={'Modelo: '} value={`${product?.model?.name}`} />
-                      <DetailItem label={'Marca: '} value={`${product?.maker?.name}`} />
-                      <DetailItem label={'Estado: '} value={`${product?.condition}`} /> */}
+                      
+                
                   
                   
             </View>

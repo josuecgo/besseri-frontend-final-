@@ -71,10 +71,7 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
   const [isSelected, setIsSelected] = useState(false);
 
   const handlePress = () => {
-    
     setIsSelected(!isSelected)
-    
-
   };
 
   const emailRef = useRef();

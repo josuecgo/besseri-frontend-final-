@@ -7,7 +7,7 @@ export const productReducer = (state, action) => {
             ...state,
             errorMessage:'',
             productos: action.payload.productos,
-            
+            // categorias:action.payload.categorias
         }
         case 'getCategorias' : 
         return {

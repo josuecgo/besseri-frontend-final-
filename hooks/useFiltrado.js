@@ -14,9 +14,11 @@ export const useFiltrado = ( isServicios ) => {
         productos,
         valueMaker, 
         valueModel,
-        servicios
+        servicios,
+        
     } = useContext(ProductContext)
-   
+    
+    
     const makerFilter = () => {
         if (isServicios === 'Servicios') {
             servicesFilter();

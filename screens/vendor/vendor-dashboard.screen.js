@@ -165,7 +165,7 @@ const VendorDashboardScreen = ({ navigation, route }) => {
             business={businessDetails}
             imageSource={personMockImage}
         >
-            <View style={{ alignItems: 'center' }}>
+            <View style={{ alignItems: 'center',marginBottom:10 }}>
 
             {business_profile?.wallet?.charges_enabled &&
                 businessDetails?.wallet_id ? null : (

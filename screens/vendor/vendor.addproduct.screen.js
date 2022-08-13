@@ -46,6 +46,7 @@ import {adjust, deviceHeight, deviceWidth} from '../../util/Dimentions';
 import {HeaderBackground} from '../../components/Background/HeaderBackground';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { screenFocusProduct, stringIsEmpty } from '../../util/helpers/StatusText';
+import { AddImage } from '../../components/button/AddImage';
 const {width, height} = Dimensions.get('screen');
 
 
@@ -167,6 +168,7 @@ const VendorAddProductScreen = ({navigation}) => {
       name:'Dia siguiente'
     },
   ]
+  const [img1, setImg1] = useState(false)
   
   const textinputVal = isProductNameScreen
     ? inputValues[CREDENTIAL_KEYS.NAME]
@@ -845,6 +847,50 @@ const VendorAddProductScreen = ({navigation}) => {
 
           {isUploadImage ? (
             <View style={styles.uploadImgContainer}>
+              <View style={{flexDirection:'row'}} >
+                {
+                  isEditMode ? (
+                    <AddImage 
+                    logo={`${base_url}/${toBeEditedProduct?.productImg}`} 
+                    setLogo={setImg1} 
+                    pickLogo={pickProductImg}
+                    />
+                  ):(
+                    <>
+                      <AddImage logo={img1} setLogo={setImg1} />
+                      <AddImage logo={img1} setLogo={setImg1} />
+                      <AddImage logo={img1} setLogo={setImg1} />
+                    </>
+                  
+                  )
+                }
+              </View>
+              
+
+              <Text style={styles.uploadImgContainerHeading}>
+                {isEditMode
+                  ? '¿Quieres editar la imagen del producto?'
+                  : 'Sube la imagen del producto'}
+              </Text>
+
+              {isEditMode ? (
+                <ButtonComponent
+                  buttonText={'Next'}
+                  colorB={'#0bda51'}
+                  width={width / 2}
+                  borderRadius={10}
+                  handlePress={() => {
+                    setCurrentScreen(SCREEN_TYPES?.PRODUCT_SUMMARY);
+                    setisSummaryMode(true);
+                  }}
+                />
+              ) : null}
+             
+            </View>
+          ) : null}
+
+          {/* {isUploadImage ? (
+            <View style={styles.uploadImgContainer}>
               {isEditMode ? (
                 <Image
                   source={{uri: `${base_url}/${toBeEditedProduct?.productImg}`}}
@@ -886,7 +932,7 @@ const VendorAddProductScreen = ({navigation}) => {
                 />
               ) : null}
             </View>
-          ) : null}
+          ) : null} */}
         </View>
         {isProductSummary ? (
           <ScrollView contentContainerStyle={styles.scrollViewContainer} >
@@ -1081,6 +1127,8 @@ const styles = StyleSheet.create({
     ...CommonStyles.flexOneCenter,
     width: '90%',
     alignSelf: 'center',
+   
+    
   },
   uploadImgContainerHeading: {
     ...CommonStyles.fontFamily,

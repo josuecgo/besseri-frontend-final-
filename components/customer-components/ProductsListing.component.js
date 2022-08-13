@@ -26,9 +26,7 @@ const ProductListing = ({category,products,navigation,comision}) => {
             <View style={{width:'60%'}}>
               <Text style={{...CommonStyles.fontFamily,fontSize:adjust(14)}}>{category}</Text>
             </View>
-            {/* <TouchableOpacity style={styles.seeMoreButton}>
-                <Text style={{...CommonStyles.fontFamily,color:'white'}}>See more</Text>
-            </TouchableOpacity> */}
+            
         </View>
 
         <FlatList
@@ -43,7 +41,7 @@ const ProductListing = ({category,products,navigation,comision}) => {
                comision
              });
            }}
-           increaseQuantity={() => increaseQuantity(itemData.item?._id)}
+           increaseQuantity={() => CartActions.increaseQuantity(itemData.item?._id)}
            onAddToCart={() => addItemToCart(itemData.item)}
            data={itemData.item}
            inCart={cartProductIds.includes(itemData.item._id)}

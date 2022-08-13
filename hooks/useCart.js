@@ -9,7 +9,7 @@ import { useCompras } from '../hooks/useCompras';
 
 export const useCart = () => {
     const dispatch = useDispatch();
-    const cartProductIds = useSelector(state => state.cart.cart_items_ids);
+    const cartProductIds = useSelector(state => state?.cart?.cart_items_ids);
     const businessIdInCart = useSelector(state => state.cart.businessId);
     const products = useSelector(state => state.cart.cart_items);
     const montoTotal = useSelector(state => state.cart.total_amount);
@@ -21,7 +21,7 @@ export const useCart = () => {
     const [aplicado, setAplicado] = useState('')
     const [cupon, setCupon] = useState(null)
 
-
+    
     const addItemToCart = (item) => {
         
        
@@ -62,7 +62,7 @@ export const useCart = () => {
       if (valor) {
         if (valor?.type == '%') {
           let desc = montoTotal / 100 * valor?.descuento;
-          console.log(desc);
+          
           await dispatch(CartActions.descuentoToCart(desc,valor));
           return
         } else { 
@@ -78,27 +78,27 @@ export const useCart = () => {
 
 
 
-const aplicar = useCallback(
-  async (txtCupon) => {
-       
-    try {
-         
-      const result = await aplicarCupones(txtCupon);
-      
-      
-      if (result?.status == 200) {
-        setAplicado(result?.cupon?.data)
-        applyCupon(result?.cupon?.data)
-        setCupon(result)
-      }
-           
-      } catch (e) {
-        console.log(e?.response?.status);
-        showToaster(e?.response?.data?.message);
-        return {status:e?.response?.status}
-      }
-    }, 
-[]);
+  const aplicar = useCallback(
+    async (txtCupon) => {
+        
+      try {
+          
+        const result = await aplicarCupones(txtCupon);
+        
+        
+        if (result?.status == 200) {
+          setAplicado(result?.cupon?.data)
+          applyCupon(result?.cupon?.data)
+          setCupon(result)
+        }
+            
+        } catch (e) {
+          console.log(e?.response?.status);
+          showToaster(e?.response?.data?.message);
+          return {status:e?.response?.status}
+        }
+      }, 
+  []);
 
 
   const borrarDescuento = async() => {

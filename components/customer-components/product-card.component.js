@@ -122,7 +122,6 @@ const ProductCardComponent = ({
   }
 
 
-
   return (
     <Pressable onPress={onViewDetail} style={styles.cardContainer}>
       {cartProduct ? (
@@ -149,6 +148,7 @@ const ProductCardComponent = ({
       <Image
         source={{uri: `${base_url}/${data?.productImg}`}}
         style={styles.productImg}
+        resizeMode='stretch'
       />
       {/* <View style={{flexDirection:'row',alignItems:'center',alignSelf:'center'}}>
       <Image
@@ -161,7 +161,9 @@ const ProductCardComponent = ({
         colors={Colors.primaryGradient}
         style={styles.LinearGradient}>
         <Text style={styles.productTitle}>{data?.name}</Text>
+        <Text style={styles.textSub} >{data?.brand.name} </Text>
         <View style={styles.productSubTitle} > 
+          
           <Text style={styles.textSub} >{data.maker.name} </Text>
           <Text style={styles.textSub} >{data.model.name} </Text>
         </View>
@@ -224,15 +226,11 @@ const ProductCardComponent = ({
 const styles = StyleSheet.create({
   cardContainer: {
     width: deviceWidth / 2.2,
-   
     marginHorizontal: 3,
-    
-    // padding:5
-   
     
   },
   LinearGradient: {
-    minHeight: deviceWidth * 0.30,
+    minHeight: deviceWidth * 0.40,
     paddingHorizontal: 5,
     justifyContent: 'space-evenly',
     paddingVertical: 5,
@@ -241,8 +239,8 @@ const styles = StyleSheet.create({
     width: '100%',
     height: deviceWidth * 0.3,
     // marginVertical:10,
-    alignSelf: 'center',
-    resizeMode: 'stretch',
+    alignSelf: 'center',backgroundColor:'white'
+    
   },
   productTitle: {
     ...CommonStyles.fontFamily,

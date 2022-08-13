@@ -66,27 +66,50 @@ export const ProductProvider = ({children}) => {
            
     //       }
     // },[])
+    const getCategorias = async() => {
+        try {
+            const apiCall = await axios.get(customer_api_urls.get_products);
+            
+          
+
+
+
+            await dispatch({
+                type:'getCategorias',
+                payload: {
+                   
+                    categorias: apiCall?.data?.data?.categories
+                }
+            });
+          
+          
+           
+          } catch(e) {
+            console.log({getProducts:e})
+            showToaster('No hay conexion con el servidor ');
+           
+          }
+    }
 
     const getProducts = async() => {
         try {
             const apiCall = await axios.get(customer_api_urls.get_products);
-            
-            
-            
-            dispatch({
+
+            await dispatch({
                 type:'getProductos',
                 payload: {
                     productos: apiCall.data.data.products,
-                    categorias: apiCall.data.data.categories
+                    // categorias: apiCall?.data?.data?.categories
                 }
             });
-            dispatch({
-                type:'getCategorias',
-                payload: {
+
+            // await dispatch({
+            //     type:'getCategorias',
+            //     payload: {
                    
-                    categorias: apiCall.data.data.categories
-                }
-            });
+            //         categorias: apiCall?.data?.data?.categories
+            //     }
+            // });
           
           
            
@@ -236,48 +259,61 @@ export const ProductProvider = ({children}) => {
 
     }
     
+
+    useEffect(() => {
+        // let abortController = new AbortController();  
+        const source = axios.CancelToken.source(); 
+        getCategorias()
+        return () => {  
+            // abortController.abort();  
+            source.cancel();
+        }  
+       
+    }, [])
     
     useEffect(() => {
-        let abortController = new AbortController();  
+        // let abortController = new AbortController();  
+        const source = axios.CancelToken.source(); 
         getProducts()
         return () => {  
-            abortController.abort();  
+            // abortController.abort();  
+            source.cancel();
         }  
        
     }, [])
 
     useEffect(() => {
-        let abortController = new AbortController();
+        // let abortController = new AbortController();
         getComision()
-        return () => {  
-            abortController.abort();  
-        } 
+        // return () => {  
+        //     abortController.abort();  
+        // } 
     }, [])
 
     useEffect(() => {
-        let abortController = new AbortController();
+        // let abortController = new AbortController();
         getMarcas();
-        return () => {  
-            abortController.abort();  
-        } 
+        // return () => {  
+        //     abortController.abort();  
+        // } 
     }, [])
 
     useEffect(() => {
-        let abortController = new AbortController();
+        // let abortController = new AbortController();
         getServices();
-        return () => {  
-            abortController.abort();  
-        } 
+        // return () => {  
+        //     abortController.abort();  
+        // } 
     }, [])
     
     useEffect(() => {
-        let abortController = new AbortController();
+        // let abortController = new AbortController();
         if (valueMaker) {
             getModelo(valueMaker); 
         }
-        return () => {  
-            abortController.abort();  
-        } 
+        // return () => {  
+        //     abortController.abort();  
+        // } 
     }, [valueMaker])
     
     
