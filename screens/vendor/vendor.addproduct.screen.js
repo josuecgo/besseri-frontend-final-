@@ -170,8 +170,7 @@ const VendorAddProductScreen = ({navigation}) => {
     },
   ]
 
-  const {marcas} = useContext(ProductContext);
-  console.log(marcas);
+
 
   const textinputVal = isProductNameScreen
     ? inputValues[CREDENTIAL_KEYS.NAME]

@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { Text, TouchableOpacity, View, StyleSheet, Image, ScrollView, Platform, PermissionsAndroid, FlatList } from 'react-native';
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
@@ -52,6 +52,8 @@ const CustomerProductsViewScreen = React.memo((props) => {
       </View>
     )
   }
+
+
 
   return (
     <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor,paddingTop:15 }}>
@@ -122,6 +124,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
           horizontal
           keyExtractor={item => item?._id}
           renderItem={({item}) => (
+            
             <CategoryButton
             onPress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.MORE_PRODUCTS,{category:item})}
             category={item.name} />

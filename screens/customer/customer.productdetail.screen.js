@@ -20,6 +20,7 @@ import { ThinlineSeparator } from '../../components/CommonComponents';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { moneda } from '../../util/Moneda';
 import { useCart } from '../../hooks/useCart'
+import { ProductImg } from '../../components/image-carousel/ProductImg';
 
 const CustomerProductDetailScreen = (props) => {
   const {width} = useWindowDimensions();
@@ -83,6 +84,7 @@ const CustomerProductDetailScreen = (props) => {
     width: deviceWidth,
     height: 240,
   }]
+  console.log(product.urlsImg);
   return (
     <>
         <View style={{flex:1,backgroundColor:Colors.bgColor}}>
@@ -103,29 +105,17 @@ const CustomerProductDetailScreen = (props) => {
               <View style={{width:23,height:30}} />
             </View>
             <View style={{backgroundColor:Colors.white,elevation:1,marginBottom:5}} >
-              <Modal 
-              visible={isOpen} 
-              transparent={true}
-              onRequestClose={() => setIsOpen(false)}
-              >
-                <ImageViewer 
-                imageUrls={images}
-                onDoubleClick={()=>setIsOpen(false)}
-                />
-              </Modal>
-              <TouchableOpacity
-              onPress={()=> setIsOpen(true) }
-              >
-                <Image
-                source={{uri: `${base_url}/${product?.productImg}`}}
-                style={{
-                width: deviceWidth,
-                height: 240,
+              {
+                product?.urlsImg.length > 0 ? (
+                  <ProductImg imgs={product?.urlsImg} />
+                ):(
+                  <Image
+                    source={{uri: `${base_url}/${product?.productImg}`}}
+                    style={styles.productImg}
+                  />
+                )
+              }
 
-                }}
-                resizeMode='contain'
-                />    
-              </TouchableOpacity>
               
             </View>
 
