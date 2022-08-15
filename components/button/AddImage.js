@@ -6,21 +6,21 @@ import Colors from '../../util/styles/colors';
 import { showToaster } from '../../util/constants';
 
 
-export const AddImage = ({logo,setLogo,pickLogo}) => {
+export const AddImage = ({logo,setLogo}) => {
    
 
-    // const pickLogo = () => {
-    //     ImageCropPicker.openPicker({
-    //       width: 300,
-    //       height: 400,
-    //       cropping: true,
-    //     }).then(res => {
-    //       console.log(res);
-    //       setLogo(res);
-    //     }).catch(e => {
-    //       showToaster('Algo salio mal')
-    //     })
-    // }
+    const pickLogo = () => {
+        ImageCropPicker.openPicker({
+          width: 300,
+          height: 400,
+          cropping: true,
+        }).then(res => {
+          
+          setLogo(res);
+        }).catch(e => {
+          showToaster('Algo salio mal')
+        })
+    }
     
     return (
         <View style={styles.card}>

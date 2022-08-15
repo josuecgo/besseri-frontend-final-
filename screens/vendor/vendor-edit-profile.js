@@ -18,7 +18,6 @@ import { saveBusinessProfile } from '../../util/local-storage/auth_service';
 
 export const EditProfile = ({navigation, route}) => {
     const [showLoader, setShowLoader] = useState(false);
-    // const {address,city,country,email,location,logo,state,storeName,account_id,_id,kmFree} = route.params.business;
     const {business} = route.params;
     let km = Math.round(business?.kmFree * 1.609)
     const {form, onChange} = useForm({
@@ -33,18 +32,7 @@ export const EditProfile = ({navigation, route}) => {
       storeName: business?.storeName ,
       account_id: business?.account_id 
   })
-    // const {form, onChange} = useForm({
-    //     id:business?._id,
-    //     address: address ? address : '',
-    //     city: city ? city :  '' ,
-    //     country: country ? country : '',
-    //     email : email ? email : '',
-    //     kmFree: kmFree ? kmFree : '',
-    //     logo : logo ? logo : '',
-    //     state: state ? state : '',
-    //     storeName: storeName ? storeName : '' ,
-    //     account_id: account_id ? account_id : ''
-    // })
+
     
     
     const data = [

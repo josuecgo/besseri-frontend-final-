@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {
   Dimensions,
   Text,
@@ -47,6 +47,7 @@ import {HeaderBackground} from '../../components/Background/HeaderBackground';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { screenFocusProduct, stringIsEmpty } from '../../util/helpers/StatusText';
 import { AddImage } from '../../components/button/AddImage';
+import { ProductContext } from '../../util/context/Product/ProductContext';
 const {width, height} = Dimensions.get('screen');
 
 
@@ -168,8 +169,10 @@ const VendorAddProductScreen = ({navigation}) => {
       name:'Dia siguiente'
     },
   ]
-  const [img1, setImg1] = useState(false)
-  
+
+  const {marcas} = useContext(ProductContext);
+  console.log(marcas);
+
   const textinputVal = isProductNameScreen
     ? inputValues[CREDENTIAL_KEYS.NAME]
     : isDescriptionScreen
@@ -376,6 +379,7 @@ const VendorAddProductScreen = ({navigation}) => {
     );
   };
   const ProductSummaryCard = ({label, value, onPress, isImageTab}) => {
+    
     return (
       <TouchableOpacity
         onPress={onPress}
@@ -393,9 +397,26 @@ const VendorAddProductScreen = ({navigation}) => {
             {label}
           </Text>
           {isImageTab ? (
-            <View>
-              <Image source={{uri: value}} style={{width: 150, height: 150}} />
-            </View>
+            <>
+              <View style={{flexDirection:'row'}} >
+                {
+                value.map((item,index) => {
+                 
+                  if (index < 3) {
+                    return(
+                      <View key={item?.path}  >
+                        <Image source={{uri: item?.path}} style={{width: deviceWidth / 3.5, height: 100}}  resizeMode='cover' />
+                      </View>
+                    )
+                  }
+                  return null
+                })
+              }
+              </View>
+               
+            
+            </>
+
           ) : (
             <Text style={styles.flatListCardBtnText}>{value}</Text>
           )}
@@ -410,13 +431,17 @@ const VendorAddProductScreen = ({navigation}) => {
   };
   // Creating In Screen component ends here
 
-  const pickProductImg = () => {
+  const pickProductImg1 = () => {
     ImagePicker.openPicker({
+      multiple: true,
       width: 300,
       height: 400,
       cropping: true,
-    }).then(image => {
-      onChangeText(image?.path, CREDENTIAL_KEYS.PRODUCT_IMAGE);
+      maxFiles:3,
+      
+    }).then((image) => {
+      
+      onChangeText(image, CREDENTIAL_KEYS.PRODUCT_IMAGE);
       setCurrentScreen(SCREEN_TYPES?.PRODUCT_SUMMARY);
       setisSummaryMode(true);
       // setUri(image.path);
@@ -424,20 +449,32 @@ const VendorAddProductScreen = ({navigation}) => {
     });
   };
 
+
   const uploadProductImg = async () => {
     try {
       setShowLoader(true);
       const imageFormData = new FormData();
-      imageFormData.append('productImg', {
-        uri: inputValues[CREDENTIAL_KEYS.PRODUCT_IMAGE],
-        type: 'image/jpg',
-        name: 'photo.jpg',
-      });
+      
+      let images = inputValues[CREDENTIAL_KEYS.PRODUCT_IMAGE];
+      
+      for (let index = 0; index < 3; index++) {
+        
+        // console.log(images[index]?.path);
+        imageFormData.append('productImg', {
+          uri: images[index]?.path,
+          type: 'image/jpg',
+          name: 'photo.jpg',
+        });
+        
+      }
+
+      
       const productImgUpload = await axios.post(
         vendor_api_urls.upload_product_image,
         imageFormData,
       );
       setShowLoader(false);
+      
       if (productImgUpload?.status == api_statuses.success) {
         return productImgUpload?.data?.data;
       } else {
@@ -448,7 +485,7 @@ const VendorAddProductScreen = ({navigation}) => {
       console.log(e);
     }
   };
-
+ 
   const createProduct = async () => {
     try {
       setShowLoader(true);
@@ -460,6 +497,7 @@ const VendorAddProductScreen = ({navigation}) => {
       //   name:'photo.jpg'
       // });
       const productImgUpload = await uploadProductImg();
+      
       if (productImgUpload) {
         const apiBody = {
           name: inputValues[CREDENTIAL_KEYS.NAME],
@@ -468,7 +506,8 @@ const VendorAddProductScreen = ({navigation}) => {
           modelId: inputValues[CREDENTIAL_KEYS.PRODUCT_MODEL]?._id,
           makerId: inputValues[CREDENTIAL_KEYS.PRODUCT_MAKER]?._id,
           isBlocked: false,
-          productImg: productImgUpload,
+          productImg: productImgUpload[0]?.path,
+          urlsImg:productImgUpload,
           categoryId: selectedCategory?._id,
           category: selectedCategory,
           price: inputValues[CREDENTIAL_KEYS.PRICE],
@@ -476,7 +515,8 @@ const VendorAddProductScreen = ({navigation}) => {
           subCategory: selectedSubCategory,
           brand: selectedBrand,
           brandId: selectedBrand?._id,
-          estimatedDelivery: inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY].name
+          estimatedDelivery: inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY].name,
+          urlsImg:productImgUpload
         };
         
         const apiCall = await axios.post(
@@ -494,6 +534,7 @@ const VendorAddProductScreen = ({navigation}) => {
         showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
         setShowLoader(false);
       }
+      setShowLoader(false);
     } catch (e) {
       setShowLoader(false);
       console.log(e);
@@ -501,6 +542,7 @@ const VendorAddProductScreen = ({navigation}) => {
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
     }
   };
+
 
   const editProduct = async () => {
     try {
@@ -520,8 +562,9 @@ const VendorAddProductScreen = ({navigation}) => {
         makerId: inputValues[CREDENTIAL_KEYS.PRODUCT_MAKER]?._id,
         isBlocked: false,
         productImg: productImgUpload
-          ? productImgUpload
+          ?  productImgUpload[0]?.path
           : toBeEditedProduct?.productImg,
+        urlsImg:productImgUpload,
         categoryId: selectedCategory?._id,
         category: selectedCategory,
         price: inputValues[CREDENTIAL_KEYS.PRICE],
@@ -668,7 +711,7 @@ const VendorAddProductScreen = ({navigation}) => {
         </View>
         
       {/* cambio scroll */}
-      {/* <View contentContainerStyle={styles.scrollViewContainer}> */}
+
        <View style={{flex:1}} >
 
         <View style={styles.InputWrapper}>
@@ -845,51 +888,9 @@ const VendorAddProductScreen = ({navigation}) => {
             </View>
           ) : null}
 
+
+
           {isUploadImage ? (
-            <View style={styles.uploadImgContainer}>
-              <View style={{flexDirection:'row'}} >
-                {
-                  isEditMode ? (
-                    <AddImage 
-                    logo={`${base_url}/${toBeEditedProduct?.productImg}`} 
-                    setLogo={setImg1} 
-                    pickLogo={pickProductImg}
-                    />
-                  ):(
-                    <>
-                      <AddImage logo={img1} setLogo={setImg1} />
-                      <AddImage logo={img1} setLogo={setImg1} />
-                      <AddImage logo={img1} setLogo={setImg1} />
-                    </>
-                  
-                  )
-                }
-              </View>
-              
-
-              <Text style={styles.uploadImgContainerHeading}>
-                {isEditMode
-                  ? '¿Quieres editar la imagen del producto?'
-                  : 'Sube la imagen del producto'}
-              </Text>
-
-              {isEditMode ? (
-                <ButtonComponent
-                  buttonText={'Next'}
-                  colorB={'#0bda51'}
-                  width={width / 2}
-                  borderRadius={10}
-                  handlePress={() => {
-                    setCurrentScreen(SCREEN_TYPES?.PRODUCT_SUMMARY);
-                    setisSummaryMode(true);
-                  }}
-                />
-              ) : null}
-             
-            </View>
-          ) : null}
-
-          {/* {isUploadImage ? (
             <View style={styles.uploadImgContainer}>
               {isEditMode ? (
                 <Image
@@ -913,10 +914,10 @@ const VendorAddProductScreen = ({navigation}) => {
                 <ButtonComponent
                   buttonText={isEditMode ? 'Editar' : 'Subir'}
                   colorB={Colors.terciarySolid}
-                  width={width / 2}
-                  margin={15}
+                  width={width / 3.3}
+                  margin={1}
                   borderRadius={10}
-                  handlePress={pickProductImg}
+                  handlePress={()=>pickProductImg1()}
                 />
               </View>
               {isEditMode ? (
@@ -932,7 +933,7 @@ const VendorAddProductScreen = ({navigation}) => {
                 />
               ) : null}
             </View>
-          ) : null} */}
+          ) : null}
         </View>
         {isProductSummary ? (
           <ScrollView contentContainerStyle={styles.scrollViewContainer} >
@@ -940,7 +941,7 @@ const VendorAddProductScreen = ({navigation}) => {
         
           <View style={styles.InputWrapper} >
             <ProductSummaryCard
-              onPress={pickProductImg}
+              onPress={pickProductImg1}
               value={inputValues[CREDENTIAL_KEYS.PRODUCT_IMAGE]}
               label="Imagen"
               isImageTab={true}
@@ -1020,7 +1021,7 @@ const VendorAddProductScreen = ({navigation}) => {
             </Text>
           </View>
          
-<View style={{flex:1,width:deviceWidth,height:top + 5}} />
+    <View style={{flex:1,width:deviceWidth,height:top + 5}} />
 
           </ScrollView>
 
@@ -1065,7 +1066,7 @@ const VendorAddProductScreen = ({navigation}) => {
         )}
 
       </View>
-      {/* Fin scroll */}
+
       
     </View>
   );
@@ -1078,14 +1079,7 @@ const styles = StyleSheet.create({
   header: {
     width: deviceWidth,
     height: Platform.OS == 'ios' ? deviceHeight * 0.15 : deviceHeight * 0.1,
-
-    // padding: 10,
-    // borderWidth: 1,
-    // borderColor: Colors.primaryColor,
-    // backgroundColor: Colors.primaryColor,
-    // ...CommonStyles.horizontalCenter,
     paddingHorizontal: deviceWidth * 0.1,
-    // flexDirection:'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -1094,7 +1088,7 @@ const styles = StyleSheet.create({
     fontSize: adjust(16),
   },
   headerIcon: {
-    // paddingHorizontal: 10
+
   },
   InputWrapper: {
     flex: 1,
