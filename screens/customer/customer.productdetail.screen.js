@@ -78,13 +78,8 @@ const CustomerProductDetailScreen = (props) => {
     );
   };
 
+  console.log(product?.productImg);
 
-  const images = [{
-    url: `${base_url}/${product?.productImg}`,
-    width: deviceWidth,
-    height: 240,
-  }]
-  console.log(product.urlsImg);
   return (
     <>
         <View style={{flex:1,backgroundColor:Colors.bgColor}}>
@@ -106,7 +101,7 @@ const CustomerProductDetailScreen = (props) => {
             </View>
             <View style={{backgroundColor:Colors.white,elevation:1,marginBottom:5}} >
               {
-                product?.urlsImg.length > 0 ? (
+                product?.urlsImg ? (
                   <ProductImg imgs={product?.urlsImg} />
                 ):(
                   <Image
