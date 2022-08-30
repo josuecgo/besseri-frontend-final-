@@ -24,7 +24,7 @@ export const useFiltrado = ( isServicios ) => {
             servicesFilter();
             return;
         }
-
+     
         if (valueMaker) {
             if (valueModel) {
                

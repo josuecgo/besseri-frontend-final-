@@ -515,7 +515,7 @@ const VendorAddProductScreen = ({navigation}) => {
           brand: selectedBrand,
           brandId: selectedBrand?._id,
           estimatedDelivery: inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY].name,
-          urlsImg:productImgUpload
+          // urlsImg:productImgUpload
         };
         
         const apiCall = await axios.post(
