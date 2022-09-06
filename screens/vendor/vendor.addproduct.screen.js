@@ -199,7 +199,7 @@ const VendorAddProductScreen = ({navigation}) => {
  
   };
   
-  // console.log(inputValues);
+
   //Create Brand
 
   const createBrand = async () => {
@@ -458,10 +458,10 @@ const VendorAddProductScreen = ({navigation}) => {
       
       for (let index = 0; index < 3; index++) {
         
-        // console.log(images[index]?.path);
+        
         imageFormData.append('productImg', {
           uri: images[index]?.path,
-          type: 'image/jpg',
+          type: 'image/jpeg',
           name: 'photo.jpg',
         });
         
@@ -473,15 +473,16 @@ const VendorAddProductScreen = ({navigation}) => {
         imageFormData,
       );
       setShowLoader(false);
-      
+      console.log({productImgUpload});
+     
       if (productImgUpload?.status == api_statuses.success) {
         return productImgUpload?.data?.data;
       } else {
         return false;
       }
-    } catch (e) {
+    } catch (error) {
       showToaster('Algo salió mal al cargar la imagen del producto');
-      console.log(e);
+      console.log(error);
     }
   };
  
@@ -489,12 +490,8 @@ const VendorAddProductScreen = ({navigation}) => {
     try {
       setShowLoader(true);
       const businessId = await getBusinessId();
-      // const imageFormData = new FormData();
-      // imageFormData.append('productImg',{
-      //   uri:inputValues[CREDENTIAL_KEYS.PRODUCT_IMAGE],
-      //   type:'image/jpg',
-      //   name:'photo.jpg'
-      // });
+
+      
       const productImgUpload = await uploadProductImg();
       
       if (productImgUpload) {

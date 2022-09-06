@@ -18,7 +18,7 @@ export const useFiltrado = ( isServicios ) => {
         
     } = useContext(ProductContext)
     
-    
+    console.log(productos);
     const makerFilter = () => {
         if (isServicios === 'Servicios') {
             servicesFilter();
