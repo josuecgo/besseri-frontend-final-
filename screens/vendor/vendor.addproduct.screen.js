@@ -9,6 +9,7 @@ import {
 
   FlatList,
   Image,
+  Platform,
 
 } from 'react-native';
 import CommonStyles from '../../util/styles/styles';
@@ -48,6 +49,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { screenFocusProduct, stringIsEmpty } from '../../util/helpers/StatusText';
 import { AddImage } from '../../components/button/AddImage';
 import { ProductContext } from '../../util/context/Product/ProductContext';
+
 const {width, height} = Dimensions.get('screen');
 
 
@@ -284,7 +286,7 @@ const VendorAddProductScreen = ({navigation}) => {
             setSelectedcategory(apiData[d]);
           }
         }
-        console.log(selectedCategory);
+        // console.log(selectedCategory);
       }
     } catch (e) {
       setShowLoader(false);
@@ -310,7 +312,7 @@ const VendorAddProductScreen = ({navigation}) => {
               setSelectedSubCategory(apiData[d]);
             }
           }
-          console.log(selectedCategory);
+          // console.log(selectedCategory);
         }
       }
     } catch (e) {
@@ -435,8 +437,8 @@ const VendorAddProductScreen = ({navigation}) => {
       multiple: true,
       width: 300,
       height: 400,
-      cropping: true,
       maxFiles:3,
+      mediaType:'photo'
       
     }).then((image) => {
       
@@ -449,43 +451,52 @@ const VendorAddProductScreen = ({navigation}) => {
   };
 
 
-  const uploadProductImg = async () => {
-    try {
-      setShowLoader(true);
-      const imageFormData = new FormData();
-      
-      let images = inputValues[CREDENTIAL_KEYS.PRODUCT_IMAGE];
-      
-      for (let index = 0; index < 3; index++) {
-        
-        
-        imageFormData.append('productImg', {
-          uri: images[index]?.path,
-          type: 'image/jpeg',
-          name: 'photo.jpg',
-        });
-        
-      }
 
-      
-      const productImgUpload = await axios.post(
-        vendor_api_urls.upload_product_image,
-        imageFormData,
-      );
+const uploadProductImg = async () => {
+  setShowLoader(true);
+  const imageFormData = new FormData();
+  let images = inputValues[CREDENTIAL_KEYS.PRODUCT_IMAGE];
+ 
+  for (let index = 0; index < images.length; index++) {   
+    imageFormData.append('imageFormData', {
+      uri: images[index]?.path,
+      type: images[index]?.mime,
+      name: 'photo.jpg',
+    });
+  }
+  
+
+  var requestoptions = {
+    method: 'POST',
+    body: imageFormData,
+    headers:{
+      'Content-Type' : 'multipart/form-data'
+    }
+  };
+
+  let data = await fetch(vendor_api_urls.upload_product_image,requestoptions)
+    .then(res => res.json())
+    .then(result => {
       setShowLoader(false);
-      console.log({productImgUpload});
-     
-      if (productImgUpload?.status == api_statuses.success) {
-        return productImgUpload?.data?.data;
+      
+      if (result?.success) {
+        // return result?.data;
+        
+        return result?.data
       } else {
         return false;
       }
-    } catch (error) {
-      showToaster('Algo salió mal al cargar la imagen del producto');
-      console.log(error);
-    }
-  };
- 
+    } )
+    .catch(error =>{
+       console.log(error,'upload')
+       setShowLoader(false);
+      })
+
+      console.log({data});
+    return data;
+};
+
+  
   const createProduct = async () => {
     try {
       setShowLoader(true);
@@ -493,7 +504,7 @@ const VendorAddProductScreen = ({navigation}) => {
 
       
       const productImgUpload = await uploadProductImg();
-      
+      console.log({productImgUpload});
       if (productImgUpload) {
         const apiBody = {
           name: inputValues[CREDENTIAL_KEYS.NAME],
@@ -533,8 +544,8 @@ const VendorAddProductScreen = ({navigation}) => {
       setShowLoader(false);
     } catch (e) {
       setShowLoader(false);
-      console.log(e);
-      console.log(e.response.data);
+      console.log(e,'create');
+  
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
     }
   };
@@ -580,8 +591,8 @@ const VendorAddProductScreen = ({navigation}) => {
       }
     } catch (e) {
       setShowLoader(false);
-      console.log(e);
-      console.log(e.response.data);
+      console.log(e,'e');
+      // console.log(e.response.data);
       showToaster(
         'Algo salió mal, inténtalo de nuevo, contacte con él administrador',
       );
