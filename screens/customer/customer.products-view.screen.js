@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet, Image, ScrollView, Platform, PermissionsAndroid, FlatList } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, Image, ScrollView, Platform, PermissionsAndroid, FlatList, ActivityIndicator } from 'react-native';
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
 import Geolocation from '@react-native-community/geolocation';
@@ -31,12 +31,11 @@ const CustomerProductsViewScreen = React.memo((props) => {
     comision,modelo,
     setModelo,marcas,
     setMarcas,valueMaker, setValueMaker,
-    valueModel, setValueModel,resetFiltro
+    valueModel, setValueModel,resetFiltro,productFiltrado
   } = useContext(ProductContext)
 
-  const {productFilter} = useFiltrado(props?.route?.name)
+  
 
- 
  
 
   const CategoryButton = ({ category,onPress }) => {
@@ -54,6 +53,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
   }
 
 
+  
 
   return (
     <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor,paddingTop:15 }}>
@@ -134,19 +134,42 @@ const CustomerProductsViewScreen = React.memo((props) => {
         
 
         <ScrollView contentContainerStyle={{ flexGrow: 1, marginTop: 5 }}>
+          {
+            comision && productFiltrado ? (
+              categorias.map((item)=>(
+                <View key={item._id} >
+                  <ProductListing
+                  navigation={props.navigation}
+                  category={item.name} 
+                  products={productFiltrado.filter(product => product.categoryId == item._id)} 
+                  comision={comision}
+                  />
+                </View>
+              ))
+            ):(
+              <View
+              style={{
+              alignItems:'center',
+              justifyContent: 'center',
+              }}>
+                <ActivityIndicator/>
+                <Text>cargando</Text>                        
+              </View>
+            )
+          }
 
-         {
+          {/* {
             categorias.map((item)=>(
               <View key={item._id} >
                 <ProductListing
                 navigation={props.navigation}
                 category={item.name} 
-                products={productFilter.filter(product => product.categoryId == item._id)} 
+                products={productFiltrado.filter(product => product.categoryId == item._id)} 
                 comision={comision}
                 />
               </View>
             ))
-          }
+          } */}
         <View style={{height:deviceWidth *0.05,width:deviceWidth,marginBottom:0}} />
         </ScrollView>
       </View>

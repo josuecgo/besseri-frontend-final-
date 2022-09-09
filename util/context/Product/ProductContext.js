@@ -18,7 +18,8 @@ const productInicialState = {
     marcas:[],
     modelo:null,
     comision:false,
-    isLoading:false
+    isLoading:false,
+    productFiltrado: false
 }
 
 
@@ -35,7 +36,7 @@ export const ProductProvider = ({children}) => {
     const [modelo, setModelo] = useState(false);
     const [servicios, setServicios] = useState(false)
     const [loading, setLoading] = useState(false)
-    
+    const [dowload, setDowload] = useState(false)
     // const getProducts = useCallback(
     //     async() => {
     //       try {
@@ -102,22 +103,25 @@ export const ProductProvider = ({children}) => {
                     // categorias: apiCall?.data?.data?.categories
                 }
             });
-
-            // await dispatch({
-            //     type:'getCategorias',
-            //     payload: {
-                   
-            //         categorias: apiCall?.data?.data?.categories
-            //     }
-            // });
-          
-          
+            
+            setDowload(apiCall.data.data.products)
            
           } catch(e) {
             console.log({getProducts:e})
             showToaster('No hay conexion con el servidor ');
            
           }
+    }
+
+    const filterProduct = async(data) => {
+        
+        await dispatch({
+            type:'filterProducts',
+            payload: {
+                productos:data,
+                // categorias: apiCall?.data?.data?.categories
+            }
+        });
     }
 
     const getServices = useCallback(
@@ -309,6 +313,10 @@ export const ProductProvider = ({children}) => {
     useEffect(() => {
         // let abortController = new AbortController();
         if (valueMaker) {
+            if (valueModel) {
+                setValueModel(null);
+                setModelo(false);
+            }
             getModelo(valueMaker); 
         }
         // return () => {  
@@ -316,6 +324,12 @@ export const ProductProvider = ({children}) => {
         // } 
     }, [valueMaker])
     
+    useEffect(() => {
+        if (dowload) {
+            filterProduct(dowload)
+        }
+    
+    }, [dowload])
     
     
 
@@ -333,7 +347,7 @@ export const ProductProvider = ({children}) => {
             setValueModel,
             resetFiltro,
             searchCall,
-            
+            filterProduct
           
         }}
         >

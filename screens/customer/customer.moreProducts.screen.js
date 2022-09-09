@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     Text,
     TouchableOpacity,
@@ -10,6 +10,7 @@ import {
     PermissionsAndroid,
     FlatList,
     TextInput,
+    ActivityIndicator,
 } from 'react-native';
 import ProductListing from '../../components/customer-components/ProductsListing.component';
 import Colors from '../../util/styles/colors';
@@ -35,6 +36,7 @@ import { getUserId } from '../../util/local-storage/auth_service';
 import { useCart } from '../../hooks/useCart';
 import { SearchInput } from '../../components/customer-components/SearchInput';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { ProductContext } from '../../util/context/Product/ProductContext';
 const SCREEN_STATES = {
     USER_LOCATION: 'User location',
     PRODUCTS: 'Products',
@@ -45,7 +47,7 @@ const CustomerMoreProductsScreen = props => {
     const { params } = useRoute();
     const [isLoading, setIsLoading] = useState(true);
     const [products, setProducts] = useState([]);
-    const [comision, setComision] = useState(0);
+    const [comision, setComision] = useState(false);
     const [valueMaker, setValueMaker] = useState(null);
     const [valueModel, setValueModel] = useState(null);
     const [open, setOpen] = useState(false);
@@ -60,7 +62,10 @@ const CustomerMoreProductsScreen = props => {
         latitude: 0,
     });
     const [searchText, setSearchtext] = useState('');
-    const [productFilter, setProductFilter] = useState([]);
+    const [productFilter, setProductFilter] = useState(false);
+    const {
+        productos,
+    } = useContext(ProductContext)
     //Fetching user location..............................
     const getUserLocation = async () => {
         if (Platform.OS === 'ios') {
@@ -118,25 +123,7 @@ const CustomerMoreProductsScreen = props => {
         getUserLocation();
     }, []);
 
-    //Get Products to show
-    const getProducts = async () => {
-        try {
-            const apiCall = await axios.get(
-                `${customer_api_urls.get_category_products}/${params?.category?._id}`,
-            );
 
-            const getUser = await getUserId();
-
-            setIsLogin(getUser);
-
-            setProducts(apiCall.data.data);
-            //  setState(apiCall.data.data.products,SCREEN_STATES.PRODUCTS);
-            //  setState(apiCall.data.data.categories,SCREEN_STATES.CATEGORIES);
-    
-        } catch (e) {
-            showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
-        }
-    };
 
     const getComision = async () => {
         try {
@@ -146,9 +133,7 @@ const CustomerMoreProductsScreen = props => {
             console.log(error);
         }
     };
-    useEffect(() => {
-        getProducts();
-    }, []);
+
 
     useEffect(() => {
         getComision();
@@ -163,20 +148,21 @@ const CustomerMoreProductsScreen = props => {
         if (searchText.length > 1) {
             searchCategoria();
         }else{
-            getProducts()
+            setProductFilter(productos);
         }
     }, [searchText]);
 
     const searchCategoria = () => {
         let itemData;
 
-        const search = products.filter(item => {
+        const search = productos.filter(item => {
             itemData = item.name ? item?.name.toLowerCase() : ''.toLowerCase();
             let searchTextData = searchText.toLowerCase();
             return itemData.indexOf(searchTextData) > -1;
         });
 
         setProductFilter(search);
+        
     };
 
     const makerFilter = () => {
@@ -186,38 +172,59 @@ const CustomerMoreProductsScreen = props => {
                
                 let itemData;
                 let itemModel;
-                const marca = products.filter((item) => {
+                const marca = productos.filter((item) => {
                     itemData = item.maker ? item?.maker?._id : '';
                     let searchTextData = valueMaker;
-                   
-                    return itemData.indexOf(searchTextData) > -1;
+                    let searchTextData2 = valueModel;
+                    let match = matchesForModel(searchTextData2,item);
+                    return itemData.indexOf(searchTextData) > -1 || match;
+                    
                 })
                 
                 const modelo = marca.filter((item) => {
-                    console.log(item.model._id);
+                   
                     itemModel = item.model ? item?.model?._id : '';
                     let searchTextData = valueModel;
-                   
-                    return itemModel.indexOf(searchTextData) > -1;
+                    let match = matchesForModel(searchTextData,item);
+                    return itemModel.indexOf(searchTextData) > -1 || match;
+               
                 })
 
                 setProductFilter(modelo ? modelo : []);
-               
+             
                
             } else {
-                const marca = products.filter((item) => {
+                const marca = productos.filter((item) => {
                     let itemData = item.maker ? item?.maker?._id : '';
                     let searchTextData = valueMaker;
                     return itemData.indexOf(searchTextData) > -1;
                 })
                 setProductFilter(marca ? marca : []);
+             
             }
         }else{  
            
-            setProductFilter(products)
+            setProductFilter(productos)
         }
        
     };
+
+    const matchesForModel = (id,searchId) => {
+        
+        if (searchId?.matchs.length > 0) {
+            console.log({id,searchId:searchId?.matchs});
+            const match = searchId?.matchs.filter(element => element?.model === id);
+            if (match.length > 0) {
+                
+                return searchId;
+            }else{
+                return false;
+            }
+     
+        }
+        return false;
+
+    }
 
     const goCart = () => {
         props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK);
@@ -359,32 +366,49 @@ const CustomerMoreProductsScreen = props => {
                 
 
                 <ScrollView contentContainerStyle={{ flexGrow: 1, marginTop: 20 }}>
-                    <View
+                    {
+                        productFilter && comision ? (
+                            <View
+                            style={{
+                                flexDirection: 'row',
+                                flexWrap: 'wrap',
+                                justifyContent: 'center',
+                            }}>
+                                {
+                                    
+                                productFilter.map(item => (
+                                    <View key={item._id}>
+                                        <ProductCardComponent
+                                            onAddToCart={() => addItemToCart(item)}
+                                            data={item}
+                                            cartProduct={false}
+                                            onViewDetail={() => {
+                                                props?.navigation.navigate(
+                                                    CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL,
+                                                    {
+                                                        product: item,
+                                                        comision: comision,
+                                                    },
+                                                );
+                                            }}
+                                            comision={comision}
+                                        />
+                                    </View>
+                                ))
+                                }
+                        </View>
+                        ):(
+                        <View
                         style={{
-                            flexDirection: 'row',
-                            flexWrap: 'wrap',
+                            alignItems:'center',
                             justifyContent: 'center',
                         }}>
-                        {productFilter.map(item => (
-                            <View key={item._id}>
-                                <ProductCardComponent
-                                    onAddToCart={() => addItemToCart(item)}
-                                    data={item}
-                                    cartProduct={false}
-                                    onViewDetail={() => {
-                                        props?.navigation.navigate(
-                                            CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL,
-                                            {
-                                                product: item,
-                                                comision: comision,
-                                            },
-                                        );
-                                    }}
-                                    comision={comision}
-                                />
-                            </View>
-                        ))}
-                    </View>
+                            <ActivityIndicator/>
+                            <Text>cargando</Text>                        
+                        </View>
+                        )
+                    }
+                    
 
                     <View style={{ width: deviceWidth, height: deviceHeight * 0.05 }} />
                 </ScrollView>

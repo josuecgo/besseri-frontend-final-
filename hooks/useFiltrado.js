@@ -15,10 +15,11 @@ export const useFiltrado = ( isServicios ) => {
         valueMaker, 
         valueModel,
         servicios,
+        filterProduct,
         
     } = useContext(ProductContext)
     
-    console.log(productos);
+
     const makerFilter = () => {
         if (isServicios === 'Servicios') {
             servicesFilter();
@@ -33,36 +34,42 @@ export const useFiltrado = ( isServicios ) => {
                 const marca = productos.filter((item) => {
                     itemData = item.maker ? item?.maker?._id : '';
                     let searchTextData = valueMaker;
-                   
-                    return itemData.indexOf(searchTextData) > -1;
+                    let searchTextData2 = valueModel;
+                    let match = matchesForModel(searchTextData2,item);
+                    return itemData.indexOf(searchTextData) > -1 || match;
                 })
                 
                 const modelo = marca.filter((item) => {
                     
                     itemModel = item.model ? item?.model?._id : '';
                     let searchTextData = valueModel;
-                   
-                    return itemModel.indexOf(searchTextData) > -1;
+
+                    let match = matchesForModel(searchTextData,item);
+                    
+                    return itemModel.indexOf(searchTextData) > -1 || match;
                 })
 
                 setProductFilter(modelo ? modelo : []);
-               
+                filterProduct(modelo ? modelo : []);
                
             } else {
                 
-                const marca = productos.filter((item) => {
-                    let itemData = item.maker ? item?.maker?._id : '';
-                    let searchTextData = valueMaker;
-                    return itemData.indexOf(searchTextData) > -1;
-                })
+            const marca = productos.filter((item) => {
+                let itemData = item.maker ? item?.maker?._id : '';
+                
+                let searchTextData = valueMaker;
+                
+                return itemData.indexOf(searchTextData) > -1  ;
+            })
                 
                 setProductFilter(marca ? marca : []);
+                filterProduct(marca ? marca : [])
             }
 
             
           
         }else{  
-           
+            filterProduct(productos)
             setProductFilter(productos)
         }
        
@@ -113,9 +120,31 @@ export const useFiltrado = ( isServicios ) => {
         }
     }
 
-   
+    const matchesForModel = (id,searchId) => {
+        
+        if (searchId?.matchs.length > 0) {
+            console.log({id,searchId:searchId?.matchs});
+            const match = searchId?.matchs.filter(element => element?.model === id);
+            if (match.length > 0) {
+                
+                return searchId;
+            }else{
+                return false;
+            }
+     
+        }
+        return false;
+        
+    }
+
     useEffect(() => {
-      makerFilter();
+        console.log('da');
+        filterProduct(productos)
+    }, [productos])
+    
+    useEffect(() => {
+
+        makerFilter();
     }, [productos,valueMaker,valueModel,servicios])
     
    

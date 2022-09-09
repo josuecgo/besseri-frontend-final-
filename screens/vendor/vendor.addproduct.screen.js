@@ -492,7 +492,7 @@ const uploadProductImg = async () => {
        setShowLoader(false);
       })
 
-      console.log({data});
+     
     return data;
 };
 
@@ -504,7 +504,7 @@ const uploadProductImg = async () => {
 
       
       const productImgUpload = await uploadProductImg();
-      console.log({productImgUpload});
+     
       if (productImgUpload) {
         const apiBody = {
           name: inputValues[CREDENTIAL_KEYS.NAME],

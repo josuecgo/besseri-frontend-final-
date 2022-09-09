@@ -150,13 +150,7 @@ const ProductCardComponent = ({
         style={styles.productImg}
         resizeMode='stretch'
       />
-      {/* <View style={{flexDirection:'row',alignItems:'center',alignSelf:'center'}}>
-      <Image
-    source={{uri:`${base_url}/${data?.productImg}`}}
-    style={{width:20,height:20,borderRadius:20/2,marginRight:5}}
-    />
-   
-      </View> */}
+
       <LinearGradient
         colors={Colors.primaryGradient}
         style={styles.LinearGradient}>

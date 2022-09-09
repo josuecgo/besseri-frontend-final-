@@ -9,6 +9,13 @@ export const productReducer = (state, action) => {
             productos: action.payload.productos,
             // categorias:action.payload.categorias
         }
+        case 'filterProducts' : 
+        return {
+            ...state,
+            errorMessage:'',
+            productFiltrado: action.payload.productos,
+            // categorias:action.payload.categorias
+        }
         case 'getCategorias' : 
         return {
             ...state,
