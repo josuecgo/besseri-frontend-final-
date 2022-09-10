@@ -122,8 +122,27 @@ const CustomerMoreProductsScreen = props => {
     useEffect(() => {
         getUserLocation();
     }, []);
+    useEffect(() => {
+        getProducts();
+    }, []);
 
+    const getProducts = async () => {
+        try {
+            const apiCall = await axios.get(
+                `${customer_api_urls.get_category_products}/${params?.category?._id}`,
+            );
 
+            const getUser = await getUserId();
+
+            setIsLogin(getUser);
+
+            setProducts(apiCall.data.data);
+            
+
+        } catch (e) {
+            showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
+        }
+    };
 
     const getComision = async () => {
         try {
@@ -148,14 +167,14 @@ const CustomerMoreProductsScreen = props => {
         if (searchText.length > 1) {
             searchCategoria();
         }else{
-            setProductFilter(productos);
+            getProducts()
         }
     }, [searchText]);
 
     const searchCategoria = () => {
         let itemData;
 
-        const search = productos.filter(item => {
+        const search = products.filter(item => {
             itemData = item.name ? item?.name.toLowerCase() : ''.toLowerCase();
             let searchTextData = searchText.toLowerCase();
             return itemData.indexOf(searchTextData) > -1;
@@ -172,7 +191,7 @@ const CustomerMoreProductsScreen = props => {
                
                 let itemData;
                 let itemModel;
-                const marca = productos.filter((item) => {
+                const marca = products.filter((item) => {
                     itemData = item.maker ? item?.maker?._id : '';
                     let searchTextData = valueMaker;
                     let searchTextData2 = valueModel;
@@ -194,7 +213,7 @@ const CustomerMoreProductsScreen = props => {
              
                
             } else {
-                const marca = productos.filter((item) => {
+                const marca = products.filter((item) => {
                     let itemData = item.maker ? item?.maker?._id : '';
                     let searchTextData = valueMaker;
                     return itemData.indexOf(searchTextData) > -1;
@@ -204,7 +223,7 @@ const CustomerMoreProductsScreen = props => {
             }
         }else{  
            
-            setProductFilter(productos)
+            setProductFilter(products)
         }
        
     };

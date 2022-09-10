@@ -5,9 +5,6 @@ import { showToaster } from '../util/constants';
 import { ProductContext } from '../util/context/Product/ProductContext';
 
 export const useFiltrado = ( isServicios ) => {
-    
-    
-
     const [productFilter, setProductFilter] = useState([]);
     const [serviciosFiltrados, setServiciosFiltrados] = useState([])
     const {
@@ -137,10 +134,7 @@ export const useFiltrado = ( isServicios ) => {
         
     }
 
-    useEffect(() => {
-        console.log('da');
-        filterProduct(productos)
-    }, [productos])
+   
     
     useEffect(() => {
 
@@ -148,7 +142,7 @@ export const useFiltrado = ( isServicios ) => {
     }, [productos,valueMaker,valueModel,servicios])
     
    
-   
+   console.log({valueMaker});
   
 
     return {

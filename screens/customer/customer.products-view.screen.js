@@ -31,11 +31,11 @@ const CustomerProductsViewScreen = React.memo((props) => {
     comision,modelo,
     setModelo,marcas,
     setMarcas,valueMaker, setValueMaker,
-    valueModel, setValueModel,resetFiltro,productFiltrado
+    valueModel, setValueModel,resetFiltro,productFiltrado,filterProduct,productos
   } = useContext(ProductContext)
 
   
-
+  const {productFilter} = useFiltrado(props?.route?.name)
  
 
   const CategoryButton = ({ category,onPress }) => {
@@ -53,6 +53,9 @@ const CustomerProductsViewScreen = React.memo((props) => {
   }
 
 
+  useEffect(() => {
+      filterProduct(productos)
+  }, [productos])
   
 
   return (
