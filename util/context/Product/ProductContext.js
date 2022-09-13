@@ -119,7 +119,7 @@ export const ProductProvider = ({children}) => {
         async() => {
           try {
             const getFee = await axios.get(customer_api_urls?.get_fees);
-
+            console.log(getFee.data.data[0]?.besseri_comission);
             dispatch({
                 type:'getComision',
                 payload: {
@@ -129,7 +129,7 @@ export const ProductProvider = ({children}) => {
           
            
           } catch(e) {
-            console.log({productContext:e})
+            // console.log({productContext:e})
             showToaster('No hay conexion con el servidor ');
            
           }

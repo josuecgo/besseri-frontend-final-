@@ -57,7 +57,6 @@ const CustomerProductsViewScreen = React.memo((props) => {
       filterProduct(productos)
   }, [productos])
   
-
   return (
     <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor,paddingTop:15 }}>
             

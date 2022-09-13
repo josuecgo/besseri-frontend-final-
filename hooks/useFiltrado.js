@@ -142,7 +142,7 @@ export const useFiltrado = ( isServicios ) => {
     }, [productos,valueMaker,valueModel,servicios])
     
    
-   console.log({valueMaker});
+ 
   
 
     return {
