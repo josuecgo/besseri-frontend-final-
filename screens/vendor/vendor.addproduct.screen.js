@@ -438,7 +438,10 @@ const VendorAddProductScreen = ({navigation}) => {
       width: 300,
       height: 400,
       maxFiles:3,
-      mediaType:'photo'
+      mediaType:'photo',
+      compressImageQuality:0.5,
+      compressImageMaxHeight:400,
+      compressImageMaxWidth:300
       
     }).then((image) => {
       
@@ -457,9 +460,10 @@ const uploadProductImg = async () => {
   const imageFormData = new FormData();
   let images = inputValues[CREDENTIAL_KEYS.PRODUCT_IMAGE];
  
-  for (let index = 0; index < images.length; index++) {   
+  for (let index = 0; index < images.length; index++) {  
+    
     imageFormData.append('imageFormData', {
-      uri: images[index]?.path,
+      uri: Platform.OS === 'ios' ? images[index]?.path : images[index]?.path,
       type: images[index]?.mime,
       name: 'photo.jpg',
     });
@@ -474,26 +478,35 @@ const uploadProductImg = async () => {
     }
   };
 
-  let data = await fetch(vendor_api_urls.upload_product_image,requestoptions)
-    .then(res => res.json())
-    .then(result => {
-      setShowLoader(false);
-      
-      if (result?.success) {
-        // return result?.data;
-        
-        return result?.data
-      } else {
-        return false;
-      }
-    } )
-    .catch(error =>{
-       console.log(error,'upload')
-       setShowLoader(false);
-      })
+  let resp = await  fetch(vendor_api_urls.upload_product_image,requestoptions);
+  // await  data.then(res => {
+  //    //console.log(res.json());
 
-     
-    return data;
+  //     res.json()
+  //   })
+  //   .then(result => {
+  //     setShowLoader(false);
+      
+  //     console.log(result);
+  //     if (result?.success) {
+  //       // return result?.data;
+        
+  //       return result?.data
+  //     } else {
+  //       return false;
+  //     }
+  //   } )
+  //   .catch(error =>{
+  //      console.log(error,'fetch')
+  //      setShowLoader(false);
+  //     })
+  const data = await resp.json();
+  console.log(data);
+  if (data?.success) {
+    return data?.data
+  }
+  return false
+  
 };
 
   
@@ -504,7 +517,7 @@ const uploadProductImg = async () => {
 
       
       const productImgUpload = await uploadProductImg();
-     
+      console.log({productImgUpload});
       if (productImgUpload) {
         const apiBody = {
           name: inputValues[CREDENTIAL_KEYS.NAME],
