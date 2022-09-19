@@ -103,8 +103,7 @@ const CustomerCartScreen = (props) => {
     }
   }
   
-  
- 
+
 
   const fetchBusinessDetails = async () => {
     try {
@@ -139,8 +138,7 @@ const CustomerCartScreen = (props) => {
         for (var a = 0; a < allProducts?.length; a++) {
           totalProductsPrice += allProducts[a]?.price * allProducts[a]?.quantity
         }
-        let subtotal = totalAmount -  descuento;
-       
+        let subtotal = totalAmount ;
         props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ENVIO, {
           deliveryDistance:deliveryDistance,
           storeId: businessProfiles[0]?._id,
@@ -151,7 +149,8 @@ const CustomerCartScreen = (props) => {
           delivery_fee:delivery_fee,
           subtotal:subtotal,
           comision:comission,
-          cupon:idDesc
+          cupon:idDesc,
+          descuento
         })
        } else {
          showToaster('No puedes hacer pedidos en esta tienda en este momento.')
@@ -245,7 +244,6 @@ const CustomerCartScreen = (props) => {
       </View>
     )
   }
-  
  
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -361,7 +359,7 @@ const CustomerCartScreen = (props) => {
               </ScrollView>
              
              {
-              totalAmount == NaN ? (
+              !(totalAmount + (billComission * totalAmount / 100) - descuento)  ? (
                 <View/>
               ):(
                 <View style={styles.detailCard}>

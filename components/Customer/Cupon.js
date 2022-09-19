@@ -29,7 +29,7 @@ export const Cupon = () => {
         </View>
         <View style={styles.aplicado} >
            
-                    <Text style={styles.cupon} >{aplicado?.name}</Text>
+        <Text style={styles.cupon} >{aplicado?.name}</Text>
   
         </View>
         

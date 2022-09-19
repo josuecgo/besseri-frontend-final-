@@ -69,15 +69,17 @@ const CustomerOrderSummaryFree = React.memo((props) => {
     besseri_commission: params?.comission,
     totalAmount: params?.totalAmount,
     subtotal: params?.subtotal,
+    descuento:params?.descuento,
+    comision:params?.comision
   });
   const [isVisible, setIsVisible] = useState(false);
   const [deliveryAddress, setDeliveryAddress] = useState(true);
   const [deliveryDistance, setDeliveryDistance] = useState(0);
-  const totalAmount =allCharges?.subtotal + allCharges?.besseri_commission ;
-  const totalSinEnvio = allCharges?.subtotal + allCharges?.besseri_commission ;
+  const totalAmount =allCharges?.subtotal + allCharges?.besseri_commission  - allCharges.descuento;
+  const totalSinEnvio = allCharges?.subtotal + allCharges?.besseri_commission  - allCharges.descuento ;
   const [tienda, setTienda] = useState(false);
 
-  
+
  
 
 
@@ -166,7 +168,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
         ordered_by_id: user?._id,
         products: products,
         storeId: business?._id,
-        total_amount: tienda ? totalSinEnvio : totalAmount,
+        total_amount: tienda ? totalSinEnvio  : totalAmount,
         delivery_address: deliveryAddress,
         ordered_on: new Date(),
         delivery_fee: 0,
@@ -394,7 +396,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
       </View>
     );
   };
-
+ 
   
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -496,21 +498,32 @@ const CustomerOrderSummaryFree = React.memo((props) => {
                 <View>
                   <Text style={{ fontSize: adjust(12), fontWeight: 'bold' }}>
                     {moneda(
-                      item.quantity * item.price +
-                      allCharges?.besseri_commission,
+                      item.quantity *  item.price  + (allCharges?.comision * item.price / 100) 
                     )}
+                    
                   </Text>
                 </View>
               </View>
             </View>
           ))}
+
         </View>
         <ThinlineSeparator margin={10} />
 
         <View style={styles.detailCard}>
+          {
+            allCharges?.descuento > 0 && (
+              <DetailItem
+              label={'Descuento'}
+              value={`-${moneda(allCharges?.descuento)} MXN`}
+              />
+            )
+          }
+          
+        
           <DetailItem
             label={'Total'}
-            value={`${moneda(totalSinEnvio.toFixed(2))} MXN`}
+            value={`${moneda(totalSinEnvio.toFixed(2) )} MXN`}
           />
 
 

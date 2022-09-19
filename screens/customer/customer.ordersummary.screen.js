@@ -56,12 +56,14 @@ const CustomerOrderSummary = (props) => {
         delivery_charges:params.delivery_fee,
         besseri_commission:params?.comission,
         totalAmount:params?.totalAmount,
-        subtotal:params?.subtotal
+        subtotal:params?.subtotal,
+        descuento:params?.descuento,
+        comision:params?.comision
     })
     const [isVisible, setIsVisible] = useState(false);
     const [deliveryAddress,setDeliveryAddress] = useState(null);
     const [deliveryDistance,setDeliveryDistance] = useState(0)
-    const totalAmount = allCharges?.subtotal  + allCharges?.besseri_commission + costoEnvio;
+    const totalAmount = allCharges?.subtotal  + allCharges?.besseri_commission + costoEnvio - allCharges.descuento;
     
     const handleModalize = async(flag) => {
         if(flag == 'open') {
@@ -376,7 +378,8 @@ const CustomerOrderSummary = (props) => {
             </View>
         )
     }
-
+    
+    
     return (
     <View style={{flex:1,backgroundColor:'white'}}>
         <AddressesListingModal
@@ -498,7 +501,9 @@ const CustomerOrderSummary = (props) => {
                         <Text style={{fontSize:adjust(12),fontWeight:'bold'}}>{item.quantity}x</Text>
                     </View>
                     <View>
-                        <Text style={{fontSize:adjust(12),fontWeight:'bold'}}>{moneda(item.quantity * item.price + allCharges?.besseri_commission)}</Text>
+                        <Text style={{fontSize:adjust(12),fontWeight:'bold'}}>
+                            {moneda(item.quantity *  item.price  + (allCharges?.comision * item.price / 100) )}
+                        </Text>
                     </View>
                 </View>
             </View>
@@ -511,12 +516,22 @@ const CustomerOrderSummary = (props) => {
 
       <View style={styles.detailCard}>
       {/* <DetailItem label={'Sub total'} value={`${moneda(allCharges?.subtotal)} MXN`}/> */}
+        <DetailItem 
+        label={'Gastos de envío'} 
+        value={deliveryAddress ? costoEnvio == 0 ? 'Envio Gratis' : `${moneda(costoEnvio)} MXN` : 'Seleccionar direccion'}
+        />
+        {
+            allCharges?.descuento > 0 && (
+              <DetailItem
+              label={'Descuento'}
+              value={`-${moneda(allCharges?.descuento)} MXN`}
+              />
+            )
+        }
        <DetailItem 
-       label={'Gastos de envío'} 
-       value={deliveryAddress ? costoEnvio == 0 ? 'Envio Gratis' : `${moneda(costoEnvio)} MXN` : 'Seleccionar direccion'}
+       label={'Total'} 
+       value={deliveryAddress ? `${moneda(totalAmount.toFixed(2)) } MXN` : 'Seleccionar direccion' }
        />
-       
-       <DetailItem label={'Total'} value={deliveryAddress ? `${moneda(totalAmount.toFixed(2)) } MXN` : 'Seleccionar direccion' }/>
       </View> 
     </ScrollView>
     {
