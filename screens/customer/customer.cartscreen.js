@@ -157,7 +157,7 @@ const CustomerCartScreen = (props) => {
          
        }
     } else {
-      props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR)
+      props.navigation.navigate('LSFS',{customer:true})
     }
   }
 

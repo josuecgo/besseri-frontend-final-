@@ -26,18 +26,7 @@ export const iniciar = (props) => {
     <View style={styles.body} >
         <HeaderBackground/>
             <View style={styles.header} >
-            {/* <TouchableOpacity onPress={() => props.navigation.goBack()}>
-                  <MaterialCommunityIcons
-                  name='keyboard-backspace'
-                  color={Colors.white}
-                  size={30}
-                  style={{left:10}}
-                  />
-            </TouchableOpacity> */}
-
-            {/* <Text style={{fontSize:adjust(18),color:Colors.white}}>Detalles de producto</Text>
-
-            <View style={{width:23,height:30}} /> */}
+            
           </View>
 
           <View style={styles.content} >

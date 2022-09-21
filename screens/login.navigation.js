@@ -1,5 +1,5 @@
 // login, sign up, forgot password, stack
-import {LOGIN_SIGNUP_FORGOT_ROUTES, ROLES} from '../util/constants';
+import {CUSTOMER_HOME_SCREEN_ROUTES, LOGIN_SIGNUP_FORGOT_ROUTES, ROLES} from '../util/constants';
 import LoginScreen from './login.screen';
 import SignUpScreen from './sign-up.screen';
 import ForgotPasswordScreen from './forgot-password.screen';
@@ -13,12 +13,20 @@ import ChangePasswordScreen from './change-password.screen';
 import { HomePageScreen } from './HomePageScreen';
 import SignUpScreenCustomer from './sign-up.screen-customer';
 import PrivacyPolicy from './privacypolicy.screen';
+import { iniciar } from './customer/customer.iniciar.screen';
 
 const Stack = createStackNavigator();
 
-export const LSFS = () => {
+export const LSFS = ({route}) => {
+  const isCustomer = route?.params ? route?.params?.customer : false;
+  const initial = isCustomer ?  CUSTOMER_HOME_SCREEN_ROUTES.INICIAR :  LOGIN_SIGNUP_FORGOT_ROUTES.HOMEPAGE;
+  
+  
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator 
+    screenOptions={{headerShown: false}}
+    initialRouteName={initial}
+    >
 
       <Stack.Screen
         name={LOGIN_SIGNUP_FORGOT_ROUTES.HOMEPAGE}
@@ -66,6 +74,10 @@ export const LSFS = () => {
       <Stack.Screen
         name={LOGIN_SIGNUP_FORGOT_ROUTES.PRIVACY_POLICY}
         component={PrivacyPolicy}
+      />
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.INICIAR}
+        component={iniciar}
       />
     </Stack.Navigator>
   );

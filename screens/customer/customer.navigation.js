@@ -38,6 +38,7 @@ import { CreateCardScreen } from './customer.createCard.screen';
 import PrivacyPolicy from '../privacypolicy.screen';
 import { CartScreen } from './Cart/CartScreen';
 import { ChatScreen } from './Chat/ChatScreen';
+import { LSFS } from '../login.navigation';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -248,10 +249,10 @@ export const CustomerHomeStack = () => {
         component={CustomerServicesViewScreen}
       />
 
-      <Stack.Screen
+      {/* <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.INICIAR}
         component={iniciar}
-      />
+      /> */}
       <Stack.Screen
         name={LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN}
         component={LoginScreen}
@@ -268,6 +269,10 @@ export const CustomerHomeStack = () => {
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.CHAT_SCREEN}
         component={ChatScreen}
+      />
+      <Stack.Screen
+        name={'LSFS'}
+        component={LSFS}
       />
     </Stack.Navigator>
   );
