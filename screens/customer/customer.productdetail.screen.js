@@ -78,7 +78,7 @@ const CustomerProductDetailScreen = (props) => {
     );
   };
 
-  console.log(product?.productImg);
+  console.log(`${base_url}/${product?.productImg}`);
 
   return (
     <>
@@ -101,7 +101,7 @@ const CustomerProductDetailScreen = (props) => {
             </View>
             <View style={{backgroundColor:Colors.white,elevation:1,marginBottom:5}} >
               {
-                product?.urlsImg ? (
+                false ? (
                   <ProductImg imgs={product?.urlsImg} />
                 ):(
                   <Image
@@ -165,7 +165,8 @@ const CustomerProductDetailScreen = (props) => {
 
             <TouchableOpacity
             onPress={() => {
-                    props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.CHAT_SCREEN,product)
+                //props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.CHAT_SCREEN,product)
+                Linking.openURL(`mailto:${business?.email}`);
             }}
             style={{
               marginVertical:10,
