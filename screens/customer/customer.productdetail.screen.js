@@ -78,8 +78,6 @@ const CustomerProductDetailScreen = (props) => {
     );
   };
 
-  console.log(`${base_url}/${product?.productImg}`);
-
   return (
     <>
         <View style={{flex:1,backgroundColor:Colors.bgColor}}>
@@ -101,7 +99,7 @@ const CustomerProductDetailScreen = (props) => {
             </View>
             <View style={{backgroundColor:Colors.white,elevation:1,marginBottom:5}} >
               {
-                false ? (
+                product?.urlsImg.length > 0 ? (
                   <ProductImg imgs={product?.urlsImg} />
                 ):(
                   <Image
@@ -113,6 +111,7 @@ const CustomerProductDetailScreen = (props) => {
 
               
             </View>
+          
 
           <ScrollView
           showsVerticalScrollIndicator={false}
@@ -220,6 +219,11 @@ const styles = StyleSheet.create({
         marginTop:'10%',
         padding:20,
         marginBottom:10
+    },
+    productImg:{
+      width: deviceWidth,
+      height: 240,
+      resizeMode:'contain'
     }
 })
 
