@@ -27,7 +27,7 @@ import SignUpScreen from '../sign-up.screen';
 import SignUpScreenCustomer from '../sign-up.screen-customer';
 import { OrderSuccessful } from './customer.order-successful';
 import { SearchScreen } from './SearchScreen';
-
+import { LSFS } from '../login.navigation';
 import { CustomerNotificationViewScreen } from './customer.notificaciones';
 import { NotificationContext } from '../../util/context/NotificationContext';
 import { EnvioScreen } from './customer.envio.screen';
@@ -38,7 +38,6 @@ import { CreateCardScreen } from './customer.createCard.screen';
 import PrivacyPolicy from '../privacypolicy.screen';
 import { CartScreen } from './Cart/CartScreen';
 import { ChatScreen } from './Chat/ChatScreen';
-import { LSFS } from '../login.navigation';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -249,10 +248,10 @@ export const CustomerHomeStack = () => {
         component={CustomerServicesViewScreen}
       />
 
-      {/* <Stack.Screen
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.INICIAR}
         component={iniciar}
-      /> */}
+      />
       <Stack.Screen
         name={LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN}
         component={LoginScreen}

@@ -131,6 +131,7 @@ const CustomerCartScreen = (props) => {
 
   
   const goPurchase = () => {
+    console.log('click1');
     if (isLogin) {
       if(businessProfiles[0]?.wallet_id && !businessProfiles[0]?.isBlocked) {
         let allProducts = products?.filter(prod => prod?.business_id == businessProfiles[0]?._id);
@@ -157,6 +158,7 @@ const CustomerCartScreen = (props) => {
          
        }
     } else {
+      console.log('click');
       props.navigation.navigate('LSFS',{customer:true})
     }
   }
