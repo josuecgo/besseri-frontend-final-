@@ -11,6 +11,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		4D8C95E228E2147200EA61E9 /* hermes.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8C95E128E2147200EA61E9 /* hermes.xcframework */; };
 		4DD1EE69280DCFA900FA39AF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4DD1EE68280DCFA900FA39AF /* GoogleService-Info.plist */; };
 		4DD1EE6A280DCFA900FA39AF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4DD1EE68280DCFA900FA39AF /* GoogleService-Info.plist */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -42,6 +43,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Besseri/main.m; sourceTree = "<group>"; };
 		41C631DE2024A7F14F19E7A5 /* Pods-Besseri.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Besseri.debug.xcconfig"; path = "Target Support Files/Pods-Besseri/Pods-Besseri.debug.xcconfig"; sourceTree = "<group>"; };
 		4CF8D9C2806A4E8084178DE8 /* Arial-Rounded-MT-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Arial-Rounded-MT-Bold.ttf"; path = "../assets/fonts/Arial-Rounded-MT-Bold.ttf"; sourceTree = "<group>"; };
+		4D8C95E128E2147200EA61E9 /* hermes.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = hermes.xcframework; path = "Pods/hermes-engine/destroot/Library/Frameworks/universal/hermes.xcframework"; sourceTree = "<group>"; };
 		4D912DF12811AA1800EE49E7 /* Besseri.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Besseri.entitlements; path = Besseri/Besseri.entitlements; sourceTree = "<group>"; };
 		4DD1EE68280DCFA900FA39AF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4DD1EE6C280DD6E200FA39AF /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Regular.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D8C95E228E2147200EA61E9 /* hermes.xcframework in Frameworks */,
 				965750EEE58978C4869E2FC1 /* libPods-Besseri.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -126,6 +129,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4D8C95E128E2147200EA61E9 /* hermes.xcframework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				A01EC48FA5F0A7015EEBBB60 /* libPods-Besseri.a */,
 				D2AAF44CBBD789F6E38CFA2E /* libPods-Besseri-BesseriTests.a */,
@@ -702,7 +706,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				EXCLUDED_ARCHS = "";
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 i386";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -768,7 +772,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				EXCLUDED_ARCHS = "";
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 i386";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
