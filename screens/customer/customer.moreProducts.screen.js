@@ -498,9 +498,10 @@ const CustomerMoreProductsScreen = props => {
                     }
                     
 
-                    <View style={{ width: deviceWidth, height: deviceHeight * 0.10,marginVertical:bottom + 20 }} />
-                </View>
+                    </View>
             </View>
+            <View style={{ width: deviceWidth, height: deviceHeight * 0.10,marginVertical:bottom + 20 }} />
+              
         </View>
     );
 };
