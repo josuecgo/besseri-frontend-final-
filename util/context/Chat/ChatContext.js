@@ -23,27 +23,27 @@ export const ChatProvider = ({ children }) => {
 
     const getMensajes = async(de) => {
         try {
-            const id = await getUserId();
+            // const id = await getUserId();
         
-            const apiCall = await axios.get(`${api_urls.getMessage}/${id}`,{
-                data:{
-                    de
-                },
-                params:{
-                    de
-                }
-            }   
-            );
+            // const apiCall = await axios.get(`${api_urls.getMessage}/${id}`,{
+            //     data:{
+            //         de
+            //     },
+            //     params:{
+            //         de
+            //     }
+            // }   
+            // );
 
             
-            dispatch({
-                type:'cargarMensajes',
-                payload:apiCall?.data.data
-            })
-            dispatch({
-                type:'cargarMensajes',
-                payload:apiCall?.data.data
-            })
+            // dispatch({
+            //     type:'cargarMensajes',
+            //     payload:apiCall?.data.data
+            // })
+            // dispatch({
+            //     type:'cargarMensajes',
+            //     payload:apiCall?.data.data
+            // })
         } catch (error) {
             console.log(error?.response?.data);
         }

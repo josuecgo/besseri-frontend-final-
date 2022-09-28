@@ -9,7 +9,7 @@ import { AutoPartsAndServices } from './screens/customer/customer.navigation';
 import { RiderNavigation } from './screens/rider/rider.navigation';
 import { LSFS } from './screens/login.navigation';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
-import LoginScreen from './screens/login.screen';
+
 import { MainNavigation } from './util/Routes/navigation.routes';
 import { combineReducers, createStore } from 'redux';
 import businessProfileReducer from './util/ReduxStore/Reducers/VendorReducers/BusinessProfileReducer';
@@ -17,27 +17,18 @@ import { Provider } from 'react-redux';
 import CartReducer from './util/ReduxStore/Reducers/CustomerReducers/CartReducer';
 import { StripeProvider } from '@stripe/stripe-react-native';
 import RiderReducer from './util/ReduxStore/Reducers/RiderReducers/RiderReducer';
-import firebaseApp from "@react-native-firebase/app";
-import messaging, { firebase } from '@react-native-firebase/messaging';
-import { NativeBaseProvider, Text, Box } from 'native-base';
-import axios from 'axios';
-import { api_urls, base_url } from './util/api/api_essentials';
-import PushNotification from 'react-native-push-notification';
-import { useNotification } from './hooks/useNotification';
+
+import messaging from '@react-native-firebase/messaging';
+import { NativeBaseProvider } from 'native-base';
+
 import { NotificationContext, NotificationProvider } from './util/context/NotificationContext';
-import ProductCardComponent from './components/customer-components/product-card.component';
+
 import { ProductProvider } from './util/context/Product/ProductContext';
-import PushNotificationManager from './util/context/PushNotificationManager';
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
+
 import { ChatProvider } from './util/context/Chat/ChatContext';
 
 
-const getComponent = {
-  [ROLES.UNSET]: <LSFS />,
-  [ROLES.BUSINESS]: <VendorNavigation />,
-  [ROLES.CUSTOMER]: <AutoPartsAndServices />,
-  [ROLES.RIDER]: <RiderNavigation />,
-};
+
 
 const App = () => {
 
