@@ -5,7 +5,7 @@ import CommonStyles from '../../util/styles/styles';
 import Geolocation from '@react-native-community/geolocation';
 import {  CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../util/constants';
 import ProductListing from '../../components/customer-components/ProductsListing.component';
-import { adjust, deviceWidth } from '../../util/Dimentions';
+import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import { ProductContext } from '../../util/context/Product/ProductContext';
@@ -54,7 +54,12 @@ const CustomerProductsViewScreen = React.memo((props) => {
 
 
   useEffect(() => {
-      filterProduct(productos)
+    let abortController = new AbortController(); 
+    filterProduct(productos)
+    return () => {  
+      abortController.abort();  
+     
+    }  
   }, [productos])
 
 
@@ -66,6 +71,15 @@ const CustomerProductsViewScreen = React.memo((props) => {
     comision={comision}
     />
   )
+
+  const renderItemCategorias = ({item}) => (
+    <CategoryButton
+    onPress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.MORE_PRODUCTS,{category:item})}
+    category={item.name} 
+    />
+  )
+
+  const memorizedValueCategoria = useMemo(() => renderItemCategorias, [categorias]);
 
   const memorizedValue = useMemo(() => renderItem, [productFiltrado]);
   
@@ -137,12 +151,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
           data={categorias}
           horizontal
           keyExtractor={item => item?._id}
-          renderItem={({item}) => (
-            
-            <CategoryButton
-            onPress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.MORE_PRODUCTS,{category:item})}
-            category={item.name} />
-          )}
+          renderItem={memorizedValueCategoria}
           />
         </View>
         
@@ -152,10 +161,10 @@ const CustomerProductsViewScreen = React.memo((props) => {
             comision && productFiltrado ? (
               <FlatList
               data={categorias}
-              
+              initialNumToRender={5}
               keyExtractor={item => item?._id}
               renderItem={memorizedValue}
-              ListFooterComponent={<View style={{width:'100%',marginBottom:30}} />}
+              ListFooterComponent={<View style={{width:'100%',marginBottom:10,height:deviceHeight * 20 / 100}} />}
               />
               // categorias.map((item)=>(
               //   <View key={item._id} >
@@ -191,7 +200,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
               </View>
             ))
           } */}
-        <View style={{height:deviceWidth *0.05,width:deviceWidth,marginBottom:0}} />
+        <View style={{height:deviceWidth *0.05,width:deviceWidth,marginVertical:30}} />
         </View>
       </View>
     </View>

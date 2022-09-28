@@ -38,14 +38,9 @@ export const ProductProvider = ({children}) => {
     const [loading, setLoading] = useState(false)
     const [dowload, setDowload] = useState(false)
 
-    const getCategorias = async() => {
+    const getCategorias = async(params) => {
         try {
-            const apiCall = await axios.get(customer_api_urls.get_products);
-            
-          
-
-
-
+            const apiCall = await axios.get(customer_api_urls.get_products,{params});
             await dispatch({
                 type:'getCategorias',
                 payload: {
@@ -53,9 +48,7 @@ export const ProductProvider = ({children}) => {
                     categorias: apiCall?.data?.data?.categories
                 }
             });
-          
-          
-           
+
           } catch(e) {
             console.log({getProducts:e})
             showToaster('No hay conexion con el servidor ');
@@ -63,26 +56,49 @@ export const ProductProvider = ({children}) => {
           }
     }
 
-    const getProducts = async() => {
-        try {
-            const apiCall = await axios.get(customer_api_urls.get_products);
+    // const getProducts = async() => {
+    //     try {
+    //         const apiCall = await axios.get(customer_api_urls.get_products);
 
-            await dispatch({
-                type:'getProductos',
-                payload: {
-                    productos: apiCall.data.data.products,
-                    // categorias: apiCall?.data?.data?.categories
-                }
-            });
+    //         await dispatch({
+    //             type:'getProductos',
+    //             payload: {
+    //                 productos: apiCall.data.data.products,
+    //                 // categorias: apiCall?.data?.data?.categories
+    //             }
+    //         });
             
-            setDowload(apiCall.data.data.products)
+    //         setDowload(apiCall.data.data.products)
            
-          } catch(e) {
-            console.log({getProducts:e})
-            showToaster('No hay conexion con el servidor ');
+    //       } catch(e) {
+    //         console.log({getProducts:e})
+    //         showToaster('No hay conexion con el servidor ');
            
-          }
-    }
+    //       }
+    // }
+
+    const getProducts = useCallback(
+        async(params) => {
+            try {
+                
+                const apiCall = await axios.get(customer_api_urls.get_products);
+    
+                await dispatch({
+                    type:'getProductos',
+                    payload: {
+                        productos: apiCall.data.data.products,
+                        // categorias: apiCall?.data?.data?.categories
+                    }
+                });
+                
+                setDowload(apiCall.data.data.products)
+               
+              } catch(e) {
+                console.log({getProducts:e})
+                showToaster('No hay conexion con el servidor ');
+               
+            }
+    },[])
 
     const filterProduct = async(data) => {
         
@@ -119,7 +135,7 @@ export const ProductProvider = ({children}) => {
         async() => {
           try {
             const getFee = await axios.get(customer_api_urls?.get_fees);
-            console.log(getFee.data.data[0]?.besseri_comission);
+            
             dispatch({
                 type:'getComision',
                 payload: {
@@ -236,9 +252,9 @@ export const ProductProvider = ({children}) => {
     
 
     useEffect(() => {
-        // let abortController = new AbortController();  
-        const source = axios.CancelToken.source(); 
-        getCategorias()
+        const cancelToken = axios.CancelToken;
+        const source = cancelToken.source();
+        getCategorias(source.token)
         return () => {  
             // abortController.abort();  
             source.cancel();
@@ -246,39 +262,38 @@ export const ProductProvider = ({children}) => {
        
     }, [])
     
-    useEffect(() => {
-        // let abortController = new AbortController();  
-        const source = axios.CancelToken.source(); 
-        getProducts()
+    useEffect(async() => {
+        const CancelToken = axios.CancelToken;
+        const source = CancelToken.source(); 
+        getProducts(source.token)
         return () => {  
-            // abortController.abort();  
             source.cancel();
         }  
        
     }, [])
 
     useEffect(() => {
-        // let abortController = new AbortController();
+        let abortController = new AbortController();
         getComision()
-        // return () => {  
-        //     abortController.abort();  
-        // } 
+        return () => {  
+            abortController.abort();  
+        } 
     }, [])
 
     useEffect(() => {
-        // let abortController = new AbortController();
+        let abortController = new AbortController();
         getMarcas();
-        // return () => {  
-        //     abortController.abort();  
-        // } 
+        return () => {  
+            abortController.abort();  
+        } 
     }, [])
 
     useEffect(() => {
-        // let abortController = new AbortController();
+        let abortController = new AbortController();
         getServices();
-        // return () => {  
-        //     abortController.abort();  
-        // } 
+        return () => {  
+            abortController.abort();  
+        } 
     }, [])
     
     useEffect(() => {

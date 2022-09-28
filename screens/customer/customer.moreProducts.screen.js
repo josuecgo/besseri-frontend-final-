@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import {
     Text,
     TouchableOpacity,
@@ -120,10 +120,20 @@ const CustomerMoreProductsScreen = props => {
     };
 
     useEffect(() => {
+        let abortController = new AbortController();  
         getUserLocation();
+        return () => {  
+            abortController.abort();  
+        }  
     }, []);
+
+
     useEffect(() => {
+        let abortController = new AbortController();  
         getProducts();
+        return () => {  
+            abortController.abort();  
+        }  
     }, []);
 
     const getProducts = async () => {
@@ -155,19 +165,31 @@ const CustomerMoreProductsScreen = props => {
 
 
     useEffect(() => {
+        let abortController = new AbortController();  
         getComision();
+        return () => {  
+            abortController.abort();  
+        }  
     }, []);
 
     useEffect(() => {
+        let abortController = new AbortController();  
         makerFilter();
+        return () => {  
+            abortController.abort();  
+        }  
     }, [products,valueMaker,valueModel])
     
 
     useEffect(() => {
+        let abortController = new AbortController();  
         if (searchText.length > 1) {
             searchCategoria();
         }else{
             getProducts()
+        }
+        return () => {  
+            abortController.abort();
         }
     }, [searchText]);
 
@@ -280,14 +302,45 @@ const CustomerMoreProductsScreen = props => {
     };
 
     useEffect(() => {
+        let abortController = new AbortController(); 
         getMarcas();
+        return () => {  
+            abortController.abort();  
+        }  
     }, []);
 
     useEffect(() => {
+        let abortController = new AbortController(); 
         if (valueMaker) {
-            getModelo(valueMaker);
+            
+            getModelo(valueMaker); 
+            
+        }
+        return () => {  
+            abortController.abort();
         }
     }, [valueMaker]);
+
+
+    const renderItem = ({item}) => (
+      <ProductCardComponent
+        onAddToCart={() => addItemToCart(item)}
+        data={item}
+        cartProduct={false}
+        onViewDetail={() => {
+          props?.navigation.navigate(
+            CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL,
+            {
+              product: item,
+              comision: comision,
+            },
+          );
+        }}
+        comision={comision}
+      />
+    );
+
+    const memorizedValue = useMemo(() => renderItem, [productFilter]);
 
     return (
         <View style={{ ...CommonStyles.flexOne }}>
@@ -384,38 +437,50 @@ const CustomerMoreProductsScreen = props => {
 
                 
 
-                <ScrollView contentContainerStyle={{ flexGrow: 1, marginTop: 20 }}>
+                <View style={{ flexGrow: 1, marginTop: 20 }}>
                     {
                         productFilter && comision ? (
-                            <View
-                            style={{
-                                flexDirection: 'row',
-                                flexWrap: 'wrap',
-                                justifyContent: 'center',
-                            }}>
-                                {
+                            
+                            <FlatList
+                            data={productFilter}
+                            numColumns={2}
+                            keyExtractor={item => item?._id}
+                            renderItem={memorizedValue}
+                            ListFooterComponent={<View style={{width:'100%',marginBottom:30}} />}
+                            contentContainerStyle={{alignItems:'center'}}
+                            initialNumToRender={5}
+                            />
+                            
+                           
+                        //     <View
+                            // style={{
+                            //     flexDirection: 'row',
+                            //     flexWrap: 'wrap',
+                            //     justifyContent: 'center',
+                            // }}>
+                        //         {
                                     
-                                productFilter.map(item => (
-                                    <View key={item._id}>
-                                        <ProductCardComponent
-                                            onAddToCart={() => addItemToCart(item)}
-                                            data={item}
-                                            cartProduct={false}
-                                            onViewDetail={() => {
-                                                props?.navigation.navigate(
-                                                    CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL,
-                                                    {
-                                                        product: item,
-                                                        comision: comision,
-                                                    },
-                                                );
-                                            }}
-                                            comision={comision}
-                                        />
-                                    </View>
-                                ))
-                                }
-                        </View>
+                        //         productFilter.map(item => (
+                        //             <View key={item._id}>
+                        //                 <ProductCardComponent
+                        //                     onAddToCart={() => addItemToCart(item)}
+                        //                     data={item}
+                        //                     cartProduct={false}
+                        //                     onViewDetail={() => {
+                        //                         props?.navigation.navigate(
+                        //                             CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL,
+                        //                             {
+                        //                                 product: item,
+                        //                                 comision: comision,
+                        //                             },
+                        //                         );
+                        //                     }}
+                        //                     comision={comision}
+                        //                 />
+                        //             </View>
+                        //         ))
+                        //         }
+                        // </View>
                         ):(
                         <View
                         style={{
@@ -430,7 +495,7 @@ const CustomerMoreProductsScreen = props => {
                     
 
                     <View style={{ width: deviceWidth, height: deviceHeight * 0.05 }} />
-                </ScrollView>
+                </View>
             </View>
         </View>
     );
