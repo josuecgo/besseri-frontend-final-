@@ -437,7 +437,7 @@ const CustomerMoreProductsScreen = props => {
 
                 
 
-                <View style={{  marginVertical: 20 }}>
+                <View style={{  marginVertical: bottom + 20 }}>
                     {
                         productFilter && comision ? (
                             
@@ -446,7 +446,11 @@ const CustomerMoreProductsScreen = props => {
                             numColumns={2}
                             keyExtractor={item => item?._id}
                             renderItem={memorizedValue}
-                            ListFooterComponent={<View style={{width:'100%',marginBottom:bottom + 10,height:deviceHeight * 20 / 100}} />}
+                            ListFooterComponent={<View style={{
+                                width:'100%',
+                                marginBottom:bottom + 10,height:deviceHeight * 20 / 100 + bottom,
+                                
+                            }} />}
                             contentContainerStyle={{alignItems:'center'}}
                             initialNumToRender={5}
                             />
