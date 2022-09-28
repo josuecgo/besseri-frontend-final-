@@ -56,6 +56,18 @@ const CustomerProductsViewScreen = React.memo((props) => {
   useEffect(() => {
       filterProduct(productos)
   }, [productos])
+
+
+  const renderItem = ({item}) => (
+    <ProductListing
+    navigation={props.navigation}
+    category={item.name} 
+    products={productFiltrado.filter(product => product.categoryId == item._id)} 
+    comision={comision}
+    />
+  )
+
+  const memorizedValue = useMemo(() => renderItem, [productFiltrado]);
   
   return (
     <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor,paddingTop:15 }}>
@@ -135,19 +147,26 @@ const CustomerProductsViewScreen = React.memo((props) => {
         </View>
         
 
-        <ScrollView contentContainerStyle={{ flexGrow: 1, marginTop: 5 }}>
+        <View style={{ flexGrow: 1, marginTop: 5 }}>
           {
             comision && productFiltrado ? (
-              categorias.map((item)=>(
-                <View key={item._id} >
-                  <ProductListing
-                  navigation={props.navigation}
-                  category={item.name} 
-                  products={productFiltrado.filter(product => product.categoryId == item._id)} 
-                  comision={comision}
-                  />
-                </View>
-              ))
+              <FlatList
+              data={categorias}
+              
+              keyExtractor={item => item?._id}
+              renderItem={memorizedValue}
+              ListFooterComponent={<View style={{width:'100%',marginBottom:30}} />}
+              />
+              // categorias.map((item)=>(
+              //   <View key={item._id} >
+              //     <ProductListing
+              //     navigation={props.navigation}
+              //     category={item.name} 
+              //     products={productFiltrado.filter(product => product.categoryId == item._id)} 
+              //     comision={comision}
+              //     />
+              //   </View>
+              // ))
             ):(
               <View
               style={{
@@ -173,7 +192,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
             ))
           } */}
         <View style={{height:deviceWidth *0.05,width:deviceWidth,marginBottom:0}} />
-        </ScrollView>
+        </View>
       </View>
     </View>
   );
