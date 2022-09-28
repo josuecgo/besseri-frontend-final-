@@ -37,12 +37,14 @@ import { useCart } from '../../hooks/useCart';
 import { SearchInput } from '../../components/customer-components/SearchInput';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { ProductContext } from '../../util/context/Product/ProductContext';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const SCREEN_STATES = {
     USER_LOCATION: 'User location',
     PRODUCTS: 'Products',
     CATEGORIES: 'Categories',
 };
 const CustomerMoreProductsScreen = props => {
+    const {bottom} = useSafeAreaInsets()
     const { addItemToCart } = useCart();
     const { params } = useRoute();
     const [isLoading, setIsLoading] = useState(true);
@@ -63,9 +65,7 @@ const CustomerMoreProductsScreen = props => {
     });
     const [searchText, setSearchtext] = useState('');
     const [productFilter, setProductFilter] = useState(false);
-    const {
-        productos,
-    } = useContext(ProductContext)
+    const {productos} = useContext(ProductContext)
     //Fetching user location..............................
     const getUserLocation = async () => {
         if (Platform.OS === 'ios') {
@@ -344,7 +344,7 @@ const CustomerMoreProductsScreen = props => {
 
     return (
         <View style={{ ...CommonStyles.flexOne }}>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1,paddingBottom:bottom + 80 }}>
                 <HeaderBackground />
                 <View style={styles.header}>
                     <TouchableOpacity
@@ -437,7 +437,7 @@ const CustomerMoreProductsScreen = props => {
 
                 
 
-                <View style={{ flexGrow: 1, marginVertical: 20 }}>
+                <View style={{  marginVertical: 20 }}>
                     {
                         productFilter && comision ? (
                             
@@ -446,7 +446,7 @@ const CustomerMoreProductsScreen = props => {
                             numColumns={2}
                             keyExtractor={item => item?._id}
                             renderItem={memorizedValue}
-                            ListFooterComponent={<View style={{width:'100%',marginBottom:10,height:deviceHeight * 20 / 100}} />}
+                            ListFooterComponent={<View style={{width:'100%',marginBottom:bottom + 10,height:deviceHeight * 20 / 100}} />}
                             contentContainerStyle={{alignItems:'center'}}
                             initialNumToRender={5}
                             />
@@ -494,7 +494,7 @@ const CustomerMoreProductsScreen = props => {
                     }
                     
 
-                    <View style={{ width: deviceWidth, height: deviceHeight * 0.05 }} />
+                    <View style={{ width: deviceWidth, height: deviceHeight * 0.10,marginVertical:bottom + 20 }} />
                 </View>
             </View>
         </View>
