@@ -437,7 +437,7 @@ const CustomerMoreProductsScreen = props => {
 
                 
 
-                <View style={{ flexGrow: 1, marginTop: 20 }}>
+                <View style={{ flexGrow: 1, marginVertical: 20 }}>
                     {
                         productFilter && comision ? (
                             
@@ -446,7 +446,7 @@ const CustomerMoreProductsScreen = props => {
                             numColumns={2}
                             keyExtractor={item => item?._id}
                             renderItem={memorizedValue}
-                            ListFooterComponent={<View style={{width:'100%',marginBottom:30}} />}
+                            ListFooterComponent={<View style={{width:'100%',marginBottom:10,height:deviceHeight * 20 / 100}} />}
                             contentContainerStyle={{alignItems:'center'}}
                             initialNumToRender={5}
                             />
