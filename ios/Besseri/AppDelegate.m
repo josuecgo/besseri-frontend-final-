@@ -1,5 +1,8 @@
 #import "AppDelegate.h"
 
+#if RCT_DEV
+#import <React/RCTDevLoadingView.h>
+#endif
 #import <UserNotifications/UserNotifications.h>
 #import <RNCPushNotificationIOS.h>
 
