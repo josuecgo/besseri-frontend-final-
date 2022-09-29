@@ -35,7 +35,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
   } = useContext(ProductContext)
 
   
-  const {productFilter} = useFiltrado(props?.route?.name)
+  // const {productFilter} = useFiltrado(props?.route?.name)
  
 
   const CategoryButton = ({ category,onPress }) => {
@@ -52,22 +52,25 @@ const CustomerProductsViewScreen = React.memo((props) => {
     )
   }
 
-
-  useEffect(() => {
-    let abortController = new AbortController(); 
-    filterProduct(productos)
-    return () => {  
-      abortController.abort();  
+  
+  // useEffect(() => {
+  //   let abortController = new AbortController(); 
+  //   if (productos) {
+  //     filterProduct(productos)
+  //   }
+    
+  //   return () => {  
+  //     abortController.abort();  
      
-    }  
-  }, [productos])
+  //   }  
+  // }, [productos])
 
 
   const renderItem = ({item}) => (
     <ProductListing
     navigation={props.navigation}
     category={item.name} 
-    products={productFiltrado.filter(product => product.categoryId == item._id)} 
+    products={productos.filter(product => product.categoryId == item._id)} 
     comision={comision}
     />
   )
@@ -81,7 +84,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
 
   const memorizedValueCategoria = useMemo(() => renderItemCategorias, [categorias]);
 
-  const memorizedValue = useMemo(() => renderItem, [productFiltrado]);
+  const memorizedValue = useMemo(() => renderItem, [productos]);
   
   return (
     <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor,paddingTop:15 }}>
@@ -152,19 +155,21 @@ const CustomerProductsViewScreen = React.memo((props) => {
           horizontal
           keyExtractor={item => item?._id}
           renderItem={memorizedValueCategoria}
+          showsHorizontalScrollIndicator={false}
           />
         </View>
         
 
         <View style={{ flexGrow: 1, marginTop: 5 }}>
           {
-            comision && productFiltrado ? (
+            comision && productFiltrado || productos ? (
               <FlatList
               data={categorias}
               initialNumToRender={5}
               keyExtractor={item => item?._id}
               renderItem={memorizedValue}
               ListFooterComponent={<View style={{width:'100%',marginBottom:10,height:deviceHeight * 20 / 100}} />}
+              showsVerticalScrollIndicator={false}
               />
               // categorias.map((item)=>(
               //   <View key={item._id} >

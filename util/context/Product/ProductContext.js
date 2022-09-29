@@ -12,7 +12,7 @@ import { productReducer } from "./productReducer";
 
 
 const productInicialState = {
-    productos:[],
+    productos:null,
     servicios:[],
     categorias:[],
     marcas:[],
@@ -78,7 +78,7 @@ export const ProductProvider = ({children}) => {
     // }
 
     const getProducts = useCallback(
-        async(params) => {
+        async() => {
             try {
                 
                 const apiCall = await axios.get(customer_api_urls.get_products);
@@ -92,7 +92,7 @@ export const ProductProvider = ({children}) => {
                 });
                 
                 setDowload(apiCall.data.data.products)
-               
+                filterProduct(apiCall.data.data.products)
               } catch(e) {
                 console.log({getProducts:e})
                 showToaster('No hay conexion con el servidor ');
@@ -310,14 +310,7 @@ export const ProductProvider = ({children}) => {
         } 
     }, [valueMaker])
     
-    // useEffect(() => {
-    //     if (dowload && !valueMaker) {
-    //         console.log({valueMaker});
 
-    //         filterProduct(dowload)
-    //     }
-    
-    // }, [dowload])
     
     
 

@@ -33,6 +33,7 @@ const ProductListing = ({category,products,navigation,comision}) => {
         data={products}
         contentContainerStyle={{marginTop:15,paddingHorizontal:5}}
         horizontal
+        showsHorizontalScrollIndicator={false}
         renderItem={itemData => (
            <ProductCardComponent
            onViewDetail={() => {

@@ -124,7 +124,7 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = Besseri;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
@@ -546,7 +546,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = /Users/josuegarcia/Downloads/pruebareactnative/BesseriDev/app/besseriFinal/Besseri/ios/Besseri/AppDelegate.h;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/mario-code/Documents/Trabajo/Besseri/besseri-frontend-final-/ios/Besseri/AppDelegate.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Besseri.app/Besseri";
@@ -584,7 +584,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = /Users/josuegarcia/Downloads/pruebareactnative/BesseriDev/app/besseriFinal/Besseri/ios/Besseri/AppDelegate.h;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/mario-code/Documents/Trabajo/Besseri/besseri-frontend-final-/ios/Besseri/AppDelegate.h";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Besseri.app/Besseri";
 				VALID_ARCHS = "arm64 x86_64";
@@ -623,7 +623,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.josue.oropeza.refacciones.besseri;
 				PRODUCT_NAME = Besseri;
-				SWIFT_OBJC_BRIDGING_HEADER = /Users/josuegarcia/Downloads/pruebareactnative/BesseriDev/app/besseriFinal/Besseri/ios/Besseri/AppDelegate.h;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/mario-code/Documents/Trabajo/Besseri/besseri-frontend-final-/ios/Besseri/AppDelegate.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "arm64 x86_64";
@@ -665,7 +665,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.josue.oropeza.refacciones.besseri;
 				PRODUCT_NAME = Besseri;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = /Users/josuegarcia/Downloads/pruebareactnative/BesseriDev/app/besseriFinal/Besseri/ios/Besseri/AppDelegate.h;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/mario-code/Documents/Trabajo/Besseri/besseri-frontend-final-/ios/Besseri/AppDelegate.h";
 				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "arm64 x86_64";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -706,7 +706,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				EXCLUDED_ARCHS = "";
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 i386";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -772,7 +772,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				EXCLUDED_ARCHS = "";
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 i386";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
