@@ -74,7 +74,7 @@ const CustomerCartScreen = (props) => {
 
     } catch(e) 
     { 
-        console.log({error:e})
+        // console.log({error:e})
         
         showToaster('Error')
     }
@@ -97,7 +97,7 @@ const CustomerCartScreen = (props) => {
       }
     } catch(e) 
     { 
-        console.log({error:e})
+        // console.log({error:e})
         
         showToaster('Recuerde que para comprar necesitas tener dada de alta tu direccion ')
     }
@@ -107,14 +107,14 @@ const CustomerCartScreen = (props) => {
 
   const fetchBusinessDetails = async () => {
     try {
-      console.log(businessId);
+      // console.log(businessId);
       const getBusinessDetails = await axios.post(vendor_api_urls?.get_multiple_stores, {
         businessIds: [businessId]
       });
       setBusinessProfiles(getBusinessDetails.data.data);
       calculateDelivery()
     } catch (e) {
-      console.log(e?.response);
+      // console.log(e?.response);
       showToaster('Algo salió mal');
     }
   }
@@ -131,7 +131,7 @@ const CustomerCartScreen = (props) => {
 
   
   const goPurchase = () => {
-    console.log('click1');
+    // console.log('click1');
     if (isLogin) {
       if(businessProfiles[0]?.wallet_id && !businessProfiles[0]?.isBlocked) {
         let allProducts = products?.filter(prod => prod?.business_id == businessProfiles[0]?._id);
@@ -158,7 +158,7 @@ const CustomerCartScreen = (props) => {
          
        }
     } else {
-      console.log('click');
+      // console.log('click');
       props.navigation.navigate('LSFS',{customer:true})
     }
   }
@@ -184,7 +184,7 @@ const CustomerCartScreen = (props) => {
       setComission(getFee.data.data[0]?.besseri_comission);
       setDeliveryFee(getFee.data.data[0]?.delivery_fee);
     } catch (e) {
-      console.log(e?.response);
+      // console.log(e?.response);
       showToaster('something went wrong');
     }
   }

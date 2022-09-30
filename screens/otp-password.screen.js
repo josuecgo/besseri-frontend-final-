@@ -61,8 +61,8 @@ const OtpPasswordScreen = ({navigation}) => {
       registerApiCall(apiCall?.data?.path);
       
     } catch(e) {
-      console.log(e)
-      console.log(e?.response?.data)
+      // console.log(e)
+      // console.log(e?.response?.data)
       setShowLoader(false)
        showToaster('Algo salió mal')
     }
@@ -79,7 +79,7 @@ const OtpPasswordScreen = ({navigation}) => {
           ...(route.params?.body?.isVendor ? {logo:path} : {}),
           ...(route.params?.body?.isRider ? {profile:path} : {}),
         });
-        console.log({a:apiCall.status,d:api_statuses.success});
+        // console.log({a:apiCall.status,d:api_statuses.success});
       
           setShowLoader(false);
           navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN);
@@ -89,7 +89,7 @@ const OtpPasswordScreen = ({navigation}) => {
       
     } catch (e) {
       setShowLoader(false);
-      console.log({e})
+      // console.log({e})
     }
     setShowLoader(false);
   }

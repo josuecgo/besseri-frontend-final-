@@ -152,7 +152,7 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
       }
     } catch (e) {
       alert(e.response.data.message)
-      console.log(e.response.data)
+      // console.log(e.response.data)
       setShowLoader(false);
     }
   }

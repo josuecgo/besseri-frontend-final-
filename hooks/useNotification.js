@@ -27,7 +27,7 @@ export const useNotification = () => {
             setNotificaciones(data);
            
         } catch (e) {
-            console.log({ eaAndData: e })
+            // console.log({ eaAndData: e })
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
         }
     }

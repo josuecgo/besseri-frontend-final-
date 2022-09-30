@@ -71,7 +71,7 @@ export const useCompras = () => {
                 setLoading(false)
                 return apiCall?.status
             } catch (e) {
-                console.log(e?.response?.status);
+                // console.log(e?.response?.status);
                 setLoading(false);
                 showToaster(e?.response?.data?.message);
                 
@@ -81,14 +81,14 @@ export const useCompras = () => {
     const aplicarCupones = async (name) => {
             setLoading(true)
             try {
-                console.log(name);
+                // console.log(name);
                 const id = await getUserId();
                 const apiCall = await axios.post(`${vendor_api_urls.search_cupones}/${id}`,{name});
                
                 setLoading(false)
                 return {cupon:apiCall.data,status:apiCall.status}
             } catch (e) {
-                console.log(e?.response?.status);
+                // console.log(e?.response?.status);
                 setLoading(false);
                 showToaster(e?.response?.data?.message);
                 

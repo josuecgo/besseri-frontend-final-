@@ -89,7 +89,7 @@ export const NotificationProvider = ({children}) => {
           
         } catch(e) {
           alert('errr');
-          console.log(e)
+          // console.log(e)
         }
 
 
@@ -130,7 +130,7 @@ export const NotificationProvider = ({children}) => {
             
            
         } catch (e) {
-            console.log({ getNot: e })
+            // console.log({ getNot: e })
             setNotificaciones([])
             setCount(0)
             setCountRider(0)

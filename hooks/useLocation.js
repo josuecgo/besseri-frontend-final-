@@ -83,7 +83,7 @@ export const useLocation = () => {
          }
         } catch(e) 
         { 
-            console.log(e.response)
+            // console.log(e.response)
             
             showToaster('Something went wrong please try again :/')
         }
@@ -104,7 +104,7 @@ export const useLocation = () => {
                         }
                     );
             } catch (error) {   
-                console.log(error);
+                // console.log(error);
             }
            
  
@@ -127,11 +127,11 @@ export const useLocation = () => {
                 });
               });
             } else {
-              console.log("Location permission denied")
+            //   console.log("Location permission denied")
             }
         
           } catch(e) {
-            console.log(e)
+            // console.log(e)
            showToaster('No se pudo obtener la ubicación actual.')
           }
         }
@@ -151,7 +151,7 @@ export const useLocation = () => {
          
     
         } catch (error) {
-          console.log({updateUbication:error});
+        //   console.log({updateUbication:error});
         }
     }
    

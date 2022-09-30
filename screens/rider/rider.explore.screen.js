@@ -73,7 +73,7 @@ export default function RiderExplore(props) {
           setLocation(position.coords);
         });
       } else {
-        console.log('location permission denied');
+        // console.log('location permission denied');
         showToaster('Permiso de ubicación denegado');
       }
     } catch (e) {
@@ -107,7 +107,7 @@ export default function RiderExplore(props) {
     } catch (e) {
       setLoading(false);
       // console.log(e);
-      console.log({xplorerRider:e?.response?.data});
+      // console.log({xplorerRider:e?.response?.data});
       showToaster(
         e?.response?.data?.message
           ? e?.response?.data?.message
@@ -139,7 +139,7 @@ export default function RiderExplore(props) {
     } catch (e) {
       setLoading(false);
     
-      console.log(e?.response?.data);
+      // console.log(e?.response?.data);
       showToaster('Algo salió mal, inténtalo de nuevo');
     }
   };

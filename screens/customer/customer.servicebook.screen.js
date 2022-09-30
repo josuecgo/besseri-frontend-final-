@@ -64,10 +64,10 @@ const CustomerServiceBook = (props) => {
     const fetchFees = async () => {
         try {
           const getFee = await axios.get(customer_api_urls?.get_fees);
-          console.log(getFee.data)
+        //   console.log(getFee.data)
           setBesseriCharges(getFee.data.data[0]?.besseri_comission);
         } catch (e) {
-          console.log(e?.response);
+        //   console.log(e?.response);
           showToaster('Algo salió mal');
         }
       }
@@ -104,7 +104,7 @@ const CustomerServiceBook = (props) => {
             setLoading(false);
             if (apiCall.status == api_statuses.success) {
                 setBusiness(apiCall.data.data);
-                console.log(apiCall.data.data)
+                // console.log(apiCall.data.data)
                 initializePaymentSheet(apiCall.data.data?.store?.wallet_id)
             } else {
                 showToaster('Algo salió mal, inténtalo de nuevo más tarde.');
@@ -145,7 +145,7 @@ const CustomerServiceBook = (props) => {
         } catch(e) {
            //  Alert.alert('Refund failed',JSON.stringify(e))
            showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
-           console.log(e?.response?.data)
+        //    console.log(e?.response?.data)
         }
     }
 
@@ -198,7 +198,7 @@ const CustomerServiceBook = (props) => {
             setLoading(false)
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
             refundPayment()
-            console.log(e?.response?.data)
+            // console.log(e?.response?.data)
         }
     }
 
@@ -226,7 +226,7 @@ const CustomerServiceBook = (props) => {
            publishableKey:response?.data?.publishableKey
          };
         } catch(e) {
-            console.log('line 192',e?.response?.data)
+            // console.log('line 192',e?.response?.data)
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
         }
        };
@@ -249,7 +249,7 @@ const CustomerServiceBook = (props) => {
            merchantDisplayName:'Besseri'
          });
          if (!error) {
-           console.log(error)
+        //    console.log(error)
          }
        };
      

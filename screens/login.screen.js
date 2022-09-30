@@ -78,7 +78,7 @@ const LoginScreen = ({navigation}) => {
     } 
     catch(e) {
       setShowLoader(false);
-      console.log(e);
+      // console.log(e);
       Alert.alert('Algo salió mal','Lo siento por la interrupción, esta solicitud falló');
     }
   }
@@ -102,14 +102,14 @@ const LoginScreen = ({navigation}) => {
        
      }
      else {
-       console.log('this called')
+      //  console.log('this called')
        Alert.alert('Algo salió mal','Perdón por la interrupción, esta solicitud falló -1');
        return;
      }
     } 
     catch(e) {
       setShowLoader(false);
-      console.log(e);
+      // console.log(e);
       Alert.alert('Algo salió mal','Lo siento por la interrupción, esta solicitud falló');
     }
   }
@@ -167,7 +167,7 @@ const LoginScreen = ({navigation}) => {
     }
 
     } catch(e) { 
-      console.log(e);
+      // console.log(e);
       setShowLoader(false);
   
     }

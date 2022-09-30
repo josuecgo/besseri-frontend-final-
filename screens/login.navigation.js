@@ -18,7 +18,7 @@ import { iniciar } from './customer/customer.iniciar.screen';
 const Stack = createStackNavigator();
 
 export const LSFS = ({route}) => {
-  const isCustomer = route?.params ? route?.params?.customer : false;
+  const isCustomer = true ? route?.params?.customer : false;
   const initial = isCustomer ?  CUSTOMER_HOME_SCREEN_ROUTES.INICIAR :  LOGIN_SIGNUP_FORGOT_ROUTES.HOMEPAGE;
   
   

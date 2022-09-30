@@ -42,7 +42,7 @@ const VendorOrdersScreen = ({navigation, route}) => {
        showToaster('Something went wrong please try again');
      }
     } catch(e) {
-      console.log(e.response.data)
+      // console.log(e.response.data)
       setLoading(false);
       showToaster('Something went wrong please try again');
     }
@@ -58,7 +58,7 @@ const VendorOrdersScreen = ({navigation, route}) => {
        showToaster('Something went wrong please try again');
      }
     } catch(e) {
-      console.log(e.response.data)
+      // console.log(e.response.data)
       setLoading(false);
       showToaster('Something went wrong please try again');
     }

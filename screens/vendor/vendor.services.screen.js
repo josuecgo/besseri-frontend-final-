@@ -51,13 +51,13 @@ const VendorServicesScreen = ({navigation, route}) => {
     setShowLoader(false);
     if(apiCall.status == 200) {
      setServices(apiCall.data.data);
-     console.log(businessId)
+    //  console.log(businessId)
      return;
     }
     showToaster('Algo salió mal')
     } catch(e) {
       setShowLoader(false);
-       console.log(e.response.data);
+      //  console.log(e.response.data);
        showToaster('Algo salió mal')
     }
   }

@@ -16,6 +16,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
 import {moneda} from '../../util/Moneda';
 import axios from 'axios';
+import { showToaster } from '../../util/constants';
 const ServicesCardComponent = ({onViewDetail, data}) => {
   const horizontalCardStyles = {
     cardContainer: {
@@ -52,7 +53,8 @@ const ServicesCardComponent = ({onViewDetail, data}) => {
 
       setComision(getFee.data.data[0]?.besseri_comission);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      showToaster('No hay conexion - code 02')
     }
   };
   

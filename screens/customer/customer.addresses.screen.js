@@ -88,11 +88,11 @@ const CustomerAddressesScreen = (props) => {
               // setState(res.coords,SCREEN_STATES.USER_LOCATION);
             });
           } else {
-            console.log("Location permission denied")
+            // console.log("Location permission denied")
           }
       
         } catch(e) {
-          console.log(e)
+        //   console.log(e)
          showToaster('No se pudo obtener la ubicación actual.')
         } 
         }
@@ -136,7 +136,7 @@ const CustomerAddressesScreen = (props) => {
             }
         } catch(e) 
         { 
-            console.log(e.response)
+            // console.log(e.response)
             setLoading(false);  
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
         }
@@ -167,7 +167,7 @@ const CustomerAddressesScreen = (props) => {
 
                 } catch(e) 
                 { 
-                    console.log(e.response.data)
+                    // console.log(e.response.data)
                     setLoading(false);  
                     showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
                 }
@@ -193,7 +193,7 @@ const CustomerAddressesScreen = (props) => {
          }
         } catch(e) 
         { 
-            console.log(e.response.data)
+            // console.log(e.response.data)
             setLoading(false);  
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
         }

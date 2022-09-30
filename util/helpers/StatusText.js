@@ -42,7 +42,7 @@ export const screenFocus = (value) => {
     
     switch (value) {
         case SCREEN_TYPES.SERVICE_NAME:
-            console.log('lo lee');
+            
             return CREDENTIAL_KEYS.NAME
            
         case SCREEN_TYPES.SERVICE_DESCRIPTION:
@@ -61,10 +61,10 @@ export const screenFocus = (value) => {
             return CREDENTIAL_KEYS.PRODUCT_CATEGORY;
             
         case SCREEN_TYPES.UPLOAD_IMAGE:
-            console.log('foto');
+           
             break;
         default:
-            console.log('estas en nombre');
+            // console.log('estas en nombre');
             break;
     }
 

@@ -56,7 +56,7 @@ export default function CustomerMapStores(props) {
           getStores(position.coords);
         })
       } else {
-        console.log("location permission denied")
+        // console.log("location permission denied")
         showToaster("Permiso de ubicación denegado");
       }
     } catch(e) {

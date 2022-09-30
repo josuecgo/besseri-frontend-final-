@@ -77,7 +77,7 @@ const VendorBookingDetail = props => {
     } catch (e) {
       setLoading(false);
       showToaster('Algo salió mal');
-      console.log(e.response);
+      // console.log(e.response);
     }
   };
   const chaneStatus = async (status, code) => {
@@ -97,7 +97,7 @@ const VendorBookingDetail = props => {
     } catch (e) {
       setLoading(false);
       showToaster('Algo salió mal');
-      console.log(e.response.data);
+      // console.log(e.response.data);
     }
   };
 

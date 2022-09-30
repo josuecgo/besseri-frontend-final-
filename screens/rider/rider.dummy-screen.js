@@ -110,7 +110,7 @@ const RiderDummyScreen = props => {
             
             
         } catch (e) {
-            console.log(e);
+            // console.log(e);
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo - 1');
         }
     };
@@ -136,7 +136,7 @@ const RiderDummyScreen = props => {
             }
             // console.log('line 57', rider_wallet?.charges_enabled);
         } catch (e) {
-            console.log('line 38', e);
+            // console.log('line 38', e);
             showToaster('Perdón por la interrupción, esta solicitud falló');
         }
     };
@@ -160,15 +160,15 @@ const RiderDummyScreen = props => {
                 await saveRiderProfile([apiCall?.data?.profile]);
 
                 Linking.openURL(apiCall?.data?.link?.url);
-                console.log('line 106', riderD);
-                console.log('line 107', apiCall.data.profile);
+                // console.log('line 106', riderD);
+                // console.log('line 107', apiCall.data.profile);
                 //  if(apiCall.data.profile != null) {
                 //  }
             }
         } catch (e) {
             setLoader(true);
 
-            console.log(e);
+            // console.log(e);
             showToaster('Algo salió mal, intenta de nuevo');
         }
     };

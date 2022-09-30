@@ -56,7 +56,7 @@ const ShareServiceDetail = (props) => {
       setIsLogin(getUser)
     } catch (error) {
       setLoading(false);
-      console.log(error);
+      // console.log(error);
       showToaster('Algo salió mal, inténtalo de nuevo más tarde');
     }
     
@@ -78,7 +78,7 @@ const ShareServiceDetail = (props) => {
          showToaster('Algo salió mal');
        }
     } catch(e) {
-      console.log(e)
+      // console.log(e)
         setLoading(false);
         showToaster('Algo salió mal, inténtalo de nuevo más tarde');
     }

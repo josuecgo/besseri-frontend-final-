@@ -15,7 +15,7 @@ export const CartScreen = (props) => {
     const {userLocation} = useLocation();
     const businessSelectRef = useRef();
     let businessIds = [];
-    console.log(businessProfiles);
+    // console.log(businessProfiles);
 
 
     const goPurchase = () => {
@@ -50,14 +50,14 @@ export const CartScreen = (props) => {
 
     const fetchBusinessDetails = async () => {
       try {
-        console.log(businessId);
+        // console.log(businessId);
         const getBusinessDetails = await axios.post(vendor_api_urls?.get_multiple_stores, {
           businessIds: [businessId]
         });
         setBusinessProfiles(getBusinessDetails.data.data);
         calculateDelivery()
       } catch (e) {
-        console.log(e?.response);
+        // console.log(e?.response);
         showToaster('Algo salió mal');
       }
     }

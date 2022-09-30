@@ -218,7 +218,7 @@ const VendorAddProductScreen = ({navigation}) => {
       }
     } catch (e) {
       setShowLoader(false);
-      console.log(e.response.data);
+      // console.log(e.response.data);
       alert('Algo salió mal');
     }
   };
@@ -233,7 +233,7 @@ const VendorAddProductScreen = ({navigation}) => {
         setBrands(apiCall.data.data);
       }
     } catch (e) {
-      console.log(e?.response?.data);
+      // console.log(e?.response?.data);
       setShowLoader(false);
       alert('Algo salió mal');
     }
@@ -316,7 +316,7 @@ const VendorAddProductScreen = ({navigation}) => {
         }
       }
     } catch (e) {
-      console.log(e?.response?.data);
+      // console.log(e?.response?.data);
       setShowLoader(false);
     }
   };
@@ -339,7 +339,7 @@ const VendorAddProductScreen = ({navigation}) => {
       }
     } catch (e) {
       setShowLoader(false);
-      console.log(e.response.data);
+      // console.log(e.response.data);
       alert('Algo salió mal');
     }
   };
@@ -501,7 +501,7 @@ const uploadProductImg = async () => {
   //      setShowLoader(false);
   //     })
   const data = await resp.json();
-  console.log(data);
+  // console.log(data);
   if (data?.success) {
     return data?.data
   }
@@ -517,7 +517,7 @@ const uploadProductImg = async () => {
 
       
       const productImgUpload = await uploadProductImg();
-      console.log({productImgUpload});
+      // console.log({productImgUpload});
       if (productImgUpload) {
         const apiBody = {
           name: inputValues[CREDENTIAL_KEYS.NAME],
@@ -557,7 +557,7 @@ const uploadProductImg = async () => {
       setShowLoader(false);
     } catch (e) {
       setShowLoader(false);
-      console.log(e,'create');
+      // console.log(e,'create');
   
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
     }
@@ -604,7 +604,7 @@ const uploadProductImg = async () => {
       }
     } catch (e) {
       setShowLoader(false);
-      console.log(e,'e');
+      // console.log(e,'e');
       // console.log(e.response.data);
       showToaster(
         'Algo salió mal, inténtalo de nuevo, contacte con él administrador',

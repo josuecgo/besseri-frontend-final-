@@ -92,7 +92,7 @@ const RiderOrderDetail = props => {
         if (apiCall?.data?.data?.order_status_code == 'PARCEL_DELIVERED') {
           dispatch(reloadEarnings());
         }
-        console.log(apiCall?.data?.data);
+        // console.log(apiCall?.data?.data);
       } else {
         showToaster('Algo salió mal por favor inténtalo de nuevo más tarde');
       }
@@ -103,7 +103,7 @@ const RiderOrderDetail = props => {
           ? e?.response?.data?.message
           : 'Something went wrong',
       );
-      console.log(e?.response?.data);
+      // console.log(e?.response?.data);
     }
   };
 
@@ -151,7 +151,7 @@ const RiderOrderDetail = props => {
         showToaster('Algo salió mal. Por favor, vuelva a intentarlo ');
       }
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       setLoading(false);
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
     }
@@ -177,7 +177,7 @@ const RiderOrderDetail = props => {
      
      
     } catch(e) {
-     console.log({detail:e});
+    //  console.log({detail:e});
     }
   }
 

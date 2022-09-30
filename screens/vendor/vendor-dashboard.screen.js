@@ -58,7 +58,7 @@ const VendorDashboardScreen = ({ navigation, route }) => {
             const earnings = await getStoreEarnings(businessData?._id);
             dispatch(setEarnings(earnings));
         } catch (e) {
-            console.log({ earningsAndData: e })
+            // console.log({ earningsAndData: e })
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
         }
     }
@@ -98,7 +98,7 @@ const VendorDashboardScreen = ({ navigation, route }) => {
             }
         }
         catch (e) {
-            console.log('line 38', e?.response?.data);
+            // console.log('line 38', e?.response?.data);
             // showToaster('Perdón por la interrupción, esta solicitud falló')
         }
     }
@@ -136,7 +136,7 @@ const VendorDashboardScreen = ({ navigation, route }) => {
             getNotificaciones();
       
         } catch(e) {
-         console.log({detail:e});
+        //  console.log({detail:e});
         }
     }
 

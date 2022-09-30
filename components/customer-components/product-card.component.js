@@ -18,6 +18,7 @@ import {adjust, deviceWidth} from '../../util/Dimentions';
 import LinearGradient from 'react-native-linear-gradient';
 import {moneda} from '../../util/Moneda';
 import axios from 'axios';
+import { showToaster } from '../../util/constants';
 
 
 const ProductCardComponent = ({
@@ -51,7 +52,8 @@ const ProductCardComponent = ({
       
       setComision(getFee.data.data[0]?.besseri_comission);
     } catch (error) {
-      console.log({comision:error});
+      // console.log({comision:error});
+      showToaster('Hubo un error - 01')
     }
     
 

@@ -152,7 +152,7 @@ const VendorAddServiceScreen = ({navigation}) => {
         }
         } catch (e) {
         setShowLoader(false);
-        console.log(e);
+        // console.log(e);
         alert('something went wrong - 1');
         }
     };
@@ -172,7 +172,7 @@ const VendorAddServiceScreen = ({navigation}) => {
         }
         } catch (e) {
         setShowLoader(false);
-        console.log(e.response.data);
+        // console.log(e.response.data);
         alert('something went wrong - 2');
         }
     };

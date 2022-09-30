@@ -120,7 +120,7 @@ export const useFiltrado = ( isServicios ) => {
     const matchesForModel = (id,searchId) => {
         
         if (searchId?.matchs.length > 0) {
-            console.log({id,searchId:searchId?.matchs});
+            // console.log({id,searchId:searchId?.matchs});
             const match = searchId?.matchs.filter(element => element?.model === id);
             if (match.length > 0) {
                 

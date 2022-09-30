@@ -109,7 +109,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
       }
       setIsVisible(false);
     } catch (e) {
-      console.log(e.response);
+      // console.log(e.response);
       setIsVisible(false);
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 2');
     }
@@ -154,7 +154,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
       }
     } catch (e) {
       setLoading(false);
-      console.log({code4: e});
+      // console.log({code4: e});
       setLoading(false);
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo 2 code: 4');
       refundPayment();
@@ -196,7 +196,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
       }
     } catch (e) {
       setLoading(false);
-      console.log({code4: e});
+      // console.log({code4: e});
       setLoading(false);
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo 2 code: 4');
       refundPayment();
@@ -216,7 +216,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
     } catch (e) {
       //  Alert.alert('Refund failed',JSON.stringify(e))
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 5');
-      console.log(e?.response?.data);
+      // console.log(e?.response?.data);
     }
   };
   
@@ -227,7 +227,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
     cartProduct?.cart_items.map((item) => {
       
       for (let index = 0; index < item.quantity; index++) {
-        console.log(item._id)
+        // console.log(item._id)
         ids.push(item._id);
       }
     })
@@ -272,7 +272,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
         publishableKey: response?.data?.publishableKey,
       };
     } catch (e) {
-      console.log('line 183', e);
+      // console.log('line 183', e);
       showToaster('Algo salió mal, intenta de nuevo code: 6');
     }
     setIsVisible(false);
@@ -296,7 +296,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
         // console.log({initializePay:error})
       }
     } catch (error) {
-      console.log({init: error});
+      // console.log({init: error});
     }
   };
 

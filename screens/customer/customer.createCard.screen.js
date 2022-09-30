@@ -36,7 +36,7 @@ export const CreateCardScreen = (props) => {
         
         if (form?.card_number.length <= 16 && form?.holder_name.length > 0 && form.cvv2.length > 0  ) {
             if (card) {
-                console.log('editar');
+                // console.log('editar');
             }else{
                 const response = await saveCards(form)
                

@@ -45,7 +45,7 @@ export const ChatProvider = ({ children }) => {
             //     payload:apiCall?.data.data
             // })
         } catch (error) {
-            console.log(error?.response?.data);
+            // console.log(error?.response?.data);
         }
     }
 
@@ -69,7 +69,7 @@ export const ChatProvider = ({ children }) => {
             })
 
         } catch (error) {
-            console.log(error?.response?.data);
+            // console.log(error?.response?.data);
         }
     }
 

@@ -98,7 +98,7 @@ const SplashScreen = ({navigation}) => {
      }
     } 
     catch(e) {
-      console.log(e);
+      // console.log(e);
       Alert.alert('Algo salió mal','Lo siento por la interrupción, esta solicitud falló');
     }
   }

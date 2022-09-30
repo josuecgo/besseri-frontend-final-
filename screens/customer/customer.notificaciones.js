@@ -45,7 +45,7 @@ export const CustomerNotificationViewScreen = React.memo((props) => {
             getNotificaciones();
         //   console.log(apiCall.status);
         } catch(e) {
-         console.log({detail:e});
+        //  console.log({detail:e});
         }
     }
 

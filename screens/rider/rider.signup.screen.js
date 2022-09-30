@@ -164,7 +164,7 @@ const RiderSignup = ({navigation, route}) => {
       setShowLoader(false);
      
       Alert.alert(e.response.data.message);
-      console.log(e.response.data);
+      // console.log(e.response.data);
       setShowLoader(false);
     }
     
@@ -176,7 +176,7 @@ const RiderSignup = ({navigation, route}) => {
       cropping: true,
     })
       .then(res => {
-        console.log(res);
+        // console.log(res);
         setLogo(res);
       })
       .catch(e => {

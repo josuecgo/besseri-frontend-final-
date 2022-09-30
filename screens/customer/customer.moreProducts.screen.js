@@ -87,10 +87,10 @@ const CustomerMoreProductsScreen = props => {
                         // setState(res.coords,SCREEN_STATES.USER_LOCATION);
                     });
                 } else {
-                    console.log('Permiso de ubicación denegado');
+                    // console.log('Permiso de ubicación denegado');
                 }
             } catch (e) {
-                console.log(e);
+                // console.log(e);
                 showToaster('No se pudo obtener la ubicación actual.');
             }
         }
@@ -159,7 +159,7 @@ const CustomerMoreProductsScreen = props => {
             const getFee = await axios.get(customer_api_urls?.get_fees);
             setComision(getFee.data.data[0]?.besseri_comission);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     };
 
@@ -253,7 +253,7 @@ const CustomerMoreProductsScreen = props => {
     const matchesForModel = (id,searchId) => {
         
         if (searchId?.matchs.length > 0) {
-            console.log({id,searchId:searchId?.matchs});
+            // console.log({id,searchId:searchId?.matchs});
             const match = searchId?.matchs.filter(element => element?.model === id);
             if (match.length > 0) {
                 
@@ -281,7 +281,7 @@ const CustomerMoreProductsScreen = props => {
                 showToaster('No tienes conexion a la red');
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             setMarcas([]);
         }
         setIsLoading(false);

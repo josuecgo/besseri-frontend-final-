@@ -93,7 +93,7 @@ export const useCart = () => {
         }
             
         } catch (e) {
-          console.log(e?.response?.status);
+          // console.log(e?.response?.status);
           showToaster(e?.response?.data?.message);
           return {status:e?.response?.status}
         }

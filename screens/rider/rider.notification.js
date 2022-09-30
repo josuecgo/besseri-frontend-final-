@@ -46,7 +46,7 @@ export const RiderNotification = ({navigation}) => {
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
           }
         } catch (e) {
-          console.log(e?.response?.data)
+          // console.log(e?.response?.data)
   
         }
       
@@ -66,7 +66,7 @@ export const RiderNotification = ({navigation}) => {
             getNotificaciones();
       
         } catch(e) {
-         console.log({detail:e});
+        //  console.log({detail:e});
         }
     }
 
