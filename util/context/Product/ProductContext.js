@@ -51,7 +51,7 @@ export const ProductProvider = ({children}) => {
 
           } catch(e) {
             // console.log({getProducts:e})
-            showToaster('No hay conexion con el servidor ');
+            showToaster('No hay conexion con el servidor - C01');
            
           }
     }
@@ -83,34 +83,35 @@ export const ProductProvider = ({children}) => {
                 
                 const apiCall = await axios.get(customer_api_urls.get_products);
     
-                // await dispatch({
-                //     type:'getProductos',
-                //     payload: {
-                //         productos: apiCall.data.data.products,
-                //         // categorias: apiCall?.data?.data?.categories
-                //     }
-                // });
-                if (apiCall?.status == 200) {
+                
+                if (apiCall?.status === 200) {
+                    await dispatch({
+                        type:'getProductos',
+                        payload: {
+                            productos: apiCall.data.data.products,
+                            // categorias: apiCall?.data?.data?.categories
+                        }
+                    });
                     setDowload(apiCall.data.data.products)
                     filterProduct(apiCall.data.data.products)
                 }
 
               } catch(e) {
                 // console.log({getProducts:e})
-                showToaster('No hay conexion con el servidor ');
+                showToaster('No hay conexion con el servidor - 01');
                
             }
     },[])
 
     const filterProduct = async(data) => {
         
-        // await dispatch({
-        //     type:'filterProducts',
-        //     payload: {
-        //         productos:data,
-        //         // categorias: apiCall?.data?.data?.categories
-        //     }
-        // });
+        await dispatch({
+            type:'filterProducts',
+            payload: {
+                productos:data,
+                // categorias: apiCall?.data?.data?.categories
+            }
+        });
     }
 
     const getServices = useCallback(
@@ -129,7 +130,7 @@ export const ProductProvider = ({children}) => {
 
               
               } catch(e) {
-                
+                showToaster('No hay conexion con los servicios')
                 // console.log({getServices:e});
                 
               }
@@ -139,14 +140,15 @@ export const ProductProvider = ({children}) => {
         async() => {
           try {
             const getFee = await axios.get(customer_api_urls?.get_fees);
-            if (apiCall?.status == 200) {
-                        dispatch({
+
+            dispatch({
                 type:'getComision',
                 payload: {
                     comision: getFee.data.data[0]?.besseri_comission,
                 }
             });
-            }
+
+            
 
 
           
@@ -288,11 +290,15 @@ export const ProductProvider = ({children}) => {
 
     useEffect(() => {
         let abortController = new AbortController();
-        getComision()
+        if (!state?.comision) {
+            
+            getComision()
+        }
+        
         return () => {  
             abortController.abort();  
         } 
-    }, [])
+    }, [state?.comision])
 
     useEffect(() => {
         let abortController = new AbortController();
@@ -325,7 +331,7 @@ export const ProductProvider = ({children}) => {
     }, [valueMaker])
     
 
-    
+   
     
 
     return (

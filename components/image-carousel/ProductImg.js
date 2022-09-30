@@ -21,7 +21,7 @@ export const ProductImg = ({imgs}) => {
     const renderImg = (img) => {
         let images = [];
 
-        for(let i = 0; i < imgs.length ; i++){
+        for(let i = 0; i <= (imgs.length - 1) ; i++){
             
             images.push({
                 url: `${base_url}/${imgs[i]?.path}`,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Text,
   View,
@@ -19,6 +19,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {moneda} from '../../util/Moneda';
 import axios from 'axios';
 import { showToaster } from '../../util/constants';
+import { ProductContext } from '../../util/context/Product/ProductContext';
 
 
 const ProductCardComponent = ({
@@ -33,8 +34,10 @@ const ProductCardComponent = ({
   onViewDetail,
 }) => {
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
-
-  const [comision, setComision] = useState(0)
+  const {
+    comision
+  } = useContext(ProductContext);
+  // const [comision, setComision] = useState(10)
 
 
 
@@ -47,14 +50,16 @@ const ProductCardComponent = ({
   
  
   const getComision = async() => {
-    try {
-      const getFee = await axios.get(customer_api_urls?.get_fees);
+    // try {
+    //   const getFee = await axios.get(customer_api_urls?.get_fees);
+    //   if (getFee?.status === 200) {
+    //     setComision(getFee?.data?.data[0]?.besseri_comission);
+    //   }
       
-      setComision(getFee.data.data[0]?.besseri_comission);
-    } catch (error) {
-      // console.log({comision:error});
-      showToaster('Hubo un error - 01')
-    }
+    // } catch (error) {
+    //   // console.log({comision:error});
+    //   showToaster('Hubo un error - 01')
+    // }
     
 
   }
@@ -123,7 +128,6 @@ const ProductCardComponent = ({
     );
   }
 
-
   return (
     <Pressable onPress={onViewDetail} style={styles.cardContainer}>
       {cartProduct ? (
@@ -157,11 +161,11 @@ const ProductCardComponent = ({
         colors={Colors.primaryGradient}
         style={styles.LinearGradient}>
         <Text style={styles.productTitle}>{data?.name}</Text>
-        <Text style={styles.textSub} >{data?.brand.name} </Text>
+        <Text style={styles.textSub} >{data?.brand?.name} </Text>
         <View style={styles.productSubTitle} > 
           
-          <Text style={styles.textSub} >{data.maker.name} </Text>
-          <Text style={styles.textSub} >{data.model.name} </Text>
+          <Text style={styles.textSub} >{data?.maker?.name} </Text>
+          <Text style={styles.textSub} >{data?.model?.name} </Text>
         </View>
         {
           data?.estimatedDelivery && (
