@@ -83,13 +83,13 @@ export const ProductProvider = ({children}) => {
                 
                 const apiCall = await axios.get(customer_api_urls.get_products);
     
-                await dispatch({
-                    type:'getProductos',
-                    payload: {
-                        productos: apiCall.data.data.products,
-                        // categorias: apiCall?.data?.data?.categories
-                    }
-                });
+                // await dispatch({
+                //     type:'getProductos',
+                //     payload: {
+                //         productos: apiCall.data.data.products,
+                //         // categorias: apiCall?.data?.data?.categories
+                //     }
+                // });
                 
                 setDowload(apiCall.data.data.products)
                 filterProduct(apiCall.data.data.products)
@@ -102,13 +102,13 @@ export const ProductProvider = ({children}) => {
 
     const filterProduct = async(data) => {
         
-        await dispatch({
-            type:'filterProducts',
-            payload: {
-                productos:data,
-                // categorias: apiCall?.data?.data?.categories
-            }
-        });
+        // await dispatch({
+        //     type:'filterProducts',
+        //     payload: {
+        //         productos:data,
+        //         // categorias: apiCall?.data?.data?.categories
+        //     }
+        // });
     }
 
     const getServices = useCallback(
@@ -262,7 +262,7 @@ export const ProductProvider = ({children}) => {
        
     }, [])
     
-    useEffect(async() => {
+    useEffect(() => {
         const CancelToken = axios.CancelToken;
         const source = CancelToken.source(); 
         getProducts(source.token)
@@ -328,7 +328,8 @@ export const ProductProvider = ({children}) => {
             setValueModel,
             resetFiltro,
             searchCall,
-            filterProduct
+            filterProduct,
+            dowload
           
         }}
         >
