@@ -1,6 +1,6 @@
 import React, { useEffect, useState,useRef } from 'react';
 import {Text, TouchableOpacity, View,StyleSheet, Platform, ScrollView,Image, useWindowDimensions, Linking, Modal} from 'react-native';
-import ImageViewer from 'react-native-image-zoom-viewer';
+
 
 import Colors from '../../util/styles/colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';

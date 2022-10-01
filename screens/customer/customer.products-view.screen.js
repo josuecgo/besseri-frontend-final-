@@ -31,13 +31,14 @@ const CustomerProductsViewScreen = React.memo((props) => {
     comision,modelo,
     setModelo,marcas,
     setMarcas,valueMaker, setValueMaker,
-    valueModel, setValueModel,resetFiltro,productFiltrado,filterProduct,productos,dowload
-  } = useContext(ProductContext)
+    valueModel, setValueModel,resetFiltro,productFiltrado
+  } = useContext(ProductContext);
 
   
   // const {productFilter} = useFiltrado(props?.route?.name)
  
-
+  const d = [1]
+  console.log(d.length);
   const CategoryButton = ({ category,onPress }) => {
     return (
       <View style={{alignItems:'center'}} >
@@ -70,7 +71,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
     <ProductListing
     navigation={props.navigation}
     category={item.name} 
-    products={dowload.filter(product => product.categoryId == item._id)} 
+    products={productFiltrado.filter(product => product.categoryId == item._id)} 
     comision={comision}
     />
   )
@@ -84,7 +85,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
 
   const memorizedValueCategoria = useMemo(() => renderItemCategorias, [categorias]);
 
-  const memorizedValue = useMemo(() => renderItem, [dowload]);
+  const memorizedValue = useMemo(() => renderItem, [productFiltrado]);
   
   return (
     <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor,paddingTop:15 }}>
@@ -162,7 +163,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
 
         <View style={{ flexGrow: 1, marginTop: 5 }}>
           {
-            comision && dowload? (
+            comision && productFiltrado ? (
               <FlatList
               data={categorias}
               initialNumToRender={5}
