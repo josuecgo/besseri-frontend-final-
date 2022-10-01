@@ -546,7 +546,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/mario-code/Documents/Trabajo/Besseri/besseri-frontend-final-/ios/Besseri/AppDelegate.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/josuegarcia/Downloads/pruebareactnative/BesseriDev/app/besseriFinal/besseri-frontend-final-/ios/Besseri/AppDelegate.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Besseri.app/Besseri";
@@ -584,7 +584,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/mario-code/Documents/Trabajo/Besseri/besseri-frontend-final-/ios/Besseri/AppDelegate.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/josuegarcia/Downloads/pruebareactnative/BesseriDev/app/besseriFinal/besseri-frontend-final-/ios/Besseri/AppDelegate.h";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Besseri.app/Besseri";
 				VALID_ARCHS = "arm64 x86_64";
@@ -623,7 +623,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.josue.oropeza.refacciones.besseri;
 				PRODUCT_NAME = Besseri;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/mario-code/Documents/Trabajo/Besseri/besseri-frontend-final-/ios/Besseri/AppDelegate.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/josuegarcia/Downloads/pruebareactnative/BesseriDev/app/besseriFinal/besseri-frontend-final-/ios/Besseri/AppDelegate.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "arm64 x86_64";
@@ -656,7 +656,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.4;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -665,7 +665,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.josue.oropeza.refacciones.besseri;
 				PRODUCT_NAME = Besseri;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/mario-code/Documents/Trabajo/Besseri/besseri-frontend-final-/ios/Besseri/AppDelegate.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/josuegarcia/Downloads/pruebareactnative/BesseriDev/app/besseriFinal/besseri-frontend-final-/ios/Besseri/AppDelegate.h";
 				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "arm64 x86_64";
 				VERSIONING_SYSTEM = "apple-generic";
