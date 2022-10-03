@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import CommonStyles from '../../util/styles/styles';
 import Colors from '../../util/styles/colors';
-import ImageCarouselComponent from '../../components/image-carousel/image-carousel.component';
 import ButtonComponent from '../../components/button/button.component';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
@@ -97,7 +96,7 @@ const VendorProductDetailsScreen = ({navigation, route}) => {
   };
 
  
-
+  console.log(product?.urlsImg);
   return (
     <>
       <HeaderBackground />
@@ -126,14 +125,21 @@ const VendorProductDetailsScreen = ({navigation, route}) => {
           <View style={{flexDirection:'row',backgroundColor:'white'}} >
             
             {
-              product?.urlsImg.length > 0 ? (
+             product?.urlsImg ? (
+              product?.urlsImg?.length > 0 ? (
                 <ProductImg imgs={product?.urlsImg} />
-              ):(
-                <Image
-                  source={{uri: `${base_url}/${product?.productImg}`}}
-                  style={styles.productImg}
-                />
-              )
+                ):(
+                  <Image
+                    source={{uri: `${base_url}/${product?.productImg}`}}
+                    style={styles.productImg}
+                  />
+                )
+             ):(
+              <Image
+                source={{uri: `${base_url}/${product?.productImg}`}}
+                style={styles.productImg}
+              />
+            )
             }
             
           </View>

@@ -4,10 +4,7 @@ import {  StatusBar,useColorScheme } from 'react-native';
 import { KeysStripe, ROLES } from './util/constants';
 import { NavigationContainer } from '@react-navigation/native';
 import { USER_ROLE } from './util/local-storage';
-import { VendorNavigation } from './screens/vendor/vendor.navigation';
-import { AutoPartsAndServices } from './screens/customer/customer.navigation';
-import { RiderNavigation } from './screens/rider/rider.navigation';
-import { LSFS } from './screens/login.navigation';
+
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 
 import { MainNavigation } from './util/Routes/navigation.routes';
@@ -83,7 +80,7 @@ const App = () => {
 }
 const App2 = () => {
  
-  const {showNotification,  getNotificaciones  } = useContext(NotificationContext);
+  const {showNotification  } = useContext(NotificationContext);
 
 
   
@@ -123,7 +120,6 @@ const App2 = () => {
 
   return (
   
-    //<PushNotificationManager getNotificaciones={getNotificaciones} >
       <NavigationContainer>
         
         
@@ -133,8 +129,7 @@ const App2 = () => {
    
       </NavigationContainer>
     
-  
-    //</PushNotificationManager>
+
 
 
 

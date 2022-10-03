@@ -30,9 +30,9 @@ const CustomerProductDetailScreen = (props) => {
   const product = params?.product;
   const comision = params?.comision;
   const {top} = useSafeAreaInsets()
-  const {addItemToCart,inTheCart,inCart} = useCart()
+  const {addItemToCart,inTheCart} = useCart()
   const isChange = useRef(false);
-  const [isOpen, setIsOpen] = useState(false)
+
 
   useEffect(() => {
     setEnCarrito(inTheCart(product))
@@ -78,6 +78,7 @@ const CustomerProductDetailScreen = (props) => {
     );
   };
 
+
   return (
     <>
         <View style={{flex:1,backgroundColor:Colors.bgColor}}>
@@ -98,7 +99,24 @@ const CustomerProductDetailScreen = (props) => {
               <View style={{width:23,height:30}} />
             </View>
             <View style={{backgroundColor:Colors.white,elevation:1,marginBottom:5}} >
-              {
+            {
+             product?.urlsImg ? (
+              product?.urlsImg?.length > 0 ? (
+                <ProductImg imgs={product?.urlsImg} />
+                ):(
+                  <Image
+                    source={{uri: `${base_url}/${product?.productImg}`}}
+                    style={styles.productImg}
+                  />
+                )
+             ):(
+              <Image
+                source={{uri: `${base_url}/${product?.productImg}`}}
+                style={styles.productImg}
+              />
+            )
+            }
+              {/* {
                 product?.urlsImg.length > 0 ? (
                   <ProductImg imgs={product?.urlsImg} />
                 ):(
@@ -107,7 +125,7 @@ const CustomerProductDetailScreen = (props) => {
                     style={styles.productImg}
                   />
                 )
-              }
+              } */}
 
               
             </View>

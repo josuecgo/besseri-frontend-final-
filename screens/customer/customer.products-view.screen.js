@@ -37,8 +37,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
   
   // const {productFilter} = useFiltrado(props?.route?.name)
  
-  const d = [1]
-  console.log(d.length);
+
   const CategoryButton = ({ category,onPress }) => {
     return (
       <View style={{alignItems:'center'}} >
