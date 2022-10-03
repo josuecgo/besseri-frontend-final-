@@ -56,26 +56,7 @@ export const ProductProvider = ({children}) => {
           }
     }
 
-    // const getProducts = async() => {
-    //     try {
-    //         const apiCall = await axios.get(customer_api_urls.get_products);
 
-    //         await dispatch({
-    //             type:'getProductos',
-    //             payload: {
-    //                 productos: apiCall.data.data.products,
-    //                 // categorias: apiCall?.data?.data?.categories
-    //             }
-    //         });
-            
-    //         setDowload(apiCall.data.data.products)
-           
-    //       } catch(e) {
-    //         console.log({getProducts:e})
-    //         showToaster('No hay conexion con el servidor ');
-           
-    //       }
-    // }
 
     const getProducts = useCallback(
         async() => {

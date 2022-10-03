@@ -78,7 +78,7 @@ const CustomerProductDetailScreen = (props) => {
     );
   };
 
-
+  console.log(product?.urlsImg);
   return (
     <>
         <View style={{flex:1,backgroundColor:Colors.bgColor}}>
