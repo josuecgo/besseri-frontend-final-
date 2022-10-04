@@ -162,7 +162,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
 
         <View style={{ flexGrow: 1, marginTop: 5 }}>
           {
-            comision && productFiltrado ? (
+            comision && !!productFiltrado ? (
               <FlatList
               data={categorias}
               initialNumToRender={5}

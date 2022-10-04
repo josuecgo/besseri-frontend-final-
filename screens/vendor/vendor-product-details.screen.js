@@ -125,21 +125,21 @@ const VendorProductDetailsScreen = ({navigation, route}) => {
           <View style={{flexDirection:'row',backgroundColor:'white'}} >
             
             {
-             product?.urlsImg ? (
-              product?.urlsImg?.length > 0 ? (
-                <ProductImg imgs={product?.urlsImg} />
-                ):(
-                  <Image
-                    source={{uri: `${base_url}/${product?.productImg}`}}
-                    style={styles.productImg}
-                  />
-                )
-             ):(
-              <Image
-                source={{uri: `${base_url}/${product?.productImg}`}}
-                style={styles.productImg}
-              />
-            )
+              product?.urlsImg ? (
+                product?.urlsImg?.length > 0 ? (
+                  <ProductImg imgs={product?.urlsImg} />
+                  ):(
+                    <Image
+                      source={{uri: `${base_url}/${product?.productImg}`}}
+                      style={styles.productImg}
+                    />
+                  )
+              ):(
+                <Image
+                  source={{uri: `${base_url}/${product?.productImg}`}}
+                  style={styles.productImg}
+                />
+              )
             }
             
           </View>

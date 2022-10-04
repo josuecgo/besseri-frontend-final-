@@ -14,59 +14,59 @@ import { SendMessage } from '../../../components/Chat/SendMessage'
 
 
 export const ChatScreen = (props) => {
-    const product = props?.route?.params;
-    const { chatState, getMensajes } = useContext(ChatContext);
-    const [uid, setUid] = useState(0);
-    const [store, setStore] = useState(null);
+    // const product = props?.route?.params;
+    // const { chatState, getMensajes } = useContext(ChatContext);
+    // const [uid, setUid] = useState(0);
+    // const [store, setStore] = useState(null);
 
-    const getVendor = async() => {
+    // const getVendor = async() => {
         
-        try {
-            const url = `${vendor_api_urls.business_profile_detail}/${product?.business_id}`;
-            const apiCall = await axios.get(url);
-            setStore(apiCall?.data?.data?.store)
-            // dispatch({
-            //     type:'getProductos',
-            //     payload: {
-            //         productos: apiCall.data.data.products,
-            //         categorias: apiCall.data.data.categories
-            //     }
-            // });
-            // dispatch({
-            //     type:'getCategorias',
-            //     payload: {
+    //     try {
+    //         const url = `${vendor_api_urls.business_profile_detail}/${product?.business_id}`;
+    //         const apiCall = await axios.get(url);
+    //         setStore(apiCall?.data?.data?.store)
+    //         // dispatch({
+    //         //     type:'getProductos',
+    //         //     payload: {
+    //         //         productos: apiCall.data.data.products,
+    //         //         categorias: apiCall.data.data.categories
+    //         //     }
+    //         // });
+    //         // dispatch({
+    //         //     type:'getCategorias',
+    //         //     payload: {
                    
-            //         categorias: apiCall.data.data.categories
-            //     }
-            // });
+    //         //         categorias: apiCall.data.data.categories
+    //         //     }
+    //         // });
            
-        } catch(e) {
-            // console.log({getProducts:e})
-            showToaster('No hay conexion con el servidor ');
+    //     } catch(e) {
+    //         // console.log({getProducts:e})
+    //         showToaster('No hay conexion con el servidor ');
            
-        }
-        const id = await getUserId()
-        setUid(id)
-    }
+    //     }
+    //     const id = await getUserId()
+    //     setUid(id)
+    // }
 
 
 
-    useEffect(() => {
-        getVendor();
-    }, [])
+    // useEffect(() => {
+    //     getVendor();
+    // }, [])
 
-    useEffect(() => {
-      if (store) {
-        getMensajes(store?.account_id)
-      }
-    }, [store])
+    // useEffect(() => {
+    //   if (store) {
+    //     getMensajes(store?.account_id)
+    //   }
+    // }, [store])
     
     
   
 
     return (
         <>
-            <HeaderTitle 
+            {/* <HeaderTitle 
             titulo={store?.storeName} 
             // iconName='keyboard-backspace'
             />
@@ -83,7 +83,7 @@ export const ChatScreen = (props) => {
 
                
 
-            </View>
+            </View> */}
         </>
      
     )

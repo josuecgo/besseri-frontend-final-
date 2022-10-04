@@ -300,10 +300,7 @@ export const ProductProvider = ({children}) => {
     useEffect(() => {
         let abortController = new AbortController();
         if (valueMaker) {
-            // if (valueModel) {
-            //     setValueModel(null);
-            //     setModelo(false);
-            // }
+
             getModelo(valueMaker); 
         }
         return () => {  

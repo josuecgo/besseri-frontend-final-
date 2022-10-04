@@ -1,35 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import {
-    Text,
     View,
     StyleSheet,
-    Image,
-    ScrollView,
-    useWindowDimensions,
-    PermissionsAndroid,
     FlatList,
     Pressable,
-    Dimensions,
 } from 'react-native';
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
-import { useDispatch, useSelector } from 'react-redux';
+
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { TextInput } from 'react-native-gesture-handler';
-import axios from 'axios';
-import {
-    customer_api_urls,
-    vendor_api_urls,
-} from '../../util/api/api_essentials';
+
 import {
     CUSTOMER_HOME_SCREEN_ROUTES,
     SHARED_ROUTES,
-    showToaster,
+
 } from '../../util/constants';
 import SpinKit from 'react-native-spinkit';
 import ProductCardComponent from '../../components/customer-components/product-card.component';
-import * as CartActions from '../../util/ReduxStore/Actions/CustomerActions/CartActions';
-import { useRoute } from '@react-navigation/native';
+
 import ServicesCardComponent from '../../components/customer-components/ServicesCard.component';
 import { HeaderBackground } from '../../components/Background/HeaderBackground';
 import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';

@@ -151,6 +151,7 @@ const ProductCardComponent = ({
           <AntDesign name="delete" color="red" size={18} />
         </TouchableOpacity>
       ) : null}
+      
       <Image
         source={{uri: `${base_url}/${data?.productImg}`}}
         style={styles.productImg}

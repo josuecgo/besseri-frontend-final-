@@ -14,7 +14,7 @@ export const productReducer = (state, action) => {
             ...state,
             errorMessage:'',
             productFiltrado: action.payload.productos,
-            // categorias:action.payload.categorias
+            
         }
         case 'getCategorias' : 
         return {

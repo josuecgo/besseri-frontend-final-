@@ -22,7 +22,7 @@ export const ChatProvider = ({ children }) => {
 
 
     const getMensajes = async(de) => {
-        try {
+        // try {
             // const id = await getUserId();
         
             // const apiCall = await axios.get(`${api_urls.getMessage}/${id}`,{
@@ -44,33 +44,33 @@ export const ChatProvider = ({ children }) => {
             //     type:'cargarMensajes',
             //     payload:apiCall?.data.data
             // })
-        } catch (error) {
+        // } catch (error) {
             // console.log(error?.response?.data);
-        }
+        // }
     }
 
     const enviarMensaje = async(para) => {
-        try {
-            const id = await getUserId();
+        // try {
+        //     const id = await getUserId();
         
-            const apiCall = await axios.post(`${api_urls.getMessage}/${id}`,{
-                data:{
-                    de
-                },
-                params:{
-                    de
-                }
-            }   
-            );
+        //     const apiCall = await axios.post(`${api_urls.getMessage}/${id}`,{
+        //         data:{
+        //             de
+        //         },
+        //         params:{
+        //             de
+        //         }
+        //     }   
+        //     );
 
-            dispatch({
-                type:'cargarMensajes',
-                payload:apiCall?.data.data
-            })
+        //     dispatch({
+        //         type:'cargarMensajes',
+        //         payload:apiCall?.data.data
+        //     })
 
-        } catch (error) {
-            // console.log(error?.response?.data);
-        }
+        // } catch (error) {
+        //     // console.log(error?.response?.data);
+        // }
     }
 
     return (
