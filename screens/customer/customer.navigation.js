@@ -27,7 +27,7 @@ import SignUpScreen from '../sign-up.screen';
 import SignUpScreenCustomer from '../sign-up.screen-customer';
 import { OrderSuccessful } from './customer.order-successful';
 import { SearchScreen } from './SearchScreen';
-import { LSFS } from '../login.navigation';
+// import { LSFS } from '../login.navigation';
 import { CustomerNotificationViewScreen } from './customer.notificaciones';
 import { NotificationContext } from '../../util/context/NotificationContext';
 import { EnvioScreen } from './customer.envio.screen';
@@ -271,7 +271,7 @@ export const CustomerHomeStack = () => {
       />
       <Stack.Screen
         name={'LSFS'}
-        component={LSFS}
+        component={SignUpScreenCustomer}
       />
     </Stack.Navigator>
   );
