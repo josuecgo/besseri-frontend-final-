@@ -251,7 +251,7 @@ export const ProductProvider = ({children}) => {
     useEffect(() => {
         // const cancelToken = axios.CancelToken;
         // const source = cancelToken.source();
-        getCategorias(source.token)
+        getCategorias()
         // return () => {  
         //     // abortController.abort();  
         //     source.cancel();
