@@ -405,7 +405,12 @@ const CustomerMoreProductsScreen = props => {
                 </Text>
 
                 
-                <View style={Platform.OS === 'ios' ? styles.filterContainer : styles.filterContainer2}  >
+                <View 
+                style={
+                Platform.OS === 'ios' ? styles.filterContainer : styles.filterContainer2
+  
+                }  
+                >
                     <DropDownPicker
                         open={open}
                         value={valueMaker}
@@ -414,8 +419,16 @@ const CustomerMoreProductsScreen = props => {
                         setValue={setValueMaker}
                         setItems={setMarcas}
                         containerStyle={styles.picker}
+            
                         placeholder="Marca"
                         schema={{ label: 'name', value: '_id', testID: '_id' }}
+                        zIndex={3000}
+                        zIndexInverse={1000}
+                        textStyle={{color:Colors.textPrimary}}
+                        style={{borderColor:'white'}}
+                        itemProps={{
+                            
+                        }}
                     />
 
                     {modelo ? (
@@ -429,6 +442,9 @@ const CustomerMoreProductsScreen = props => {
                             containerStyle={styles.picker}
                             placeholder="Modelo"
                             schema={{ label: 'name', value: '_id', testID: '_id' }}
+                            zIndex={1000}
+                            textStyle={{color:Colors.textPrimary}}
+                            style={{borderColor:'white'}}
                         />
                     ) : (
                         <View style={styles.picker} />
@@ -437,7 +453,7 @@ const CustomerMoreProductsScreen = props => {
 
                 
 
-                <View style={{  marginVertical: bottom + 20 }}>
+                <View style={{  marginVertical: bottom + 20,zIndex:1 }}>
                     {
                         productFilter && comision ? (
                             
@@ -558,19 +574,21 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         marginTop: 10,
-        // zIndex:2
+        zIndex:2
        
       },
       filterContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         marginTop: 10,
-        zIndex:20,
+        zIndex:2,
         
         
       },
     picker: {
         width: deviceWidth / 2.2,
+        borderColor:Colors.white,
+        zIndex:9
     },
 });
 export default CustomerMoreProductsScreen;

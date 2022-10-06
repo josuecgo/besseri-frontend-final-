@@ -12,11 +12,7 @@ export const ProductImg = ({imgs}) => {
     
     const [isOpen, setIsOpen] = useState(false)
 
-    let images = [{
-        // url: `${base_url}/${item?.path}`,
-        width: deviceWidth,
-        height: 240,
-    }]
+
    
     const renderImg = (img) => {
         let images = [];
@@ -26,7 +22,8 @@ export const ProductImg = ({imgs}) => {
             images.push({
                 url: `${base_url}/${imgs[i]?.path}`,
                 width: deviceWidth,
-                height: 240,
+                // height: 240,
+               
             })
         }
 

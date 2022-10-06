@@ -41,29 +41,6 @@ const ProductCardComponent = ({
 
 
 
-  useEffect(() => {
-    if (data?.name.length > 0) {
-      getComision();
-    }
-   
-  }, [data])
-  
- 
-  const getComision = async() => {
-    // try {
-    //   const getFee = await axios.get(customer_api_urls?.get_fees);
-    //   if (getFee?.status === 200) {
-    //     setComision(getFee?.data?.data[0]?.besseri_comission);
-    //   }
-      
-    // } catch (error) {
-    //   // console.log({comision:error});
-    //   showToaster('Hubo un error - 01')
-    // }
-    
-
-  }
-  
   
   if (horizontal) {
     const horizontalCardStyles = {
@@ -101,7 +78,7 @@ const ProductCardComponent = ({
               {moneda(Number(data?.price) + Number((comision * data?.price) / 100))}
               {' '} MXN
             </Text>
-            <Text style={{color: 'grey'}}>{data?.maker?.name}</Text>
+            <Text style={{color: 'grey',textTransform:'uppercase',fontSize:adjust(10)}}>{data?.maker?.name}</Text>
             <Text style={{color: 'grey'}}>{data?.model?.name}</Text>
             <TouchableOpacity onPress={onAddToCart}>
               <Text
@@ -165,7 +142,7 @@ const ProductCardComponent = ({
         <Text style={styles.textSub} >{data?.brand?.name} </Text>
         <View style={styles.productSubTitle} > 
           
-          <Text style={styles.textSub} >{data?.maker?.name} </Text>
+          <Text style={[styles.textSub,{textTransform:'uppercase',fontSize:adjust(8)}]} >{data?.maker?.name} </Text>
           <Text style={styles.textSub} >{data?.model?.name} </Text>
         </View>
         {

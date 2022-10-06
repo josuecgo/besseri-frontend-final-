@@ -1,9 +1,9 @@
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet, Image, ScrollView, Platform, PermissionsAndroid, FlatList, ActivityIndicator } from 'react-native';
+import React, {  useContext, useMemo, useState } from 'react';
+import { Text, TouchableOpacity, View, StyleSheet, Platform, FlatList, ActivityIndicator } from 'react-native';
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
-import Geolocation from '@react-native-community/geolocation';
-import {  CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../util/constants';
+
+import {  CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants';
 import ProductListing from '../../components/customer-components/ProductsListing.component';
 import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -13,11 +13,6 @@ import { useFiltrado } from '../../hooks/useFiltrado';
 
 
 
-const SCREEN_STATES = {
-  USER_LOCATION:'User location',
-  PRODUCTS:'Products',
-  CATEGORIES:'Categories'
-}
 
 
 const CustomerProductsViewScreen = React.memo((props) => {
@@ -42,7 +37,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
     return (
       <View style={{alignItems:'center'}} >
         <TouchableOpacity onPress={onPress} style={styles.categoryButton}>
-          <Text style={{fontSize:adjust(9)}} >
+          <Text style={styles.categoryButtonText} >
                 {category}
           </Text>
             
@@ -53,23 +48,13 @@ const CustomerProductsViewScreen = React.memo((props) => {
   }
 
   
-  // useEffect(() => {
-  //   let abortController = new AbortController(); 
-  //   if (productos) {
-  //     filterProduct(productos)
-  //   }
-    
-  //   return () => {  
-  //     abortController.abort();  
-     
-  //   }  
-  // }, [productos])
+
 
 
   const renderItem = ({item}) => (
     <ProductListing
     navigation={props.navigation}
-    category={item.name} 
+    category={item} 
     products={productFilter.filter(product => product.categoryId == item._id)} 
     comision={comision}
     />
@@ -77,7 +62,9 @@ const CustomerProductsViewScreen = React.memo((props) => {
 
   const renderItemCategorias = ({item}) => (
     <CategoryButton
-    onPress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.MORE_PRODUCTS,{category:item})}
+    onPress={() => {
+      props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.MORE_PRODUCTS,{category:item})
+    }}
     category={item.name} 
     />
   )
@@ -106,6 +93,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
             placeholder="Marca"
             schema={{label: 'name', value: '_id', testID: '_id'}}
             zIndex={1000}
+            textStyle={{color:Colors.textPrimary}}
           />
 
           {modelo ? (
@@ -121,6 +109,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
               placeholder="Modelo"
               schema={{label: 'name', value: '_id', testID: '_id'}}
               zIndex={1000}
+              textStyle={{color:Colors.textPrimary}}
             />
           ) : (
             <View style={styles.picker} />
@@ -171,16 +160,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
               ListFooterComponent={<View style={{width:'100%',marginBottom:10,height:deviceHeight * 20 / 100}} />}
               showsVerticalScrollIndicator={false}
               />
-              // categorias.map((item)=>(
-              //   <View key={item._id} >
-              //     <ProductListing
-              //     navigation={props.navigation}
-              //     category={item.name} 
-              //     products={productFiltrado.filter(product => product.categoryId == item._id)} 
-              //     comision={comision}
-              //     />
-              //   </View>
-              // ))
+             
             ):(
               <View
               style={{
@@ -188,23 +168,12 @@ const CustomerProductsViewScreen = React.memo((props) => {
               justifyContent: 'center',
               }}>
                 <ActivityIndicator/>
-                <Text>cargando</Text>                        
+                <Text>Cargando</Text>                        
               </View>
             )
           }
 
-          {/* {
-            categorias.map((item)=>(
-              <View key={item._id} >
-                <ProductListing
-                navigation={props.navigation}
-                category={item.name} 
-                products={productFiltrado.filter(product => product.categoryId == item._id)} 
-                comision={comision}
-                />
-              </View>
-            ))
-          } */}
+         
         <View style={{height:deviceWidth *0.05,width:deviceWidth,marginVertical:30}} />
         </View>
       </View>
@@ -220,13 +189,15 @@ const styles = StyleSheet.create({
     margin: 5,
     borderRadius: 100,
     // paddingHorizontal: 15
-    elevation:2,
+    // elevation:2,
     // width:50,
     // height:50
   },
   categoryButtonText: {
     ...CommonStyles.fontFamily,
-    color: Colors.white, fontSize: 15,
+    color:Colors.textPrimary,
+    fontWeight:'bold',
+    fontSize:adjust(8),
 
   },
   offerCardImg: {
@@ -259,7 +230,7 @@ const styles = StyleSheet.create({
     marginHorizontal:10
   },
   btnReset:{
-    // borderBottomWidth:1
+   marginVertical:10
   },
   txtReset:{
     borderBottomWidth:1,

@@ -19,7 +19,7 @@ export default (state = initialState, action) => {
                 ...state,
                 cart_items: state.cart_items.concat(action.data),
                 cart_items_ids: state.cart_items_ids.concat(action.data?._id),
-                total_amount:state.total_amount + parseInt(action.data.price),
+                total_amount:state.total_amount + Number(action.data.price),
                 businessId:action?.data?.business_id,
             }
         case DESCUENTO:
@@ -70,7 +70,7 @@ export default (state = initialState, action) => {
                         }
                         : item
                     ),
-                    total_amount:state.total_amount + parseInt(action.price)
+                    total_amount:state.total_amount + Number(action.price)
                 };
             }
             return {
@@ -93,7 +93,7 @@ export default (state = initialState, action) => {
                         }
                         : item
                     ),
-                    total_amount:state.total_amount - parseInt(action.price)
+                    total_amount:state.total_amount - Number(action.price)
                 };
             }
             return {

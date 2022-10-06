@@ -21,6 +21,7 @@ import { Cupon } from '../../components/Customer/Cupon';
 import { descuento } from '../../util/helpers/Descuento';
 import { ExploreScreen } from './Cart/ExploreScreen';
 import { useCart } from '../../hooks/useCart';
+import { moneda } from '../../util/Moneda';
 
 
 const CustomerCartScreen = (props) => {
@@ -46,7 +47,10 @@ const CustomerCartScreen = (props) => {
   const [isLogin , setIsLogin  ] = useState(false)
   let businessIds = [];
   const {cupon} = useCart()
+  // const [totalAmount, setTotalAmount] = useState(false)
 
+
+  
  
   useEffect(async() => {
     let abortController = new AbortController();
@@ -140,15 +144,17 @@ const CustomerCartScreen = (props) => {
           totalProductsPrice += allProducts[a]?.price * allProducts[a]?.quantity
         }
         let subtotal = totalAmount ;
+
         props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ENVIO, {
           deliveryDistance:deliveryDistance,
           storeId: businessProfiles[0]?._id,
           products: allProducts,
           business: businessProfiles[0],
-          totalAmount: Math.round(totalProductsPrice + Math.round((Number(comission) * Number(subtotal)) / 100)),
-          comission:Math.round((Number(comission) * Number(subtotal)) / 100),
+          // totalAmount: Math.round(totalProductsPrice + Math.round((Number(comission) * Number(subtotal)) / 100)),
+          totalAmount:totalAmount,
+          comission:Math.round((comission * subtotal) / 100),
           delivery_fee:delivery_fee,
-          subtotal:subtotal,
+          subtotal:Math.round(totalAmount),
           comision:comission,
           cupon:idDesc,
           descuento
@@ -246,7 +252,10 @@ const CustomerCartScreen = (props) => {
       </View>
     )
   }
- 
+  
+
+
+
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
       <Modalize adjustToContentHeight ref={businessSelectRef}>
@@ -368,10 +377,13 @@ const CustomerCartScreen = (props) => {
                   
                   <Cupon  />
                  
-                  
+                  {/* {moneda(
+                Number(data?.price) + Number((comision * data?.price) / 100),
+              )} */}
                   <DetailItem 
                   label={'Total'}  
-                  value={ `${totalAmount + (billComission * totalAmount / 100) - descuento} MXN`} 
+                  value={ `${ (totalAmount +  comission * totalAmount / 100 - descuento).toFixed(2)} MXN`} 
+                  // value={moneda( (totalAmount) + (billComission * totalAmount) / 100) - descuento}
                   />
                   {/* <DetailItem label={'Total Charges'} value={`${Math.round(totalAmount + totalDeliveryFee + (Number(comission) * Number(totalAmount)) / 100)} MXN`} /> */}
                   <Text style={{margin:5}}>Se aplicarán gastos de envío en función del número de kilómetros</Text>

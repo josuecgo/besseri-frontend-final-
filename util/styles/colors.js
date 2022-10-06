@@ -38,7 +38,8 @@ const Colors = {
   attention:'#F9B410',
   alert:'#FF6D00',
   error:'#ff0000',
-  textSecundary: '#5F6368'
+  textSecundary: '#5F6368',
+  textPrimary:'#666666'
 };
 
 export default Colors;

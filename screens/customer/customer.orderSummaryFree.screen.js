@@ -80,7 +80,6 @@ const CustomerOrderSummaryFree = React.memo((props) => {
   const [tienda, setTienda] = useState(false);
 
 
- 
 
 
   const getUserDetails = async () => {
