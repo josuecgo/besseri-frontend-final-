@@ -343,7 +343,7 @@ const CustomerMoreProductsScreen = props => {
             ) : null}
             </TouchableOpacity>
         </View>
-        <View
+        {/* <View
             style={{
             width: '95%',
             height: 45,
@@ -362,8 +362,8 @@ const CustomerMoreProductsScreen = props => {
             name="search"
             />
             <SearchInput onDebounce={value => setSearchtext(value)} />
-        </View>
-
+        </View> */}
+        <View style={{height:30}} />
         <Text
             style={{
             fontSize: 15,

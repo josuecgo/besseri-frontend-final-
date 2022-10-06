@@ -82,7 +82,7 @@ const CustomHeaderComponent = props => {
  
   return (
     <>
-      <HeaderBackground hios={0.23} handroid={0.18} />
+      <HeaderBackground hios={0.15} handroid={0.10 } />
       <View style={[styles.header]}>
         <Pressable
           onPress={() => {
@@ -128,7 +128,7 @@ const CustomHeaderComponent = props => {
 
       </View>
       <View style={styles.top}>
-        <SearchInput onDebounce={value => setSearchText(value)} />
+        {/* <SearchInput onDebounce={value => setSearchText(value)} />
         {loading ? (
           <SpinKit
             type="ThreeBounce"
@@ -136,7 +136,7 @@ const CustomHeaderComponent = props => {
             color={Colors.primarySolid}
             size={30}
           />
-        ) : null}
+        ) : null} */}
       </View>
     </>
   );
@@ -145,7 +145,7 @@ const CustomHeaderComponent = props => {
 const styles = StyleSheet.create({
   header: {
     width: deviceWidth,
-    height: Platform.OS == 'ios' ? deviceHeight * 0.16 : deviceHeight * 0.11,
+    height: Platform.OS == 'ios' ? deviceHeight * 0.16 : deviceHeight * 0.10,
 
     // padding: 10,
     // borderWidth: 1,
@@ -186,10 +186,10 @@ const styles = StyleSheet.create({
   },
   top: {
     width: deviceWidth - 20,
-    height: 45,
-    borderWidth: 1,
-    borderColor: '#f8f8f8',
-    backgroundColor: '#f8f8f8',
+    // height: 45,
+    // borderWidth: 1,
+    // borderColor: '#f8f8f8',
+    // backgroundColor: '#f8f8f8',
     borderRadius: 5,
     paddingLeft: 10,
     color: 'grey',
