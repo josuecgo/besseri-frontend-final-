@@ -2,7 +2,7 @@ import { Image, Platform } from 'react-native'
 import React from 'react'
 import { deviceHeight, deviceWidth } from '../../util/Dimentions'
 
-export const HeaderBackground = ({hios=0.13,handroid=0.10}) => {
+export const HeaderBackground = ({hios=0.15,handroid=0.10}) => {
 
   return (
     <>
