@@ -214,13 +214,13 @@ const styles = StyleSheet.create({
   filterContainer2: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 10,
+    marginTop: 25,
     // zIndex:2
   },
   filterContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 10,
+    marginTop: 25,
     zIndex:2,
     
   },
