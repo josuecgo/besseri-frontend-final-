@@ -74,11 +74,11 @@ const CustomerProductsViewScreen = React.memo((props) => {
   const memorizedValue = useMemo(() => renderItem, [productFilter]);
   
   return (
-    <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor,paddingTop:15 }}>
+    <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor }}>
             
      
       
-      <View style={{flex:1}} >
+      <View style={{flex:1,backgroundColor:Colors.bgColor}} >
         
         <View style={Platform.OS === 'ios' ? styles.filterContainer : styles.filterContainer2}>
           <DropDownPicker

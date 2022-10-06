@@ -82,7 +82,7 @@ const CustomHeaderComponent = props => {
  
   return (
     <>
-      <HeaderBackground hios={0.15} handroid={0.10 } />
+      <HeaderBackground hios={0.16} handroid={0.12 } />
       <View style={[styles.header]}>
         <Pressable
           onPress={() => {
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   header: {
     width: deviceWidth,
     height: Platform.OS == 'ios' ? deviceHeight * 0.16 : deviceHeight * 0.10,
-
+   
     // padding: 10,
     // borderWidth: 1,
     // borderColor: Colors.primaryColor,
@@ -186,6 +186,7 @@ const styles = StyleSheet.create({
   },
   top: {
     width: deviceWidth - 20,
+    backgroundColor:Colors.bgColor,
     // height: 45,
     // borderWidth: 1,
     // borderColor: '#f8f8f8',
