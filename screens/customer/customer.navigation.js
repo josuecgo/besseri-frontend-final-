@@ -58,7 +58,7 @@ export const PartsServicesFunctionsDrawer = () => {
         name={'Autopartes'}
         component={CustomerHomeStack}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name={'Servicios'}
         component={CustomerServicesViewScreen}
         options={{
@@ -67,7 +67,7 @@ export const PartsServicesFunctionsDrawer = () => {
             <CustomHeaderComponent {...props} name="Servicios" isService={true} showSearch={true} />
           ),
         }}
-      />
+      /> */}
       <Drawer.Screen
         name={'Notificaciones'}
         component={CustomerNotificationStack}

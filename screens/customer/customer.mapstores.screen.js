@@ -34,7 +34,7 @@ export default function CustomerMapStores(props) {
     const watchID = Geolocation.watchPosition((position) => {
      
     });
-    setWatchID(watchID);
+    //setWatchID(watchID);
   }
 
   const getLocation = async() => {

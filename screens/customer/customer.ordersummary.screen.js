@@ -425,7 +425,7 @@ const CustomerOrderSummary = (props) => {
       </View>
 
 
-    <ScrollView contentContainerStyle={{flexGrow:1}}>
+    <ScrollView contentContainerStyle={{flexGrow:1,marginTop:25}}>
      <View style={{width:'93%',alignSelf:'center',marginTop:'8%'}}>
          <View style={{...CommonStyles.flexDirectionRow,...CommonStyles.justifySpaceBetween}}>
          <Text style={{...CommonStyles.fontFamily,fontSize:15}}>Dirección de entrega</Text>

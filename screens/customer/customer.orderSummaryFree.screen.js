@@ -415,7 +415,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
       </View>
       
 
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1,marginTop:25 }}>
 
         <View style={{ width: '93%', alignSelf: 'center', marginTop: '1%' }}>
           <Text style={{ ...CommonStyles.fontFamily, fontSize: 15 }}>
@@ -438,7 +438,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
         <ThinlineSeparator margin={10} />
        
        
-        <View style={{ width: '93%', alignSelf: 'center', marginTop: '1%' }}>
+        <View style={{ width: '93%', alignSelf: 'center', marginTop: '2%' }}>
           <Text style={{ ...CommonStyles.fontFamily, fontSize: 15 }}>
             Información del cliente
           </Text>

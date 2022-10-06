@@ -15,10 +15,10 @@ import { Badge } from '../Badge';
 
 const getIcons = ({focused, color, size, name,count}) => {
   const ICONS = {
-    'Servicios': (
-      <MaterialIcons name='build'  size={28} color={color} />
+    // 'Servicios': (
+    //   <MaterialIcons name='build'  size={28} color={color} />
 
-    ),
+    // ),
     'Autopartes': (
       // <ImgIcon url={require('../../assets/images/iconos/autopartes.png')} />
       <MaterialIcons name='drive-eta'  size={28} color={color} />

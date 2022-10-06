@@ -135,7 +135,7 @@ const CustomerStoreScreen = props => {
               setSelectedCategoryId('products');
             }}
             style={{
-              width: deviceWidth / 2,
+              width: deviceWidth ,
               alignItems: 'center',
               padding: 10,
               borderBottomWidth: 3,
@@ -156,7 +156,7 @@ const CustomerStoreScreen = props => {
               {'Productos'}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
+         {/*  <TouchableOpacity
             onPress={() => {
               setSelectedCategoryId('services');
             }}
@@ -181,7 +181,7 @@ const CustomerStoreScreen = props => {
               }}>
               {'Servicios'}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
  
