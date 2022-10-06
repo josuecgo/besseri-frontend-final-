@@ -137,28 +137,6 @@ const CustomHeaderComponent = props => {
             size={30}
           />
         ) : null}
-        {/* <InputFieldComponent
-          ref={searchRef}
-          onFocus={() =>
-            props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES?.SEARCH,{isService:props.isService,comision})
-          }
-          icon={
-            <Ionicons
-              // style={{marginLeft: 15, left: 6}}
-              color={Colors.white}
-              size={25}
-              name="search"
-            />
-          }
-          keyboardType={KEYBOARD_TYPES.DEFAULT}
-          placeholderText={`Buscar`}
-          secureTextEntry={false}
-          value={searchValue}
-          onChangeText={text => {
-            setSearchValue(text);
-          }}
-          width={'86%'}
-        /> */}
       </View>
     </>
   );

@@ -139,7 +139,7 @@ const ProductCardComponent = ({
         colors={Colors.primaryGradient}
         style={styles.LinearGradient}>
         <Text style={styles.productTitle}>{data?.name}</Text>
-        <Text style={styles.textSub} >{data?.brand?.name} </Text>
+        <Text style={[styles.textSub,{textTransform:'uppercase'}]} >{data?.brand?.name} </Text>
         <View style={styles.productSubTitle} > 
           
           <Text style={[styles.textSub,{textTransform:'uppercase',fontSize:adjust(8)}]} >{data?.maker?.name} </Text>

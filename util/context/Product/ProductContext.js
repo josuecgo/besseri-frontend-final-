@@ -212,7 +212,7 @@ export const ProductProvider = ({children}) => {
                 setLoading(false);
 
             } else {
-
+                
                 const apiCall = await axios.post(customer_api_urls.search_api,{searchText:st});
            
                 if (apiCall?.status == 200) {
@@ -222,6 +222,8 @@ export const ProductProvider = ({children}) => {
                             productos: apiCall.data.Data,
                         }
                     });
+                    console.log({resp:apiCall.data.Data});
+                    filterProduct(apiCall.data.Data)
                 }
                 
                 setLoading(false);

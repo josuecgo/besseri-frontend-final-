@@ -376,16 +376,11 @@ const CustomerCartScreen = (props) => {
                 <View style={styles.detailCard}>
                   
                   <Cupon  />
-                 
-                  {/* {moneda(
-                Number(data?.price) + Number((comision * data?.price) / 100),
-              )} */}
+
                   <DetailItem 
                   label={'Total'}  
                   value={ `${ (totalAmount +  comission * totalAmount / 100 - descuento).toFixed(2)} MXN`} 
-                  // value={moneda( (totalAmount) + (billComission * totalAmount) / 100) - descuento}
                   />
-                  {/* <DetailItem label={'Total Charges'} value={`${Math.round(totalAmount + totalDeliveryFee + (Number(comission) * Number(totalAmount)) / 100)} MXN`} /> */}
                   <Text style={{margin:5}}>Se aplicarán gastos de envío en función del número de kilómetros</Text>
                 </View>
               )
