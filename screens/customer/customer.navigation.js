@@ -38,6 +38,7 @@ import { CreateCardScreen } from './customer.createCard.screen';
 import PrivacyPolicy from '../privacypolicy.screen';
 import { CartScreen } from './Cart/CartScreen';
 import { ChatScreen } from './Chat/ChatScreen';
+import { ProfileScreen } from './ProfileScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -101,6 +102,13 @@ export const PartsServicesFunctionsDrawer = () => {
           headerShown: false,
         }}
       />
+      {/* <Drawer.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.PERFIL}
+        component={ProfileScreen}
+        options={{
+          headerShown: false,
+        }}
+      /> */}
     </Drawer.Navigator>
   );
 }
@@ -268,6 +276,10 @@ export const CustomerHomeStack = () => {
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.CHAT_SCREEN}
         component={ChatScreen}
+      />
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.PERFIL}
+        component={ProfileScreen}
       />
       <Stack.Screen
         name={'LSFS'}

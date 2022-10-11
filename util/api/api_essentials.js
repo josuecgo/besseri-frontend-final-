@@ -6,6 +6,7 @@ export const base_url = env == 'prod' ? 'https://api.besseri.mx' : env == 'dev' 
 export const api_urls = {
     registration:`${base_url}/user/signup`,
     login:`${base_url}/user/login`,
+    delete_user:`${base_url}/user/delete-account`,
     generate_otp:`${base_url}/user/generate-otp`,
     get_order_details:`${base_url}/orders/get-order-details`,
     forget_password:`${base_url}/forgot-password/generatecode`,
@@ -83,7 +84,8 @@ export const customer_api_urls = {
     get_fees:`${base_url}/admin/get-fee`,
     cancel_order:`${base_url}/orders/cancel-user-order`,
     create_payment_sheet_services:`${base_url}/payments/payment-sheet-services`,
-    service_search:`${base_url}/services/search-api`
+    service_search:`${base_url}/services/search-api`,
+   
 }
 export const rider_api_urls = {
     get_details:`${base_url}/rider/get-riderinfo`,

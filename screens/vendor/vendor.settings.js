@@ -133,6 +133,7 @@ const VendorSettingsScreen = ({ navigation }) => {
                     icon={
                         <AntDesign name='logout' color='white' size={20}/>
                     }
+                    label="Cerrar sesión"
                 />
  
 

@@ -47,6 +47,7 @@ const getIcons = ({focused, color, size, name,count}) => {
     'Términos y condiciones': (
       <MaterialIcons name='info'  size={28} color={color} />
     ),
+
   };
   return ICONS[name];
 };
@@ -123,22 +124,38 @@ const CustomDrawerComponent = React.memo((props) => {
         })}
         {
           user ? (
+            <>
             <DrawerItem
-          onPress={async() => {
-            
-            await logout();
-            getNotificaciones()
-            props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS,{reload:true});
-            showToaster('Cerraste sesión')
-          }}
-          label="Logout"
-          activeTintColor={Colors.red}
-          activeBackgroundColor={Colors.primaryColorShade}
-          inactiveTintColor={Colors.red}
-          icon={({focused, size, color}) => (
-            <MaterialIcons size={size} color={color} name="logout" />
-          )}
-        />
+            onPress={async() => {
+              props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PERFIL);
+              
+            }}
+            label="Perfil"
+            activeTintColor={Colors.white}
+            activeBackgroundColor={Colors.primarySolid}
+            // inactiveTintColor={Colors.red}
+            icon={({focused, size, color}) => (
+              <MaterialIcons size={size} color={color} name="account-circle" />
+            )}
+            focused={focusedRoute === CUSTOMER_HOME_SCREEN_ROUTES.PERFIL}
+            />
+            <DrawerItem
+            onPress={async() => {
+              
+              await logout();
+              getNotificaciones()
+              props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS,{reload:true});
+              showToaster('Cerraste sesión')
+            }}
+            label="Logout"
+            activeTintColor={Colors.red}
+            activeBackgroundColor={Colors.primaryColorShade}
+            inactiveTintColor={Colors.red}
+            icon={({focused, size, color}) => (
+              <MaterialIcons size={size} color={color} name="logout" />
+            )}
+            />
+            </>
         ):(
           <DrawerItem
           onPress={async() => {

@@ -43,7 +43,7 @@ export const ProductImg = ({imgs}) => {
                 <Image
                 source={{uri: `${base_url}/${item?.path}`}}
                 style={styles.productImg}
-                alt="Alternate Text"
+                alt=""
                 resizeMode="contain"
                 /> 
             </TouchableOpacity>

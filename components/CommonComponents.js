@@ -74,7 +74,7 @@ export const MenuItem = props => {
         }}>
         <View style={styles.iconWrapper}>{props.icon}</View>
         <Text style={styles.label}>
-          {props?.logoutBtn ? 'Sign Out' : props.label}
+          {props?.logoutBtn ? props.label : props.label}
         </Text>
       </View>
       <Text style={styles.value}>{props.value}</Text>

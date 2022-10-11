@@ -170,7 +170,7 @@ export const ProductProvider = ({children}) => {
             if (valueMaker.length > 0) {
                 
                
-                const apiCall = await axios.get(`${vendor_api_urls.get_models}/${id}`,);
+                const apiCall = await axios.get(`${vendor_api_urls.get_models}/${id}`);
                 
                 if (apiCall?.status == 200) {
                     setModelo(apiCall.data.data);

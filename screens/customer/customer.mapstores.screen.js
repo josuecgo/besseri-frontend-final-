@@ -66,8 +66,8 @@ export default function CustomerMapStores(props) {
   const getStores = async(location) => {
     try {
       const apiCall = await axios.post(`${customer_api_urls.get_stores}`,{
-        startlat:location?.latitude,
-        startlng:location?.longitude,
+        startlat:location?.latitude || 19.485297844903283,
+        startlng:location?.longitude || -99.22777616792496,
         
         range:30
       });
@@ -100,8 +100,8 @@ export default function CustomerMapStores(props) {
         style={styles.map}
         //specify our coordinates.
         initialRegion={{
-          latitude:19.485297844903283,
-          longitude: -99.22777616792496,
+          latitude:location?.latitude || 19.485297844903283,
+          longitude: location?.longitude || -99.22777616792496,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}

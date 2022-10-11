@@ -129,7 +129,8 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   METODO: 'Metodo de pago',
   CARDS: 'Tarjetas',
   CREATE_CARD: 'Guardar Tarjeta',
-  CHAT_SCREEN: 'Chat Screen'
+  CHAT_SCREEN: 'Chat Screen',
+  PERFIL: 'Perfil'
 };
 
 export const BOTTOM_TAB_RIDER_ROUTES = {

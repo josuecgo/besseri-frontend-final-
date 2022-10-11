@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import Colors from './colors';
 
 const CommonStyles = StyleSheet.create({
   flexOneCenter: {
@@ -33,6 +34,11 @@ const CommonStyles = StyleSheet.create({
   },
   fontWeight300:{
     fontWeight:'300'
+  },
+  headerTitle:{
+    fontSize:18,
+    fontWeight:'bold',
+    color:Colors.white
   }
 });
 
