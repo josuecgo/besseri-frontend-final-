@@ -5,19 +5,36 @@ import { ButtonIconoInput } from '../button/ButtonIconoInput'
 import Colors from '../../util/styles/colors'
 import { useContext } from 'react'
 import { ChatContext } from '../../util/context/Chat/ChatContext'
+import { useState } from 'react'
 
-export const SendMessage = () => {
-    const { chatState, getMensajes } = useContext(ChatContext);
+export const SendMessage = (props) => {
+    const { enviarMensaje,mensaje,setMensaje,sending } = useContext(ChatContext);
+    
+
+    const sendMessage = () => {
+        if (mensaje) {
+            enviarMensaje({...props,mensaje})
+           
+        }else{
+            // console.log('vacio');
+        }
+        
+    }
+
+    
+    const handleChange = text => setMensaje(text);
+
     return (
         <View style={styles.content} >
-        <Input 
-        mx="3" 
-        placeholder="Mensaje" 
-        w="75%" 
-        maxWidth="300px" 
-        />
+            <Input 
+            mx="3" 
+            placeholder="Mensaje" 
+            w="75%" 
+            maxWidth="300px" 
+            onChangeText={handleChange}
+            />
 
-        <ButtonIconoInput name={'send'}  size={20} />
+            <ButtonIconoInput name={'send'}  size={20} onPress={sendMessage} sending={sending} />
         </View>
     )
 }

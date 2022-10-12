@@ -182,8 +182,8 @@ const CustomerProductDetailScreen = (props) => {
 
             <TouchableOpacity
             onPress={() => {
-                //props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.CHAT_SCREEN,product)
-                Linking.openURL(`mailto:${business?.email}`);
+                props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.CHAT_SCREEN,product)
+                // Linking.openURL(`mailto:${business?.email}`);
             }}
             style={{
               marginVertical:10,

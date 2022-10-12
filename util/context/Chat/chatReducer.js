@@ -45,7 +45,11 @@ export const chatReducer = ( state, action ) => {
                 ...state,
                 mensajes: [ ...action.payload ]
             }
-    
+        case 'enviando':
+            return {
+                ...state,
+                sending: action.payload 
+            }
         default:
             return state;
     }

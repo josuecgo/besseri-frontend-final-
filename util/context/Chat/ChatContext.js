@@ -1,7 +1,9 @@
-import { types } from '@babel/core';
+
 import axios from 'axios';
-import React, { createContext, useReducer } from 'react';
-import { api_urls, vendor_api_urls } from '../../api/api_essentials';
+import React, { createContext, useReducer,useState } from 'react';
+
+import { api_urls } from '../../api/api_essentials';
+import { showToaster } from '../../constants';
 import { getUserId } from '../../local-storage/auth_service';
 import { chatReducer } from './chatReducer';
 
@@ -13,71 +15,80 @@ const initialState = {
     chatActivo: null, // UID del usuario al que yo quiero enviar mensajes
     usuarios: [], // Todos los usuarios de la base datos
     mensajes: [], // El chat seleccionado
+    sending:false
+
+
 }
 
 
 export const ChatProvider = ({ children }) => {
 
     const [ chatState, dispatch ] = useReducer(chatReducer, initialState);
+    const [mensaje, setMensaje] = useState('');
 
+    const getMensajes = async(de,room) => {
+        try {
+            const id = await getUserId();
+           
+            const apiCall = await axios.post(`${api_urls.getMessage}/${id}`,{
+                    de,
+                    room
+            }   
+            );
 
-    const getMensajes = async(de) => {
-        // try {
-            // const id = await getUserId();
-        
-            // const apiCall = await axios.get(`${api_urls.getMessage}/${id}`,{
-            //     data:{
-            //         de
-            //     },
-            //     params:{
-            //         de
-            //     }
-            // }   
-            // );
+            dispatch({
+                type:'cargarMensajes',
+                payload:apiCall?.data.data
+            })
 
-            
-            // dispatch({
-            //     type:'cargarMensajes',
-            //     payload:apiCall?.data.data
-            // })
-            // dispatch({
-            //     type:'cargarMensajes',
-            //     payload:apiCall?.data.data
-            // })
-        // } catch (error) {
-            // console.log(error?.response?.data);
-        // }
+        } catch (error) {
+            console.log(error?.response?.data);
+        }
     }
 
-    const enviarMensaje = async(para) => {
-        // try {
-        //     const id = await getUserId();
-        
-        //     const apiCall = await axios.post(`${api_urls.getMessage}/${id}`,{
-        //         data:{
-        //             de
-        //         },
-        //         params:{
-        //             de
-        //         }
-        //     }   
-        //     );
+    const enviarMensaje = async({para,idProduct}) => {
+        try {
+            const id = await getUserId();
+            dispatch({
+                type:'enviando',
+                payload:true
+            })
+            const apiCall = await axios.post(`${api_urls.create_message}`,{
+                para,
+                de:id,
+                room:idProduct,
+                mensaje
+            }   
+            );
+            setMensaje('')
+            
+            if (apiCall?.data?.success) {
+                getMensajes(para,idProduct)
+                setMensaje('')
+            }
+            dispatch({
+                type:'enviando',
+                payload:false
+            })
 
-        //     dispatch({
-        //         type:'cargarMensajes',
-        //         payload:apiCall?.data.data
-        //     })
-
-        // } catch (error) {
-        //     // console.log(error?.response?.data);
-        // }
+        } catch (error) {
+            // console.log(error?.response?.data);
+            showToaster('No hay conexion :(');
+            setMensaje('')
+            dispatch({
+                type:'enviando',
+                payload:false
+            })
+        }
     }
 
     return (
         <ChatContext.Provider value={{
-            chatState,
+            ...chatState,
             dispatch,
-            getMensajes
+            getMensajes,
+            enviarMensaje,
+            mensaje, setMensaje
         }}>
             { children }
         </ChatContext.Provider>
