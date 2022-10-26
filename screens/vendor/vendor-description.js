@@ -8,9 +8,8 @@ import { ListProducts } from '../../components/Vendor/ListProducts';
 export const VendorDescription = ({route}) => {
    
     const {chargeId,storePickup,products,user} = route.params?.order;
-    const order =  route.params;
+    const order =  route.params.order;
    
-    
     return (
         <View style={styles.container} >
             <HeaderTitle 
