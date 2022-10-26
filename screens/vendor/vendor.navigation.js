@@ -34,6 +34,7 @@ import { Badge } from '../../components/Badge';
 import { NotificationContext } from '../../util/context/NotificationContext';
 import { HomeScreen } from './vendor-home.screen';
 import { CrearEditCuponScreen } from './Cupon/CrearEditCuponScreen';
+import { VendorDescription } from './vendor-description';
 export const VendorNavigation = () => {
 
   const {count} = useContext(NotificationContext);
@@ -213,6 +214,13 @@ const NotificationNavigator = () => {
            headerShown: false,
          }}
       />
+      <NotificationStack.Screen
+        name={VENDOR_DETAILS_ROUTES.DESCRIPTION}
+        component={VendorDescription}
+        options={{
+          headerShown: false,
+        }}
+      />
      
     </NotificationStack.Navigator>
   );
@@ -302,9 +310,16 @@ const OrderNavigator = () => {
           headerShown: false,
         }}
       />
-       <OrderStack.Screen
+      <OrderStack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.BOOKING_DETAIL}
         component={VendorBookingDetail}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <OrderStack.Screen
+        name={VENDOR_DETAILS_ROUTES.DESCRIPTION}
+        component={VendorDescription}
         options={{
           headerShown: false,
         }}

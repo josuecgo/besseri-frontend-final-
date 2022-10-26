@@ -156,7 +156,7 @@ const VendorDashboardScreen = ({ navigation, route }) => {
 
    
  
-
+    // console.log(notificaciones);
     
     return (
         <VendorScreenContainerComponent
@@ -193,25 +193,28 @@ const VendorDashboardScreen = ({ navigation, route }) => {
             <View>
               
                 {
-                    notificaciones && notificaciones?.length > 0 ? ( notificaciones.map((item,index) => {
+                    notificaciones && (
+                        notificaciones?.length > 0 ? ( notificaciones.map((item,index) => {
+                            
+                            return (
+                                <View key={item._id} style={[styles.card,{backgroundColor: item?.isView ?  Colors.white :  '#E8F1FE'}]} >
+                                    <TouchableOpacity  
+                                onPress={() => orderDetail(item?.body._id,item?.body.orderId,item)} 
+                                activeOpacity={0.2}
+                                >
+                                    <NotificationCard item={item} navigation={navigation} orderDetail={orderDetail} />
+                                </TouchableOpacity>
+                                </View>
+                            )
                         
-                        return (
-                            <View key={item._id} style={[styles.card,{backgroundColor: item?.isView ?  Colors.white :  '#E8F1FE'}]} >
-                                 <TouchableOpacity  
-                              onPress={() => orderDetail(item?.body._id,item?.body.orderId,item)} 
-                              activeOpacity={0.2}
-                              >
-                                <NotificationCard item={item} navigation={navigation} orderDetail={orderDetail} />
-                              </TouchableOpacity>
+                        })
+                        ) : (
+                            <View>
+                                <NotificationEmpty/>
                             </View>
                         )
-                       
-                    })
-                    ) : (
-                        <View>
-                            <NotificationEmpty/>
-                        </View>
                     )
+                    
                 }
 
             </View>

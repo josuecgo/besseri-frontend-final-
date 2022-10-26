@@ -1,7 +1,7 @@
-export const env = 'prod';
+export const env = 'dev';
 
-// export const base_url = env == 'prod' ? 'https://api.besseri.mx' : env == 'dev' ?  'https://besseri-apis.herokuapp.com' : 'http://192.168.10.10:5001';
-export const base_url = false ? 'http://192.168.100.72:3005' : 'http://192.168.1.17:3005'
+export const base_url = env == 'prod' ? 'https://api.besseri.mx' : env == 'dev' ?  'http://192.168.1.7:3005' : 'http://192.168.10.10:5001';
+// export const base_url = false ? 'http://192.168.100.72:3005' : 'http://192.168.1.17:3005'
 
 export const api_urls = {
     registration:`${base_url}/user/signup`,
@@ -17,6 +17,7 @@ export const api_urls = {
     createAccountOpenpay:`${base_url}/openpay/create-openpay`,
     getMessage: `${base_url}/chat/get-msg`,
     create_message:`${base_url}/chat/create-msg`,
+    get_chats:`${base_url}/chat/get-chats`,
 }
 export const paymentApis = {
     refundPayment:`${base_url}/payments/refund-amount`,

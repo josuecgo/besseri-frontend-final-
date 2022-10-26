@@ -13,7 +13,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { moneda } from '../util/Moneda';
 
 export const NotificationCard = ({item,orderDetail}) => {
-  const {_id,orderId} = item?.body;
+  const {_id} = item?.body;
   const [order, setOrder] = useState([]);
   const [orderStatus, setOrderStatus] = useState([])
   const [loading, setLoading] = useState(false);

@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-import React, { createContext, useReducer,useState } from 'react';
+import React, { createContext, useEffect, useReducer,useState } from 'react';
 
 import { api_urls } from '../../api/api_essentials';
 import { showToaster } from '../../constants';
@@ -15,8 +15,8 @@ const initialState = {
     chatActivo: null, // UID del usuario al que yo quiero enviar mensajes
     usuarios: [], // Todos los usuarios de la base datos
     mensajes: [], // El chat seleccionado
-    sending:false
-
+    sending:false,
+    chats:false
 
 }
 
@@ -82,13 +82,36 @@ export const ChatProvider = ({ children }) => {
         }
     }
 
+    const getChats = async() =>  {
+        const id = await getUserId();
+        const apiCall = await axios.get(`${api_urls.get_chats}/${id}`);
+
+        console.log(apiCall.status);
+        if (apiCall.status === 200) {
+            dispatch({
+                type:'chats',
+                payload:apiCall?.data.data
+            }) 
+        }
+
+       
+        
+    }
+
+    // useEffect(() => {
+    //     getChats()
+    // }, [])
+    
+
     return (
         <ChatContext.Provider value={{
             ...chatState,
             dispatch,
             getMensajes,
             enviarMensaje,
-            mensaje, setMensaje
+            mensaje, 
+            setMensaje,
+            getChats
         }}>
             { children }
         </ChatContext.Provider>

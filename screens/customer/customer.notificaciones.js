@@ -1,17 +1,13 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet, Image, ScrollView, Platform, PermissionsAndroid, FlatList } from 'react-native';
-import ProductListing from '../../components/customer-components/ProductsListing.component';
+import React, {  useContext,  useState } from 'react';
+import {  TouchableOpacity, View, StyleSheet, ScrollView } from 'react-native';
+
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
-import Geolocation from '@react-native-community/geolocation';
-import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../util/constants';
+import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants';
 import axios from 'axios';
-import {  api_urls, customer_api_urls } from '../../util/api/api_essentials';
-import { deleteNotification, getNotification, getUser, getUserId } from '../../util/local-storage/auth_service';
+import {  api_urls } from '../../util/api/api_essentials';
 
-import { adjust, deviceWidth } from '../../util/Dimentions';
 import { NotificationContext } from '../../util/context/NotificationContext';
-import TopCircleComponent from '../../components/top-circle/top-circle.component';
 import { NotificationCard } from '../../components/NotificationCard';
 import { NotificationEmpty } from '../../components/NotificationEmpty';
 

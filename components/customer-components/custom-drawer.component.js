@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 
 import Colors from '../../util/styles/colors';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
-import {CUSTOMER_HOME_SCREEN_ROUTES , LOGIN_SIGNUP_FORGOT_ROUTES, showToaster} from '../../util/constants';
+import {CUSTOMER_HOME_SCREEN_ROUTES , LOGIN_SIGNUP_FORGOT_ROUTES, MAIN_ROUTES, showToaster} from '../../util/constants';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { getUser, logout } from '../../util/local-storage/auth_service';
@@ -46,6 +46,9 @@ const getIcons = ({focused, color, size, name,count}) => {
     ),
     'Términos y condiciones': (
       <MaterialIcons name='info'  size={28} color={color} />
+    ),
+    'Perfil': (
+      <MaterialIcons name='account-circle'  size={28} color={color} />
     ),
 
   };
@@ -91,7 +94,7 @@ const CustomDrawerComponent = React.memo((props) => {
   
   return (
     <DrawerContentScrollView >
-      <HeaderBackground/>
+      <HeaderBackground />
       <View style={[styles.header]}>
         {/* <View style={[CommonStyles.flexDirectionColumn]}> */}
           <View style={styles.topDataHeader}>
@@ -105,6 +108,9 @@ const CustomDrawerComponent = React.memo((props) => {
 
       <View style={{paddingHorizontal:  0}}>
         {props.state.routeNames.map(name => {
+          if (name === 'Perfil' && !user) {
+            return 
+          }
           return (
             <DrawerItem
               key={name}
@@ -125,36 +131,38 @@ const CustomDrawerComponent = React.memo((props) => {
         {
           user ? (
             <>
-            <DrawerItem
-            onPress={async() => {
-              props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PERFIL);
-              
-            }}
-            label="Perfil"
-            activeTintColor={Colors.white}
-            activeBackgroundColor={Colors.primarySolid}
-            // inactiveTintColor={Colors.red}
-            icon={({focused, size, color}) => (
-              <MaterialIcons size={size} color={color} name="account-circle" />
-            )}
-            focused={focusedRoute === CUSTOMER_HOME_SCREEN_ROUTES.PERFIL}
-            />
-            <DrawerItem
-            onPress={async() => {
-              
-              await logout();
-              getNotificaciones()
-              props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS,{reload:true});
-              showToaster('Cerraste sesión')
-            }}
-            label="Logout"
-            activeTintColor={Colors.red}
-            activeBackgroundColor={Colors.primaryColorShade}
-            inactiveTintColor={Colors.red}
-            icon={({focused, size, color}) => (
-              <MaterialIcons size={size} color={color} name="logout" />
-            )}
-            />
+        
+              {/* <DrawerItem
+              onPress={async() => {
+                props.navigation.navigate(MAIN_ROUTES.CHATSCREEN);
+                
+              }}
+              label="Chat"
+              activeTintColor={Colors.white}
+              activeBackgroundColor={Colors.primarySolid}
+              // inactiveTintColor={Colors.red}
+              icon={({focused, size, color}) => (
+                <MaterialIcons size={size} color={color} name="chat" />
+              )}
+              focused={focusedRoute === 'Chats'}
+              labelStyle={{fontSize:adjust(10)}}
+              /> */}
+              <DrawerItem
+              onPress={async() => {
+                
+                await logout();
+                getNotificaciones()
+                props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS,{reload:true});
+                showToaster('Cerraste sesión')
+              }}
+              label="Logout"
+              activeTintColor={Colors.red}
+              activeBackgroundColor={Colors.primaryColorShade}
+              inactiveTintColor={Colors.red}
+              icon={({focused, size, color}) => (
+                <MaterialIcons size={size} color={color} name="logout" />
+              )}
+              />
             </>
         ):(
           <DrawerItem
@@ -162,7 +170,7 @@ const CustomDrawerComponent = React.memo((props) => {
            
             await logout();
             getNotificaciones()
-            props.navigation.replace('AuthStack');
+            props.navigation.navigate('AuthStack');
           }}
           label="Iniciar sesión"
           activeTintColor={Colors.terciarySolid}
@@ -182,13 +190,15 @@ const CustomDrawerComponent = React.memo((props) => {
 const styles = StyleSheet.create({
   header: { 
     width: deviceWidth,
-    height:Platform.OS == 'ios' ? deviceHeight * 0.10 : deviceHeight * 0.10,
+    height:Platform.OS == 'ios' ? deviceHeight * 0.13 : deviceHeight * 0.10,
    
-     paddingHorizontal: 10,
-    // borderWidth: 1,
-    // borderColor: Colors.primaryColor,
-     //backgroundColor: Colors.primaryColor,
-    // ...CommonStyles.horizontalCenter,
+    // paddingHorizontal: 10,
+    justifyContent:'center',
+    
+    // backgroundColor:'red',
+    marginHorizontal:10,
+    alignItems:'flex-start'
+    
  
 
     
@@ -199,7 +209,7 @@ const styles = StyleSheet.create({
     color: Colors.white,
   },
   email: {
-    fontSize: adjust(12),
+    fontSize: adjust(11),
     color: Colors.lightGreen,
     fontStyle: 'italic',
   },

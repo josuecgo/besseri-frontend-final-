@@ -251,63 +251,63 @@ export const ProductProvider = ({children}) => {
     
 
     useEffect(() => {
-        // const cancelToken = axios.CancelToken;
-        // const source = cancelToken.source();
+        const cancelToken = axios.CancelToken;
+        const source = cancelToken.source();
         getCategorias()
-        // return () => {  
-        //     // abortController.abort();  
-        //     source.cancel();
-        // }  
+        return () => {  
+            // abortController.abort();  
+            source.cancel();
+        }  
        
     }, [])
     
     useEffect(() => {
-        // const CancelToken = axios.CancelToken;
-        // const source = CancelToken.source(); 
+        const CancelToken = axios.CancelToken;
+        const source = CancelToken.source(); 
         getProducts()
-        // return () => {  
-        //     source.cancel();
-        // }  
+        return () => {  
+            source.cancel();
+        }  
        
     }, [])
 
     useEffect(() => {
-        // let abortController = new AbortController();
+        let abortController = new AbortController();
         if (!state?.comision) {
             
             getComision()
         }
         
-        // return () => {  
-        //     abortController.abort();  
-        // } 
+        return () => {  
+            abortController.abort();  
+        } 
     }, [state?.comision])
 
     useEffect(() => {
-        // let abortController = new AbortController();
+        let abortController = new AbortController();
         getMarcas();
-        // return () => {  
-        //     abortController.abort();  
-        // } 
+        return () => {  
+            abortController.abort();  
+        } 
     }, [])
 
     useEffect(() => {
-        // let abortController = new AbortController();
+        let abortController = new AbortController();
         getServices();
-        // return () => {  
-        //     abortController.abort();  
-        // } 
+        return () => {  
+            abortController.abort();  
+        } 
     }, [])
     
     useEffect(() => {
-        // let abortController = new AbortController();
+        let abortController = new AbortController();
         if (valueMaker) {
 
             getModelo(valueMaker); 
         }
-        // return () => {  
-        //     abortController.abort();  
-        // } 
+        return () => {  
+            abortController.abort();  
+        } 
     }, [valueMaker])
     
 

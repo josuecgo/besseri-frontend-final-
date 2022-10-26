@@ -21,13 +21,12 @@ import CustomerServiceBook from './customer.servicebook.screen';
 import CustomerBookingDetail from './customer.bookingDetail.screen';
 
 import CustomerProductDetailScreen from './customer.productdetail.screen';
-import { iniciar } from './customer.iniciar.screen';
+
 import LoginScreen from '../login.screen';
 import SignUpScreen from '../sign-up.screen';
 import SignUpScreenCustomer from '../sign-up.screen-customer';
 import { OrderSuccessful } from './customer.order-successful';
 import { SearchScreen } from './SearchScreen';
-import { LSFS } from '../login.navigation';
 import { CustomerNotificationViewScreen } from './customer.notificaciones';
 import { NotificationContext } from '../../util/context/NotificationContext';
 import { EnvioScreen } from './customer.envio.screen';
@@ -74,10 +73,6 @@ export const PartsServicesFunctionsDrawer = () => {
         component={CustomerNotificationStack}
       />
 
-      {/* <Drawer.Screen
-        name={'Mis Tarjetas'}
-        component={CardsNavigator}
-      /> */}
 
       <Drawer.Screen
         name={'Mi dirección'}
@@ -102,13 +97,15 @@ export const PartsServicesFunctionsDrawer = () => {
           headerShown: false,
         }}
       />
-      {/* <Drawer.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.PERFIL}
+      <Drawer.Screen
+        name={'Perfil'}
         component={ProfileScreen}
         options={{
           headerShown: false,
         }}
-      /> */}
+      />
+      
+      
     </Drawer.Navigator>
   );
 }
@@ -256,10 +253,10 @@ export const CustomerHomeStack = () => {
         component={CustomerServicesViewScreen}
       />
 
-      <Stack.Screen
+      {/* <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.INICIAR}
         component={iniciar}
-      />
+      /> */}
       <Stack.Screen
         name={LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN}
         component={LoginScreen}
@@ -281,10 +278,10 @@ export const CustomerHomeStack = () => {
         name={CUSTOMER_HOME_SCREEN_ROUTES.PERFIL}
         component={ProfileScreen}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name={'LSFS'}
         component={LSFS}
-      />
+      /> */}
     </Stack.Navigator>
   );
 };

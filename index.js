@@ -17,7 +17,7 @@ moment.locale('es')
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: function (token) {
-    // console.log("TOKEn:", token);
+    console.log("TOKEn:", token);
     
   },
   // (required) Called when a remote is received or opened, or local notification is opened

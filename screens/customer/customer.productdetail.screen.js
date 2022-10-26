@@ -51,12 +51,17 @@ const CustomerProductDetailScreen = (props) => {
        setBusiness(businessDetailsAPi.data.data.store);
        
      } else {
-       showToaster('Algo salio mal')
+       showToaster('Algo salio mal code 1')
      }
     } catch(e) {
-        showToaster('Algo salio mal')
+        // showToaster('No se pudo traer informacion del vendedor')
+        console.log('No se pudo traer informacion del vendedor');
+        
     }
   }
+
+
+  
   useEffect(() => {
     getBusinessDetails()
   },[]);
@@ -79,6 +84,7 @@ const CustomerProductDetailScreen = (props) => {
   };
 
   
+
   return (
     <>
         <View style={{flex:1,backgroundColor:Colors.bgColor}}>
@@ -182,8 +188,8 @@ const CustomerProductDetailScreen = (props) => {
 
             <TouchableOpacity
             onPress={() => {
-                props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.CHAT_SCREEN,product)
-                // Linking.openURL(`mailto:${business?.email}`);
+                // props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.CHAT_SCREEN,product)
+                Linking.openURL(`mailto:${business?.email}`);
             }}
             style={{
               marginVertical:10,

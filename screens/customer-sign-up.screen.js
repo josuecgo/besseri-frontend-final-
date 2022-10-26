@@ -27,7 +27,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 const CREDENTIAL_KEYS = {
-  FULL_NAME: 'Nombre completo',
+  FULL_NAME: 'Nombre',
+  LASTNAME: 'Apellidos',
   EMAIL_ADDRESS: 'Dirección de correo electrónico',
   PHONE_NUMBER: 'Número de teléfono',
   PASSWORD: 'Contraseña',
@@ -40,6 +41,7 @@ const CustomerSignUpScreen = ({navigation}) => {
   const [showLoader,setShowLoader] = useState(false);
   const [userCredentials, setUserCredentials] = useState({
     [CREDENTIAL_KEYS.FULL_NAME]: '',
+    [CREDENTIAL_KEYS.LASTNAME]: '',
     [CREDENTIAL_KEYS.EMAIL_ADDRESS]: '',
     [CREDENTIAL_KEYS.PHONE_NUMBER]: '',
     [CREDENTIAL_KEYS.PASSWORD] : '',
@@ -48,6 +50,7 @@ const CustomerSignUpScreen = ({navigation}) => {
   const [isSelected, setIsSelected] = useState(false);
   const [showPass, setShowPass] = useState(true);
   const [showPass2, setShowPass2] = useState(true);
+  const lastnameRef = useRef();
   const emailAddressRef = useRef();
   const phoneNumberRef = useRef();
   const passwordRef = useRef();
@@ -70,7 +73,7 @@ const CustomerSignUpScreen = ({navigation}) => {
       const url = api_urls.generate_otp;
       const body = {
         email: userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS],
-        name: userCredentials[CREDENTIAL_KEYS.FULL_NAME],
+        name: userCredentials[CREDENTIAL_KEYS.FULL_NAME] + ' ' + userCredentials[CREDENTIAL_KEYS.LASTNAME],
         phone: userCredentials[CREDENTIAL_KEYS.PHONE_NUMBER],
         password: userCredentials[CREDENTIAL_KEYS.PASSWORD],
         isCommonUser:true,
@@ -96,7 +99,18 @@ const CustomerSignUpScreen = ({navigation}) => {
   }
 
   const generateOtp = async () => {
-    if (comparaText(userCredentials[CREDENTIAL_KEYS.CONFIRMPASSWORD],userCredentials[CREDENTIAL_KEYS.PASSWORD]) && userCredentials[CREDENTIAL_KEYS.PASSWORD].length > 0) {
+    let validPhone = userCredentials[CREDENTIAL_KEYS.PHONE_NUMBER].length > 9
+    let validName = userCredentials[CREDENTIAL_KEYS.FULL_NAME].length > 0 && userCredentials[CREDENTIAL_KEYS.LASTNAME].length > 0
+    let valid = comparaText(userCredentials[CREDENTIAL_KEYS.CONFIRMPASSWORD],userCredentials[CREDENTIAL_KEYS.PASSWORD]) && userCredentials[CREDENTIAL_KEYS.PASSWORD].length > 0;
+    if (!validPhone) {
+      showToaster('Introduce un numero correcto');
+      return
+    }
+    if (!validName) {
+      showToaster('Introduce tu nombre y apellido(s)');
+      return
+    }
+    if (valid) {
       if (isSelected) {
         Alert.alert(
           "Código de verificación",
@@ -178,8 +192,21 @@ const CustomerSignUpScreen = ({navigation}) => {
             placeholderText={CREDENTIAL_KEYS.FULL_NAME}
             secureTextEntry={false}
             value={userCredentials[CREDENTIAL_KEYS.FULL_NAME]}
+            nextFieldRef={lastnameRef}
+            returnType="next"
+          />
+          <InputFieldComponent
+            // icon={<Ionicons color={Colors.dark} size={20} name="person" />}
+            keyboardType={KEYBOARD_TYPES.DEFAULT}
+            onChangeText={inputText => {
+              onChangeText(inputText, CREDENTIAL_KEYS.LASTNAME);
+            }}
+            placeholderText={CREDENTIAL_KEYS.LASTNAME}
+            
+            value={userCredentials[CREDENTIAL_KEYS.LASTNAME]}
             nextFieldRef={emailAddressRef}
             returnType="next"
+            ref={lastnameRef}
           />
           <InputFieldComponent
             
@@ -195,7 +222,6 @@ const CustomerSignUpScreen = ({navigation}) => {
             returnType="next"
           />
           <InputFieldComponent
-           
             keyboardType={KEYBOARD_TYPES.PHONE_PAD}
             onChangeText={inputText => {
               onChangeText(inputText, CREDENTIAL_KEYS.PHONE_NUMBER);

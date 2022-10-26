@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import CommonStyles from '../../util/styles/styles';
 import Colors from '../../util/styles/colors';
-import {ORDER_STATUSES, SCREEN_HORIZONTAL_MARGIN, showToaster, STATUSES_COLORS, STATUS_LABELS} from '../../util/constants';
+import {ORDER_STATUSES, SCREEN_HORIZONTAL_MARGIN, showToaster, STATUSES_COLORS, STATUS_LABELS, VENDOR_DETAILS_ROUTES} from '../../util/constants';
 import DropDownPicker from 'react-native-dropdown-picker';
 import ButtonComponent from '../../components/button/button.component';
 import OrderProductItemComponent from '../../components/vendor-shared/order-product-item.component';
@@ -212,7 +212,6 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
  
   
   
-  
   return (
     <ScrollView contentContainerStyle={{flexGrow: 1}}>
       <LoaderComponent isVisible={loading} />
@@ -308,7 +307,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
                   CommonStyles.fontFamily,
                   styles.customerHeading,
                 ]}>
-                {order?.delivery_address?.phone}
+                {order?.delivery_address?.phone ? order?.delivery_address?.phone : order?.user.phone}
               </Text>
               <Text style={[styles.customerHeading, CommonStyles.fontFamily]}>
                 Costo
@@ -326,14 +325,17 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
 
 
           <View>
-            <Text
-              style={[
-                CommonStyles.fontFamily,
-                styles.customerHeading,
-                {marginVertical: 10},
-              ]}>
-              Detalles del pedido
-            </Text>
+            <TouchableOpacity onPress={() => navigation.navigate(VENDOR_DETAILS_ROUTES.DESCRIPTION,{order})} >
+              <Text
+                style={[
+                  CommonStyles.fontFamily,
+                  styles.customerHeading,
+                  {marginVertical: 10,textDecorationLine:'underline'},
+                ]}>
+                Detalles del pedido
+              </Text>
+            </TouchableOpacity>
+            
 
             <View style={[CommonStyles.flexDirectionRow, styles.mbTen]}>
               <CustomText text="Imagen" />
@@ -541,7 +543,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   customerHeading: {
-    fontSize: 18,
+    fontSize: adjust(15),
+    
   },
   customerSubText: {
     opacity: 0.5,

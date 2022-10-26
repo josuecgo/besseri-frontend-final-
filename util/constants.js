@@ -23,7 +23,8 @@ export const MAIN_ROUTES = {
   AUTH_STACK:'AuthStack',
   VENDOR_STACK:'VendorStack',
   CUSTOMER_STACK:'CustomerStack',
-  RIDER_STACK:'RiderStack'
+  RIDER_STACK:'RiderStack',
+  CHATSCREEN : 'Chats'
 }
 
 export const ROLES = {
@@ -55,7 +56,8 @@ export const VENDOR_DETAILS_ROUTES = {
   VENDOR_EDIT_PROFILE:'Vendor Edit Profile',
   CREATE_PRODUCT:'Create Product',
   CREATE_SERVICE:'Create Service',
-  BUSINESS_LOCATION:'Business Location'
+  BUSINESS_LOCATION:'Business Location',
+  DESCRIPTION:'Description'
 };
 
 export const CUPON_ROUTES = {
@@ -124,7 +126,7 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   SEARCH:'Search',
   PRODUCT_DETAIL:'Product detail',
   ORDER_STACK:'ORDER_STACK',
-  INICIAR:'Iniciar',
+  INICIAR:'AuthStack',
   ENVIO: 'Envio',
   METODO: 'Metodo de pago',
   CARDS: 'Tarjetas',

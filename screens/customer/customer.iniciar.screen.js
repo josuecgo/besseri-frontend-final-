@@ -18,7 +18,8 @@ export const iniciar = (props) => {
     }
 
     const goSignIn = () => {
-        props.navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.SIGN_UP_CUSTOMER);
+        props.navigation.navigate('AuthStack');
+        // props.navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.SIGN_UP_CUSTOMER);
     }
 
 

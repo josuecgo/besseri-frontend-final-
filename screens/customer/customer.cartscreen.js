@@ -163,9 +163,10 @@ const CustomerCartScreen = (props) => {
          showToaster('No puedes hacer pedidos en esta tienda en este momento.')
          
        }
-    } else {
-      // console.log('click');
-      props.navigation.navigate('LSFS',{customer:true})
+    } else {  
+      console.log('clicks');
+      // props.navigation.navigate('AuthStack',{customer:true})
+      props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR)
     }
   }
 

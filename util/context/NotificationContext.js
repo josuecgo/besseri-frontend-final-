@@ -1,9 +1,7 @@
 import axios from "axios";
 import React,{ createContext, useEffect, useReducer,useState } from "react";
 import {
-
   Platform,
-
 } from 'react-native';
 import { api_urls } from "../api/api_essentials";
 import { showToaster } from "../constants";
@@ -221,13 +219,14 @@ export const NotificationProvider = ({children}) => {
     });
   
     const onRemoteNotification = (notification) => {
-      const isClicked = notification.getData().userInteraction === 1;
+        getNotificaciones();
+      // const isClicked = notification.getData().userInteraction === 1;
       
-      if (isClicked) {
-        getNotificaciones();
-      } else {
-        getNotificaciones();
-      }
+      // if (isClicked) {
+      //   getNotificaciones();
+      // } else {
+      //   getNotificaciones();
+      // }
     };
 
 
