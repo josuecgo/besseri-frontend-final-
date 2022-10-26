@@ -10,9 +10,9 @@ export const ListItemProduct = (props) => {
         quantity,name,price,
         description,productImg,brand,
         estimatedDelivery,condition,
-        category,subCategory
-    } = props?.item
-
+        category,subCategory,maker,model
+    } = props?.item;
+    
     return (
         <View style={styles.contain} >
             <View style={styles.header} >
@@ -50,6 +50,18 @@ export const ListItemProduct = (props) => {
                 fd='row'
                 />
                 
+            </View>
+            <View style={styles.middle} >
+                <DescriptionOrder 
+                tipo="Auto:"
+                value={maker?.name}  
+                
+                />
+                <DescriptionOrder 
+                tipo="Modelo:"
+                value={model?.name}  
+                
+                />
             </View>
             <DescriptionOrder 
                 tipo="Fecha de entrega:"

@@ -14,6 +14,14 @@ export const notificationReducer = (state, action) => {
                 errorMessage:'',
                 servicios: action.payload.servicios
             }
+        case 'getNotification' : 
+            return {
+                ...state,
+                notificaciones:action.payload.notificaciones,
+                countRider:action.payload.countRider,
+                count:action.payload.count,
+                countCustomer:action.payload.countCustomer,
+            }
         
         default:
             return state;

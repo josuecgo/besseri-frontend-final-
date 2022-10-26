@@ -22,7 +22,10 @@ import PushNotificationIOS from '@react-native-community/push-notification-ios';
 const authInicialState = {
     view: false, 
     notification: '',
-    
+    notificaciones:[],
+    countRider:0,
+    count:0,
+    countCustomer:0
 }
 
 
@@ -108,7 +111,16 @@ export const NotificationProvider = ({children}) => {
               const apiCall = await axios.get(url);
               const data = apiCall?.data?.data;
               const count = apiCall?.data?.count;
-              
+
+              await dispatch({
+                type:'getNotification',
+                payload: {
+                  notificaciones:data,
+                  countRider:count,
+                  count:count,
+                  countCustomer:count,
+                }
+            });
               setNotificaciones(data)
               setCount(count)
               setCountRider(count)
@@ -235,11 +247,11 @@ export const NotificationProvider = ({children}) => {
         value={{
             ...state,
             getNotificaciones,
-            notificaciones,
+            // notificaciones,
             setNotificaciones,
-            count,
-            countRider,
-            countCustomer,
+            // count,
+            // countRider,
+            // countCustomer,
             getToken,
             showNotification,
             pushIos
