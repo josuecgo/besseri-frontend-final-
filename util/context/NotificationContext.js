@@ -63,7 +63,7 @@ export const NotificationProvider = ({children}) => {
    
     const showNotification = async(msg) => {
        
-        getNotificaciones();
+        
 
         try {
           
@@ -80,16 +80,16 @@ export const NotificationProvider = ({children}) => {
             (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
           );
           
-          PushNotification.localNotification({
+          await PushNotification.localNotification({
              title:msg?.data?.title,
              message:msg?.data?.message,
              channelId:'channel-id'
           });
 
-         
+          getNotificaciones();
           
         } catch(e) {
-          alert('errr');
+          alert('No se pudo recibir notificacion');
           // console.log(e)
         }
 
@@ -113,14 +113,14 @@ export const NotificationProvider = ({children}) => {
               const count = apiCall?.data?.count;
 
               await dispatch({
-                type:'getNotification',
-                payload: {
-                  notificaciones:data,
-                  countRider:count,
-                  count:count,
-                  countCustomer:count,
-                }
-            });
+                  type:'getNotification',
+                  payload: {
+                    notificaciones:data,
+                    countRider:count,
+                    count:count,
+                    countCustomer:count,
+                  }
+              });
               setNotificaciones(data)
               setCount(count)
               setCountRider(count)
