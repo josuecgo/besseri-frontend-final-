@@ -208,10 +208,25 @@ export const NotificationProvider = ({children}) => {
         return unsubscribe
       }
 
+      async function pushIos2(){
+       
+        const unsubscribe = await messaging().setBackgroundMessageHandler(async (remoteMsg) => {
+          PushNotificationIOS.addNotificationRequest({
+            alertTitle:remoteMsg.data.title,
+            alertBody:remoteMsg.data.message
+          })
+
+        })
+        getNotificaciones();
+
+        return unsubscribe
+      }
+
+
       const iosPermisoss = () => {
         PushNotificationIOS.requestPermissions()
         PushNotificationIOS.addEventListener('localNotification',pushIos);
-        PushNotificationIOS.addEventListener('notification', pushIos )
+        PushNotificationIOS.addEventListener('notification', pushIos2 )
       }
 
     useEffect(() => {
@@ -222,9 +237,10 @@ export const NotificationProvider = ({children}) => {
         
     }, [])
 
-    useEffect(() => {
+    useEffect(async() => {
       const type = 'notification';
       PushNotificationIOS.addEventListener(type, onRemoteNotification);
+      await getNotificaciones();
       return () => {
         PushNotificationIOS.removeEventListener(type);
       };
