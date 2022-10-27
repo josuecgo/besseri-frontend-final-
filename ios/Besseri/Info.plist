@@ -26,8 +26,9 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-        <key>NSAllowsArbitraryLoads</key><true/>
-    </dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>El acceso a las fotos es para poder mostrar tus productos.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
