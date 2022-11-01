@@ -1,5 +1,5 @@
 import React,{useContext, useEffect} from 'react';
-import { View} from 'react-native';
+import { Platform, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {BOTTOM_TAB_RIDER_ROUTES, RIDER_STACK_ROUTES} from '../../util/constants';
@@ -16,17 +16,29 @@ import { deviceHeight } from '../../util/Dimentions';
 import { RiderNotification } from './rider.notification';
 import { Badge } from '../../components/Badge';
 import { NotificationContext } from '../../util/context/NotificationContext';
+import { useLocation } from '../../hooks/useLocation';
 
 
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 export const RiderNavigation = () => {
+  const {userLocation,getLocationHook} = useLocation()
+  const {countRider,iosPermisoss,getToken} = useContext(NotificationContext);
 
-  const {countRider} = useContext(NotificationContext);
+  useEffect(() => {
+    if (Platform.OS === 'ios') {
+      
+      iosPermisoss();
+      
+    }
+    getToken();
+    
+}, [])
 
-  
-  
+useEffect(() => {
+  getLocationHook()
+}, [])
   // console.log({countRider,notificaciones});
   return (
     <BottomTab.Navigator

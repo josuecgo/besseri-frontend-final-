@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { View} from 'react-native';
+import { Platform, View} from 'react-native';
 import Colors from '../../util/styles/colors';
 import VendorOrdersScreen from './vendor-orders.screen';
 import VendorProfileScreen from './vendor-profile.screen';
@@ -37,10 +37,19 @@ import { CrearEditCuponScreen } from './Cupon/CrearEditCuponScreen';
 import { VendorDescription } from './vendor-description';
 export const VendorNavigation = ({navigation}) => {
 
-  const {count,getNotificaciones} = useContext(NotificationContext);
+  const {count,iosPermisoss,getToken} = useContext(NotificationContext);
  
 
 
+  useEffect(() => {
+    if (Platform.OS === 'ios') {
+      
+      iosPermisoss();
+      
+    }
+    getToken();
+    
+  }, [])
 
   return (
     <BottomTab.Navigator

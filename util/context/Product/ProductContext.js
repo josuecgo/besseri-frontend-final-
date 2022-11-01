@@ -264,17 +264,15 @@ export const ProductProvider = ({children}) => {
     }, [])
     
     useEffect(async() => {
-        const rolUser = await getUserType()
-        console.log(rolUser);
-        if(!rolUser === 'vendor' && !rolUser === 'rider' ){
+       
             const CancelToken = axios.CancelToken;
             const source = CancelToken.source(); 
-            console.log('dentro');
+          
             getProducts()
             return () => {  
                 source.cancel();
             }   
-        }
+        
         
         
        
@@ -283,7 +281,7 @@ export const ProductProvider = ({children}) => {
     useEffect(async() => {
         const rolUser = await getUserType()
         
-        if(!rolUser === 'vendor' && !rolUser === 'rider' ){
+      
             let abortController = new AbortController();
             if (!state?.comision) {
                 
@@ -293,20 +291,20 @@ export const ProductProvider = ({children}) => {
             return () => {  
                 abortController.abort();  
             } 
-        }
+        
        
     }, [state?.comision])
 
     useEffect(async() => {
         const rolUser = await getUserType()
         
-        if(!rolUser === 'vendor' && !rolUser === 'rider' ){
+      
             let abortController = new AbortController();
             getMarcas();
             return () => {  
                 abortController.abort();  
             } 
-        }
+        
        
     }, [])
 
@@ -326,7 +324,7 @@ export const ProductProvider = ({children}) => {
     useEffect(async() => {
         const rolUser = await getUserType()
         
-        if(!rolUser === 'vendor' && !rolUser === 'rider' ){
+       
             let abortController = new AbortController();
             if (valueMaker) {
 
@@ -335,7 +333,7 @@ export const ProductProvider = ({children}) => {
             return () => {  
                 abortController.abort();  
             } 
-        }
+        
         
     }, [valueMaker])
     

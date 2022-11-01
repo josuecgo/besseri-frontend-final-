@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useContext } from 'react';
-import {  StatusBar,useColorScheme } from 'react-native';
+import {  Platform, StatusBar,useColorScheme } from 'react-native';
 
 import { KeysStripe, ROLES } from './util/constants';
 import { NavigationContainer } from '@react-navigation/native';
@@ -88,9 +88,9 @@ const App2 = () => {
 
   useEffect(() => {
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-      
-      showNotification(remoteMessage)
       console.log('background');
+      showNotification(remoteMessage)
+      
     
     });
   },[])
@@ -99,8 +99,10 @@ const App2 = () => {
     // firebase.messaging().onMessage(msg => {
     //   alert('ms')
     // })
+    let os = Platform.OS
     messaging().onMessage(msg => {
-      console.log('onmessage');
+      
+      console.log(os,' ----onmessage--'  );
       showNotification(msg)
      
 

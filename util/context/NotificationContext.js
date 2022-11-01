@@ -89,8 +89,8 @@ export const NotificationProvider = ({children}) => {
               channelId:'channel-id'
            });
            
-
-          await getNotificaciones();
+         
+          getNotificaciones();
           
         } catch(e) {
           alert('No se pudo recibir notificacion');
@@ -200,14 +200,14 @@ export const NotificationProvider = ({children}) => {
      
       async function pushIos(){
        
-        const unsubscribe = await messaging().onMessage(async (remoteMsg) => {
-          console.log('remote push ios');
-          // await PushNotificationIOS.addNotificationRequest({
-          //   alertTitle:remoteMsg?.data?.title,
-          //   alertBody:remoteMsg?.data?.message
-          // })
+        // const unsubscribe = await messaging().onMessage(async (remoteMsg) => {
+        //   console.log('remote push ios');
+        //   // await PushNotificationIOS.addNotificationRequest({
+        //   //   alertTitle:remoteMsg?.data?.title,
+        //   //   alertBody:remoteMsg?.data?.message
+        //   // })
 
-        })
+        // })
         
         getNotificaciones();
 
@@ -235,15 +235,17 @@ export const NotificationProvider = ({children}) => {
        
       }
 
-    useEffect(() => {
-        if (Platform.OS === 'ios') {
+    // useEffect(() => {
+    //     if (Platform.OS === 'ios') {
           
-          iosPermisoss();
+    //       iosPermisoss();
           
-        }
-        getToken();
+    //     }
+    //     getToken();
         
-    }, [])
+    // }, [])
+
+
 
     useEffect(async() => {
       const type = 'notification';
@@ -255,7 +257,7 @@ export const NotificationProvider = ({children}) => {
     });
   
     const onRemoteNotification = (notification) => {
-        console.log({notification});
+        // console.log({notification});
         getNotificaciones();
       // const isClicked = notification.getData().userInteraction === 1;
       
@@ -279,7 +281,8 @@ export const NotificationProvider = ({children}) => {
             // countCustomer,
             getToken,
             showNotification,
-            pushIos
+            pushIos,
+            iosPermisoss
         }}
         >
             {children}

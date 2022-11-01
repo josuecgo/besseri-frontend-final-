@@ -38,52 +38,57 @@ import {useSelector} from 'react-redux';
 import {deviceWidth} from '../../util/Dimentions';
 import { CardOrders } from '../../components/Rider/CardOrders';
 import { NotificationContext } from '../../util/context/NotificationContext';
+import { useLocation } from '../../hooks/useLocation';
 
 export default function RiderExplore(props) {
   const {getNotificaciones} = useContext(NotificationContext);
+  const {userLocation,getLocationHook} = useLocation()
   const [orders, setOrders] = useState([]);
   const [location, setLocation] = useState(null);
   const [loading, setLoading] = useState(false);
   const rider_wallet = useSelector(state => state?.rider?.wallet);
+  const rider = useSelector(state => state?.rider);
   const [riderProfile, setRiderProfile] = useState(null);
   const item = props.route.params ? props?.route?.params.item : false;
   
-  const getLocationIos = () => {
-    Geolocation.getCurrentPosition(position => {
-      setLocation(position.coords);
-    });
-  };
+  
 
-  const getLocation = async () => {
-    if (Platform.OS === 'ios') {
-      getLocationIos();
-      return;
-    }
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          title: 'Besseri',
-          message:
-            'Besseri necesita ubicación para mostrarle las tiendas cercanas',
-        },
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        Geolocation.getCurrentPosition(position => {
-          setLocation(position.coords);
-        });
-      } else {
-        // console.log('location permission denied');
-        showToaster('Permiso de ubicación denegado');
-      }
-    } catch (e) {
-      showToaster('No pude obtener tu ubicación');
-    }
-  };
+  // const getLocationIos = () => {
+  //   Geolocation.getCurrentPosition(position => {
+  //     setLocation(position.coords);
+  //   });
+  // };
 
-  useEffect(() => {
-    getLocation();
-  }, []);
+  // const getLocation = async () => {
+  //   if (Platform.OS === 'ios') {
+  //     getLocationIos();
+  //     return;
+  //   }
+  //   try {
+  //     const granted = await PermissionsAndroid.request(
+  //       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+  //       {
+  //         title: 'Besseri',
+  //         message:
+  //           'Besseri necesita ubicación para mostrarle las tiendas cercanas',
+  //       },
+  //     );
+  //     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+  //       Geolocation.getCurrentPosition(position => {
+  //         setLocation(position.coords);
+  //       });
+  //     } else {
+  //       // console.log('location permission denied');
+  //       showToaster('Permiso de ubicación denegado');
+  //     }
+  //   } catch (e) {
+  //     showToaster('No pude obtener tu ubicación');
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getLocation();
+  // }, []);
 
   const requestRide = async orderId => {
     
@@ -115,6 +120,7 @@ export default function RiderExplore(props) {
       );
     }
   };
+
   const getNearbyOrders = async () => {
     try {
       const riderData = await getRiderProfile();
@@ -122,8 +128,8 @@ export default function RiderExplore(props) {
       setLoading(true);
       const riderId = await getRiderId();
       const apiCall = await axios.post(`${rider_api_urls.get_nearby_orders}`, {
-        startlat: location?.latitude,
-        startlng: location?.longitude,
+        startlat: userLocation?.latitude,
+        startlng: userLocation?.longitude,
         // rango de distancia
         range: 30,
         riderId: riderId,
@@ -148,29 +154,32 @@ export default function RiderExplore(props) {
   
   useEffect(() => {
     getNearbyOrders();
-  }, [location]);
-
-
-
+  }, [userLocation]);
+  
+  useEffect(() => {
+    getLocationHook()
+  }, [])
+  
+// console.log(userLocation);
   return (
     <View style={styles.container}>
       <LoaderComponent isVisible={loading} />
       {/*Render our MapView*/}
-      {location?.latitude && location?.longitude ? (
+      {userLocation?.latitude && userLocation?.longitude ? (
         <MapView
           style={styles.map}
           //specify our coordinates.
           initialRegion={{
-            latitude: location?.latitude,
-            longitude: location?.longitude,
+            latitude: userLocation?.latitude,
+            longitude: userLocation?.longitude,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}>
           <Circle
             radius={100}
             center={{
-              latitude: location?.latitude,
-              longitude: location?.longitude,
+              latitude: userLocation?.latitude,
+              longitude: userLocation?.longitude,
             }}
             fillColor="#000"
             strokeColor="#000"

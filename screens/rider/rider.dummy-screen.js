@@ -177,10 +177,12 @@ const RiderDummyScreen = props => {
 
     const location = async( ) => {
         const p = await getRiderProfile();
+        
         if (p.location.latitude == 0) {
           updateUbication()
         }
       }
+
       useEffect(() => {
         location();
       }, [])

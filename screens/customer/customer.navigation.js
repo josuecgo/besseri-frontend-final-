@@ -1,4 +1,4 @@
-import React,{ useContext} from 'react';
+import React,{ useContext, useEffect} from 'react';
 import {CUSTOMER_HOME_SCREEN_ROUTES, LOGIN_SIGNUP_FORGOT_ROUTES} from '../../util/constants';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -38,13 +38,23 @@ import PrivacyPolicy from '../privacypolicy.screen';
 import { CartScreen } from './Cart/CartScreen';
 import { ChatScreen } from './Chat/ChatScreen';
 import { ProfileScreen } from './ProfileScreen';
+import { Platform } from 'react-native';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 export const PartsServicesFunctionsDrawer = () => {
-  const {countCustomer,getNotificaciones} = useContext(NotificationContext);
+  const {countCustomer,getNotificaciones,iosPermisoss,getToken} = useContext(NotificationContext);
 
+  useEffect(() => {
+    if (Platform.OS === 'ios') {
+      
+      iosPermisoss();
+      
+    }
+    getToken();
+    
+}, [])
 
   return (
     <Drawer.Navigator
