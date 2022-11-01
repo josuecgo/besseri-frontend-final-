@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View} from 'react-native';
 import Colors from '../../util/styles/colors';
 import VendorOrdersScreen from './vendor-orders.screen';
@@ -35,12 +35,12 @@ import { NotificationContext } from '../../util/context/NotificationContext';
 import { HomeScreen } from './vendor-home.screen';
 import { CrearEditCuponScreen } from './Cupon/CrearEditCuponScreen';
 import { VendorDescription } from './vendor-description';
-export const VendorNavigation = () => {
+export const VendorNavigation = ({navigation}) => {
 
-  const {count} = useContext(NotificationContext);
+  const {count,getNotificaciones} = useContext(NotificationContext);
+ 
 
 
-  
 
   return (
     <BottomTab.Navigator
@@ -135,6 +135,16 @@ export const VendorNavigation = () => {
           title: 'News',
           
         }}
+        listeners={({ navigation, route }) => ({
+          tabPress: async(e) => {
+            // Prevent default action
+            e.preventDefault();
+            // getNotificaciones();
+            // Do something with the `navigation` object
+            navigation.navigate(BOTTOM_TAB_VENDOR_ROUTES.DASHBOARD);
+            
+          },
+        })}
       />
       <BottomTab.Screen
         name={BOTTOM_TAB_VENDOR_ROUTES.PROFILE}

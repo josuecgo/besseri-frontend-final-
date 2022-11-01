@@ -7,7 +7,6 @@ import App from './App';
 import {name as appName} from './app.json';
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from 'react-native-push-notification'
-import messaging, { firebase } from '@react-native-firebase/messaging';
 import moment from 'moment'
 import 'moment/locale/es'  
 moment.locale('es')
@@ -32,7 +31,7 @@ PushNotification.configure({
   onAction: function (notification) {
     // console.log("ACTION:", notification.action);
     // console.log("NOTIFICATION:", notification);
-
+    console.log({d:notification});
     // process the action
   },
   // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)

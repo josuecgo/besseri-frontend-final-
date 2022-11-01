@@ -1,5 +1,5 @@
 import React, { useState,useContext } from 'react';
-import { View, Text, useWindowDimensions, StyleSheet, TouchableOpacity, Linking, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, useWindowDimensions, StyleSheet, TouchableOpacity, Linking, Alert, ActivityIndicator, AppState } from 'react-native';
 import { getFormattedDate } from '../../util/utility-functions';
 import personMockImage from '../../assets/images/person-mock-image.jpeg';
 import Colors from '../../util/styles/colors';
@@ -20,6 +20,9 @@ import { NotificationCard } from '../../components/NotificationCard';
 import { useNotification } from '../../hooks/useNotification';
 import { NotificationContext } from '../../util/context/NotificationContext';
 import { NotificationEmpty } from '../../components/NotificationEmpty';
+import { NavigationEvents } from 'react-navigation';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { useRef } from 'react';
 
 const VendorDashboardScreen = ({ navigation, route }) => {
     const [loader, setLoader] = useState(false);
@@ -150,13 +153,42 @@ const VendorDashboardScreen = ({ navigation, route }) => {
    
     useEffect(() => {
         getStorage();
-        getNotificaciones();
+        
     }, [])
     
+    
+    
+    const appState = useRef(AppState.currentState);
+    const [appStateVisible, setAppStateVisible] = useState(appState.current);
+  
+    useEffect(() => {
+      const subscription = AppState.addEventListener("change", nextAppState => {
+        if (
+          appState.current.match(/inactive|background/) &&
+          nextAppState === "active"
+        ) {
+            
+            getNotificaciones()
+        }
+  
+        appState.current = nextAppState;
+        setAppStateVisible(appState.current);
+       
+        
+      });
+  
+      return () => {
+        subscription.remove();
+      };
+    }, []);
 
-   
- 
-    // console.log(notificaciones);
+    
+    useEffect(() => {
+        getNotificaciones()
+    }, [])
+    
+    
+    
     
     return (
         <VendorScreenContainerComponent

@@ -56,7 +56,7 @@ const App = () => {
   
   return(
     <StripeProvider
-    publishableKey={KeysStripe.LIVE_KEY}
+    publishableKey={KeysStripe.TEST_KEY}
     >
     <Provider store={reduxStore}>
     
@@ -87,9 +87,10 @@ const App2 = () => {
 
 
   useEffect(() => {
-    messaging().setBackgroundMessageHandler(async remoteMessage => {
+    messaging().setBackgroundMessageHandler(async (remoteMessage) => {
       
       showNotification(remoteMessage)
+      console.log('background');
     
     });
   },[])
@@ -99,7 +100,7 @@ const App2 = () => {
     //   alert('ms')
     // })
     messaging().onMessage(msg => {
-      
+      console.log('onmessage');
       showNotification(msg)
      
 

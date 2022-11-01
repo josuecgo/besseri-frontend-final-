@@ -80,13 +80,17 @@ export const NotificationProvider = ({children}) => {
             (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
           );
           
-          await PushNotification.localNotification({
-             title:msg?.data?.title,
-             message:msg?.data?.message,
-             channelId:'channel-id'
-          });
+         
 
-          getNotificaciones();
+   
+            await PushNotification.localNotification({
+              title:msg?.data?.title,
+              message:msg?.data?.message,
+              channelId:'channel-id'
+           });
+           
+
+          await getNotificaciones();
           
         } catch(e) {
           alert('No se pudo recibir notificacion');
@@ -107,7 +111,7 @@ export const NotificationProvider = ({children}) => {
            
             if (id) {
               const url = `${api_urls.getNotification}/${id}`;
-
+              
               const apiCall = await axios.get(url);
               const data = apiCall?.data?.data;
               const count = apiCall?.data?.count;
@@ -180,7 +184,7 @@ export const NotificationProvider = ({children}) => {
         if(permission) {
           const fcmToken =  await firebase.messaging().getToken();
           const userId = await getUserId();
-          
+          console.log({fcmToken});
           if(fcmToken && userId) {
             const r = await axios.post(api_urls?.save_fcm_token,{
               token:fcmToken,
@@ -197,41 +201,45 @@ export const NotificationProvider = ({children}) => {
       async function pushIos(){
        
         const unsubscribe = await messaging().onMessage(async (remoteMsg) => {
-          PushNotificationIOS.addNotificationRequest({
-            alertTitle:remoteMsg.data.title,
-            alertBody:remoteMsg.data.message
-          })
+          console.log('remote push ios');
+          // await PushNotificationIOS.addNotificationRequest({
+          //   alertTitle:remoteMsg?.data?.title,
+          //   alertBody:remoteMsg?.data?.message
+          // })
 
         })
+        
         getNotificaciones();
 
         return unsubscribe
       }
 
-      async function pushIos2(){
+      // async function pushIos2(){
        
-        const unsubscribe = await messaging().setBackgroundMessageHandler(async (remoteMsg) => {
-          PushNotificationIOS.addNotificationRequest({
-            alertTitle:remoteMsg.data.title,
-            alertBody:remoteMsg.data.message
-          })
+      //   const unsubscribe = await messaging().setBackgroundMessageHandler(async (remoteMsg) => {
+      //     PushNotificationIOS.addNotificationRequest({
+      //       alertTitle:remoteMsg.data.title,
+      //       alertBody:remoteMsg.data.message
+      //     })
 
-        })
-        getNotificaciones();
+      //   })
+      //   getNotificaciones();
 
-        return unsubscribe
-      }
+      //   return unsubscribe
+      // }
 
 
       const iosPermisoss = () => {
         PushNotificationIOS.requestPermissions()
-        PushNotificationIOS.addEventListener('localNotification',pushIos);
-        PushNotificationIOS.addEventListener('notification', pushIos2 )
+        // PushNotificationIOS.addEventListener('localNotification',pushIos);
+       
       }
 
     useEffect(() => {
         if (Platform.OS === 'ios') {
-          iosPermisoss()
+          
+          iosPermisoss();
+          
         }
         getToken();
         
@@ -240,13 +248,14 @@ export const NotificationProvider = ({children}) => {
     useEffect(async() => {
       const type = 'notification';
       PushNotificationIOS.addEventListener(type, onRemoteNotification);
-      await getNotificaciones();
+      // await getNotificaciones();
       return () => {
         PushNotificationIOS.removeEventListener(type);
       };
     });
   
     const onRemoteNotification = (notification) => {
+        console.log({notification});
         getNotificaciones();
       // const isClicked = notification.getData().userInteraction === 1;
       

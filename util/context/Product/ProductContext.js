@@ -5,6 +5,7 @@ import { showToaster } from "../../constants";
 
 
 import { productReducer } from "./productReducer";
+import { getUserType } from "../../local-storage/auth_service";
 
 
 
@@ -40,6 +41,7 @@ export const ProductProvider = ({children}) => {
 
     const getCategorias = async(params) => {
         try {
+            
             const apiCall = await axios.get(customer_api_urls.get_products,{params});
             await dispatch({
                 type:'getCategorias',
@@ -261,53 +263,80 @@ export const ProductProvider = ({children}) => {
        
     }, [])
     
-    useEffect(() => {
-        const CancelToken = axios.CancelToken;
-        const source = CancelToken.source(); 
-        getProducts()
-        return () => {  
-            source.cancel();
-        }  
+    useEffect(async() => {
+        const rolUser = await getUserType()
+        console.log(rolUser);
+        if(!rolUser === 'vendor' && !rolUser === 'rider' ){
+            const CancelToken = axios.CancelToken;
+            const source = CancelToken.source(); 
+            console.log('dentro');
+            getProducts()
+            return () => {  
+                source.cancel();
+            }   
+        }
+        
+        
        
     }, [])
 
-    useEffect(() => {
-        let abortController = new AbortController();
-        if (!state?.comision) {
-            
-            getComision()
-        }
+    useEffect(async() => {
+        const rolUser = await getUserType()
         
-        return () => {  
-            abortController.abort();  
-        } 
+        if(!rolUser === 'vendor' && !rolUser === 'rider' ){
+            let abortController = new AbortController();
+            if (!state?.comision) {
+                
+                getComision()
+            }
+            
+            return () => {  
+                abortController.abort();  
+            } 
+        }
+       
     }, [state?.comision])
 
-    useEffect(() => {
-        let abortController = new AbortController();
-        getMarcas();
-        return () => {  
-            abortController.abort();  
-        } 
+    useEffect(async() => {
+        const rolUser = await getUserType()
+        
+        if(!rolUser === 'vendor' && !rolUser === 'rider' ){
+            let abortController = new AbortController();
+            getMarcas();
+            return () => {  
+                abortController.abort();  
+            } 
+        }
+       
     }, [])
 
-    useEffect(() => {
-        let abortController = new AbortController();
-        getServices();
-        return () => {  
-            abortController.abort();  
-        } 
+    useEffect(async() => {
+        const rolUser = await getUserType()
+        
+        if(!rolUser === 'vendor' && !rolUser === 'rider' ){
+            let abortController = new AbortController();
+            getServices();
+            return () => {  
+                abortController.abort();  
+            } 
+        }
+       
     }, [])
     
-    useEffect(() => {
-        let abortController = new AbortController();
-        if (valueMaker) {
+    useEffect(async() => {
+        const rolUser = await getUserType()
+        
+        if(!rolUser === 'vendor' && !rolUser === 'rider' ){
+            let abortController = new AbortController();
+            if (valueMaker) {
 
-            getModelo(valueMaker); 
+                getModelo(valueMaker); 
+            }
+            return () => {  
+                abortController.abort();  
+            } 
         }
-        return () => {  
-            abortController.abort();  
-        } 
+        
     }, [valueMaker])
     
 
