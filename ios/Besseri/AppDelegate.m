@@ -1,6 +1,8 @@
 #import "AppDelegate.h"
 #import <UserNotifications/UserNotifications.h>
 #import <RNCPushNotificationIOS.h>
+//#import <GoogleMaps/GoogleMaps.h>
+
 #if RCT_DEV
 #import <React/RCTDevLoadingView.h>
 #endif
@@ -38,6 +40,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  //[GMSServices provideAPIKey:@"_YOUR_API_KEY_"]; // add this line using the api key obtained from Google Console
   
   [FIRApp configure];
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];

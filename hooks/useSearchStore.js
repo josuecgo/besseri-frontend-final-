@@ -4,7 +4,7 @@ import { customer_api_urls, vendor_api_urls } from '../util/api/api_essentials';
 import { showToaster } from '../util/constants';
 import { ProductContext } from '../util/context/Product/ProductContext';
 
-export const useSearchStore = ( store ) => {
+export const useSearchStore = (  ) => {
     
     const [ isLoading, setIsLoading ] = useState(true);
     const [ marcas, setMarcas ] = useState([]);
@@ -26,30 +26,30 @@ export const useSearchStore = ( store ) => {
 
     const {
         productos,
-
+        store
     } = useContext(ProductContext)
 
-    const getStore = async () => {
+    const getStore = async (tienda) => {
         
         try {
             setIsLoading(true);
-            const apiCall = await axios.get(
-            `${customer_api_urls.get_store_data}/${store?._id}`);
-            let cate = apiCall.data?.data?.categories;
-          
            
-            let result  = cate.filter((elem, index) => {
-                const firstIndex = cate.findIndex(({ _id, name }) => {
-                    return _id === elem._id && name === elem.name
-                });
-                return firstIndex === index
-            });
+            const apiCall = await axios.get(`${customer_api_urls.get_store_data}/${tienda?._id}`);
             
-
-            setCategories(result);
-            setProductsData(apiCall.data.data.products);
-            setMinimumPrice(apiCall.data.data.minPrice);
-            setServices(apiCall?.data?.data?.services);
+            let cate = apiCall?.data?.data?.categories;
+            // let result  = cate.filter((elem, index) => {
+            //     const firstIndex = cate.findIndex(({ _id, name }) => {
+            //         return _id === elem._id && name === elem.name
+            //     });
+            //     return firstIndex === index
+            // });
+            
+           
+            setCategories(cate);
+            setProductsData(apiCall?.data?.data?.products);
+            setProductFilter(apiCall?.data?.data?.products)
+            // setMinimumPrice(apiCall?.data?.data?.minPrice);
+            // setServices(apiCall?.data?.data?.services);
             setIsLoading(false);
             //  setState(apiCall.data.data.products,SCREEN_STATES.PRODUCTS);
             //  setState(apiCall.data.data.categories,SCREEN_STATES.CATEGORIES);
@@ -57,7 +57,7 @@ export const useSearchStore = ( store ) => {
           setIsLoading(false);
         //   console.log(e);
         //   console.log(e.response.data);
-          showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
+          showToaster('Algo salió mal. Por favor, vuelva a intentarlo get store');
         }
     };
 
@@ -114,69 +114,7 @@ export const useSearchStore = ( store ) => {
     }  
     
 
-    // const makerFilter = () => {
-    //     if (servicios) {
-    //         servicesFilter();
-    //         return;
-    //     }
-
-        
-        
-       
-        
-    //     if (valueMaker) {
-    //         if (valueModel) {
-               
-    //             let itemData;
-    //             let itemModel;
-    //             const marca = productos.filter((item) => {
-    //                 itemData = item.maker ? item?.maker?._id : '';
-    //                 let searchTextData = valueMaker;
-                   
-    //                 return itemData.indexOf(searchTextData) > -1;
-    //             })
-                
-    //             const modelo = marca.filter((item) => {
-                    
-    //                 itemModel = item.model ? item?.model?._id : '';
-    //                 let searchTextData = valueModel;
-                   
-    //                 return itemModel.indexOf(searchTextData) > -1;
-    //             })
-
-
-
-    //             setProductFilter(modelo ? modelo : []);
-                
-               
-    //         } else {
-    //             setValueModel(null);
-    //             const marca = productos.filter((item) => {
-    //                 let itemData = item.maker ? item?.maker?._id : '';
-    //                 let searchTextData = valueMaker;
-    //                 return itemData.indexOf(searchTextData) > -1;
-    //             })
-               
-    //             setProductFilter(marca ? marca : []);
-               
-    //         }
-    //     }else{  
-            
-    //         setProductFilter(productos);
-            
-    //     }
-        
-
-    //     if (valueCategorias) {
-    //         if (valueMaker) {
-    //             categoriaFilter(productFilter);
-    //         } else {
-    //             categoriaFilter();
-    //         }
-            
-    //     }
-       
-    // };
+    
 
 
     const makerFilter = () => {
@@ -322,51 +260,47 @@ export const useSearchStore = ( store ) => {
         setValueMaker(null);
         setValueModel(null);
 
-        getStore();
+        getStore(store);
         
 
     }
 
 
-    const getComision = async () => {
-        try {
-          setIsLoading(true);
-          const getFee = await axios.get(customer_api_urls?.get_fees);
+    // const getComision = async () => {
+    //     try {
+    //       setIsLoading(true);
+    //       const getFee = await axios.get(customer_api_urls?.get_fees);
     
-          setComision(getFee.data.data[0]?.besseri_comission);
+    //       setComision(getFee.data.data[0]?.besseri_comission);
     
-          setIsLoading(false);
-          //  setState(apiCall.data.data.products,SCREEN_STATES.PRODUCTS);
-          //  setState(apiCall.data.data.categories,SCREEN_STATES.CATEGORIES);
-        } catch (e) {
-          setIsLoading(false);
+    //       setIsLoading(false);
+    //       //  setState(apiCall.data.data.products,SCREEN_STATES.PRODUCTS);
+    //       //  setState(apiCall.data.data.categories,SCREEN_STATES.CATEGORIES);
+    //     } catch (e) {
+    //       setIsLoading(false);
     
-          showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
-        }
+    //       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
+    //     }
        
-    };
+    // };
 
-    useEffect(() => {
-        getComision();
-    }, [productsData]);
-
-
+    // useEffect(() => {
+    //     getComision();
+    // }, [productsData]);
 
 
-    useEffect(() => {
+
+
+    // useEffect(() => {
        
-      makerFilter();
-    //   if (valueCategorias) {
-    //     categoriaFilter(productsData);
-    //   }
+    //   makerFilter();
+    // //   if (valueCategorias) {
+    // //     categoriaFilter(productsData);
+    // //   }
       
-    }, [productsData,valueMaker,valueModel,valueCategorias])
+    // }, [productsData,valueMaker,valueModel,valueCategorias])
     
-    useEffect(() => {
-       
-        
-
-    }, [valueCategorias])
+   
     
     
    
@@ -381,9 +315,7 @@ export const useSearchStore = ( store ) => {
         }
     }, [valueMaker]);
    
-    useEffect(() => {
-        getStore();
-    }, []);
+  
 
     
     
@@ -410,11 +342,72 @@ export const useSearchStore = ( store ) => {
         categories,
         services,
         valueCategorias, setValueCategorias,
-        setCategories,resetFiltros,comision
-
+        setCategories,resetFiltros,comision,
+        getStore
     }
 
 }
 
+// const makerFilter = () => {
+    //     if (servicios) {
+    //         servicesFilter();
+    //         return;
+    //     }
+
+        
+        
+       
+        
+    //     if (valueMaker) {
+    //         if (valueModel) {
+               
+    //             let itemData;
+    //             let itemModel;
+    //             const marca = productos.filter((item) => {
+    //                 itemData = item.maker ? item?.maker?._id : '';
+    //                 let searchTextData = valueMaker;
+                   
+    //                 return itemData.indexOf(searchTextData) > -1;
+    //             })
+                
+    //             const modelo = marca.filter((item) => {
+                    
+    //                 itemModel = item.model ? item?.model?._id : '';
+    //                 let searchTextData = valueModel;
+                   
+    //                 return itemModel.indexOf(searchTextData) > -1;
+    //             })
 
 
+
+    //             setProductFilter(modelo ? modelo : []);
+                
+               
+    //         } else {
+    //             setValueModel(null);
+    //             const marca = productos.filter((item) => {
+    //                 let itemData = item.maker ? item?.maker?._id : '';
+    //                 let searchTextData = valueMaker;
+    //                 return itemData.indexOf(searchTextData) > -1;
+    //             })
+               
+    //             setProductFilter(marca ? marca : []);
+               
+    //         }
+    //     }else{  
+            
+    //         setProductFilter(productos);
+            
+    //     }
+        
+
+    //     if (valueCategorias) {
+    //         if (valueMaker) {
+    //             categoriaFilter(productFilter);
+    //         } else {
+    //             categoriaFilter();
+    //         }
+            
+    //     }
+       
+    // };

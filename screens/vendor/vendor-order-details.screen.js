@@ -96,8 +96,11 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
       riderId:riderId
      });
      setLoading(false);
+     
      if(apiCall.status == api_statuses.success) {
-        getOrderDetails();
+      
+        await getOrderDetails();
+        navigation.goBack()
      } else {
        showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
        navigation.goBack()
@@ -149,6 +152,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
      if(apiCall.status == api_statuses.success) {
       //  console.log(apiCall.data)
         await getOrderDetails()
+        
      } else {
        showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
        navigation.goBack()

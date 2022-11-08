@@ -7,9 +7,10 @@ import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants'
 
 export const MetodoScreen = (props) => {
   const {navigation,route} = props;
-  const {pickup} = route?.params;
+  const {pickup,totalAmount,descuento} = route?.params;
+  const mayorMil = totalAmount - descuento;
+  console.log({mayorMil});
   
-
   const goOrderFree = (pago) => {
     navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_SUMMARY_FREE,{
       ...route?.params,
@@ -43,13 +44,18 @@ export const MetodoScreen = (props) => {
         <View style={styles.card} >
         
           <View style={styles.btn} >
-            <ModeEnvio 
-            texto={'Pago en efectivo'} 
-            iconName={'local-atm'}
-            subtitulo='Paga al recibir el producto'
-            nav={()=> metodoPago('cash')}
+            {
+              (mayorMil <= 1000) && (
+                <ModeEnvio 
+                texto={'Pago en efectivo'} 
+                iconName={'local-atm'}
+                subtitulo='Paga al recibir el producto'
+                nav={()=> metodoPago('cash')}
+                
+                />
+              )
+            }
             
-            />
             <ModeEnvio 
             texto={'Pago con tarjeta'} 
             iconName={'credit-card'}

@@ -451,7 +451,7 @@ PODS:
     - RNNotifee/NotifeeCore (= 4.0.1)
   - RNNotifee/NotifeeCore (4.0.1):
     - React-Core
-  - RNReanimated (2.10.0):
+  - RNReanimated (2.12.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -783,7 +783,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNImageCropPicker: 448d3c6e923fde3466b49caf3c2457c2a0ba02dd
   RNNotifee: ed6c0b5ffc0b021507fe196a1c4cfd1fe002410c
-  RNReanimated: 297665fc9f18101ff029e80d789d65ddd34bf44a
+  RNReanimated: 423c2d32dfa17324af66c438fe0ac3a62f9f56b3
   RNScreens: 0591543e343c7444ea1756b6265d81a4295922c9
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
@@ -795,6 +795,6 @@ SPEC CHECKSUMS:
   Yoga: aa0cb45287ebe1004c02a13f279c55a95f1572f4
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 836a72e0711cd1856eac09d042c84089ec5800c5
+PODFILE CHECKSUM: 294e794d702b644f684db7a8b6e7a8bb675c3b30
 
 COCOAPODS: 1.11.3

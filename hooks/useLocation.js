@@ -44,6 +44,15 @@ export const useLocation = () => {
         }
     }, [])
 
+    useEffect(() => {
+      getCurrentLocation()
+        .then( location => {
+            setInitialPosition(location);
+            setHasLocation(true)
+        } )
+    }, [])
+    
+
     
 
     useEffect(() => {

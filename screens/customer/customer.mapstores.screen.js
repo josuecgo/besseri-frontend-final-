@@ -1,7 +1,9 @@
-import React, { useState,useEffect } from "react";
-import { FlatList, Image, PermissionsAndroid, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native";
-import MapView,{Marker,Polyline} from "react-native-maps";
-import Colors from '../../util/styles/colors';
+import React, { useState,useEffect, useRef, useContext } from "react";
+import { FlatList, Image, PermissionsAndroid, 
+  StyleSheet, Text, TouchableOpacity, 
+  useWindowDimensions, View } from "react-native";
+import MapView,{Marker,Polyline, PROVIDER_GOOGLE} from "react-native-maps";
+
 import { api_statuses, base_url, customer_api_urls } from "../../util/api/api_essentials";
 import axios from "axios";
 import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from "../../util/constants";
@@ -11,6 +13,9 @@ import Geolocation from "@react-native-community/geolocation";
 import { useCart } from "../../hooks/useCart";
 import { StoreCard } from "../../components/Customer/StoreCard";
 import { SearchComponent } from "../../components/Customer/SearchComponent";
+import Carousel from "react-native-snap-carousel";
+import { deviceWidth } from "../../util/Dimentions";
+import { ProductContext } from "../../util/context/Product/ProductContext";
 
 
 
@@ -19,8 +24,9 @@ export default function CustomerMapStores(props) {
 
   const [stores,setstores] = useState([]);
   const [location,setLocation] = useState(null);
-
-  const {} = useCart()
+  const [storeActive, setStoreActive] = useState(false)
+  const {getProductStore} = useContext(ProductContext)
+  const maoViewRef = useRef();
  
   const getLocationIOS = () => {
     Geolocation.getCurrentPosition(
@@ -66,9 +72,10 @@ export default function CustomerMapStores(props) {
   const getStores = async(location) => {
     try {
       const apiCall = await axios.post(`${customer_api_urls.get_stores}`,{
-        startlat:location?.latitude || 19.485297844903283,
-        startlng:location?.longitude || -99.22777616792496,
-        
+        // startlat:location?.latitude || 19.485306213822334,
+        // startlng:location?.longitude || -99.22779700380474,
+        startlat: 19.485306213822334,
+        startlng: -99.22779700380474,
         range:30
       });
       if(apiCall.status == api_statuses.success) {
@@ -82,6 +89,18 @@ export default function CustomerMapStores(props) {
        showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
     }
   }
+
+  const centerPosition = async(loc) => {
+
+    maoViewRef.current?.animateCamera({
+      center:{
+        latitude:loc?.latitude,
+        longitude:loc?.longitude
+      }
+    })
+  }
+
+  
   useEffect(() => {
     if (!location) {
       getLocation()
@@ -90,18 +109,20 @@ export default function CustomerMapStores(props) {
   },[location]);
 
   
-  
   return (
     <View style={styles.container}>
     {/*Render our MapView*/}
       {
         location?.latitude && location?.longitude && stores  ? 
         <MapView
+        ref={(el)=>maoViewRef.current = el }
+        // provider={PROVIDER_GOOGLE}
         style={styles.map}
         //specify our coordinates.
         initialRegion={{
           latitude:location?.latitude || 19.485297844903283,
           longitude: location?.longitude || -99.22777616792496,
+        
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
@@ -126,8 +147,8 @@ export default function CustomerMapStores(props) {
       }
       <View style={{flex:1,width:'100%'}}>
         
-        <View style={{flex:1,position:'absolute',bottom:10,alignSelf:'center',paddingLeft:5}}>
-          <FlatList
+        <View style={{flex:1,position:'absolute',bottom:25,alignSelf:'center',paddingLeft:5}}>
+          {/* <FlatList
           contentContainerStyle={{flexGrow:1}}
           data={stores}
           horizontal
@@ -138,8 +159,34 @@ export default function CustomerMapStores(props) {
             goStore={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.STORE_SCREEN,{data:itemData.item})}
             />
           )}
-          
-          />
+          // getItemCount={(index) => console.log(index) }
+         
+          /> */}
+          <Carousel
+              // ref={(c) => { this._carousel = c; }}
+              data={stores}
+              renderItem={itemData => (
+                <StoreCard
+                data={itemData.item}
+                goStore={async() => {
+                  await getProductStore(itemData?.item)
+                  props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.STORE_SCREEN,{data:itemData?.item})
+                }
+                }
+                />
+              )}
+              sliderWidth={deviceWidth}
+              itemWidth={deviceWidth}
+              onSnapToItem={(index) => {
+                // console.log(stores[index]?.location);
+                let storeLocation = {
+                  latitude : stores[index]?.location?.latitude,
+                  longitude: stores[index]?.location?.longitude,
+                }
+                setStoreActive(stores[index]);
+                centerPosition(storeLocation)
+              }}
+            />
         </View>
       </View>
     </View>

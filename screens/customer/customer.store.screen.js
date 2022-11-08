@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Text,
   TouchableOpacity,
@@ -21,42 +21,43 @@ import {
   SHARED_ROUTES,
   showToaster,
 } from '../../util/constants';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as CartActions from '../../util/ReduxStore/Actions/CustomerActions/CartActions';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import RatingComponent from '../../components/Ratings/rating.component';
-import {useRoute} from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import axios from 'axios';
-import {base_url, customer_api_urls} from '../../util/api/api_essentials';
+import { base_url, customer_api_urls } from '../../util/api/api_essentials';
 import LoaderComponent from '../../components/Loader/Loader.component';
 import ServicesCardComponent from '../../components/customer-components/ServicesCard.component';
-import {adjust, deviceWidth} from '../../util/Dimentions';
-import {useCart} from '../../hooks/useCart';
+import { adjust, deviceWidth } from '../../util/Dimentions';
+import { useCart } from '../../hooks/useCart';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {SearchComponent} from '../../components/Customer/SearchComponent';
-import {useSearchStore} from '../../hooks/useSearchStore';
-import {Empty} from '../../components/Customer/Empty';
+import { SearchComponent } from '../../components/Customer/SearchComponent';
+import { useSearchStore } from '../../hooks/useSearchStore';
+import { Empty } from '../../components/Customer/Empty';
+import { ProductContext } from '../../util/context/Product/ProductContext';
 
 const CustomerStoreScreen = props => {
-  const {params} = useRoute();
+  const { params } = useRoute();
 
   const [selectedCategoryId, setSelectedCategoryId] = useState('products');
   // const [isLoading, setIsLoading] = useState(false);
 
   const cart_item_ids = useSelector(state => state?.cart?.cart_items_ids);
-  const {addItemToCart} = useCart();
+  const { addItemToCart } = useCart();
 
-  const store = params.data;
+
   const [searchText, setSearchText] = useState('');
   const isServices = selectedCategoryId === 'services' ? true : false;
   const [openModel, setOpenModel] = useState(false);
   const [open, setOpen] = useState(false);
   const [openCategorias, setOpenCategorias] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    {label: 'Apple', value: 'apple'},
-    {label: 'Banana', value: 'banana'},
-  ]);
+  const {
+    store,
+    comision,
+  } = useContext(ProductContext)
+
   const {
     marcas,
     valueCategorias,
@@ -72,11 +73,12 @@ const CustomerStoreScreen = props => {
     valueModel,
     setValueModel,
     searchCallStore,
-    isLoading,
-    comision,
     categories,
     services,
-  } = useSearchStore(store);
+    getStore,
+    isLoading,
+    productsData
+  } = useSearchStore();
 
   useEffect(() => {
     searchCallStore(searchText, isServices);
@@ -86,11 +88,25 @@ const CustomerStoreScreen = props => {
     props.navigation.pop();
   };
 
+
+  // console.log(productFiltradoStore[0]?.business_id);
+  // console.log(params?.data);
+  useEffect(() => {
+    if (params?.data) {
+     
+      getStore(params?.data );
+    }
+
+  }, [params?.data]);
+
+
+  
+
   return (
     <View style={styles.container}>
       {/* <LoaderComponent isVisible={isLoading} /> */}
       <ImageBackground
-        source={{uri: `${base_url}/${store?.logo}`}}
+        source={{ uri: `${base_url}/${store?.logo}` }}
         style={styles.img}>
         <View style={styles.ImageContainer}>
           <View style={styles.header}>
@@ -106,8 +122,8 @@ const CustomerStoreScreen = props => {
           </View>
         </View>
       </ImageBackground>
-      <View style={{marginHorizontal: 10}}>
-        <Text style={{...CommonStyles.fontFamily, fontSize: 20}}>
+      <View style={{ marginHorizontal: 10 }}>
+        <Text style={{ ...CommonStyles.fontFamily, fontSize: 20 }}>
           {store?.storeName}
         </Text>
 
@@ -122,20 +138,20 @@ const CustomerStoreScreen = props => {
             size={20}
           />
           <Text
-            style={{...CommonStyles.fontFamily, color: 'grey', fontSize: 12}}>
+            style={{ ...CommonStyles.fontFamily, color: 'grey', fontSize: 12 }}>
             {store?.address}
           </Text>
         </View>
       </View>
 
-        <View>
-        <View style={{flexDirection: 'row'}}>
+      <View>
+        <View style={{ flexDirection: 'row' }}>
           <TouchableOpacity
             onPress={() => {
               setSelectedCategoryId('products');
             }}
             style={{
-              width: deviceWidth ,
+              width: deviceWidth,
               alignItems: 'center',
               padding: 10,
               borderBottomWidth: 3,
@@ -156,175 +172,181 @@ const CustomerStoreScreen = props => {
               {'Productos'}
             </Text>
           </TouchableOpacity>
-         {/*  <TouchableOpacity
-            onPress={() => {
-              setSelectedCategoryId('services');
-            }}
-            style={{
-              width: deviceWidth / 2,
-              alignItems: 'center',
-              padding: 10,
-              borderBottomWidth: 3,
-              height: 50,
-              borderBottomColor:
-                selectedCategoryId == 'services'
-                  ? Colors.primarySolid
-                  : 'white',
-            }}>
-            <Text
+          {/*  <TouchableOpacity
+              onPress={() => {
+                setSelectedCategoryId('services');
+              }}
               style={{
-                ...CommonStyles.fontFamily,
-                color:
+                width: deviceWidth / 2,
+                alignItems: 'center',
+                padding: 10,
+                borderBottomWidth: 3,
+                height: 50,
+                borderBottomColor:
                   selectedCategoryId == 'services'
                     ? Colors.primarySolid
-                    : 'black',
+                    : 'white',
               }}>
-              {'Servicios'}
-            </Text>
-          </TouchableOpacity> */}
+              <Text
+                style={{
+                  ...CommonStyles.fontFamily,
+                  color:
+                    selectedCategoryId == 'services'
+                      ? Colors.primarySolid
+                      : 'black',
+                }}>
+                {'Servicios'}
+              </Text>
+            </TouchableOpacity> */}
         </View>
 
- 
-          <SearchComponent setSearchText={setSearchText} />
 
-          <View style={Platform.OS === 'ios' ? styles.filterContainer : styles.filterContainer2}>
-            <DropDownPicker
-              open={openCategorias}
-              value={valueCategorias}
-              items={categories}
-              setOpen={setOpenCategorias}
-              setValue={setValueCategorias}
-              setItems={setCategories}
-              containerStyle={styles.picker}
-              placeholder="Categorias"
-              schema={{label: 'name', value: '_id', testID: '_id'}}
-              labelStyle={{fontSize: adjust(8)}}
-              listItemLabelStyle={{fontSize: adjust(8)}}
-              arrowIconStyle={{height: 12, width: 12}}
-              textStyle={{
-                fontSize: adjust(8),
-              }}
-              labelProps={{
-                numberOfLines: 1,
-              }}
-              zIndex={1000}
-            />
+        <SearchComponent setSearchText={setSearchText} />
 
-            <DropDownPicker
-              open={open}
-              value={valueMaker}
-              items={marcas}
-              setOpen={setOpen}
-              setValue={setValueMaker}
-              setItems={setMarcas}
-              containerStyle={styles.picker}
-              placeholder="Marca"
-              schema={{label: 'name', value: '_id', testID: '_id'}}
-              labelStyle={{fontSize: adjust(8)}}
-              listItemLabelStyle={{fontSize: adjust(8)}}
-              arrowIconStyle={{height: 12, width: 12}}
-              textStyle={{
-                fontSize: adjust(8),
-              }}
-              labelProps={{
-                numberOfLines: 1,
-              }}
-              zIndex={1000}
-            />
-
-            {modelo ? (
-              <DropDownPicker
-                open={openModel}
-                value={valueModel}
-                items={modelo}
-                setOpen={setOpenModel}
-                setValue={setValueModel}
-                setItems={setModelo}
-                containerStyle={styles.picker}
-                placeholder="Modelo"
-                schema={{label: 'name', value: '_id', testID: '_id'}}
-                labelStyle={{fontSize: adjust(8)}}
-                listItemLabelStyle={{fontSize: adjust(8)}}
-                arrowIconStyle={{height: 12, width: 12}}
-                textStyle={{
-                  fontSize: adjust(8),
-                }}
-                labelProps={{
-                  numberOfLines: 1,
-                }}
-                zIndex={1000}
-              />
-            ) : (
-              <View style={styles.picker} />
-            )}
-          </View>
-          <TouchableOpacity
-            style={{justifyContent: 'flex-end', alignItems:'flex-end',right:5}}
-            onPress={resetFiltros}>
-            <Text>Restablecer filtros</Text>
-          </TouchableOpacity>
-        
-
-        <View style={{marginTop:3}}>
-          <FlatList
-            
-            ListEmptyComponent={<Empty />}
-            data={selectedCategoryId == 'products' ? productFilter : services}
-            contentContainerStyle={{marginTop: 20, flexGrow: 1}}
-            renderItem={({item, index}) => {
-              if (selectedCategoryId == 'products') {
-                return (
-                  <ProductCardComponent
-                    onViewDetail={() => {
-                      props?.navigation.navigate(
-                        CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL,
-                        {
-                          product: item,
-                          comision,
-                        },
-                      );
-                    }}
-                    onAddToCart={() => {
-                      addItemToCart(item);
-                    }}
-                    inCart={cart_item_ids?.includes(item?._id)}
-                    horizontal={true}
-                    data={item}
-                  />
-                );
-              } else {
-                return (
-                  <ServicesCardComponent
-                    onViewDetail={() => {
-                      props?.navigation?.navigate(
-                        SHARED_ROUTES.SERVICE_DETAIL,
-                        {
-                          service: item,
-                          isVendor: false,
-                          comision,
-                        },
-                      );
-                    }}
-                    onAddToCart={() => {
-                      addItemToCart(item);
-                    }}
-                    inCart={cart_item_ids?.includes(item?._id)}
-                    horizontal={true}
-                    data={item}
-                  />
-                );
-              }
+        <View style={Platform.OS === 'ios' ? styles.filterContainer : styles.filterContainer2}>
+          <DropDownPicker
+            open={openCategorias}
+            value={valueCategorias}
+            items={categories}
+            setOpen={setOpenCategorias}
+            setValue={setValueCategorias}
+            setItems={setCategories}
+            containerStyle={styles.picker}
+            placeholder="Categorias"
+            schema={{ label: 'name', value: '_id', testID: '_id' }}
+            labelStyle={{ fontSize: adjust(8) }}
+            listItemLabelStyle={{ fontSize: adjust(8) }}
+            arrowIconStyle={{ height: 12, width: 12 }}
+            textStyle={{
+              fontSize: adjust(8),
             }}
+            labelProps={{
+              numberOfLines: 1,
+            }}
+            zIndex={1000}
           />
+
+          <DropDownPicker
+            open={open}
+            value={valueMaker}
+            items={marcas}
+            setOpen={setOpen}
+            setValue={setValueMaker}
+            setItems={setMarcas}
+            containerStyle={styles.picker}
+            placeholder="Marca"
+            schema={{ label: 'name', value: '_id', testID: '_id' }}
+            labelStyle={{ fontSize: adjust(8) }}
+            listItemLabelStyle={{ fontSize: adjust(8) }}
+            arrowIconStyle={{ height: 12, width: 12 }}
+            textStyle={{
+              fontSize: adjust(8),
+            }}
+            labelProps={{
+              numberOfLines: 1,
+            }}
+            zIndex={1000}
+          />
+
+          {modelo ? (
+            <DropDownPicker
+              open={openModel}
+              value={valueModel}
+              items={modelo}
+              setOpen={setOpenModel}
+              setValue={setValueModel}
+              setItems={setModelo}
+              containerStyle={styles.picker}
+              placeholder="Modelo"
+              schema={{ label: 'name', value: '_id', testID: '_id' }}
+              labelStyle={{ fontSize: adjust(8) }}
+              listItemLabelStyle={{ fontSize: adjust(8) }}
+              arrowIconStyle={{ height: 12, width: 12 }}
+              textStyle={{
+                fontSize: adjust(8),
+              }}
+              labelProps={{
+                numberOfLines: 1,
+              }}
+              zIndex={1000}
+            />
+          ) : (
+            <View style={styles.picker} />
+          )}
+        </View>
+        <TouchableOpacity
+          style={{ justifyContent: 'flex-end', alignItems: 'flex-end', right: 5 }}
+          onPress={resetFiltros}>
+          <Text>Restablecer filtros</Text>
+        </TouchableOpacity>
+
+
+        <View style={{ marginTop: 3 }}>
+          {
+            isLoading ?  (
+              <Text>Cargando</Text>
+            ):(
+              <FlatList
+                ListEmptyComponent={<Empty />}
+                data={selectedCategoryId == 'products' ? productFilter : services}
+                contentContainerStyle={{ marginTop: 20, flexGrow: 1 }}
+                renderItem={({ item, index }) => {
+                  if (selectedCategoryId == 'products') {
+                    return (
+                      <ProductCardComponent
+                        onViewDetail={() => {
+                          props?.navigation.navigate(
+                            CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL,
+                            {
+                              product: item,
+                              comision,
+                            },
+                          );
+                        }}
+                        onAddToCart={() => {
+                          addItemToCart(item);
+                        }}
+                        inCart={cart_item_ids?.includes(item?._id)}
+                        horizontal={true}
+                        data={item}
+                      />
+                    );
+                  } else {
+                    return (
+                      <ServicesCardComponent
+                        onViewDetail={() => {
+                          props?.navigation?.navigate(
+                            SHARED_ROUTES.SERVICE_DETAIL,
+                            {
+                              service: item,
+                              isVendor: false,
+                              comision,
+                            },
+                          );
+                        }}
+                        onAddToCart={() => {
+                          addItemToCart(item);
+                        }}
+                        inCart={cart_item_ids?.includes(item?._id)}
+                        horizontal={true}
+                        data={item}
+                      />
+                    );
+                  }
+                }}
+              />
+            )
+          }
+         
         </View>
 
         {/* </ScrollView> */}
-        </View>
+      </View>
     </View>
   );
 };
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: 'white'},
+  container: { flex: 1, backgroundColor: 'white' },
   headerBackButton: {
     width: 35,
     height: 35,
@@ -342,20 +364,20 @@ const styles = StyleSheet.create({
     ...CommonStyles.horizontalCenter,
     ...CommonStyles.justifySpaceBetween,
   },
-  img: {width: '100%', height: 100},
-  ImageContainer: {flex: 1, backgroundColor: 'rgba(0,0,0,0.5)'},
+  img: { width: '100%', height: 100 },
+  ImageContainer: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)' },
   filterContainer2: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: 10,
     // zIndex:2
-   
+
   },
   filterContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: 10,
-    zIndex:20,
+    zIndex: 20,
   },
   picker: {
     width: deviceWidth / 3.5,

@@ -1,7 +1,7 @@
-import React,{ useContext, useEffect} from 'react';
-import {CUSTOMER_HOME_SCREEN_ROUTES, LOGIN_SIGNUP_FORGOT_ROUTES} from '../../util/constants';
-import {createStackNavigator} from '@react-navigation/stack';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import React, { useContext, useEffect } from 'react';
+import { CUSTOMER_HOME_SCREEN_ROUTES, LOGIN_SIGNUP_FORGOT_ROUTES } from '../../util/constants';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import CustomerHomeViewScreen from './customer.home-view.screen';
 import CustomerProductsViewScreen from './customer.products-view.screen';
 import CustomerServicesViewScreen from './customer.services-view.screen';
@@ -39,31 +39,110 @@ import { CartScreen } from './Cart/CartScreen';
 import { ChatScreen } from './Chat/ChatScreen';
 import { ProfileScreen } from './ProfileScreen';
 import { Platform } from 'react-native';
+import { ProductContext } from '../../util/context/Product/ProductContext';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 export const PartsServicesFunctionsDrawer = () => {
-  const {countCustomer,getNotificaciones,iosPermisoss,getToken} = useContext(NotificationContext);
+  const { 
+    countCustomer, 
+    getNotificaciones, 
+    iosPermisoss,
+    getToken,
+    deleteNotificaciones
+  } = useContext(NotificationContext);
+
+  const {getCategorias, getProducts, 
+    comision, getMarcas, getServices, getModelo, 
+    valueMaker,getComision 
+  } = useContext(ProductContext)
 
   useEffect(() => {
     if (Platform.OS === 'ios') {
-      
       iosPermisoss();
-      
     }
     getToken();
+  }, [])
+
+  useEffect(async () => {
+    let abortController = new AbortController();
     
-}, [])
+    if (!comision) {
+      getComision()
+    }
+
+    return () => {
+      abortController.abort();
+    }
+  }, [comision])
+
+  useEffect(() => {
+    let abortController = new AbortController();
+    getCategorias()
+    return () => {
+      // abortController.abort();  
+      abortController.abort();
+    }
+  }, [])
+
+  useEffect(async () => {
+    
+    let abortController = new AbortController();
+    getProducts()
+    return () => {
+      abortController.abort();
+    }
+  }, [])
+
+
+
+  useEffect(async () => {
+    let abortController = new AbortController();
+    getServices();
+    return () => {
+      abortController.abort();
+    }
+  }, [])
+
+
+  useEffect(async () => {
+
+
+    let abortController = new AbortController();
+    getMarcas();
+    return () => {
+      abortController.abort();
+    }
+
+
+  }, [])
+
+
+  useEffect(async () => {
+    let abortController = new AbortController();
+    if (valueMaker) {
+      getModelo(valueMaker);
+    }
+    return () => {
+      abortController.abort();
+    }
+  }, [valueMaker])
+
 
   return (
     <Drawer.Navigator
-      drawerContent={(props) => <CustomDrawerComponent {...props} countCustomer={countCustomer} getNotificaciones={getNotificaciones} /> }
+      drawerContent={(props) => <CustomDrawerComponent 
+        {...props} 
+        countCustomer={countCustomer} 
+        getNotificaciones={getNotificaciones} 
+        deleteNotificaciones={deleteNotificaciones}
+        />}
       initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
       screenOptions={{
         headerShown: false,
       }}>
-     
+
       <Drawer.Screen
         name={'Autopartes'}
         component={CustomerHomeStack}
@@ -91,7 +170,7 @@ export const PartsServicesFunctionsDrawer = () => {
       <Drawer.Screen
         name={'Pedidos'}
         component={OrdersNavigator}
-        
+
       />
       <Drawer.Screen
         name={'Reservaciones'}
@@ -114,28 +193,28 @@ export const PartsServicesFunctionsDrawer = () => {
           headerShown: false,
         }}
       />
-      
-      
+
+
     </Drawer.Navigator>
   );
 }
 const OrdersNavigator = () => {
   return (
     <Stack.Navigator
-    screenOptions={{headerShown: false}}
+      screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS} component={CustomerOrdersViewScreen}/>
-      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_DETAIL} component={CustomerOrderDetail}/>
+      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS} component={CustomerOrdersViewScreen} />
+      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_DETAIL} component={CustomerOrderDetail} />
     </Stack.Navigator>
   )
 }
 const CardsNavigator = () => {
   return (
     <Stack.Navigator
-    screenOptions={{headerShown: false}}
+      screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.CARDS} component={CustomerCardsScreen}/>
-      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.CREATE_CARD} component={CreateCardScreen}/>
+      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.CARDS} component={CustomerCardsScreen} />
+      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.CREATE_CARD} component={CreateCardScreen} />
     </Stack.Navigator>
   )
 }
@@ -143,13 +222,13 @@ const CardsNavigator = () => {
 const OrderStack = () => {
   return (
     <Stack.Navigator
-    screenOptions={{headerShown: false}}
+      screenOptions={{ headerShown: false }}
       initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
     >
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.CART}
         component={CustomerCartScreen}
-        // component={CartScreen}
+      // component={CartScreen}
       />
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ENVIO}
@@ -178,8 +257,8 @@ const OrderStack = () => {
 export const CustomerNotificationStack = () => {
   return (
     <Stack.Navigator
-      screenOptions={{headerShown: false}}
-      >
+      screenOptions={{ headerShown: false }}
+    >
       <Stack.Screen
         name={'NotificacionesHome'}
         component={CustomerNotificationViewScreen}
@@ -193,7 +272,7 @@ export const CustomerNotificationStack = () => {
       <Stack.Screen
         name={'OrdersHome'}
         component={CustomerHomeStack}
-        
+
       />
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_DETAIL}
@@ -206,7 +285,7 @@ export const CustomerNotificationStack = () => {
 export const CustomerHomeStack = () => {
   return (
     <Stack.Navigator
-      screenOptions={{headerShown: false}}
+      screenOptions={{ headerShown: false }}
       initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}>
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS}
@@ -222,8 +301,8 @@ export const CustomerHomeStack = () => {
         name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK}
         component={OrderStack}
       />
-     
-       <Stack.Screen
+
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.MAP_STORES}
         component={CustomerMapStores}
       />
@@ -231,11 +310,11 @@ export const CustomerHomeStack = () => {
         name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_DETAIL}
         component={CustomerOrderDetail}
       />
-       <Stack.Screen
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.MORE_PRODUCTS}
         component={CustomerMoreProductsScreen}
       />
-       <Stack.Screen
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL}
         component={CustomerProductDetailScreen}
       />
@@ -243,11 +322,11 @@ export const CustomerHomeStack = () => {
         name={CUSTOMER_HOME_SCREEN_ROUTES.STORE_SCREEN}
         component={CustomerStoreScreen}
       />
-       <Stack.Screen
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.BOOK_SERVICE}
         component={CustomerServiceBook}
       />
-      
+
       {/* <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SEARCH}
         component={CustomerSearchScreen}
@@ -257,7 +336,7 @@ export const CustomerHomeStack = () => {
         name={CUSTOMER_HOME_SCREEN_ROUTES.SEARCH}
         component={SearchScreen}
       />
-      
+
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SERVICE}
         component={CustomerServicesViewScreen}
@@ -300,7 +379,7 @@ export const CustomerHomeStack = () => {
 export const AutoPartsAndServices = () => {
   return (
     <Stack.Navigator
-      screenOptions={{headerShown: false}}
+      screenOptions={{ headerShown: false }}
       initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}>
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
@@ -316,18 +395,18 @@ export const AutoPartsAndServices = () => {
 
 const CustomerServicesStack = () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown:false}}
-    initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES?.SERVICE}
+    <Stack.Navigator screenOptions={{ headerShown: false }}
+      initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES?.SERVICE}
     >
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SERVICE}
         component={CustomerServicesViewScreen}
       />
-          <Stack.Screen
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.BOOK_SERVICE}
         component={CustomerServiceBook}
       />
-      <Stack.Screen/>
+      <Stack.Screen />
     </Stack.Navigator>
   )
 }
@@ -335,7 +414,7 @@ const CustomerServicesStack = () => {
 export const BookingsStack = () => {
   return (
     <Stack.Navigator
-      screenOptions={{headerShown: false}}
+      screenOptions={{ headerShown: false }}
       initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}>
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.APPOINTMENTS}

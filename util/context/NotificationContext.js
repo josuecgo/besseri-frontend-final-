@@ -154,6 +154,20 @@ export const NotificationProvider = ({children}) => {
        
     }
 
+    const deleteNotificaciones = async() => {
+
+      await dispatch({
+        type:'getNotification',
+        payload: {
+          notificaciones:[],
+          countRider:0,
+          count:0,
+          countCustomer:0,
+        }
+      });
+
+    }
+
     
     
       async function requestUserPermission() {
@@ -274,11 +288,9 @@ export const NotificationProvider = ({children}) => {
         value={{
             ...state,
             getNotificaciones,
-            // notificaciones,
+
             setNotificaciones,
-            // count,
-            // countRider,
-            // countCustomer,
+            deleteNotificaciones,
             getToken,
             showNotification,
             pushIos,

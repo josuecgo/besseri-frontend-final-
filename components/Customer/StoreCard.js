@@ -8,7 +8,7 @@ import { base_url } from '../../util/api/api_essentials';
 import Colors from '../../util/styles/colors';
 
 export const StoreCard = ({data,goStore}) => {
-    
+  
   return (
     <View style={styles.card}>
       <View

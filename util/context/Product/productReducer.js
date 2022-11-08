@@ -9,6 +9,7 @@ export const productReducer = (state, action) => {
             productos: action.payload.productos,
             // categorias:action.payload.categorias
         }
+        
         case 'filterProducts' : 
         return {
             ...state,
@@ -16,6 +17,7 @@ export const productReducer = (state, action) => {
             productFiltrado: action.payload.productos,
             
         }
+       
         case 'getCategorias' : 
         return {
             ...state,
@@ -37,7 +39,26 @@ export const productReducer = (state, action) => {
                 ...state,
                 marcas:action.payload.marcas
             }
-    
+        case 'getStore':
+           
+            return {
+                ...state,
+                store:action.payload.store
+            }
+        case 'productStore' : 
+            return {
+                ...state,
+                errorMessage:'',
+                productosStore: action.payload.productos,
+                // categorias:action.payload.categorias
+            }
+        case 'filterProductsStore' : 
+            return {
+                ...state,
+                errorMessage:'',
+                productFiltradoStore: action.payload.productFiltradoStore,
+                
+            }
         default:
             return state;
     }

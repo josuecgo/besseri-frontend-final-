@@ -20,7 +20,10 @@ const productInicialState = {
     modelo:null,
     comision:false,
     isLoading:false,
-    productFiltrado: false
+    productFiltrado: false,
+    store:[],
+    productosStore:[],
+    productFiltradoStore:false
 }
 
 
@@ -66,7 +69,6 @@ export const ProductProvider = ({children}) => {
                 
                 const apiCall = await axios.get(customer_api_urls.get_products);
     
-                
                 if (apiCall?.status === 200) {
                     await dispatch({
                         type:'getProductos',
@@ -96,6 +98,7 @@ export const ProductProvider = ({children}) => {
             }
         });
     }
+
 
     const getServices = useCallback(
         async() => {
@@ -252,91 +255,138 @@ export const ProductProvider = ({children}) => {
     }
     
 
-    useEffect(() => {
-        const cancelToken = axios.CancelToken;
-        const source = cancelToken.source();
-        getCategorias()
-        return () => {  
-            // abortController.abort();  
-            source.cancel();
-        }  
-       
-    }, [])
-    
-    useEffect(async() => {
-       
-            const CancelToken = axios.CancelToken;
-            const source = CancelToken.source(); 
-          
-            getProducts()
-            return () => {  
-                source.cancel();
-            }   
-        
-        
-        
-       
-    }, [])
 
-    useEffect(async() => {
-        const rolUser = await getUserType()
-        
-      
-            let abortController = new AbortController();
-            if (!state?.comision) {
+    const getProductStore = useCallback(
+        async(store) => {
+            try {
                 
-                getComision()
+                await dispatch({
+                    type:'getStore',
+                    payload: {
+                        store: store,
+                          
+                    }
+                });
+            } catch (e) {
+              
+              showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
             }
-            
-            return () => {  
-                abortController.abort();  
-            } 
-        
-       
-    }, [state?.comision])
+    },[])
 
-    useEffect(async() => {
-        const rolUser = await getUserType()
-        
-      
-            let abortController = new AbortController();
-            getMarcas();
-            return () => {  
-                abortController.abort();  
-            } 
-        
-       
-    }, [])
+    const filterProductStore = async(data) => {
+        // console.log(data,'--data');
+        await dispatch({
+            type:'filterProductsStore',
+            payload: {
+                productFiltradoStore:data,
+                // categorias: apiCall?.data?.data?.categories
+            }
+        });
+    }
+    const productStore = async(data) => {
+        console.log('--data');
+        // await dispatch({
+        //     type:'productStore',
+        //     payload: {
+        //         productosStore:data?.products,
+        //         // minimumPrice:data?.minPrice,
+        //         // categories:data?.minPrice,
+        //         // categorias: apiCall?.data?.data?.categories
+        //     }
+        // });
+    }
 
-    useEffect(async() => {
-        const rolUser = await getUserType()
+    
+
+    // const storeProduct = useCallback(
+    //     async(store) => {
+    //         try {
+    //             console.log(store?._id,'storeproduct');
+    //             const apiCall = await axios.get(`${customer_api_urls.get_store_data}/${store?._id}`);
         
-        if(!rolUser === 'vendor' && !rolUser === 'rider' ){
-            let abortController = new AbortController();
-            getServices();
-            return () => {  
-                abortController.abort();  
-            } 
+    //             let cate = apiCall.data?.data?.categories;
+                  
+                   
+    //             // let result  = cate.filter((elem, index) => {
+    //             //         const firstIndex = cate.findIndex(({ _id, name }) => {
+    //             //             return _id === elem._id && name === elem.name
+    //             //         });
+    //             //         return firstIndex === index
+    //             // });
+                    
+        
+                   
+    //             console.log({status:apiCall?.status});
+    //             if (apiCall?.status === 200) {
+    //                 console.log('llamando productStore');
+    //                 // setProductsData(apiCall.data.data.products);
+    //                 await productStore({
+    //                     // productosStore:apiCall.data.data?.products,
+    //                     productosStore:[],
+    //                     minimumPrice:apiCall.data.data.minPrice,
+    //                     categories:[],
+    //                 })
+                    
+    //                 // setMinimumPrice(apiCall.data.data.minPrice);
+    //                 // setServices(apiCall?.data?.data?.services);
+
+    //                 filterProductStore(apiCall.data.data.products);
+                   
+                    
+    //             }
+
+    //           } catch(e) {
+    //             // console.log({getProducts:e})
+    //             showToaster('No hay conexion con el servidor - 01STR');
+               
+    //         }
+    // },[state?.store])
+
+    
+
+    const storeProduct = async(store) => {
+        try {
+            console.log(store?.storeName,'storeproduct');
+            const apiCall = await axios.get(`${customer_api_urls.get_store_data}/${store?._id}`);
+    
+            let cate = apiCall.data?.data?.categories;
+              
+               
+            // let result  = cate.filter((elem, index) => {
+            //         const firstIndex = cate.findIndex(({ _id, name }) => {
+            //             return _id === elem._id && name === elem.name
+            //         });
+            //         return firstIndex === index
+            // });
+                
+    
+               
+            console.log({status:apiCall?.status});
+            if (apiCall?.status === 200) {
+                console.log('llamando productStore');
+                // setProductsData(apiCall.data.data.products);
+                await productStore({
+                    // productosStore:apiCall.data.data?.products,
+                    productosStore:[],
+                    minimumPrice:apiCall.data.data.minPrice,
+                    categories:[],
+                })
+                
+                // setMinimumPrice(apiCall.data.data.minPrice);
+                // setServices(apiCall?.data?.data?.services);
+
+                filterProductStore(apiCall.data.data.products);
+               
+                
+            }
+
+          } catch(e) {
+            // console.log({getProducts:e})
+            showToaster('No hay conexion con el servidor - 01STR');
+           
         }
-       
-    }, [])
-    
-    useEffect(async() => {
-        const rolUser = await getUserType()
-        
-       
-            let abortController = new AbortController();
-            if (valueMaker) {
-
-                getModelo(valueMaker); 
-            }
-            return () => {  
-                abortController.abort();  
-            } 
-        
-        
-    }, [valueMaker])
-    
+   
+    }
 
    
     
@@ -356,8 +406,17 @@ export const ProductProvider = ({children}) => {
             resetFiltro,
             searchCall,
             filterProduct,
-            dowload
-          
+            dowload,
+            getProducts,
+            getCategorias,
+            getComision,
+            getServices,
+            getMarcas,
+            getModelo,
+            getProductStore,
+            filterProductStore,
+            productStore,
+            storeProduct
         }}
         >
             {children}

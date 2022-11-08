@@ -61,6 +61,7 @@ const CustomDrawerComponent = React.memo((props) => {
   const {routes, index} = state;
   const count = props.countCustomer;
   const getNotificaciones = props.getNotificaciones;
+  const {deleteNotificaciones} = props;
   const focusedRoute = routes[index].name;
  
  
@@ -149,9 +150,8 @@ const CustomDrawerComponent = React.memo((props) => {
               /> */}
               <DrawerItem
               onPress={async() => {
-                
+                deleteNotificaciones()
                 await logout();
-                getNotificaciones()
                 props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS,{reload:true});
                 showToaster('Cerraste sesión')
               }}
@@ -180,6 +180,7 @@ const CustomDrawerComponent = React.memo((props) => {
             <MaterialIcons size={size} color={color} name="login" />
           )}
         />
+        
         )
         }
       </View>
