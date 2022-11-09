@@ -4,6 +4,8 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Colors from '../../util/styles/colors';
 import Modal from 'react-native-modal';
 import SpinKit from 'react-native-spinkit';
+
+
 const LoaderComponent = ({isVisible}) => {
   
   return (

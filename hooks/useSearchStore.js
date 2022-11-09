@@ -43,7 +43,7 @@ export const useSearchStore = (  ) => {
             //     });
             //     return firstIndex === index
             // });
-            
+            console.log(apiCall.status);
            
             setCategories(cate);
             setProductsData(apiCall?.data?.data?.products);
@@ -115,70 +115,74 @@ export const useSearchStore = (  ) => {
     
 
     
-
-
     const makerFilter = () => {
-        if (servicios) {
-            servicesFilter();
-            return;
-        }
-
-        
+       
+     
         if (valueMaker) {
             if (valueModel) {
                
                 let itemData;
                 let itemModel;
-                const marca = productos.filter((item) => {
+                const marca = productsData.filter((item) => {
                     itemData = item.maker ? item?.maker?._id : '';
                     let searchTextData = valueMaker;
-                   
-                    return itemData.indexOf(searchTextData) > -1;
+                    let searchTextData2 = valueModel;
+                    let match = matchesForModel(searchTextData2,item);
+                    return itemData.indexOf(searchTextData) > -1 || match;
                 })
                 
                 const modelo = marca.filter((item) => {
                     
                     itemModel = item.model ? item?.model?._id : '';
                     let searchTextData = valueModel;
-                   
-                    return itemModel.indexOf(searchTextData) > -1;
+
+                    let match = matchesForModel(searchTextData,item);
+                    
+                    return itemModel.indexOf(searchTextData) > -1 || match;
                 })
-
-
 
                 setProductFilter(modelo ? modelo : []);
-                if (valueCategorias) {
-                    categoriaFilter(modelo ? modelo : []);
-                }
+                
                
             } else {
-                setValueModel(null);
-               
-                const marca = productos.filter((item) => {
-                    let itemData = item.maker ? item?.maker?._id : '';
-                    let searchTextData = valueMaker;
-                    return itemData.indexOf(searchTextData) > -1;
-                })
-               
-                setProductFilter(marca ? marca : []);
-                if (valueCategorias) {
-                    categoriaFilter(marca ? marca : []);
-                }
+                
+            const marca = productsData.filter((item) => {
+                let itemData = item.maker ? item?.maker?._id : '';
+                
+                let searchTextData = valueMaker;
+                
+                return itemData.indexOf(searchTextData) > -1  ;
+            })
+                
+            setProductFilter(marca ? marca : []);
+                
             }
-        }else{  
-            
-            setProductFilter(productos);
-            if (valueCategorias) {
-                categoriaFilter();
-            }
-           
-        }
-        
 
-       
+            
+          
+        }else{  
+          
+            setProductFilter(productos)
+        }
        
     };
 
+    const matchesForModel = (id,searchId) => {
+        
+        if (searchId?.matchs.length > 0) {
+            // console.log({id,searchId:searchId?.matchs});
+            const match = searchId?.matchs.filter(element => element?.model === id);
+            if (match.length > 0) {
+                
+                return searchId;
+            }else{
+                return false;
+            }
+     
+        }
+        return false;
+        
+    }
     const servicesFilter = ()=> {
         if (valueMaker) {
             if (valueModel) {
@@ -255,12 +259,12 @@ export const useSearchStore = (  ) => {
     }
 
     const resetFiltros = () => {
-        setProductFilter(productos);
+        setProductFilter(productsData);
         setValueCategorias(null);
         setValueMaker(null);
         setValueModel(null);
 
-        getStore(store);
+        // getStore(store);
         
 
     }
@@ -316,7 +320,10 @@ export const useSearchStore = (  ) => {
     }, [valueMaker]);
    
   
+    useEffect(() => {
 
+        makerFilter();
+    }, [valueMaker,valueModel])
     
     
     return {
