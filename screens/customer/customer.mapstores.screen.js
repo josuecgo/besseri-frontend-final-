@@ -38,7 +38,7 @@ export default function CustomerMapStores(props) {
         setLocation(position.coords);
         getStores(position.coords);
       },
-      (error) => alert(error.message),
+      (error) => {},
 
     );
     const watchID = Geolocation.watchPosition((position) => {
@@ -67,7 +67,7 @@ export default function CustomerMapStores(props) {
         })
       } else {
         // console.log("location permission denied")
-        showToaster("Permiso de ubicación denegado");
+        // showToaster("Permiso de ubicación denegado");
       }
     } catch (e) {
       showToaster('No pude obtener tu ubicación')
@@ -181,20 +181,6 @@ export default function CustomerMapStores(props) {
       <View style={{ flex: 1, width: '100%' }}>
 
         <View style={{ flex: 1, position: 'absolute', bottom: 25, alignSelf: 'center', paddingLeft: 5 }}>
-          {/* <FlatList
-          contentContainerStyle={{flexGrow:1}}
-          data={stores}
-          horizontal
-          keyExtractor={item => item?._id}
-          renderItem={itemData => (
-            <StoreCard
-            data={itemData.item}
-            goStore={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.STORE_SCREEN,{data:itemData.item})}
-            />
-          )}
-          // getItemCount={(index) => console.log(index) }
-         
-          /> */}
           <Carousel
             // ref={(c) => { this._carousel = c; }}
             ListEmptyComponent={emptyStore}
