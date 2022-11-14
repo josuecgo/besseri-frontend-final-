@@ -152,7 +152,7 @@ const CustomDrawerComponent = React.memo((props) => {
               onPress={async() => {
                 deleteNotificaciones()
                 await logout();
-                props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS,{reload:true});
+                props.navigation.replace(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS,{reload:true});
                 showToaster('Cerraste sesión')
               }}
               label="Logout"
@@ -170,7 +170,7 @@ const CustomDrawerComponent = React.memo((props) => {
            
             await logout();
             getNotificaciones()
-            props.navigation.navigate('AuthStack');
+            props.navigation.replace('AuthStack');
           }}
           label="Iniciar sesión"
           activeTintColor={Colors.terciarySolid}

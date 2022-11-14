@@ -1,5 +1,5 @@
 import {View, StyleSheet,Text, ActivityIndicator} from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import {Box, CheckIcon, Select} from 'native-base';
 import {HeaderTitle} from '../../../components/Customer/HeaderTitle';
 import {useForm} from '../../../hooks/useForm';
@@ -10,31 +10,63 @@ import { ButtonFooter } from '../../../components/button/ButtoFooter';
 import { useCompras } from '../../../hooks/useCompras';
 import { getUserId } from '../../../util/local-storage/auth_service';
 import { CUPON_ROUTES, showToaster } from '../../../util/constants';
+import CheckboxTerms from '../../../components/button/CheckboxTerms';
 
 export const CrearEditCuponScreen = ({navigation}) => {
   const {form, onChange} = useForm({
     name: '',
     type: '',
     descuento: '',
+    minCompra:''
+    
   });
   const {createCupones,isLoading} = useCompras();
+  const [isSelected, setIsSelected] = useState(false);
+
 
   const enviarCupon = async() => {
+    
     const userId = await getUserId()
     if (form?.name && form?.type && form?.descuento && userId) {
-      const result = await createCupones({
-        ...form,
-        creator:userId
-      })
-      if (result == 200) {
-        navigation.replace(CUPON_ROUTES.HOME_CUPON)
-      }
+    
+        const result = await createCupones({
+          ...form,
+          creator:userId,
+          first:isSelected
+        })
+        if (result == 200) {
+          navigation.replace(CUPON_ROUTES.HOME_CUPON)
+        }
     }else{
       showToaster('Faltan campos')
     }
       
    
   }
+
+  const handlePress = () => {
+    
+    setIsSelected(!isSelected)
+   
+  };
+
+  const onChanged = (text,inp) => {
+    let newText = '';
+    let numbers = '0123456789';
+
+    for (var i=0; i < text.length; i++) {
+        if(numbers.indexOf(text[i]) > -1 ) {
+            newText = newText + text[i];
+        }
+        else {
+            // your call back function
+            alert("Por favor solo inserte numeros");
+        }
+    }
+    onChange(newText, inp)
+  }
+
+  
 
   return (
     <View style={styles.content}>
@@ -57,11 +89,21 @@ export const CrearEditCuponScreen = ({navigation}) => {
         <InputFieldComponent
           keyboardType={KEYBOARD_TYPES.NUMBER_PAD}
           onChangeText={inputText => {
-            onChange(inputText, 'descuento');
+            onChanged(inputText, 'descuento');
           }}
           placeholderText={'Descuento'}
           secureTextEntry={false}
           value={form?.descuento}
+          // nextFieldRef={emailRef}
+          returnType="next"
+        />
+        <InputFieldComponent
+          // keyboardType={KEYBOARD_TYPES.NUMBER_PAD}
+          keyboardType='numeric'
+          onChangeText={(text)=> onChanged(text,'minCompra')}
+          placeholderText={'Minimo de compra (opcional)'}
+          secureTextEntry={false}
+          value={form?.minCompra}
           // nextFieldRef={emailRef}
           returnType="next"
         />
@@ -83,7 +125,15 @@ export const CrearEditCuponScreen = ({navigation}) => {
             >
             <Select.Item label="% Porcentaje" value="%" />
             <Select.Item label="$ Cantidad" value="$" />
-          </Select>
+        </Select>
+        <CheckboxTerms 
+          isSelected={isSelected}
+          roleName={'first'} 
+          text={'Aplica solo a primeras compras'} 
+          txtColor='black' 
+          handlePress={handlePress} 
+          
+          />
       </Box>
       {
         !isLoading ? (

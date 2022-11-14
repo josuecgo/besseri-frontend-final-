@@ -9,19 +9,55 @@ import { moneda } from '../../util/Moneda';
 
 export const CuponCard = ({ data,editarCupon,eliminarCupon }) => {
 
-
     return (
         <View style={styles.container} >
 
             <View>
                 <Text style={styles.name} >Cupón: {data?.name}</Text>
-                {
-                    data?.type === '%' ? (
-                        <Text style={styles.txt} >{data?.descuento}{data?.type} de descuento </Text>
-                    ) : (
-                        <Text style={styles.txt} >{moneda(data?.descuento)} pesos de descuento  </Text>
-                    )
-                }
+                <View style={styles.first} >
+                    <Text style={styles.txt} >Solo primera compra: </Text>
+                    <View style={ {
+                        backgroundColor: data?.first ? Colors.terciarySolid : Colors.alertRed,
+                        borderRadius:5,
+                        padding:4
+                    }}>
+                    <Text style={[
+                        styles.txtFirst,
+                        {color:data?.first ? 'white' : Colors.black}
+                    ]} > 
+                        { data?.first ? 'Si' : 'No' } 
+                    </Text>
+                    </View>
+                   
+                </View>
+                <View style={styles.first} >
+                    <Text style={styles.txt} >Mínimo de compra: </Text>
+                    <View style={ {
+                        backgroundColor: data?.first ? Colors.terciarySolid : Colors.alertRed,
+                        borderRadius:5,
+                        padding:4
+                    }}>
+                    <Text style={[
+                        styles.txtFirst,
+                        
+                    ]} > 
+                        { data?.minCompra ? moneda(data?.minCompra) : '$0.00' } 
+                    </Text>
+                    </View>
+                   
+                </View>
+
+                <View style={styles.first} >
+                    {
+                        data?.type === '%' ? (
+                            <Text style={styles.txt} >{data?.descuento}{data?.type} de descuento. </Text>
+                        ) : (
+                            <Text style={styles.txt} >{moneda(data?.descuento)} pesos de descuento.  </Text>
+                        )
+                    }  
+                </View>
+                
+                
 
 
             </View>
@@ -52,7 +88,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: Colors.white,
         marginHorizontal: 10,
-        padding: 5,
+        padding: 3,
         elevation: 1,
         justifyContent:'space-between',
         flexDirection:'row',
@@ -61,7 +97,16 @@ const styles = StyleSheet.create({
     name:{
         fontSize: adjust(15)
     },
+    first:{
+        flexDirection:'row',
+        alignItems:'center',
+        marginVertical:2
+    },
+    txtFirst:{
+        fontSize: adjust(9),
+    },
     txt: {
-        fontSize: adjust(12)
+        fontSize: adjust(12),
+        color:Colors.textPrimary
     }
 })

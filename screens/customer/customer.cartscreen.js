@@ -46,11 +46,9 @@ const CustomerCartScreen = (props) => {
   const [deliveryDistance,setDeliveryDistance] = useState(null);
   const [isLogin , setIsLogin  ] = useState(false)
   let businessIds = [];
-  const {cupon} = useCart()
   // const [totalAmount, setTotalAmount] = useState(false)
 
 
-  
  
   useEffect(async() => {
     let abortController = new AbortController();

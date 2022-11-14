@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import * as CartActions from '../util/ReduxStore/Actions/CustomerActions/CartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { showToaster } from '../util/constants';
 
 import { useCompras } from '../hooks/useCompras';
+import { ProductContext } from '../util/context/Product/ProductContext';
 
 
 
@@ -15,12 +16,15 @@ export const useCart = () => {
     const montoTotal = useSelector(state => state.cart.total_amount);
     const businessId = useSelector(state => state?.cart?.businessId);
     const [businessProfiles, setBusinessProfiles] = useState([]);
-
+    const {
+      comision,
+    } = useContext(ProductContext);
     const [inCart, setInCart] = useState(false)
     const {aplicarCupones,isLoading} = useCompras()
     const [aplicado, setAplicado] = useState('')
     const [cupon, setCupon] = useState(null)
 
+    
     
     const addItemToCart = (item) => {
         
@@ -82,8 +86,8 @@ export const useCart = () => {
     async (txtCupon) => {
         
       try {
-          
-        const result = await aplicarCupones(txtCupon);
+        const total = Number(montoTotal) + Number((comision * montoTotal) / 100)
+        const result = await aplicarCupones(txtCupon,total);
         
         
         if (result?.status == 200) {
@@ -98,7 +102,7 @@ export const useCart = () => {
           return {status:e?.response?.status}
         }
       }, 
-  []);
+  [montoTotal]);
 
 
   const borrarDescuento = async() => {

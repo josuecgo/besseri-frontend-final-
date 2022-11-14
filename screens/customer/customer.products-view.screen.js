@@ -20,13 +20,13 @@ const CustomerProductsViewScreen = React.memo((props) => {
 
   const [open, setOpen] = useState(false);
   const [openModel, setOpenModel] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false)
   const {
     categorias,
     comision,modelo,
     setModelo,marcas,
     setMarcas,valueMaker, setValueMaker,
-    valueModel, setValueModel,resetFiltro,productFiltrado
+    valueModel, setValueModel,resetFiltro,productFiltrado,getProducts,loading
   } = useContext(ProductContext);
 
   
@@ -159,6 +159,12 @@ const CustomerProductsViewScreen = React.memo((props) => {
               renderItem={memorizedValue}
               ListFooterComponent={<View style={{width:'100%',marginBottom:10,height:deviceHeight * 20 / 100}} />}
               showsVerticalScrollIndicator={false}
+              onRefresh={() => {
+                
+                getProducts();
+
+              }}
+              refreshing={loading}
               />
              
             ):(

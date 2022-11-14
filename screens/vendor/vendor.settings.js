@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Platform, Text, StyleSheet, TouchableOpacity, View, Alert } from 'react-native';
 import CommonStyles from '../../util/styles/styles';
 import Colors from '../../util/styles/colors';
@@ -13,12 +13,16 @@ import Loader from '../../components/Loader/Loader.component'
 import { LOGIN_SIGNUP_FORGOT_ROUTES, MAIN_ROUTES, showToaster, VENDOR_DETAILS_ROUTES } from '../../util/constants';
 import { deviceHeight, deviceWidth } from '../../util/Dimentions';
 import { HeaderBackground } from '../../components/Background/HeaderBackground';
+import { NotificationContext } from '../../util/context/NotificationContext';
 
 
 
 const VendorSettingsScreen = ({ navigation }) => {
     const [showLoader, setShowLoader] = useState(false);
-    
+    const { 
+
+        deleteNotificaciones
+      } = useContext(NotificationContext);
     const commonTextStyle = {
         fontSize: 18,
         color: Colors.white,
@@ -38,6 +42,7 @@ const VendorSettingsScreen = ({ navigation }) => {
                    const logoutUser =  await logout(); 
                    setShowLoader(false);
                    if(logoutUser) {
+                       await deleteNotificaciones()
                        navigation.replace(MAIN_ROUTES.CUSTOMER_STACK);
                    } else {
                        showToaster('Algo salió mal, inténtalo de nuevo más tarde. :/')

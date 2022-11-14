@@ -78,12 +78,12 @@ export const useCompras = () => {
                return e?.response?.status
             }
     }
-    const aplicarCupones = async (name) => {
+    const aplicarCupones = async (name,total) => {
             setLoading(true)
             try {
-                // console.log(name);
+                
                 const id = await getUserId();
-                const apiCall = await axios.post(`${vendor_api_urls.search_cupones}/${id}`,{name});
+                const apiCall = await axios.post(`${vendor_api_urls.search_cupones}/${id}`,{name,total});
                
                 setLoading(false)
                 return {cupon:apiCall.data,status:apiCall.status}

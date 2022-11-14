@@ -97,13 +97,13 @@ export const PartsServicesFunctionsDrawer = () => {
 
 
 
-  useEffect(async () => {
-    let abortController = new AbortController();
-    getServices();
-    return () => {
-      abortController.abort();
-    }
-  }, [])
+  // useEffect(async () => {
+  //   let abortController = new AbortController();
+  //   getServices();
+  //   return () => {
+  //     abortController.abort();
+  //   }
+  // }, [])
 
 
   useEffect(async () => {

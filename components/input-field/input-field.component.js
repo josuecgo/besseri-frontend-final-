@@ -39,6 +39,8 @@ const InputFieldComponent = forwardRef(
       setFocused(false);
     };
 
+    
+
     return (
       <View style={{alignItems:'center'}} >
         <View

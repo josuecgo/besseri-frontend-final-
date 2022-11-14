@@ -55,6 +55,7 @@ const CustomerSignUpScreen = ({navigation}) => {
   const phoneNumberRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
+  
   const onChangeText = (inputText, key) => {
     setUserCredentials({
       ...userCredentials,

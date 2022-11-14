@@ -10,6 +10,8 @@ import { useSelector } from 'react-redux';
 import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants';
 import { adjust, deviceWidth } from '../../util/Dimentions';
 import { useCart } from '../../hooks/useCart';
+import axios from 'axios';
+import { customer_api_urls } from '../../util/api/api_essentials';
 
 const ProductListing = ({category,products,navigation,comision}) => {
   

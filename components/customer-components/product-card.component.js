@@ -39,7 +39,19 @@ const ProductCardComponent = ({
   } = useContext(ProductContext);
   // const [comision, setComision] = useState(10)
 
-
+  const handleChange = async() => {
+   
+    const stock = await axios.get(`${customer_api_urls.inStock_product}/${data._id}`)
+    
+    if (stock?.data?.product) {
+      onAddToCart(data)
+      
+    }else{
+      showToaster('Producto sin existencias, lamentamos el inconveniente.')
+    }
+   
+   
+  }
 
   
   if (horizontal) {
@@ -80,7 +92,7 @@ const ProductCardComponent = ({
             </Text>
             <Text style={{color: 'grey',textTransform:'uppercase',fontSize:adjust(10)}}>{data?.maker?.name}</Text>
             <Text style={{color: 'grey'}}>{data?.model?.name}</Text>
-            <TouchableOpacity onPress={onAddToCart}>
+            <TouchableOpacity onPress={handleChange}>
               <Text
                 style={{
                   ...CommonStyles.fontFamily,
@@ -167,7 +179,7 @@ const ProductCardComponent = ({
 
           {cartProduct ? null : (
             <TouchableOpacity
-              onPress={onAddToCart}
+              onPress={handleChange}
               style={styles.addToCartIcon}>
               {inCart ? (
                 <Ionicons name="cart" color={Colors.white} size={25} />

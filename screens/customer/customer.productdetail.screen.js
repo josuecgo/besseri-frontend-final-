@@ -32,16 +32,25 @@ const CustomerProductDetailScreen = (props) => {
   const {top} = useSafeAreaInsets()
   const {addItemToCart,inTheCart} = useCart()
   const isChange = useRef(false);
-
+  const [isDisable, setIsDisable] = useState(false);
 
   useEffect(() => {
     setEnCarrito(inTheCart(product))
   }, [isChange.current])
 
  
-  const handleChange = () => {
-    addItemToCart(product)
-    isChange.current = !isChange.current
+  const handleChange = async() => {
+    setIsDisable(true)
+    const {data} = await axios.get(`${customer_api_urls.inStock_product}/${product._id}`)
+    
+    if (data?.product) {
+      addItemToCart(product)
+      isChange.current = !isChange.current
+    }else{
+      showToaster('Producto sin existencias, lamentamos el inconveniente.')
+    }
+    setIsDisable(false)
+   
   }
 
   const getBusinessDetails = async() => {
@@ -83,7 +92,6 @@ const CustomerProductDetailScreen = (props) => {
     );
   };
 
-  
 
   return (
     <>
@@ -188,8 +196,13 @@ const CustomerProductDetailScreen = (props) => {
 
             <TouchableOpacity
             onPress={() => {
+              // Linking.openURL(`mailto:${business?.email}? subject=Golf 1.8&body=Golf`)
+           
                 // props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.CHAT_SCREEN,product)
-                Linking.openURL(`mailto:${business?.email}`);
+                // Linking.openURL(`mailto:${business?.email}`);
+                Linking.openURL(`mailto:${business?.email}?subject=''&body=Producto:${product?.name}
+                Marca:${product?.model?.maker?.name}
+                Modelo: ${product?.model.name}`)
             }}
             style={{
               marginVertical:10,
@@ -207,6 +220,7 @@ const CustomerProductDetailScreen = (props) => {
 
 
               <ButtonComponent
+              disabled={isDisable}
                 buttonText={
                   enCarrito
                     ? 'QUITAR DEL CARRITO'

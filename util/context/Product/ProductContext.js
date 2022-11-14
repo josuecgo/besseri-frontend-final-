@@ -66,7 +66,7 @@ export const ProductProvider = ({children}) => {
     const getProducts = useCallback(
         async() => {
             try {
-                
+                setLoading(true)
                 const apiCall = await axios.get(customer_api_urls.get_products);
     
                 if (apiCall?.status === 200) {
@@ -81,10 +81,11 @@ export const ProductProvider = ({children}) => {
                     filterProduct(apiCall.data.data.products)
                 }
 
+                setLoading(false)
               } catch(e) {
                 // console.log({getProducts:e})
                 showToaster('No hay conexion con el servidor - 01');
-               
+                setLoading(false)
             }
     },[])
 
@@ -102,24 +103,24 @@ export const ProductProvider = ({children}) => {
 
     const getServices = useCallback(
         async() => {
-            try {
-                const apiCall = await axios.get(customer_api_urls.get_services);
-                if (apiCall?.status == 200) {
-                    dispatch({
-                        type:'getServicios',
-                        payload: {
-                            servicios: apiCall.data.data,
+            // try {
+            //     const apiCall = await axios.get(customer_api_urls.get_services);
+            //     if (apiCall?.status == 200) {
+            //         dispatch({
+            //             type:'getServicios',
+            //             payload: {
+            //                 servicios: apiCall.data.data,
                            
-                        }
-                    });
-                }
+            //             }
+            //         });
+            //     }
 
               
-              } catch(e) {
-                showToaster('No hay conexion con los servicios')
-                // console.log({getServices:e});
+            //   } catch(e) {
+            //     showToaster('No hay conexion con los servicios')
+            //     // console.log({getServices:e});
                 
-              }
+            //   }
     },[])
 
     const getComision = useCallback(
@@ -250,7 +251,7 @@ export const ProductProvider = ({children}) => {
         setModelo(false);
         getMarcas();
         getProducts();
-        getServices();
+        // getServices();
 
     }
     
@@ -416,7 +417,8 @@ export const ProductProvider = ({children}) => {
             getProductStore,
             filterProductStore,
             productStore,
-            storeProduct
+            storeProduct,
+            loading
         }}
         >
             {children}
