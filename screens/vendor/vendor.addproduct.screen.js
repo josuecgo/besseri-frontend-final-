@@ -41,16 +41,16 @@ import {
   base_url,
   vendor_api_urls,
 } from '../../util/api/api_essentials';
-import ImagePicker, {ImageOrVideo} from 'react-native-image-crop-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 import {useRoute} from '@react-navigation/native';
 import {adjust, deviceHeight, deviceWidth} from '../../util/Dimentions';
 import {HeaderBackground} from '../../components/Background/HeaderBackground';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { screenFocusProduct, stringIsEmpty } from '../../util/helpers/StatusText';
-import { AddImage } from '../../components/button/AddImage';
-import { ProductContext } from '../../util/context/Product/ProductContext';
+import { RenderItemAplication } from '../../components/Vendor/RenderItemAplication';
 
-const {width, height} = Dimensions.get('screen');
+
+const {width} = Dimensions.get('screen');
 
 
 export const CREDENTIAL_KEYS = {
@@ -63,6 +63,7 @@ export const CREDENTIAL_KEYS = {
   ESTIMATED_DELIVERY: 'Estimated Delivery',
   PRODUCT_IMAGE: 'Product Image',
   PRODUCT_MODEL: 'Product Model',
+  PRODUCT_APLICATION: 'Product Aplication',
   PRODUCT_CONDITION: 'Product Conditon',
   PRODUCT_MAKER: 'Product Maker',
   PRODUCT_CATEGORY: 'Product Category',
@@ -77,6 +78,7 @@ export const SCREEN_TYPES = {
   ESTIMATED_DELIVERY: 'Tiempo de entrega',
   CHOOSE_CATEGORY: 'Elegir la categoría',
   CHOOSE_MODEL: 'Elegir modelo',
+  CHOOSE_APLICATION: 'Elegir año compatible',
   PRODUCT_CONDITION: 'Condición del producto',
   PRODUCT_SUMMARY: 'Resumen del producto',
   CHOOSE_SUB_CATEGORY: 'Subcategoría',
@@ -89,6 +91,7 @@ const HEADER_TITLE = {
   [SCREEN_TYPES?.ESTIMATED_DELIVERY]: '¿Tiempo de entrega del producto?',
   [SCREEN_TYPES?.CHOOSE_MAKER]: '¿Quién es el fabricante del producto?',
   [SCREEN_TYPES?.CHOOSE_MODEL]: '¿Cuál es el modelo del producto?',
+  [SCREEN_TYPES?.CHOOSE_APLICATION]: '¿Cuál es el año del vehiculo compatible?',
   [SCREEN_TYPES?.CHOOSE_CATEGORY]: '¿Cuál es la categoría del producto?',
   [SCREEN_TYPES?.CHOOSE_SUB_CATEGORY]: '¿Cuál es la subcategoría del producto?',
   [SCREEN_TYPES?.PRODUCT_CONDITION]: '¿Cuál es el estado del producto?',
@@ -122,6 +125,7 @@ const VendorAddProductScreen = ({navigation}) => {
       : '',
     [CREDENTIAL_KEYS.PRODUCT_MAKER]: isEditMode ? toBeEditedProduct?.maker : '',
     [CREDENTIAL_KEYS.PRODUCT_MODEL]: isEditMode ? toBeEditedProduct?.model : '',
+    [CREDENTIAL_KEYS.PRODUCT_APLICATION]: isEditMode ? toBeEditedProduct?.aplication : '',
     [CREDENTIAL_KEYS?.PRODUCT_BRAND]: isEditMode
       ? toBeEditedProduct?.brand
       : '',
@@ -132,6 +136,7 @@ const VendorAddProductScreen = ({navigation}) => {
   const [selectedBrand, setselectedBrand] = useState(
     isEditMode ? toBeEditedProduct?.brand : null,
   );
+  const [aplication, setAplication] = useState([{de:2001,al:2006}]);
   const [models, setModels] = useState([]);
   const [makers, setMakers] = useState([]);
   const [brands, setBrands] = useState([]);
@@ -149,6 +154,7 @@ const VendorAddProductScreen = ({navigation}) => {
   const isDeliveryScreen = currentScreen == SCREEN_TYPES?.ESTIMATED_DELIVERY;
   const isChooseMaker = currentScreen == SCREEN_TYPES?.CHOOSE_MAKER;
   const isChooseModel = currentScreen == SCREEN_TYPES?.CHOOSE_MODEL;
+  const isChooseAplication = currentScreen == SCREEN_TYPES?.CHOOSE_APLICATION;
   const isChooseCategory = currentScreen == SCREEN_TYPES?.CHOOSE_CATEGORY;
   const isProductCondition = currentScreen == SCREEN_TYPES?.PRODUCT_CONDITION;
   const isUploadImage = currentScreen == SCREEN_TYPES?.UPLOAD_IMAGE;
@@ -171,7 +177,7 @@ const VendorAddProductScreen = ({navigation}) => {
       name:'Dia siguiente'
     },
   ]
-
+  const [pantallaSelect, setpantallaSelect] = useState('')
 
 
   const textinputVal = isProductNameScreen
@@ -238,6 +244,7 @@ const VendorAddProductScreen = ({navigation}) => {
       alert('Algo salió mal');
     }
   };
+
   useEffect(() => {
     getBrands();
   }, []);
@@ -293,6 +300,7 @@ const VendorAddProductScreen = ({navigation}) => {
       alert('Algo salió mal');
     }
   };
+
   const getSubCategories = async () => {
     try {
       if (selectedCategory?._id) {
@@ -315,14 +323,42 @@ const VendorAddProductScreen = ({navigation}) => {
           // console.log(selectedCategory);
         }
       }
+     
     } catch (e) {
       // console.log(e?.response?.data);
       setShowLoader(false);
     }
   };
+
+  const getAplications = async() => {
+    
+    try {
+      const apiCall = await axios.post(
+        `${vendor_api_urls.get_aplication}`,{
+          selectedSubCategory:selectedSubCategory._id,
+          model:inputValues[CREDENTIAL_KEYS.PRODUCT_MODEL]._id
+        }
+      );
+
+      
+      setAplication(apiCall.data.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    if (selectedSubCategory) {
+      getAplications()
+    }
+   
+  }, [selectedSubCategory])
+  
+
   useEffect(() => {
     getSubCategories();
   }, [selectedCategory]);
+
   useEffect(() => {
     getCategories();
   }, []);
@@ -612,7 +648,11 @@ const uploadProductImg = async () => {
     }
   };
 
-  const [pantallaSelect, setpantallaSelect] = useState('')
+  
+
+
+
+
     useEffect(() => {
         setpantallaSelect(screenFocusProduct(currentScreen))
     }, [currentScreen])
@@ -637,6 +677,8 @@ const uploadProductImg = async () => {
               : isChooseCategory
               ? SCREEN_TYPES?.CHOOSE_SUB_CATEGORY
               : isSubCategory
+              ? SCREEN_TYPES.CHOOSE_APLICATION
+              : isChooseAplication
               ? SCREEN_TYPES?.PRODUCT_BRAND
               : isBrandScreen
               ? SCREEN_TYPES?.PRODUCT_CONDITION
@@ -651,6 +693,7 @@ const uploadProductImg = async () => {
   
   }
 
+  
   const backPage = () => {
     setCurrentScreen(
       isProductNameScreen
@@ -670,7 +713,10 @@ const uploadProductImg = async () => {
         : isSubCategory
         ? SCREEN_TYPES?.CHOOSE_CATEGORY
         : isBrandScreen
+        ? SCREEN_TYPES.CHOOSE_APLICATION
+        : isChooseAplication
         ? SCREEN_TYPES?.CHOOSE_SUB_CATEGORY
+      
         : isProductCondition 
         ? SCREEN_TYPES?.PRODUCT_BRAND
         : isUploadImage
@@ -680,6 +726,13 @@ const uploadProductImg = async () => {
         : null
     );
     setProgress(progress - 100 / 8);
+  }
+
+  const handleChange = (item) => {
+    setInputValues({
+      ...inputValues,
+      [CREDENTIAL_KEYS.PRODUCT_APLICATION]: item,
+    })
   }
   
   return (
@@ -750,6 +803,20 @@ const uploadProductImg = async () => {
               color={Colors.dark}
             />
           ) : null}
+
+          {
+            isChooseAplication && (
+              <FlatList
+                data={aplication}
+                keyExtractor={item => item?._id}
+                renderItem={ ({item}) => ( <RenderItemAplication item={item} /> ) }
+                selected={inputValues[CREDENTIAL_KEYS?.PRODUCT_APLICATION]?._id}
+                onPress={handleChange}
+                credential={CREDENTIAL_KEYS?.PRODUCT_APLICATION}
+              />
+            )
+            
+          }
 
           {isChooseModel ||
           isChooseMaker ||
@@ -824,6 +891,8 @@ const uploadProductImg = async () => {
                           itemData?.item?._id
                         : isSubCategory
                         ? selectedSubCategory?._id == itemData?.item?._id
+                        : isChooseAplication
+                        ? itemData.item.al
                         : isBrandScreen
                         ? selectedBrand?._id == itemData?.item?._id
                         : false
@@ -855,6 +924,9 @@ const uploadProductImg = async () => {
                       }
                       if (isSubCategory) {
                         setSelectedSubCategory(itemData.item);
+                      }
+                      if (isChooseAplication) {
+                        console.log(itemData.item);
                       }
                       if (isBrandScreen) {
                         setselectedBrand(itemData?.item);
