@@ -97,6 +97,8 @@ export const screenFocusProduct = (value) => {
            
         case ProductScreen.CHOOSE_SUB_CATEGORY:
             return KEYS_PRODUCT.PRODUCT_CATEGORY;
+        case ProductScreen.CHOOSE_APLICATION:
+            return KEYS_PRODUCT.PRODUCT_APLICATION;   
         case ProductScreen.PRODUCT_BRAND:
             return KEYS_PRODUCT.PRODUCT_BRAND;
 
@@ -112,6 +114,11 @@ export const screenFocusProduct = (value) => {
 
 export const stringIsEmpty  = (v) => {
     
+
+    if (v.de) {
+        return true
+    }
+
     if (v.name) {
         if (v.name.length > 0) {
     
@@ -129,6 +136,8 @@ export const stringIsEmpty  = (v) => {
         
         return false;
     }
+
+   
 }
 
 export const comparaText = (t1,t2) => {

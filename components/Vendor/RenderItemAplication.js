@@ -3,12 +3,13 @@ import React from 'react'
 import CommonStyles from '../../util/styles/styles'
 import { deviceWidth } from '../../util/Dimentions'
 
-export const RenderItemAplication = ({item,onPress,backgroundColor,selected = false}) => {
+export const RenderItemAplication = ({item,handleChange,backgroundColor,selected = false}) => {
 
+    
 
     return (
         <TouchableOpacity
-        onPress={onPress}
+        onPress={() => handleChange(item)}
         style={[
         styles.flatListCardBtn,
         {

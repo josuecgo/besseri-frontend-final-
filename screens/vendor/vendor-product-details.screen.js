@@ -29,6 +29,7 @@ import {adjust, deviceHeight, deviceWidth} from '../../util/Dimentions';
 import {HeaderBackground} from '../../components/Background/HeaderBackground';
 import {moneda} from '../../util/Moneda';
 import { ProductImg } from '../../components/image-carousel/ProductImg';
+import { DetailsProduct } from '../../components/Vendor/DetailsProduct';
 
 const VendorProductDetailsScreen = ({navigation, route}) => {
   const {width} = useWindowDimensions();
@@ -96,7 +97,6 @@ const VendorProductDetailsScreen = ({navigation, route}) => {
   };
 
  
-  console.log(product?.urlsImg);
   return (
     <>
       <HeaderBackground />
@@ -191,31 +191,43 @@ const VendorProductDetailsScreen = ({navigation, route}) => {
                   ]}>
                   Detalles de producto
                 </Text>
-                <Text style={[CommonStyles.fontFamily, {marginBottom: 10}]}>
+                {/* <Text style={[CommonStyles.fontFamily, {marginBottom: 10}]}>
                   <Text style={{fontSize: 16}}>{product?.description}</Text>
-                </Text>
-                <Text style={[CommonStyles.fontFamily, {marginBottom: 10}]}>
-                  <Text style={{fontSize: adjust(13)}}>
-                    Tiempo de entrega:{' '}
-                  </Text>
-                  <Text style={{fontSize: 16}}>
-                    {product?.estimatedDelivery}
-                  </Text>
-                </Text>
+                </Text> */}
 
-                <Text style={[CommonStyles.fontFamily, {marginBottom: 10}]}>
-                  <Text style={{fontSize: 16}}>Modelo: </Text>
-                  <Text style={{fontSize: adjust(13)}}>
-                    {product?.model?.name}
-                  </Text>
-                </Text>
+                <DetailsProduct
+                label='Descripcion: '
+                value={` ${product?.description}`}
+                />
+                
+                <DetailsProduct
+                label='Tiempo de entrega: '
+                value={` ${product?.estimatedDelivery}`}
+                />
+                
+                <DetailsProduct
+                label='Modelo: '
+                value={` ${product?.model?.name}`}
+                />
 
-                <Text style={[CommonStyles.fontFamily, {marginBottom: 10}]}>
-                  <Text style={{fontSize: adjust(13)}}>Marca: </Text>
-                  <Text style={{fontSize: adjust(13)}}>
-                    {product?.maker?.name}
-                  </Text>
-                </Text>
+               
+                <DetailsProduct
+                label='Marca: '
+                value={` ${product?.maker?.name}`}
+                />
+
+                {
+                  product?.aplicacion && (
+                    <DetailsProduct
+                    label='Año'
+                    value={` ${product?.aplicacion?.de} al ${product?.aplicacion?.al}`}
+                    />
+                  )
+                }
+
+                
+
+                
 
 
                 <Text style={[CommonStyles.fontFamily, {marginBottom: 10}]}>
@@ -234,6 +246,7 @@ const VendorProductDetailsScreen = ({navigation, route}) => {
                     {product?.inStock ? 'Disponible' : 'Agotado.'}
                   </Text>
                 </Text>
+
               </View>
             </View>
             {/*Fin Detalles del producto */}

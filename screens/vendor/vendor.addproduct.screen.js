@@ -48,6 +48,7 @@ import {HeaderBackground} from '../../components/Background/HeaderBackground';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { screenFocusProduct, stringIsEmpty } from '../../util/helpers/StatusText';
 import { RenderItemAplication } from '../../components/Vendor/RenderItemAplication';
+import { ListEmpty } from '../../components/Vendor/ListEmpty';
 
 
 const {width} = Dimensions.get('screen');
@@ -136,7 +137,7 @@ const VendorAddProductScreen = ({navigation}) => {
   const [selectedBrand, setselectedBrand] = useState(
     isEditMode ? toBeEditedProduct?.brand : null,
   );
-  const [aplication, setAplication] = useState([{de:2001,al:2006}]);
+  const [aplication, setAplication] = useState([]);
   const [models, setModels] = useState([]);
   const [makers, setMakers] = useState([]);
   const [brands, setBrands] = useState([]);
@@ -572,7 +573,10 @@ const uploadProductImg = async () => {
           brand: selectedBrand,
           brandId: selectedBrand?._id,
           estimatedDelivery: inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY].name,
-          // urlsImg:productImgUpload
+          aplicacion:{
+            de:inputValues[CREDENTIAL_KEYS.PRODUCT_APLICATION].de,
+            al:inputValues[CREDENTIAL_KEYS.PRODUCT_APLICATION].al
+          }
         };
         
         const apiCall = await axios.post(
@@ -652,12 +656,11 @@ const uploadProductImg = async () => {
 
 
 
-
     useEffect(() => {
         setpantallaSelect(screenFocusProduct(currentScreen))
     }, [currentScreen])
     
-   
+ 
   const nextPage = () => {
         
         if (stringIsEmpty(inputValues[pantallaSelect]) ){
@@ -688,7 +691,12 @@ const uploadProductImg = async () => {
           );
           setProgress(progress + 100 / 8);
         }else{
+          if (isChooseAplication) {
+            showToaster('No puedes crear este producto')
+          }else{
             showToaster('Rellena el campo')
+          }
+          
         }
   
   }
@@ -728,11 +736,14 @@ const uploadProductImg = async () => {
     setProgress(progress - 100 / 8);
   }
 
+
   const handleChange = (item) => {
+    
     setInputValues({
       ...inputValues,
       [CREDENTIAL_KEYS.PRODUCT_APLICATION]: item,
     })
+
   }
   
   return (
@@ -767,7 +778,7 @@ const uploadProductImg = async () => {
         </View>
       </View>
       <View
-            style={{
+        style={{
             width: `${progress}%`,
             height: 5,
             backgroundColor: Colors.brightBlue,
@@ -809,10 +820,21 @@ const uploadProductImg = async () => {
               <FlatList
                 data={aplication}
                 keyExtractor={item => item?._id}
-                renderItem={ ({item}) => ( <RenderItemAplication item={item} /> ) }
-                selected={inputValues[CREDENTIAL_KEYS?.PRODUCT_APLICATION]?._id}
-                onPress={handleChange}
-                credential={CREDENTIAL_KEYS?.PRODUCT_APLICATION}
+                renderItem={ ({item}) => ( 
+                  <RenderItemAplication 
+                  handleChange={ handleChange}
+                  credential={CREDENTIAL_KEYS?.PRODUCT_APLICATION}
+                  item={item} 
+                  selected={inputValues[CREDENTIAL_KEYS?.PRODUCT_APLICATION]?._id} 
+                  /> 
+                ) }
+                ListEmptyComponent={() => (
+                  <ListEmpty 
+                  msg={'No hay vehiculos compatibles con tu producto, contacte al administrador'} 
+                  />
+                )}
+                style={{flex:1}}
+                
               />
             )
             
@@ -1071,6 +1093,13 @@ const uploadProductImg = async () => {
               }
               value={`${selectedSubCategory?.name}`}
               label="Subcategoría"
+            />
+            <ProductSummaryCard
+              onPress={() =>
+                setCurrentScreen(SCREEN_TYPES?.CHOOSE_APLICATION)
+              }
+              value={`del: ${inputValues[CREDENTIAL_KEYS.PRODUCT_APLICATION].de} al: ${inputValues[CREDENTIAL_KEYS.PRODUCT_APLICATION].al}`}
+              label="Año"
             />
             <ProductSummaryCard
               onPress={() => setCurrentScreen(SCREEN_TYPES?.CHOOSE_MAKER)}
