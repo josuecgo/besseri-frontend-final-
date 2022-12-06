@@ -10,6 +10,7 @@ import { moneda } from '../../util/Moneda';
 
 
 const ProductComponent = ({ data,openProductDetails }) => {
+ 
   return (
     <Pressable
     onPress={() => {
@@ -30,7 +31,29 @@ const ProductComponent = ({ data,openProductDetails }) => {
             MXN {moneda(data?.price)}
           </Text>
         </View>
+        <View style={{flexDirection:'row'}} >
+          <Text
+            numberOfLines={3}
+            ellipsizeMode="tail"
+            style={[CommonStyles.fontFamily, styles.detailsText]}>
+            {data?.maker?.name} {data?.model?.name}
+          </Text>
+        </View>
+        {
+          data.aplicacion && (
+            <View style={{flexDirection:'row'}} >
+              <Text
+                numberOfLines={3}
+                ellipsizeMode="tail"
+                style={[CommonStyles.fontFamily, styles.detailsText]}>
+                de {data?.aplicacion?.de} al {data?.aplicacion?.al}
+              </Text>
+            </View>
+          )
+        }
+       
         <View style={[CommonStyles.flexDirectionColumn]}>
+       
           <Text
             numberOfLines={3}
             ellipsizeMode="tail"

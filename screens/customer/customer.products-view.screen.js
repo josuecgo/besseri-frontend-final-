@@ -10,6 +10,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 
 import { ProductContext } from '../../util/context/Product/ProductContext';
 import { useFiltrado } from '../../hooks/useFiltrado';
+import { SelectFilter } from '../../components/SelectFilter';
 
 
 
@@ -18,9 +19,7 @@ import { useFiltrado } from '../../hooks/useFiltrado';
 const CustomerProductsViewScreen = React.memo((props) => {
 
 
-  const [open, setOpen] = useState(false);
-  const [openModel, setOpenModel] = useState(false);
-  const [isLoading, setIsLoading] = useState(false)
+
   const {
     categorias,
     comision,modelo,
@@ -30,7 +29,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
   } = useContext(ProductContext);
 
   
-  const {productFilter} = useFiltrado(props?.route?.name)
+  const {productFilter} = useFiltrado();
  
 
   const CategoryButton = ({ category,onPress }) => {
@@ -81,7 +80,8 @@ const CustomerProductsViewScreen = React.memo((props) => {
       <View style={{flex:1,backgroundColor:Colors.bgColor}} >
         
         <View style={Platform.OS === 'ios' ? styles.filterContainer : styles.filterContainer2}>
-          <DropDownPicker
+          <SelectFilter/>
+          {/* <DropDownPicker
             open={open}
             value={valueMaker}
             items={marcas}
@@ -114,6 +114,21 @@ const CustomerProductsViewScreen = React.memo((props) => {
           ) : (
             <View style={styles.picker} />
           )}
+
+          <DropDownPicker
+            open={open}
+            value={valueMaker}
+            items={marcas}
+            setOpen={setOpen}
+            setValue={setValueMaker}
+            setItems={setMarcas}
+            containerStyle={styles.picker}
+            style={{borderColor:'white'}}
+            placeholder="Marca"
+            schema={{label: 'name', value: '_id', testID: '_id'}}
+            zIndex={1000}
+            textStyle={{color:Colors.textPrimary}}
+          /> */}
         </View>
         <View style={styles.reset} >
           {

@@ -65,6 +65,7 @@ const VendorProductsScreen = ({navigation, route}) => {
   useEffect(() => {
     getMyProducts();
   },[isFocused]);
+  
   return (
     <VendorScreenContainerComponent
       needFloatingActionButton={true}

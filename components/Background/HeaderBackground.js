@@ -2,7 +2,7 @@ import { Image, Platform } from 'react-native'
 import React from 'react'
 import { deviceHeight, deviceWidth } from '../../util/Dimentions'
 
-export const HeaderBackground = ({hios=0.15,handroid=0.10}) => {
+export const HeaderBackground = ({hios=0.12,handroid=0.10}) => {
 
   return (
     <>
@@ -10,7 +10,7 @@ export const HeaderBackground = ({hios=0.15,handroid=0.10}) => {
         source={require('../../assets/images/header2.png')}
         style={{
           position: 'absolute',
-          height: Platform.OS == 'ios' ? deviceHeight *hios  : deviceHeight * handroid,
+          height: Platform.OS == 'ios' ? deviceHeight * hios  : deviceHeight * handroid,
           width: deviceWidth,
           // resizeMode:'cover'
           resizeMode:'stretch'

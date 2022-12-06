@@ -416,6 +416,8 @@ const VendorAddProductScreen = ({navigation}) => {
       </TouchableOpacity>
     );
   };
+ 
+  // console.log(toBeEditedProduct.productImg);
   const ProductSummaryCard = ({label, value, onPress, isImageTab}) => {
     
     return (
@@ -434,28 +436,41 @@ const VendorAddProductScreen = ({navigation}) => {
           <Text style={{fontWeight: '300', color: 'grey', fontSize: 13}}>
             {label}
           </Text>
-          {isImageTab ? (
+          {isImageTab ? 
+            
+        
             <>
-              <View style={{flexDirection:'row'}} >
-                {
-                value.map((item,index) => {
-                 
+            <View style={{flexDirection:'row'}} >
+              {
+                toBeEditedProduct.urlsImg  ? (
+                  toBeEditedProduct?.urlsImg.map((item,index) => {
+                    
                   if (index < 3) {
                     return(
                       <View key={item?.path}  >
-                        <Image source={{uri: item?.path}} style={{width: deviceWidth / 3.5, height: 100}}  resizeMode='cover' />
+                       
+                        <Image source={{uri: `${base_url}/${item.path}`}} style={{width: deviceWidth / 3.5, height: 100}}  resizeMode='cover' />
                       </View>
                     )
                   }
                   return null
                 })
-              }
-              </View>
-               
-            
+              ):(
+                <View  >
+                   
+                  <Image source={{uri: value}} style={{width: deviceWidth / 3.5, height: 100}}  resizeMode='cover' />
+                 </View>
+              )
+             
+            }
+            </View>
+             
+          
             </>
+            
+           
 
-          ) : (
+           : (
             <Text style={styles.flatListCardBtnText}>{value}</Text>
           )}
         </View>
@@ -603,8 +618,9 @@ const uploadProductImg = async () => {
     }
   };
 
-
+  
   const editProduct = async () => {
+   
     try {
       setShowLoader(true);
       const businessId = await getBusinessId();
@@ -629,7 +645,11 @@ const uploadProductImg = async () => {
         category: selectedCategory,
         price: inputValues[CREDENTIAL_KEYS.PRICE],
         condition: inputValues[CREDENTIAL_KEYS.PRODUCT_CONDITION],
-        estimatedDelivery: inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY].name
+        estimatedDelivery: inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY].name,
+        aplicacion:{
+          de:inputValues[CREDENTIAL_KEYS.PRODUCT_APLICATION].de,
+          al:inputValues[CREDENTIAL_KEYS.PRODUCT_APLICATION].al
+        }
       };
       const apiCall = await axios.patch(vendor_api_urls?.edit_product, apiBody);
       setShowLoader(false);

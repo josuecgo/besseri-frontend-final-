@@ -12,65 +12,113 @@ export const useFiltrado = ( isServicios ) => {
         valueMaker, 
         valueModel,
         servicios,
-        filterProduct,
-        
+        valueYear,
+        filterProduct
     } = useContext(ProductContext)
     
 
-    const makerFilter = () => {
-        if (isServicios === 'Servicios') {
-            servicesFilter();
-            return;
-        }
-     
-        if (valueMaker) {
-            if (valueModel) {
+    // const makerFilter = () => {
+    //     if (isServicios === 'Servicios') {
+    //         servicesFilter();
+    //         return;
+    //     }
+    //     let filtrado = []
+    //     if (valueMaker) {
+    //         if (valueModel) {
                
-                let itemData;
-                let itemModel;
-                const marca = productos.filter((item) => {
-                    itemData = item.maker ? item?.maker?._id : '';
-                    let searchTextData = valueMaker;
-                    let searchTextData2 = valueModel;
-                    let match = matchesForModel(searchTextData2,item);
-                    return itemData.indexOf(searchTextData) > -1 || match;
-                })
+    //             let itemData;
+    //             let itemModel;
+    //             const marca = productos.filter((item) => {
+    //                 itemData = item.maker ? item?.maker?._id : '';
+    //                 let searchTextData = valueMaker;
+    //                 let searchTextData2 = valueModel;
+    //                 let match = matchesForModel(searchTextData2,item);
+    //                 return itemData.indexOf(searchTextData) > -1 || match;
+    //             })
                 
-                const modelo = marca.filter((item) => {
+    //             const modelo = marca.filter((item) => {
                     
-                    itemModel = item.model ? item?.model?._id : '';
-                    let searchTextData = valueModel;
+    //                 itemModel = item.model ? item?.model?._id : '';
+    //                 let searchTextData = valueModel;
 
-                    let match = matchesForModel(searchTextData,item);
+    //                 let match = matchesForModel(searchTextData,item);
                     
-                    return itemModel.indexOf(searchTextData) > -1 || match;
-                })
+    //                 return itemModel.indexOf(searchTextData) > -1 || match;
+    //             })
 
-                setProductFilter(modelo ? modelo : []);
-                filterProduct(modelo ? modelo : []);
+    //             filtrado = modelo ? modelo : []
+
+    //             // setProductFilter(modelo ? modelo : []);
+    //             // filterProduct(modelo ? modelo : []);
                
-            } else {
+    //         } else {
                 
-            const marca = productos.filter((item) => {
-                let itemData = item.maker ? item?.maker?._id : '';
+    //         const marca = productos.filter((item) => {
+    //             let itemData = item.maker ? item?.maker?._id : '';
                 
-                let searchTextData = valueMaker;
+    //             let searchTextData = valueMaker;
                 
-                return itemData.indexOf(searchTextData) > -1  ;
-            })
-                
-                setProductFilter(marca ? marca : []);
-                filterProduct(marca ? marca : [])
-            }
+    //             return itemData.indexOf(searchTextData) > -1  ;
+    //         })
+    //             filtrado = marca ? marca : []
+    //             // setProductFilter();
+    //             // filterProduct(marca ? marca : [])
+    //         }
 
             
           
-        }else{  
-            filterProduct(productos)
-            setProductFilter(productos)
-        }
+    //     }else{  
+    //         filtrado = productos
+    //         // filterProduct(productos)
+    //         // setProductFilter(productos)
+    //     }
+
+    //     if (valueYear) {
+      
+    //         let match = filtrado.filter((item) => {
+              
+            
+            
+    //           let compatible = item?.matchs.find(element =>  {
+      
+    //             let result = betweenNumber(element?.de,element?.al,valueYear)
+                
+    //             if (result) {
+    //               return element
+    //             }else{
+    //               return false
+    //             }
+    //           });
+              
+    //           // console.log({
+    //           //   name:item.name,
+    //           //   bde:item?.aplicacion?.de,
+    //           //   bbollDe: item?.aplicacion?.de <= valueYear,
+    //           //   al:item?.aplicacion?.al,
+    //           //   aboolAl:item?.aplicacion?.al >= valueYear,
+    //           //   valueYear,
+    //           //   compatible
+    //           // });
+      
+    //           if (valueYear >= item?.aplicacion?.de  && valueYear <= item?.aplicacion?.al || compatible ) {
+               
+    //             return item
+    //           }
+      
+    //         })
+            
+    //         filterProduct(match)
+    //         setProductFilter(match)
+    //       }else{
+    //         filterProduct(filtrado)
+    //         setProductFilter(filtrado)
+            
+    //       }
+
+        
        
-    };
+    // };
+
 
     const servicesFilter = ()=> {
         
@@ -117,6 +165,117 @@ export const useFiltrado = ( isServicios ) => {
         }
     }
 
+    const makerFilter = () => {
+       
+    
+        let filtrado = []
+        if (valueMaker) {
+          if (valueModel) {
+           
+            
+            let itemData;
+            let itemModel;
+           
+            const marca = productos.filter((item) => {
+              itemData = item.maker ? item?.maker?._id : '';
+              itemAplicacion = item.aplicacion ? item.aplicacion : ''
+              let searchTextData = valueMaker;
+              let searchTextData2 = valueModel;
+              
+              let match = matchesForModel(searchTextData2,item,valueYear);
+              
+              return itemData.indexOf(searchTextData) > -1 || match ;
+          })
+      
+            const modelo = marca.filter((item) => {
+              itemModel = item.model ? item?.model?._id : '';
+              let searchTextData = valueModel;
+              
+              let match = matchesForModel(searchTextData,item,valueYear);
+              
+              return itemModel.indexOf(searchTextData) > -1 || match ;
+          })
+            filtrado = modelo ? modelo : []
+           
+           
+          }else{
+             
+              const marca = productos.filter((item) => {
+                let itemData = item.maker ? item?.maker?._id : '';
+                
+                let searchTextData = valueMaker;
+                    
+                return itemData.indexOf(searchTextData) > -1  ;
+              })
+            
+              filtrado = marca ? marca : []
+            
+             
+          }
+    
+        }else{
+          filtrado = productos
+         
+        }
+    
+        if (valueYear) {
+          
+          let match = filtrado.filter((item) => {
+            
+
+            let compatible = item?.matchs.find(element =>  {
+                let model = valueModel ? element?.model === valueModel : ""
+
+                let result = betweenNumber(element?.de,element?.al,valueYear)
+              
+                if (result && model ) {
+                    return element
+                }else{
+                    return false
+                }
+            });
+            
+            // console.log({
+            //   name:item.name,
+            //   bde:item?.aplicacion?.de,
+            //   bbollDe: item?.aplicacion?.de <= valueYear,
+            //   al:item?.aplicacion?.al,
+            //   aboolAl:item?.aplicacion?.al >= valueYear,
+            //   valueYear,
+            //   compatible
+            // });
+            let value = betweenNumber(item?.aplicacion?.de,item?.aplicacion?.al,valueYear)
+    
+            if (value || compatible ) {
+             
+              return item
+            }
+    
+          })
+          
+            setProductFilter(match)
+        }else{
+            setProductFilter(filtrado)
+        }
+       
+        
+        
+        
+       
+    }
+
+
+    const  betweenNumber = (startingNumber, endingNumber, givenNumber) => {
+
+        if(givenNumber >= startingNumber && givenNumber <= endingNumber){
+            console.log(`número dado ${givenNumber} cae entre ${startingNumber} y ${endingNumber}`);
+            return true
+        }else{
+          console.log(`número dado ${givenNumber} no cae entre ${startingNumber} y ${endingNumber}`);
+            return false;
+        }
+    }
+
     const matchesForModel = (id,searchId) => {
         
         if (searchId?.matchs.length > 0) {
@@ -139,7 +298,7 @@ export const useFiltrado = ( isServicios ) => {
     useEffect(() => {
 
         makerFilter();
-    }, [productos,valueMaker,valueModel,servicios])
+    }, [productos,valueMaker,valueModel,servicios,valueYear])
     
    
  

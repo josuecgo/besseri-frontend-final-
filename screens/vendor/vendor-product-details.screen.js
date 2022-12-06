@@ -96,7 +96,7 @@ const VendorProductDetailsScreen = ({navigation, route}) => {
     }
   };
 
- 
+  console.log(product);
   return (
     <>
       <HeaderBackground />
@@ -104,18 +104,22 @@ const VendorProductDetailsScreen = ({navigation, route}) => {
         <TouchableOpacity onPress={goBack}>
           <Ionicons size={20} color={Colors.white} name="arrow-back-outline" />
         </TouchableOpacity>
-        <View style={{flex: 1, marginLeft: deviceWidth * 0.04}}>
+        <View style={{flex: 1, paddingLeft: deviceWidth * 0.03}}>
           <Text
             numberOfLines={2}
             ellipsizeMode="tail"
             style={[
               CommonStyles.fontFamily,
-              {color: Colors.white, fontSize: adjust(16)},
+              {color: Colors.white, fontSize: adjust(14),
+                fontWeight:'bold',
+                
+              },
             ]}>
             {product?.name}
           </Text>
         </View>
       </View>
+    
       <ScrollView
         contentContainerStyle={{backgroundColor: Colors.white}}
         showsVerticalScrollIndicator={false}>
@@ -341,6 +345,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: Platform.OS == 'ios' ? deviceHeight * 0.15 : deviceHeight * 0.1,
     paddingLeft: 10,
+   
   },
   productDetailsScreen: {
     flex: 1,

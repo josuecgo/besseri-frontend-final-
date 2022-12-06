@@ -21,7 +21,7 @@ export const RenderItemAplication = ({item,handleChange,backgroundColor,selected
             ...styles.flatListCardBtnText,
             fontWeight: selected === item._id ? 'bold' : 'normal',
         }}>
-        del: {item.de} al: {item.de}
+        del: {item.de} al: {item.al}
         </Text>
     </TouchableOpacity>
   )

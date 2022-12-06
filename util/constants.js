@@ -57,7 +57,9 @@ export const VENDOR_DETAILS_ROUTES = {
   CREATE_PRODUCT:'Create Product',
   CREATE_SERVICE:'Create Service',
   BUSINESS_LOCATION:'Business Location',
-  DESCRIPTION:'Description'
+  DESCRIPTION:'Description',
+  SUBCATEGORIA:'Subcategoria',
+  ALL_PRODUCT:'All Product',
 };
 
 export const CUPON_ROUTES = {

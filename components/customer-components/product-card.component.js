@@ -156,7 +156,13 @@ const ProductCardComponent = ({
           
           <Text style={[styles.textSub,{textTransform:'uppercase',fontSize:adjust(8)}]} >{data?.maker?.name} </Text>
           <Text style={styles.textSub} >{data?.model?.name} </Text>
+          
         </View>
+        {
+          data?.aplicacion && (
+            <Text style={styles.textSub} >{data?.aplicacion?.de} al {data?.aplicacion?.al} </Text>
+          )
+        }
         {
           data?.estimatedDelivery && (
             <Text style={styles.textSub} >{`Entrega ${data?.estimatedDelivery} aprox.`} </Text>

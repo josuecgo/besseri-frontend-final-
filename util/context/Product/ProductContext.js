@@ -36,12 +36,14 @@ export const ProductProvider = ({children}) => {
     const [state, dispatch] = useReducer(productReducer, productInicialState);
     const [valueMaker, setValueMaker] = useState(null);
     const [valueModel, setValueModel] = useState(null);
+    const [valueYear, setValueYear] = useState("")
     const [ marcas, setMarcas ] = useState([]);
     const [modelo, setModelo] = useState(false);
+    const [years, setYears] = useState([]);
     const [servicios, setServicios] = useState(false)
     const [loading, setLoading] = useState(false)
     const [dowload, setDowload] = useState(false)
-
+    
     const getCategorias = async(params) => {
         try {
             
@@ -246,8 +248,9 @@ export const ProductProvider = ({children}) => {
 
    
     const resetFiltro = () => {
-        setValueMaker(null);
-        setValueModel(null);
+        setValueMaker("");
+        setValueModel("");
+        setValueYear("")
         setModelo(false);
         getMarcas();
         getProducts();
@@ -299,49 +302,17 @@ export const ProductProvider = ({children}) => {
 
     
 
-    // const storeProduct = useCallback(
-    //     async(store) => {
-    //         try {
-    //             console.log(store?._id,'storeproduct');
-    //             const apiCall = await axios.get(`${customer_api_urls.get_store_data}/${store?._id}`);
-        
-    //             let cate = apiCall.data?.data?.categories;
-                  
-                   
-    //             // let result  = cate.filter((elem, index) => {
-    //             //         const firstIndex = cate.findIndex(({ _id, name }) => {
-    //             //             return _id === elem._id && name === elem.name
-    //             //         });
-    //             //         return firstIndex === index
-    //             // });
-                    
-        
-                   
-    //             console.log({status:apiCall?.status});
-    //             if (apiCall?.status === 200) {
-    //                 console.log('llamando productStore');
-    //                 // setProductsData(apiCall.data.data.products);
-    //                 await productStore({
-    //                     // productosStore:apiCall.data.data?.products,
-    //                     productosStore:[],
-    //                     minimumPrice:apiCall.data.data.minPrice,
-    //                     categories:[],
-    //                 })
-                    
-    //                 // setMinimumPrice(apiCall.data.data.minPrice);
-    //                 // setServices(apiCall?.data?.data?.services);
-
-    //                 filterProductStore(apiCall.data.data.products);
-                   
-                    
-    //             }
-
-    //           } catch(e) {
-    //             // console.log({getProducts:e})
-    //             showToaster('No hay conexion con el servidor - 01STR');
-               
-    //         }
-    // },[state?.store])
+    const rangeYear = () => {
+        const max = new Date().getFullYear() + 1
+    
+        const min = max - 33
+        const years = []
+    
+        for (let i = max; i >= min; i--) {
+          years.push(i)
+        }
+        setYears(years);
+    }
 
     
 
@@ -389,6 +360,10 @@ export const ProductProvider = ({children}) => {
    
     }
 
+    useEffect(() => {
+        rangeYear()
+    }, [])
+    
    
     
 
@@ -418,7 +393,10 @@ export const ProductProvider = ({children}) => {
             filterProductStore,
             productStore,
             storeProduct,
-            loading
+            loading,
+            valueYear,
+            setValueYear,
+            years
         }}
         >
             {children}

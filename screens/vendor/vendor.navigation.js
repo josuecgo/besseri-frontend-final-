@@ -35,6 +35,9 @@ import { NotificationContext } from '../../util/context/NotificationContext';
 import { HomeScreen } from './vendor-home.screen';
 import { CrearEditCuponScreen } from './Cupon/CrearEditCuponScreen';
 import { VendorDescription } from './vendor-description';
+import { ProductsScreen } from './Products/ProductsScreen';
+import { SubCategoriaScreen } from './Products/SubCategoriaScreen';
+import { AllProduct } from './Products/AllProduct';
 export const VendorNavigation = ({navigation}) => {
 
   const {count,iosPermisoss,getToken} = useContext(NotificationContext);
@@ -286,11 +289,34 @@ const ProductNavigator = () => {
       initialRouteName={VENDOR_DETAILS_ROUTES.PRODUCT_LISTING}>
       <ProductStack.Screen
         name={VENDOR_DETAILS_ROUTES.PRODUCT_LISTING}
-        component={VendorProductsScreen}
+        component={ProductsScreen}
         options={{
           headerShown: false,
         }}
       />
+
+      <ProductStack.Screen
+        name={VENDOR_DETAILS_ROUTES.SUBCATEGORIA}
+        component={SubCategoriaScreen}
+        options={{
+          headerShown: false,
+        }}
+      />  
+      <ProductStack.Screen
+        name={VENDOR_DETAILS_ROUTES.ALL_PRODUCT}
+        component={AllProduct}
+        options={{
+          headerShown: false,
+        }}
+      />       
+
+      {/* <ProductStack.Screen
+        name={VENDOR_DETAILS_ROUTES.PRODUCT_LISTING}
+        component={VendorProductsScreen}
+        options={{
+          headerShown: false,
+        }}
+      /> */}
       <ProductStack.Screen
         name={VENDOR_DETAILS_ROUTES.PRODUCT_DETAILS}
         component={VendorProductDetailsScreen}
@@ -298,13 +324,7 @@ const ProductNavigator = () => {
           headerShown: false,
         }}
       />
-        {/* <ProductStack.Screen
-        name={VENDOR_DETAILS_ROUTES.CREATE_PRODUCT}
-        component={VendorAddProduct}
-        options={{
-          headerShown: false,
-        }}
-      /> */}
+       
     </ProductStack.Navigator>
   );
 };

@@ -38,6 +38,8 @@ import { SearchInput } from '../../components/customer-components/SearchInput';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { ProductContext } from '../../util/context/Product/ProductContext';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SelectFilter } from '../../components/SelectFilter';
+import { CheckIcon, Select } from 'native-base';
 const SCREEN_STATES = {
     USER_LOCATION: 'User location',
     PRODUCTS: 'Products',
@@ -49,24 +51,22 @@ const CustomerMoreProductsScreen = props => {
     const { params } = useRoute();
     const [isLoading, setIsLoading] = useState(true);
     const [products, setProducts] = useState([]);
-    const [comision, setComision] = useState(false);
+    // const [comision, setComision] = useState(false);
     const [valueMaker, setValueMaker] = useState(null);
     const [valueModel, setValueModel] = useState(null);
+    const [valueYear, setValueYear] = useState("")
     const [open, setOpen] = useState(false);
     const [openModel, setOpenModel] = useState(false);
     const [marcas, setMarcas] = useState([]);
     const [modelo, setModelo] = useState(false);
-    const [userLocation, setUserLocation] = useState(null);
+   
     const cart_items = useSelector(state => state?.cart?.cart_items);
-    const [isLogin, setIsLogin] = useState(false);
-    const [coords, setCoords] = useState({
-        longitude: 0,
-        latitude: 0,
-    });
+    
+   
     const [searchText, setSearchtext] = useState('');
     const [productFilter, setProductFilter] = useState(false);
-    const {productos} = useContext(ProductContext)
-    //Fetching user location..............................
+    const {comision,years} = useContext(ProductContext);
+  
     // const getUserLocation = async () => {
     //     if (Platform.OS === 'ios') {
     //         getLocation();
@@ -126,7 +126,20 @@ const CustomerMoreProductsScreen = props => {
     //         abortController.abort();  
     //     }  
     // }, []);
+    const handleMarca = (item) => {
+        setValueModel('')
+        setValueMaker(item)
+        
 
+    }
+    const handleModel = (item) => {
+        setValueModel(item);
+
+    }
+    const handleYear = (item) => {
+        setValueYear(item);
+
+    }
 
     useEffect(() => {
         let abortController = new AbortController();  
@@ -142,10 +155,6 @@ const CustomerMoreProductsScreen = props => {
                 `${customer_api_urls.get_category_products}/${params?.category?._id}`,
             );
 
-            const getUser = await getUserId();
-
-            setIsLogin(getUser);
-
             setProducts(apiCall.data.data);
             
 
@@ -154,23 +163,8 @@ const CustomerMoreProductsScreen = props => {
         }
     };
 
-    const getComision = async () => {
-        try {
-            const getFee = await axios.get(customer_api_urls?.get_fees);
-            setComision(getFee.data.data[0]?.besseri_comission);
-        } catch (error) {
-            // console.log(error);
-        }
-    };
+   
 
-
-    useEffect(() => {
-        let abortController = new AbortController();  
-        getComision();
-        return () => {  
-            abortController.abort();  
-        }  
-    }, []);
 
     useEffect(() => {
         let abortController = new AbortController();  
@@ -178,7 +172,7 @@ const CustomerMoreProductsScreen = props => {
         return () => {  
             abortController.abort();  
         }  
-    }, [products,valueMaker,valueModel])
+    }, [products,valueMaker,valueModel,valueYear])
     
 
     useEffect(() => {
@@ -206,7 +200,7 @@ const CustomerMoreProductsScreen = props => {
         
     };
 
-    const makerFilter = () => {
+    const makerFilter2 = () => {
        
         if (valueMaker) {
             if (valueModel) {
@@ -249,6 +243,117 @@ const CustomerMoreProductsScreen = props => {
         }
        
     };
+
+    const makerFilter = () => {
+       
+    
+        let filtrado = []
+        if (valueMaker) {
+          if (valueModel) {
+           
+            
+            let itemData;
+            let itemModel;
+           
+            const marca = products.filter((item) => {
+              itemData = item.maker ? item?.maker?._id : '';
+              itemAplicacion = item.aplicacion ? item.aplicacion : ''
+              let searchTextData = valueMaker;
+              let searchTextData2 = valueModel;
+              
+              let match = matchesForModel(searchTextData2,item,valueYear);
+              
+              return itemData.indexOf(searchTextData) > -1 || match ;
+          })
+      
+            const modelo = marca.filter((item) => {
+              itemModel = item.model ? item?.model?._id : '';
+              let searchTextData = valueModel;
+              
+              let match = matchesForModel(searchTextData,item,valueYear);
+              
+              return itemModel.indexOf(searchTextData) > -1 || match ;
+          })
+            filtrado = modelo ? modelo : []
+           
+           
+          }else{
+             
+              const marca = products.filter((item) => {
+                let itemData = item.maker ? item?.maker?._id : '';
+                
+                let searchTextData = valueMaker;
+                    
+                return itemData.indexOf(searchTextData) > -1  ;
+              })
+            
+              filtrado = marca ? marca : []
+            
+             
+          }
+    
+        }else{
+          filtrado = products
+         
+        }
+    
+        if (valueYear) {
+          
+          let match = filtrado.filter((item) => {
+            
+
+            let compatible = item?.matchs.find(element =>  {
+                let model = valueModel ? element?.model === valueModel : ""
+
+                let result = betweenNumber(element?.de,element?.al,valueYear)
+              
+                if (result && model ) {
+                    return element
+                }else{
+                    return false
+                }
+            });
+            
+            // console.log({
+            //   name:item.name,
+            //   bde:item?.aplicacion?.de,
+            //   bbollDe: item?.aplicacion?.de <= valueYear,
+            //   al:item?.aplicacion?.al,
+            //   aboolAl:item?.aplicacion?.al >= valueYear,
+            //   valueYear,
+            //   compatible
+            // });
+            let value = betweenNumber(item?.aplicacion?.de,item?.aplicacion?.al,valueYear)
+    
+            if (value || compatible ) {
+             
+              return item
+            }
+    
+          })
+          
+            setProductFilter(match)
+        }else{
+            setProductFilter(filtrado)
+        }
+       
+        
+        
+        
+       
+    }
+
+
+    const  betweenNumber = (startingNumber, endingNumber, givenNumber) => {
+
+        if(givenNumber >= startingNumber && givenNumber <= endingNumber){
+            console.log(`número dado ${givenNumber} cae entre ${startingNumber} y ${endingNumber}`);
+            return true
+        }else{
+          console.log(`número dado ${givenNumber} no cae entre ${startingNumber} y ${endingNumber}`);
+            return false;
+        }
+    }
 
     const matchesForModel = (id,searchId) => {
         
@@ -406,7 +511,74 @@ const CustomerMoreProductsScreen = props => {
 
                 
                 <View style={Platform.OS === 'ios' ? styles.filterContainer : styles.filterContainer2}  >
-                    <DropDownPicker
+                <Select
+                variant='unstyled'
+                selectedValue={valueMaker}
+                minWidth={deviceWidth * 0.32}
+                accessibilityLabel="Marca"
+                placeholder="Marca"
+                _selectedItem={{
+                    bg: "teal.600",
+                    endIcon: <CheckIcon size="5" />
+                }}
+                
+                onValueChange={itemValue => handleMarca(itemValue)}
+                style={styles.select}
+                borderColor={Colors.white}
+                backgroundColor={Colors.white}
+            >
+                {
+                    marcas.map((item) => <Select.Item key={item._id} label={item.name} value={item._id} />)
+                }
+
+            </Select>
+
+            
+
+            {modelo ? (
+            <Select
+                selectedValue={valueModel}
+                minWidth={deviceWidth * 0.33}
+                accessibilityLabel="Modelo"
+                placeholder="Modelo"
+                _selectedItem={{
+                    bg: "teal.600",
+                    endIcon: <CheckIcon size="5" />
+                }}
+               
+                onValueChange={itemValue => handleModel(itemValue)}
+                style={styles.select}
+                borderColor={Colors.white}
+                backgroundColor={Colors.white}
+            >
+                {
+                    modelo.map((item) => <Select.Item key={item._id} label={item.name} value={item._id} />)
+                }
+            </Select>
+            ) : (
+                <View style={styles.picker} />
+            )}
+
+            <Select
+                selectedValue={valueYear}
+                minWidth={deviceWidth * 0.25}
+                accessibilityLabel="Año"
+                placeholder="Año"
+                _selectedItem={{
+                    bg: "teal.600",
+                    endIcon: <CheckIcon size="5" />
+                }}
+
+                onValueChange={itemValue => handleYear(itemValue)}
+                style={styles.select}
+                borderColor={Colors.white}
+                backgroundColor={Colors.white}
+            >
+                {
+                    years.map((item, i) => <Select.Item key={item} label={item.toString()} value={item} />)
+                }
+            </Select>
+                    {/* <DropDownPicker
                         open={open}
                         value={valueMaker}
                         items={marcas}
@@ -436,7 +608,7 @@ const CustomerMoreProductsScreen = props => {
                         />
                     ) : (
                         <View style={styles.picker} />
-                    )}
+                    )} */}
                 </View>
 
                 
@@ -504,7 +676,7 @@ const CustomerMoreProductsScreen = props => {
 
                     </View>
             </View>
-            <View style={{ width: deviceWidth, height: deviceHeight * 0.10,marginVertical:bottom + 20 }} />
+            {/* <View style={{ width: deviceWidth, height: deviceHeight * 0.1  }} /> */}
               
         </View>
     );

@@ -19,7 +19,10 @@ const ProductListing = ({category,products,navigation,comision}) => {
 
   const {addItemToCart} = useCart()
   
-
+ 
+  if (products <= 0) {
+    return null;
+  }
 
   
   return (
