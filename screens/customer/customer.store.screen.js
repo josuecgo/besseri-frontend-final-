@@ -11,7 +11,6 @@ import {
   Alert,
 } from 'react-native';
 import Colors from '../../util/styles/colors';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import CommonStyles from '../../util/styles/styles';
 import ProductCardComponent from '../../components/customer-components/product-card.component';
@@ -19,21 +18,18 @@ import ButtonComponent from '../../components/button/button.component';
 import {
   CUSTOMER_HOME_SCREEN_ROUTES,
   SHARED_ROUTES,
-  showToaster,
 } from '../../util/constants';
-import { useDispatch, useSelector } from 'react-redux';
-import * as CartActions from '../../util/ReduxStore/Actions/CustomerActions/CartActions';
+import {  useSelector } from 'react-redux';
+import { CheckIcon, Select } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import RatingComponent from '../../components/Ratings/rating.component';
 import { useRoute } from '@react-navigation/native';
-import axios from 'axios';
-import { base_url, customer_api_urls } from '../../util/api/api_essentials';
+
+import { base_url } from '../../util/api/api_essentials';
 import LoaderComponent from '../../components/Loader/Loader.component';
 import ServicesCardComponent from '../../components/customer-components/ServicesCard.component';
-import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
+import {  deviceHeight, deviceWidth } from '../../util/Dimentions';
 import { useCart } from '../../hooks/useCart';
-import DropDownPicker from 'react-native-dropdown-picker';
-import { SearchComponent } from '../../components/Customer/SearchComponent';
+
 import { useSearchStore } from '../../hooks/useSearchStore';
 import { Empty } from '../../components/Customer/Empty';
 import { ProductContext } from '../../util/context/Product/ProductContext';
@@ -50,34 +46,28 @@ const CustomerStoreScreen = props => {
 
   const [searchText, setSearchText] = useState('');
   const isServices = selectedCategoryId === 'services' ? true : false;
-  const [openModel, setOpenModel] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [openCategorias, setOpenCategorias] = useState(false);
+ 
   const {
     store,
     comision,
+    years
   } = useContext(ProductContext)
 
   const {
     marcas,
-    valueCategorias,
-    setValueCategorias,
-    setMarcas,
     resetFiltros,
     modelo,
-    setModelo,
-    setCategories,
     productFilter,
-    valueMaker,
-    setValueMaker,
-    valueModel,
-    setValueModel,
     searchCallStore,
-    categories,
     services,
     getStore,
     isLoading,
-    productsData
+    valueMaker,
+    valueModel,
+    valueYear,
+    handleMarca,
+    handleModel,
+    handleYear
   } = useSearchStore();
 
   useEffect(() => {
@@ -172,36 +162,8 @@ const CustomerStoreScreen = props => {
               {'Productos'}
             </Text>
           </TouchableOpacity>
-          {/*  <TouchableOpacity
-              onPress={() => {
-                setSelectedCategoryId('services');
-              }}
-              style={{
-                width: deviceWidth / 2,
-                alignItems: 'center',
-                padding: 10,
-                borderBottomWidth: 3,
-                height: 50,
-                borderBottomColor:
-                  selectedCategoryId == 'services'
-                    ? Colors.primarySolid
-                    : 'white',
-              }}>
-              <Text
-                style={{
-                  ...CommonStyles.fontFamily,
-                  color:
-                    selectedCategoryId == 'services'
-                      ? Colors.primarySolid
-                      : 'black',
-                }}>
-                {'Servicios'}
-              </Text>
-            </TouchableOpacity> */}
+        
         </View>
-
-
-        {/* <SearchComponent setSearchText={setSearchText} /> */}
 
         {
           isLoading ? (
@@ -212,75 +174,73 @@ const CustomerStoreScreen = props => {
               <View style={
                 Platform.OS === 'ios' ? styles.filterContainer : styles.filterContainer2
                 }>
-                {/* <DropDownPicker
-                open={openCategorias}
-                value={valueCategorias}
-                items={categories}
-                setOpen={setOpenCategorias}
-                setValue={setValueCategorias}
-                setItems={setCategories}
-                containerStyle={styles.picker}
-                placeholder="Categorias"
-                schema={{ label: 'name', value: '_id', testID: '_id' }}
-                labelStyle={{ fontSize: adjust(8) }}
-                listItemLabelStyle={{ fontSize: adjust(8) }}
-                arrowIconStyle={{ height: 12, width: 12 }}
-                textStyle={{
-                  fontSize: adjust(8),
-                }}
-                labelProps={{
-                  numberOfLines: 1,
-                }}
-                zIndex={1000}
-              /> */}
-
-                <DropDownPicker
-                  open={open}
-                  value={valueMaker}
-                  items={marcas}
-                  setOpen={setOpen}
-                  setValue={setValueMaker}
-                  setItems={setMarcas}
-                  containerStyle={styles.picker}
-                  placeholder="Marca"
-                  schema={{ label: 'name', value: '_id', testID: '_id' }}
-                  labelStyle={{ fontSize: adjust(8) }}
-                  listItemLabelStyle={{ fontSize: adjust(8) }}
-                  arrowIconStyle={{ height: 12, width: 12 }}
-                  textStyle={{
-                    fontSize: adjust(8),
-                  }}
-                  labelProps={{
-                    numberOfLines: 1,
-                  }}
-                  zIndex={1000}
-                />
-
-                {modelo ? (
-                  <DropDownPicker
-                    open={openModel}
-                    value={valueModel}
-                    items={modelo}
-                    setOpen={setOpenModel}
-                    setValue={setValueModel}
-                    setItems={setModelo}
-                    containerStyle={styles.picker}
-                    placeholder="Modelo"
-                    schema={{ label: 'name', value: '_id', testID: '_id' }}
-                    labelStyle={{ fontSize: adjust(8) }}
-                    listItemLabelStyle={{ fontSize: adjust(8) }}
-                    arrowIconStyle={{ height: 12, width: 12 }}
-                    textStyle={{
-                      fontSize: adjust(8),
+                   <Select
+                    variant='unstyled'
+                    selectedValue={valueMaker}
+                    minWidth={deviceWidth * 0.32}
+                    accessibilityLabel="Marca"
+                    placeholder="Marca"
+                    _selectedItem={{
+                        bg: "teal.600",
+                        endIcon: <CheckIcon size="5" />
                     }}
-                    labelProps={{
-                      numberOfLines: 1,
-                    }}
-                    zIndex={1000}
-                  />
-                ) : (
-                  <View style={styles.picker} />
-                )}
+                    
+                    onValueChange={itemValue => handleMarca(itemValue)}
+                    style={styles.select}
+                    borderColor={Colors.white}
+                    backgroundColor={Colors.white}
+                >
+                    {
+                        marcas.map((item) => <Select.Item key={item._id} label={item.name} value={item._id} />)
+                    }
+
+                    </Select>
+
+            
+
+                    {modelo ? (
+                    <Select
+                        selectedValue={valueModel}
+                        minWidth={deviceWidth * 0.33}
+                        accessibilityLabel="Modelo"
+                        placeholder="Modelo"
+                        _selectedItem={{
+                            bg: "teal.600",
+                            endIcon: <CheckIcon size="5" />
+                        }}
+                    
+                        onValueChange={itemValue => handleModel(itemValue)}
+                        style={styles.select}
+                        borderColor={Colors.white}
+                        backgroundColor={Colors.white}
+                    >
+                        {
+                            modelo.map((item) => <Select.Item key={item._id} label={item.name} value={item._id} />)
+                        }
+                    </Select>
+                    ) : (
+                        <View style={styles.picker} />
+                    )}
+
+                    <Select
+                        selectedValue={valueYear}
+                        minWidth={deviceWidth * 0.25}
+                        accessibilityLabel="Año"
+                        placeholder="Año"
+                        _selectedItem={{
+                            bg: "teal.600",
+                            endIcon: <CheckIcon size="5" />
+                        }}
+
+                        onValueChange={itemValue => handleYear(itemValue)}
+                        style={styles.select}
+                        borderColor={Colors.white}
+                        backgroundColor={Colors.white}
+                    >
+                        {
+                            years.map((item, i) => <Select.Item key={item} label={item.toString()} value={item} />)
+                        }
+                    </Select>
               </View>
               <TouchableOpacity
                 style={{ justifyContent: 'flex-end', alignItems: 'flex-end', right: 5 }}

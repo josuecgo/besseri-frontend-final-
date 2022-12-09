@@ -5,46 +5,35 @@ import {
     View,
     StyleSheet,
     Platform,
-    ScrollView,
-    useWindowDimensions,
-    PermissionsAndroid,
+
     FlatList,
-    TextInput,
+   
     ActivityIndicator,
 } from 'react-native';
-import ProductListing from '../../components/customer-components/ProductsListing.component';
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
-import Geolocation from '@react-native-community/geolocation';
 import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../util/constants';
 import axios from 'axios';
 import {
     customer_api_urls,
     vendor_api_urls,
 } from '../../util/api/api_essentials';
-import { useDispatch, useSelector } from 'react-redux';
-import * as CartActions from '../../util/ReduxStore/Actions/CustomerActions/CartActions';
-import InputFieldComponent from '../../components/input-field/input-field.component';
+import { useSelector } from 'react-redux';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import KEYBOARD_TYPES from '../../util/keyboard-types';
 import { useRoute } from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ProductCardComponent from '../../components/customer-components/product-card.component';
 import { HeaderBackground } from '../../components/Background/HeaderBackground';
 import { deviceHeight, deviceWidth } from '../../util/Dimentions';
-import { getUserId } from '../../util/local-storage/auth_service';
 import { useCart } from '../../hooks/useCart';
 import { SearchInput } from '../../components/customer-components/SearchInput';
-import DropDownPicker from 'react-native-dropdown-picker';
 import { ProductContext } from '../../util/context/Product/ProductContext';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { SelectFilter } from '../../components/SelectFilter';
 import { CheckIcon, Select } from 'native-base';
-const SCREEN_STATES = {
-    USER_LOCATION: 'User location',
-    PRODUCTS: 'Products',
-    CATEGORIES: 'Categories',
-};
+
+
+
 const CustomerMoreProductsScreen = props => {
     const {bottom} = useSafeAreaInsets()
     const { addItemToCart } = useCart();
@@ -55,8 +44,7 @@ const CustomerMoreProductsScreen = props => {
     const [valueMaker, setValueMaker] = useState(null);
     const [valueModel, setValueModel] = useState(null);
     const [valueYear, setValueYear] = useState("")
-    const [open, setOpen] = useState(false);
-    const [openModel, setOpenModel] = useState(false);
+  
     const [marcas, setMarcas] = useState([]);
     const [modelo, setModelo] = useState(false);
    
@@ -126,20 +114,7 @@ const CustomerMoreProductsScreen = props => {
     //         abortController.abort();  
     //     }  
     // }, []);
-    const handleMarca = (item) => {
-        setValueModel('')
-        setValueMaker(item)
-        
-
-    }
-    const handleModel = (item) => {
-        setValueModel(item);
-
-    }
-    const handleYear = (item) => {
-        setValueYear(item);
-
-    }
+    
 
     useEffect(() => {
         let abortController = new AbortController();  
@@ -200,49 +175,7 @@ const CustomerMoreProductsScreen = props => {
         
     };
 
-    const makerFilter2 = () => {
-       
-        if (valueMaker) {
-            if (valueModel) {
-               
-                let itemData;
-                let itemModel;
-                const marca = products.filter((item) => {
-                    itemData = item.maker ? item?.maker?._id : '';
-                    let searchTextData = valueMaker;
-                    let searchTextData2 = valueModel;
-                    let match = matchesForModel(searchTextData2,item);
-                    return itemData.indexOf(searchTextData) > -1 || match;
-                    
-                })
-                
-                const modelo = marca.filter((item) => {
-                   
-                    itemModel = item.model ? item?.model?._id : '';
-                    let searchTextData = valueModel;
-                    let match = matchesForModel(searchTextData,item);
-                    return itemModel.indexOf(searchTextData) > -1 || match;
-               
-                })
-
-                setProductFilter(modelo ? modelo : []);
-             
-               
-            } else {
-                const marca = products.filter((item) => {
-                    let itemData = item.maker ? item?.maker?._id : '';
-                    let searchTextData = valueMaker;
-                    return itemData.indexOf(searchTextData) > -1;
-                })
-                setProductFilter(marca ? marca : []);
-             
-            }
-        }else{  
-           
-            setProductFilter(products)
-        }
-       
-    };
+  
 
     const makerFilter = () => {
        
@@ -511,104 +444,74 @@ const CustomerMoreProductsScreen = props => {
 
                 
                 <View style={Platform.OS === 'ios' ? styles.filterContainer : styles.filterContainer2}  >
-                <Select
-                variant='unstyled'
-                selectedValue={valueMaker}
-                minWidth={deviceWidth * 0.32}
-                accessibilityLabel="Marca"
-                placeholder="Marca"
-                _selectedItem={{
-                    bg: "teal.600",
-                    endIcon: <CheckIcon size="5" />
-                }}
-                
-                onValueChange={itemValue => handleMarca(itemValue)}
-                style={styles.select}
-                borderColor={Colors.white}
-                backgroundColor={Colors.white}
-            >
-                {
-                    marcas.map((item) => <Select.Item key={item._id} label={item.name} value={item._id} />)
-                }
+                    <Select
+                    variant='unstyled'
+                    selectedValue={valueMaker}
+                    minWidth={deviceWidth * 0.32}
+                    accessibilityLabel="Marca"
+                    placeholder="Marca"
+                    _selectedItem={{
+                        bg: "teal.600",
+                        endIcon: <CheckIcon size="5" />
+                    }}
+                    
+                    onValueChange={itemValue => handleMarca(itemValue)}
+                    style={styles.select}
+                    borderColor={Colors.white}
+                    backgroundColor={Colors.white}
+                >
+                    {
+                        marcas.map((item) => <Select.Item key={item._id} label={item.name} value={item._id} />)
+                    }
 
-            </Select>
+                    </Select>
 
             
 
-            {modelo ? (
-            <Select
-                selectedValue={valueModel}
-                minWidth={deviceWidth * 0.33}
-                accessibilityLabel="Modelo"
-                placeholder="Modelo"
-                _selectedItem={{
-                    bg: "teal.600",
-                    endIcon: <CheckIcon size="5" />
-                }}
-               
-                onValueChange={itemValue => handleModel(itemValue)}
-                style={styles.select}
-                borderColor={Colors.white}
-                backgroundColor={Colors.white}
-            >
-                {
-                    modelo.map((item) => <Select.Item key={item._id} label={item.name} value={item._id} />)
-                }
-            </Select>
-            ) : (
-                <View style={styles.picker} />
-            )}
-
-            <Select
-                selectedValue={valueYear}
-                minWidth={deviceWidth * 0.25}
-                accessibilityLabel="Año"
-                placeholder="Año"
-                _selectedItem={{
-                    bg: "teal.600",
-                    endIcon: <CheckIcon size="5" />
-                }}
-
-                onValueChange={itemValue => handleYear(itemValue)}
-                style={styles.select}
-                borderColor={Colors.white}
-                backgroundColor={Colors.white}
-            >
-                {
-                    years.map((item, i) => <Select.Item key={item} label={item.toString()} value={item} />)
-                }
-            </Select>
-                    {/* <DropDownPicker
-                        open={open}
-                        value={valueMaker}
-                        items={marcas}
-                        setOpen={setOpen}
-                        setValue={setValueMaker}
-                        setItems={setMarcas}
-                        containerStyle={styles.picker}
-                        placeholder="Marca"
-                        schema={{ label: 'name', value: '_id', testID: '_id' }}
-                        style={{borderColor:'white'}}
-                        textStyle={{color:Colors.textPrimary}}
-                    />
-
                     {modelo ? (
-                        <DropDownPicker
-                            open={openModel}
-                            value={valueModel}
-                            items={modelo}
-                            setOpen={setOpenModel}
-                            setValue={setValueModel}
-                            setItems={setModelo}
-                            containerStyle={styles.picker}
-                            placeholder="Modelo"
-                            schema={{ label: 'name', value: '_id', testID: '_id' }}
-                            style={{borderColor:'white'}}
-                            textStyle={{color:Colors.textPrimary}}
-                        />
+                    <Select
+                        selectedValue={valueModel}
+                        minWidth={deviceWidth * 0.33}
+                        accessibilityLabel="Modelo"
+                        placeholder="Modelo"
+                        _selectedItem={{
+                            bg: "teal.600",
+                            endIcon: <CheckIcon size="5" />
+                        }}
+                    
+                        onValueChange={itemValue => handleModel(itemValue)}
+                        style={styles.select}
+                        borderColor={Colors.white}
+                        backgroundColor={Colors.white}
+                    >
+                        {
+                            modelo.map((item) => <Select.Item key={item._id} label={item.name} value={item._id} />)
+                        }
+                    </Select>
                     ) : (
                         <View style={styles.picker} />
-                    )} */}
+                    )}
+
+                    <Select
+                        selectedValue={valueYear}
+                        minWidth={deviceWidth * 0.25}
+                        accessibilityLabel="Año"
+                        placeholder="Año"
+                        _selectedItem={{
+                            bg: "teal.600",
+                            endIcon: <CheckIcon size="5" />
+                        }}
+
+                        onValueChange={itemValue => handleYear(itemValue)}
+                        style={styles.select}
+                        borderColor={Colors.white}
+                        backgroundColor={Colors.white}
+                    >
+                        {
+                            years.map((item, i) => <Select.Item key={item} label={item.toString()} value={item} />)
+                        }
+                    </Select>
+                   
                 </View>
 
                 

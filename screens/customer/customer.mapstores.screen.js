@@ -79,7 +79,7 @@ export default function CustomerMapStores(props) {
         startlat: location?.latitude || 19.485306213822334,
         startlng: location?.longitude || -99.22779700380474,
 
-        range: 30
+        range: 3000
       });
       if (apiCall.status == api_statuses.success) {
 
