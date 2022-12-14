@@ -15,7 +15,7 @@ export const SelectFilter = () => {
         marcas,
         valueMaker, setValueMaker,
         valueModel, setValueModel, years, setValueYear, valueYear,
-        carActive,loading,productos,reset
+        carActive,productos,carDefault
     } = useContext(ProductContext);
 
     const handleMarca = (item) => {
@@ -39,24 +39,28 @@ export const SelectFilter = () => {
     }
     
     useEffect(() => {
-        if (productos && carActive?.maker  ) {
-            handleMarca(carActive.maker._id)
-            handleYear(carActive.year)
+        if (productos && carDefault?.maker?._id  ) {
+            handleMarca(carDefault?.maker?._id)
+            handleYear(carDefault.year)
         }
-    }, [productos,carActive])
+    }, [productos,carDefault])
 
 
     useEffect(() => {
-        if (modelo && carActive?.model && valueMaker) {
+        if (modelo && carDefault?.model?._id && valueMaker) {
             setTimeout(() => {
-                handleModel(carActive.model._id)
+                handleModel(carDefault?.model?._id)
             }, 2000);
            
         }
-    }, [modelo])
+    }, [modelo,carDefault])
     
-
-    
+    // console.log({
+    //     valueMaker,
+    //     valueModel,
+    //     valueYear
+    // });
+    // console.log(carDefault);
     
 
     return (

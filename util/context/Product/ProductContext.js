@@ -36,7 +36,7 @@ export const ProductContext = createContext({});
 export const ProductProvider = ({children}) => {
 
     const [state, dispatch] = useReducer(productReducer, productInicialState);
-    
+    const [carDefault, setCarDefault] = useState(false)
     const [valueMaker, setValueMaker] = useState(null);
     const [valueModel, setValueModel] = useState(null);
     const [valueYear, setValueYear] = useState("")
@@ -47,7 +47,7 @@ export const ProductProvider = ({children}) => {
     const [loading, setLoading] = useState(false)
     const [dowload, setDowload] = useState(false)
     const [reset, setReset] = useState(false)
-
+    const [activeCarLoading, setActiveCarLoading] = useState(false)
     const getCategorias = async(params) => {
         try {
             
@@ -69,8 +69,7 @@ export const ProductProvider = ({children}) => {
 
 
 
-    const getProducts = useCallback(
-        async() => {
+    const getProducts =  async() => {
             try {
                 setLoading(true)
                 const apiCall = await axios.get(customer_api_urls.get_products);
@@ -85,16 +84,16 @@ export const ProductProvider = ({children}) => {
                     });
                     setDowload(apiCall.data.data.products)
                     filterProduct(apiCall.data.data.products)
-                    getActiveCar()
+                  
                 }
 
                 setLoading(false)
               } catch(e) {
-                // console.log({getProducts:e})
+                console.log({getProducts:e})
                 showToaster('No hay conexion con el servidor - 01');
                 setLoading(false)
             }
-    },[])
+    }
 
     const filterProduct = async(data) => {
         
@@ -257,40 +256,44 @@ export const ProductProvider = ({children}) => {
             if (!userId) {
                 return
             }
-          const apiCall = await axios.post(`${customer_api_urls.active_car}/${userId}`,{data});
+            setCarDefault(data)
+            const apiCall = await axios.post(`${customer_api_urls.active_car}/${userId}`,{data});
+                
+            if (apiCall.status == api_statuses.success) {
+                // let {isCarActive} = apiCall.data.data;
+                // console.log({isCarActive});
+                setCarDefault(isCarActive)
             
-          if (apiCall.status == api_statuses.success) {
-            let {isCarActive} = apiCall.data.data;
+                // await dispatch({
+                //     type:'activeCar',
+                //     payload: {
+                //         car:isCarActive,
+                //         // categorias: apiCall?.data?.data?.categories
+                //     }
+                // });
             
-            await dispatch({
-                type:'activeCar',
-                payload: {
-                    car:isCarActive,
-                    // categorias: apiCall?.data?.data?.categories
-                }
-            });
-           
-          }
+            }
     
         } catch (error) {
           console.log(error,'activeCar');
-         
+          setCarDefault(false)
         }
        
     }
 
     const getActiveCar = async() => {
-        
+        setActiveCarLoading(true)
         const userId = await getUserId();
         try {
             if (!userId) {
-                await dispatch({
-                    type:'activeCar',
-                    payload: {
-                        car:false,
-                        // categorias: apiCall?.data?.data?.categories
-                    }
-                }); 
+                setCarDefault(false)
+                // await dispatch({
+                //     type:'activeCar',
+                //     payload: {
+                //         car:false,
+                //         // categorias: apiCall?.data?.data?.categories
+                //     }
+                // }); 
                 return
             }
             
@@ -301,27 +304,32 @@ export const ProductProvider = ({children}) => {
 
          
             if (data?.isCarActive) {
-                await dispatch({
-                    type:'activeCar',
-                    payload: {
-                        car:data.isCarActive,
-                        // categorias: apiCall?.data?.data?.categories
-                    }
-                }); 
+                setCarDefault(data.isCarActive)
+                // await dispatch({
+                //     type:'activeCar',
+                //     payload: {
+                //         car:data.isCarActive,
+                //         // categorias: apiCall?.data?.data?.categories
+                //     }
+                // }); 
             }
            
            
           }
+          setActiveCarLoading(false)
     
         } catch (error) {
           console.log(error,'getActive car');
-          await dispatch({
-            type:'activeCar',
-            payload: {
-                car:false,
-                // categorias: apiCall?.data?.data?.categories
-            }
-        }); 
+          setCarDefault(false)
+          setActiveCarLoading(false)
+
+        //   await dispatch({
+        //     type:'activeCar',
+        //     payload: {
+        //         car:false,
+        //         // categorias: apiCall?.data?.data?.categories
+        //     }
+        // }); 
         }
     }
 
@@ -336,15 +344,8 @@ export const ProductProvider = ({children}) => {
         setModelo(false);
         getMarcas();
         getProducts();
-        await dispatch({
-            type:'activeCar',
-            payload: {
-                car:false,
-                // categorias: apiCall?.data?.data?.categories
-            }
-        }); 
+        setCarDefault(false)
         setReset(true)
-
     }
     
 
@@ -453,9 +454,12 @@ export const ProductProvider = ({children}) => {
         rangeYear()
     }, [])
     
-    // useEffect(() => {
-    //     getActiveCar()
-    // }, [])
+        // useEffect(() => {
+        //     if (dowload) {
+        //         getActiveCar()
+        //     }
+            
+        // }, [dowload])
     
     
     
@@ -492,7 +496,9 @@ export const ProductProvider = ({children}) => {
             years,
             activeCar,
             getActiveCar,
-            reset
+            reset,
+            carDefault,
+            activeCarLoading
         }}
         >
             {children}

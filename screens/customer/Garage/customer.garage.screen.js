@@ -21,7 +21,8 @@ export const GarageScreen = (props) => {
   const {
     years,
     activeCar,
-    carActive
+    carDefault,
+    activeCarLoading
   } = useContext(ProductContext);
   const {
     marcas,
@@ -38,7 +39,7 @@ export const GarageScreen = (props) => {
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [cars, setCars] = useState([])
   const [carSelect, setCarSelect] = useState(false)
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState(carDefault ? carDefault._id : '')
 
   const handleModalize = () => {
     setShowModal(true)
@@ -120,7 +121,9 @@ export const GarageScreen = (props) => {
   }
 
   const changeCarDefault = async(car) => {
-    activeCar(car)
+    let firstCar = cars.find((c) => c._id === car)
+   
+    activeCar(firstCar)
     setValue(car)
   }
 
@@ -128,7 +131,7 @@ export const GarageScreen = (props) => {
     getGarage()
   }, [])
 
- 
+
   return (
     <>
       <ModalCreateCar
@@ -188,9 +191,9 @@ export const GarageScreen = (props) => {
               changeCarDefault(nextValue);
             }}
             
-           
+            
             >
-              <ItemCar data={item} handleModalizeDelete={handleModalizeDelete} />
+              <ItemCar isDisabled={activeCarLoading} data={item} handleModalizeDelete={handleModalizeDelete} />
             </Radio.Group>
           </Box>
          

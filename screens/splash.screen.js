@@ -58,6 +58,7 @@ const SplashScreen = ({navigation}) => {
   const checkBuildApp = async() => {
     try {
       let version = DeviceInfo.getBuildNumber();
+      console.log({version});
       let os = Platform.OS
       const url = `${api_urls.check_version}`;
       const apiCall = await axios.post(url,{
@@ -65,8 +66,10 @@ const SplashScreen = ({navigation}) => {
         version: parseInt(version)
        });
 
+      if (!apiCall?.data?.success) {
+        navigation.replace('UpdateScreen');
+      }
      
-      return apiCall?.data?.success
       
     } catch (error) {
       console.log(error);
@@ -76,11 +79,11 @@ const SplashScreen = ({navigation}) => {
   const check_auth = async() => {
     const user_id = await getUserId();
     const userType = await getUserType();
-    const appBuild = await checkBuildApp()
+     await checkBuildApp()
    
-    if (!appBuild) {
-      return  navigation.replace('UpdateScreen');
-    }
+    // if (!appBuild) {
+    //   return  navigation.replace('UpdateScreen');
+    // }
     if(user_id && userType) {
       if(userType == USER_ROLES.vendor) {
         await getBusinessDetails(user_id);

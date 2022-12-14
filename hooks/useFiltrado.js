@@ -16,7 +16,7 @@ export const useFiltrado = ( isServicios ) => {
         valueModel, setValueModel, 
         setValueYear, valueYear,modelo
     } = useContext(ProductContext)
-    
+    const [loadingFilter, setLoadingFilter] = useState(false)
 
     // const makerFilter = () => {
     //     if (isServicios === 'Servicios') {
@@ -168,7 +168,7 @@ export const useFiltrado = ( isServicios ) => {
 
     const makerFilter = () => {
        
-       
+        setLoadingFilter(true)
         let filtrado = []
         if (valueMaker) {
           if (valueModel) {
@@ -236,15 +236,6 @@ export const useFiltrado = ( isServicios ) => {
                 }
             });
             
-            // console.log({
-            //   name:item.name,
-            //   bde:item?.aplicacion?.de,
-            //   bbollDe: item?.aplicacion?.de <= valueYear,
-            //   al:item?.aplicacion?.al,
-            //   aboolAl:item?.aplicacion?.al >= valueYear,
-            //   valueYear,
-            //   compatible
-            // });
             let value = betweenNumber(item?.aplicacion?.de,item?.aplicacion?.al,valueYear)
     
             if (value || compatible ) {
@@ -253,9 +244,10 @@ export const useFiltrado = ( isServicios ) => {
             }
     
           })
-          
+            setLoadingFilter(false)
             setProductFilter(match)
         }else{
+            setLoadingFilter(false)
             setProductFilter(filtrado)
         }
        
@@ -264,42 +256,7 @@ export const useFiltrado = ( isServicios ) => {
         
        
     }
-    const makerFilterCar = () => {
-       
-       
-        let filtrado = []
-       
-       
-        
-        
-        
-       
-    }
 
-    const getGarage = async () => {
-        const userId = await getUserId();
-        try {
-          if (!userId) {
-          
-            return
-          }
-          const apiCall = await axios.get(`${customer_api_urls.get_garage}/${userId}`);
-    
-          if (apiCall.status == api_statuses.success) {
-            let car = apiCall.data.data;
-            if (car.length > 0) {
-                makerFilterCar(car)
-                // 
-            }
-          } else {
-            showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
-          }
-    
-        } catch (error) {
-          console.log(error);
-          showToaster('No hay conexion con el servidor')
-        }
-    } 
 
 
     const  betweenNumber = (startingNumber, endingNumber, givenNumber) => {
@@ -334,16 +291,13 @@ export const useFiltrado = ( isServicios ) => {
 
    
     
+
     useEffect(() => {
 
         makerFilter();
-    }, [productos,valueMaker,valueModel,servicios,valueYear])
-    
+    }, [productos,valueMaker,valueModel,valueYear])
    
  
-    useEffect(() => {
-        getGarage()
-    }, [])
 
 
     
@@ -353,7 +307,8 @@ export const useFiltrado = ( isServicios ) => {
 
     return {
         productFilter,
-        serviciosFiltrados
+        serviciosFiltrados,
+        loadingFilter
     }
 
 }

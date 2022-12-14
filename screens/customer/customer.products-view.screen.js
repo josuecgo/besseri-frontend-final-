@@ -28,7 +28,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
   } = useContext(ProductContext);
 
   
-  const {productFilter} = useFiltrado();
+  const {productFilter,loadingFilter} = useFiltrado();
  
 
   const CategoryButton = ({ category,onPress }) => {
@@ -55,7 +55,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
       <ProductListing
       navigation={props.navigation}
       category={item} 
-      products={productFilter.filter(product => product.categoryId == item._id)} 
+      products={ productFilter.filter(product => product.categoryId == item._id) } 
       comision={comision}
       />
     )
@@ -74,7 +74,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
 
   const memorizedValue = useMemo(() => renderItem, [productFilter]);
 
- 
+   
   
   return (
     <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor }}>
@@ -124,12 +124,8 @@ const CustomerProductsViewScreen = React.memo((props) => {
 
         <View style={{ flexGrow: 1, marginTop: 5 }}>
           {
-            comision && !!productFiltrado ? 
-            productFilter.length <= 0 
-            ? (
-              <Empty/>
-            )
-            :
+            comision && !!productFiltrado && !loadingFilter
+            ?
             (
               <FlatList
               data={categorias}

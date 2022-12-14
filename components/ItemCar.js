@@ -2,11 +2,11 @@ import { StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Box, HStack, VStack, Text, Spacer, Avatar, Radio } from 'native-base';
 
-export const ItemCar = ({ data,handleModalizeDelete }) => {
+export const ItemCar = ({ data,handleModalizeDelete,isDisabled }) => {
 
     return (
         <>
-            <Radio value={data} my={1}>
+            <Radio isDisabled={isDisabled}  value={data._id} my={1}>
              
             <TouchableOpacity
             onLongPress={() => handleModalizeDelete(data)}
