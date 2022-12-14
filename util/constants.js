@@ -158,7 +158,8 @@ export const ASYNC_STORAGE_NAMES = {
   BUSINESS_STATUS:'BusinessStatus',
   RIDER_PROFILE:'Rider Profile',
   CUSTOMER_ADDRESS:'addressCustomer',
-  NOTIFICATION_STORAGE:'notificationStorage'
+  NOTIFICATION_STORAGE:'notificationStorage',
+  CAR_STORAGE:'carStorage'
 }
 export const USER_ROLES = {
   customer:'customer',

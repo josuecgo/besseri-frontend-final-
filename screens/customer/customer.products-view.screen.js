@@ -11,6 +11,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { ProductContext } from '../../util/context/Product/ProductContext';
 import { useFiltrado } from '../../hooks/useFiltrado';
 import { SelectFilter } from '../../components/SelectFilter';
+import { Empty } from '../../components/Customer/Empty';
 
 
 
@@ -23,9 +24,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
   const {
     categorias,
     comision,modelo,
-    setModelo,marcas,
-    setMarcas,valueMaker, setValueMaker,
-    valueModel, setValueModel,resetFiltro,productFiltrado,getProducts,loading
+    resetFiltro,productFiltrado,getProducts,loading
   } = useContext(ProductContext);
 
   
@@ -50,14 +49,17 @@ const CustomerProductsViewScreen = React.memo((props) => {
 
 
 
-  const renderItem = ({item}) => (
-    <ProductListing
-    navigation={props.navigation}
-    category={item} 
-    products={productFilter.filter(product => product.categoryId == item._id)} 
-    comision={comision}
-    />
-  )
+  const renderItem = ({item}) => {
+   
+    return(
+      <ProductListing
+      navigation={props.navigation}
+      category={item} 
+      products={productFilter.filter(product => product.categoryId == item._id)} 
+      comision={comision}
+      />
+    )
+  }
 
   const renderItemCategorias = ({item}) => (
     <CategoryButton
@@ -71,6 +73,8 @@ const CustomerProductsViewScreen = React.memo((props) => {
   const memorizedValueCategoria = useMemo(() => renderItemCategorias, [categorias]);
 
   const memorizedValue = useMemo(() => renderItem, [productFilter]);
+
+ 
   
   return (
     <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor }}>
@@ -81,54 +85,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
         
         <View style={Platform.OS === 'ios' ? styles.filterContainer : styles.filterContainer2}>
           <SelectFilter/>
-          {/* <DropDownPicker
-            open={open}
-            value={valueMaker}
-            items={marcas}
-            setOpen={setOpen}
-            setValue={setValueMaker}
-            setItems={setMarcas}
-            containerStyle={styles.picker}
-            style={{borderColor:'white'}}
-            placeholder="Marca"
-            schema={{label: 'name', value: '_id', testID: '_id'}}
-            zIndex={1000}
-            textStyle={{color:Colors.textPrimary}}
-          />
-
-          {modelo ? (
-            <DropDownPicker
-              open={openModel}
-              value={valueModel}
-              items={modelo}
-              setOpen={setOpenModel}
-              setValue={setValueModel}
-              setItems={setModelo}
-              containerStyle={styles.picker}
-              style={{borderColor:'white'}}
-              placeholder="Modelo"
-              schema={{label: 'name', value: '_id', testID: '_id'}}
-              zIndex={1000}
-              textStyle={{color:Colors.textPrimary}}
-            />
-          ) : (
-            <View style={styles.picker} />
-          )}
-
-          <DropDownPicker
-            open={open}
-            value={valueMaker}
-            items={marcas}
-            setOpen={setOpen}
-            setValue={setValueMaker}
-            setItems={setMarcas}
-            containerStyle={styles.picker}
-            style={{borderColor:'white'}}
-            placeholder="Marca"
-            schema={{label: 'name', value: '_id', testID: '_id'}}
-            zIndex={1000}
-            textStyle={{color:Colors.textPrimary}}
-          /> */}
+       
         </View>
         <View style={styles.reset} >
           {
@@ -160,18 +117,26 @@ const CustomerProductsViewScreen = React.memo((props) => {
           keyExtractor={item => item?._id}
           renderItem={memorizedValueCategoria}
           showsHorizontalScrollIndicator={false}
+          
           />
         </View>
         
 
         <View style={{ flexGrow: 1, marginTop: 5 }}>
           {
-            comision && !!productFiltrado ? (
+            comision && !!productFiltrado ? 
+            productFilter.length <= 0 
+            ? (
+              <Empty/>
+            )
+            :
+            (
               <FlatList
               data={categorias}
               initialNumToRender={5}
               keyExtractor={item => item?._id}
               renderItem={memorizedValue}
+             
               ListFooterComponent={<View style={{width:'100%',marginBottom:10,height:deviceHeight * 20 / 100}} />}
               showsVerticalScrollIndicator={false}
               onRefresh={() => {

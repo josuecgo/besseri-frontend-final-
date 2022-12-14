@@ -12,6 +12,7 @@ import { adjust, deviceWidth } from '../../util/Dimentions';
 import { useCart } from '../../hooks/useCart';
 import axios from 'axios';
 import { customer_api_urls } from '../../util/api/api_essentials';
+import { Empty } from '../Customer/Empty';
 
 const ProductListing = ({category,products,navigation,comision}) => {
   
@@ -19,11 +20,11 @@ const ProductListing = ({category,products,navigation,comision}) => {
 
   const {addItemToCart} = useCart()
   
- 
+  
   if (products <= 0) {
     return null;
   }
-
+ 
   
   return (
     <View style={styles.container}>
@@ -60,6 +61,7 @@ const ProductListing = ({category,products,navigation,comision}) => {
            comision={comision}
            />
         )}
+        ListEmptyComponent={() => (<Empty/>) }
         />
     </View>
   );

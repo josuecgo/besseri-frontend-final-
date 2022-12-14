@@ -1,7 +1,7 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '11.0'
+platform :ios, '13.0'
 
 target 'Besseri' do
   # React Native Maps dependencies
@@ -13,7 +13,7 @@ target 'Besseri' do
   use_react_native!(
     :path => config[:reactNativePath],
     # to enable hermes on iOS, change `false` to `true` and then install pods
-    :hermes_enabled => true
+    :hermes_enabled => false
   )
 
 
@@ -27,38 +27,45 @@ target 'Besseri' do
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable the next line.
   use_flipper!({ 'Flipper' => '0.91.1' })
-   
   post_install do |installer|
-    react_native_post_install(installer)
-
-    installer.aggregate_targets.each do |aggregate_target| 
-      aggregate_target.user_project.native_targets.each do |target|
-        target.build_configurations.each do |config|
-          config.build_settings['LIBRARY_SEARCH_PATHS'] = ['$(SDKROOT)/usr/lib/swift', '$(inherited)'] # or it won't build on apple silicon
-          # without explicitly clearing this out, it flaps between excluding arm64 or not
-          config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "" # stop this setting from waffling between arm65/x86_64 machines after pod install
-          # Fix some library / linker errors
-          config.build_settings['ONLY_ACTIVE_ARCH'] = 'YES' # only one at a time
-          config.build_settings['VALID_ARCHS'] = 'arm64 x86_64' # you need both to work on both CPU archs / release etc
-          config.build_settings['EXCLUDED_ARCHS'] = 'i386' # or you get directory not found linker errors
-        end
-      end
-      aggregate_target.user_project.save
-    end
-
     installer.pods_project.targets.each do |target|
-      target.build_configurations.each do |config|
-
-        # We support a smaller range of deployment than some libraries, eliminate related noise
-        # This also avoids a nasty Folly bug about an API not available until ios10+
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSMinimumDeployVersion
-      end
+     target.build_configurations.each do |config|
+       config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64 i386"
     end
-
-    # If you move versions around though you get another nasty Folly bug about redefined symbols, fix that...
-    `sed -i -e  $'s/__IPHONE_10_0/__IPHONE_12_0/' Pods/RCT-Folly/folly/portability/Time.h`
-
+    end
   end
+   
+  # post_install do |installer|
+  #   react_native_post_install(installer)
+
+  #   installer.aggregate_targets.each do |aggregate_target| 
+  #     aggregate_target.user_project.native_targets.each do |target|
+  #       target.build_configurations.each do |config|
+  #         config.build_settings['LIBRARY_SEARCH_PATHS'] = ['$(SDKROOT)/usr/lib/swift', '$(inherited)'] # or it won't build on apple silicon
+  #         # without explicitly clearing this out, it flaps between excluding arm64 or not
+  #         config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "" # stop this setting from waffling between arm65/x86_64 machines after pod install
+  #         # Fix some library / linker errors
+  #         config.build_settings['ONLY_ACTIVE_ARCH'] = 'YES' # only one at a time
+  #         config.build_settings['VALID_ARCHS'] = 'arm64 x86_64' # you need both to work on both CPU archs / release etc
+  #         config.build_settings['EXCLUDED_ARCHS'] = 'i386' # or you get directory not found linker errors
+  #       end
+  #     end
+  #     aggregate_target.user_project.save
+  #   end
+
+  #   installer.pods_project.targets.each do |target|
+  #     target.build_configurations.each do |config|
+
+  #       # We support a smaller range of deployment than some libraries, eliminate related noise
+  #       # This also avoids a nasty Folly bug about an API not available until ios10+
+  #       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = $iOSMinimumDeployVersion
+  #     end
+  #   end
+
+  #   # If you move versions around though you get another nasty Folly bug about redefined symbols, fix that...
+  #   `sed -i -e  $'s/__IPHONE_10_0/__IPHONE_12_0/' Pods/RCT-Folly/folly/portability/Time.h`
+
+  # end
 
 
 end

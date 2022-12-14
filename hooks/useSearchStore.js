@@ -27,7 +27,7 @@ export const useSearchStore = (  ) => {
 
     const {
         productos,
-        store
+        
     } = useContext(ProductContext)
 
     const getStore = async (tienda) => {
@@ -168,7 +168,7 @@ export const useSearchStore = (  ) => {
           filtrado = productsData
          
         }
-        console.log({valueYear});
+       
         if (valueYear) {
           
           let match = filtrado.filter((item) => {
@@ -326,6 +326,7 @@ export const useSearchStore = (  ) => {
         setValueMaker("");
         setValueModel("");
         setValueYear("")
+        setModelo('')
         // getStore(store);
         
 

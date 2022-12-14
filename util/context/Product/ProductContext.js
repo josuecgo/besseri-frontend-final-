@@ -1,11 +1,11 @@
 import React,{ createContext, useCallback, useEffect, useReducer,useState } from "react";
 import axios from 'axios';
-import { customer_api_urls, vendor_api_urls } from "../../api/api_essentials";
+import { api_statuses, customer_api_urls, vendor_api_urls } from "../../api/api_essentials";
 import { showToaster } from "../../constants";
 
 
 import { productReducer } from "./productReducer";
-import { getUserType } from "../../local-storage/auth_service";
+import { getUserId, getUserType } from "../../local-storage/auth_service";
 
 
 
@@ -23,7 +23,8 @@ const productInicialState = {
     productFiltrado: false,
     store:[],
     productosStore:[],
-    productFiltradoStore:false
+    productFiltradoStore:false,
+    carActive:null
 }
 
 
@@ -33,7 +34,9 @@ const productInicialState = {
 export const ProductContext = createContext({});
 
 export const ProductProvider = ({children}) => {
+
     const [state, dispatch] = useReducer(productReducer, productInicialState);
+    
     const [valueMaker, setValueMaker] = useState(null);
     const [valueModel, setValueModel] = useState(null);
     const [valueYear, setValueYear] = useState("")
@@ -43,7 +46,8 @@ export const ProductProvider = ({children}) => {
     const [servicios, setServicios] = useState(false)
     const [loading, setLoading] = useState(false)
     const [dowload, setDowload] = useState(false)
-    
+    const [reset, setReset] = useState(false)
+
     const getCategorias = async(params) => {
         try {
             
@@ -81,6 +85,7 @@ export const ProductProvider = ({children}) => {
                     });
                     setDowload(apiCall.data.data.products)
                     filterProduct(apiCall.data.data.products)
+                    getActiveCar()
                 }
 
                 setLoading(false)
@@ -246,15 +251,99 @@ export const ProductProvider = ({children}) => {
         }
     },[]);
 
+    const activeCar = async(data) => {
+        const userId = await getUserId();
+        try {
+            if (!userId) {
+                return
+            }
+          const apiCall = await axios.post(`${customer_api_urls.active_car}/${userId}`,{data});
+            
+          if (apiCall.status == api_statuses.success) {
+            let {isCarActive} = apiCall.data.data;
+            
+            await dispatch({
+                type:'activeCar',
+                payload: {
+                    car:isCarActive,
+                    // categorias: apiCall?.data?.data?.categories
+                }
+            });
+           
+          }
+    
+        } catch (error) {
+          console.log(error,'activeCar');
+         
+        }
+       
+    }
+
+    const getActiveCar = async() => {
+        
+        const userId = await getUserId();
+        try {
+            if (!userId) {
+                await dispatch({
+                    type:'activeCar',
+                    payload: {
+                        car:false,
+                        // categorias: apiCall?.data?.data?.categories
+                    }
+                }); 
+                return
+            }
+            
+          const apiCall = await axios.get(`${customer_api_urls.get_active_car}/${userId}`);
+            
+          if (apiCall.status == api_statuses.success) {
+            let data = apiCall.data.data;
+
+         
+            if (data?.isCarActive) {
+                await dispatch({
+                    type:'activeCar',
+                    payload: {
+                        car:data.isCarActive,
+                        // categorias: apiCall?.data?.data?.categories
+                    }
+                }); 
+            }
+           
+           
+          }
+    
+        } catch (error) {
+          console.log(error,'getActive car');
+          await dispatch({
+            type:'activeCar',
+            payload: {
+                car:false,
+                // categorias: apiCall?.data?.data?.categories
+            }
+        }); 
+        }
+    }
+
+
+ 
+
    
-    const resetFiltro = () => {
+    const resetFiltro = async() => {
         setValueMaker("");
         setValueModel("");
         setValueYear("")
         setModelo(false);
         getMarcas();
         getProducts();
-        // getServices();
+        await dispatch({
+            type:'activeCar',
+            payload: {
+                car:false,
+                // categorias: apiCall?.data?.data?.categories
+            }
+        }); 
+        setReset(true)
 
     }
     
@@ -364,7 +453,11 @@ export const ProductProvider = ({children}) => {
         rangeYear()
     }, [])
     
-   
+    // useEffect(() => {
+    //     getActiveCar()
+    // }, [])
+    
+    
     
 
     return (
@@ -396,7 +489,10 @@ export const ProductProvider = ({children}) => {
             loading,
             valueYear,
             setValueYear,
-            years
+            years,
+            activeCar,
+            getActiveCar,
+            reset
         }}
         >
             {children}

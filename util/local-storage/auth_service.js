@@ -18,6 +18,13 @@ export const getNotification = async() => {
     const notification = await AsyncStorage.getItem(ASYNC_STORAGE_NAMES.NOTIFICATION_STORAGE);
     return JSON.parse(notification);
 } 
+export const saveCarActive = async(car) => {
+    await AsyncStorage.setItem(ASYNC_STORAGE_NAMES.CAR_STORAGE,JSON.stringify(car)); 
+};
+export const getCarActive = async() => {
+    const car = await AsyncStorage.getItem(ASYNC_STORAGE_NAMES.CAR_STORAGE);
+    return JSON.parse(car);
+} 
 
 export const deleteNotification = async() => {
     await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.NOTIFICATION_STORAGE);

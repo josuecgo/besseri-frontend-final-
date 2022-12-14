@@ -1,19 +1,20 @@
 import axios from 'axios';
 import { useState,useEffect, useCallback, useContext } from 'react';
-import { customer_api_urls, vendor_api_urls } from '../util/api/api_essentials';
+import { api_statuses, customer_api_urls, vendor_api_urls } from '../util/api/api_essentials';
 import { showToaster } from '../util/constants';
 import { ProductContext } from '../util/context/Product/ProductContext';
+import { getUserId } from '../util/local-storage/auth_service';
 
 export const useFiltrado = ( isServicios ) => {
     const [productFilter, setProductFilter] = useState([]);
     const [serviciosFiltrados, setServiciosFiltrados] = useState([])
     const {
         productos,
-        valueMaker, 
-        valueModel,
         servicios,
-        valueYear,
-        filterProduct
+        carActive,
+        valueMaker, setValueMaker,
+        valueModel, setValueModel, 
+        setValueYear, valueYear,modelo
     } = useContext(ProductContext)
     
 
@@ -167,7 +168,7 @@ export const useFiltrado = ( isServicios ) => {
 
     const makerFilter = () => {
        
-    
+       
         let filtrado = []
         if (valueMaker) {
           if (valueModel) {
@@ -220,7 +221,7 @@ export const useFiltrado = ( isServicios ) => {
     
         if (valueYear) {
           
-          let match = filtrado.filter((item) => {
+            let match = filtrado.filter((item) => {
             
 
             let compatible = item?.matchs.find(element =>  {
@@ -263,15 +264,51 @@ export const useFiltrado = ( isServicios ) => {
         
        
     }
+    const makerFilterCar = () => {
+       
+       
+        let filtrado = []
+       
+       
+        
+        
+        
+       
+    }
+
+    const getGarage = async () => {
+        const userId = await getUserId();
+        try {
+          if (!userId) {
+          
+            return
+          }
+          const apiCall = await axios.get(`${customer_api_urls.get_garage}/${userId}`);
+    
+          if (apiCall.status == api_statuses.success) {
+            let car = apiCall.data.data;
+            if (car.length > 0) {
+                makerFilterCar(car)
+                // 
+            }
+          } else {
+            showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
+          }
+    
+        } catch (error) {
+          console.log(error);
+          showToaster('No hay conexion con el servidor')
+        }
+    } 
 
 
     const  betweenNumber = (startingNumber, endingNumber, givenNumber) => {
 
         if(givenNumber >= startingNumber && givenNumber <= endingNumber){
-            console.log(`número dado ${givenNumber} cae entre ${startingNumber} y ${endingNumber}`);
+            // console.log(`número dado ${givenNumber} cae entre ${startingNumber} y ${endingNumber}`);
             return true
         }else{
-          console.log(`número dado ${givenNumber} no cae entre ${startingNumber} y ${endingNumber}`);
+        //   console.log(`número dado ${givenNumber} no cae entre ${startingNumber} y ${endingNumber}`);
             return false;
         }
     }
@@ -293,6 +330,8 @@ export const useFiltrado = ( isServicios ) => {
         
     }
 
+
+
    
     
     useEffect(() => {
@@ -302,7 +341,15 @@ export const useFiltrado = ( isServicios ) => {
     
    
  
-  
+    useEffect(() => {
+        getGarage()
+    }, [])
+
+
+    
+    
+    
+   
 
     return {
         productFilter,

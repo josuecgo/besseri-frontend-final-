@@ -53,6 +53,7 @@ const CustomerAddressesScreen = (props) => {
         await getAddresses()
         setLoading(false);
     }
+
     useEffect(() => {
         getUserDetails();
         getAddresses();
@@ -120,7 +121,7 @@ const CustomerAddressesScreen = (props) => {
         })
         });
         setWatchID(watchID);
-      }
+    }
     
 
     const getAddresses = async() => {
@@ -250,9 +251,9 @@ const CustomerAddressesScreen = (props) => {
         </View>
       {
           addresses.length > 0 ? 
-          <TouchableOpacity onPress={() => handleModalize('open')} style={{alignSelf:'flex-end',padding:10}}>
-          <AntDesign name='plus' color='black' size={30}/>
-      </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleModalize('open')} style={{alignSelf:'flex-end',padding:10}}>
+                <AntDesign name='plus' color='black' size={30}/>
+            </TouchableOpacity>
       : null
       }
      <ScrollView contentContainerStyle={{flexGrow:1,backgroundColor:'white'}}> 

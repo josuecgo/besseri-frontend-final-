@@ -12,6 +12,7 @@ import ShareServiceDetail from '../../screens/servicedetail.sharescreen';
 import { RiderNavigation } from '../../screens/rider/rider.navigation';
 import PrivacyPolicy from '../../screens/privacypolicy.screen';
 import { ChatStack } from './ChatStack';
+import { UpdateScreen } from '../../screens/UpdateScreen';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,10 @@ export const MainNavigation = () => {
       <Stack.Screen
         name={'AuthStack'}
         component={LSFS}
+      />
+      <Stack.Screen
+        name={'UpdateScreen'}
+        component={UpdateScreen}
       />
       <Stack.Screen
         name={'VendorStack'}

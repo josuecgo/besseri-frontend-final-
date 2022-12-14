@@ -40,6 +40,9 @@ import { ChatScreen } from './Chat/ChatScreen';
 import { ProfileScreen } from './ProfileScreen';
 import { Platform } from 'react-native';
 import { ProductContext } from '../../util/context/Product/ProductContext';
+import { GarageScreen } from './Garage/customer.garage.screen';
+
+
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -57,6 +60,12 @@ export const PartsServicesFunctionsDrawer = () => {
     comision, getMarcas, getServices, getModelo, 
     valueMaker,getComision 
   } = useContext(ProductContext)
+
+
+
+
+
+
 
   useEffect(() => {
     if (Platform.OS === 'ios') {
@@ -147,21 +156,16 @@ export const PartsServicesFunctionsDrawer = () => {
         name={'Autopartes'}
         component={CustomerHomeStack}
       />
-      {/* <Drawer.Screen
-        name={'Servicios'}
-        component={CustomerServicesViewScreen}
-        options={{
-          headerShown: true,
-          header: props => (
-            <CustomHeaderComponent {...props} name="Servicios" isService={true} showSearch={true} />
-          ),
-        }}
-      /> */}
+     
       <Drawer.Screen
         name={'Notificaciones'}
         component={CustomerNotificationStack}
       />
 
+      <Drawer.Screen
+        name={'Garage'}
+        component={GarageScreen}
+      />
 
       <Drawer.Screen
         name={'Mi dirección'}

@@ -6,17 +6,20 @@ import { useContext } from 'react'
 import { ProductContext } from '../util/context/Product/ProductContext'
 import { deviceHeight, deviceWidth } from '../util/Dimentions'
 import { CheckIcon, Select } from 'native-base'
+import { useEffect } from 'react'
 
 export const SelectFilter = () => {
 
     const {
         modelo,
-        setModelo, marcas,
-        setMarcas, valueMaker, setValueMaker,
-        valueModel, setValueModel, years, setValueYear, valueYear
+        marcas,
+        valueMaker, setValueMaker,
+        valueModel, setValueModel, years, setValueYear, valueYear,
+        carActive,loading,productos,reset
     } = useContext(ProductContext);
 
     const handleMarca = (item) => {
+       
         setValueModel('')
         setValueMaker(item)
         
@@ -35,13 +38,33 @@ export const SelectFilter = () => {
 
     }
     
+    useEffect(() => {
+        if (productos && carActive?.maker  ) {
+            handleMarca(carActive.maker._id)
+            handleYear(carActive.year)
+        }
+    }, [productos,carActive])
+
+
+    useEffect(() => {
+        if (modelo && carActive?.model && valueMaker) {
+            setTimeout(() => {
+                handleModel(carActive.model._id)
+            }, 2000);
+           
+        }
+    }, [modelo])
+    
+
+    
+    
 
     return (
         <>
             <Select
                 variant='unstyled'
                 selectedValue={valueMaker}
-                minWidth={deviceWidth * 0.32}
+                minWidth={deviceWidth * 0.35}
                 accessibilityLabel="Marca"
                 placeholder="Marca"
                 _selectedItem={{
@@ -88,7 +111,7 @@ export const SelectFilter = () => {
 
             <Select
                 selectedValue={valueYear}
-                minWidth={deviceWidth * 0.25}
+                minWidth={deviceWidth * 0.23}
                 accessibilityLabel="Año"
                 placeholder="Año"
                 _selectedItem={{

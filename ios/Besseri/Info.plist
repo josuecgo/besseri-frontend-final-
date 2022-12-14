@@ -29,6 +29,10 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>itms-apps</string>
+	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>El acceso a las fotos es para poder mostrar tus productos.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

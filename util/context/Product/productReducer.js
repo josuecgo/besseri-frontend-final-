@@ -17,7 +17,12 @@ export const productReducer = (state, action) => {
             productFiltrado: action.payload.productos,
             
         }
-       
+        case 'activeCar' : 
+        return {
+            ...state,
+            carActive: action.payload.car,
+            
+        }
         case 'getCategorias' : 
         return {
             ...state,

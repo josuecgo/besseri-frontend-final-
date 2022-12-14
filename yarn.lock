@@ -1112,26 +1112,6 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@expo/config-plugins@^3.0.5":
-  version "3.1.0"
-  resolved "https://registry.npmjs.org/@expo/config-plugins/-/config-plugins-3.1.0.tgz"
-  integrity sha512-V5qxaxCAExBM0TXmbU1QKiZcAGP3ecu7KXede8vByT15cro5PkcWu2sSdJCYbHQ/gw6Vf/i8sr8gKlN8V8TSLg==
-  dependencies:
-    "@expo/config-types" "^42.0.0"
-    "@expo/json-file" "8.2.33"
-    "@expo/plist" "0.0.14"
-    chalk "^4.1.2"
-    debug "^4.3.1"
-    find-up "~5.0.0"
-    fs-extra "9.0.0"
-    getenv "^1.0.0"
-    glob "7.1.6"
-    resolve-from "^5.0.0"
-    semver "^7.3.5"
-    slash "^3.0.0"
-    xcode "^3.0.1"
-    xml2js "^0.4.23"
-
 "@expo/config-plugins@^4.0.16":
   version "4.0.16"
   resolved "https://registry.npmjs.org/@expo/config-plugins/-/config-plugins-4.0.16.tgz"
@@ -1154,24 +1134,10 @@
     xcode "^3.0.1"
     xml2js "0.4.23"
 
-"@expo/config-types@^42.0.0":
-  version "42.0.0"
-  resolved "https://registry.npmjs.org/@expo/config-types/-/config-types-42.0.0.tgz"
-  integrity sha512-Rj02OMZke2MrGa/1Y/EScmR7VuWbDEHPJyvfFyyLbadUt+Yv6isCdeFzDt71I7gJlPR9T4fzixeYLrtXXOTq0w==
-
 "@expo/config-types@^43.0.1":
   version "43.0.1"
   resolved "https://registry.npmjs.org/@expo/config-types/-/config-types-43.0.1.tgz"
   integrity sha512-EtllpCGDdB/UdwAIs5YXJwBLpbFQNdlLLrxIvoILA9cXrpQMWkeDCT9lQPJzFRMFcLUaMuGvkzX2tR4tx5EQFQ==
-
-"@expo/json-file@8.2.33":
-  version "8.2.33"
-  resolved "https://registry.npmjs.org/@expo/json-file/-/json-file-8.2.33.tgz"
-  integrity sha512-CDnhjdirUs6OdN5hOSTJ2y3i9EiJMk7Z5iDljC5xyCHCrUex7oyI8vbRsZEojAahxZccgL/PrO+CjakiFFWurg==
-  dependencies:
-    "@babel/code-frame" "~7.10.4"
-    json5 "^1.0.1"
-    write-file-atomic "^2.3.0"
 
 "@expo/json-file@8.2.34":
   version "8.2.34"
@@ -1181,15 +1147,6 @@
     "@babel/code-frame" "~7.10.4"
     json5 "^1.0.1"
     write-file-atomic "^2.3.0"
-
-"@expo/plist@0.0.14":
-  version "0.0.14"
-  resolved "https://registry.npmjs.org/@expo/plist/-/plist-0.0.14.tgz"
-  integrity sha512-bb4Ua1M/OdNgS8KiGdSDUjZ/bbPfv3xdPY/lz8Ctp/adlj/QgB8xA7tVPeqSSfJPZqFRwU0qLCnRhpUOnP51VQ==
-  dependencies:
-    "@xmldom/xmldom" "~0.7.0"
-    base64-js "^1.2.3"
-    xmlbuilder "^14.0.0"
 
 "@expo/plist@0.0.17":
   version "0.0.17"
@@ -2629,12 +2586,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@stripe/stripe-react-native@^0.2.3":
-  version "0.2.3"
-  resolved "https://registry.npmjs.org/@stripe/stripe-react-native/-/stripe-react-native-0.2.3.tgz"
-  integrity sha512-UugLDeJEHAbrHDj5OcwhD5Za96pTwXr2sCfvO6UrGzH71HZ7vzBSq+/Cckm2HJFmkC4JqamGjTxy/pI6pqZ4ng==
-  dependencies:
-    "@expo/config-plugins" "^3.0.5"
+"@stripe/stripe-react-native@^0.22.1":
+  version "0.22.1"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-react-native/-/stripe-react-native-0.22.1.tgz#accaeb98381c6ccc2658c975d5e31e726b83cabb"
+  integrity sha512-L4UjvhgZir+jNvXS4lCNv8C8xWYOtH+n1YFAhuKVxA2tuRvWz2lJJ7U4bOpl3cJn1tPvIsvroCWx/Nra5Fgmgw==
 
 "@tootallnate/once@1":
   version "1.1.2"
@@ -7392,6 +7347,11 @@ react-native-codegen@^0.0.7:
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
 
+react-native-device-info@^10.3.0:
+  version "10.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-10.3.0.tgz#6bab64d84d3415dd00cc446c73ec5e2e61fddbe7"
+  integrity sha512-/ziZN1sA1REbJTv5mQZ4tXggcTvSbct+u5kCaze8BmN//lbxcTvWsU6NQd4IihLt89VkbX+14IGc9sVApSxd/w==
+
 react-native-dropdown-picker@^5.1.28:
   version "5.1.28"
   resolved "https://registry.npmjs.org/react-native-dropdown-picker/-/react-native-dropdown-picker-5.1.28.tgz"
@@ -9034,7 +8994,7 @@ xml-name-validator@^3.0.0:
   resolved "https://registry.npmjs.org/xml-name-validator/-/xml-name-validator-3.0.0.tgz"
   integrity sha512-A5CUptxDsvxKJEU3yO6DuWBSJz/qizqzJKOMIfUJHETbBw/sFaDxgd6fxm1ewUaM0jZ444Fc5vC5ROYurg/4Pw==
 
-xml2js@0.4.23, xml2js@^0.4.23:
+xml2js@0.4.23:
   version "0.4.23"
   resolved "https://registry.npmjs.org/xml2js/-/xml2js-0.4.23.tgz"
   integrity sha512-ySPiMjM0+pLDftHgXY4By0uswI3SPKLDw/i3UXbnO8M/p28zqexCUoPmQFrYD+/1BzhGJSs2i1ERWKJAtiLrug==

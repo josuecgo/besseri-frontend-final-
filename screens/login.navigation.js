@@ -17,9 +17,11 @@ import PrivacyPolicy from './privacypolicy.screen';
 
 const Stack = createStackNavigator();
 
+
+
 export const LSFS = ({route}) => {
 
-  
+
   
   return (
     <Stack.Navigator 

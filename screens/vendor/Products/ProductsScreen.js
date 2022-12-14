@@ -9,23 +9,7 @@ import Loading from '../../../components/Loader/Loading';
 import { VENDOR_DETAILS_ROUTES } from '../../../util/constants';
 
 
-const getIcon = (nameIcon) => {
-  console.log(nameIcon);
-  switch (nameIcon) {
-    case 'FRENOS':
-      
-      return require('../../../assets/images/categorias/freno.png');
-    case 'TRANSMISION':
-      
-      return require('../../../assets/images/categorias/transmision.png')
-    case 'LLANTAS':
-      
-      return require('../../../assets/images/categorias/llanta.png')
-    default:
-      return require('../../../assets/images/categorias/carroceria.png')
-     
-  }
-} 
+
 const getIcons = (name) => {
   const ICONS = {
     

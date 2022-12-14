@@ -5,32 +5,27 @@ import {
   Text,
   View,
   StyleSheet,
-  Image,
+
   useWindowDimensions,
   TouchableOpacity,
   ScrollView,
   Linking,
   Platform,
 } from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
 import ButtonComponent from '../../components/button/button.component';
-import OrderCard from '../../components/customer-components/ordercard.component';
 import LoaderComponent from '../../components/Loader/Loader.component';
 import {
-  api_statuses,
-  base_url,
+
   customer_api_urls,
-  vendor_api_urls,
+
 } from '../../util/api/api_essentials';
-import {CUSTOMER_HOME_SCREEN_ROUTES, showToaster} from '../../util/constants';
-import {getUserId} from '../../util/local-storage/auth_service';
+
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import AddressComponent from '../../components/customer-components/customer.addresscard.component';
 import {ThinlineSeparator} from '../../components/CommonComponents';
-import ProductCardComponent from '../../components/customer-components/product-card.component';
 import Entypo from 'react-native-vector-icons/Entypo';
 import moment from 'moment';
 import {HeaderBackground} from '../../components/Background/HeaderBackground';
@@ -39,14 +34,14 @@ import {adjust, deviceHeight} from '../../util/Dimentions';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const CustomerOrderDetail = props => {
-  const {width, height} = useWindowDimensions();
+  const {width} = useWindowDimensions();
   const [loading, setLoading] = useState(false);
   const {params} = useRoute();
   const address = params.order.delivery_address;
   let store = params.order.store;
   const totalAmount = parseInt(params.order.total_amount);
   const {top} = useSafeAreaInsets();
-  const comision = params.comision;
+
   const [storeId, setStoreId] = useState(null);
 
   const openMapa = () => {

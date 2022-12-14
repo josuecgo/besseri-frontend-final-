@@ -1,6 +1,6 @@
 export const env = 'dev';
 
-export const base_url = env == 'prod' ? 'https://api.besseri.mx' : env == 'dev' ?  'http://192.168.1.9:3005' : 'http://192.168.10.10:5001';
+export const base_url = env == 'prod' ? 'https://api.besseri.mx' : env == 'dev' ?  'http://192.168.1.7:3005' : 'http://192.168.10.10:5001';
 // export const base_url = false ? 'http://192.168.100.72:3005' : 'http://192.168.1.17:3005'
 
 export const api_urls = {
@@ -18,6 +18,7 @@ export const api_urls = {
     getMessage: `${base_url}/chat/get-msg`,
     create_message:`${base_url}/chat/create-msg`,
     get_chats:`${base_url}/chat/get-chats`,
+    check_version:`${base_url}/user/check-version`,
 }
 export const paymentApis = {
     refundPayment:`${base_url}/payments/refund-amount`,
@@ -90,7 +91,11 @@ export const customer_api_urls = {
     cancel_order:`${base_url}/orders/cancel-user-order`,
     create_payment_sheet_services:`${base_url}/payments/payment-sheet-services`,
     service_search:`${base_url}/services/search-api`,
-   
+    create_car:`${base_url}/info-user/create-garage`,
+    get_garage:`${base_url}/info-user/get-garage`,
+    delete_garage:`${base_url}/info-user/delete-garage`,
+    active_car:`${base_url}/info-user/active-car`,
+    get_active_car:`${base_url}/info-user/get-active-car`,
 }
 export const rider_api_urls = {
     get_details:`${base_url}/rider/get-riderinfo`,

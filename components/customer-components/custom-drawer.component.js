@@ -11,6 +11,7 @@ import { getUser, logout } from '../../util/local-storage/auth_service';
 import { HeaderBackground } from '../Background/HeaderBackground';
 import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
 import { Badge } from '../Badge';
+import { ProductContext } from '../../util/context/Product/ProductContext';
 
 
 const getIcons = ({focused, color, size, name,count}) => {
@@ -31,6 +32,9 @@ const getIcons = ({focused, color, size, name,count}) => {
     ),
     'Mis Tarjetas': (
       <MaterialIcons name='credit-card'  size={28} color={color} />
+    ),
+    'Garage': (
+      <MaterialIcons name='directions-car'  size={28} color={color} />
     ),
     'Mi dirección': (
       <MaterialIcons name='location-on'  size={28} color={color} />
@@ -63,7 +67,9 @@ const CustomDrawerComponent = React.memo((props) => {
   const getNotificaciones = props.getNotificaciones;
   const {deleteNotificaciones} = props;
   const focusedRoute = routes[index].name;
- 
+  const {
+    getActiveCar
+} = useContext(ProductContext);
  
   const getUserData = async() => {
     const user = await getUser();
@@ -133,25 +139,13 @@ const CustomDrawerComponent = React.memo((props) => {
           user ? (
             <>
         
-              {/* <DrawerItem
-              onPress={async() => {
-                props.navigation.navigate(MAIN_ROUTES.CHATSCREEN);
-                
-              }}
-              label="Chat"
-              activeTintColor={Colors.white}
-              activeBackgroundColor={Colors.primarySolid}
-              // inactiveTintColor={Colors.red}
-              icon={({focused, size, color}) => (
-                <MaterialIcons size={size} color={color} name="chat" />
-              )}
-              focused={focusedRoute === 'Chats'}
-              labelStyle={{fontSize:adjust(10)}}
-              /> */}
+          
               <DrawerItem
               onPress={async() => {
                 deleteNotificaciones()
+                
                 await logout();
+                await getActiveCar();
                 props.navigation.replace(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS,{reload:true});
                 showToaster('Cerraste sesión')
               }}
@@ -218,3 +212,5 @@ const styles = StyleSheet.create({
 });
 
 export default CustomDrawerComponent;
+
+
