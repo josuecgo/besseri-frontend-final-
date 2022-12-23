@@ -43,7 +43,7 @@ const CustomHeaderComponent = props => {
 
   const goCart = async() => {
     const user_id = await getUserId();
-    
+    console.log('click');
     if (user_id) {
       props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK) 
     }else{
@@ -93,37 +93,48 @@ const CustomHeaderComponent = props => {
         </Pressable>
 
         <Text style={styles.titulo}>{props.name}</Text>
-        <View style={CommonStyles.flexDirectionRow}>
+        <View style={[CommonStyles.flexDirectionRow,{
+          justifyContent:'space-between',
+         
+          }]}>
+          <TouchableOpacity onPress={() =>
+              props.navigation.navigate('Garage')
+            }>
+              <MaterialCommunityIcons
+                color={Colors.white}
+                size={30}
+                name="car"
+              />
+            </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
               props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.MAP_STORES)
             }>
             <MaterialIcons
-              style={{marginRight: 10}}
+              style={{marginHorizontal: 5}}
               color={Colors.white}
               size={30}
               name="storefront"
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK)
-            }>
-            <TouchableOpacity onPress={goCart}>
+        
+
+          <TouchableOpacity onPress={goCart}  >
               <MaterialCommunityIcons
                 color={Colors.white}
                 size={30}
                 name="cart"
+                onPress={goCart}
               />
-            </TouchableOpacity>
-            {cart_items.length > 0 ? (
-              <View style={styles.cartItemsLengthWrapper}>
+          </TouchableOpacity>
+          {cart_items.length > 0 ? (
+              <TouchableOpacity onPress={goCart} style={styles.cartItemsLengthWrapper}>
                 <Text style={styles.cartItemsLengthWrapperText}>
                   {cart_items.length}
                 </Text>
-              </View>
-            ) : null}
-          </TouchableOpacity>
+              </TouchableOpacity>
+          ) : null}
+          
         </View>
 
       </View>

@@ -12,6 +12,7 @@ import { ProductContext } from '../../util/context/Product/ProductContext';
 import { useFiltrado } from '../../hooks/useFiltrado';
 import { SelectFilter } from '../../components/SelectFilter';
 import { Empty } from '../../components/Customer/Empty';
+import { CarDefault } from '../../components/Customer/CarDefault';
 
 
 
@@ -88,6 +89,9 @@ const CustomerProductsViewScreen = React.memo((props) => {
        
         </View>
         <View style={styles.reset} >
+          <View>
+            <CarDefault/>
+          </View>
           {
             modelo && (
               <TouchableOpacity 
@@ -207,8 +211,9 @@ const styles = StyleSheet.create({
     
   },
   reset:{
-    
-    alignItems:'flex-end',
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
     marginHorizontal:10
   },
   btnReset:{

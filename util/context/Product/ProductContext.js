@@ -47,7 +47,9 @@ export const ProductProvider = ({children}) => {
     const [loading, setLoading] = useState(false)
     const [dowload, setDowload] = useState(false)
     const [reset, setReset] = useState(false)
-    const [activeCarLoading, setActiveCarLoading] = useState(false)
+    const [activeCarLoading, setActiveCarLoading] = useState(false);
+    const [cars, setCars] = useState([])
+
     const getCategorias = async(params) => {
         try {
             
@@ -260,18 +262,7 @@ export const ProductProvider = ({children}) => {
             const apiCall = await axios.post(`${customer_api_urls.active_car}/${userId}`,{data});
                 
             if (apiCall.status == api_statuses.success) {
-                // let {isCarActive} = apiCall.data.data;
-                // console.log({isCarActive});
-                setCarDefault(isCarActive)
-            
-                // await dispatch({
-                //     type:'activeCar',
-                //     payload: {
-                //         car:isCarActive,
-                //         // categorias: apiCall?.data?.data?.categories
-                //     }
-                // });
-            
+               showToaster('Nuevo Auto activado')
             }
     
         } catch (error) {
@@ -332,6 +323,29 @@ export const ProductProvider = ({children}) => {
         // }); 
         }
     }
+
+    const getGarage = async () => {
+        const userId = await getUserId();
+        try {
+          if (!userId) {
+            showToaster('Inicia sesión')
+            return
+          }
+          const apiCall = await axios.get(`${customer_api_urls.get_garage}/${userId}`);
+    
+          if (apiCall.status == api_statuses.success) {
+    
+            setCars(apiCall.data.data)
+          
+          } else {
+            showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
+          }
+    
+        } catch (error) {
+          console.log(error);
+          showToaster('No hay conexion con el servidor')
+        }
+      }
 
 
  
@@ -454,15 +468,9 @@ export const ProductProvider = ({children}) => {
         rangeYear()
     }, [])
     
-        // useEffect(() => {
-        //     if (dowload) {
-        //         getActiveCar()
-        //     }
-            
-        // }, [dowload])
-    
-    
-    
+    useEffect(() => {
+        getGarage()
+    }, [])
 
     return (
         <ProductContext.Provider
@@ -498,7 +506,9 @@ export const ProductProvider = ({children}) => {
             getActiveCar,
             reset,
             carDefault,
-            activeCarLoading
+            activeCarLoading,
+            getGarage,
+            cars
         }}
         >
             {children}

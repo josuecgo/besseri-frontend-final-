@@ -20,6 +20,7 @@ import {moneda} from '../../util/Moneda';
 import axios from 'axios';
 import { showToaster } from '../../util/constants';
 import { ProductContext } from '../../util/context/Product/ProductContext';
+import { Compatible } from '../Customer/Compatible';
 
 
 const ProductCardComponent = ({
@@ -33,6 +34,7 @@ const ProductCardComponent = ({
   onRemoveFromCart,
   onViewDetail,
 }) => {
+ const {carDefault} = useContext(ProductContext)
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
   const {
     comision
@@ -140,6 +142,8 @@ const ProductCardComponent = ({
           <AntDesign name="delete" color="red" size={18} />
         </TouchableOpacity>
       ) : null}
+
+     
       
       <Image
         source={{uri: `${base_url}/${data?.productImg}`}}
@@ -150,6 +154,11 @@ const ProductCardComponent = ({
       <LinearGradient
         colors={Colors.primaryGradient}
         style={styles.LinearGradient}>
+           {
+            carDefault && (
+              <Compatible carDefault={carDefault}/>
+            )
+          }
         <Text style={styles.productTitle}>{data?.name}</Text>
         <Text style={[styles.textSub,{textTransform:'uppercase'}]} >{data?.brand?.name} </Text>
         <View style={styles.productSubTitle} > 

@@ -25,12 +25,13 @@ import { useRoute } from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ProductCardComponent from '../../components/customer-components/product-card.component';
 import { HeaderBackground } from '../../components/Background/HeaderBackground';
-import { deviceHeight, deviceWidth } from '../../util/Dimentions';
+import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
 import { useCart } from '../../hooks/useCart';
 import { SearchInput } from '../../components/customer-components/SearchInput';
 import { ProductContext } from '../../util/context/Product/ProductContext';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CheckIcon, Select } from 'native-base';
+import { CarDefault } from '../../components/Customer/CarDefault';
 
 
 
@@ -53,68 +54,37 @@ const CustomerMoreProductsScreen = props => {
    
     const [searchText, setSearchtext] = useState('');
     const [productFilter, setProductFilter] = useState(false);
-    const {comision,years} = useContext(ProductContext);
+    const {comision,years,resetFiltro,carDefault} = useContext(ProductContext);
+
+
+    const handleMarca = (item) => {
+       
+        console.log(item);
+        setValueMaker(item)
+        
+
+    }
+    const handleModel = (item) => {
+        setValueModel(item);
+
+    }
+    const handleYear = (item) => {
+        
+        setValueYear(item);
+
+    }
+
+    const resetFiltros = async() => {
+        setValueMaker("");
+        setValueModel("");
+        setValueYear("")
+        setModelo(false);
+        getMarcas();
+        getProducts();
+        resetFiltro()
+    }
   
-    // const getUserLocation = async () => {
-    //     if (Platform.OS === 'ios') {
-    //         getLocation();
-    //     } else {
-    //         try {
-    //             const granted = await PermissionsAndroid.request(
-    //                 PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-    //                 {
-    //                     title: 'Permiso de ubicación',
-    //                     message:
-    //                         'Esta aplicación necesita acceso a tu ubicación' +
-    //                         ' para que podamos saber dónde estás.',
-    //                 },
-    //             );
-    //             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-    //                 await Geolocation.getCurrentPosition(res => {
-    //                     setUserLocation(res.coords);
-    //                     // setState(res.coords,SCREEN_STATES.USER_LOCATION);
-    //                 });
-    //             } else {
-    //                 // console.log('Permiso de ubicación denegado');
-    //             }
-    //         } catch (e) {
-    //             // console.log(e);
-    //             showToaster('No se pudo obtener la ubicación actual.');
-    //         }
-    //     }
-    // };
 
-    // const getLocation = () => {
-    //     Geolocation.getCurrentPosition(
-    //         position => {
-    //             const currentLatitude = JSON.stringify(position.coords.latitude);
-    //             const currentLongitude = JSON.stringify(position.coords.longitude);
-    //             setCoords({
-    //                 latitude: currentLatitude,
-    //                 longitude: currentLongitude,
-    //             });
-    //         },
-    //         error => alert(error.message),
-    //     );
-    //     const watchID = Geolocation.watchPosition(position => {
-    //         const currentLatitude = JSON.stringify(position.coords.latitude);
-    //         const currentLongitude = JSON.stringify(position.coords.longitude);
-    //         setCoords({
-    //             latitude: currentLatitude,
-    //             longitude: currentLongitude,
-    //         });
-    //     });
-    //     setWatchID(watchID);
-    // };
-
-    // useEffect(() => {
-    //     let abortController = new AbortController();  
-    //     getUserLocation();
-    //     return () => {  
-    //         abortController.abort();  
-    //     }  
-    // }, []);
-    
 
     useEffect(() => {
         let abortController = new AbortController();  
@@ -256,8 +226,9 @@ const CustomerMoreProductsScreen = props => {
             //   valueYear,
             //   compatible
             // });
-            let value = betweenNumber(item?.aplicacion?.de,item?.aplicacion?.al,valueYear)
+            let value = valueModel === item.model && betweenNumber(item?.aplicacion?.de,item?.aplicacion?.al,valueYear)
     
+            
             if (value || compatible ) {
              
               return item
@@ -380,6 +351,19 @@ const CustomerMoreProductsScreen = props => {
 
     const memorizedValue = useMemo(() => renderItem, [productFilter]);
 
+    useEffect(() => {
+        handleMarca(carDefault?.maker?._id)
+        handleYear(carDefault?.year)
+    }, [carDefault])
+
+    useEffect(() => {
+      if (carDefault && modelo) {
+        handleModel(carDefault?.model?._id)
+      }
+    }, [modelo,carDefault])
+    
+    
+
     return (
         <View style={{ ...CommonStyles.flexOne }}>
             <View style={{ flex: 1,paddingBottom:bottom + 80 }}>
@@ -461,7 +445,13 @@ const CustomerMoreProductsScreen = props => {
                     backgroundColor={Colors.white}
                 >
                     {
-                        marcas.map((item) => <Select.Item key={item._id} label={item.name} value={item._id} />)
+                        marcas.map((item) => <Select.Item 
+                        
+                        key={item._id} 
+                        label={item.name} 
+                        value={item._id} 
+                        textTransform='uppercase' 
+                        />)
                     }
 
                     </Select>
@@ -485,7 +475,7 @@ const CustomerMoreProductsScreen = props => {
                         backgroundColor={Colors.white}
                     >
                         {
-                            modelo.map((item) => <Select.Item key={item._id} label={item.name} value={item._id} />)
+                            modelo.map((item) => <Select.Item textTransform='uppercase' key={item._id} label={item.name} value={item._id} />)
                         }
                     </Select>
                     ) : (
@@ -512,6 +502,25 @@ const CustomerMoreProductsScreen = props => {
                         }
                     </Select>
                    
+                </View>
+
+                <View style={styles.reset} >
+                    <View>
+                        <CarDefault/>
+                    </View>
+                    {
+                        modelo && (
+                        <TouchableOpacity 
+                        onPress={resetFiltros}
+                        style={styles.btnReset} 
+                        >
+                            <Text style={styles.txtReset} >Limpiar filtros</Text>
+                        </TouchableOpacity>
+                        
+                        )
+                        
+                    }
+                    
                 </View>
 
                 
@@ -577,7 +586,7 @@ const CustomerMoreProductsScreen = props => {
                     }
                     
 
-                    </View>
+                </View>
             </View>
             {/* <View style={{ width: deviceWidth, height: deviceHeight * 0.1  }} /> */}
               
@@ -652,5 +661,20 @@ const styles = StyleSheet.create({
         width: deviceWidth / 2.2,
        
     },
+    reset:{
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'space-between',
+        marginHorizontal:10
+      },
+      btnReset:{
+       marginVertical:10
+      },
+      txtReset:{
+        borderBottomWidth:1,
+        color:Colors.primarySolid,
+        borderColor:Colors.primarySolid,
+        fontSize:adjust(10)
+      }
 });
 export default CustomerMoreProductsScreen;

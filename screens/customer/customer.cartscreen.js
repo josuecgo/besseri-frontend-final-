@@ -14,7 +14,7 @@ import axios from 'axios';
 import { api_statuses, base_url, customer_api_urls, vendor_api_urls } from '../../util/api/api_essentials';
 import { Modalize } from 'react-native-modalize';
 import { HeaderBackground } from '../../components/Background/HeaderBackground';
-import { deviceHeight, deviceWidth } from '../../util/Dimentions';
+import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
 import { useLocation } from '../../hooks/useLocation';
 import { getUserAddress, getUserId } from '../../util/local-storage/auth_service';
 import { Cupon } from '../../components/Customer/Cupon';
@@ -48,7 +48,9 @@ const CustomerCartScreen = (props) => {
   let businessIds = [];
   // const [totalAmount, setTotalAmount] = useState(false)
 
-
+  const goDirecctions = () => {
+    props.navigation.navigate('Mi dirección')
+  }
  
   useEffect(async() => {
     let abortController = new AbortController();
@@ -95,13 +97,14 @@ const CustomerCartScreen = (props) => {
             label:apiCall.data.data[0].label
           });
       } else {
-          showToaster('Error para obtener su direccion :/')
+          showToaster('Error para obtener su direccion :/');
+          setDireccion(false);
       }
     } catch(e) 
     { 
         // console.log({error:e})
-        
-        showToaster('Recuerde que para comprar necesitas tener dada de alta tu direccion ')
+        setDireccion(false);
+        showToaster('Crea una direccion para poder realizar tu compra')
     }
   }
   
@@ -134,7 +137,17 @@ const CustomerCartScreen = (props) => {
   
   const goPurchase = () => {
     // console.log('click1');
+    
     if (isLogin) {
+      if (!direccion) {
+        showToaster('Crea una direccion para poder realizar tu compra')
+        return
+      }
+      if ((totalAmount +  comission * totalAmount / 100 - descuento).toFixed(2) <= 300) {
+        showToaster('Compra minima $300.00.')
+        return
+      }
+
       if(businessProfiles[0]?.wallet_id && !businessProfiles[0]?.isBlocked) {
         let allProducts = products?.filter(prod => prod?.business_id == businessProfiles[0]?._id);
         let totalProductsPrice = 0;
@@ -373,6 +386,17 @@ const CustomerCartScreen = (props) => {
                 <View/>
               ):(
                 <View style={styles.detailCard}>
+                  {
+                    !direccion && (
+                      <TouchableOpacity 
+                      onPress={goDirecctions}
+                      style={{alignItems:'center',justifyContent:'center',marginVertical:5}} 
+                      >
+                        <Text style={{color:Colors.primarySolid, fontSize: adjust(18),textDecorationLine:'underline'}} >Crear mi direccion</Text>
+                      </TouchableOpacity>
+                      
+                    )
+                  }
                   
                   <Cupon  />
 

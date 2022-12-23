@@ -189,9 +189,15 @@ const CustomerStoreScreen = props => {
                     style={styles.select}
                     borderColor={Colors.white}
                     backgroundColor={Colors.white}
+
                 >
                     {
-                        marcas.map((item) => <Select.Item key={item._id} label={item.name} value={item._id} />)
+                        marcas.map((item) => <Select.Item 
+                        key={item._id} 
+                        label={item.name} 
+                        value={item._id} 
+                        textTransform='uppercase'
+                        />)
                     }
 
                     </Select>
@@ -215,7 +221,12 @@ const CustomerStoreScreen = props => {
                         backgroundColor={Colors.white}
                     >
                         {
-                            modelo.map((item) => <Select.Item key={item._id} label={item.name} value={item._id} />)
+                            modelo.map((item) => <Select.Item 
+                            key={item._id} 
+                            label={item.name} 
+                            value={item._id} 
+                            textTransform='uppercase'
+                            />)
                         }
                     </Select>
                     ) : (

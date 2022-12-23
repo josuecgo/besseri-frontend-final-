@@ -325,6 +325,7 @@ const CustomerOrderSummaryFree = React.memo((props) => {
     const {error} = await presentPaymentSheet();
 
     if (error) {
+      setIsVisible(false);
       Alert.alert(`Error code: ${error.code}`, error.message);
     } else {
       placeOrder();

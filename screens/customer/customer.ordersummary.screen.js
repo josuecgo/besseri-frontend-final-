@@ -101,11 +101,11 @@ const CustomerOrderSummary = (props) => {
          } else {
              showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 1')
          }
-         setIsVisible(false);
+         
         } catch(e) 
         { 
             // console.log(e.response)
-            setIsVisible(false); 
+           
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 2')
         }
     }
@@ -115,7 +115,7 @@ const CustomerOrderSummary = (props) => {
         
         if (!stripeEssentials?.intentId) {
             await initializePaymentSheet()
-           
+            setIsVisible(false);
         }
         
         try {
@@ -136,7 +136,7 @@ const CustomerOrderSummary = (props) => {
         
          const apiCall = await axios.post(`${customer_api_urls.place_order}`,body);
          setLoading(false);
-         setIsVisible(false)
+         
          if(apiCall.status == api_statuses.success) {
             // setOrderPlaced(true)
             for (var a=0;a<products?.length;a++) {
@@ -144,9 +144,10 @@ const CustomerOrderSummary = (props) => {
             }
             showToaster('Pedido realizado');
             props.navigation.navigate('OrderSuccessful',props.navigation)
-             
+            setIsVisible(false) 
          } else {
              showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 3')
+             setIsVisible(false);
          }
         } catch(e) 
         { 
@@ -209,12 +210,14 @@ const CustomerOrderSummary = (props) => {
           const apiCall = await axios.post(paymentApis?.refundPayment,{
             intentId:stripeEssentials?.intentId
           });
+          setIsVisible(false);
           if(apiCall?.status == 200) {
               showToaster('Su cantidad ha sido reembolsada');
               return
           }
          } catch(e) {
             //  Alert.alert('Refund failed',JSON.stringify(e))
+            setIsVisible(false);
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 5')
             // console.log(e?.response?.data)
          }
@@ -258,7 +261,7 @@ const CustomerOrderSummary = (props) => {
             intentId:response?.data?.intentId
         }
         setStripeEssentials(apiResponse)
-        
+        setIsVisible(false);
         return {
             paymentIntent:response?.data?.paymentIntent,
             ephemeralKey:response?.data?.ephemeralKey,
@@ -267,6 +270,7 @@ const CustomerOrderSummary = (props) => {
         };
        } catch(e) {
         //    console.log('line 183',e)
+
            showToaster('Algo salió mal, intenta de nuevo code: 6')
        }
        setIsVisible(false);
@@ -331,7 +335,10 @@ const CustomerOrderSummary = (props) => {
             const { error } = await presentPaymentSheet();
             
             if (error) {
-              Alert.alert(`Error code: ${error.code}`, error.message);
+                
+                setIsVisible(false);
+                Alert.alert(`Error code: ${error.code}`, error.message);
+              
             } else {
               placeOrder()
             }

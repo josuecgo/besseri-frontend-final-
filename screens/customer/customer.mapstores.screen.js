@@ -66,7 +66,7 @@ export default function CustomerMapStores(props) {
           getStores(position.coords);
         })
       } else {
-        // console.log("location permission denied")
+        console.log("location permission denied")
         // showToaster("Permiso de ubicación denegado");
       }
     } catch (e) {
@@ -78,7 +78,8 @@ export default function CustomerMapStores(props) {
       const apiCall = await axios.post(`${customer_api_urls.get_stores}`, {
         startlat: location?.latitude || 19.485306213822334,
         startlng: location?.longitude || -99.22779700380474,
-
+        // startlat:  19.485306213822334,
+        // startlng:  -99.22779700380474,
         range: 30
       });
       if (apiCall.status == api_statuses.success) {

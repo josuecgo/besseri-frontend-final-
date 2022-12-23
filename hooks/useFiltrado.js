@@ -236,7 +236,7 @@ export const useFiltrado = ( isServicios ) => {
                 }
             });
             
-            let value = betweenNumber(item?.aplicacion?.de,item?.aplicacion?.al,valueYear)
+            let value = valueModel === item.model && betweenNumber(item?.aplicacion?.de,item?.aplicacion?.al,valueYear)
     
             if (value || compatible ) {
              

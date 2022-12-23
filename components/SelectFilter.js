@@ -80,9 +80,15 @@ export const SelectFilter = () => {
                 style={styles.select}
                 borderColor={Colors.white}
                 backgroundColor={Colors.white}
+                textTransform={'uppercase'}
             >
                 {
-                    marcas.map((item) => <Select.Item key={item._id} label={item.name} value={item._id} />)
+                    marcas.map((item) => <Select.Item 
+                    key={item._id} 
+                    label={item.name} 
+                    value={item._id} 
+                    textTransform={'uppercase'}
+                    />)
                 }
 
             </Select>
@@ -106,7 +112,7 @@ export const SelectFilter = () => {
                 backgroundColor={Colors.white}
             >
                 {
-                    modelo.map((item) => <Select.Item key={item._id} label={item.name} value={item._id} />)
+                    modelo.map((item) => <Select.Item textTransform='uppercase' key={item._id} label={item.name} value={item._id} />)
                 }
             </Select>
             ) : (

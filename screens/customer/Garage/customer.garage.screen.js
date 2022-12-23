@@ -22,7 +22,9 @@ export const GarageScreen = (props) => {
     years,
     activeCar,
     carDefault,
-    activeCarLoading
+    activeCarLoading,
+    getGarage,
+    cars
   } = useContext(ProductContext);
   const {
     marcas,
@@ -37,7 +39,7 @@ export const GarageScreen = (props) => {
   } = useSearchStore();
   const [showModal, setShowModal] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
-  const [cars, setCars] = useState([])
+  
   const [carSelect, setCarSelect] = useState(false)
   const [value, setValue] = useState(carDefault ? carDefault._id : '')
 
@@ -78,28 +80,6 @@ export const GarageScreen = (props) => {
     }
   }
 
-  const getGarage = async () => {
-    const userId = await getUserId();
-    try {
-      if (!userId) {
-        showToaster('Inicia sesión')
-        return
-      }
-      const apiCall = await axios.get(`${customer_api_urls.get_garage}/${userId}`);
-
-      if (apiCall.status == api_statuses.success) {
-
-        setCars(apiCall.data.data)
-        setShowModal(false)
-      } else {
-        showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
-      }
-
-    } catch (error) {
-      console.log(error);
-      showToaster('No hay conexion con el servidor')
-    }
-  }
 
   const onDelete = async(car) => {
     try {
@@ -127,9 +107,7 @@ export const GarageScreen = (props) => {
     setValue(car)
   }
 
-  useEffect(() => {
-    getGarage()
-  }, [])
+
 
 
   return (
@@ -206,7 +184,7 @@ export const GarageScreen = (props) => {
         )}
       />
 
-      <Text>customer.garage.sceen</Text>
+     
     </>
   )
 }

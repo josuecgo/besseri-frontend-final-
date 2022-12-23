@@ -27,7 +27,7 @@ export const useSearchStore = (  ) => {
 
     const {
         productos,
-        
+        carDefault
     } = useContext(ProductContext)
 
     const getStore = async (tienda) => {
@@ -195,7 +195,8 @@ export const useSearchStore = (  ) => {
             //   valueYear,
             //   compatible
             // });
-            let value = betweenNumber(item?.aplicacion?.de,item?.aplicacion?.al,valueYear)
+
+            let value = valueModel === item.model && betweenNumber(item?.aplicacion?.de,item?.aplicacion?.al,valueYear)
     
             if (value || compatible ) {
              
@@ -351,7 +352,16 @@ export const useSearchStore = (  ) => {
     }
     
    
-    
+    useEffect(() => {
+        handleMarca(carDefault?.maker?._id)
+        handleYear(carDefault?.year)
+    }, [carDefault])
+
+    useEffect(() => {
+      if (carDefault && modelo) {
+        handleModel(carDefault?.model?._id)
+      }
+    }, [modelo,carDefault])
     
    
     useEffect(() => {
