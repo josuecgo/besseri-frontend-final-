@@ -4,6 +4,9 @@ import Colors from '../../util/styles/colors'
 import { adjust } from '../../util/Dimentions'
 
 export const Compatible = ({carDefault}) => {
+  
+  
+
   return (
     <View style={styles.container} >
       <Text style={styles.txt} >Compatible con {carDefault?.model?.name} {carDefault.year} </Text>

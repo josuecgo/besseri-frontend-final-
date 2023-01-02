@@ -23,6 +23,7 @@ import { Badge } from '../Badge';
 import { NotificationContext } from '../../util/context/NotificationContext';
 import { SearchInput } from './SearchInput';
 import { ProductContext } from '../../util/context/Product/ProductContext';
+import { CarDefault } from '../Customer/CarDefault';
 
 
 
@@ -139,15 +140,7 @@ const CustomHeaderComponent = props => {
 
       </View>
       <View style={styles.top}>
-        {/* <SearchInput onDebounce={value => setSearchText(value)} />
-        {loading ? (
-          <SpinKit
-            type="ThreeBounce"
-            isVisible={loading}
-            color={Colors.primarySolid}
-            size={30}
-          />
-        ) : null} */}
+      {/* <CarDefault/> */}
       </View>
     </>
   );

@@ -12,113 +12,12 @@ export const useFiltrado = ( isServicios ) => {
         productos,
         servicios,
         carActive,
-        valueMaker, setValueMaker,
-        valueModel, setValueModel, 
-        setValueYear, valueYear,modelo
+        valueMaker,
+        valueModel, valueYear,carCompatible,modelo
     } = useContext(ProductContext)
     const [loadingFilter, setLoadingFilter] = useState(false)
 
-    // const makerFilter = () => {
-    //     if (isServicios === 'Servicios') {
-    //         servicesFilter();
-    //         return;
-    //     }
-    //     let filtrado = []
-    //     if (valueMaker) {
-    //         if (valueModel) {
-               
-    //             let itemData;
-    //             let itemModel;
-    //             const marca = productos.filter((item) => {
-    //                 itemData = item.maker ? item?.maker?._id : '';
-    //                 let searchTextData = valueMaker;
-    //                 let searchTextData2 = valueModel;
-    //                 let match = matchesForModel(searchTextData2,item);
-    //                 return itemData.indexOf(searchTextData) > -1 || match;
-    //             })
-                
-    //             const modelo = marca.filter((item) => {
-                    
-    //                 itemModel = item.model ? item?.model?._id : '';
-    //                 let searchTextData = valueModel;
 
-    //                 let match = matchesForModel(searchTextData,item);
-                    
-    //                 return itemModel.indexOf(searchTextData) > -1 || match;
-    //             })
-
-    //             filtrado = modelo ? modelo : []
-
-    //             // setProductFilter(modelo ? modelo : []);
-    //             // filterProduct(modelo ? modelo : []);
-               
-    //         } else {
-                
-    //         const marca = productos.filter((item) => {
-    //             let itemData = item.maker ? item?.maker?._id : '';
-                
-    //             let searchTextData = valueMaker;
-                
-    //             return itemData.indexOf(searchTextData) > -1  ;
-    //         })
-    //             filtrado = marca ? marca : []
-    //             // setProductFilter();
-    //             // filterProduct(marca ? marca : [])
-    //         }
-
-            
-          
-    //     }else{  
-    //         filtrado = productos
-    //         // filterProduct(productos)
-    //         // setProductFilter(productos)
-    //     }
-
-    //     if (valueYear) {
-      
-    //         let match = filtrado.filter((item) => {
-              
-            
-            
-    //           let compatible = item?.matchs.find(element =>  {
-      
-    //             let result = betweenNumber(element?.de,element?.al,valueYear)
-                
-    //             if (result) {
-    //               return element
-    //             }else{
-    //               return false
-    //             }
-    //           });
-              
-    //           // console.log({
-    //           //   name:item.name,
-    //           //   bde:item?.aplicacion?.de,
-    //           //   bbollDe: item?.aplicacion?.de <= valueYear,
-    //           //   al:item?.aplicacion?.al,
-    //           //   aboolAl:item?.aplicacion?.al >= valueYear,
-    //           //   valueYear,
-    //           //   compatible
-    //           // });
-      
-    //           if (valueYear >= item?.aplicacion?.de  && valueYear <= item?.aplicacion?.al || compatible ) {
-               
-    //             return item
-    //           }
-      
-    //         })
-            
-    //         filterProduct(match)
-    //         setProductFilter(match)
-    //       }else{
-    //         filterProduct(filtrado)
-    //         setProductFilter(filtrado)
-            
-    //       }
-
-        
-       
-    // };
 
 
     const servicesFilter = ()=> {
@@ -167,7 +66,12 @@ export const useFiltrado = ( isServicios ) => {
     }
 
     const makerFilter = () => {
-       
+        if (valueModel && valueYear && modelo) {
+            let carModel = modelo.find((item) => item._id === valueModel )
+            carCompatible({model:carModel,year:valueYear})
+        }else{
+            carCompatible(false)
+        }
         setLoadingFilter(true)
         let filtrado = []
         if (valueMaker) {
@@ -178,6 +82,7 @@ export const useFiltrado = ( isServicios ) => {
             let itemModel;
            
             const marca = productos.filter((item) => {
+                // console.log(item);
               itemData = item.maker ? item?.maker?._id : '';
               itemAplicacion = item.aplicacion ? item.aplicacion : ''
               let searchTextData = valueMaker;
@@ -225,7 +130,7 @@ export const useFiltrado = ( isServicios ) => {
             
 
             let compatible = item?.matchs.find(element =>  {
-                let model = valueModel ? element?.model === valueModel : ""
+                let model = valueModel ? element?.model._id === valueModel : ""
 
                 let result = betweenNumber(element?.de,element?.al,valueYear)
               
@@ -245,6 +150,7 @@ export const useFiltrado = ( isServicios ) => {
     
           })
             setLoadingFilter(false)
+            // console.log(match);
             setProductFilter(match)
         }else{
             setLoadingFilter(false)
@@ -257,7 +163,7 @@ export const useFiltrado = ( isServicios ) => {
        
     }
 
-
+    
 
     const  betweenNumber = (startingNumber, endingNumber, givenNumber) => {
 
@@ -271,10 +177,13 @@ export const useFiltrado = ( isServicios ) => {
     }
 
     const matchesForModel = (id,searchId) => {
+        // console.log(searchId?.matchs);
         
         if (searchId?.matchs.length > 0) {
-            // console.log({id,searchId:searchId?.matchs});
-            const match = searchId?.matchs.filter(element => element?.model === id);
+            // console.log({id});
+            // console.log(searchId?.matchs);
+            const match = searchId?.matchs.filter(element => element?.model._id === id);
+            
             if (match.length > 0) {
                 
                 return searchId;

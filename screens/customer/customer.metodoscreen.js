@@ -9,7 +9,7 @@ export const MetodoScreen = (props) => {
   const {navigation,route} = props;
   const {pickup,totalAmount,descuento} = route?.params;
   const mayorMil = totalAmount - descuento;
-  console.log({mayorMil});
+ 
   
   const goOrderFree = (pago) => {
     navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_SUMMARY_FREE,{
@@ -45,7 +45,7 @@ export const MetodoScreen = (props) => {
         
           <View style={styles.btn} >
             {
-              (mayorMil <= 1000) && (
+              (mayorMil <= 500) && (
                 <ModeEnvio 
                 texto={'Pago en efectivo'} 
                 iconName={'local-atm'}

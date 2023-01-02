@@ -328,7 +328,7 @@ export const ProductProvider = ({children}) => {
         const userId = await getUserId();
         try {
           if (!userId) {
-            showToaster('Inicia sesión')
+            // showToaster('Inicia sesión')
             return
           }
           const apiCall = await axios.get(`${customer_api_urls.get_garage}/${userId}`);
@@ -345,10 +345,18 @@ export const ProductProvider = ({children}) => {
           console.log(error);
           showToaster('No hay conexion con el servidor')
         }
-      }
+    }
 
 
- 
+    const carCompatible = async (car) => {
+        await dispatch({
+            type:'activeCar',
+            payload: {
+                car:car,
+                
+            }
+        }); 
+    }
 
    
     const resetFiltro = async() => {
@@ -360,6 +368,7 @@ export const ProductProvider = ({children}) => {
         getProducts();
         setCarDefault(false)
         setReset(true)
+        carCompatible(false)
     }
     
 
@@ -508,7 +517,8 @@ export const ProductProvider = ({children}) => {
             carDefault,
             activeCarLoading,
             getGarage,
-            cars
+            cars,
+            carCompatible
         }}
         >
             {children}

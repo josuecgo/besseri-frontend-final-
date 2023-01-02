@@ -27,7 +27,7 @@ export const useSearchStore = (  ) => {
 
     const {
         productos,
-        carDefault
+        carDefault,carCompatible
     } = useContext(ProductContext)
 
     const getStore = async (tienda) => {
@@ -120,16 +120,24 @@ export const useSearchStore = (  ) => {
        
     
         let filtrado = []
+        if (valueModel && valueYear && modelo) {
+            let carModel = modelo.find((item) => item._id === valueModel )
+            carCompatible({model:carModel,year:valueYear})
+        }else{
+            carCompatible(false)
+        }
+
         if (valueMaker) {
           if (valueModel) {
            
             
             let itemData;
             let itemModel;
+          
            
             const marca = productsData.filter((item) => {
               itemData = item.maker ? item?.maker?._id : '';
-              itemAplicacion = item.aplicacion ? item.aplicacion : ''
+              let itemAplicacion = item.aplicacion ? item.aplicacion : ''
               let searchTextData = valueMaker;
               let searchTextData2 = valueModel;
               
@@ -139,6 +147,7 @@ export const useSearchStore = (  ) => {
           })
       
             const modelo = marca.filter((item) => {
+               
               itemModel = item.model ? item?.model?._id : '';
               let searchTextData = valueModel;
               
@@ -175,7 +184,8 @@ export const useSearchStore = (  ) => {
             
 
             let compatible = item?.matchs.find(element =>  {
-                let model = valueModel ? element?.model === valueModel : ""
+                console.log(element);
+                let model = valueModel ? element?.model?._id === valueModel : ""
 
                 let result = betweenNumber(element?.de,element?.al,valueYear)
               
@@ -232,7 +242,7 @@ export const useSearchStore = (  ) => {
         
         if (searchId?.matchs.length > 0) {
             // console.log({id,searchId:searchId?.matchs});
-            const match = searchId?.matchs.filter(element => element?.model === id);
+            const match = searchId?.matchs.filter(element => element?.model?._id === id);
             if (match.length > 0) {
                 
                 return searchId;

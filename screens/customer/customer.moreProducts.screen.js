@@ -54,12 +54,12 @@ const CustomerMoreProductsScreen = props => {
    
     const [searchText, setSearchtext] = useState('');
     const [productFilter, setProductFilter] = useState(false);
-    const {comision,years,resetFiltro,carDefault} = useContext(ProductContext);
+    const {comision,years,resetFiltro,carDefault,carCompatible} = useContext(ProductContext);
 
 
     const handleMarca = (item) => {
        
-        console.log(item);
+        // console.log(item);
         setValueMaker(item)
         
 
@@ -151,6 +151,12 @@ const CustomerMoreProductsScreen = props => {
        
     
         let filtrado = []
+        if (valueModel && valueYear && modelo) {
+            let carModel = modelo.find((item) => item._id === valueModel )
+            carCompatible({model:carModel,year:valueYear})
+        }else{
+            carCompatible(false)
+        }
         if (valueMaker) {
           if (valueModel) {
            
@@ -206,7 +212,8 @@ const CustomerMoreProductsScreen = props => {
             
 
             let compatible = item?.matchs.find(element =>  {
-                let model = valueModel ? element?.model === valueModel : ""
+                console.log(element?.model);
+                let model = valueModel ? element?.model._id === valueModel : ""
 
                 let result = betweenNumber(element?.de,element?.al,valueYear)
               
@@ -263,7 +270,7 @@ const CustomerMoreProductsScreen = props => {
         
         if (searchId?.matchs.length > 0) {
             // console.log({id,searchId:searchId?.matchs});
-            const match = searchId?.matchs.filter(element => element?.model === id);
+            const match = searchId?.matchs.filter(element => element?.model._id === id);
             if (match.length > 0) {
                 
                 return searchId;
@@ -505,8 +512,8 @@ const CustomerMoreProductsScreen = props => {
                 </View>
 
                 <View style={styles.reset} >
-                    <View>
-                        <CarDefault/>
+                    <View style={{marginVertical:10}} >
+                        <CarDefault navigation={props.navigation} />
                     </View>
                     {
                         modelo && (

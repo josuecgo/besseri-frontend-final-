@@ -89,8 +89,8 @@ const CustomerProductsViewScreen = React.memo((props) => {
        
         </View>
         <View style={styles.reset} >
-          <View>
-            <CarDefault/>
+          <View style={{marginVertical:10}} >
+            <CarDefault navigation={props.navigation} />
           </View>
           {
             modelo && (

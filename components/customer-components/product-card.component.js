@@ -34,12 +34,9 @@ const ProductCardComponent = ({
   onRemoveFromCart,
   onViewDetail,
 }) => {
- const {carDefault} = useContext(ProductContext)
+ const {carDefault,comision,carActive} = useContext(ProductContext)
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
-  const {
-    comision
-  } = useContext(ProductContext);
-  // const [comision, setComision] = useState(10)
+
 
   const handleChange = async() => {
    
@@ -94,6 +91,11 @@ const ProductCardComponent = ({
             </Text>
             <Text style={{color: 'grey',textTransform:'uppercase',fontSize:adjust(10)}}>{data?.maker?.name}</Text>
             <Text style={{color: 'grey'}}>{data?.model?.name}</Text>
+            {
+            carDefault || carActive && (
+              <Compatible carDefault={carDefault ? carDefault : carActive}/>
+            )
+          }
             <TouchableOpacity onPress={handleChange}>
               <Text
                 style={{
@@ -114,6 +116,7 @@ const ProductCardComponent = ({
             }}
             style={horizontalCardStyles.img}
           />
+         
         </View>
       </Pressable>
     );
@@ -154,9 +157,9 @@ const ProductCardComponent = ({
       <LinearGradient
         colors={Colors.primaryGradient}
         style={styles.LinearGradient}>
-           {
-            carDefault && (
-              <Compatible carDefault={carDefault}/>
+          {
+            carDefault || carActive && (
+              <Compatible carDefault={carDefault ? carDefault : carActive}/>
             )
           }
         <Text style={styles.productTitle}>{data?.name}</Text>
