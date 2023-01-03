@@ -24,7 +24,10 @@ const ProductListing = ({category,products,navigation,comision}) => {
   if (products <= 0) {
     return null;
   }
- 
+  
+  if (category?.name === 'TRANSMISION') {
+    // console.log(products[0]);
+  }
   
   return (
     <View style={styles.container}>

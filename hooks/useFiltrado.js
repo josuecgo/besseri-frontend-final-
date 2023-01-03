@@ -84,7 +84,7 @@ export const useFiltrado = ( isServicios ) => {
             const marca = productos.filter((item) => {
                 // console.log(item);
               itemData = item.maker ? item?.maker?._id : '';
-              itemAplicacion = item.aplicacion ? item.aplicacion : ''
+            //   let itemAplicacion = item.aplicacion ? item.aplicacion : ''
               let searchTextData = valueMaker;
               let searchTextData2 = valueModel;
               
@@ -118,18 +118,22 @@ export const useFiltrado = ( isServicios ) => {
             
              
           }
+          
     
         }else{
           filtrado = productos
          
         }
     
+        // console.log(filtrado);
         if (valueYear) {
           
             let match = filtrado.filter((item) => {
-            
-
+           
+                
             let compatible = item?.matchs.find(element =>  {
+                // console.log(element?.model._id);
+                // console.log({modell:valueModel});
                 let model = valueModel ? element?.model._id === valueModel : ""
 
                 let result = betweenNumber(element?.de,element?.al,valueYear)
@@ -141,10 +145,12 @@ export const useFiltrado = ( isServicios ) => {
                 }
             });
             
-            let value = valueModel === item.model && betweenNumber(item?.aplicacion?.de,item?.aplicacion?.al,valueYear)
-    
+            let value = valueModel === item.model._id && betweenNumber(item?.aplicacion?.de,item?.aplicacion?.al,valueYear)
+            // console.log({
+            //     value , compatible
+            // });
             if (value || compatible ) {
-             
+            
               return item
             }
     
@@ -168,10 +174,10 @@ export const useFiltrado = ( isServicios ) => {
     const  betweenNumber = (startingNumber, endingNumber, givenNumber) => {
 
         if(givenNumber >= startingNumber && givenNumber <= endingNumber){
-            // console.log(`número dado ${givenNumber} cae entre ${startingNumber} y ${endingNumber}`);
+            console.log(`número dado ${givenNumber} cae entre ${startingNumber} y ${endingNumber}`);
             return true
         }else{
-        //   console.log(`número dado ${givenNumber} no cae entre ${startingNumber} y ${endingNumber}`);
+          console.log(`número dado ${givenNumber} no cae entre ${startingNumber} y ${endingNumber}`);
             return false;
         }
     }
