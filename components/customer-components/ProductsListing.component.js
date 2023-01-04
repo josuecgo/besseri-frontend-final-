@@ -14,7 +14,7 @@ import axios from 'axios';
 import { customer_api_urls } from '../../util/api/api_essentials';
 import { Empty } from '../Customer/Empty';
 
-const ProductListing = ({category,products,navigation,comision}) => {
+const ProductListing = ({category,products,navigation,comision,carCompatible}) => {
   
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
 
@@ -37,7 +37,11 @@ const ProductListing = ({category,products,navigation,comision}) => {
             </View>
           
             <TouchableOpacity
-            onPress={() => navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.MORE_PRODUCTS,{category:category})}
+            onPress={() => {
+              carCompatible(false)
+              navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.MORE_PRODUCTS,{category:category})
+            
+            }}
             >
               <Text style={{textDecorationLine:'underline', right:10,color:Colors.primarySolid,fontSize:adjust(10)}} >Ver más</Text>
               {/* <Ionicons name="ios-arrow-forward-outline" color="red" size={18} /> */}

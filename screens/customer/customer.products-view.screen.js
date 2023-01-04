@@ -1,4 +1,4 @@
-import React, {  useContext, useMemo, useState } from 'react';
+import React, {  useContext, useEffect, useMemo, useState } from 'react';
 import { Text, TouchableOpacity, View, StyleSheet, Platform, FlatList, ActivityIndicator } from 'react-native';
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
@@ -25,7 +25,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
   const {
     categorias,
     comision,modelo,
-    resetFiltro,productFiltrado,getProducts,loading
+    resetFiltro,productFiltrado,getProducts,loading,carCompatible,valueModel
   } = useContext(ProductContext);
 
   
@@ -58,6 +58,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
       category={item} 
       products={ productFilter.filter(product => product.categoryId == item._id) } 
       comision={comision}
+      carCompatible={carCompatible}
       />
     )
   }
@@ -75,7 +76,18 @@ const CustomerProductsViewScreen = React.memo((props) => {
 
   const memorizedValue = useMemo(() => renderItem, [productFilter]);
 
-   
+ 
+ useEffect(() => {
+    const unsubscribe = props.navigation.addListener('focus', () => {
+     
+      carCompatible(false)
+      
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [props.navigation]);
+  // console.log(valueModel);
   
   return (
     <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor }}>

@@ -37,7 +37,8 @@ const CustomHeaderComponent = props => {
   const {
     searchCall,
     loading,
-    resetFiltro
+    resetFiltro,
+    carCompatible
   } = useContext(ProductContext)
 
  
@@ -108,9 +109,10 @@ const CustomHeaderComponent = props => {
               />
             </TouchableOpacity>
           <TouchableOpacity
-            onPress={() =>
+            onPress={() =>{
+              carCompatible(false)
               props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.MAP_STORES)
-            }>
+            }}>
             <MaterialIcons
               style={{marginHorizontal: 5}}
               color={Colors.white}

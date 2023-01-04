@@ -121,7 +121,7 @@ const ProductCardComponent = ({
       </Pressable>
     );
   }
-
+ 
   return (
     <Pressable onPress={onViewDetail} style={styles.cardContainer}>
       {cartProduct ? (
@@ -158,7 +158,7 @@ const ProductCardComponent = ({
         colors={Colors.primaryGradient}
         style={styles.LinearGradient}>
           {
-            carDefault || carActive && (
+            carDefault || (carActive?.model?._id != data?.model?._id && carActive) && (
               <Compatible carDefault={carDefault ? carDefault : carActive}/>
             )
           }

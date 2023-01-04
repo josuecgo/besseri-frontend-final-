@@ -378,6 +378,7 @@ const CustomerMoreProductsScreen = props => {
                 <View style={styles.header}>
                     <TouchableOpacity
                         onPress={() => {
+                            carCompatible(false)
                             props.navigation.goBack();
                         }}>
                         <MaterialCommunityIcons
