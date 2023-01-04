@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
+import { useSelector } from 'react-redux';
 import { api_statuses, customer_api_urls, vendor_api_urls } from '../util/api/api_essentials';
 import { showToaster } from '../util/constants';
 import { getBusinessId, getBusinessProfile } from '../util/local-storage/auth_service';
@@ -16,6 +17,8 @@ export const useVendor = () => {
   const [modelos, setModelos] = useState([])
   const [years, setYears] = useState([]);
   const [productsFilter, setProductsFilter] = useState([])
+  const [business,setBusinessDetails] = useState(null);
+  const business_profile = useSelector(state => state?.businessActions);
 
   const getMyProducts = async () => {
     try {
@@ -23,16 +26,16 @@ export const useVendor = () => {
       const profile = await getBusinessProfile();
       setBusinessDetails(profile);
 
-      const businessId = await getBusinessId();
-      const url = `${vendor_api_urls.get_products}/${businessId}`
-      const apiCall = await axios.get(url);
+      // const businessId = await getBusinessId();
+      // const url = `${vendor_api_urls.get_products}/${businessId}`
+      // const apiCall = await axios.get(url);
       setShowLoader(false);
-      if (apiCall.status == 200) {
-        setProducts(apiCall.data.data);
+      // if (apiCall.status == 200) {
+      //   setProducts(apiCall.data.data);
 
-        return;
-      }
-      alert('No hay conexion con el servidor');
+      //   return;
+      // }
+      // alert('No hay conexion con el servidor');
     } catch (e) {
       setShowLoader(false);
       //  console.log(e.response.data);
@@ -310,6 +313,10 @@ export const useVendor = () => {
     rangeYear()
   }, [])
 
+  useEffect(() => {
+    getMyProducts()
+  }, [])
+  
 
 
 
@@ -332,7 +339,9 @@ export const useVendor = () => {
     years,
     productsFilter,
     filterProducts,
-    setShowLoader
+    setShowLoader,
+    business_profile,
+    business
   }
 
 }

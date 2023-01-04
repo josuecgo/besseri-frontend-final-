@@ -6,7 +6,8 @@ import ListCard from '../../../components/Vendor/ListCard';
 import { Avatar, Box, FlatList, HStack, Spacer, VStack, Text, Pressable } from 'native-base';
 import { useState } from 'react';
 import Loading from '../../../components/Loader/Loading';
-import { VENDOR_DETAILS_ROUTES } from '../../../util/constants';
+import { showToaster, VENDOR_DETAILS_ROUTES } from '../../../util/constants';
+import FloatingActionButtonComponent from '../../../components/button/floating-action-button.component';
 
 
 
@@ -55,10 +56,28 @@ const getIcons = (name) => {
 
 
 export const ProductsScreen = ({navigation}) => {
-  const {  showLoader, categorias,setSelectedcategory,selectedCategory } = useVendor();
+  const {  showLoader, categorias,setSelectedcategory,selectedCategory, business_profile,
+    business } = useVendor();
  
   // console.log({ showLoader, products, categorias });
-
+  const floatButtonHandler = () => {
+      if(!business?.location?.latitude || !business?.location?.longitude || !business?.location?.city || !business?.location?.state) {
+        showToaster('Su ubicación no está configurada completamente, configúrela desde la configuración');
+        return
+      }
+      if(business?.status == 'BLOCKED') {
+        showToaster('No puedes crear productos porque tu cuenta está bloqueada');
+        return;
+      }
+      if(!business?.wallet_id || !business_profile?.wallet?.charges_enabled) {
+        showToaster('Es necesario configurar una cuenta comercial de Stripe antes de vender, vaya al panel y agregue la cuenta');
+        return;
+      }
+      navigation.navigate(VENDOR_DETAILS_ROUTES.CREATE_PRODUCT,{
+        product:null,
+        isEdit:false
+      });
+  };
   
   const setView = async(item) => {
     
@@ -129,7 +148,7 @@ export const ProductsScreen = ({navigation}) => {
           />
         )
       }
-     
+      <FloatingActionButtonComponent handler={floatButtonHandler} />
     </View>
   )
 }
