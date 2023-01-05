@@ -98,8 +98,8 @@ export default function CustomerMapStores(props) {
 
     maoViewRef.current?.animateCamera({
       center: {
-        latitude: loc?.latitude,
-        longitude: loc?.longitude
+        latitude: parseFloat(loc?.latitude) ,
+        longitude: parseFloat(loc?.longitude) 
       }
     })
   }
