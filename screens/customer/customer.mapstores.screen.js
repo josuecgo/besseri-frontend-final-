@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import {
-  FlatList, Image, PermissionsAndroid,
+  FlatList, Image, Linking, PermissionsAndroid,
   StyleSheet, Text, TouchableOpacity,
   useWindowDimensions, View
 } from "react-native";
@@ -104,6 +104,12 @@ export default function CustomerMapStores(props) {
     })
   }
 
+  const openMaps = (latitude, longitude) => {
+    const daddr = `${latitude},${longitude}`;
+    const company = Platform.OS === "ios" ? "apple" : "google";
+    Linking.openURL(`http://maps.${company}.com/maps?daddr=${daddr}`);
+  }
+
 
   useEffect(() => {
     if (!location) {
@@ -166,10 +172,14 @@ export default function CustomerMapStores(props) {
               stores.map((item) => (
 
                 <Marker
-                  coordinate={{ latitude: parseFloat(item.location?.latitude), longitude: parseFloat(item.location?.longitude) }}
+                  coordinate={{ 
+                    latitude: parseFloat(item.location?.latitude), 
+                    longitude: parseFloat(item.location?.longitude) 
+                  }}
                   // image={{uri: 'custom_pin'}}
                   key={item._id}
                   title={item.storeName}
+                  
                 />
 
 
@@ -189,6 +199,7 @@ export default function CustomerMapStores(props) {
             renderItem={itemData => (
               <StoreCard
                 data={itemData.item}
+                openMaps={openMaps}
                 goStore={async () => {
                   await getProductStore(itemData?.item)
                   props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.STORE_SCREEN, { data: itemData?.item })

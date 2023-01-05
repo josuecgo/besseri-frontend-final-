@@ -7,8 +7,8 @@ import CommonStyles from '../../util/styles/styles';
 import { base_url } from '../../util/api/api_essentials';
 import Colors from '../../util/styles/colors';
 
-export const StoreCard = ({data,goStore}) => {
-  
+export const StoreCard = ({data,goStore,openMaps}) => {
+ 
   return (
     <View style={styles.card}>
       <View
@@ -59,8 +59,17 @@ export const StoreCard = ({data,goStore}) => {
           {data?.state}
         </Text>
       </View>
+       
+      <TouchableOpacity
+      onPress={() => openMaps( parseFloat(data?.location.latitude), parseFloat(data.location.longitude) )}
+      style={styles.openMaps}
+      >
 
+        <Ionicons name="map" color={Colors.primarySolid} size={20} />
+        <Text style={{color: 'grey', fontSize: 13,marginHorizontal:5}} >Abrir Mapa</Text>
+      </TouchableOpacity>
       <View style={{flex: 1}}>
+       
         <TouchableOpacity
           onPress={goStore}
           style={styles.btnNavigate}>
@@ -96,5 +105,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 35 / 2,
+  },
+  openMaps:{
+    marginVertical:10,
+    flexDirection:'row',
+    alignItems:'center',
+    // justifyContent:'space-evenly'
   }
 });
