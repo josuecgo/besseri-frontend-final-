@@ -146,7 +146,8 @@ export const BOTTOM_TAB_RIDER_ROUTES = {
   RIDER_NOTIFICATION:'Rider Notification',   
 };
 export const RIDER_STACK_ROUTES = {
-  RIDER_ORDER_DETAIL:'Rider Order Detail'
+  RIDER_ORDER_DETAIL:'Rider Order Detail',
+  DESCRIPTION:'Description',
 }
 
 

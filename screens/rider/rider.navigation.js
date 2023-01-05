@@ -17,12 +17,16 @@ import { RiderNotification } from './rider.notification';
 import { Badge } from '../../components/Badge';
 import { NotificationContext } from '../../util/context/NotificationContext';
 import { useLocation } from '../../hooks/useLocation';
+import { VendorDescription } from '../vendor/vendor-description';
 
 
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+
+
 export const RiderNavigation = () => {
+
   const {userLocation,getLocationHook} = useLocation()
   const {countRider,iosPermisoss,getToken} = useContext(NotificationContext);
 
@@ -140,6 +144,8 @@ useEffect(() => {
   );
 };
 
+
+
 const OrdersNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown:false}}>
@@ -147,11 +153,16 @@ const OrdersNavigator = () => {
         component={RidersOrdersViewScreen}
       />
       <Stack.Screen name={RIDER_STACK_ROUTES.RIDER_ORDER_DETAIL}
-      component={RiderOrderDetail}/
-      >
-    </Stack.Navigator>
-  )
-}
+      component={RiderOrderDetail}
+      />
+      <Stack.Screen name={RIDER_STACK_ROUTES.DESCRIPTION}
+      component={VendorDescription}
+      />
+  </Stack.Navigator>
+  );
+};
+
+
 
 const NotificationNavigator = () => {
   return (
