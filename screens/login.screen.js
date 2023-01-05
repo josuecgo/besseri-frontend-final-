@@ -69,8 +69,9 @@ const LoginScreen = ({navigation}) => {
           [CREDENTIAL_KEYS.EMAIL_ADDRESS]:"",
           [CREDENTIAL_KEYS.PASSWORD]:""
         })
-       //}
-     }
+           //}
+    }
+
      else {
        Alert.alert('Algo salió mal','Lo siento por la interrupción, esta solicitud falló');
        return;
