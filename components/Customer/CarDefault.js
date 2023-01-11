@@ -18,7 +18,7 @@ export const CarDefault = ({navigation}) => {
         w="190"  
         trigger={triggerProps => {
         return <Pressable {...triggerProps}>
-                <Text>Mi auto: {carDefault && carDefault?.model.name} </Text>
+                <Text>Mi auto: {carDefault && carDefault?.model?.name} </Text>
               </Pressable>;
         }}
         
@@ -34,7 +34,7 @@ export const CarDefault = ({navigation}) => {
                   key={c._id} 
                   value={c._id}
                   >
-                    {c.model.name}
+                    {c?.model?.name}
                   </Menu.ItemOption>
                 ))
               

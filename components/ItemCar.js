@@ -1,6 +1,7 @@
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Box, HStack, VStack, Text, Spacer, Avatar, Radio } from 'native-base';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export const ItemCar = ({ data,handleModalizeDelete,isDisabled }) => {
 
@@ -10,14 +11,20 @@ export const ItemCar = ({ data,handleModalizeDelete,isDisabled }) => {
              
             <TouchableOpacity
             onLongPress={() => handleModalizeDelete(data)}
+           
             >
                 <HStack
                     space={[2, 3]}
-                    justifyContent="space-between"
-                    marginX={30}
+                    justifyContent="center"
+                    alignItems={'center'}
+                    // marginX={30}
                 >
-                    <Avatar size="40px" source={require('../assets/images/categorias/carroceria.png')} />
-                    <VStack>
+                    <MaterialIcons 
+                    name='directions-car'  
+                    size={40} 
+                     
+                    />
+                    {/* <VStack> */}
                         <Text _dark={{
                             color: "warmGray.50"
                         }} color="coolGray.800" bold>
@@ -26,19 +33,12 @@ export const ItemCar = ({ data,handleModalizeDelete,isDisabled }) => {
                         <Text color="coolGray.600" _dark={{
                             color: "warmGray.200"
                         }}>
-                            {data.maker.name}
+                        {data.maker.name} {data.year}
                         </Text>
-                    </VStack>
+                       
+                    {/* </VStack> */}
                     <Spacer />
-                    <Text fontSize="md" _dark={{
-                        color: "warmGray.50"
-                    }}
-                        color="coolGray.800"
-                        alignSelf="flex-start"
-                    // justifyItems={'center'}
-                    >
-                        {data.year}
-                    </Text>
+                   
                 </HStack>
             </TouchableOpacity>
 

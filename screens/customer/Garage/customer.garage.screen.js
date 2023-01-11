@@ -16,6 +16,7 @@ import { api_statuses, customer_api_urls } from '../../../util/api/api_essential
 import axios from 'axios';
 import { useEffect } from 'react';
 import { ItemCar } from '../../../components/ItemCar';
+import { ThinlineSeparator } from '../../../components/CommonComponents';
 
 export const GarageScreen = (props) => {
   const {
@@ -102,13 +103,13 @@ export const GarageScreen = (props) => {
 
   const changeCarDefault = async(car) => {
     let firstCar = cars.find((c) => c._id === car)
-   
+    
     activeCar(firstCar)
     setValue(car)
   }
 
 
-
+  // console.log(carDefault);
 
   return (
     <>
@@ -153,10 +154,11 @@ export const GarageScreen = (props) => {
       <FlatList
         data={cars}
         keyExtractor={item => item?._id}
+        
         renderItem={({ item }) => (
           <Box
-          borderBottomWidth="1"
-          borderColor="muted.800"
+          backgroundColor={Colors.white}
+          style={styles.box}
           // pl={["0", "4"]} pr={["0", "5"]}
           // padding='1'
 
@@ -168,11 +170,12 @@ export const GarageScreen = (props) => {
             onChange={nextValue => {
               changeCarDefault(nextValue);
             }}
-            
+           
             
             >
               <ItemCar isDisabled={activeCarLoading} data={item} handleModalizeDelete={handleModalizeDelete} />
             </Radio.Group>
+            <ThinlineSeparator/>
           </Box>
          
         )
@@ -365,4 +368,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   headerText: { ...CommonStyles.fontFamily, color: Colors.white, fontSize: 20, position: 'absolute' },
+  box:{
+    marginHorizontal:10,
+    paddingHorizontal:5,
+    paddingVertical:5
+  }
 })

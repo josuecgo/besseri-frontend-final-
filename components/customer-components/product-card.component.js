@@ -93,8 +93,11 @@ const ProductCardComponent = ({
             <Text style={{color: 'grey'}}>{data?.model?.name}</Text>
             {
             carDefault || carActive && (
-              <Compatible carDefault={carDefault ? carDefault : carActive}/>
+              <Compatible carDefault={carActive ? carActive  : carDefault }/>
             )
+            // carDefault  && (
+            //   <Compatible carDefault={carDefault}/>
+            // )
           }
             <TouchableOpacity onPress={handleChange}>
               <Text
@@ -121,6 +124,8 @@ const ProductCardComponent = ({
       </Pressable>
     );
   }
+
+ 
  
   return (
     <Pressable onPress={onViewDetail} style={styles.cardContainer}>
@@ -158,9 +163,13 @@ const ProductCardComponent = ({
         colors={Colors.primaryGradient}
         style={styles.LinearGradient}>
           {
-            carDefault || (carActive?.model?._id != data?.model?._id && carActive) && (
-              <Compatible carDefault={carDefault ? carDefault : carActive}/>
+          
+             carActive && carActive?.model?._id != data?.model?._id && (
+              <Compatible carDefault={carActive}/>
             )
+            // carDefault  && (
+            //   <Compatible carDefault={carDefault}/>
+            // )
           }
         <Text style={styles.productTitle}>{data?.name}</Text>
         <Text style={[styles.textSub,{textTransform:'uppercase'}]} >{data?.brand?.name} </Text>

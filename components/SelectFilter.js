@@ -22,7 +22,7 @@ export const SelectFilter = () => {
        
         setValueModel('')
         setValueMaker(item)
-        
+        setValueYear('')
 
     }
 
@@ -43,22 +43,22 @@ export const SelectFilter = () => {
             handleMarca(carDefault?.maker?._id)
             handleYear(carDefault.year)
         }
-    }, [productos,carDefault])
+    }, [carDefault])
 
 
     useEffect(() => {
         if (modelo && carDefault?.model?._id && valueMaker) {
             setTimeout(() => {
                 handleModel(carDefault?.model?._id)
-            }, 2000);
+            },500);
            
         }
-    }, [modelo,carDefault])
+    }, [carDefault])
     
     // console.log({
     //     valueMaker,
     //     valueModel,
-    //     valueYear
+    //     valueYear,carActive
     // });
     // console.log(carDefault);
     

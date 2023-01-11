@@ -25,9 +25,7 @@ const ProductListing = ({category,products,navigation,comision,carCompatible}) =
     return null;
   }
   
-  if (category?.name === 'TRANSMISION') {
-    // console.log(products[0]);
-  }
+  
   
   return (
     <View style={styles.container}>

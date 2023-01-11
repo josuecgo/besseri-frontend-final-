@@ -204,6 +204,7 @@ const VendorAddProductScreen = ({navigation}) => {
   const [brandName, setBrandName] = useState('');
 
   const onChangeText = (inputText, key) => {
+   
     setInputValues({...inputValues, [key]: inputText});
  
   };
@@ -436,13 +437,13 @@ const VendorAddProductScreen = ({navigation}) => {
           <Text style={{fontWeight: '300', color: 'grey', fontSize: 13}}>
             {label}
           </Text>
-          {isImageTab ? 
+          {false ? 
             
         
             <>
             <View style={{flexDirection:'row'}} >
               {
-                toBeEditedProduct.urlsImg  ? (
+                toBeEditedProduct?.urlsImg  ? (
                   toBeEditedProduct?.urlsImg.map((item,index) => {
                     
                   if (index < 3) {
@@ -496,17 +497,16 @@ const VendorAddProductScreen = ({navigation}) => {
       compressImageMaxWidth:300
       
     }).then((image) => {
-      
-      onChangeText(image, CREDENTIAL_KEYS.PRODUCT_IMAGE);
-      setCurrentScreen(SCREEN_TYPES?.PRODUCT_SUMMARY);
-      setisSummaryMode(true);
-      // setUri(image.path);
-      // props.onChange?.(image);
+      console.log(image);
+      // onChangeText(image, CREDENTIAL_KEYS.PRODUCT_IMAGE);
+      // setCurrentScreen(SCREEN_TYPES?.PRODUCT_SUMMARY);
+      // setisSummaryMode(true);
+     
     });
   };
 
 
-
+  
 const uploadProductImg = async () => {
   setShowLoader(true);
   const imageFormData = new FormData();
@@ -673,42 +673,69 @@ const uploadProductImg = async () => {
   };
 
   
-
-
-
-    useEffect(() => {
-        setpantallaSelect(screenFocusProduct(currentScreen))
-    }, [currentScreen])
+ 
+ 
+  
+  useEffect(() => {
+    setpantallaSelect(screenFocusProduct(currentScreen))
+  }, [currentScreen])
     
  
   const nextPage = () => {
         
         if (stringIsEmpty(inputValues[pantallaSelect]) ){
-          setCurrentScreen(
-            isProductNameScreen
-              ? SCREEN_TYPES?.PRODUCT_DESCRIPTION
-              : isDescriptionScreen
-              ? SCREEN_TYPES?.PRODUCT_PRICE
-              : isPriceScreen
-              ? SCREEN_TYPES?.ESTIMATED_DELIVERY
-              : isDeliveryScreen
-              ? SCREEN_TYPES?.CHOOSE_MAKER
-              : isChooseMaker
-              ? SCREEN_TYPES?.CHOOSE_MODEL
-              : isChooseModel
-              ? SCREEN_TYPES?.CHOOSE_CATEGORY
-              : isChooseCategory
-              ? SCREEN_TYPES?.CHOOSE_SUB_CATEGORY
-              : isSubCategory
-              ? SCREEN_TYPES.CHOOSE_APLICATION
-              : isChooseAplication
-              ? SCREEN_TYPES?.PRODUCT_BRAND
-              : isBrandScreen
-              ? SCREEN_TYPES?.PRODUCT_CONDITION
-              : isProductCondition
-              ? SCREEN_TYPES?.UPLOAD_IMAGE
-              : null
-          );
+          if (inputValues[CREDENTIAL_KEYS.PRODUCT_MAKER]._id === '639cb2cacd30bfa4463f12a7') {
+            setCurrentScreen(
+              isProductNameScreen
+                ? SCREEN_TYPES?.PRODUCT_DESCRIPTION
+                : isDescriptionScreen
+                ? SCREEN_TYPES?.PRODUCT_PRICE
+                : isPriceScreen
+                ? SCREEN_TYPES?.ESTIMATED_DELIVERY
+                : isDeliveryScreen
+                ? SCREEN_TYPES?.CHOOSE_MAKER
+                : isChooseMaker
+                ? SCREEN_TYPES?.CHOOSE_MODEL
+                : isChooseModel
+                ? SCREEN_TYPES?.CHOOSE_CATEGORY
+                : isChooseCategory
+                ? SCREEN_TYPES?.CHOOSE_SUB_CATEGORY
+                : isSubCategory
+                ? SCREEN_TYPES?.PRODUCT_BRAND
+                : isBrandScreen
+                ? SCREEN_TYPES?.PRODUCT_CONDITION
+                : isProductCondition
+                ? SCREEN_TYPES?.UPLOAD_IMAGE
+                : null
+            );
+          }else{
+            setCurrentScreen(
+              isProductNameScreen
+                ? SCREEN_TYPES?.PRODUCT_DESCRIPTION
+                : isDescriptionScreen
+                ? SCREEN_TYPES?.PRODUCT_PRICE
+                : isPriceScreen
+                ? SCREEN_TYPES?.ESTIMATED_DELIVERY
+                : isDeliveryScreen
+                ? SCREEN_TYPES?.CHOOSE_MAKER
+                : isChooseMaker
+                ? SCREEN_TYPES?.CHOOSE_MODEL
+                : isChooseModel
+                ? SCREEN_TYPES?.CHOOSE_CATEGORY
+                : isChooseCategory
+                ? SCREEN_TYPES?.CHOOSE_SUB_CATEGORY
+                : isSubCategory
+                ? SCREEN_TYPES.CHOOSE_APLICATION
+                : isChooseAplication
+                ? SCREEN_TYPES?.PRODUCT_BRAND
+                : isBrandScreen
+                ? SCREEN_TYPES?.PRODUCT_CONDITION
+                : isProductCondition
+                ? SCREEN_TYPES?.UPLOAD_IMAGE
+                : null
+            );
+          }
+          
           setProgress(progress + 100 / 8);
         }else{
           if (isChooseAplication) {
@@ -723,37 +750,69 @@ const uploadProductImg = async () => {
 
   
   const backPage = () => {
-    setCurrentScreen(
-      isProductNameScreen
-        ? navigation.pop()
-        : isDescriptionScreen
-        ? SCREEN_TYPES?.PRODUCT_NAME
-        : isPriceScreen
-        ? SCREEN_TYPES?.PRODUCT_DESCRIPTION
-        :isDeliveryScreen
-        ?SCREEN_TYPES?.PRODUCT_PRICE
-        : isChooseMaker
-        ? SCREEN_TYPES?.ESTIMATED_DELIVERY
-        : isChooseModel
-        ? SCREEN_TYPES?.CHOOSE_MAKER
-        : isChooseCategory
-        ? SCREEN_TYPES?.CHOOSE_MODEL
-        : isSubCategory
-        ? SCREEN_TYPES?.CHOOSE_CATEGORY
-        : isBrandScreen
-        ? SCREEN_TYPES.CHOOSE_APLICATION
-        : isChooseAplication
-        ? SCREEN_TYPES?.CHOOSE_SUB_CATEGORY
-      
-        : isProductCondition 
-        ? SCREEN_TYPES?.PRODUCT_BRAND
-        : isUploadImage
-        ? SCREEN_TYPES?.PRODUCT_CONDITION
-        : isProductSummary
-        ? SCREEN_TYPES?.UPLOAD_IMAGE
-        : null
-    );
-    setProgress(progress - 100 / 8);
+    if (inputValues[CREDENTIAL_KEYS.PRODUCT_MAKER]._id === '639cb2cacd30bfa4463f12a7') {
+      setCurrentScreen(
+        isProductNameScreen
+          ? navigation.pop()
+          : isDescriptionScreen
+          ? SCREEN_TYPES?.PRODUCT_NAME
+          : isPriceScreen
+          ? SCREEN_TYPES?.PRODUCT_DESCRIPTION
+          :isDeliveryScreen
+          ?SCREEN_TYPES?.PRODUCT_PRICE
+          : isChooseMaker
+          ? SCREEN_TYPES?.ESTIMATED_DELIVERY
+          : isChooseModel
+          ? SCREEN_TYPES?.CHOOSE_MAKER
+          : isChooseCategory
+          ? SCREEN_TYPES?.CHOOSE_MODEL
+          : isSubCategory
+          ? SCREEN_TYPES?.CHOOSE_CATEGORY
+          : isBrandScreen
+          ? SCREEN_TYPES?.CHOOSE_SUB_CATEGORY
+          : isProductCondition 
+          ? SCREEN_TYPES?.PRODUCT_BRAND
+          : isUploadImage
+          ? SCREEN_TYPES?.PRODUCT_CONDITION
+          : isProductSummary
+          ? SCREEN_TYPES?.UPLOAD_IMAGE
+          : null
+      );
+      setProgress(progress - 100 / 8);
+    }else{
+      setCurrentScreen(
+        isProductNameScreen
+          ? navigation.pop()
+          : isDescriptionScreen
+          ? SCREEN_TYPES?.PRODUCT_NAME
+          : isPriceScreen
+          ? SCREEN_TYPES?.PRODUCT_DESCRIPTION
+          :isDeliveryScreen
+          ?SCREEN_TYPES?.PRODUCT_PRICE
+          : isChooseMaker
+          ? SCREEN_TYPES?.ESTIMATED_DELIVERY
+          : isChooseModel
+          ? SCREEN_TYPES?.CHOOSE_MAKER
+          : isChooseCategory
+          ? SCREEN_TYPES?.CHOOSE_MODEL
+          : isSubCategory
+          ? SCREEN_TYPES?.CHOOSE_CATEGORY
+          : isBrandScreen
+          ? SCREEN_TYPES.CHOOSE_APLICATION
+          : isChooseAplication
+          ? SCREEN_TYPES?.CHOOSE_SUB_CATEGORY
+        
+          : isProductCondition 
+          ? SCREEN_TYPES?.PRODUCT_BRAND
+          : isUploadImage
+          ? SCREEN_TYPES?.PRODUCT_CONDITION
+          : isProductSummary
+          ? SCREEN_TYPES?.UPLOAD_IMAGE
+          : null
+      );
+      setProgress(progress - 100 / 8);
+    }
+    
   }
 
 
@@ -812,7 +871,7 @@ const uploadProductImg = async () => {
             <Text style={commonTextStyle}>{HEADER_TITLE[currentScreen]}</Text>
           </View>
 
-        </View>
+      </View>
         
       {/* cambio scroll */}
 

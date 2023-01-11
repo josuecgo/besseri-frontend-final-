@@ -32,9 +32,9 @@ const CustomerCartScreen = (props) => {
   const idDesc = useSelector(state => state.cart.idDesc);
   const businessId = useSelector(state => state?.cart?.businessId);
   const [direccion, setDireccion] = useState({
-    long:0,
-    lat:0,
-    label:''
+    long: 0,
+    lat: 0,
+    label: ''
   })
   // const {totalAmount} = useCart()
   const businessSelectRef = useRef();
@@ -43,16 +43,16 @@ const CustomerCartScreen = (props) => {
   const [delivery_fee, setDeliveryFee] = useState();
   const [totalDeliveryFee, setTotalDeliveryFee] = useState(null);
   const [billComission, setBillComission] = useState()
-  const [deliveryDistance,setDeliveryDistance] = useState(null);
-  const [isLogin , setIsLogin  ] = useState(false)
+  const [deliveryDistance, setDeliveryDistance] = useState(null);
+  const [isLogin, setIsLogin] = useState(false)
   let businessIds = [];
   // const [totalAmount, setTotalAmount] = useState(false)
 
   const goDirecctions = () => {
     props.navigation.navigate('Mi dirección')
   }
- 
-  useEffect(async() => {
+
+  useEffect(async () => {
     let abortController = new AbortController();
     const user = await getUserId();
     setIsLogin(user)
@@ -60,54 +60,52 @@ const CustomerCartScreen = (props) => {
     if (user) {
       getAddresses(user);
     }
-    
-    return () => {  
-      abortController.abort();  
-    } 
-   
+
+    return () => {
+      abortController.abort();
+    }
+
   }, [isLogin])
 
 
-  const getComision = async() => {
+  const getComision = async () => {
     try {
-      
-     
-      const getFee = await axios.get(customer_api_urls?.get_fees);
-      
-      setBillComission(getFee.data.data[0]?.besseri_comission); 
 
-    } catch(e) 
-    { 
-        // console.log({error:e})
-        
-        showToaster('Error')
+
+      const getFee = await axios.get(customer_api_urls?.get_fees);
+
+      setBillComission(getFee.data.data[0]?.besseri_comission);
+
+    } catch (e) {
+      // console.log({error:e})
+
+      showToaster('Error')
     }
   }
-  
-  const getAddresses = async(userID) => {
-    
+
+  const getAddresses = async (userID) => {
+
     try {
-      
+
       const apiCall = await axios.get(`${customer_api_urls.get_addresses}/${userID}`);
-     
-      if(apiCall.status == api_statuses.success) {
-          setDireccion({
-            long:apiCall.data.data[0].longitude,
-            lat:apiCall.data.data[0].latitude,
-            label:apiCall.data.data[0].label
-          });
+
+      if (apiCall.status == api_statuses.success) {
+        setDireccion({
+          long: apiCall.data.data[0].longitude,
+          lat: apiCall.data.data[0].latitude,
+          label: apiCall.data.data[0].label
+        });
       } else {
-          showToaster('Error para obtener su direccion :/');
-          setDireccion(false);
-      }
-    } catch(e) 
-    { 
-        // console.log({error:e})
+        showToaster('Error para obtener su direccion :/');
         setDireccion(false);
-        showToaster('Crea una direccion para poder realizar tu compra')
+      }
+    } catch (e) {
+      // console.log({error:e})
+      setDireccion(false);
+      showToaster('Crea una direccion para poder realizar tu compra')
     }
   }
-  
+
 
 
   const fetchBusinessDetails = async () => {
@@ -123,58 +121,60 @@ const CustomerCartScreen = (props) => {
       showToaster('Algo salió mal');
     }
   }
-  
+
   const calculateDelivery = () => {
-    
+
     const distance = Math.sqrt(
       Math.pow(69.1 * (Number(businessProfiles[0]?.location?.latitude) - [direccion?.lat]), 2) +
       Math.pow(69.1 * ([direccion?.long] - Number(businessProfiles[0]?.location?.longitude)) * Math.cos(Number(businessProfiles[0]?.location?.latitude) / 57.3), 2));
-    
+
     setTotalDeliveryFee(Math.round(distance) * delivery_fee);
     setDeliveryDistance(Math.round(distance));
   }
 
-  
+  // console.log({businessId});
+  // console.log(products.length);
+  // console.log(businessProfiles,'businessProfiles');
   const goPurchase = () => {
     // console.log('click1');
-    
+
     if (isLogin) {
       if (!direccion) {
         showToaster('Crea una direccion para poder realizar tu compra')
         return
       }
-      if ((totalAmount +  comission * totalAmount / 100 - descuento).toFixed(2) <= 300) {
+      if ((totalAmount + comission * totalAmount / 100 - descuento).toFixed(2) <= 300) {
         showToaster('Compra minima $300.00.')
         return
       }
-
-      if(businessProfiles[0]?.wallet_id && !businessProfiles[0]?.isBlocked) {
+     
+      if (businessProfiles[0]?.wallet_id && !businessProfiles[0]?.isBlocked) {
         let allProducts = products?.filter(prod => prod?.business_id == businessProfiles[0]?._id);
         let totalProductsPrice = 0;
         for (var a = 0; a < allProducts?.length; a++) {
           totalProductsPrice += allProducts[a]?.price * allProducts[a]?.quantity
         }
-        let subtotal = totalAmount ;
+        let subtotal = totalAmount;
 
         props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ENVIO, {
-          deliveryDistance:deliveryDistance,
+          deliveryDistance: deliveryDistance,
           storeId: businessProfiles[0]?._id,
           products: allProducts,
           business: businessProfiles[0],
           // totalAmount: Math.round(totalProductsPrice + Math.round((Number(comission) * Number(subtotal)) / 100)),
-          totalAmount:totalAmount,
-          comission:Math.round((comission * subtotal) / 100),
-          delivery_fee:delivery_fee,
-          subtotal:Math.round(totalAmount),
-          comision:comission,
-          cupon:idDesc,
+          totalAmount: totalAmount,
+          comission: Math.round((comission * subtotal) / 100),
+          delivery_fee: delivery_fee,
+          subtotal: Math.round(totalAmount),
+          comision: comission,
+          cupon: idDesc,
           descuento
         })
-       } else {
-         showToaster('No puedes hacer pedidos en esta tienda en este momento.')
-         
-       }
-    } else {  
+      } else {
+        showToaster('No puedes hacer pedidos en esta tienda en este momento.')
+
+      }
+    } else {
       console.log('clicks');
       // props.navigation.navigate('AuthStack',{customer:true})
       props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR)
@@ -182,21 +182,21 @@ const CustomerCartScreen = (props) => {
   }
 
 
-   
+
 
   useEffect(() => {
     let abortController = new AbortController();
-    if(businessProfiles && delivery_fee) {
+    if (businessProfiles && delivery_fee) {
       calculateDelivery()
     }
-    return () => {  
-      abortController.abort();  
-    } 
-  },[businessProfiles,delivery_fee,direccion])
+    return () => {
+      abortController.abort();
+    }
+  }, [businessProfiles, delivery_fee, direccion])
 
   const fetchFees = async () => {
     try {
-      
+
       const getFee = await axios.get(customer_api_urls?.get_fees);
       // console.log(getFee.data)
       setComission(getFee.data.data[0]?.besseri_comission);
@@ -209,9 +209,9 @@ const CustomerCartScreen = (props) => {
   useEffect(() => {
     let abortController = new AbortController();
     fetchFees();
-    return () => {  
-      abortController.abort();  
-    } 
+    return () => {
+      abortController.abort();
+    }
   }, []);
 
   useEffect(() => {
@@ -224,18 +224,18 @@ const CustomerCartScreen = (props) => {
         businessIds?.push(products[a]?.business_id);
       }
     }
-    return () => {  
-      abortController.abort();  
-    } 
+    return () => {
+      abortController.abort();
+    }
 
   }, [products])
   useEffect(() => {
     let abortController = new AbortController();
     fetchBusinessDetails()
-    return () => {  
-      abortController.abort();  
-    } 
-  }, [businessId]);
+    return () => {
+      abortController.abort();
+    }
+  }, [businessId,products]);
 
   const increaseQuantity = (id, price) => {
     dispatch(CartActions.increaseQuantity(id, price));
@@ -247,24 +247,24 @@ const CustomerCartScreen = (props) => {
     dispatch(CartActions.deleteItemFromCart(id));
 
   }
-  const DetailItem = ({ label, value,distance,distanceLabel }) => {
+  const DetailItem = ({ label, value, distance, distanceLabel }) => {
     return (
       <View style={{ width: '100%', height: 60, borderBottomWidth: label == 'Total Charges' ? 0 : 0.3, borderColor: Colors.dark, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', alignSelf: 'center', padding: 12 }}>
         <View>
-        <Text style={{ ...CommonStyles.fontFamily, fontSize: 16 }}>{label}</Text>
-       {
-         distance ? 
-         <Text style={{ fontWeight:'300', fontSize: 13 }}>{distanceLabel}</Text>
-         :
-         null
+          <Text style={{ ...CommonStyles.fontFamily, fontSize: 16 }}>{label}</Text>
+          {
+            distance ?
+              <Text style={{ fontWeight: '300', fontSize: 13 }}>{distanceLabel}</Text>
+              :
+              null
 
-       }
+          }
         </View>
         <Text style={{ fontSize: 16 }}>{value}</Text>
       </View>
     )
   }
-  
+
 
 
 
@@ -289,14 +289,14 @@ const CustomerCartScreen = (props) => {
                     }
                     businessSelectRef?.current?.close()
                     props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_SUMMARY, {
-                      deliveryDistance:deliveryDistance,
+                      deliveryDistance: deliveryDistance,
                       storeId: item?._id,
                       products: allProducts,
                       business: item,
                       totalAmount: Math.round(totalProductsPrice + Math.round((Number(comission) * Number(totalAmount)) / 100) + Math.round(totalDeliveryFee)),
-                      comission:Math.round((Number(comission) * Number(totalAmount)) / 100),
-                      delivery_fee:Math.round(totalDeliveryFee),
-                      subtotal:totalAmount,
+                      comission: Math.round((Number(comission) * Number(totalAmount)) / 100),
+                      delivery_fee: Math.round(totalDeliveryFee),
+                      subtotal: totalAmount,
                     })
                   } else {
                     showToaster('Esta tienda no ha configurado su cuenta correctamente, por lo que no será posible realizar pedidos desde aquí.')
@@ -325,12 +325,12 @@ const CustomerCartScreen = (props) => {
       </Modalize>
       {
         products.length == 0 ?
-         (
-          <ExploreScreen {...props} />
-         )
+          (
+            <ExploreScreen {...props} />
+          )
           :
           <>
-          <HeaderBackground/>
+            <HeaderBackground />
             <View style={styles.header}>
               <TouchableOpacity onPress={() => props.navigation.goBack()}>
                 <MaterialCommunityIcons
@@ -361,81 +361,81 @@ const CustomerCartScreen = (props) => {
 
 
               <ScrollView horizontal >
-                <View style={{flexDirection:'row'}} >
-                {
+                <View style={{ flexDirection: 'row' }} >
+                  {
                     products.map((item) => (
                       <View key={item._id}  >
                         <ProductCardComponent
-                        onRemoveFromCart={() => removeItemFromCart(item?._id)}
-                        cartProduct={true}
-                        data={item}
-                        increaseQuantity={() => increaseQuantity(item._id,item.price)}
-                        decreaseQuantity={() => decreaseQuantity(item?._id,item.price)}
-                        comision={comission}
+                          onRemoveFromCart={() => removeItemFromCart(item?._id)}
+                          cartProduct={true}
+                          data={item}
+                          increaseQuantity={() => increaseQuantity(item._id, item.price)}
+                          decreaseQuantity={() => decreaseQuantity(item?._id, item.price)}
+                          comision={comission}
                         />
                       </View>
                     ))
                   }
                 </View>
 
-                
-              </ScrollView>
-             
-             {
-              !(totalAmount + (billComission * totalAmount / 100) - descuento)  ? (
-                <View/>
-              ):(
-                <View style={styles.detailCard}>
-                  {
-                    !direccion && (
-                      <TouchableOpacity 
-                      onPress={goDirecctions}
-                      style={{alignItems:'center',justifyContent:'center',marginVertical:5}} 
-                      >
-                        <Text style={{color:Colors.primarySolid, fontSize: adjust(18),textDecorationLine:'underline'}} >Crear mi direccion</Text>
-                      </TouchableOpacity>
-                      
-                    )
-                  }
-                  
-                  <Cupon  />
 
-                  <DetailItem 
-                  label={'Total'}  
-                  value={ `${ (totalAmount +  comission * totalAmount / 100 - descuento).toFixed(2)} MXN`} 
-                  />
-                  <Text style={{margin:5}}>Se aplicarán gastos de envío en función del número de kilómetros</Text>
-                </View>
-              )
-             }
+              </ScrollView>
+
+              {
+                !(totalAmount + (billComission * totalAmount / 100) - descuento) ? (
+                  <View />
+                ) : (
+                  <View style={styles.detailCard}>
+                    {
+                      !direccion && (
+                        <TouchableOpacity
+                          onPress={goDirecctions}
+                          style={{ alignItems: 'center', justifyContent: 'center', marginVertical: 5 }}
+                        >
+                          <Text style={{ color: Colors.primarySolid, fontSize: adjust(18), textDecorationLine: 'underline' }} >Crear mi direccion</Text>
+                        </TouchableOpacity>
+
+                      )
+                    }
+
+                    <Cupon />
+
+                    <DetailItem
+                      label={'Total'}
+                      value={`${(totalAmount + comission * totalAmount / 100 - descuento).toFixed(2)} MXN`}
+                    />
+                    <Text style={{ margin: 5 }}>Se aplicarán gastos de envío en función del número de kilómetros</Text>
+                  </View>
+                )
+              }
             </ScrollView>
           </>
 
       }
 
-      
-     {
-       products?.length > 0 ?
-       <View style={{ position: 'absolute', bottom: 0, width: '100%',zIndex:9999 }}>
-       <ButtonComponent
-         buttonText={'Ordenar ahora'}
-         colorB={Colors.terciarySolid}
-         borderRadius={0}
-         handlePress={goPurchase}
-       />
-     </View>
-     :
-     null
-     }
 
-    <View style={{height:deviceHeight * 0.10 ,width:deviceWidth}} />
+      {
+        products?.length > 0 ?
+          <View style={{ position: 'absolute', bottom: 0, width: '100%', zIndex: 9999 }}>
+            <ButtonComponent
+              buttonText={'Ordenar ahora'}
+              colorB={Colors.terciarySolid}
+              borderRadius={0}
+              handlePress={goPurchase}
+            />
+          </View>
+          :
+          null
+      }
+
+      <View style={{ height: deviceHeight * 0.10, width: deviceWidth }} />
     </View>
   );
 };
 const styles = StyleSheet.create({
   header: {
     width: '100%',
-    height:Platform.OS == 'ios' ? deviceHeight * 0.15 : deviceHeight * 0.10,
+    height: Platform.OS == 'ios' ? deviceHeight * 0.15 : deviceHeight * 0.10,
     // backgroundColor: Colors.primaryColor,
     flexDirection: 'row',
     justifyContent: 'space-between',

@@ -258,15 +258,20 @@ export const ProductProvider = ({children}) => {
             if (!userId) {
                 return
             }
-            setCarDefault(data)
+            setLoading(true)
+            // setCarDefault(data)
+            console.log(data);
             const apiCall = await axios.post(`${customer_api_urls.active_car}/${userId}`,{data});
                 
             if (apiCall.status == api_statuses.success) {
-               showToaster('Nuevo Auto activado')
+                getActiveCar()
+               showToaster('Nuevo Auto activado');
             }
-    
+            setLoading(false)
         } catch (error) {
-          console.log(error,'activeCar');
+          console.log(error,'activeCar catch');
+          setLoading(false)
+         
           setCarDefault(false)
         }
        
@@ -277,14 +282,9 @@ export const ProductProvider = ({children}) => {
         const userId = await getUserId();
         try {
             if (!userId) {
+                
                 setCarDefault(false)
-                // await dispatch({
-                //     type:'activeCar',
-                //     payload: {
-                //         car:false,
-                //         // categorias: apiCall?.data?.data?.categories
-                //     }
-                // }); 
+
                 return
             }
             
@@ -296,6 +296,7 @@ export const ProductProvider = ({children}) => {
          
             if (data?.isCarActive) {
                 setCarDefault(data.isCarActive)
+                // carCompatible(data.isCarActive)
                 // await dispatch({
                 //     type:'activeCar',
                 //     payload: {
@@ -313,7 +314,7 @@ export const ProductProvider = ({children}) => {
           console.log(error,'getActive car');
           setCarDefault(false)
           setActiveCarLoading(false)
-
+       
         //   await dispatch({
         //     type:'activeCar',
         //     payload: {
@@ -349,6 +350,7 @@ export const ProductProvider = ({children}) => {
 
 
     const carCompatible = async (car) => {
+        console.log(car);
         await dispatch({
             type:'activeCar',
             payload: {
@@ -356,6 +358,13 @@ export const ProductProvider = ({children}) => {
                 
             }
         }); 
+    }
+
+    const resetCarDefault = (update) => {
+        setCarDefault({
+            ...carDefault,
+            update
+        })
     }
 
    
@@ -518,7 +527,8 @@ export const ProductProvider = ({children}) => {
             activeCarLoading,
             getGarage,
             cars,
-            carCompatible
+            carCompatible,
+            resetCarDefault
         }}
         >
             {children}

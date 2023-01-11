@@ -31,13 +31,14 @@ export default (state = initialState, action) => {
             }
         case DELETE_ITEM:
             const selectedItem = state.cart_items.filter(item => item?._id == action.data);
-            const productAmount = Number(selectedItem[0]?.price) * selectedItem[0]?.quantity; 
+            const productAmount = Number(selectedItem[0]?.price) * selectedItem[0]?.quantity;
+            let id = state.cart_items.length == 1 ?  null : state.businessId;
             return {
                 ...state,
                 cart_items:state?.cart_items?.filter(item => item?._id != action?.data),
                 cart_items_ids:state?.cart_items_ids?.filter(item => item != action?.data),
                 total_amount:state?.total_amount - productAmount,
-                businessId:null
+                businessId:id
                 
             }  
         case REMOVE_ITEM:
@@ -51,9 +52,10 @@ export default (state = initialState, action) => {
         case RESET_CART:
             return {
                 ...state,
-                cart_items:[],
+                cart_items:[], 
                 cart_items_ids:[],
-                total_amount:0
+                total_amount:0,
+                businessId: null
             }      
         case INCREASE_QUANTITY:
             const item = state.cart_items.find(

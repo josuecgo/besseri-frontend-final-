@@ -5,7 +5,7 @@ import { adjust } from '../../util/Dimentions'
 
 export const Compatible = ({carDefault}) => {
   
-  
+  // console.log(carDefault);
 
   return (
     <View style={styles.container} >

@@ -9,12 +9,10 @@ import {
 } from 'react-native';
 import Colors from '../util/styles/colors';
 import CommonStyles from '../util/styles/styles';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Modalize} from 'react-native-modalize';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import InputFieldComponent from './input-field/input-field.component';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import KEYBOARD_TYPES from '../util/keyboard-types';
 import ButtonComponent from './button/button.component';
 import {adjust, deviceHeight, deviceWidth} from '../util/Dimentions';
