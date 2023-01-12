@@ -177,7 +177,7 @@ export const useVendor = () => {
        
         const marca = productsCategoria.filter((item) => {
           itemData = item.maker ? item?.maker?._id : '';
-          itemAplicacion = item.aplicacion ? item.aplicacion : ''
+          
           let searchTextData = valueMaker;
           let searchTextData2 = valueModel;
           

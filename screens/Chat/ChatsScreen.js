@@ -10,7 +10,7 @@ export const ChatsScreen = ({navigation}) => {
     const { chats} = useContext(ChatContext);
 
     const goChatPv = (data) => {
-        console.log(data);
+      
         navigation.navigate('PRIVATE',data)
     }
     

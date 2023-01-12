@@ -21,7 +21,7 @@ PushNotification.configure({
   },
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification: function (notification) {
-    // console.log("NOTIFICATION:", notification);
+  
 
     // (required) Called when a remote is received or opened, or local notification is opened
     notification.finish(PushNotificationIOS.FetchResult.NoData);
@@ -29,9 +29,7 @@ PushNotification.configure({
 
   // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
   onAction: function (notification) {
-    // console.log("ACTION:", notification.action);
-    // console.log("NOTIFICATION:", notification);
-    console.log({d:notification});
+  
     // process the action
   },
   // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)

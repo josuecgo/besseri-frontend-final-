@@ -421,6 +421,9 @@ const VendorAddProductScreen = ({navigation}) => {
   // console.log(toBeEditedProduct.productImg);
   const ProductSummaryCard = ({label, value, onPress, isImageTab}) => {
     
+    if (isImageTab) {
+      console.log(value);
+    }
     return (
       <TouchableOpacity
         onPress={onPress}
@@ -437,12 +440,12 @@ const VendorAddProductScreen = ({navigation}) => {
           <Text style={{fontWeight: '300', color: 'grey', fontSize: 13}}>
             {label}
           </Text>
-          {false ? 
+          {isImageTab ? 
             
         
             <>
             <View style={{flexDirection:'row'}} >
-              {
+              {/* {
                 toBeEditedProduct?.urlsImg  ? (
                   toBeEditedProduct?.urlsImg.map((item,index) => {
                     
@@ -463,6 +466,16 @@ const VendorAddProductScreen = ({navigation}) => {
                  </View>
               )
              
+            } */}
+            {
+              value.map((item,i) => (
+                <View key={i} >
+                  <Image source={{uri: item.path}} 
+                  style={{width: deviceWidth / 3.5, height: 100}}  
+                  resizeMode='cover' 
+                  />
+                </View>
+              ))
             }
             </View>
              
@@ -497,10 +510,10 @@ const VendorAddProductScreen = ({navigation}) => {
       compressImageMaxWidth:300
       
     }).then((image) => {
-      console.log(image);
-      // onChangeText(image, CREDENTIAL_KEYS.PRODUCT_IMAGE);
-      // setCurrentScreen(SCREEN_TYPES?.PRODUCT_SUMMARY);
-      // setisSummaryMode(true);
+      
+      onChangeText(image, CREDENTIAL_KEYS.PRODUCT_IMAGE);
+      setCurrentScreen(SCREEN_TYPES?.PRODUCT_SUMMARY);
+      setisSummaryMode(true);
      
     });
   };
@@ -589,8 +602,8 @@ const uploadProductImg = async () => {
           brandId: selectedBrand?._id,
           estimatedDelivery: inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY].name,
           aplicacion:{
-            de:inputValues[CREDENTIAL_KEYS.PRODUCT_APLICATION].de,
-            al:inputValues[CREDENTIAL_KEYS.PRODUCT_APLICATION].al
+            de:inputValues[CREDENTIAL_KEYS.PRODUCT_APLICATION]?.de,
+            al:inputValues[CREDENTIAL_KEYS.PRODUCT_APLICATION]?.al
           }
         };
         
@@ -647,8 +660,8 @@ const uploadProductImg = async () => {
         condition: inputValues[CREDENTIAL_KEYS.PRODUCT_CONDITION],
         estimatedDelivery: inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY].name,
         aplicacion:{
-          de:inputValues[CREDENTIAL_KEYS.PRODUCT_APLICATION].de,
-          al:inputValues[CREDENTIAL_KEYS.PRODUCT_APLICATION].al
+          de:inputValues[CREDENTIAL_KEYS.PRODUCT_APLICATION]?.de,
+          al:inputValues[CREDENTIAL_KEYS.PRODUCT_APLICATION]?.al
         }
       };
       const apiCall = await axios.patch(vendor_api_urls?.edit_product, apiBody);
@@ -1027,7 +1040,7 @@ const uploadProductImg = async () => {
                         setSelectedSubCategory(itemData.item);
                       }
                       if (isChooseAplication) {
-                        console.log(itemData.item);
+                        
                       }
                       if (isBrandScreen) {
                         setselectedBrand(itemData?.item);
@@ -1173,13 +1186,20 @@ const uploadProductImg = async () => {
               value={`${selectedSubCategory?.name}`}
               label="Subcategoría"
             />
-            <ProductSummaryCard
-              onPress={() =>
-                setCurrentScreen(SCREEN_TYPES?.CHOOSE_APLICATION)
-              }
-              value={`del: ${inputValues[CREDENTIAL_KEYS.PRODUCT_APLICATION].de} al: ${inputValues[CREDENTIAL_KEYS.PRODUCT_APLICATION].al}`}
-              label="Año"
-            />
+
+            
+            {
+              inputValues[CREDENTIAL_KEYS.PRODUCT_APLICATION]?.de && (
+                <ProductSummaryCard
+                  onPress={() =>
+                    setCurrentScreen(SCREEN_TYPES?.CHOOSE_APLICATION)
+                  }
+                  value={`del: ${inputValues[CREDENTIAL_KEYS.PRODUCT_APLICATION]?.de} al: ${inputValues[CREDENTIAL_KEYS.PRODUCT_APLICATION]?.al}`}
+                  label="Año"
+                />
+              )
+              
+            }
             <ProductSummaryCard
               onPress={() => setCurrentScreen(SCREEN_TYPES?.CHOOSE_MAKER)}
               value={`${inputValues[CREDENTIAL_KEYS.PRODUCT_MAKER]?.name}`}

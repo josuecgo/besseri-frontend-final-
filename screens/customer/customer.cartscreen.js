@@ -175,7 +175,7 @@ const CustomerCartScreen = (props) => {
 
       }
     } else {
-      console.log('clicks');
+     
       // props.navigation.navigate('AuthStack',{customer:true})
       props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR)
     }

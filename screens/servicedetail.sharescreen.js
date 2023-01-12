@@ -103,7 +103,6 @@ const ShareServiceDetail = (props) => {
          showToaster('Algo salió mal');
        }
     } catch(e) {
-      console.log(e.response.data)
         setLoading(false);
         showToaster('Algo salió mal, inténtalo de nuevo más tarde');
     }

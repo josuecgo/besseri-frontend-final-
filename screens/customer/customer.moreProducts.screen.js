@@ -32,6 +32,7 @@ import { ProductContext } from '../../util/context/Product/ProductContext';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CheckIcon, Select } from 'native-base';
 import { CarDefault } from '../../components/Customer/CarDefault';
+import { matchMaker, matchModel, matchYear } from '../../util/utility-functions';
 
 
 
@@ -61,7 +62,7 @@ const CustomerMoreProductsScreen = props => {
        
         // console.log(item);
         setValueMaker(item)
-        
+        setValueYear('')
 
     }
     const handleModel = (item) => {
@@ -160,44 +161,17 @@ const CustomerMoreProductsScreen = props => {
         if (valueMaker) {
           if (valueModel) {
            
-            
-            let itemData;
-            let itemModel;
-           
-            const marca = products.filter((item) => {
-              itemData = item.maker ? item?.maker?._id : '';
-              itemAplicacion = item.aplicacion ? item.aplicacion : ''
-              let searchTextData = valueMaker;
-              let searchTextData2 = valueModel;
-              
-              let match = matchesForModel(searchTextData2,item,valueYear);
-              
-              return itemData.indexOf(searchTextData) > -1 || match ;
-          })
-      
-            const modelo = marca.filter((item) => {
-              itemModel = item.model ? item?.model?._id : '';
-              let searchTextData = valueModel;
-              
-              let match = matchesForModel(searchTextData,item,valueYear);
-              
-              return itemModel.indexOf(searchTextData) > -1 || match ;
-          })
+            const modelo =  matchModel(products,valueMaker,valueModel,valueYear)
             filtrado = modelo ? modelo : []
            
            
           }else{
+
+            const marca = matchMaker(products,valueMaker,valueYear);
+
+            filtrado = marca ? marca : []
              
-              const marca = products.filter((item) => {
-                let itemData = item.maker ? item?.maker?._id : '';
-                
-                let searchTextData = valueMaker;
-                    
-                return itemData.indexOf(searchTextData) > -1  ;
-              })
-            
-              filtrado = marca ? marca : []
-            
+           
              
           }
     
@@ -207,41 +181,7 @@ const CustomerMoreProductsScreen = props => {
         }
     
         if (valueYear) {
-          
-          let match = filtrado.filter((item) => {
-            
-
-            let compatible = item?.matchs.find(element =>  {
-                console.log(element?.model);
-                let model = valueModel ? element?.model._id === valueModel : ""
-
-                let result = betweenNumber(element?.de,element?.al,valueYear)
-              
-                if (result && model ) {
-                    return element
-                }else{
-                    return false
-                }
-            });
-            
-            // console.log({
-            //   name:item.name,
-            //   bde:item?.aplicacion?.de,
-            //   bbollDe: item?.aplicacion?.de <= valueYear,
-            //   al:item?.aplicacion?.al,
-            //   aboolAl:item?.aplicacion?.al >= valueYear,
-            //   valueYear,
-            //   compatible
-            // });
-            let value = valueModel === item.model && betweenNumber(item?.aplicacion?.de,item?.aplicacion?.al,valueYear)
-    
-            
-            if (value || compatible ) {
-             
-              return item
-            }
-    
-          })
+            let match = matchYear(filtrado,valueModel,valueYear)
           
             setProductFilter(match)
         }else{
@@ -255,33 +195,7 @@ const CustomerMoreProductsScreen = props => {
     }
 
 
-    const  betweenNumber = (startingNumber, endingNumber, givenNumber) => {
 
-        if(givenNumber >= startingNumber && givenNumber <= endingNumber){
-            console.log(`número dado ${givenNumber} cae entre ${startingNumber} y ${endingNumber}`);
-            return true
-        }else{
-          console.log(`número dado ${givenNumber} no cae entre ${startingNumber} y ${endingNumber}`);
-            return false;
-        }
-    }
-
-    const matchesForModel = (id,searchId) => {
-        
-        if (searchId?.matchs.length > 0) {
-            // console.log({id,searchId:searchId?.matchs});
-            const match = searchId?.matchs.filter(element => element?.model._id === id);
-            if (match.length > 0) {
-                
-                return searchId;
-            }else{
-                return false;
-            }
-     
-        }
-        return false;
-
-    }
 
     const goCart = () => {
         props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK);
@@ -370,7 +284,7 @@ const CustomerMoreProductsScreen = props => {
     }, [modelo,carDefault])
     
     
-
+    
     return (
         <View style={{ ...CommonStyles.flexOne }}>
             <View style={{ flex: 1,paddingBottom:bottom + 80 }}>
@@ -544,7 +458,7 @@ const CustomerMoreProductsScreen = props => {
                             renderItem={memorizedValue}
                             ListFooterComponent={<View style={{
                                 width:'100%',
-                                marginBottom:bottom + 10,height:deviceHeight * 20 / 100 + bottom,
+                                marginBottom:bottom + 10,height:deviceHeight * 20 / 100 + bottom,backgroundColor:'red'
                                 
                             }} />}
                             contentContainerStyle={{alignItems:'center'}}
@@ -552,35 +466,7 @@ const CustomerMoreProductsScreen = props => {
                             />
                             
                            
-                        //     <View
-                            // style={{
-                            //     flexDirection: 'row',
-                            //     flexWrap: 'wrap',
-                            //     justifyContent: 'center',
-                            // }}>
-                        //         {
-                                    
-                        //         productFilter.map(item => (
-                        //             <View key={item._id}>
-                        //                 <ProductCardComponent
-                        //                     onAddToCart={() => addItemToCart(item)}
-                        //                     data={item}
-                        //                     cartProduct={false}
-                        //                     onViewDetail={() => {
-                        //                         props?.navigation.navigate(
-                        //                             CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL,
-                        //                             {
-                        //                                 product: item,
-                        //                                 comision: comision,
-                        //                             },
-                        //                         );
-                        //                     }}
-                        //                     comision={comision}
-                        //                 />
-                        //             </View>
-                        //         ))
-                        //         }
-                        // </View>
+            
                         ):(
                         <View
                         style={{
@@ -588,7 +474,7 @@ const CustomerMoreProductsScreen = props => {
                             justifyContent: 'center',
                         }}>
                             <ActivityIndicator/>
-                            <Text>cargando</Text>                        
+                            <Text>Cargando</Text>                        
                         </View>
                         )
                     }
@@ -596,7 +482,7 @@ const CustomerMoreProductsScreen = props => {
 
                 </View>
             </View>
-            {/* <View style={{ width: deviceWidth, height: deviceHeight * 0.1  }} /> */}
+            <View style={{ width: deviceWidth, height: deviceHeight * 0.1  }} />
               
         </View>
     );

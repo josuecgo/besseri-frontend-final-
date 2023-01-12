@@ -67,7 +67,7 @@ export const GarageScreen = (props) => {
       });
 
       if (apiCall.status == api_statuses.success) {
-        console.log(apiCall.data.data);
+       
         setShowModal(false)
         getGarage()
         resetFiltros()
@@ -76,7 +76,7 @@ export const GarageScreen = (props) => {
       }
 
     } catch (error) {
-      console.log(error);
+     
       showToaster('No hay conexion con el servidor')
     }
   }
@@ -88,7 +88,7 @@ export const GarageScreen = (props) => {
       const apiCall = await axios.delete(`${customer_api_urls.delete_garage}/${car._id}`);
 
       if (apiCall.status == api_statuses.success) {
-        console.log(apiCall.data.data);
+       
         getGarage()
         setShowModalDelete(false)
       } else {
@@ -96,7 +96,7 @@ export const GarageScreen = (props) => {
       }
 
     } catch (error) {
-      console.log(error);
+
       showToaster('No hay conexion con el servidor')
     }
   }

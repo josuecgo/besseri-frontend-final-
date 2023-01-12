@@ -4,6 +4,7 @@ import { api_statuses, customer_api_urls, vendor_api_urls } from '../util/api/ap
 import { showToaster } from '../util/constants';
 import { ProductContext } from '../util/context/Product/ProductContext';
 import { getUserId } from '../util/local-storage/auth_service';
+import { matchMaker, matchModel, matchYear } from '../util/utility-functions';
 
 export const useFiltrado = ( isServicios ) => {
     const [productFilter, setProductFilter] = useState([]);
@@ -65,7 +66,7 @@ export const useFiltrado = ( isServicios ) => {
         }
     }
 
-    const makerFilter = () => {
+    const makerFilter = async() => {
         if (valueModel && valueYear && modelo) {
             let carModel = modelo.find((item) => item._id === valueModel )
             carCompatible({model:carModel,year:valueYear})
@@ -73,51 +74,28 @@ export const useFiltrado = ( isServicios ) => {
             carCompatible(false)
         }
         setLoadingFilter(true)
+        
         let filtrado = []
         if (valueMaker) {
-          if (valueModel) {
-           
+            if (valueModel) {
+
+                // const marca = await matchMaker(productos,valueMaker,valueModel,valueYear);
+               
+                const modelo = await matchModel(productos,valueMaker,valueModel,valueYear)
+        
+        
+                filtrado = modelo ? modelo : []
             
-            let itemData;
-            let itemModel;
-           
-            const marca = productos.filter((item) => {
-                // console.log(item);
-              itemData = item.maker ? item?.maker?._id : '';
-            //   let itemAplicacion = item.aplicacion ? item.aplicacion : ''
-              let searchTextData = valueMaker;
-              let searchTextData2 = valueModel;
-              
-              let match = matchesForModel(searchTextData2,item,valueYear);
-              
-              return itemData.indexOf(searchTextData) > -1 || match ;
-          })
-      
-            const modelo = marca.filter((item) => {
-              itemModel = item.model ? item?.model?._id : '';
-              let searchTextData = valueModel;
-              
-              let match = matchesForModel(searchTextData,item,valueYear);
-              
-              return itemModel.indexOf(searchTextData) > -1 || match ;
-          })
-            filtrado = modelo ? modelo : []
-           
-           
-          }else{
-             
-              const marca = productos.filter((item) => {
-                let itemData = item.maker ? item?.maker?._id : '';
+            
+            }else{
                 
-                let searchTextData = valueMaker;
-                    
-                return itemData.indexOf(searchTextData) > -1  ;
-              })
-            
-              filtrado = marca ? marca : []
-            
-             
-          }
+                
+                const marca = matchMaker(productos,valueMaker,valueYear);
+
+                filtrado = marca ? marca : []
+                
+                
+            }
           
     
         }else{
@@ -125,38 +103,12 @@ export const useFiltrado = ( isServicios ) => {
          
         }
     
-        // console.log(filtrado);
+       
         if (valueYear) {
-          
-            let match = filtrado.filter((item) => {
+            let match = matchYear(filtrado,valueModel,valueYear)
            
-                
-            let compatible = item?.matchs.find(element =>  {
-                // console.log(element?.model._id);
-                // console.log({modell:valueModel});
-                let model = valueModel ? element?.model._id === valueModel : ""
-
-                let result = betweenNumber(element?.de,element?.al,valueYear)
-              
-                if (result && model ) {
-                    return element
-                }else{
-                    return false
-                }
-            });
-            
-            let value = valueModel === item.model._id && betweenNumber(item?.aplicacion?.de,item?.aplicacion?.al,valueYear)
-            // console.log({
-            //     value , compatible
-            // });
-            if (value || compatible ) {
-            
-              return item
-            }
-    
-          })
             setLoadingFilter(false)
-            // console.log(match);
+           
             setProductFilter(match)
         }else{
             setLoadingFilter(false)
@@ -167,39 +119,6 @@ export const useFiltrado = ( isServicios ) => {
         
         
        
-    }
-
-    
-
-    const  betweenNumber = (startingNumber, endingNumber, givenNumber) => {
-
-        if(givenNumber >= startingNumber && givenNumber <= endingNumber){
-            console.log(`número dado ${givenNumber} cae entre ${startingNumber} y ${endingNumber}`);
-            return true
-        }else{
-          console.log(`número dado ${givenNumber} no cae entre ${startingNumber} y ${endingNumber}`);
-            return false;
-        }
-    }
-
-    const matchesForModel = (id,searchId) => {
-        // console.log(searchId?.matchs);
-        
-        if (searchId?.matchs.length > 0) {
-            // console.log({id});
-            // console.log(searchId?.matchs);
-            const match = searchId?.matchs.filter(element => element?.model._id === id);
-            
-            if (match.length > 0) {
-                
-                return searchId;
-            }else{
-                return false;
-            }
-     
-        }
-        return false;
-        
     }
 
 

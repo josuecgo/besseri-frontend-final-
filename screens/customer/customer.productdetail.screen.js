@@ -63,8 +63,8 @@ const CustomerProductDetailScreen = (props) => {
        showToaster('Algo salio mal code 1')
      }
     } catch(e) {
-        // showToaster('No se pudo traer informacion del vendedor')
-        console.log('No se pudo traer informacion del vendedor');
+        showToaster('No se pudo traer informacion del vendedor')
+       
         
     }
   }

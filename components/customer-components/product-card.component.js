@@ -92,8 +92,8 @@ const ProductCardComponent = ({
             <Text style={{color: 'grey',textTransform:'uppercase',fontSize:adjust(10)}}>{data?.maker?.name}</Text>
             <Text style={{color: 'grey'}}>{data?.model?.name}</Text>
             {
-            carDefault || carActive && (
-              <Compatible carDefault={carActive ? carActive  : carDefault }/>
+            carActive && carActive?.model?._id != data?.model?._id && (
+              <Compatible carDefault={carActive}/>
             )
             // carDefault  && (
             //   <Compatible carDefault={carDefault}/>
@@ -174,9 +174,17 @@ const ProductCardComponent = ({
         <Text style={styles.productTitle}>{data?.name}</Text>
         <Text style={[styles.textSub,{textTransform:'uppercase'}]} >{data?.brand?.name} </Text>
         <View style={styles.productSubTitle} > 
+          {
+            data?.maker?.name !== 'All' && (
+              <Text style={[styles.textSub,{textTransform:'uppercase',fontSize:adjust(8)}]} >{data?.maker?.name} </Text>
+            ) 
+          }
+          {
+            data?.model?.name !== 'all' && (
+              <Text style={styles.textSub} >{data?.model?.name} </Text>
+            )
+          }
           
-          <Text style={[styles.textSub,{textTransform:'uppercase',fontSize:adjust(8)}]} >{data?.maker?.name} </Text>
-          <Text style={styles.textSub} >{data?.model?.name} </Text>
           
         </View>
         {

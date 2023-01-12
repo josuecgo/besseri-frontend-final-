@@ -88,7 +88,7 @@ const SplashScreen = ({navigation}) => {
 	  return apiCall?.data?.success
      
     } catch (error) {
-      console.log(error);
+     
 	  return  false
     }
   };

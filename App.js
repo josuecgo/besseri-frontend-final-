@@ -88,7 +88,7 @@ const App2 = () => {
 
   useEffect(() => {
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-      console.log('background');
+      
       showNotification(remoteMessage)
       
     
@@ -102,7 +102,7 @@ const App2 = () => {
     let os = Platform.OS
     messaging().onMessage(msg => {
       
-      console.log(os,' ----onmessage--'  );
+     
       showNotification(msg)
      
 

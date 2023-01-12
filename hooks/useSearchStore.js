@@ -3,6 +3,8 @@ import { useState,useEffect, useContext } from 'react';
 import { customer_api_urls, vendor_api_urls } from '../util/api/api_essentials';
 import { showToaster } from '../util/constants';
 import { ProductContext } from '../util/context/Product/ProductContext';
+import { matchMaker, matchModel, matchYear } from '../util/utility-functions';
+
 
 export const useSearchStore = (  ) => {
     
@@ -73,7 +75,7 @@ export const useSearchStore = (  ) => {
                 showToaster('No tienes conexion a la red')
             }
         } catch (error) {
-            console.log(error);
+           
             setMarcas([])
         }
        
@@ -130,45 +132,17 @@ export const useSearchStore = (  ) => {
         if (valueMaker) {
           if (valueModel) {
            
-            
-            let itemData;
-            let itemModel;
-          
-           
-            const marca = productsData.filter((item) => {
-              itemData = item.maker ? item?.maker?._id : '';
-              let itemAplicacion = item.aplicacion ? item.aplicacion : ''
-              let searchTextData = valueMaker;
-              let searchTextData2 = valueModel;
-              
-              let match = matchesForModel(searchTextData2,item,valueYear);
-              
-              return itemData.indexOf(searchTextData) > -1 || match ;
-          })
-      
-            const modelo = marca.filter((item) => {
-               
-              itemModel = item.model ? item?.model?._id : '';
-              let searchTextData = valueModel;
-              
-              let match = matchesForModel(searchTextData,item,valueYear);
-              
-              return itemModel.indexOf(searchTextData) > -1 || match ;
-          })
+
+            const modelo =  matchModel(productsData,valueMaker,valueModel,valueYear)
             filtrado = modelo ? modelo : []
            
            
+           
           }else{
-             
-              const marca = productsData.filter((item) => {
-                let itemData = item.maker ? item?.maker?._id : '';
-                
-                let searchTextData = valueMaker;
-                    
-                return itemData.indexOf(searchTextData) > -1  ;
-              })
-            
-              filtrado = marca ? marca : []
+            const marca = matchMaker(productsData,valueMaker,valueYear);
+
+         
+            filtrado = marca ? marca : []
             
              
           }
@@ -179,41 +153,7 @@ export const useSearchStore = (  ) => {
         }
        
         if (valueYear) {
-          
-          let match = filtrado.filter((item) => {
-            
-
-            let compatible = item?.matchs.find(element =>  {
-                console.log(element);
-                let model = valueModel ? element?.model?._id === valueModel : ""
-
-                let result = betweenNumber(element?.de,element?.al,valueYear)
-              
-                if (result && model ) {
-                    return element
-                }else{
-                    return false
-                }
-            });
-            
-            // console.log({
-            //   name:item.name,
-            //   bde:item?.aplicacion?.de,
-            //   bbollDe: item?.aplicacion?.de <= valueYear,
-            //   al:item?.aplicacion?.al,
-            //   aboolAl:item?.aplicacion?.al >= valueYear,
-            //   valueYear,
-            //   compatible
-            // });
-
-            let value = valueModel === item.model && betweenNumber(item?.aplicacion?.de,item?.aplicacion?.al,valueYear)
-    
-            if (value || compatible ) {
-             
-              return item
-            }
-    
-          })
+            let match = matchYear(filtrado,valueModel,valueYear)
           
             setProductFilter(match)
         }else{

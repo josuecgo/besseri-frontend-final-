@@ -236,7 +236,6 @@ export const ProductProvider = ({children}) => {
                             productos: apiCall.data.Data,
                         }
                     });
-                    console.log({resp:apiCall.data.Data});
                     filterProduct(apiCall.data.Data)
                 }
                 
@@ -260,7 +259,7 @@ export const ProductProvider = ({children}) => {
             }
             setLoading(true)
             // setCarDefault(data)
-            console.log(data);
+         
             const apiCall = await axios.post(`${customer_api_urls.active_car}/${userId}`,{data});
                 
             if (apiCall.status == api_statuses.success) {
@@ -350,7 +349,7 @@ export const ProductProvider = ({children}) => {
 
 
     const carCompatible = async (car) => {
-        console.log(car);
+       
         await dispatch({
             type:'activeCar',
             payload: {
@@ -455,9 +454,9 @@ export const ProductProvider = ({children}) => {
                 
     
                
-            console.log({status:apiCall?.status});
+        
             if (apiCall?.status === 200) {
-                console.log('llamando productStore');
+                
                 // setProductsData(apiCall.data.data.products);
                 await productStore({
                     // productosStore:apiCall.data.data?.products,
