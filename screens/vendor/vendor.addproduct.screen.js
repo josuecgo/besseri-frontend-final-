@@ -116,7 +116,7 @@ const VendorAddProductScreen = ({navigation}) => {
     [CREDENTIAL_KEYS.PRICE]: isEditMode ? toBeEditedProduct?.price : '',
     [CREDENTIAL_KEYS.ESTIMATED_DELIVERY]: isEditMode ? toBeEditedProduct?.estimatedDelivery : '',
     [CREDENTIAL_KEYS.PRODUCT_IMAGE]: isEditMode
-      ? `${base_url}/${toBeEditedProduct?.productImg}`
+      ? toBeEditedProduct.urlsImg.map((i)=>  `${base_url}/${i?.path}` )
       : '',
     [CREDENTIAL_KEYS.PRODUCT_CATEGORY]: isEditMode
       ? toBeEditedProduct?.categoryId
@@ -369,7 +369,7 @@ const VendorAddProductScreen = ({navigation}) => {
   const getMakers = async () => {
     try {
       setShowLoader(true);
-      const apiCall = await axios.get(vendor_api_urls.get_makers);
+      const apiCall = await axios.get(vendor_api_urls.get_makers_vendor);
       setShowLoader(false);
       
       if (apiCall?.status == api_statuses?.success) {
@@ -420,9 +420,16 @@ const VendorAddProductScreen = ({navigation}) => {
  
   // console.log(toBeEditedProduct.productImg);
   const ProductSummaryCard = ({label, value, onPress, isImageTab}) => {
-    
+   
     if (isImageTab) {
-      console.log(value);
+      if (value[0].path) {
+        console.log('existe');
+        console.log(value);
+      }else{
+        console.log('no existe');
+        console.log(value);
+      }
+      // console.log(value,'value');
     }
     return (
       <TouchableOpacity
@@ -462,7 +469,7 @@ const VendorAddProductScreen = ({navigation}) => {
               ):(
                 <View  >
                    
-                  <Image source={{uri: value}} style={{width: deviceWidth / 3.5, height: 100}}  resizeMode='cover' />
+                  <Image source={{uri: }} stle={{width: deviceWidth / 3.5, height: 100}}  resizeMode='cover' />
                  </View>
               )
              
@@ -470,7 +477,7 @@ const VendorAddProductScreen = ({navigation}) => {
             {
               value.map((item,i) => (
                 <View key={i} >
-                  <Image source={{uri: item.path}} 
+                  <Image source={{uri: value[0].path ?  item.path : item}} 
                   style={{width: deviceWidth / 3.5, height: 100}}  
                   resizeMode='cover' 
                   />
@@ -838,6 +845,8 @@ const uploadProductImg = async () => {
 
   }
   
+
+ 
   return (
     <View style={styles.container}>
       <AddBrandModal
@@ -1098,7 +1107,7 @@ const uploadProductImg = async () => {
 
           {isUploadImage ? (
             <View style={styles.uploadImgContainer}>
-              {isEditMode ? (
+              {isEditMode ?  (
                 <Image
                   source={{uri: `${base_url}/${toBeEditedProduct?.productImg}`}}
                   style={{width: 100, height: 100, borderRadius: 100 / 2}}

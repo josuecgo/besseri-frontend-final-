@@ -165,7 +165,7 @@ const VendorAddServiceScreen = ({navigation}) => {
     const getMakers = async () => {
         try {
         setShowLoader(true);
-        const apiCall = await axios.get(vendor_api_urls.get_makers);
+        const apiCall = await axios.get(vendor_api_urls.get_makers_vendor);
         setShowLoader(false);
         if (apiCall?.status == api_statuses?.success) {
             setMakers(apiCall.data.data);

@@ -35,6 +35,7 @@ export const vendor_api_urls = {
     get_models:`${base_url}/modals/get-models`,
     get_aplication:`${base_url}/match/get-aplication`,
     get_makers:`${base_url}/maker/get-makers`,
+    get_makers_vendor:`${base_url}/maker/get-makers-vendor`,
     upload_product_image:`${base_url}/products/upload-product-images`,
     upload_service_image:`${base_url}/services/upload-service-image`,
     out_of_stock:`${base_url}/products/out-of-stock`,
