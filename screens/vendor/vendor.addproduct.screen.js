@@ -106,7 +106,7 @@ const VendorAddProductScreen = ({navigation}) => {
   const isEditMode = params?.isEdit;
   const toBeEditedProduct = params?.product;
   
-  let images = ''; 
+  let images = []; 
   // console.log(toBeEditedProduct.urlsImg);
   if (isEditMode) {
     if (toBeEditedProduct.urlsImg && toBeEditedProduct?.urlsImg?.length > 0) {
@@ -118,7 +118,7 @@ const VendorAddProductScreen = ({navigation}) => {
     }
   }
 
-
+  
   const [inputValues, setInputValues] = useState({
     [CREDENTIAL_KEYS.NAME]: isEditMode ? toBeEditedProduct?.name : '',
     [CREDENTIAL_KEYS.STOCK]: isEditMode ? toBeEditedProduct?.stock : '',
@@ -138,7 +138,7 @@ const VendorAddProductScreen = ({navigation}) => {
       : '',
     [CREDENTIAL_KEYS.PRODUCT_MAKER]: isEditMode ? toBeEditedProduct?.maker : '',
     [CREDENTIAL_KEYS.PRODUCT_MODEL]: isEditMode ? toBeEditedProduct?.model : '',
-    [CREDENTIAL_KEYS.PRODUCT_APLICATION]: isEditMode ? toBeEditedProduct?.aplication : '',
+    [CREDENTIAL_KEYS.PRODUCT_APLICATION]: isEditMode ? toBeEditedProduct?.aplicacion : '',
     [CREDENTIAL_KEYS?.PRODUCT_BRAND]: isEditMode
       ? toBeEditedProduct?.brand
       : '',
@@ -433,9 +433,7 @@ const VendorAddProductScreen = ({navigation}) => {
  
   // console.log(toBeEditedProduct.productImg);
   const ProductSummaryCard = ({label, value, onPress, isImageTab}) => {
-    if (isImageTab) {
-      console.log(value);
-    }
+   
     return (
       <TouchableOpacity
         onPress={onPress}
@@ -536,7 +534,7 @@ const uploadProductImg = async () => {
   setShowLoader(true);
   const imageFormData = new FormData();
   let images = inputValues[CREDENTIAL_KEYS.PRODUCT_IMAGE];
- 
+  console.log({images});
   for (let index = 0; index < images.length; index++) {  
     
     imageFormData.append('imageFormData', {
@@ -556,27 +554,7 @@ const uploadProductImg = async () => {
   };
 
   let resp = await  fetch(vendor_api_urls.upload_product_image,requestoptions);
-  // await  data.then(res => {
-  //    //console.log(res.json());
-
-  //     res.json()
-  //   })
-  //   .then(result => {
-  //     setShowLoader(false);
-      
-  //     console.log(result);
-  //     if (result?.success) {
-  //       // return result?.data;
-        
-  //       return result?.data
-  //     } else {
-  //       return false;
-  //     }
-  //   } )
-  //   .catch(error =>{
-  //      console.log(error,'fetch')
-  //      setShowLoader(false);
-  //     })
+  
   const data = await resp.json();
   // console.log(data);
   if (data?.success) {
@@ -643,17 +621,26 @@ const uploadProductImg = async () => {
     }
   };
 
-  
   const editProduct = async () => {
    
     try {
       setShowLoader(true);
+      
       const businessId = await getBusinessId();
+      
       let productImgUpload = null;
-      const productImg = `${base_url}/${toBeEditedProduct?.productImg}`;
-      if (inputValues[CREDENTIAL_KEYS.PRODUCT_IMAGE] != productImg) {
+      let url = toBeEditedProduct?.productImg;
+      
+      const productImg = `${base_url}/${url}`;
+      
+      if (inputValues[CREDENTIAL_KEYS.PRODUCT_IMAGE][0].path != productImg) {
+        
         productImgUpload = await uploadProductImg();
       }
+
+      console.log(productImgUpload,'productImgUpload');
+
+            
       const apiBody = {
         productId: toBeEditedProduct?._id,
         name: inputValues[CREDENTIAL_KEYS.NAME],
@@ -664,8 +651,10 @@ const uploadProductImg = async () => {
         isBlocked: false,
         productImg: productImgUpload
           ?  productImgUpload[0]?.path
-          : toBeEditedProduct?.productImg,
-        urlsImg:productImgUpload,
+          : toBeEditedProduct?.productImg[0]?.path,
+        urlsImg:productImgUpload
+        ?  productImgUpload
+        : toBeEditedProduct?.productImg,
         categoryId: selectedCategory?._id,
         category: selectedCategory,
         price: inputValues[CREDENTIAL_KEYS.PRICE],
@@ -683,7 +672,7 @@ const uploadProductImg = async () => {
         navigation.navigate(BOTTOM_TAB_VENDOR_ROUTES.PRODUCTS);
       } else {
         showToaster(
-          'Algo salió mal, inténtalo de nuevo, contacte con él administrador',
+          'El servidor no responde, intente mas tarde, contacte con él administrador',
         );
         setShowLoader(false);
       }
@@ -850,7 +839,7 @@ const uploadProductImg = async () => {
 
   }
   
-
+  
  
   return (
     <View style={styles.container}>
@@ -926,14 +915,17 @@ const uploadProductImg = async () => {
               <FlatList
                 data={aplication}
                 keyExtractor={item => item?._id}
-                renderItem={ ({item}) => ( 
-                  <RenderItemAplication 
-                  handleChange={ handleChange}
-                  credential={CREDENTIAL_KEYS?.PRODUCT_APLICATION}
-                  item={item} 
-                  selected={inputValues[CREDENTIAL_KEYS?.PRODUCT_APLICATION]?._id} 
-                  /> 
-                ) }
+                renderItem={ ({item}) => {
+                  // console.log(inputValues[CREDENTIAL_KEYS?.PRODUCT_APLICATION]);
+                  return ( 
+                    <RenderItemAplication 
+                    handleChange={ handleChange}
+                    credential={CREDENTIAL_KEYS?.PRODUCT_APLICATION}
+                    item={item} 
+                    selected={inputValues[CREDENTIAL_KEYS?.PRODUCT_APLICATION]} 
+                    /> 
+                  )
+                } }
                 ListEmptyComponent={() => (
                   <ListEmpty 
                   msg={'No hay vehiculos compatibles con tu producto, contacte al administrador'} 
@@ -1002,72 +994,75 @@ const uploadProductImg = async () => {
                     : []
                 }
                 keyExtractor={item => item?._id}
-                renderItem={itemData => (
-                  <ListCard
-                    selected={
-                      isDeliveryScreen 
-                      ? inputValues[CREDENTIAL_KEYS?.ESTIMATED_DELIVERY]?._id ==
-                      itemData.item._id
-                      : isChooseMaker
-                        ? inputValues[CREDENTIAL_KEYS?.PRODUCT_MAKER]?._id ==
-                          itemData.item._id
-                        : isChooseModel
-                        ? inputValues[CREDENTIAL_KEYS?.PRODUCT_MODEL]?._id ==
-                          itemData.item?._id
-                        : isChooseCategory
-                        ? inputValues[CREDENTIAL_KEYS.PRODUCT_CATEGORY] ==
-                          itemData?.item?._id
-                        : isSubCategory
-                        ? selectedSubCategory?._id == itemData?.item?._id
-                        : isChooseAplication
-                        ? itemData.item.al
-                        : isBrandScreen
-                        ? selectedBrand?._id == itemData?.item?._id
-                        : false
-                    }
-                    onPress={() => {
-                      if (isDeliveryScreen)
-                        setInputValues({
-                          ...inputValues,
-                          [CREDENTIAL_KEYS.ESTIMATED_DELIVERY]: itemData.item,
-                        });
-                      if (isChooseMaker)
-                        setInputValues({
-                          ...inputValues,
-                          [CREDENTIAL_KEYS.PRODUCT_MAKER]: itemData.item,
-                        });
-                      if (isChooseModel)
-                        setInputValues({
-                          ...inputValues,
-                          [CREDENTIAL_KEYS.PRODUCT_MODEL]: itemData.item,
-                        });
-                      if (isChooseCategory) {
-                        setInputValues({
-                          ...inputValues,
-                          [CREDENTIAL_KEYS.PRODUCT_CATEGORY]:
-                            itemData.item?._id,
-                        });
-                        setSelectedcategory(itemData.item);
-                        getSubCategories();
+                renderItem={itemData => {
+                  
+                  return (
+                    <ListCard
+                      selected={
+                        isDeliveryScreen 
+                        ? inputValues[CREDENTIAL_KEYS?.ESTIMATED_DELIVERY] ==
+                        itemData.item.name
+                        : isChooseMaker
+                          ? inputValues[CREDENTIAL_KEYS?.PRODUCT_MAKER]?._id ==
+                            itemData.item._id
+                          : isChooseModel
+                          ? inputValues[CREDENTIAL_KEYS?.PRODUCT_MODEL]?._id ==
+                            itemData.item?._id
+                          : isChooseCategory
+                          ? inputValues[CREDENTIAL_KEYS.PRODUCT_CATEGORY] ==
+                            itemData?.item?._id
+                          : isSubCategory
+                          ? selectedSubCategory?._id == itemData?.item?._id
+                          : isChooseAplication
+                          ? itemData.item.al
+                          : isBrandScreen
+                          ? selectedBrand?._id == itemData?.item?._id
+                          : false
                       }
-                      if (isSubCategory) {
-                        setSelectedSubCategory(itemData.item);
-                      }
-                      if (isChooseAplication) {
-                        
-                      }
-                      if (isBrandScreen) {
-                        setselectedBrand(itemData?.item);
-                        setInputValues({
-                          ...inputValues,
-                          [CREDENTIAL_KEYS.PRODUCT_BRAND]:
-                            itemData.item,
-                        });
-                      }
-                    }}
-                    name={itemData.item.name}
-                  />
-                )}
+                      onPress={() => {
+                        if (isDeliveryScreen)
+                          setInputValues({
+                            ...inputValues,
+                            [CREDENTIAL_KEYS.ESTIMATED_DELIVERY]: itemData.item,
+                          });
+                        if (isChooseMaker)
+                          setInputValues({
+                            ...inputValues,
+                            [CREDENTIAL_KEYS.PRODUCT_MAKER]: itemData.item,
+                          });
+                        if (isChooseModel)
+                          setInputValues({
+                            ...inputValues,
+                            [CREDENTIAL_KEYS.PRODUCT_MODEL]: itemData.item,
+                          });
+                        if (isChooseCategory) {
+                          setInputValues({
+                            ...inputValues,
+                            [CREDENTIAL_KEYS.PRODUCT_CATEGORY]:
+                              itemData.item?._id,
+                          });
+                          setSelectedcategory(itemData.item);
+                          getSubCategories();
+                        }
+                        if (isSubCategory) {
+                          setSelectedSubCategory(itemData.item);
+                        }
+                        if (isChooseAplication) {
+                          
+                        }
+                        if (isBrandScreen) {
+                          setselectedBrand(itemData?.item);
+                          setInputValues({
+                            ...inputValues,
+                            [CREDENTIAL_KEYS.PRODUCT_BRAND]:
+                              itemData.item,
+                          });
+                        }
+                      }}
+                      name={itemData.item.name}
+                    />
+                  )
+                }}
               />
             </View>
           ) : null}
@@ -1185,7 +1180,7 @@ const uploadProductImg = async () => {
             />
             <ProductSummaryCard
               onPress={() => setCurrentScreen(SCREEN_TYPES?.ESTIMATED_DELIVERY)}
-              value={`${inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY].name}`}
+              value={`${inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY]}`}
               label="Tiempo de entrega"
             />
             <ProductSummaryCard

@@ -95,7 +95,7 @@ const VendorProductDetailsScreen = ({ navigation, route }) => {
         }
     };
 
-    // console.log(product);
+    // console.log(product?.productImg);
     return (
         <>
             <HeaderBackground />

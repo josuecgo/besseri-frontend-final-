@@ -4,7 +4,6 @@ import CommonStyles from '../../util/styles/styles'
 import { deviceWidth } from '../../util/Dimentions'
 
 export const RenderItemAplication = ({item,handleChange,backgroundColor,selected = false}) => {
-
     
 
     return (
@@ -19,7 +18,7 @@ export const RenderItemAplication = ({item,handleChange,backgroundColor,selected
         <Text
         style={{
             ...styles.flatListCardBtnText,
-            fontWeight: selected === item._id ? 'bold' : 'normal',
+            fontWeight: selected.al === item.al && selected.de === item.de  ? 'bold' : 'normal',
         }}>
         del: {item.de} al: {item.al}
         </Text>
