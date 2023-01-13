@@ -105,6 +105,20 @@ const VendorAddProductScreen = ({navigation}) => {
   const {top} = useSafeAreaInsets()
   const isEditMode = params?.isEdit;
   const toBeEditedProduct = params?.product;
+  
+  let images = ''; 
+  
+  if (isEditMode) {
+    if (toBeEditedProduct.urlsImg.length > 0) {
+      console.log(toBeEditedProduct.urlsImg,'to edit');
+      images = toBeEditedProduct?.urlsImg.map((i)=>  `${base_url}/${i?.path}`)
+    }else{
+      
+      images = [{path:`${base_url}/${toBeEditedProduct.productImg}`}]
+    }
+  }
+
+
   const [inputValues, setInputValues] = useState({
     [CREDENTIAL_KEYS.NAME]: isEditMode ? toBeEditedProduct?.name : '',
     [CREDENTIAL_KEYS.STOCK]: isEditMode ? toBeEditedProduct?.stock : '',
@@ -115,9 +129,7 @@ const VendorAddProductScreen = ({navigation}) => {
     [CREDENTIAL_KEYS.TO_YEAR]: isEditMode ? toBeEditedProduct?.toyear : '',
     [CREDENTIAL_KEYS.PRICE]: isEditMode ? toBeEditedProduct?.price : '',
     [CREDENTIAL_KEYS.ESTIMATED_DELIVERY]: isEditMode ? toBeEditedProduct?.estimatedDelivery : '',
-    [CREDENTIAL_KEYS.PRODUCT_IMAGE]: isEditMode
-      ? toBeEditedProduct.urlsImg.map((i)=>  `${base_url}/${i?.path}` )
-      : '',
+    [CREDENTIAL_KEYS.PRODUCT_IMAGE]: images,
     [CREDENTIAL_KEYS.PRODUCT_CATEGORY]: isEditMode
       ? toBeEditedProduct?.categoryId
       : '',
@@ -131,6 +143,7 @@ const VendorAddProductScreen = ({navigation}) => {
       ? toBeEditedProduct?.brand
       : '',
   });
+  
   const [showLoader, setShowLoader] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isSummaryMode, setisSummaryMode] = useState(false);
@@ -420,16 +433,8 @@ const VendorAddProductScreen = ({navigation}) => {
  
   // console.log(toBeEditedProduct.productImg);
   const ProductSummaryCard = ({label, value, onPress, isImageTab}) => {
-   
     if (isImageTab) {
-      if (value[0].path) {
-        console.log('existe');
-        console.log(value);
-      }else{
-        console.log('no existe');
-        console.log(value);
-      }
-      // console.log(value,'value');
+      console.log(value);
     }
     return (
       <TouchableOpacity
@@ -477,7 +482,7 @@ const VendorAddProductScreen = ({navigation}) => {
             {
               value.map((item,i) => (
                 <View key={i} >
-                  <Image source={{uri: value[0].path ?  item.path : item}} 
+                  <Image source={{uri: value.length > 0 ? item.path : item }} 
                   style={{width: deviceWidth / 3.5, height: 100}}  
                   resizeMode='cover' 
                   />
@@ -525,7 +530,7 @@ const VendorAddProductScreen = ({navigation}) => {
     });
   };
 
-
+  // console.log(toBeEditedProduct);
   
 const uploadProductImg = async () => {
   setShowLoader(true);
