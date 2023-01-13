@@ -107,9 +107,9 @@ const VendorAddProductScreen = ({navigation}) => {
   const toBeEditedProduct = params?.product;
   
   let images = ''; 
-  
+  // console.log(toBeEditedProduct.urlsImg);
   if (isEditMode) {
-    if (toBeEditedProduct.urlsImg.length > 0) {
+    if (toBeEditedProduct.urlsImg && toBeEditedProduct?.urlsImg?.length > 0) {
       console.log(toBeEditedProduct.urlsImg,'to edit');
       images = toBeEditedProduct?.urlsImg.map((i)=>  `${base_url}/${i?.path}`)
     }else{
