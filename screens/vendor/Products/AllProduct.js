@@ -150,6 +150,11 @@ export const AllProduct = (props) => {
                         renderItem={memorizedValue}
                         keyExtractor={item => item._id}
                         showsVerticalScrollIndicator={false}
+                        onRefresh={() => { 
+                            resetFilter()
+                            productSubCategoria(idSubCategoria) 
+                        }}
+                        refreshing={showLoader}
                     />
                 )
             }

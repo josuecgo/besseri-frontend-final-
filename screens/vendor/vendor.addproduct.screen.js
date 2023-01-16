@@ -128,7 +128,7 @@ const VendorAddProductScreen = ({navigation}) => {
     [CREDENTIAL_KEYS.FROM_YEAR]: isEditMode ? toBeEditedProduct?.fromyear : '',
     [CREDENTIAL_KEYS.TO_YEAR]: isEditMode ? toBeEditedProduct?.toyear : '',
     [CREDENTIAL_KEYS.PRICE]: isEditMode ? toBeEditedProduct?.price : '',
-    [CREDENTIAL_KEYS.ESTIMATED_DELIVERY]: isEditMode ? toBeEditedProduct?.estimatedDelivery : '',
+    [CREDENTIAL_KEYS.ESTIMATED_DELIVERY]: isEditMode ? {name:toBeEditedProduct?.estimatedDelivery} : '',
     [CREDENTIAL_KEYS.PRODUCT_IMAGE]: images,
     [CREDENTIAL_KEYS.PRODUCT_CATEGORY]: isEditMode
       ? toBeEditedProduct?.categoryId
@@ -431,7 +431,6 @@ const VendorAddProductScreen = ({navigation}) => {
     );
   };
  
-  // console.log(toBeEditedProduct.productImg);
   const ProductSummaryCard = ({label, value, onPress, isImageTab}) => {
    
     return (
@@ -530,39 +529,39 @@ const VendorAddProductScreen = ({navigation}) => {
 
   // console.log(toBeEditedProduct);
   
-const uploadProductImg = async () => {
-  setShowLoader(true);
-  const imageFormData = new FormData();
-  let images = inputValues[CREDENTIAL_KEYS.PRODUCT_IMAGE];
-  console.log({images});
-  for (let index = 0; index < images.length; index++) {  
-    
-    imageFormData.append('imageFormData', {
-      uri: Platform.OS === 'ios' ? images[index]?.path : images[index]?.path,
-      type: images[index]?.mime,
-      name: 'photo.jpg',
-    });
-  }
-  
-
-  var requestoptions = {
-    method: 'POST',
-    body: imageFormData,
-    headers:{
-      'Content-Type' : 'multipart/form-data'
+  const uploadProductImg = async () => {
+    setShowLoader(true);
+    const imageFormData = new FormData();
+    let images = inputValues[CREDENTIAL_KEYS.PRODUCT_IMAGE];
+    console.log({images});
+    for (let index = 0; index < images.length; index++) {  
+      
+      imageFormData.append('imageFormData', {
+        uri: Platform.OS === 'ios' ? images[index]?.path : images[index]?.path,
+        type: images[index]?.mime,
+        name: 'photo.jpg',
+      });
     }
-  };
+    
 
-  let resp = await  fetch(vendor_api_urls.upload_product_image,requestoptions);
-  
-  const data = await resp.json();
-  // console.log(data);
-  if (data?.success) {
-    return data?.data
-  }
-  return false
-  
-};
+    var requestoptions = {
+      method: 'POST',
+      body: imageFormData,
+      headers:{
+        'Content-Type' : 'multipart/form-data'
+      }
+    };
+
+    let resp = await  fetch(vendor_api_urls.upload_product_image,requestoptions);
+    
+    const data = await resp.json();
+    // console.log(data);
+    if (data?.success) {
+      return data?.data
+    }
+    return false
+    
+  };
 
   
   const createProduct = async () => {
@@ -638,7 +637,7 @@ const uploadProductImg = async () => {
         productImgUpload = await uploadProductImg();
       }
 
-      console.log(productImgUpload,'productImgUpload');
+      
 
             
       const apiBody = {
@@ -840,7 +839,6 @@ const uploadProductImg = async () => {
   }
   
   
- 
   return (
     <View style={styles.container}>
       <AddBrandModal
@@ -995,12 +993,12 @@ const uploadProductImg = async () => {
                 }
                 keyExtractor={item => item?._id}
                 renderItem={itemData => {
-                  
+                  // console.log(itemData.item.name);
                   return (
                     <ListCard
                       selected={
                         isDeliveryScreen 
-                        ? inputValues[CREDENTIAL_KEYS?.ESTIMATED_DELIVERY] ==
+                        ? inputValues[CREDENTIAL_KEYS?.ESTIMATED_DELIVERY]?.name ===
                         itemData.item.name
                         : isChooseMaker
                           ? inputValues[CREDENTIAL_KEYS?.PRODUCT_MAKER]?._id ==
@@ -1180,7 +1178,7 @@ const uploadProductImg = async () => {
             />
             <ProductSummaryCard
               onPress={() => setCurrentScreen(SCREEN_TYPES?.ESTIMATED_DELIVERY)}
-              value={`${inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY]}`}
+              value={`${inputValues[CREDENTIAL_KEYS.ESTIMATED_DELIVERY].name}`}
               label="Tiempo de entrega"
             />
             <ProductSummaryCard
