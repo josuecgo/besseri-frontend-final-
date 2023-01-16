@@ -110,8 +110,8 @@ const VendorAddProductScreen = ({navigation}) => {
   // console.log(toBeEditedProduct.urlsImg);
   if (isEditMode) {
     if (toBeEditedProduct.urlsImg && toBeEditedProduct?.urlsImg?.length > 0) {
-      console.log(toBeEditedProduct.urlsImg,'to edit');
-      images = toBeEditedProduct?.urlsImg.map((i)=>  `${base_url}/${i?.path}`)
+      
+      images = toBeEditedProduct?.urlsImg.map((i)=> { return { path:`${base_url}/${i?.path}` } })
     }else{
       
       images = [{path:`${base_url}/${toBeEditedProduct.productImg}`}]
@@ -432,7 +432,9 @@ const VendorAddProductScreen = ({navigation}) => {
   };
  
   const ProductSummaryCard = ({label, value, onPress, isImageTab}) => {
-   
+    if (isImageTab) {
+      console.log(value);
+    }
     return (
       <TouchableOpacity
         onPress={onPress}
@@ -838,7 +840,7 @@ const VendorAddProductScreen = ({navigation}) => {
 
   }
   
-  
+  // console.log(inputValues[CREDENTIAL_KEYS.PRODUCT_IMAGE]);
   return (
     <View style={styles.container}>
       <AddBrandModal
