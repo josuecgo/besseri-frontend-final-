@@ -16,16 +16,15 @@ import { ProductContext } from '../../util/context/Product/ProductContext';
 
 const getIcons = ({focused, color, size, name,count}) => {
   const ICONS = {
-    // 'Servicios': (
-    //   <MaterialIcons name='build'  size={28} color={color} />
-
-    // ),
     'Autopartes': (
       // <ImgIcon url={require('../../assets/images/iconos/autopartes.png')} />
       <MaterialIcons name='drive-eta'  size={28} color={color} />
     ),
     'Pedidos': (
       <MaterialIcons name='assignment-turned-in'  size={28} color={color} />
+    ),
+    'Chats': (
+      <MaterialIcons name='chat'  size={28} color={color} />
     ),
     'Reservaciones': (
       <MaterialIcons name='event'  size={28} color={color} />

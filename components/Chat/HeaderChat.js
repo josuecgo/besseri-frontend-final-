@@ -7,7 +7,7 @@ import { HeaderBackground } from '../Background/HeaderBackground'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
-export const HeaderTitle = ({nav,titulo,iconName='keyboard-backspace',subtitulo}) => {
+export const HeaderChat = ({nav,titulo,iconName='keyboard-backspace',subtitulo}) => {
 
 
   return (
@@ -29,7 +29,7 @@ export const HeaderTitle = ({nav,titulo,iconName='keyboard-backspace',subtitulo}
           }
            
             <Text style={styles.headerText}>{titulo}</Text>
-           
+            <Text style={styles.headerSubText}>{subtitulo}</Text>
         </View>
     </>
   )
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center'
     },
-    headerText:{...CommonStyles.fontFamily,color:Colors.white,fontSize:20,position:'absolute'},
-    headerSubText:{...CommonStyles.fontFamily,color:Colors.white,fontSize:12,position:'absolute'},
+    headerText:{...CommonStyles.fontFamily,color:Colors.white,fontSize:20},
+    headerSubText:{...CommonStyles.fontFamily,color:Colors.white,fontSize:12},
 
 })

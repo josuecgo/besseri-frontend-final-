@@ -42,7 +42,8 @@ export const BOTTOM_TAB_VENDOR_ROUTES = {
   PROFILE: 'Profile',
   SERVICES:'Services',
   SERVICES2:'Services2',
-  CUPON:'Cupon'
+  CUPON:'Cupon',
+  VER_MAS:'Ver Mas',
 };
 
 export const VENDOR_DETAILS_ROUTES = {
@@ -60,6 +61,7 @@ export const VENDOR_DETAILS_ROUTES = {
   DESCRIPTION:'Description',
   SUBCATEGORIA:'Subcategoria',
   ALL_PRODUCT:'All Product',
+  
 };
 
 export const CUPON_ROUTES = {

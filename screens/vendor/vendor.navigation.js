@@ -38,6 +38,7 @@ import { VendorDescription } from './vendor-description';
 import { ProductsScreen } from './Products/ProductsScreen';
 import { SubCategoriaScreen } from './Products/SubCategoriaScreen';
 import { AllProduct } from './Products/AllProduct';
+import { VerMasScreen } from './VerMas/vendor-ver-mas.screen';
 export const VendorNavigation = ({navigation}) => {
 
   const {count,iosPermisoss,getToken} = useContext(NotificationContext);
@@ -85,9 +86,13 @@ export const VendorNavigation = ({navigation}) => {
                 case BOTTOM_TAB_VENDOR_ROUTES.CUPON:
                   iconName = 'local-offer'
                 break;
+              
+                case BOTTOM_TAB_VENDOR_ROUTES.ORDERS2:
+                  iconName = 'assignment'
+                break;
                 
                 default:
-                    iconName = 'person'
+                    iconName = 'menu'
                     break;
             }
     
@@ -162,9 +167,16 @@ export const VendorNavigation = ({navigation}) => {
         name={BOTTOM_TAB_VENDOR_ROUTES.PROFILE}
         component={ProfileNavigator}
         options={{
-          title: 'Perfil',
+          title: 'Más',
         }}
       />
+      {/* <BottomTab.Screen
+        name={BOTTOM_TAB_VENDOR_ROUTES.VER_MAS}
+        component={VerMasNavigator}
+        options={{
+          title: 'Más'
+        }}
+      /> */}
     </BottomTab.Navigator>
   );
 };
@@ -212,6 +224,23 @@ const ProfileNavigator = () => {
         }}
       />
     </ProfileStack.Navigator>
+  );
+};
+
+const VerMasStack = createStackNavigator();
+
+const VerMasNavigator = () => {
+  return (
+    <VerMasStack.Navigator>
+      <VerMasStack.Screen
+        name={VENDOR_DETAILS_ROUTES.VER_MAS}
+        component={VerMasScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+    </VerMasStack.Navigator>
   );
 };
 

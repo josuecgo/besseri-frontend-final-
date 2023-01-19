@@ -10,7 +10,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {getBusinessProfile} from '../../util/local-storage/auth_service';
 import Loader from '../../components/Loader/Loader.component'
-import { VENDOR_DETAILS_ROUTES } from '../../util/constants';
+import { MAIN_ROUTES, VENDOR_DETAILS_ROUTES } from '../../util/constants';
 import { useSelector } from 'react-redux';
 import { deviceHeight } from '../../util/Dimentions';
 import { HeaderBackground } from '../../components/Background/HeaderBackground';
@@ -34,13 +34,20 @@ const VendorProfileScreen = ({navigation}) => {
     setBusinessProfileData(businessData);
     setShowLoader(false);
   }
+
+  const goChatsScreen = () => {
+
+    navigation.navigate(MAIN_ROUTES.CHATSCREEN);
+
+    
+  }
   
   useEffect(() => {
-   
     navigation.addListener('focus', () => {
       getBusinessData();
     });
   },[]);
+
   return (
     <View style={[styles.container]}>
     <Loader isVisible={showLoader} />
@@ -63,6 +70,15 @@ const VendorProfileScreen = ({navigation}) => {
         style={styles.profileBtn}>
         <Text style={commonTextStyle}>Perfil de trabajo</Text>
       </TouchableOpacity>
+
+      <MenuItem
+        label="Chats"
+        value={ moneda(earnings?.todays) + ` MXN`}
+        icon={
+          <MaterialIcons name="chat" color={Colors.white} size={20} />
+        }
+        onPress={goChatsScreen}
+      />
       <ThinlineSeparator margin={5} />
       <Heading text="Ganancias" />
       <MenuItem

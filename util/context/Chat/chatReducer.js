@@ -12,10 +12,10 @@ export const chatReducer = ( state, action ) => {
 
     switch ( action.type ) {
         
-        case 'usuariosCargados':
+        case 'userActive':
             return {
                 ...state,
-                usuarios: [ ...action.payload ]
+                uid: action.payload 
             }
         
         case 'activarChat':

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { CUSTOMER_HOME_SCREEN_ROUTES, LOGIN_SIGNUP_FORGOT_ROUTES } from '../../util/constants';
+import { CUSTOMER_HOME_SCREEN_ROUTES, LOGIN_SIGNUP_FORGOT_ROUTES, MAIN_ROUTES } from '../../util/constants';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import CustomerHomeViewScreen from './customer.home-view.screen';
@@ -41,7 +41,9 @@ import { ProfileScreen } from './ProfileScreen';
 import { Platform } from 'react-native';
 import { ProductContext } from '../../util/context/Product/ProductContext';
 import { GarageScreen } from './Garage/customer.garage.screen';
-
+import { ListChatsScreen } from './Chat/ListChatsScreen';
+import { ChatStack } from '../../util/Routes/ChatStack';
+import { PrivateScreen } from '../Chat/PrivateScreen';
 
 
 const Stack = createStackNavigator();
@@ -161,6 +163,10 @@ export const PartsServicesFunctionsDrawer = () => {
         name={'Notificaciones'}
         component={CustomerNotificationStack}
       />
+      <Drawer.Screen
+        name={MAIN_ROUTES.CHATSCREEN}
+        component={ChatStack}
+      />
 
       <Drawer.Screen
         name={'Garage'}
@@ -212,16 +218,8 @@ const OrdersNavigator = () => {
     </Stack.Navigator>
   )
 }
-const CardsNavigator = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false }}
-    >
-      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.CARDS} component={CustomerCardsScreen} />
-      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.CREATE_CARD} component={CreateCardScreen} />
-    </Stack.Navigator>
-  )
-}
+
+
 
 const OrderStack = () => {
   return (
@@ -365,7 +363,7 @@ export const CustomerHomeStack = () => {
       />
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.CHAT_SCREEN}
-        component={ChatScreen}
+        component={PrivateScreen}
       />
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.PERFIL}

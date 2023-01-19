@@ -52,7 +52,7 @@ export const MenuItem = props => {
       ...CommonStyles.horizontalCenter,
     },
     label: {
-      fontSize: adjust(12),
+      fontSize: adjust(15),
       color: props?.logoutBtn ? 'red' : Colors.dark,
       marginLeft: '6%',
       ...CommonStyles.fontFamily,

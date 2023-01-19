@@ -1,67 +1,36 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React,{ useContext,useState }  from 'react'
-import { vendor_api_urls } from '../../util/api/api_essentials';
 import { ChatContext } from '../../util/context/Chat/ChatContext';
-import axios from 'axios';
-import { showToaster } from '../../util/constants';
-import { getUserId } from '../../util/local-storage/auth_service';
-import { HeaderTitle } from '../../components/Customer/HeaderTitle';
+
 import { SendMessage } from '../../components/Chat/SendMessage';
 import { IncomingMessage } from '../../components/Chat/IncomingMessage';
 import Colors from '../../util/styles/colors';
 import { useEffect } from 'react';
 import { OutgoingMessage } from '../../components/Chat/OutgoingMessage';
+import { HeaderChat } from '../../components/Chat/HeaderChat';
 
 
 
 
 export const PrivateScreen = (props) => {
-    const product = props?.route?.params;
-    const { mensajes, getMensajes} = useContext(ChatContext);
-    const [uid, setUid] = useState(0);
-    const [store, setStore] = useState(null);
-
-    const getVendor = async() => {
-        
-        try {
-            const url = `${vendor_api_urls.business_profile_detail}/${product?.business_id}`;
-            const apiCall = await axios.get(url);
-            setStore(apiCall?.data?.data?.store)
-            
-           
-        } catch(e) {
-            // console.log({getProducts:e})
-            showToaster('No hay conexion con el servidor ');
-           
-        }
-        const id = await getUserId()
-        setUid(id)
-    }
-
-
-
-    useEffect(() => {
-        getVendor();
-    }, [])
-
-    useEffect(() => {
-      if (store) {
-        
-        getMensajes(store?.account_id,product?._id)
-      }
-    }, [store])
     
-    
+    const { mensajes, getMensajes, chatActivo,uid} = useContext(ChatContext);
+    const {product,para} = props?.route?.params?.data
    
-
+    useEffect(() => {
+        getMensajes(chatActivo)
+   
+    }, [])
+    
     return (
         <>
-            <HeaderTitle 
-            titulo={store?.storeName} 
+            <HeaderChat 
+            titulo={product?.name} 
+            subtitulo={para?.name}
             // iconName='keyboard-backspace'
             />
             <View style={styles.chatContent} >
-                <SendMessage para={store?.account_id} idProduct={product?._id} />
+                <SendMessage para={chatActivo.para} room={chatActivo.room} de={chatActivo.de} />
             <ScrollView contentContainerStyle={{
                 flexDirection:'column-reverse'
             }} >

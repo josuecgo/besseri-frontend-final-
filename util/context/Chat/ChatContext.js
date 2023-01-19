@@ -4,7 +4,7 @@ import React, { createContext, useEffect, useReducer,useState } from 'react';
 
 import { api_urls } from '../../api/api_essentials';
 import { showToaster } from '../../constants';
-import { getUserId } from '../../local-storage/auth_service';
+import { getBusinessProfile, getUser, getUserId, getUserType } from '../../local-storage/auth_service';
 import { chatReducer } from './chatReducer';
 
 
@@ -13,7 +13,7 @@ export const ChatContext = createContext();
 const initialState = {
     uid: '',
     chatActivo: null, // UID del usuario al que yo quiero enviar mensajes
-    usuarios: [], // Todos los usuarios de la base datos
+    usuarios: [], 
     mensajes: [], // El chat seleccionado
     sending:false,
     chats:false
@@ -25,16 +25,17 @@ export const ChatProvider = ({ children }) => {
 
     const [ chatState, dispatch ] = useReducer(chatReducer, initialState);
     const [mensaje, setMensaje] = useState('');
+    const [loadingChats, setLoadingChats] = useState(false);
 
-    const getMensajes = async(de,room) => {
+    const getMensajes = async(chat) => {
         try {
-            const id = await getUserId();
-           
-            const apiCall = await axios.post(`${api_urls.getMessage}/${id}`,{
-                    de,
-                    room
+            
+            const apiCall = await axios.post(`${api_urls.getMessage}/${chat.de}`,{
+                chat
             }   
             );
+
+            
 
             dispatch({
                 type:'cargarMensajes',
@@ -42,28 +43,29 @@ export const ChatProvider = ({ children }) => {
             })
 
         } catch (error) {
-            console.log(error?.response?.data);
+            console.log(error?.response?.data,'getMensajes');
         }
     }
 
-    const enviarMensaje = async({para,idProduct}) => {
+    const enviarMensaje = async({para,room,de,mensaje}) => {
         try {
-            const id = await getUserId();
+           
+          
             dispatch({
                 type:'enviando',
                 payload:true
             })
             const apiCall = await axios.post(`${api_urls.create_message}`,{
                 para,
-                de:id,
-                room:idProduct,
+                de:de,
+                room:room,
                 mensaje
             }   
             );
             setMensaje('')
             
             if (apiCall?.data?.success) {
-                getMensajes(para,idProduct)
+                getMensajes({para,room,de})
                 setMensaje('')
             }
             dispatch({
@@ -72,7 +74,7 @@ export const ChatProvider = ({ children }) => {
             })
 
         } catch (error) {
-            // console.log(error?.response?.data);
+            console.log(error?.response);
             showToaster('No hay conexion :(');
             setMensaje('')
             dispatch({
@@ -82,25 +84,66 @@ export const ChatProvider = ({ children }) => {
         }
     }
 
-    const getChats = async() =>  {
-        const id = await getUserId();
-        const apiCall = await axios.get(`${api_urls.get_chats}/${id}`);
-
-        console.log(apiCall.status);
-        if (apiCall.status === 200) {
-            dispatch({
-                type:'chats',
-                payload:apiCall?.data.data
-            }) 
+    const getChats = async(id) =>  {
+        try {
+            if (!id) {
+                return null;
+            }
+            setLoadingChats(true)
+        
+            const apiCall = await axios.get(`${api_urls.get_chats}/${id}`);
+            
+            if (apiCall.status === 200) {
+                setLoadingChats(false)
+                dispatch({
+                    type:'chats',
+                    payload:apiCall?.data.data
+                }) 
+            }
+            setLoadingChats(false)
+        } catch (error) {
+            console.log(error,'getChats');
+            setLoadingChats(false)
         }
-
        
         
     }
 
-    // useEffect(() => {
-    //     getChats()
-    // }, [])
+    const activarChat = (data) => {
+       
+        dispatch({
+            type:'activarChat',
+            payload:data
+        })
+    }
+
+    const typeUser = async() => {
+        const userType  = await getUserType()
+        const id = userType === 'customer' ? await getUserId() : await getBusinessProfile();
+        // console.log({id});
+        if (userType === 'customer') {
+            dispatch({
+                type:'userActive',
+                payload:id
+            })
+        }
+
+        if (userType === 'vendor') {
+            dispatch({
+                type:'userActive',
+                payload:id.account_id
+            })
+        }
+        
+
+    }
+
+    useEffect(() => {
+        typeUser()
+    }, [])
+    
+
+    
     
 
     return (
@@ -111,7 +154,9 @@ export const ChatProvider = ({ children }) => {
             enviarMensaje,
             mensaje, 
             setMensaje,
-            getChats
+            getChats,
+            activarChat,
+            loadingChats
         }}>
             { children }
         </ChatContext.Provider>

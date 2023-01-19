@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from 'react';
+import React, { useEffect, useState,useRef, useContext } from 'react';
 import {Text, TouchableOpacity, View,StyleSheet, Platform, ScrollView,Image, useWindowDimensions, Linking, Modal} from 'react-native';
 
 
@@ -21,6 +21,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { moneda } from '../../util/Moneda';
 import { useCart } from '../../hooks/useCart'
 import { ProductImg } from '../../components/image-carousel/ProductImg';
+import { ChatContext } from '../../util/context/Chat/ChatContext';
+import { getUserId } from '../../util/local-storage/auth_service';
 
 const CustomerProductDetailScreen = (props) => {
   const {width} = useWindowDimensions();
@@ -33,6 +35,9 @@ const CustomerProductDetailScreen = (props) => {
   const {addItemToCart,inTheCart} = useCart()
   const isChange = useRef(false);
   const [isDisable, setIsDisable] = useState(false);
+  
+  const {activarChat} = useContext(ChatContext)
+ 
 
   useEffect(() => {
     setEnCarrito(inTheCart(product))
@@ -75,6 +80,7 @@ const CustomerProductDetailScreen = (props) => {
     getBusinessDetails()
   },[]);
 
+  
 
   const DetailItem = ({label, value,size = 15,sizeValue = 13}) => {
     return (
@@ -195,14 +201,27 @@ const CustomerProductDetailScreen = (props) => {
             </View>
 
             <TouchableOpacity
-            onPress={() => {
+            onPress={async () => {
               // Linking.openURL(`mailto:${business?.email}? subject=Golf 1.8&body=Golf`)
-           
-                // props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.CHAT_SCREEN,product)
-                // Linking.openURL(`mailto:${business?.email}`);
-                Linking.openURL(`mailto:${business?.email}?subject=''&body=Producto:${product?.name}
-                Marca:${product?.model?.maker?.name}
-                Modelo: ${product?.model.name}`)
+                const id = await getUserId(); 
+                await activarChat({
+                  de:id,
+                  para:business.account_id,
+                  room:product._id
+                })
+
+                let data = {
+                  product,
+                  de:id,
+                  para:{name:business.storeName}
+                }
+                
+                
+                props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.CHAT_SCREEN,{data})
+          
+                // Linking.openURL(`mailto:${business?.email}?subject=''&body=Producto:${product?.name}
+                // Marca:${product?.model?.maker?.name}
+                // Modelo: ${product?.model.name}`)
             }}
             style={{
               marginVertical:10,

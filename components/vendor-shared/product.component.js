@@ -10,7 +10,7 @@ import { moneda } from '../../util/Moneda';
 
 
 const ProductComponent = ({ data,openProductDetails }) => {
- 
+  
   return (
     <Pressable
     onPress={() => {
