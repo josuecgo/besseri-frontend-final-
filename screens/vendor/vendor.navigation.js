@@ -39,8 +39,10 @@ import { ProductsScreen } from './Products/ProductsScreen';
 import { SubCategoriaScreen } from './Products/SubCategoriaScreen';
 import { AllProduct } from './Products/AllProduct';
 import { VerMasScreen } from './VerMas/vendor-ver-mas.screen';
+import { ChatContext } from '../../util/context/Chat/ChatContext';
 export const VendorNavigation = ({navigation}) => {
 
+  const { newsChats  } = useContext(ChatContext);
   const {count,iosPermisoss,getToken} = useContext(NotificationContext);
  
 
@@ -110,6 +112,7 @@ export const VendorNavigation = ({navigation}) => {
             )
         },
         
+        
       })
       }
       >
@@ -168,7 +171,9 @@ export const VendorNavigation = ({navigation}) => {
         component={ProfileNavigator}
         options={{
           title: 'Más',
+          tabBarBadge:newsChats == 0 ? undefined : newsChats
         }}
+        
       />
       {/* <BottomTab.Screen
         name={BOTTOM_TAB_VENDOR_ROUTES.VER_MAS}

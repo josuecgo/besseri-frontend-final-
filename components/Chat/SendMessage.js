@@ -14,7 +14,7 @@ export const SendMessage = (props) => {
     const sendMessage = () => {
         if (mensaje) {
             enviarMensaje({...props,mensaje})
-           
+            setMensaje('')
         }else{
             // console.log('vacio');
         }
@@ -26,16 +26,24 @@ export const SendMessage = (props) => {
 
     return (
         <View style={styles.content} >
-            <Input 
-            mx="3" 
-            placeholder="Mensaje" 
-            w="75%" 
-            maxWidth="300px" 
-            onChangeText={handleChange}
-            />
+            {/* <View  style={styles.input} > */}
+                <Input 
+                mx="3" 
+                placeholder="Mensaje" 
+                // w="90%" 
+                maxWidth="295px" 
+                onChangeText={handleChange}
+                value={mensaje}
+                borderRadius={'3xl'}
+                style={{backgroundColor:Colors.white,paddingLeft:15}}
+                borderColor={Colors.bgColor}
+                />
 
-            <ButtonIconoInput name={'send'}  size={20} onPress={sendMessage} sending={sending} />
+                
+            {/* </View> */}
+            <ButtonIconoInput name={'send'}  size={30} onPress={sendMessage} sending={sending} />
         </View>
+        
     )
 }
 
@@ -46,9 +54,17 @@ const styles = StyleSheet.create({
         // marginBottom:6,
         flexDirection:'row',
         alignItems:'center',
-        // backgroundColor: Colors.terciarySolid,
+        backgroundColor: Colors.bgColor,
         paddingVertical:7,
-        paddingHorizontal:5,
-        marginHorizontal:10
+        // paddingHorizontal:10,
+        // marginHorizontal:10
+    },
+    input:{
+        flexDirection:'row',
+        alignItems:'center',
+        backgroundColor: Colors.terciarySolid,
+        // paddingVertical:7,
+        // paddingHorizontal:5,
+        // marginHorizontal:10
     }
 })

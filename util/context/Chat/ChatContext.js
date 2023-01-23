@@ -16,8 +16,8 @@ const initialState = {
     usuarios: [], 
     mensajes: [], // El chat seleccionado
     sending:false,
-    chats:false
-
+    chats:false,
+    newsChats: 0
 }
 
 
@@ -55,6 +55,12 @@ export const ChatProvider = ({ children }) => {
                 type:'enviando',
                 payload:true
             })
+            // console.log({
+            //     para,
+            //     de:de,
+            //     room:room,
+            //     mensaje
+            // } );
             const apiCall = await axios.post(`${api_urls.create_message}`,{
                 para,
                 de:de,
@@ -66,7 +72,8 @@ export const ChatProvider = ({ children }) => {
             
             if (apiCall?.data?.success) {
                 getMensajes({para,room,de})
-                setMensaje('')
+                setMensaje('');
+                getChats(chatState.uid)
             }
             dispatch({
                 type:'enviando',
@@ -95,6 +102,8 @@ export const ChatProvider = ({ children }) => {
             
             if (apiCall.status === 200) {
                 setLoadingChats(false)
+                
+
                 dispatch({
                     type:'chats',
                     payload:apiCall?.data.data
@@ -138,6 +147,22 @@ export const ChatProvider = ({ children }) => {
 
     }
 
+    const updateIsViewRoom = async(id) => {
+        try {
+            const apiCall = await axios.post(`${api_urls.update_isView_room}/${id}`);
+           
+          
+            if (apiCall.status === 200) {
+                console.log(apiCall.data);
+                getChats(chatState.chatActivo.de)
+                
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
         typeUser()
     }, [])
@@ -156,7 +181,8 @@ export const ChatProvider = ({ children }) => {
             setMensaje,
             getChats,
             activarChat,
-            loadingChats
+            loadingChats,
+            updateIsViewRoom
         }}>
             { children }
         </ChatContext.Provider>

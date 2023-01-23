@@ -13,16 +13,18 @@ import Loader from '../../components/Loader/Loader.component'
 import { MAIN_ROUTES, VENDOR_DETAILS_ROUTES } from '../../util/constants';
 import { useSelector } from 'react-redux';
 import { deviceHeight } from '../../util/Dimentions';
-import { HeaderBackground } from '../../components/Background/HeaderBackground';
 import { moneda } from '../../util/Moneda';
 import TopHeader from '../../components/Background/TopHeader';
+import { useContext } from 'react';
+import { ChatContext } from '../../util/context/Chat/ChatContext';
+import { Badge } from '../../components/Badge';
 
 
 const VendorProfileScreen = ({navigation}) => {
   const [businessProfileData,setBusinessProfileData] = useState(null);
   const [showLoader,setShowLoader] = useState(false);
   const earnings = useSelector(state => state.businessActions.earnings);
-
+  const { newsChats  } = useContext(ChatContext);
   const commonTextStyle = {
     fontSize:18,
    fontWeight:'bold',
@@ -57,7 +59,7 @@ const VendorProfileScreen = ({navigation}) => {
     </TopHeader>
     
 
-   
+    
 
     <ScrollView contentContainerStyle={{flexGrow: 1,marginHorizontal:10}}>
       <TouchableOpacity
@@ -70,16 +72,17 @@ const VendorProfileScreen = ({navigation}) => {
         style={styles.profileBtn}>
         <Text style={commonTextStyle}>Perfil de trabajo</Text>
       </TouchableOpacity>
-
+      <ThinlineSeparator margin={5} borderWidth={0.2}  borderColor={Colors.textPrimary} />
       <MenuItem
         label="Chats"
-        value={ moneda(earnings?.todays) + ` MXN`}
+        value={<Badge count={newsChats} />}
         icon={
           <MaterialIcons name="chat" color={Colors.white} size={20} />
         }
         onPress={goChatsScreen}
       />
-      <ThinlineSeparator margin={5} />
+      
+      <ThinlineSeparator margin={5} borderWidth={0.2} />
       <Heading text="Ganancias" />
       <MenuItem
         label="Ganancias de hoy"
@@ -98,7 +101,7 @@ const VendorProfileScreen = ({navigation}) => {
         value={ moneda(earnings?.total) +  ` MXN`}
         icon={<FontAwesome5 name="coins" color={Colors.white} size={17} />}
       />
-      <ThinlineSeparator margin={15} />
+      <ThinlineSeparator margin={15}  borderWidth={0.2} />
       <Heading text="Ajustes" />
       <MenuItem
         onPress={() =>
@@ -119,7 +122,7 @@ const VendorProfileScreen = ({navigation}) => {
           />
         }
       />
-      <ThinlineSeparator margin={10} />
+      <ThinlineSeparator margin={5} borderWidth={0.2} />
       <Heading text="Servicio de asistencia" />
       <MenuItem
         label="Soporte"

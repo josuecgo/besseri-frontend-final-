@@ -19,11 +19,11 @@ import {adjust, deviceHeight, deviceWidth} from '../util/Dimentions';
 
 
 
-export const ThinlineSeparator = ({margin, width}) => {
+export const ThinlineSeparator = ({margin, width,borderColor = Colors.dark,borderWidth = 0.3 }) => {
   const style = {
     width: width ? width : '100%',
-    borderWidth: 0.3,
-    borderColor: Colors.dark,
+    borderWidth: borderWidth,
+    borderColor: borderColor,
     marginVertical: margin ? margin : 1,
     alignSelf: 'center',
   };

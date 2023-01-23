@@ -18,6 +18,7 @@ export const api_urls = {
     getMessage: `${base_url}/chat/get-msg`,
     create_message:`${base_url}/chat/create-msg`,
     get_chats:`${base_url}/chat/get-chats`,
+    update_isView_room:`${base_url}/chat/is-view-room`,
     check_version:`${base_url}/user/check-version`,
 }
 export const paymentApis = {

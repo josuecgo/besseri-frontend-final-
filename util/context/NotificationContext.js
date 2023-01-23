@@ -77,7 +77,7 @@ export const NotificationProvider = ({children}) => {
               soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
               vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
             },
-            (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
+            (created) => {} // (optional) callback returns whether the channel was created, false means it already existed.
           );
           
          

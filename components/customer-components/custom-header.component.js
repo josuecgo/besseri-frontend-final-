@@ -24,6 +24,7 @@ import { NotificationContext } from '../../util/context/NotificationContext';
 import { SearchInput } from './SearchInput';
 import { ProductContext } from '../../util/context/Product/ProductContext';
 import { CarDefault } from '../Customer/CarDefault';
+import { ChatContext } from '../../util/context/Chat/ChatContext';
 
 
 
@@ -34,6 +35,7 @@ const CustomHeaderComponent = props => {
   const [searchText, setSearchText] = useState('')
   let screenName = props?.route?.name;
   const {countCustomer,getNotificaciones} = useContext(NotificationContext);
+  const {newsChats} = useContext(ChatContext);
   const {
     searchCall,
     loading,
@@ -45,7 +47,6 @@ const CustomHeaderComponent = props => {
 
   const goCart = async() => {
     const user_id = await getUserId();
-    console.log('click');
     if (user_id) {
       props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK) 
     }else{
@@ -90,7 +91,7 @@ const CustomHeaderComponent = props => {
           onPress={() => {
             props.navigation.openDrawer();
           }}>
-          <Badge count={countCustomer} />
+          <Badge count={countCustomer + newsChats } />
           <Ionicons color={Colors.white} size={30} name="menu" />
         </Pressable>
 

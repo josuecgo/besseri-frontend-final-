@@ -1,63 +1,59 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import React,{ useContext,useState }  from 'react'
+import { FlatList } from 'react-native'
+import React,{ useContext }  from 'react'
 import { ChatContext } from '../../util/context/Chat/ChatContext';
 
 import { SendMessage } from '../../components/Chat/SendMessage';
 import { IncomingMessage } from '../../components/Chat/IncomingMessage';
-import Colors from '../../util/styles/colors';
+
 import { useEffect } from 'react';
 import { OutgoingMessage } from '../../components/Chat/OutgoingMessage';
 import { HeaderChat } from '../../components/Chat/HeaderChat';
+import Colors from '../../util/styles/colors';
+import { NotificationContext } from '../../util/context/NotificationContext';
 
 
 
 
 export const PrivateScreen = (props) => {
-    
-    const { mensajes, getMensajes, chatActivo,uid} = useContext(ChatContext);
-    const {product,para} = props?.route?.params?.data
+    const {notificaciones  } = useContext(NotificationContext);
+    const { mensajes, getMensajes, chatActivo,uid,updateIsViewRoom} = useContext(ChatContext);
+    const data = props?.route?.params?.data
+    const {product,para} = data;
+   
    
     useEffect(() => {
         getMensajes(chatActivo)
    
-    }, [])
+    }, [notificaciones])
+
+    useEffect(() => {
+        if (data.isView) {
+            updateIsViewRoom(data._id)
+        }
+    }, [data,notificaciones])
+    
     
     return (
         <>
             <HeaderChat 
             titulo={product?.name} 
             subtitulo={para?.name}
-            // iconName='keyboard-backspace'
+           
             />
-            <View style={styles.chatContent} >
-                <SendMessage para={chatActivo.para} room={chatActivo.room} de={chatActivo.de} />
-            <ScrollView contentContainerStyle={{
-                flexDirection:'column-reverse'
-            }} >
-            {
-                mensajes.map( msg => (
-                    ( msg.para === uid )
-                    ? <IncomingMessage key={ msg._id } msg={ msg } />
-                    : <OutgoingMessage key={ msg._id } msg={ msg } />
-                ))
+          
+            <FlatList
+                data={mensajes}
+                renderItem={({ item }) => item.para === uid  ? <IncomingMessage key={ item._id } msg={ item } />
+                : <OutgoingMessage key={ item._id } msg={ item } />
             }
-            </ScrollView>
-            
+                inverted
+                style={{backgroundColor:Colors.bgColor}}
+            />
+            <SendMessage para={chatActivo.para} room={chatActivo.room} de={chatActivo.de} />
 
-               
-
-            </View>
         </>
      
     )
 }
 
 
-const styles = StyleSheet.create({
-    chatContent:{
-        color:Colors.bgColor,
-        flex:1,
-        flexDirection:'column-reverse'
-    }
-    
-})

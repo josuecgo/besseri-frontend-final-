@@ -51,10 +51,16 @@ export const chatReducer = ( state, action ) => {
                 sending: action.payload 
             }
         case 'chats':
+            let sinLeer = action.payload.filter((item) => {
+               
+                return item.isView == true 
+            });
+           
             return {
                 ...state,
-                chats: action.payload 
-            }
+                chats: action.payload ,
+                newsChats: sinLeer.length
+        }
         default:
             return state;
     }

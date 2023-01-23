@@ -3,6 +3,7 @@ import React from 'react'
 import CommonStyles from '../util/styles/styles'
 import Colors from '../util/styles/colors'
 import { adjust } from '../util/Dimentions'
+import { Badge as Ba } from "native-base";
 
 export const Badge = ({count}) => {
   
@@ -10,11 +11,19 @@ export const Badge = ({count}) => {
   return (
     <>
         {count > 0 ? (
-            <View style={styles.cartItemsLengthWrapper}>
-                <Text style={styles.cartItemsLengthWrapperText}>
-                  {count}
-                </Text>
-            </View>
+            // <View style={styles.cartItemsLengthWrapper}>
+            //     <Text style={styles.cartItemsLengthWrapperText}>
+            //       {count}
+            //     </Text>
+            // </View>
+            <Ba  
+            colorScheme="danger" 
+            rounded="full"  zIndex={1} variant="solid" alignSelf="flex-end"
+             _text={{
+              fontSize: adjust(10)
+            }} 
+            >{count}
+            </Ba>
         ) : null}
     </>
   )

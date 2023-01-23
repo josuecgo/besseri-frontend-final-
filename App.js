@@ -22,7 +22,8 @@ import { NotificationContext, NotificationProvider } from './util/context/Notifi
 
 import { ProductProvider } from './util/context/Product/ProductContext';
 
-import { ChatProvider } from './util/context/Chat/ChatContext';
+import { ChatContext, ChatProvider } from './util/context/Chat/ChatContext';
+import { useChat } from './hooks/useChat';
 
 
 
@@ -80,15 +81,15 @@ const App = () => {
 }
 const App2 = () => {
  
-  const {showNotification  } = useContext(NotificationContext);
+  const {showNotification,notificaciones  } = useContext(NotificationContext);
 
-
+  const { allChats}  = useChat()
   
 
 
   useEffect(() => {
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-      
+    
       showNotification(remoteMessage)
       
     
@@ -96,12 +97,9 @@ const App2 = () => {
   },[])
 
   useEffect(() => {
-    // firebase.messaging().onMessage(msg => {
-    //   alert('ms')
-    // })
-    let os = Platform.OS
+    
+  
     messaging().onMessage(msg => {
-      
      
       showNotification(msg)
      
@@ -112,6 +110,10 @@ const App2 = () => {
     
   },[]);
 
+
+  useEffect(() => {
+    allChats()
+  }, [notificaciones])
 
 
   

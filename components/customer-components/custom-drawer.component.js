@@ -12,6 +12,7 @@ import { HeaderBackground } from '../Background/HeaderBackground';
 import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
 import { Badge } from '../Badge';
 import { ProductContext } from '../../util/context/Product/ProductContext';
+import { ChatContext } from '../../util/context/Chat/ChatContext';
 
 
 const getIcons = ({focused, color, size, name,count}) => {
@@ -24,7 +25,13 @@ const getIcons = ({focused, color, size, name,count}) => {
       <MaterialIcons name='assignment-turned-in'  size={28} color={color} />
     ),
     'Chats': (
+      <>
+      <View style={{position:'absolute',right:10}} > 
+        <Badge count={count} />
+      </View>
       <MaterialIcons name='chat'  size={28} color={color} />
+      </>
+      
     ),
     'Reservaciones': (
       <MaterialIcons name='event'  size={28} color={color} />
@@ -62,14 +69,19 @@ const CustomDrawerComponent = React.memo((props) => {
   const [user,setUser] = useState(null);
   const {state, navigation} = props;
   const {routes, index} = state;
-  const count = props.countCustomer;
+  const counter = props.countCustomer;
   const getNotificaciones = props.getNotificaciones;
   const {deleteNotificaciones} = props;
   const focusedRoute = routes[index].name;
   const {
     getActiveCar
 } = useContext(ProductContext);
- 
+  const {
+    newsChats
+  } = useContext(ChatContext);
+
+  
+
   const getUserData = async() => {
     const user = await getUser();
 
@@ -117,8 +129,10 @@ const CustomDrawerComponent = React.memo((props) => {
           if (name === 'Perfil' && !user) {
             return 
           }
+          let count = name === 'Chats' ? newsChats : counter
           return (
             <DrawerItem
+
               key={name}
               activeTintColor={Colors.white}
               activeBackgroundColor={Colors.primarySolid}

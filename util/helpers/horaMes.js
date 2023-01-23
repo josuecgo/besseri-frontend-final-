@@ -8,3 +8,22 @@ export const horaMes = ( fecha ) => {
     return hoyMes.format('HH:mm a | MMMM Do');
 
 }
+
+export const fechaMensaje = ( fecha ) => {
+    const now = moment()
+    const hoyMes = moment( fecha );
+    // console.log(now);
+    let diff = now.diff(hoyMes,'days');
+   
+    if (diff <= 0) {
+        return hoyMes.format('HH:mm a');
+    }
+
+    if (diff <= 1) {
+        return 'ayer';
+    }
+
+    return hoyMes.format('DD/MM/YY');
+    
+
+}

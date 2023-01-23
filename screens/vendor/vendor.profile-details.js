@@ -22,7 +22,7 @@ const VendorProfileDetailScreen = ({navigation, route}) => {
   const [showLoader,setShowLoader] = useState(false);
   const {params} = useRoute();
   const [business,setBusiness] = useState(null);
-  const profile = params.data;
+  
   const commonTextStyle = {
     fontSize:16,
    color:Colors.darker,
