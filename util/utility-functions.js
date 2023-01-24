@@ -121,7 +121,7 @@ const matchesForModel = (id,searchId) => {
 
   if (searchId?.matchs.length > 0) {
       
-      const match = searchId?.matchs.filter(element => element?.model._id === id);
+      const match = searchId?.matchs.filter(element => element?.model?._id === id);
       
       
 
