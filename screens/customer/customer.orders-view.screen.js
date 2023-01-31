@@ -14,6 +14,7 @@ import CommonStyles from '../../util/styles/styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { HeaderBackground } from '../../components/Background/HeaderBackground';
 import { deviceHeight } from '../../util/Dimentions';
+import { Orders } from '../../components/Customer/Orders';
 const CustomerOrdersViewScreen = (props) => {
   const { width, height } = useWindowDimensions()
   const [orders, setOrders] = useState([]);
@@ -46,11 +47,11 @@ const CustomerOrdersViewScreen = (props) => {
       }
     } 
   }
-  useEffect(() => {
-    getMyOrders()
-  }, [isFocused]);
+  // useEffect(() => {
+  //   getMyOrders()
+  // }, [isFocused]);
   return (
-    <View style={{ flex: 1, backgroundColor: 'white' }}>
+    <View style={{ flex: 1, backgroundColor: Colors.bgColor }}>
       <HeaderBackground/>
         <View style={styles.header}>
             <TouchableOpacity style={{alignSelf:'flex-start'}}>
@@ -66,8 +67,8 @@ const CustomerOrdersViewScreen = (props) => {
       <LoaderComponent isVisible={loading}/>
     
       <ScrollView contentContainerStyle={{flexGrow:1,paddingBottom:'5%'}}> 
-      {
-          !loading && orders.length == 0 ?
+      {/* {
+        !loading && orders.length == 0 ?
           <View style={{ ...CommonStyles.flexOneCenter }}>
           <Image
             source={require('../../assets/images/orderss.png')}
@@ -84,11 +85,16 @@ const CustomerOrdersViewScreen = (props) => {
             handlePress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS)}
           />
         </View>
-        </View>
+          </View>
         :
-        <View>
+       
+        } */}
+         <View style={{flex:1}} >
+          <Orders
           
-          {
+          navigation={props.navigation}
+          />
+          {/* {
             orders.map((item) => (
               <View key={item._id} >
                  <OrderCard onPress={() => {
@@ -101,9 +107,8 @@ const CustomerOrdersViewScreen = (props) => {
               </View>
                
             ))
-          }
+          } */}
           </View>
-        }
       </ScrollView>
      
     </View>

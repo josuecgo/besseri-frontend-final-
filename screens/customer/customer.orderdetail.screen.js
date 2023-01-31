@@ -32,11 +32,13 @@ import {HeaderBackground} from '../../components/Background/HeaderBackground';
 import {adjust, deviceHeight} from '../../util/Dimentions';
 
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import { ReviewProduct } from '../../components/Customer/ReviewProduct';
 
 const CustomerOrderDetail = props => {
   const {width} = useWindowDimensions();
   const [loading, setLoading] = useState(false);
   const {params} = useRoute();
+  const order = params?.order
   const address = params.order.delivery_address;
   let store = params.order.store;
   const totalAmount = parseInt(params.order.total_amount);
@@ -65,7 +67,7 @@ const CustomerOrderDetail = props => {
     setStoreId(apiCall?.data?.data?.profile);
   };
 
-
+  // console.log(order.order_status_code);
 
   useEffect(() => {
     if (!store) {
@@ -148,11 +150,17 @@ const CustomerOrderDetail = props => {
           backgroundColor: 'white',
           paddingBottom: '20%',
         }}>
+        
         <DetailItem
           label={'Status'}
           value={params?.order?.order_status}
           orderStatus={true}
         />
+        {
+          order?.order_status_code === 'PARCEL_DELIVERED' && (
+            <ReviewProduct/>
+          )
+        }
         <Text
           style={{
             ...CommonStyles.fontFamily,

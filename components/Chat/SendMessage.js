@@ -26,12 +26,12 @@ export const SendMessage = (props) => {
 
     return (
         <View style={styles.content} >
-            {/* <View  style={styles.input} > */}
+            <View  style={styles.input} >
                 <Input 
-                mx="3" 
+                // mx="3" 
                 placeholder="Mensaje" 
-                // w="90%" 
-                maxWidth="295px" 
+                w="96%" 
+                // maxWidth="295px" 
                 onChangeText={handleChange}
                 value={mensaje}
                 borderRadius={'3xl'}
@@ -40,8 +40,17 @@ export const SendMessage = (props) => {
                 />
 
                 
-            {/* </View> */}
-            <ButtonIconoInput name={'send'}  size={30} onPress={sendMessage} sending={sending} />
+            </View>
+            <View style={styles.send} >
+                <ButtonIconoInput 
+                name={'send'}  
+                size={30} 
+                onPress={sendMessage} 
+                sending={sending} 
+                color={Colors.brightBlue}
+                />
+            </View>
+           
         </View>
         
     )
@@ -51,20 +60,27 @@ export const SendMessage = (props) => {
 
 const styles = StyleSheet.create({
     content:{
-        // marginBottom:6,
+       
         flexDirection:'row',
         alignItems:'center',
         backgroundColor: Colors.bgColor,
         paddingVertical:7,
-        // paddingHorizontal:10,
-        // marginHorizontal:10
+        justifyContent:'space-around',
+        paddingHorizontal:10,
+        marginHorizontal:5
     },
     input:{
         flexDirection:'row',
         alignItems:'center',
-        backgroundColor: Colors.terciarySolid,
+        justifyContent:'flex-start',
+        // backgroundColor: Colors.red,
         // paddingVertical:7,
         // paddingHorizontal:5,
         // marginHorizontal:10
+    },
+    send:{
+        // backgroundColor: Colors.primarySolid,
+        borderRadius:100
+        // marginHorizontal:5
     }
 })

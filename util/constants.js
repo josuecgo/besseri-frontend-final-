@@ -116,6 +116,8 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   SERVICE: 'Services',
   APPOINTMENTS: 'Appointments',
   ORDERS: 'Orders',
+  ORDERS_ALL: 'Orders All',
+  ORDERS_PENDING: 'Orders Pending',
   DRAWER: 'Drawer',
   CART:'Cart',
   ORDER_SUMMARY:'Order Summary',

@@ -63,7 +63,7 @@ const RiderOrderDetail = props => {
     const address = order.delivery_address;
     const user = order?.user;
     const store = order.store;
-    const { top } = useSafeAreaInsets();
+    
     const totalAmount = Number(order?.total_amount);
     const [direccion, setDireccion] = useState(null);
     const { getNotificaciones } = useContext(NotificationContext);

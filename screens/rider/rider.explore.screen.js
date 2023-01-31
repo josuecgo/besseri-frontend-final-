@@ -189,6 +189,7 @@ export default function RiderExplore(props) {
       ) : null}
       <View style={{flex: 1, width: '100%'}}>
         {rider_wallet?.charges_enabled && riderProfile?.wallet_id ? (
+        // {true ? (
           <View
             style={{
               width: '95%',

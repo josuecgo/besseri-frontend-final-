@@ -44,6 +44,8 @@ import { GarageScreen } from './Garage/customer.garage.screen';
 import { ListChatsScreen } from './Chat/ListChatsScreen';
 import { ChatStack } from '../../util/Routes/ChatStack';
 import { PrivateScreen } from '../Chat/PrivateScreen';
+import { CustomerOrdersAllScreen } from './customer.orders.all.screen';
+import { CustomerOrdersPending } from './customer.orders.pending.screen';
 
 
 const Stack = createStackNavigator();
@@ -213,7 +215,10 @@ const OrdersNavigator = () => {
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
     >
+      
       <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS} component={CustomerOrdersViewScreen} />
+      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_ALL} component={CustomerOrdersAllScreen} />
+      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_PENDING} component={CustomerOrdersPending} />
       <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_DETAIL} component={CustomerOrderDetail} />
     </Stack.Navigator>
   )

@@ -149,7 +149,8 @@ const RiderDummyScreen = props => {
     const createAccount = async () => {
         try {
             setLoader(true);
-            const riderD = await getRiderProfile();
+            // const riderD = await getRiderProfile();
+            
             const apiCall = await axios.post(rider_api_urls?.create_stripe_account, {
                 //  email:businessDetails?.email,
                 riderId: riderProfile?._id,
@@ -166,9 +167,9 @@ const RiderDummyScreen = props => {
                 //  }
             }
         } catch (e) {
-            setLoader(true);
+            setLoader(false);
 
-            // console.log(e);
+            console.log(e,'createAccount');
             showToaster('Algo salió mal, intenta de nuevo');
         }
     };

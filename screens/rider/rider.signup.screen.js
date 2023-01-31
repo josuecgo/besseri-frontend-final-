@@ -297,7 +297,7 @@ const RiderSignup = ({navigation, route}) => {
             value={inputValues[CREDENTIAL_KEYS.PASSWORD]}
             ref={passwordRef}
             showPass={
-                <ButtonIconoInput name={showPass ? 'eye-slash' : 'eye'} size={16} onPress={() => setShowPass(!showPass) } />
+                <ButtonIconoInput name={showPass ? 'visibility-off' : 'visibility'} size={16} onPress={() => setShowPass(!showPass) } />
             }
             secureTextEntry={showPass}
             />
@@ -311,7 +311,7 @@ const RiderSignup = ({navigation, route}) => {
             value={inputValues[CREDENTIAL_KEYS.CONFIRMPASSWORD]}
             ref={passwordConfirmRef}
             showPass={
-            <ButtonIconoInput name={showPass2 ? 'eye-slash' : 'eye'} size={16} onPress={() => setShowPass2(!showPass2) } />
+            <ButtonIconoInput name={showPass2 ? 'visibility-off' : 'visibility'} size={16} onPress={() => setShowPass2(!showPass2) } />
             }
             />
 

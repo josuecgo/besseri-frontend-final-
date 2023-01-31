@@ -136,7 +136,7 @@ export const useLocation = () => {
                 });
               });
             } else {
-            //   console.log("Location permission denied")
+              console.log("Location permission denied")
             }
         
           } catch(e) {
@@ -165,7 +165,7 @@ export const useLocation = () => {
          
     
         } catch (error) {
-        //   console.log({updateUbication:error});
+          console.log({updateUbication:error});
         }
     }
    

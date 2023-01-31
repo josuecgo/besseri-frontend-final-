@@ -16,7 +16,7 @@ import InputFieldComponent from './input-field/input-field.component';
 import KEYBOARD_TYPES from '../util/keyboard-types';
 import ButtonComponent from './button/button.component';
 import {adjust, deviceHeight, deviceWidth} from '../util/Dimentions';
-
+import Modal from "react-native-modal";
 
 
 export const ThinlineSeparator = ({margin, width,borderColor = Colors.dark,borderWidth = 0.3 }) => {
@@ -467,12 +467,20 @@ export const RiderSecurityCodeModal = ({
     createAddress: {fontSize: 20, ...CommonStyles.fontFamily},
     addressDetail: {fontSize: 13, fontWeight: '300', color: Colors.dark},
   };
+  
   return (
-    <Modalize
-      onClose={onClose}
-      adjustToContentHeight={true}
+    <Modal
+      isVisible={onClose}
+      // onClose={onClose}
+      // adjustToContentHeight={true}
       ref={RiderSecurityCodeModalRef}
-      modalStyle={{paddingVertical: 20,position:'absolute',bottom: deviceHeight / 2, width:deviceWidth}}>
+      modalStyle={{
+        paddingVertical: 20,
+        position:'absolute',
+        bottom: deviceHeight / 2, 
+        width:deviceWidth
+      }}
+      >
       <ScrollView contentContainerStyle={{flexGrow: 1, paddingVertical: 15}}>
         <View style={styles.mainWrapper}>
           <Text style={styles.createAddress}>Código de seguridad</Text>
@@ -506,7 +514,7 @@ export const RiderSecurityCodeModal = ({
           />
         </View>
       </ScrollView>
-    </Modalize>
+    </Modal>
   );
 };
 

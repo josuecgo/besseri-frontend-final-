@@ -152,7 +152,7 @@ const CustomerOrderSummary = (props) => {
         } catch(e) 
         { 
             setLoading(false);
-            // console.log({code4:e});
+            console.log({code4:e});
             setLoading(false);  
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo 2 code: 4')
             refundPayment()
