@@ -12,48 +12,10 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import LoaderComponent from '../Loader/Loader.component';
 import Loading from '../Loader/Loading';
+import { useOrder } from '../../hooks/useOrder';
 
 
 export const Orders = ({ navigation }) => {
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [comision, setComision] = useState(0);
-  const [delivery, setDelivery] = useState(0);
-
-  const getMyOrders = async () => {
-    const userId = await getUserId();
-    if (userId) {
-      try {
-        setLoading(true);
-        
-        const apiCall = await axios.get(`${customer_api_urls.get_my_orders}/${userId}`);
-
-        
-        
-        setLoading(false);
-        if (apiCall.status == api_statuses.success) {
-          setOrders(apiCall.data.data)
-        } else {
-          showToaster('Algo salió mal. Por favor, vuelva a intentarlo ');
-        }
-      } catch (e) {
-        // console.log(e)
-        setLoading(false);
-        showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
-      }
-    } 
-  }
-  useEffect(() => {
-    getMyOrders()
-  }, []);
-
-
- console.log({
-  // cancelled: orders.filter((order) => order?.status == "Cancelled"),
-  // pending: orders.filter((order) => order?.status == "Pending"),
-  completed: orders.filter((order) => order?.status == "Completed"),
-  // ongoing: orders.filter((order) => order?.status == "Ongoing"),
- });
 
   const orderStatusItem = [
     {
@@ -71,11 +33,16 @@ export const Orders = ({ navigation }) => {
       text:'Pendientes de valoración',
       onPress:() => navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_ALL)
     },
-  ]
+  ];
 
+ 
+  
+
+  
+ 
   return (
     <View style={styles.body} >
-      <Text></Text>
+      
       <Box>
         <Box
           rounded="lg"
@@ -146,6 +113,7 @@ const styles = StyleSheet.create({
   body: {
     marginHorizontal: 10,
     backgroundColor: Colors.bgColor,
-    flex: 1
+    flex: 1,
+    paddingTop:25
   }
 })
