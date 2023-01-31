@@ -12,27 +12,27 @@ import {
   Linking,
   Platform,
 } from 'react-native';
-import ButtonComponent from '../../components/button/button.component';
-import LoaderComponent from '../../components/Loader/Loader.component';
+import ButtonComponent from '../../../components/button/button.component';
+import LoaderComponent from '../../../components/Loader/Loader.component';
 import {
 
   customer_api_urls,
 
-} from '../../util/api/api_essentials';
+} from '../../../util/api/api_essentials';
 
-import Colors from '../../util/styles/colors';
-import CommonStyles from '../../util/styles/styles';
+import Colors from '../../../util/styles/colors';
+import CommonStyles from '../../../util/styles/styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
-import AddressComponent from '../../components/customer-components/customer.addresscard.component';
-import {ThinlineSeparator} from '../../components/CommonComponents';
+import AddressComponent from '../../../components/customer-components/customer.addresscard.component';
+import {ThinlineSeparator} from '../../../components/CommonComponents';
 import Entypo from 'react-native-vector-icons/Entypo';
 import moment from 'moment';
-import {HeaderBackground} from '../../components/Background/HeaderBackground';
-import {adjust, deviceHeight} from '../../util/Dimentions';
+import {HeaderBackground} from '../../../components/Background/HeaderBackground';
+import {adjust, deviceHeight} from '../../../util/Dimentions';
 
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import { ReviewProduct } from '../../components/Customer/ReviewProduct';
+import { ReviewProduct } from '../../../components/Customer/ReviewProduct';
 
 const CustomerOrderDetail = props => {
   const {width} = useWindowDimensions();

@@ -1,18 +1,11 @@
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native'
 import React from 'react'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Text, AspectRatio, Box, Center, Heading, HStack, Stack, Image, VStack } from 'native-base';
+import { Text,  Box, Heading, HStack, Stack } from 'native-base';
 import Colors from '../../util/styles/colors';
-import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../util/constants';
+import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants';
 import { ListStatusOrder } from '../ListStatusOrder';
-import { getUserId } from '../../util/local-storage/auth_service';
-import axios from 'axios';
-import { api_statuses, customer_api_urls } from '../../util/api/api_essentials';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import LoaderComponent from '../Loader/Loader.component';
-import Loading from '../Loader/Loading';
-import { useOrder } from '../../hooks/useOrder';
+
 
 
 export const Orders = ({ navigation }) => {
@@ -26,20 +19,15 @@ export const Orders = ({ navigation }) => {
     {
       icon:'cube-send',
       text:'Enviado',
-      onPress:() => navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_PENDING)
+      onPress:() => navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_SENDING)
     },
     {
       icon:'package-down',
       text:'Pendientes de valoración',
-      onPress:() => navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_ALL)
+      onPress:() => navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_DELIVERED)
     },
   ];
-
- 
   
-
-  
- 
   return (
     <View style={styles.body} >
       

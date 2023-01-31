@@ -94,7 +94,8 @@ export const USER_ORDER_STATUSES = {
   PACKEd: 'PACKED',
   ORDER_OUT_FOR_DELIVERY: 'OUT_FOR_DELIVERY',
   CANCELLED: 'CANCELLED',
-  PARCEL_DELIVERED:'PARCEL_DELIVERED'
+  PARCEL_DELIVERED:'PARCEL_DELIVERED',
+  
 };
 export const STATUSES_COLORS = {
   [ORDER_STATUSES.PENDING]: '#0bda51',
@@ -118,6 +119,8 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   ORDERS: 'Orders',
   ORDERS_ALL: 'Orders All',
   ORDERS_PENDING: 'Orders Pending',
+  ORDERS_SENDING: 'Orders Sending',
+  ORDERS_DELIVERED: 'Orders Delivered',
   DRAWER: 'Drawer',
   CART:'Cart',
   ORDER_SUMMARY:'Order Summary',
@@ -177,7 +180,8 @@ export const OrderStatusCode = {
   PARCEL_PICKED:'Pedido recogido',
   PARCEL_DELIVERED:'Paquete entregado',
   RIDER_ASSIGNED:'Repartidor asignado',
-  PROCESSING:'Procesando'
+  PROCESSING:'Procesando',
+  PACKED:'Paquete listo'
 }
 
 export const KeysStripe = {

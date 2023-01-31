@@ -76,9 +76,7 @@ const CustomDrawerComponent = React.memo((props) => {
   const {
     getActiveCar
 } = useContext(ProductContext);
-  const {
-    newsChats
-  } = useContext(ChatContext);
+  const {newsChats} = useContext(ChatContext);
 
   
 

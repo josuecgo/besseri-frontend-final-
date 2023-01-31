@@ -8,12 +8,10 @@ import CustomerServicesViewScreen from './customer.services-view.screen';
 import CustomHeaderComponent from '../../components/customer-components/custom-header.component';
 import CustomDrawerComponent from '../../components/customer-components/custom-drawer.component';
 
-import CustomerOrdersViewScreen from './customer.orders-view.screen';
 import CustomerCartScreen from '../customer/customer.cartscreen';
 import CustomerOrderSummaryScreen from '../customer/customer.ordersummary.screen';
 import CustomerMapStores from './customer.mapstores.screen';
 import CustomerAddressesScreen from './customer.addresses.screen';
-import CustomerOrderDetail from './customer.orderdetail.screen';
 import CustomerMoreProductsScreen from './customer.moreProducts.screen';
 import CustomerStoreScreen from './customer.store.screen';
 import CustomerAppointments from './customer.bookings.screen';
@@ -44,8 +42,12 @@ import { GarageScreen } from './Garage/customer.garage.screen';
 import { ListChatsScreen } from './Chat/ListChatsScreen';
 import { ChatStack } from '../../util/Routes/ChatStack';
 import { PrivateScreen } from '../Chat/PrivateScreen';
-import { CustomerOrdersAllScreen } from './customer.orders.all.screen';
-import { CustomerOrdersPending } from './customer.orders.pending.screen';
+import CustomerOrdersViewScreen from './Orders/customer.orders-view.screen';
+import { CustomerOrdersAllScreen } from './Orders/customer.orders.all.screen';
+import { CustomerOrdersPending } from './Orders/customer.orders.pending.screen';
+import CustomerOrderDetail from './Orders/customer.orderdetail.screen';
+import { CustomerOrdersSending } from './Orders/customer.orders.sending';
+import { CustomerOrdersDelivered } from './Orders/customer.orders.delivered';
 
 
 const Stack = createStackNavigator();
@@ -219,6 +221,9 @@ const OrdersNavigator = () => {
       <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS} component={CustomerOrdersViewScreen} />
       <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_ALL} component={CustomerOrdersAllScreen} />
       <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_PENDING} component={CustomerOrdersPending} />
+      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_SENDING} component={CustomerOrdersSending} />
+      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_DELIVERED} component={CustomerOrdersDelivered} />
+     
       <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_DETAIL} component={CustomerOrderDetail} />
     </Stack.Navigator>
   )
