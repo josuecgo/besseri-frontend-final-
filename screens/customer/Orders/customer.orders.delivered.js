@@ -35,12 +35,21 @@ export const CustomerOrdersDelivered = (props) => {
               <FlatList
               data={delivered}
               renderItem={({item}) => <View key={item._id} >
-                <OrderCard onPress={() => {
+                <OrderCard 
+                onPress={() => {
                   props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_DETAIL,{
                     order:item,
                     
                   })
-                }} data={item} isDelivered={true}/>
+                }} 
+                onFeedback={() => {
+                  props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_FEEDBACK,{
+                    order:item,
+                  })
+                }} 
+                data={item} 
+                isDelivered={true}
+                />
               </View>}
               keyExtractor={(item) => item._id}
              

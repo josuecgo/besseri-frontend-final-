@@ -14,7 +14,7 @@ import { base_url } from '../../util/api/api_essentials';
 moment.locale('es');
 
 
-const OrderCard = ({ data, onPress, isRider,isDelivered }) => {
+const OrderCard = ({ data, onPress, isRider,isDelivered,onFeedback }) => {
   // console.log(isDelivered);
   const { products } = data;
   // console.log(products);
@@ -48,7 +48,7 @@ const OrderCard = ({ data, onPress, isRider,isDelivered }) => {
 
           {
             products.map((item, i) => {
-              // if (i == 2) return
+              if (i == 2) return
               return (
                 <Image
                   key={item._id}
@@ -185,7 +185,7 @@ const OrderCard = ({ data, onPress, isRider,isDelivered }) => {
         {
           (!isRider && isDelivered) && (
             <ButtonComponent
-            handlePress={onPress}
+            handlePress={onFeedback}
             buttonText={'Escribir un comentario'}
             width={deviceWidth * 0.5}
             colorB={Colors.alert}

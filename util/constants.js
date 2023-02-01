@@ -120,6 +120,7 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   ORDERS_ALL: 'Orders All',
   ORDERS_PENDING: 'Orders Pending',
   ORDERS_SENDING: 'Orders Sending',
+  ORDERS_FEEDBACK: 'Orders Feedback',
   ORDERS_DELIVERED: 'Orders Delivered',
   DRAWER: 'Drawer',
   CART:'Cart',
