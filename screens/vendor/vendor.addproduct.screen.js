@@ -432,9 +432,7 @@ const VendorAddProductScreen = ({navigation}) => {
   };
  
   const ProductSummaryCard = ({label, value, onPress, isImageTab}) => {
-    if (isImageTab) {
-      console.log(value);
-    }
+   
     return (
       <TouchableOpacity
         onPress={onPress}
@@ -529,7 +527,7 @@ const VendorAddProductScreen = ({navigation}) => {
     });
   };
 
-  // console.log(toBeEditedProduct);
+ 
   
   const uploadProductImg = async () => {
     setShowLoader(true);

@@ -100,6 +100,7 @@ export const customer_api_urls = {
     delete_garage:`${base_url}/info-user/delete-garage`,
     active_car:`${base_url}/info-user/active-car`,
     get_active_car:`${base_url}/info-user/get-active-car`,
+    create_feedback: `${base_url}/feedback/create-feedback`,
 }
 export const rider_api_urls = {
     get_details:`${base_url}/rider/get-riderinfo`,
