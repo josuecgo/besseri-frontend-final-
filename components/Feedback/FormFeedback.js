@@ -8,6 +8,7 @@ import { deviceWidth } from '../../util/Dimentions';
 import Colors from '../../util/styles/colors';
 import { moneda } from '../../util/Moneda';
 import { UploadImages } from '../UploadImages';
+import ButtonComponent from '../button/button.component';
 
 
 export const FormFeedback = ({ product,valueInputs, setValueInputs }) => {
@@ -17,8 +18,15 @@ export const FormFeedback = ({ product,valueInputs, setValueInputs }) => {
    
     
     const newState = valueInputs.map(obj => {
-      
+     
       if (obj.product === product._id) {
+        
+        if (input === 'imgs') {
+          
+         
+          return {...obj, [input]: [...obj.imgs ,rating]};
+        }
+
         return {...obj, [input]: rating};
       }
 
@@ -32,6 +40,28 @@ export const FormFeedback = ({ product,valueInputs, setValueInputs }) => {
   
 
   }
+
+  const deleteImg = (input,data) => {
+   
+    const newState = valueInputs.map(obj => {
+    
+      
+      if (obj.product === product._id) { 
+      
+        let newImg =  obj.imgs.filter((img) =>  img.path !== data.path );
+       
+        return {...obj, [input]: newImg};
+        
+      }
+
+      return obj;
+    });
+    
+
+    setValueInputs(newState)
+  }
+
+
 
 
   
@@ -79,7 +109,7 @@ export const FormFeedback = ({ product,valueInputs, setValueInputs }) => {
           count={5}
           defaultRating={3}
           starContainerStyle={styles.starContainer}
-          onFinishRating={(rating) => ratingCompleted('priceQuality',rating)}
+          onFinishRating={(rating) => ratingCompleted('price_quality',rating)}
         />
         <Heading size="sm" >General:</Heading>
         <AirbnbRating
@@ -96,8 +126,14 @@ export const FormFeedback = ({ product,valueInputs, setValueInputs }) => {
         />
 
         <Heading size="sm" >Imágenes</Heading>
-        <UploadImages />
+        <UploadImages 
+        form={valueInputs.find((item) => item.product === product._id)}
+        onChange={ratingCompleted} 
+        deleteImg={deleteImg}
+        />
       </View>
+
+     
 
     </View>
   )

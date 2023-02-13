@@ -24,6 +24,7 @@ import { ProductProvider } from './util/context/Product/ProductContext';
 
 import { ChatContext, ChatProvider } from './util/context/Chat/ChatContext';
 import { useChat } from './hooks/useChat';
+import FeedbackReducer from './util/ReduxStore/Reducers/CustomerReducers/FeedbackReducer';
 
 
 
@@ -36,6 +37,7 @@ const App = () => {
     businessActions: businessProfileReducer,
     cart: CartReducer,
     rider: RiderReducer,
+    feedback: FeedbackReducer
     
   });
   const reduxStore = createStore(store);
