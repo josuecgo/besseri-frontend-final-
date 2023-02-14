@@ -9,6 +9,14 @@ export const horaMes = ( fecha ) => {
 
 }
 
+export const dateFeedback = ( fecha ) => {
+
+    const hoyMes = moment( fecha );
+
+    return hoyMes.format(' DD MMM YYYY');
+
+}
+
 export const fechaMensaje = ( fecha ) => {
     const now = moment()
     const hoyMes = moment( fecha );

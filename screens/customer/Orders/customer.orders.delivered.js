@@ -16,7 +16,7 @@ export const CustomerOrdersDelivered = (props) => {
   const {delivered,loading,getMyOrders} = useOrder();
 
 
-
+  
   return (
     <View style={{ flex: 1, backgroundColor: Colors.bgColor }} >
       <HeaderTitle

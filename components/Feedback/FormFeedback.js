@@ -36,7 +36,7 @@ export const FormFeedback = ({ product,valueInputs, setValueInputs }) => {
     // console.log(newState);
 
     setValueInputs(newState)
-
+   
   
 
   }
@@ -57,7 +57,7 @@ export const FormFeedback = ({ product,valueInputs, setValueInputs }) => {
       return obj;
     });
     
-
+   
     setValueInputs(newState)
   }
 

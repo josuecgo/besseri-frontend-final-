@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     width: deviceWidth / 2.2,
     marginHorizontal: 3,
-    
+    marginVertical:4
   },
   LinearGradient: {
     minHeight: deviceWidth * 0.40,

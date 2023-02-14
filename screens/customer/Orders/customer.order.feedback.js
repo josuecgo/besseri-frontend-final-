@@ -10,7 +10,10 @@ import { customer_api_urls } from '../../../util/api/api_essentials';
 import axios from 'axios';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import { useDispatch, useSelector } from 'react-redux';
-import { addImgs, resetForm } from '../../../util/ReduxStore/Actions/FeedbackActions';
+import { addImgs, changeForm, resetForm } from '../../../util/ReduxStore/Actions/FeedbackActions';
+import { useOrder } from '../../../hooks/useOrder';
+import { useEffect } from 'react';
+import { getUserId } from '../../../util/local-storage/auth_service';
 
 
 export const CustomerOrderFeedback = ({ navigation, route }) => {
@@ -29,120 +32,121 @@ export const CustomerOrderFeedback = ({ navigation, route }) => {
     }
   }
   ));
+  const {getMyOrders} = useOrder();
+  
+  
 
-  const form = useSelector( state => state.feedback )
 
-
- 
-  const uploadProductImg = async (formData) => {
-    // console.log(valueInputs);
-
+  const uploadProductImg = async () => {
+    
     try {
-
-     
-
-     
-
-      var requestoptions = {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      };
-
-      let resp = await fetch(customer_api_urls.upload_imgs_feedback, requestoptions);
-
-      const data = await resp.json();
-      
-
-      if (data?.success) {
-       
-        return data?.data
-       
+      const user = await getUserId()
+      await dispatch(resetForm());
+      setIsLoading(true)
+      valueInputs.map( async(item,i) => {
+        let formData = new FormData()
+        
+        
+        if (item?.imgs.length === 0) {
          
-      }
+         
+          enviarValoracion({
+            customer:user,
+            product:item.product,
+            installation: item.installation,
+            durability: item.durability,
+            price_quality: item.price_quality,
+            general: item.general,
+            comments: item.comments,
+            imgs:null
+          })
 
+
+         
+        }else{
+          item?.imgs?.map(  (img) =>  formData.append('imageFormData', {
+            uri: img?.path,
+            type: img?.mime,
+            name: 'product.jpg',
+          }));
+
+          var requestoptions = {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          };
+    
+
+          let resp = await fetch(customer_api_urls.upload_imgs_feedback, requestoptions);
+    
+          const data = await resp.json();
+
+            let response =  {
+              customer:user,
+              product:item.product,
+              installation: item.installation,
+              durability: item.durability,
+              price_quality: item.price_quality,
+              general: item.general,
+              comments: item.comments,
+              imgs:data?.data
+            }
+
+           
+            enviarValoracion(response)
+            
+        }
+
+
+      })
+
+      
+      // await dispatch(resetForm());
+      await getMyOrders();
+      navigation.goBack();
+     
+     
     } catch (error) {
       console.log(error, 'upload');
+      setIsLoading(false)
       return false
     }
 
 
   };
 
-
   
- 
-  const enviarValoracion = async () => {
+  // console.log(form);
+  // console.log(valueInputs);
+  const enviarValoracion = async (data) => {
     try {
-
-      await dispatch(resetForm());
-  
-      await valueInputs.map( async(item,i) => {
-        let formData = new FormData()
-
-        item?.imgs?.map((img) => formData.append('imageFormData', {
-          uri: img?.path,
-          type: img?.mime,
-          name: 'product.jpg',
-        }));
-
-        let result = await  uploadProductImg(formData);
-       
-        
-        await dispatch(addImgs({
-          ...item,
-          imgs:result
-        }));
-        // if (result) {
-         
-        //   setValueInputs([
-        //     ...valueInputs,
-        //     {
-        //       ...item,
-        //       imgs: result
-        //     }
-        //   ])
-        //   return {
-        //     ...item,
-        //     imgs: result
-        //   }
-        
-        // }else{
-         
-        //   return {
-        //     ...item,
-        //     imgs: []
-        //   }
-          
-        // }
-
-      })
-
-
-
-     
       
-      console.log(form.feedback,'imgs');
-    
-     
      
       
       const apiCall = await axios.post(`${customer_api_urls.create_feedback}/${order._id}`,
-        {data:form.feedback}
+        {data:[data]}
       );
 
-      console.log(apiCall.data);
+
+      await dispatch(resetForm());
+      setIsLoading(false)
+     
+      
 
     } catch (error) {
       console.log(error);
+      await dispatch(resetForm());
+      setIsLoading(false)
+      showToaster('No hay conexion con el servidor.')
     }
 
   }
 
 
-  // console.log(valueInput[0]);
+
+  
 
   return (
     <View style={styles.body} >
@@ -161,7 +165,7 @@ export const CustomerOrderFeedback = ({ navigation, route }) => {
               product={item}
               valueInputs={valueInputs}
               setValueInputs={setValueInputs}
-
+             
             />
           )
 
@@ -173,12 +177,13 @@ export const CustomerOrderFeedback = ({ navigation, route }) => {
 
 
       <ButtonComponent
-        handlePress={enviarValoracion}
+        handlePress={uploadProductImg}
         borderRadius={100}
         buttonText={'Enviar valoración'}
         colorB={Colors.terciarySolid}
         margin={10}
         padding={5}
+        disabled={isLoading}
 
       />
       <LoaderComponent isVisible={isLoading} />

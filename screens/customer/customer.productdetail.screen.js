@@ -23,6 +23,7 @@ import { useCart } from '../../hooks/useCart'
 import { ProductImg } from '../../components/image-carousel/ProductImg';
 import { ChatContext } from '../../util/context/Chat/ChatContext';
 import { getUserId } from '../../util/local-storage/auth_service';
+import { CardFeedback } from '../../components/Feedback/CardFeedback';
 
 const CustomerProductDetailScreen = (props) => {
   const {width} = useWindowDimensions();
@@ -35,7 +36,7 @@ const CustomerProductDetailScreen = (props) => {
   const {addItemToCart,inTheCart} = useCart()
   const isChange = useRef(false);
   const [isDisable, setIsDisable] = useState(false);
-  
+  const [feedback, setFeedback] = useState([]);
   const {activarChat} = useContext(ChatContext)
  
 
@@ -75,10 +76,31 @@ const CustomerProductDetailScreen = (props) => {
   }
 
 
+  const getFeedbacks = async() => {
+    try {
+      const apiCall = await axios.get(`${customer_api_urls.get_feedback}/${product?._id}`);
+
+      
+      if (apiCall.status === 200) {
+        setFeedback(apiCall?.data?.data)
+      }
+     } catch(e) {
+        //  showToaster('No se pudo traer informacion del vendedor')
+        
+         
+     }
+  }
+
+
   
   useEffect(() => {
     getBusinessDetails()
   },[]);
+
+  useEffect(() => {
+    getFeedbacks();
+  }, [])
+  
 
   
 
@@ -136,16 +158,7 @@ const CustomerProductDetailScreen = (props) => {
               />
             )
             }
-              {/* {
-                product?.urlsImg.length > 0 ? (
-                  <ProductImg imgs={product?.urlsImg} />
-                ):(
-                  <Image
-                    source={{uri: `${base_url}/${product?.productImg}`}}
-                    style={styles.productImg}
-                  />
-                )
-              } */}
+
 
               
             </View>
@@ -181,24 +194,19 @@ const CustomerProductDetailScreen = (props) => {
                   
                   
             </View>
-            <View style={{backgroundColor:Colors.white,elevation:2,marginHorizontal:10,marginTop:10,padding:10}} >
+            <View style={{backgroundColor:Colors.white,elevation:1,marginHorizontal:10,marginTop:10,padding:10}} >
                 <Text
-                    style={{
-                    ...CommonStyles.fontFamily,
-                    fontSize: adjust(15),
-                    }}>
+                  style={styles.cardTitle}>
                     DESCRIPCIÓN
                 </Text>
                 <Text
-                    style={{
-                    ...CommonStyles.fontFamily,
-                    color: 'grey',
-                    marginVertical: 20,
-                    fontSize: adjust(13),
-                    }}>
+                    style={styles.cardSubtitle}>
                     {product?.description}
                 </Text>
             </View>
+            
+            <CardFeedback feedback={feedback.slice(0,1)} />
+           
 
             <TouchableOpacity
             onPress={async () => {
@@ -281,7 +289,19 @@ const styles = StyleSheet.create({
       width: deviceWidth,
       height: 240,
       resizeMode:'contain'
-    }
+    },
+    cardTitle:{
+      fontWeight:'bold',
+        ...CommonStyles.fontFamily,
+        fontSize: adjust(15),
+        
+    },
+    cardSubtitle:{
+      ...CommonStyles.fontFamily,
+      color: 'grey',
+      marginVertical: 20,
+      fontSize: adjust(13),
+      }
 })
 
 export default CustomerProductDetailScreen;

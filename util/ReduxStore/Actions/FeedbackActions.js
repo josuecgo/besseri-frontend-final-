@@ -8,6 +8,14 @@ export const addImgs = (item) => {
   })
 }
 
+export const changeForm = (item) => {
+    
+  return({
+      type:'CHANGEFORM',
+      data:item,
+      
+  })
+}
 
 export const resetForm = (item) => {
     

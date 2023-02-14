@@ -17,7 +17,7 @@ moment.locale('es');
 const OrderCard = ({ data, onPress, isRider,isDelivered,onFeedback }) => {
   // console.log(isDelivered);
   const { products } = data;
-  // console.log(products);
+  
   return (
     <View style={styles.cardContainer}>
       <View>
@@ -183,7 +183,7 @@ const OrderCard = ({ data, onPress, isRider,isDelivered,onFeedback }) => {
         margin={5}
         />
         {
-          (!isRider && isDelivered) && (
+          (!isRider && isDelivered && !data?.review) && (
             <ButtonComponent
             handlePress={onFeedback}
             buttonText={'Escribir un comentario'}

@@ -6,6 +6,13 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
  
+
+        case 'CHANGEFORM':
+           
+          return {
+            feedback: action.data
+          }
+
         case 'UPLOAD':
            
             return {
