@@ -41,7 +41,7 @@ export const ImagesFeedback = ({ imgs }) => {
       deviceHeight={deviceHeight}
       onSwipeComplete={() => setIsOpen(false)}
       swipeDirection="left"
-      
+      style={{backgroundColor:'black'}}
       >
         <View style={{ flex: 1,alignItems:'center',justifyContent:'space-between'}}>
           <View style={{flex:1}} />
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5
   },
   zoom:{
-    width: deviceWidth  ,
+    width: deviceWidth  * 0.7,
     height: deviceHeight * 0.7 ,
   }
 })

@@ -91,6 +91,13 @@ const CustomerProductDetailScreen = (props) => {
      }
   }
 
+  const goReviews = () => {
+    if (feedback.length === 0) {
+      return
+    }
+    props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_REVIEWS,feedback)
+  }
+
 
   
   useEffect(() => {
@@ -204,8 +211,12 @@ const CustomerProductDetailScreen = (props) => {
                     {product?.description}
                 </Text>
             </View>
-            
-            <CardFeedback feedback={feedback.slice(0,1)} />
+            {
+              feedback.length > 0 && ( 
+                <CardFeedback feedback={feedback} onPress={goReviews} />
+              )
+            }
+           
            
 
             <TouchableOpacity

@@ -122,6 +122,7 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   ORDERS_SENDING: 'Orders Sending',
   ORDERS_FEEDBACK: 'Orders Feedback',
   ORDERS_DELIVERED: 'Orders Delivered',
+  
   DRAWER: 'Drawer',
   CART:'Cart',
   ORDER_SUMMARY:'Order Summary',
@@ -135,6 +136,7 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   BOOKING_DETAIL:'Booking detail',
   SEARCH:'Search',
   PRODUCT_DETAIL:'Product detail',
+  PRODUCT_REVIEWS: 'PRODUCT Reviews',
   ORDER_STACK:'ORDER_STACK',
   INICIAR:'AuthStack',
   ENVIO: 'Envio',

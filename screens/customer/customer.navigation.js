@@ -49,6 +49,7 @@ import CustomerOrderDetail from './Orders/customer.orderdetail.screen';
 import { CustomerOrdersSending } from './Orders/customer.orders.sending';
 import { CustomerOrdersDelivered } from './Orders/customer.orders.delivered';
 import { CustomerOrderFeedback } from './Orders/customer.order.feedback';
+import { CustomerOrderFeedbacks } from './Orders/customer.order.feedbacks';
 
 
 const Stack = createStackNavigator();
@@ -226,7 +227,7 @@ const OrdersNavigator = () => {
       <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_FEEDBACK} component={CustomerOrderFeedback} />
       
       <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_DELIVERED} component={CustomerOrdersDelivered} />
-     
+      
       <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_DETAIL} component={CustomerOrderDetail} />
     </Stack.Navigator>
   )
@@ -333,6 +334,7 @@ export const CustomerHomeStack = () => {
         name={CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL}
         component={CustomerProductDetailScreen}
       />
+      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_REVIEWS} component={CustomerOrderFeedbacks} />
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.STORE_SCREEN}
         component={CustomerStoreScreen}

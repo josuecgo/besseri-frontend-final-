@@ -12,7 +12,7 @@ export const Review = ({review}) => {
 
   
 
-  console.log(review.general);
+  // console.log(review.general);
   return (
     <View style={styles.content} >
         
@@ -47,10 +47,10 @@ export const Review = ({review}) => {
 const styles = StyleSheet.create({
   content:{
     // backgroundColor:'red',
-    borderWidth:0.2,
     padding:5,
-    borderColor:Colors.bgColor,
-    borderRadius:5
+   
+    borderRadius:5,
+    
   },
   name:{
     color:Colors.textSecundary,

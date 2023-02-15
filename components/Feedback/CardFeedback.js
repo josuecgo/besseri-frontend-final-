@@ -7,8 +7,8 @@ import { ImagesFeedback } from './ImagesFeedback'
 import { Button, ThreeDotsIcon } from 'native-base'
 import { Review } from './Review'
 
-export const CardFeedback = ({feedback}) => {
-  
+export const CardFeedback = ({feedback,onPress}) => {
+  let imgan = 0;
   return (
     <View style={styles.card} >
 
@@ -19,13 +19,19 @@ export const CardFeedback = ({feedback}) => {
 
       <View style={styles.imgs}  >
         {
-          feedback.map((item) => (
+          feedback.map((item,i) => {
+            imgan += item?.imgs ? item?.imgs.length : 10
+           
+            if (imgan > 5) return <View key={item._id}/>
+            
+            return(
             <View key={item._id} >
               <ImagesFeedback imgs={item?.imgs} />
             </View>
-          ))
+          )})
         }
         <TouchableOpacity
+         onPress={onPress}
         style={styles.vermas}
         >
           <ThreeDotsIcon />
@@ -34,13 +40,18 @@ export const CardFeedback = ({feedback}) => {
 
       <View>
         {
-          feedback.map((item) => (
+          feedback.map((item,i) => {
+            if(i >= 3 ) return null;
+            return (
             <View key={item._id} >
               <Review review={item} />
             </View>
-          ))
+          )})
         }
-        <Button variant={'ghost'} >
+        <Button 
+        variant={'ghost'} 
+        onPress={onPress}
+        >
           Ver todo
         </Button>
       </View>

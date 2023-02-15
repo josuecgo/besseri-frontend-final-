@@ -15,9 +15,7 @@ export const UploadImages = ({onChange,form,deleteImg}) => {
       height: 400,
       maxFiles:3,
       mediaType:'photo',
-      compressImageQuality:0.5,
-      compressImageMaxHeight:400,
-      compressImageMaxWidth:300
+     
       
     }).then((image) => {
       
