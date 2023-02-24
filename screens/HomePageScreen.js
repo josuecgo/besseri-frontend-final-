@@ -14,7 +14,7 @@ export const HomePageScreen = ({navigation}) => {
 
 
     const goSignUp = () => {
-        navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.SIGN_UP_CUSTOMER);
+        navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.CUSTOMER_SIGN_UP);
     }
 
     const goLogin = () => {
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     },
     
     logo:{
-        resizeMode:'stretch',
+        resizeMode:'contain',
         height: deviceWidth * 0.40,
         //   top: 1, 
         width: deviceWidth * 0.70,

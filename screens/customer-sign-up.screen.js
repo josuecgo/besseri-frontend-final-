@@ -172,7 +172,7 @@ const CustomerSignUpScreen = ({navigation}) => {
     <CustomSafeAreaViewComponent>
       <LoaderComponent isVisible={showLoader}/>
       <TopCircleComponent
-        textHeading="Crear cuenta de cliente"
+        textHeading="Crear cuenta"
       />
       
 

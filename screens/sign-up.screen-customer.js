@@ -44,6 +44,7 @@ const SignUpScreenCustomer = ({navigation}) => {
         if (roleKey == 'Rider') {
           navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.RIDER_SIGN_UP);
         } else {
+          console.log({roleKey});
           navigation.navigate(roleKey);
         }
       }
