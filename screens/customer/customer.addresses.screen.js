@@ -16,6 +16,7 @@ import Geolocation from '@react-native-community/geolocation';
 import { HeaderBackground } from '../../components/Background/HeaderBackground';
 import { deviceHeight } from '../../util/Dimentions';
 import { useLocation } from '../../hooks/useLocation';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 
 const CustomerAddressesScreen = (props) => {
@@ -256,7 +257,22 @@ const CustomerAddressesScreen = (props) => {
             </TouchableOpacity>
       : null
       }
-     <ScrollView contentContainerStyle={{flexGrow:1,backgroundColor:'white'}}> 
+<GooglePlacesAutocomplete
+        placeholder="Type a place"
+        onPress={(data, details = null) => console.log(data, details)}
+        query={{key: 'AIzaSyDjRIMW7vCRzfSE8j0q-KEB9BrMQAQiWdw',
+        language: 'es',}}
+        fetchDetails={true}
+        onFail={error => console.log(error)}
+        onNotFound={() => console.log('no results')}
+        listEmptyComponent={() => (
+          <View style={{flex: 1}}>
+            <Text>No results were found</Text>
+          </View>
+        )}
+      />
+    
+     {/* <ScrollView contentContainerStyle={{flexGrow:1,backgroundColor:'white'}}> 
      {
          addresses?.length == 0 ?
          <View style={{...CommonStyles.flexOneCenter}}>
@@ -294,7 +310,9 @@ const CustomerAddressesScreen = (props) => {
         
         
      }
-     </ScrollView>
+
+
+     </ScrollView> */}
       
 
     </View>
