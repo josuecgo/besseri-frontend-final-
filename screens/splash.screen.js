@@ -1,10 +1,6 @@
 import React, {useEffect} from 'react';
 import {
-  Image,
-  Alert,
   StyleSheet,
-  Text,
-  ToastAndroid,
   useWindowDimensions,
   View,
   Platform,
@@ -12,65 +8,25 @@ import {
 import Colors from '../util/styles/colors';
 import CommonStyles from '../util/styles/styles';
 import CustomSafeAreaViewComponent from '../components/custom-safe-area-view/custom-safe-area-view.component';
-import Spinner from 'react-native-spinkit';
 import {
   getUserType,
   getUserId,
-  saveBusinessProfile,
-  saveBusinessStatus,
-  getBusinessId,
-  getBusinessProfile,
 } from '../util/local-storage/auth_service';
-import {MAIN_ROUTES, USER_ROLES} from '../util/constants';
+import {MAIN_ROUTES, showToaster, USER_ROLES} from '../util/constants';
 import {
-  api_statuses,
   api_urls,
-  vendor_api_urls,
 } from '../util/api/api_essentials';
 import axios from 'axios';
-import {useDispatch} from 'react-redux';
-import * as BusinessProfileActions from '../util/ReduxStore/Actions/VendorActions/BusinessProfleActions';
-import {getStoreEarnings} from '../util/api/CommonFunctions';
 import DeviceInfo from 'react-native-device-info';
-import {BackgroundImage} from '../components/Background/BackgroundImage';
 import {deviceWidth} from '../util/Dimentions';
+import Video from 'react-native-video';
+
 
 const SplashScreen = ({navigation}) => {
   const {width, height} = useWindowDimensions();
-  const dispatch = useDispatch();
+  
 
-  const getBusinessDetails = async userId => {
-    try {
-      const url = `${vendor_api_urls.business_profile}/${userId}`;
-      const apiCall = await axios.get(url);
-      if (apiCall.status == api_statuses.success) {
-        dispatch(
-          BusinessProfileActions.setActionMessage(apiCall.data.data.actions),
-        );
-        await saveBusinessProfile(apiCall.data.data.store[0]);
-        if (apiCall.data.data.isBlocked) {
-          ToastAndroid.showWithGravity(
-            'Tu negocio está bloqueado.',
-            ToastAndroid.LONG,
-            ToastAndroid.CENTER,
-          );
-          await saveBusinessStatus(true);
-        }
-      } else {
-        Alert.alert(
-          'Algo salió mal',
-          'Lo siento por la interrupción, esta solicitud falló',
-        );
-        return;
-      }
-    } catch (e) {
-      // console.log(e);
-      Alert.alert(
-        'Algo salió mal',
-        'Lo siento por la interrupción, esta solicitud falló',
-      );
-    }
-  };
+
 
   const checkBuildApp = async () => {
     try {
@@ -94,32 +50,28 @@ const SplashScreen = ({navigation}) => {
   };
 
   const check_auth = async () => {
-    const user_id = await getUserId();
-    const userType = await getUserType();
-   let appBuild  =  await checkBuildApp();
+    let appBuild  =  await checkBuildApp();
 
     if (!appBuild) {
       return  navigation.replace('UpdateScreen');
     }
-    if (user_id && userType) {
-      if (userType == USER_ROLES.vendor) {
-        await getBusinessDetails(user_id);
-        const businessId = await getBusinessId();
-        const earnings = await getStoreEarnings(businessId);
-        // console.log('earnings line 56',earnings)
-        dispatch(BusinessProfileActions.setEarnings(earnings));
-        navigation.replace(MAIN_ROUTES.VENDOR_STACK);
-      }
-      if (userType == USER_ROLES.customer) {
+    const user_id = await getUserId();
+    const userType = await getUserType();
+    setTimeout(() => {
+      if (user_id && userType) {
+     
+        if (userType == USER_ROLES.customer) {
+          navigation.replace(MAIN_ROUTES.CUSTOMER_STACK);
+        } else {
+          showToaster('Usuario no encontrado.')
+        }
+      
+      } else {
+        // navigation.replace(MAIN_ROUTES.AUTH_STACK);
         navigation.replace(MAIN_ROUTES.CUSTOMER_STACK);
       }
-      if (userType == USER_ROLES.rider) {
-        navigation.replace(MAIN_ROUTES.RIDER_STACK);
-      }
-    } else {
-      // navigation.replace(MAIN_ROUTES.AUTH_STACK);
-      navigation.replace(MAIN_ROUTES.CUSTOMER_STACK);
-    }
+    }, 2200);
+    
   };
   useEffect(() => {
     check_auth();
@@ -133,12 +85,18 @@ const SplashScreen = ({navigation}) => {
           CommonStyles.flexCenter,
           {width: width, height: height},
         ]}>
-        <BackgroundImage />
-        <Image
-          source={require('../assets/images/logo1.png')}
-          style={styles.logo}
-        />
-        <Spinner type="Circle" color={Colors.terciarySolid} size={50} />
+      
+      <Video source={require('../assets/besserLoading.mp4')}   // Can be a URL or a local file.
+       ref={(ref) => {
+        //  console.log(ref);
+       }}                                      // Store reference
+       onBuffer={()=>{}}                // Callback when remote video is buffering
+       onError={()=>{}}               // Callback when video cannot be loaded
+       style={styles.backgroundVideo} 
+       repeat={false}
+       resizeMode='cover'
+       />
+
       </View>
     </CustomSafeAreaViewComponent>
   );
@@ -146,17 +104,12 @@ const SplashScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   splashScreenHome: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.black,
   },
-  mainFontStyles: {
-    fontSize: 70,
-    color: Colors.secondaryColorBlueShade,
-  },
-  logo: {
-    resizeMode: 'cover',
-    height: 78,
-    //   top: 1,
-    width: deviceWidth * 0.7,
+  backgroundVideo: {
+    
+    width:deviceWidth ,
+    height:'60%'
   },
 });
 
