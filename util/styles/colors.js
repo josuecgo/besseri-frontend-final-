@@ -33,6 +33,7 @@ const Colors = {
   terciarySolid: '#47954A',
 
   bgColor:'#eaedf5',
+  // bgColor:'#000',
   info:'#46ade0',
   succes:'#47954A',
   attention:'#F9B410',

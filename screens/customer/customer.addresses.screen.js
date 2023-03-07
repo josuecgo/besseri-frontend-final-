@@ -20,7 +20,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 
 
 const CustomerAddressesScreen = (props) => {
-    const {width,height} = useWindowDimensions();
+   
     const [user,setUser] = useState(null);
     const [loading,setLoading] = useState(false);
     const [editMode,setEditMode] = useState(false);
@@ -252,27 +252,18 @@ const CustomerAddressesScreen = (props) => {
         </View>
       {
           addresses.length > 0 ? 
-            <TouchableOpacity onPress={() => handleModalize('open')} style={{alignSelf:'flex-end',padding:10}}>
+            <TouchableOpacity 
+            onPress={() => handleModalize('open')}
+            // onPress={() => props.navigation.navigate('Search Address')} 
+            style={{alignSelf:'flex-end',padding:10}}
+            >
                 <AntDesign name='plus' color='black' size={30}/>
             </TouchableOpacity>
       : null
       }
-<GooglePlacesAutocomplete
-        placeholder="Type a place"
-        onPress={(data, details = null) => console.log(data, details)}
-        query={{key: 'AIzaSyDjRIMW7vCRzfSE8j0q-KEB9BrMQAQiWdw',
-        language: 'es',}}
-        fetchDetails={true}
-        onFail={error => console.log(error)}
-        onNotFound={() => console.log('no results')}
-        listEmptyComponent={() => (
-          <View style={{flex: 1}}>
-            <Text>No results were found</Text>
-          </View>
-        )}
-      />
+      
     
-     {/* <ScrollView contentContainerStyle={{flexGrow:1,backgroundColor:'white'}}> 
+     <ScrollView contentContainerStyle={{flexGrow:1,backgroundColor:'white'}}> 
      {
          addresses?.length == 0 ?
          <View style={{...CommonStyles.flexOneCenter}}>
@@ -312,7 +303,7 @@ const CustomerAddressesScreen = (props) => {
      }
 
 
-     </ScrollView> */}
+     </ScrollView>
       
 
     </View>

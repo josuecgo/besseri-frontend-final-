@@ -50,23 +50,24 @@ import { CustomerOrdersSending } from './Orders/customer.orders.sending';
 import { CustomerOrdersDelivered } from './Orders/customer.orders.delivered';
 import { CustomerOrderFeedback } from './Orders/customer.order.feedback';
 import { CustomerOrderFeedbacks } from './Orders/customer.order.feedbacks';
+import { SearchAddressScreen } from './Address/SearchAddressScreen';
 
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 export const PartsServicesFunctionsDrawer = () => {
-  const { 
-    countCustomer, 
-    getNotificaciones, 
+  const {
+    countCustomer,
+    getNotificaciones,
     iosPermisoss,
     getToken,
     deleteNotificaciones
   } = useContext(NotificationContext);
 
-  const {getCategorias, getProducts, 
-    comision, getMarcas, getServices, getModelo, 
-    valueMaker,getComision 
+  const { getCategorias, getProducts,
+    comision, getMarcas, getServices, getModelo,
+    valueMaker, getComision
   } = useContext(ProductContext)
 
 
@@ -84,7 +85,7 @@ export const PartsServicesFunctionsDrawer = () => {
 
   useEffect(async () => {
     let abortController = new AbortController();
-    
+
     if (!comision) {
       getComision()
     }
@@ -104,7 +105,7 @@ export const PartsServicesFunctionsDrawer = () => {
   }, [])
 
   useEffect(async () => {
-    
+
     let abortController = new AbortController();
     getProducts()
     return () => {
@@ -114,13 +115,7 @@ export const PartsServicesFunctionsDrawer = () => {
 
 
 
-  // useEffect(async () => {
-  //   let abortController = new AbortController();
-  //   getServices();
-  //   return () => {
-  //     abortController.abort();
-  //   }
-  // }, [])
+
 
 
   useEffect(async () => {
@@ -149,12 +144,12 @@ export const PartsServicesFunctionsDrawer = () => {
 
   return (
     <Drawer.Navigator
-      drawerContent={(props) => <CustomDrawerComponent 
-        {...props} 
-        countCustomer={countCustomer} 
-        getNotificaciones={getNotificaciones} 
+      drawerContent={(props) => <CustomDrawerComponent
+        {...props}
+        countCustomer={countCustomer}
+        getNotificaciones={getNotificaciones}
         deleteNotificaciones={deleteNotificaciones}
-        />}
+      />}
       initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
       screenOptions={{
         headerShown: false,
@@ -164,7 +159,7 @@ export const PartsServicesFunctionsDrawer = () => {
         name={'Autopartes'}
         component={CustomerHomeStack}
       />
-     
+
       <Drawer.Screen
         name={'Notificaciones'}
         component={CustomerNotificationStack}
@@ -181,7 +176,7 @@ export const PartsServicesFunctionsDrawer = () => {
 
       <Drawer.Screen
         name={'Mi dirección'}
-        component={CustomerAddressesScreen}
+        component={AddressStack}
       />
       <Drawer.Screen
         name={'Pedidos'}
@@ -214,26 +209,43 @@ export const PartsServicesFunctionsDrawer = () => {
     </Drawer.Navigator>
   );
 }
+
 const OrdersNavigator = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
     >
-      
+
       <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS} component={CustomerOrdersViewScreen} />
       <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_ALL} component={CustomerOrdersAllScreen} />
       <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_PENDING} component={CustomerOrdersPending} />
       <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_SENDING} component={CustomerOrdersSending} />
       <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_FEEDBACK} component={CustomerOrderFeedback} />
-      
+
       <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_DELIVERED} component={CustomerOrdersDelivered} />
-      
+
       <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_DETAIL} component={CustomerOrderDetail} />
     </Stack.Navigator>
   )
 }
 
+const AddressStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+    >
 
+      <Stack.Screen
+        name={'HomeAddress'}
+        component={CustomerAddressesScreen}
+      />
+      <Stack.Screen
+        name={'Search Address'}
+        component={SearchAddressScreen}
+      />
+    </Stack.Navigator>
+  )
+}
 
 const OrderStack = () => {
   return (
