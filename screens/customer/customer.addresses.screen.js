@@ -20,7 +20,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 
 
 const CustomerAddressesScreen = (props) => {
-   
+    const width = 300;
     const [user,setUser] = useState(null);
     const [loading,setLoading] = useState(false);
     const [editMode,setEditMode] = useState(false);
@@ -201,11 +201,12 @@ const CustomerAddressesScreen = (props) => {
         }
     }
     const crearDireccion = () =>{ 
-        if (user) {
-             createAddressRef.current.open()
-        } else {
-            props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR) 
-        }
+        props.navigation.navigate('Search Address')
+        // if (user) {
+        //      createAddressRef.current.open()
+        // } else {
+        //     props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR) 
+        // }
        
     }
 
@@ -253,8 +254,8 @@ const CustomerAddressesScreen = (props) => {
       {
           addresses.length > 0 ? 
             <TouchableOpacity 
-            onPress={() => handleModalize('open')}
-            // onPress={() => props.navigation.navigate('Search Address')} 
+            // onPress={() => handleModalize('open')}
+            onPress={() => props.navigation.navigate('Search Address')} 
             style={{alignSelf:'flex-end',padding:10}}
             >
                 <AntDesign name='plus' color='black' size={30}/>
