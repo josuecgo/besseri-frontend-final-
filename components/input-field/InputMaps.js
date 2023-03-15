@@ -5,6 +5,7 @@ import { Avatar, HStack, Text, Input, Box, Pressable } from 'native-base'
 import Colors from '../../util/styles/colors'
 
 import {useDebouncedValue} from "../../hooks/useDebouncedValue";
+import { adjust } from '../../util/Dimentions';
 
 export const InputMaps = ({placeholder,onDebounce,addresses,onChangeDirection,textValue,setTextValue}) => {
   
@@ -26,7 +27,7 @@ export const InputMaps = ({placeholder,onDebounce,addresses,onChangeDirection,te
       mx="3" 
       placeholder={placeholder}
       onChangeText={debounce}
-      color={Colors.white}
+      color={Colors.dark}
       value={textValue}
       
       />
@@ -56,6 +57,7 @@ export const InputMaps = ({placeholder,onDebounce,addresses,onChangeDirection,te
         </Box>
         
       )}
+      ListFooterComponent={() => <View style={{height:90}} ></View>}
       />
     </View>
   )
@@ -64,7 +66,7 @@ export const InputMaps = ({placeholder,onDebounce,addresses,onChangeDirection,te
 
 const styles = StyleSheet.create({
   inpSearch:{
-    backgroundColor:'red',
+    // backgroundColor:'red',
     paddingVertical:10,
     // flex:1
     

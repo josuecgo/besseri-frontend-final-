@@ -5,6 +5,10 @@ import Colors from '../../../util/styles/colors'
 import axios from 'axios'
 import { customer_api_urls } from '../../../util/api/api_essentials'
 import MapView, { Marker } from 'react-native-maps'
+import { showAlertMsg, showToaster } from '../../../util/constants'
+import { Alert } from 'native-base'
+import { AlertInfo } from '../../../components/Alerts/AlertInfo'
+import { deviceHeight } from '../../../util/Dimentions'
 
 export const SearchAddressScreen = () => {
   const [term, setTerm] = useState('');
@@ -13,7 +17,11 @@ export const SearchAddressScreen = () => {
   const [location, setLocation] = useState(null);
   const mapViewRef = useRef();
   const [textValue, setTextValue] = useState('');
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [show, setShow] = useState({
+    show:false,
+    msg:''
+  })
   const centerPosition = async (loc) => {
 
     mapViewRef.current?.animateCamera({
@@ -29,6 +37,7 @@ export const SearchAddressScreen = () => {
   const autocompleteAddress = async () => {
 
     try {
+     
       const apiCall = await axios.get(`${customer_api_urls.search_addresses}/${term}`);
 
       
@@ -62,13 +71,22 @@ export const SearchAddressScreen = () => {
     setAddresses([])
   }
 
+  
 
   const onMovePositionMaker = async(loc) => {
     try {
+      setIsLoading(true)
       const apiCall = await axios.post(`${customer_api_urls.geocode_addresses}`,loc);
 
+    
+      if (!apiCall?.data.success) {
+        
+        setShow({view:!apiCall?.data.success,msg:apiCall?.data.msg});
+
+      }else{
+
       const {address_components,formatted_address,geometry,place_id} = apiCall?.data?.data
-      console.log(formatted_address);
+      console.log(apiCall?.data?.data);
       // console.log(address_components[0]);
       // console.log(address_components[1]);
       // console.log(address_components[2]);
@@ -82,18 +100,27 @@ export const SearchAddressScreen = () => {
         pais: address_components[5].long_name,
       })
       // setTextValue(apiCall?.data?.data)
+      }
+
       setLocation(loc)
       centerPosition(loc)
+      
+     
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
     } catch (error) {
       console.log(error);
+      setIsLoading(false)
+      showToaster('Espere un momento por favor 400.')
     }
    
   }
 
-  console.log(direccion);
+  
   return (
     <View style={styles.search} >
-      {/* <Text>{direccion}</Text> */}
+      
       <InputMaps
         placeholder='Calle'
         onDebounce={(value) => setTerm(value)}
@@ -102,6 +129,31 @@ export const SearchAddressScreen = () => {
         textValue={textValue}
         setTextValue={setTextValue}
       />
+      {
+        show.view && (
+          <View style={styles.alertInfo} >
+            <AlertInfo show={show} setShow={setShow} />
+          </View>
+          
+        )
+      }
+     
+      {
+        direccion?.calle && (
+          <>
+            <Text>#{direccion.numero} </Text>
+            <Text>calle: {direccion.calle} </Text>
+            <Text>colonia: {direccion.col} </Text>
+            <Text>municipio: {direccion.municipio} </Text>
+            <Text>estado: {direccion.estado} </Text>
+            <Text>pais: {direccion.pais} </Text>
+            <Text>latitude: {location.latitude} </Text>
+            <Text>longitude: {location.longitude} </Text>
+          </>
+          
+        )
+      }
+      
 
       {
 
@@ -131,31 +183,23 @@ export const SearchAddressScreen = () => {
             }}
 
             onPress={e => {
-              
+              if (isLoading) {
+                showToaster('Espere un momento.')
+                return
+              }
+             
               let loc = {
                 latitude: e.nativeEvent.coordinate.latitude,
                 longitude:e.nativeEvent.coordinate.longitude,
               }
               // console.log(e.nativeEvent);
+              
               onMovePositionMaker(loc)
             }}
             
             
           >
-
-
-
-            {/* <Marker
-              coordinate={{
-                latitude: parseFloat(location?.latitude),
-                longitude: parseFloat(location?.longitude)
-              }}
-              // image={{uri: 'custom_pin'}}
-              
-              title={''}
-
-            /> */}
-             <Marker
+            <Marker
             coordinate={{
               latitude: parseFloat(location?.latitude) || 19.485297844903283,
               longitude: parseFloat(location?.longitude) || -99.22777616792496,
@@ -170,7 +214,7 @@ export const SearchAddressScreen = () => {
         )
 
       }
-
+     
     </View>
   )
 }
@@ -184,6 +228,9 @@ const styles = StyleSheet.create({
     justifyContent:'space-between'
   },
   map:{
-    height: '100%',
+    height: deviceHeight * 0.70,
+  },
+  alertInfo:{
+  
   }
 })
