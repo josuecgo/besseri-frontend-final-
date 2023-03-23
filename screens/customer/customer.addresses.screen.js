@@ -57,7 +57,7 @@ const CustomerAddressesScreen = (props) => {
 
     useEffect(() => {
         getUserDetails();
-        getAddresses();
+        // getAddresses();
     },[]);
 
     const getUserLocation = async() => {
@@ -201,12 +201,13 @@ const CustomerAddressesScreen = (props) => {
         }
     }
     const crearDireccion = () =>{ 
-        props.navigation.navigate('Search Address')
-        // if (user) {
+      
+        if (user) {
         //      createAddressRef.current.open()
-        // } else {
-        //     props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR) 
-        // }
+         props.navigation.navigate('Search Address')
+        } else {
+            props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR) 
+        }
        
     }
 
@@ -215,7 +216,7 @@ const CustomerAddressesScreen = (props) => {
     
     return (
     <View style={{flex:1,backgroundColor:'white'}}>
-        <CreateAddressModal
+        {/* <CreateAddressModal
         onClose={() => {
             setEditMode(false);
             setAddressLine('');
@@ -234,7 +235,7 @@ const CustomerAddressesScreen = (props) => {
         infoVal={info}
         onChangeInfo={inf => setInfo(inf)}
         getCoordinates={getUserLocation} coords={coords}
-        />
+        /> */}
         <LoaderComponent
         isVisible={loading}
         />
