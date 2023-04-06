@@ -31,7 +31,7 @@ const SplashScreen = ({navigation}) => {
   const checkBuildApp = async () => {
     try {
       let version = DeviceInfo.getBuildNumber();
-      console.log({version});
+      
       let os = Platform.OS;
       const url = `${api_urls.check_version}`;
 
@@ -45,13 +45,13 @@ const SplashScreen = ({navigation}) => {
      
     } catch (error) {
      
-	  return  false
+	    return  false
     }
   };
 
   const check_auth = async () => {
     let appBuild  =  await checkBuildApp();
-
+     
     if (!appBuild) {
       return  navigation.replace('UpdateScreen');
     }

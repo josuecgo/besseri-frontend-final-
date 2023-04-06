@@ -51,6 +51,8 @@ import { CustomerOrdersDelivered } from './Orders/customer.orders.delivered';
 import { CustomerOrderFeedback } from './Orders/customer.order.feedback';
 import { CustomerOrderFeedbacks } from './Orders/customer.order.feedbacks';
 import { SearchAddressScreen } from './Address/SearchAddressScreen';
+import { HomeScreen } from './Home/HomeScreen';
+import { ServiciosScreen } from './Home/ServiciosScreen';
 
 
 const Stack = createStackNavigator();
@@ -314,8 +316,25 @@ export const CustomerHomeStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}>
+      initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
+    >
       <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS}
+        component={HomeScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <CustomHeaderComponent {...props} name="Home" />
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.SERVICIO}
+        component={ServiciosScreen}
+      />
+      
+      {/* <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS}
         component={CustomerProductsViewScreen}
         options={{
@@ -324,7 +343,7 @@ export const CustomerHomeStack = () => {
             <CustomHeaderComponent {...props} name="Autopartes" />
           ),
         }}
-      />
+      /> */}
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK}
         component={OrderStack}
