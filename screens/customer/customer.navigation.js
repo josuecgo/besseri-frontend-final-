@@ -30,16 +30,11 @@ import { NotificationContext } from '../../util/context/NotificationContext';
 import { EnvioScreen } from './customer.envio.screen';
 import CustomerOrderSummaryFree from './customer.orderSummaryFree.screen';
 import { MetodoScreen } from './customer.metodoscreen';
-import { CustomerCardsScreen } from './customer.cards.screen';
-import { CreateCardScreen } from './customer.createCard.screen';
 import PrivacyPolicy from '../privacypolicy.screen';
-import { CartScreen } from './Cart/CartScreen';
-import { ChatScreen } from './Chat/ChatScreen';
 import { ProfileScreen } from './ProfileScreen';
 import { Platform } from 'react-native';
 import { ProductContext } from '../../util/context/Product/ProductContext';
 import { GarageScreen } from './Garage/customer.garage.screen';
-import { ListChatsScreen } from './Chat/ListChatsScreen';
 import { ChatStack } from '../../util/Routes/ChatStack';
 import { PrivateScreen } from '../Chat/PrivateScreen';
 import CustomerOrdersViewScreen from './Orders/customer.orders-view.screen';
@@ -53,6 +48,8 @@ import { CustomerOrderFeedbacks } from './Orders/customer.order.feedbacks';
 import { SearchAddressScreen } from './Address/SearchAddressScreen';
 import { HomeScreen } from './Home/HomeScreen';
 import { ServiciosScreen } from './Home/ServiciosScreen';
+import { MapServiceScreen } from './Home/MapServiceScreen';
+import { AppointmentScreen } from './Home/AppointmentScreen';
 
 
 const Stack = createStackNavigator();
@@ -329,9 +326,20 @@ export const CustomerHomeStack = () => {
         }}
       />
 
+
+
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SERVICIO}
         component={ServiciosScreen}
+      />
+
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.MAP_SERVICES}
+        component={MapServiceScreen}
+      />
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.APPOINTMENT_SERVICES}
+        component={AppointmentScreen}
       />
       
       {/* <Stack.Screen

@@ -115,6 +115,8 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   HOME: 'Home',
   SHOW_AUTO_PARTS: 'Auto Parts',
   SERVICIO: 'SERVICIO',
+  MAP_SERVICES: 'Map Services',
+  APPOINTMENT_SERVICES: 'APPOINTMENT Services',
   SERVICE: 'Services',
   APPOINTMENTS: 'Appointments',
   ORDERS: 'Orders',

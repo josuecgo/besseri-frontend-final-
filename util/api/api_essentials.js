@@ -87,9 +87,14 @@ export const customer_api_urls = {
     get_my_orders_pending:`${base_url}/orders/get-my-orders-pending`,
     
     get_category_products:`${base_url}/products/get-category-products`,
+
     get_stores:`${base_url}/business/get-stores`,
     get_store_data:`${base_url}/business/get-store`,
+    get_stores_type_services:`${base_url}/business//get-stores`,
+
     get_services:`${base_url}/services/get-services`,
+    get_type_services:`${base_url}/services/get-type-services`,
+   
     book_service:`${base_url}/appointment/book-service`,
     get_my_bookings:`${base_url}/appointment/get-my-bookings`,
     cancel_booking:`${base_url}/appointment/cancel-appointment`,

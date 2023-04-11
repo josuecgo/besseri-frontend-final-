@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 
 import Colors from '../../util/styles/colors';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
-import {CUSTOMER_HOME_SCREEN_ROUTES , LOGIN_SIGNUP_FORGOT_ROUTES, MAIN_ROUTES, showToaster} from '../../util/constants';
+import {CUSTOMER_HOME_SCREEN_ROUTES , showToaster} from '../../util/constants';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { getUser, logout } from '../../util/local-storage/auth_service';

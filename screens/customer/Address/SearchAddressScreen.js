@@ -1,22 +1,29 @@
-import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { InputMaps } from '../../../components/input-field/InputMaps'
-import Colors from '../../../util/styles/colors'
+
 import axios from 'axios'
 import { customer_api_urls } from '../../../util/api/api_essentials'
 import MapView, { Marker } from 'react-native-maps'
-import { showAlertMsg, showToaster } from '../../../util/constants'
-import { Alert } from 'native-base'
+import { showToaster } from '../../../util/constants'
+
 import { AlertInfo } from '../../../components/Alerts/AlertInfo'
 import { deviceHeight, deviceWidth } from '../../../util/Dimentions'
 import Loading from '../../../components/Loader/Loading'
 import { SelectAddress } from '../../../components/Customer/SelectAddress'
 
-export const SearchAddressScreen = () => {
+export const SearchAddressScreen = (props) => {
+
+
+
+
   const [term, setTerm] = useState('');
   const [addresses, setAddresses] = useState([]);
   const [direccion, setDireccion] = useState()
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState({
+    latitude: null,
+    longitude: null,
+  });
   const mapViewRef = useRef();
   const [textValue, setTextValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -48,8 +55,7 @@ export const SearchAddressScreen = () => {
 
       setAddresses(apiCall?.data?.data)
     } catch (error) {
-      console.log("🚀 ~ file: SearchAddressScreen.js:19 ~ autocompleteAddress ~ error:", error)
-
+      showToaster('Error de conexion')
     }
 
 
@@ -92,10 +98,6 @@ export const SearchAddressScreen = () => {
 
         const { address_components, formatted_address, geometry, place_id } = apiCall?.data?.data
 
-        // console.log(address_components[0]);
-        // console.log(address_components[1]);
-        // console.log(address_components[2]);
-        // console.log(address_components[3]);
         setDireccion({
           address_components,
           formatted_address,
@@ -120,6 +122,17 @@ export const SearchAddressScreen = () => {
 
   }
 
+  const editData = () => {
+    setLocation(
+      {
+        latitude: null,
+        longitude: null,
+      }
+    )
+  }
+  useEffect(() => {
+    editData()
+  }, [props])
 
 
   return (
@@ -142,9 +155,7 @@ export const SearchAddressScreen = () => {
           )
         }
 
-
       </View>
-
 
 
       {
@@ -171,7 +182,7 @@ export const SearchAddressScreen = () => {
               pitch: 0,
               heading: 0,
               altitude: 0,
-              zoom: 14,
+              zoom: 16,
             }}
 
             onPress={e => {
@@ -215,9 +226,11 @@ export const SearchAddressScreen = () => {
 
       }
 
+
+
       {
         direccion?.formatted_address && (
-          <SelectAddress address={direccion} />
+          <SelectAddress address={direccion} navigation={props.navigation} />
         )
       }
 
@@ -244,9 +257,10 @@ const styles = StyleSheet.create({
   },
   map: {
     height: deviceHeight * 0.50,
+
   },
   alertInfo: {
 
   },
-  loading:{ position: 'absolute', bottom: deviceHeight * 0.30, right: deviceWidth * 0.45 }
+  loading: { position: 'absolute', bottom: deviceHeight * 0.30, right: deviceWidth * 0.45 }
 })
