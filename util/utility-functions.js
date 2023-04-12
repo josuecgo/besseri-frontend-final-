@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const getFormattedDate = () => {
   const monthNames = [
     'Jan',
@@ -135,4 +137,8 @@ const matchesForModel = (id,searchId) => {
   }
   return false;
   
+}
+
+export const dateToHour = (date) => {
+  return moment(date).subtract(1, 'hours').format('HH:mm')
 }
