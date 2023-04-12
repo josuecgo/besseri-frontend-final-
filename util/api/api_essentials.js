@@ -94,6 +94,7 @@ export const customer_api_urls = {
 
     get_services:`${base_url}/services/get-services`,
     get_type_services:`${base_url}/services/get-type-services`,
+    get_availability_services:`${base_url}/services/availability-services`,
    
     book_service:`${base_url}/appointment/book-service`,
     get_my_bookings:`${base_url}/appointment/get-my-bookings`,

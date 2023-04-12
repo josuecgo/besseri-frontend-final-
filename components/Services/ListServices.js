@@ -56,6 +56,10 @@ export const ListServices = ({ services,navigation }) => {
                   fontWeight="500" ml="-0.5" mt="-1">
                     {item?.type_services?.type}.
                   </Text>
+                  <Text fontSize="xs" 
+                  fontWeight="500" ml="-0.5" mt="-1">
+                  Autos tipo {item?.type_car?.type}.
+                  </Text>
                 </Stack>
                 <HStack justifyContent={'space-between'} >
                   <MaterialIcons
