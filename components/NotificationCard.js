@@ -90,48 +90,7 @@ export const NotificationCard = ({item,orderDetail}) => {
   );
 };
 
-const d = [
-  {
-    _id: '628bf1e5726ae4b8f1318748',
-    body: {
-      __v: 0,
-      _id: '628bf1e5726ae4b8f1318746',
-      assigned_to_rider_on: null,
-      besseri_comission: 3,
-      chargeId: 'pi_3L2i5SEZl12SIefH0tK6kHA9',
-      delivered_on: null,
-      delivery_address: {
-        __v: 0,
-        _id: '62851ac759efa41d4ba21227',
-        addressLine: 'Calle principal',
-        created_on: '2022-05-18T16:11:51.019Z',
-        info: 'Repartidor',
-        label: 'Home',
-        latitude: 18.066576,
-        longitude: -93.169733,
-        phone: '9141272333',
-        userId: '62851a4d59efa41d4ba21209',
-      },
-      delivery_fee: 12.02,
-      delivery_security_code: '314td',
-      orderId: 'BESS-45',
-      order_status: 'Processing',
-      order_status_code: 'PROCESSING',
-      ordered_by_id: '62851a4d59efa41d4ba21209',
-      ordered_on: '2022-05-23T20:43:17.178Z',
-      products: [[Object]],
-      rating: null,
-      review: null,
-      riderId: null,
-      storeId: '628bde138adad296b8c8b629',
-      to_deliver_on: null,
-      total_amount: 55,
-      view: false,
-    },
-    date: '2022-05-23T20:43:17.270Z',
-    titulo: "Hola Mario'Store, has recibido un pedido de Ezequiel 🎉",
-  },
-];
+
 
 
 const styles = StyleSheet.create({

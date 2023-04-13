@@ -28,7 +28,7 @@ export const BookingScreen = ({navigation}) => {
     getBookings()
   }, [])
   
-  console.log(bookings[0]);
+  
   return (
     <View>
       <HeaderTitle

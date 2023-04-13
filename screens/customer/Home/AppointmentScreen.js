@@ -54,7 +54,7 @@ export const AppointmentScreen = (props) => {
       const endDate  = new Date(hourSelected.end).toISOString()
       const data = {
         booked_by_id:userId,
-        serviceId:service._id,
+        serviceId:service,
         businessId: service?.business_id._id,
         startDate,
         endDate,
@@ -73,6 +73,7 @@ export const AppointmentScreen = (props) => {
       }
 
       } catch (error) {
+        console.log("🚀error:", error)
         showToaster('Error con el servidor')
      
       

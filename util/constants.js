@@ -190,6 +190,17 @@ export const OrderStatusCode = {
   PACKED:'Paquete listo'
 }
 
+export const BookingsStatusCode = {
+  EN_PROCESO:'En proceso',
+  RIDER_EN_CAMINO_A_CUSTOMER:'Rider en camino',
+  CUSTOMER_ENTREGADO_A_RIDER:'Entregado a rider',
+  ENTREGADO_A_TALLER:'Recepcionado por taller',
+  REVISANDO:'Revisando',
+  SERVICIO_CONCLUIDO:'Servicio concluido',
+  TALLER_ENTREGADO_A_RIDER:'Entregado a rider',
+  ENTREGADO_A_CUSTOMER:'Vehiculo entregado',
+}
+
 export const KeysStripe = {
   LIVE_KEY:'pk_live_51K6fAwEZl12SIefHa7w6LJCVzATHV5n253Xlw2TcAxFrOkwEElIHpoWM9gilgxRey62ACrQMLir0SY6C7Uwdgx1M00ukntyd5k',
   TEST_KEY:'pk_test_51K6fAwEZl12SIefHDB3dMygU6FJQ79Q81wCsNeaIbYlP3jqmOAUi7b9XdRkfOqrAK7Na8EgjEp6gJuacFtP4oMRa00lcje6la4',
