@@ -59,7 +59,6 @@ export const AppointmentScreen = (props) => {
         startDate,
         endDate,
       }
-      
       const apiCall = await axios.post(customer_api_urls.book_service,data)
      
       if (apiCall.data.success) {
@@ -73,7 +72,7 @@ export const AppointmentScreen = (props) => {
       }
 
       } catch (error) {
-        console.log("🚀error:", error)
+      
         showToaster('Error con el servidor')
      
       
@@ -82,6 +81,7 @@ export const AppointmentScreen = (props) => {
   
 
   const handleHour = (hour) => {
+   
     setHourSelected(hour);
   }
 
@@ -153,7 +153,7 @@ export const AppointmentScreen = (props) => {
             <HStack
             borderWidth={daySelected ? 1 : 0}
             rounded={'2xl'}
-            // height={!citas ? 70 : '100%'}
+            style={{flexWrap:'wrap',justifyContent:'space-around'}}
             >
               {
 
@@ -234,12 +234,14 @@ const styles = StyleSheet.create({
   hora:{
     borderRadius:100,
     backgroundColor:'#404040',
-    margin:5,
+    
+    marginVertical:5,
     padding:10,
     width:60,
     height:60,
     alignItems:'center',
-    justifyContent:'center'
+    justifyContent:'center',
+    
   },
   noCitas:{
     margin:5,

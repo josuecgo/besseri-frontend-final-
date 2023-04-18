@@ -51,6 +51,7 @@ import { ServiciosScreen } from './Home/ServiciosScreen';
 import { MapServiceScreen } from './Home/MapServiceScreen';
 import { AppointmentScreen } from './Home/AppointmentScreen';
 import { BookingScreen } from './Bookings/BookingScreen';
+import { BookingDetailsScreen } from './Bookings/BookingDetailsScreen';
 
 
 const Stack = createStackNavigator();
@@ -480,7 +481,7 @@ export const BookingsStack = () => {
       />
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.BOOKING_DETAIL}
-        component={CustomerBookingDetail}
+        component={BookingDetailsScreen}
       />
     </Stack.Navigator>
   );

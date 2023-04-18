@@ -13,7 +13,7 @@ export const AgendaService = ({setDaySelected,handleCalendar,showCalendar,daySel
 
 
   const onDayPress = useCallback((day) => {
-   
+    
     setDaySelected(day.dateString);
     handleCalendar(false)
   }, []);
