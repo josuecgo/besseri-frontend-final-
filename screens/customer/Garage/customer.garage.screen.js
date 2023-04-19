@@ -103,13 +103,13 @@ export const GarageScreen = (props) => {
 
   const changeCarDefault = async(car) => {
     let firstCar = cars.find((c) => c._id === car)
-    
+   
     activeCar(firstCar)
     setValue(car)
   }
 
 
-  // console.log(carDefault);
+  
 
   return (
     <>
@@ -173,7 +173,7 @@ export const GarageScreen = (props) => {
            
             
             >
-              <ItemCar isDisabled={activeCarLoading} data={item} handleModalizeDelete={handleModalizeDelete} />
+              <ItemCar  data={item} handleModalizeDelete={handleModalizeDelete} />
             </Radio.Group>
             <ThinlineSeparator/>
           </Box>

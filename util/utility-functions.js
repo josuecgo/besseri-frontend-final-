@@ -140,5 +140,10 @@ const matchesForModel = (id,searchId) => {
 }
 
 export const dateToHour = (date) => {
-  return moment(date).subtract(1, 'hours').format('HH:mm')
+  // console.log(date);
+  const d = new Date(date)
+  
+  d.setHours(d.getHours() + 1)
+  
+  return d.toLocaleTimeString('en-US', { hour12: false,hour: '2-digit', minute: '2-digit' })
 }

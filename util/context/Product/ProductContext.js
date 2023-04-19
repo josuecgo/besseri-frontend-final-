@@ -342,7 +342,7 @@ export const ProductProvider = ({children}) => {
           }
     
         } catch (error) {
-          console.log(error);
+          
           showToaster('No hay conexion con el servidor')
         }
     }
@@ -439,7 +439,7 @@ export const ProductProvider = ({children}) => {
 
     const storeProduct = async(store) => {
         try {
-            console.log(store?.storeName,'storeproduct');
+           
             const apiCall = await axios.get(`${customer_api_urls.get_store_data}/${store?._id}`);
     
             let cate = apiCall.data?.data?.categories;

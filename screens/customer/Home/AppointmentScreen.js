@@ -12,7 +12,7 @@ import { ItemServiceDetail } from '../../../components/Services/ItemServiceDetai
 
 
 export const AppointmentScreen = (props) => {
-  const { service } = props.route.params;
+  const { service,car,address } = props.route.params;
   const [daySelected, setDaySelected] = useState('');
   const [hourSelected, setHourSelected] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
@@ -22,6 +22,7 @@ export const AppointmentScreen = (props) => {
     setShowCalendar(data)
   }
 
+ 
   
   const citasDisponibles = async() => {
     
@@ -58,6 +59,8 @@ export const AppointmentScreen = (props) => {
         businessId: service?.business_id._id,
         startDate,
         endDate,
+        car,
+        address
       }
       const apiCall = await axios.post(customer_api_urls.book_service,data)
      

@@ -1,11 +1,11 @@
 import { FlatList, StyleSheet,  View } from 'react-native'
 import React from 'react'
-import { AspectRatio, Box, Center, HStack, Heading, Image, Pressable, Stack ,Text} from 'native-base';
+import {  Box,  HStack, Heading, Pressable, Stack ,Text} from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { moneda } from '../../util/Moneda';
 import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants';
 
-export const ListServices = ({ services,navigation }) => {
+export const ListServices = ({ services,goService }) => {
   
 
 
@@ -15,11 +15,7 @@ export const ListServices = ({ services,navigation }) => {
         data={services}
         renderItem={({ item }) => (
           <Pressable
-          onPress={() => {
-            navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.APPOINTMENT_SERVICES,{
-            service:item
-          })
-        }}
+          onPress={() => goService(item)}
           >
           <Box alignItems="center">
             <Box 
@@ -31,22 +27,7 @@ export const ListServices = ({ services,navigation }) => {
             _light={{
               backgroundColor: "gray.50"
             }}>
-              {/* <Box>
-                <AspectRatio w="100%" ratio={16 / 9}>
-                  <Image source={{
-                    uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg"
-                  }} alt="image" />
-                </AspectRatio>
-                <Center bg="violet.500" _dark={{
-                  bg: "violet.400"
-                }} _text={{
-                  color: "warmGray.50",
-                  fontWeight: "700",
-                  fontSize: "xs"
-                }} position="absolute" bottom="0" px="3" py="1.5">
-                  PHOTOS
-                </Center>
-              </Box> */}
+              
               <Stack p="4" space={3}>
                 <Stack space={2}>
                   <Heading size="md" ml="-1">

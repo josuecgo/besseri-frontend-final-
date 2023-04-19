@@ -11,7 +11,7 @@ export const ItemAgenda = ({ service,goBooking }) => {
 
   const { serviceId } = service;
   
-  // console.log(service);
+  
   return (
     <Box alignItems="center" my={2} >
       <Pressable

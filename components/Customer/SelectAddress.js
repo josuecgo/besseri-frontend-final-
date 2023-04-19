@@ -14,7 +14,7 @@ export const SelectAddress = ({address,navigation}) => {
   const setUpLocation = async() => {
     try {
      
-     
+      
       const userId = await getUserId();
      
       const apiCall = await axios.post(customer_api_urls.create_address,{
@@ -30,6 +30,7 @@ export const SelectAddress = ({address,navigation}) => {
       navigation.pop();
   
     } catch(e) {
+      
       
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
     //  console.log(e?.response?.data)

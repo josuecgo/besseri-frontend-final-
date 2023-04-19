@@ -1,13 +1,15 @@
 import { Alert, StyleSheet, Text, View } from 'react-native'
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect, useContext } from 'react'
 import { api_statuses, customer_api_urls } from '../../../util/api/api_essentials';
 import { getUserId } from '../../../util/local-storage/auth_service';
 
-import { showToaster } from '../../../util/constants';
+import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constants';
 import axios from 'axios';
 import { CheckIcon, Heading, Select, VStack } from 'native-base';
 import { ServiceSkeleton } from '../../../components/Services/ServiceSkeleton';
 import { ListServices } from '../../../components/Services/ListServices';
+import { ProductContext } from '../../../util/context/Product/ProductContext';
+import { MapCarDefault } from '../../../components/Customer/MapCarDefault';
 
 
 export const MapServiceScreen = (props) => {
@@ -15,6 +17,10 @@ export const MapServiceScreen = (props) => {
   const [defaultAddress, setDefaultAddress] = useState(null)
   const {type} = props.route.params;
   const [stores, setStores] = useState(null)
+  const {carDefault} = useContext(ProductContext);
+  
+  
+ 
 
   const getAddresses = async() => {
     try {
@@ -35,7 +41,8 @@ export const MapServiceScreen = (props) => {
         }else{
           setAddresses(apiCall.data.data);
           if (apiCall?.data?.data.length > 0) {
-            setDefaultAddress(apiCall.data.data[0].addressLine)
+            setDefaultAddress(apiCall.data.data[0]._id)
+          
           }else{
             setDefaultAddress(null)
           }
@@ -44,6 +51,19 @@ export const MapServiceScreen = (props) => {
         } catch(e) {
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 2')
         }
+  }
+
+  const getCars = async() => {
+    if (!carDefault) {
+      Alert.alert('No tienes ningun auto seleccionado', 'Crea una o selecciona un auto', [
+        {
+          text: 'Cancelar',
+          onPress: () => props.navigation.goBack(),
+          style: 'cancel',
+        },
+        {text: 'Crear', onPress: () => props.navigation.navigate('Garage')},
+      ]);
+    }
   }
 
   const getStoreService = async() => {
@@ -58,8 +78,26 @@ export const MapServiceScreen = (props) => {
     }
   }
 
+  const goService = (item) => {
+    props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.APPOINTMENT_SERVICES,{
+      service:item,
+      address:defaultAddress,
+      car:carDefault
+    })
+  }
+
+  const changeCar = () => {
+    props.navigation.navigate('Garage')
+  }
+
+  const handleAddress = (address) => {
+   
+    setDefaultAddress(address)
+  }
+
   useEffect(() => {
     getAddresses()
+    getCars();
   }, [])
 
   useEffect(() => {
@@ -73,7 +111,7 @@ export const MapServiceScreen = (props) => {
   if(!addresses) return <ServiceSkeleton/>
 
 
-
+  
   return (
     <View style={styles.map} >
       <Select 
@@ -87,17 +125,18 @@ export const MapServiceScreen = (props) => {
         endIcon: <CheckIcon size="5" />
       }} 
       mt={1} 
-      onValueChange={itemValue => setDefaultAddress(itemValue)}
+      onValueChange={itemValue => handleAddress(itemValue)}
       >
         {
            addresses.map((item) => (
-            <Select.Item key={item._id} label={item.formatted_address} value={item.addressLine} />
+            <Select.Item key={item._id} label={item.formatted_address} value={item._id} />
           ))
         }
          
          
       </Select>
-
+      
+      <MapCarDefault changeCar={changeCar}/>
       <VStack
       space={1}
       marginTop={10}
@@ -116,7 +155,7 @@ export const MapServiceScreen = (props) => {
       </VStack>
      
       
-      <ListServices services={stores} navigation={props.navigation} />
+      <ListServices services={stores} goService={goService} />
     </View>
   )
 }

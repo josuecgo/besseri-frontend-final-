@@ -13,10 +13,6 @@ import Loading from '../../../components/Loader/Loading'
 import { SelectAddress } from '../../../components/Customer/SelectAddress'
 
 export const SearchAddressScreen = (props) => {
-
-
-
-
   const [term, setTerm] = useState('');
   const [addresses, setAddresses] = useState([]);
   const [direccion, setDireccion] = useState()
