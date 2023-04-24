@@ -1,9 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React from 'react'
 import { HeaderTitle } from '../../../components/Customer/HeaderTitle'
+import { ItemServiceDetail } from '../../../components/Services/ItemServiceDetail';
+import { Text } from 'native-base';
+import { BookingDetails } from '../../../components/Booking/BookingDetails';
 
-export const BookingDetailsScreen = ({navigation}) => {
+export const BookingDetailsScreen = ({navigation,route}) => {
  
+  const booking = route.params;
   return (
     <View>
       <HeaderTitle
@@ -11,7 +15,7 @@ export const BookingDetailsScreen = ({navigation}) => {
       nav={() => navigation.goBack()}
       titulo={'Detalles'}
       />
-      <Text>BookingDetailsScreen</Text>
+      <BookingDetails booking={booking} />
     </View>
   )
 }

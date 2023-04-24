@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constants'
 import axios from 'axios'
 import {  customer_api_urls } from '../../../util/api/api_essentials'
@@ -10,7 +10,8 @@ import { Heading, Pressable } from 'native-base'
 
 export const ServiciosScreen = ({navigation}) => {
   const [servicios, setServicios] = useState([]);
-
+ 
+  
 
   const getServicios = async() => {
     try {

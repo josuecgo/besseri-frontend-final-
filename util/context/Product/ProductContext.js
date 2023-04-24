@@ -263,12 +263,12 @@ export const ProductProvider = ({children}) => {
             const apiCall = await axios.post(`${customer_api_urls.active_car}/${userId}`,{data});
                 
             if (apiCall.status == api_statuses.success) {
-                getActiveCar()
+                await getActiveCar()
                showToaster('Nuevo Auto activado');
             }
             setLoading(false)
         } catch (error) {
-          console.log(error,'activeCar catch');
+         
           setLoading(false)
          
           setCarDefault(false)
@@ -278,17 +278,19 @@ export const ProductProvider = ({children}) => {
 
     const getActiveCar = async() => {
         setActiveCarLoading(true)
-        const userId = await getUserId();
+        
         try {
+            const userId = await getUserId();
             if (!userId) {
                 
                 setCarDefault(false)
 
                 return
             }
-            
+        
           const apiCall = await axios.get(`${customer_api_urls.get_active_car}/${userId}`);
             
+          
           if (apiCall.status == api_statuses.success) {
             let data = apiCall.data.data;
 
@@ -296,13 +298,7 @@ export const ProductProvider = ({children}) => {
             if (data?.isCarActive) {
                 setCarDefault(data.isCarActive)
                 // carCompatible(data.isCarActive)
-                // await dispatch({
-                //     type:'activeCar',
-                //     payload: {
-                //         car:data.isCarActive,
-                //         // categorias: apiCall?.data?.data?.categories
-                //     }
-                // }); 
+             
             }
            
            
@@ -310,7 +306,7 @@ export const ProductProvider = ({children}) => {
           setActiveCarLoading(false)
     
         } catch (error) {
-          console.log(error,'getActive car');
+          
           setCarDefault(false)
           setActiveCarLoading(false)
        

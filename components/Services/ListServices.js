@@ -1,9 +1,10 @@
 import { FlatList, StyleSheet,  View } from 'react-native'
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import {  Box,  HStack, Heading, Pressable, Stack ,Text} from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { moneda } from '../../util/Moneda';
-import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants';
+
+
 
 export const ListServices = ({ services,goService }) => {
   

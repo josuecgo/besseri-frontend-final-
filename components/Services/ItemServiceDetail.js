@@ -1,12 +1,12 @@
 import { StyleSheet, View } from 'react-native'
 import React from 'react'
-import { Box, HStack, Heading, Stack, Text } from 'native-base'
+import { Box, HStack, Heading, Stack, Text, VStack } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { moneda } from '../../util/Moneda';
 
 
 export const ItemServiceDetail = ({service}) => {
-  // console.log( service)
+  
   return (
     <Box alignItems="center">
     <Box 
@@ -41,7 +41,14 @@ export const ItemServiceDetail = ({service}) => {
           fontWeight="500" ml="-0.5" mt="-1">
           Servicio para autos tipo {service?.type_car?.type}.
           </Text>
+          <Text fontSize="xs" 
+          fontWeight="500" ml="-0.5" mt="-1">
+          Duración del servicio <Text fontWeight="bold" >{service?.duration / 60 } hora.</Text>
+          </Text>
         </Stack>
+
+
+
         <HStack justifyContent={'space-between'} >
           <MaterialIcons
             name="explore"
@@ -53,17 +60,31 @@ export const ItemServiceDetail = ({service}) => {
              {service.business_id.location.formatted_address}
           </Text>
         </HStack>
-        <HStack 
-        alignItems="center" 
-        space={4} 
-        justifyContent="space-between"
-        >
+
+        
+        <HStack justifyContent={'space-around'}>
+          <VStack>
+          <Text>Garantía</Text>
           
-          
+          <Text fontSize="xs" 
+          fontWeight="500">Meses: {service.warranty.tiempo}</Text>
+          <Text fontSize="xs" 
+          fontWeight="500" >Kilometros: {service.warranty.km}</Text>
+          </VStack>
+          <VStack>
+            <Text>Incluye</Text>
+            {
+              service.consumables.map((item,i) => (
+                <Text fontSize="xs" 
+                fontWeight="500" key={i} >{item} </Text>
+              ))
+            }
+          </VStack>
         </HStack>
+       
       </Stack>
     </Box>
-  </Box>
+    </Box>
   )
 }
 

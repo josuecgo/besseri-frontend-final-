@@ -12,12 +12,14 @@ import { ProductContext } from '../../../util/context/Product/ProductContext';
 import { MapCarDefault } from '../../../components/Customer/MapCarDefault';
 
 
+
 export const MapServiceScreen = (props) => {
   const [addresses, setAddresses] = useState(null)
   const [defaultAddress, setDefaultAddress] = useState(null)
   const {type} = props.route.params;
   const [stores, setStores] = useState(null)
-  const {carDefault} = useContext(ProductContext);
+  const {carDefault,activeCar} = useContext(ProductContext);
+
   
   
  
@@ -54,6 +56,7 @@ export const MapServiceScreen = (props) => {
   }
 
   const getCars = async() => {
+    
     if (!carDefault) {
       Alert.alert('No tienes ningun auto seleccionado', 'Crea una o selecciona un auto', [
         {
@@ -108,7 +111,7 @@ export const MapServiceScreen = (props) => {
   
   
   
-  if(!addresses) return <ServiceSkeleton/>
+  if(!addresses || !carDefault) return <ServiceSkeleton/>
 
 
   
