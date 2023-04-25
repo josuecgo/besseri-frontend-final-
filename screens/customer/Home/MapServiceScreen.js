@@ -111,7 +111,7 @@ export const MapServiceScreen = (props) => {
   
   
   
-  if(!addresses || !carDefault) return <ServiceSkeleton/>
+  if(!addresses ) return <ServiceSkeleton/>
 
 
   

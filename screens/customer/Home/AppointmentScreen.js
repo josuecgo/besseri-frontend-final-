@@ -47,12 +47,22 @@ export const AppointmentScreen = (props) => {
 
 
   const agendarCita = async() => {
+    
+   
+   
+
+   
     try {
+      
       const userId = await getUserId();
       if(!userId || !service._id  || !service?.business_id._id || !hourSelected?.start || !hourSelected?.end) return showToaster('Faltan campos.')
-   
-      const startDate = new Date(hourSelected.start).toISOString()
-      const endDate  = new Date(hourSelected.end).toISOString()
+      
+      const date = new Date(hourSelected.start);
+      const startDate = moment(date.toISOString()).add(1, 'days').add(1, 'hour');
+      const date2 = new Date(hourSelected.end);
+      const endDate  = moment(date2.toISOString()).add(1, 'days').add(1, 'hour')
+
+     
       const data = {
         booked_by_id:userId,
         serviceId:service,
@@ -62,6 +72,9 @@ export const AppointmentScreen = (props) => {
         car,
         address
       }
+
+      
+      
       const apiCall = await axios.post(customer_api_urls.book_service,data)
      
       if (apiCall.data.success) {
@@ -75,6 +88,7 @@ export const AppointmentScreen = (props) => {
       }
 
       } catch (error) {
+      
       
         showToaster('Error con el servidor')
      
@@ -209,6 +223,8 @@ export const AppointmentScreen = (props) => {
       >
         Agendar
       </Button>
+
+      <View style={{height:50}} />
     </ScrollView>
   )
 }
@@ -219,7 +235,7 @@ const styles = StyleSheet.create({
   appointment: {
     margin: 10,
     justifyContent:'space-between',
-    flex:1
+  
   },
   item: {
     backgroundColor: 'white',

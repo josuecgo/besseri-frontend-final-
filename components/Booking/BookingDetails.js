@@ -3,10 +3,12 @@ import React from 'react'
 import { Box, Center, HStack, Heading, Stack, Text, VStack } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { moneda } from '../../util/Moneda';
+import moment from 'moment';
+import { dateToHour } from '../../util/utility-functions';
 
 export const BookingDetails = ({ booking }) => {
   const service = booking.serviceId;
-  
+ 
   return (
     <Box alignItems="center">
       <Box
@@ -36,7 +38,9 @@ export const BookingDetails = ({ booking }) => {
             }} fontWeight="700">
               {moneda(service?.price)}
             </Text>
-
+            <Text fontWeight={'bold'} >Dia: {moment(booking.startDate).format('LL') } </Text>
+            <Text fontWeight={'bold'} >Hora: {dateToHour(booking.startDate)} </Text>
+          
 
             <Text fontSize="xs"
               fontWeight="500" ml="-0.5" mt="-1">
@@ -44,7 +48,7 @@ export const BookingDetails = ({ booking }) => {
             </Text>
             <Text fontSize="xs"
               fontWeight="500" ml="-0.5" mt="-1">
-              Duración del servicio <Text fontWeight="bold" >{service?.duration / 60} hora.</Text>
+              Duración del servicio <Text fontWeight="bold" >{service?.duration / 60} horas.</Text>
             </Text>
           </Stack>
 

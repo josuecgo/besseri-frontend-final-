@@ -67,7 +67,7 @@ export const ItemAgenda = ({ service,goBooking }) => {
           <VStack>
          
             <Text fontWeight={'bold'} >Dia: {moment(service?.startDate).format('LL') } </Text>
-            <Text fontWeight={'bold'} >Hora: {dateToHour(service?.startDate)} </Text>
+            <Text fontWeight={'bold'} >Hora: {moment(service?.startDate).format('HH:mm')} </Text>
           </VStack>
 
 

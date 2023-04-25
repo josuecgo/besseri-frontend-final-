@@ -142,7 +142,7 @@ const matchesForModel = (id,searchId) => {
 export const dateToHour = (date) => {
   // console.log(date);
   const d = new Date(date)
-  
+ 
   d.setHours(d.getHours() + 1)
   
   return d.toLocaleTimeString('en-US', { hour12: false,hour: '2-digit', minute: '2-digit' })
