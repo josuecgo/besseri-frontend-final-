@@ -25,7 +25,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
   const {
     categorias,
     comision,modelo,
-    resetFiltro,productFiltrado,getProducts,loading,carCompatible,valueModel
+    resetFiltro,productFiltrado,getProducts,loading,carCompatible
   } = useContext(ProductContext);
 
   
@@ -79,7 +79,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
  
  useEffect(() => {
     const unsubscribe = props.navigation.addListener('focus', () => {
-     
+      
       carCompatible(false)
       
     });
@@ -94,7 +94,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
             
      
       
-      <View style={{flex:1,backgroundColor:Colors.bgColor}} >
+      <View style={{flex:1,backgroundColor:Colors.white}} >
         
         <View style={Platform.OS === 'ios' ? styles.filterContainer : styles.filterContainer2}>
           <SelectFilter/>

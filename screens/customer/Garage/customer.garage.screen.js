@@ -40,7 +40,8 @@ export const GarageScreen = (props) => {
   } = useSearchStore();
   const [showModal, setShowModal] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
-  
+  const [typeCar, setTypeCar] = useState([])
+  const [typeCarSelect, setTypeCarSelect] = useState(null)
   const [carSelect, setCarSelect] = useState(false)
   const [value, setValue] = useState(carDefault ? carDefault._id : '')
 
@@ -59,15 +60,18 @@ export const GarageScreen = (props) => {
         showToaster('Inicia sesión')
         return
       }
+     
       const apiCall = await axios.post(`${customer_api_urls.create_car}`, {
         userId,
         maker: valueMaker,
         model: valueModel,
-        year: valueYear
+        year: valueYear,
+        type:typeCarSelect
       });
 
       if (apiCall.status == api_statuses.success) {
-       
+        setTypeCarSelect(null)
+        
         setShowModal(false)
         getGarage()
         resetFiltros()
@@ -81,6 +85,17 @@ export const GarageScreen = (props) => {
     }
   }
 
+  const getTypeCar = async() => {
+    try {
+      const apiCall = await axios.get(`${customer_api_urls.get_type_car}`);
+
+     
+      setTypeCar(apiCall.data.data)
+
+    } catch (error) {
+      showToaster('No hay conexion')
+    }
+  }
 
   const onDelete = async(car) => {
     try {
@@ -108,7 +123,15 @@ export const GarageScreen = (props) => {
     setValue(car)
   }
 
+  const handleTypeCar = (car) => {
+   
+    setTypeCarSelect(car)
+  }
 
+
+  useEffect(() => {
+    getTypeCar()
+  }, [])
   
 
   return (
@@ -118,12 +141,15 @@ export const GarageScreen = (props) => {
         setShowModal={setShowModal}
         marcas={marcas}
         modelo={modelo}
+        typeCar={typeCar}
+        typeCarSelect={typeCarSelect}
         valueMaker={valueMaker}
         valueModel={valueModel}
         valueYear={valueYear}
         handleMarca={handleMarca}
         handleModel={handleModel}
         handleYear={handleYear}
+        handleTypeCar={handleTypeCar}
         resetFiltros={resetFiltros}
         years={years}
         guardarCar={guardarCar}
@@ -195,6 +221,8 @@ export const GarageScreen = (props) => {
 const ModalCreateCar = ({
   showModal,
   setShowModal,
+  typeCar,
+  typeCarSelect,
   marcas,
   modelo,
   years,
@@ -203,6 +231,7 @@ const ModalCreateCar = ({
   valueYear,
   handleMarca,
   handleModel,
+  handleTypeCar,
   handleYear,
   resetFiltros,
   guardarCar
@@ -262,6 +291,32 @@ const ModalCreateCar = ({
                 >
                   {
                     modelo.map((item) => <Select.Item key={item._id} label={item.name} value={item._id} />)
+                  }
+                </Select>
+              </FormControl>
+            )
+          }
+           {
+            typeCar && (
+              <FormControl mt="3">
+                <FormControl.Label>Tipo</FormControl.Label>
+                <Select
+                  selectedValue={typeCarSelect}
+                  minWidth={deviceWidth * 0.33}
+                  accessibilityLabel="Modelo"
+                  placeholder=""
+                  _selectedItem={{
+                    bg: "teal.600",
+                    endIcon: <CheckIcon size="5" />
+                  }}
+
+                  onValueChange={itemValue => handleTypeCar(itemValue)}
+                  style={styles.select}
+                  borderColor={Colors.white}
+                  backgroundColor={Colors.white}
+                >
+                  {
+                    typeCar.map((item) => <Select.Item key={item._id} label={item.type} value={item._id} />)
                   }
                 </Select>
               </FormControl>

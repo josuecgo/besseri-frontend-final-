@@ -16,6 +16,7 @@ import { MapCarDefault } from '../../../components/Customer/MapCarDefault';
 export const MapServiceScreen = (props) => {
   const [addresses, setAddresses] = useState(null)
   const [defaultAddress, setDefaultAddress] = useState(null)
+  
   const {type} = props.route.params;
   const [stores, setStores] = useState(null)
   const {carDefault,activeCar} = useContext(ProductContext);
@@ -72,7 +73,7 @@ export const MapServiceScreen = (props) => {
   const getStoreService = async() => {
     try {
       
-      const apiCall = await axios.post(`${customer_api_urls.get_stores_type_services}/${type}`,addresses);
+      const apiCall = await axios.post(`${customer_api_urls.get_stores_type_services}/${type}`,{addresses,carDefault});
      
       setStores(apiCall?.data?.data)
     } catch (error) {
@@ -98,6 +99,8 @@ export const MapServiceScreen = (props) => {
     setDefaultAddress(address)
   }
 
+
+
   useEffect(() => {
     getAddresses()
     getCars();
@@ -107,7 +110,7 @@ export const MapServiceScreen = (props) => {
     if (addresses) {
       getStoreService()
     }
-  }, [defaultAddress])
+  }, [defaultAddress,carDefault])
   
   
   

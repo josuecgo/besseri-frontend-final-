@@ -328,7 +328,16 @@ export const CustomerHomeStack = () => {
         }}
       />
 
-
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES}
+        component={CustomerProductsViewScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <CustomHeaderComponent {...props} name="Home" />
+          ),
+        }}
+      />
 
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SERVICIO}

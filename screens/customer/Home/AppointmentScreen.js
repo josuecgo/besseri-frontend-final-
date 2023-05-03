@@ -6,6 +6,7 @@ import axios from 'axios';
 import { customer_api_urls } from '../../../util/api/api_essentials';
 import { getUserId } from '../../../util/local-storage/auth_service';
 import moment from 'moment';
+import timeZone from 'moment-timezone';
 import { dateToHour } from '../../../util/utility-functions';
 import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constants';
 import { ItemServiceDetail } from '../../../components/Services/ItemServiceDetail';
@@ -29,6 +30,7 @@ export const AppointmentScreen = (props) => {
     try {
       setHourSelected(null)
       const url = `${customer_api_urls.get_availability_services}/${service._id}`
+      // console.log(daySelected);
       const apiCall = await axios.post(url,{date:daySelected})
 
       if (apiCall.data.data.length <= 0) {
@@ -58,22 +60,22 @@ export const AppointmentScreen = (props) => {
       if(!userId || !service._id  || !service?.business_id._id || !hourSelected?.start || !hourSelected?.end) return showToaster('Faltan campos.')
       
       const date = new Date(hourSelected.start);
-      const startDate = moment(date.toISOString()).add(1, 'days').add(1, 'hour');
+      const startDate = timeZone(date).utc();
+      // const startDate = moment(date.toISOString());
       const date2 = new Date(hourSelected.end);
-      const endDate  = moment(date2.toISOString()).add(1, 'days').add(1, 'hour')
+      const endDate  = timeZone(date2).utc()
 
-     
+      
       const data = {
         booked_by_id:userId,
         serviceId:service,
         businessId: service?.business_id._id,
-        startDate,
-        endDate,
+        startDate:startDate.tz('America/Mexico_City'),
+        endDate:endDate.tz('America/Mexico_City'),
         car,
         address
       }
-
-      
+        
       
       const apiCall = await axios.post(customer_api_urls.book_service,data)
      
@@ -109,7 +111,7 @@ export const AppointmentScreen = (props) => {
     
   }, [daySelected])
   
-  
+  // console.log(citas);
   return (
     <ScrollView
       contentContainerStyle={styles.appointment}
@@ -188,7 +190,7 @@ export const AppointmentScreen = (props) => {
                   }}
                   >
                     <Text color={hourSelected === item ? 'black' : '#FFFFFF'} >
-                      {dateToHour(item.start) } 
+                      {dateToHour(item.start)} 
                     </Text>
                     
                   </TouchableOpacity>

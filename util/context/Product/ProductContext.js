@@ -75,7 +75,7 @@ export const ProductProvider = ({children}) => {
             try {
                 setLoading(true)
                 const apiCall = await axios.get(customer_api_urls.get_products);
-    
+               
                 if (apiCall?.status === 200) {
                     await dispatch({
                         type:'getProductos',
@@ -91,7 +91,7 @@ export const ProductProvider = ({children}) => {
 
                 setLoading(false)
               } catch(e) {
-                console.log({getProducts:e})
+               
                 showToaster('No hay conexion con el servidor - 01');
                 setLoading(false)
             }

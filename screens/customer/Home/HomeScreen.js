@@ -2,12 +2,12 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { ButtonService } from '../../../components/Home/ButtonService'
 import { HStack } from 'native-base'
-import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../../util/constants'
+import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constants'
 
 export const HomeScreen = ({navigation}) => {
   return (
     <View style={styles.body} >
-      <Text>HomeScreen</Text>
+      <View/>
 
       <HStack
       justifyContent={'space-around'}
@@ -20,10 +20,12 @@ export const HomeScreen = ({navigation}) => {
         <ButtonService
         label={'Refacciones'}
         icono={require('../../../assets/images/iconos/bateria.png')}
+        onPress={()=>{ navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES) }}
         />
         <ButtonService
         label={'Lavado'}
         icono={require('../../../assets/images/iconos/carwash.png')}
+        onPress={()=>{ showToaster('Proximamente') }}
         />
       </HStack>
       

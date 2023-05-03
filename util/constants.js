@@ -114,6 +114,7 @@ export const PRODUCT_STATUS = {
 export const CUSTOMER_HOME_SCREEN_ROUTES = {
   HOME: 'Home',
   SHOW_AUTO_PARTS: 'Auto Parts',
+  SHOW_REFACCIONES: 'Refacciones',
   SERVICIO: 'SERVICIO',
   MAP_SERVICES: 'Map Services',
   APPOINTMENT_SERVICES: 'APPOINTMENT Services',

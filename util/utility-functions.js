@@ -1,5 +1,6 @@
 import moment from "moment";
-
+import timeZone from "moment-timezone";
+import { log } from "react-native-reanimated";
 export const getFormattedDate = () => {
   const monthNames = [
     'Jan',
@@ -140,10 +141,13 @@ const matchesForModel = (id,searchId) => {
 }
 
 export const dateToHour = (date) => {
-  // console.log(date);
-  const d = new Date(date)
- 
-  d.setHours(d.getHours() + 1)
   
-  return d.toLocaleTimeString('en-US', { hour12: false,hour: '2-digit', minute: '2-digit' })
+ 
+const d = moment(date).add(1,'hour')
+
+
+return d.format('HH:mm');
+  // const d = moment(date)
+
+  // return d.format("HH:mm:ss");
 }
