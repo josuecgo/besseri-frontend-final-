@@ -13,6 +13,7 @@ import { RiderNavigation } from '../../screens/rider/rider.navigation';
 import PrivacyPolicy from '../../screens/privacypolicy.screen';
 import { ChatStack } from './ChatStack';
 import { UpdateScreen } from '../../screens/UpdateScreen';
+import { BottomTabHome } from '../../screens/customer/navigation/BottomTabHome';
 
 const Stack = createStackNavigator();
 
@@ -39,6 +40,11 @@ export const MainNavigation = () => {
         name={'CustomerStack'}
         component={PartsServicesFunctionsDrawer}
       />
+      <Stack.Screen
+        name={'CustomerHomeStack'}
+        component={BottomTabHome}
+      />
+
       <Stack.Screen
         name={'RiderStack'}
         component={RiderNavigation}

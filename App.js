@@ -16,7 +16,7 @@ import { StripeProvider } from '@stripe/stripe-react-native';
 import RiderReducer from './util/ReduxStore/Reducers/RiderReducers/RiderReducer';
 
 import messaging from '@react-native-firebase/messaging';
-import { NativeBaseProvider } from 'native-base';
+import { NativeBaseProvider, extendTheme } from 'native-base';
 
 import { NotificationContext, NotificationProvider } from './util/context/NotificationContext';
 
@@ -25,6 +25,7 @@ import { ProductProvider } from './util/context/Product/ProductContext';
 import { ChatContext, ChatProvider } from './util/context/Chat/ChatContext';
 import { useChat } from './hooks/useChat';
 import FeedbackReducer from './util/ReduxStore/Reducers/CustomerReducers/FeedbackReducer';
+import UserInfoReducer from './util/ReduxStore/Reducers/CustomerReducers/UserInfoReducer';
 
 
 
@@ -34,10 +35,11 @@ const App = () => {
 
   const { getItem: getStoreRole } = useAsyncStorage(USER_ROLE);
   const store = combineReducers({
-    businessActions: businessProfileReducer,
+    // businessActions: businessProfileReducer,
     cart: CartReducer,
-    rider: RiderReducer,
-    feedback: FeedbackReducer
+    // rider: RiderReducer,
+    feedback: FeedbackReducer,
+    user: UserInfoReducer
     
   });
   const reduxStore = createStore(store);
@@ -54,7 +56,7 @@ const App = () => {
     })();
   }, []);
 
-      
+
    
   
   return(
@@ -67,7 +69,7 @@ const App = () => {
           
           <ProductProvider>
             <ChatProvider>
-              <NativeBaseProvider>
+              <NativeBaseProvider  >
                 <App2/>
               </NativeBaseProvider>
             </ChatProvider>

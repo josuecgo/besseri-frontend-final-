@@ -17,6 +17,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { ItemCar } from '../../../components/ItemCar';
 import { ThinlineSeparator } from '../../../components/CommonComponents';
+import { HeaderTitle } from '../../../components/Customer/HeaderTitle';
 
 export const GarageScreen = (props) => {
   const {
@@ -44,7 +45,7 @@ export const GarageScreen = (props) => {
   const [typeCarSelect, setTypeCarSelect] = useState(null)
   const [carSelect, setCarSelect] = useState(false)
   const [value, setValue] = useState(carDefault ? carDefault._id : '')
-
+  
   const handleModalize = () => {
     setShowModal(true)
   }
@@ -135,8 +136,8 @@ export const GarageScreen = (props) => {
   
 
   return (
-    <>
-      <ModalCreateCar
+    <View style={styles.garage} >
+      {/* <ModalCreateCar
         showModal={showModal}
         setShowModal={setShowModal}
         marcas={marcas}
@@ -159,20 +160,12 @@ export const GarageScreen = (props) => {
        setShowModalDelete={setShowModalDelete}
        onDelete={onDelete}
        carSelect={carSelect}
+      /> */}
+      <HeaderTitle
+      titulo={'Mi auto'}
+      nav={props.navigation.goBack}
       />
-      <HeaderBackground />
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => props?.navigation?.goBack()}
-          style={{ alignSelf: 'flex-start' }}>
-          <MaterialCommunityIcons
-            name='keyboard-backspace'
-            color={Colors.white}
-            size={25}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerText}>Garage</Text>
-      </View>
+    
 
 
 
@@ -214,7 +207,7 @@ export const GarageScreen = (props) => {
       />
 
      
-    </>
+    </View>
   )
 }
 
@@ -427,5 +420,9 @@ const styles = StyleSheet.create({
     marginHorizontal:10,
     paddingHorizontal:5,
     paddingVertical:5
+  },
+  garage:{
+    backgroundColor:Colors.bgColor,
+    flex:1
   }
 })

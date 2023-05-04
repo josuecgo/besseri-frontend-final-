@@ -33,14 +33,45 @@ export const getUserId = async() => {
     const userId = await AsyncStorage.getItem(ASYNC_STORAGE_NAMES.USER_ID);
     return userId;
 };
+export const saveAdressCustomer = async(userAddress) => {
+    const addressString = JSON.stringify(userAddress);
+    await AsyncStorage.setItem(ASYNC_STORAGE_NAMES.CUSTOMER_ADDRESS,addressString);
+ }
 export const getUserAddress = async() => {
     const userAddress = await AsyncStorage.getItem(ASYNC_STORAGE_NAMES.CUSTOMER_ADDRESS);
-    return userAddress;
+    return JSON.parse(userAddress);
 };
 export const getUser = async() => {
     const user = await AsyncStorage.getItem(ASYNC_STORAGE_NAMES.USER);
     return JSON.parse(user);
 } 
+export const saveUserType = async(user) => {
+    const userType = user?.isVendor ? USER_ROLES.vendor : user?.isCommonUser ? USER_ROLES.customer : USER_ROLES.rider;
+    await AsyncStorage.setItem(ASYNC_STORAGE_NAMES.USER_TYPE,userType);
+ }
+ 
+
+ export const getUserType = async() => {
+     const userType = await AsyncStorage.getItem(ASYNC_STORAGE_NAMES.USER_TYPE);
+     return userType;
+ }
+ export const logout = async() => {
+ 
+     await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.USER_ID);
+     await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.USER);
+     await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.USER_TYPE);
+     await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.BUSINESS_PROFILE);
+     await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.BUSINESS_STATUS);
+     await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.RIDER_PROFILE);
+     return true;
+ }
+
+
+
+
+
+
+
 export const saveBusinessProfile = async(data) => {
     await AsyncStorage.setItem(ASYNC_STORAGE_NAMES.BUSINESS_PROFILE,JSON.stringify(data));
 }
@@ -65,34 +96,10 @@ export const getRiderId = async() => {
     const riderId = await getRiderProfile();
     return riderId._id;
 }
-
-export const saveUserType = async(user) => {
-   const userType = user?.isVendor ? USER_ROLES.vendor : user?.isCommonUser ? USER_ROLES.customer : USER_ROLES.rider;
-   await AsyncStorage.setItem(ASYNC_STORAGE_NAMES.USER_TYPE,userType);
-}
-
-export const saveAdressCustomer = async(userAddress) => {
-   
-    await AsyncStorage.setItem(ASYNC_STORAGE_NAMES.CUSTOMER_ADDRESS,userAddress);
- }
-export const getUserType = async() => {
-    const userType = await AsyncStorage.getItem(ASYNC_STORAGE_NAMES.USER_TYPE);
-    return userType;
-}
 export const saveBusinessStatus = async(isBlocked) => {
     await AsyncStorage.setItem(ASYNC_STORAGE_NAMES.BUSINESS_STATUS,JSON.stringify(isBlocked));
 }
 export const getBusinessStatus = async() => {
     const status = await AsyncStorage.getItem(ASYNC_STORAGE_NAMES.BUSINESS_STATUS);
     return JSON.parse(status);
-}
-export const logout = async() => {
-
-    await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.USER_ID);
-    await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.USER);
-    await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.USER_TYPE);
-    await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.BUSINESS_PROFILE);
-    await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.BUSINESS_STATUS);
-    await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.RIDER_PROFILE);
-    return true;
 }

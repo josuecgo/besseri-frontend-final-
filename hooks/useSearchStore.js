@@ -10,7 +10,7 @@ export const useSearchStore = (  ) => {
     
     const [ isLoading, setIsLoading ] = useState(true);
     const [ marcas, setMarcas ] = useState([]);
-    const [modelo, setModelo] = useState(false);
+    const [modelo, setModelo] = useState([]);
     const [loading, setLoading] = useState(false);
     const [dataFilter,setDataFilter] = useState([]);
     const [servicesData,setServicesData] = useState([]);
@@ -85,7 +85,7 @@ export const useSearchStore = (  ) => {
         
         try {
             
-            
+           
             const apiCall = await axios.get(`${vendor_api_urls.get_models}/${id}`,);
             
             if (apiCall?.status == 200) {

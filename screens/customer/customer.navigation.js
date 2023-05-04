@@ -52,6 +52,8 @@ import { MapServiceScreen } from './Home/MapServiceScreen';
 import { AppointmentScreen } from './Home/AppointmentScreen';
 import { BookingScreen } from './Bookings/BookingScreen';
 import { BookingDetailsScreen } from './Bookings/BookingDetailsScreen';
+import { CreateCarScreen } from './Garage/customer.createCar.screen';
+import { BottomTabHome } from './navigation/BottomTabHome';
 
 
 const Stack = createStackNavigator();
@@ -144,70 +146,84 @@ export const PartsServicesFunctionsDrawer = () => {
 
 
   return (
-    <Drawer.Navigator
-      drawerContent={(props) => <CustomDrawerComponent
-        {...props}
-        countCustomer={countCustomer}
-        getNotificaciones={getNotificaciones}
-        deleteNotificaciones={deleteNotificaciones}
-      />}
-      initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
-      screenOptions={{
-        headerShown: false,
-      }}>
+    <Stack.Navigator
+    screenOptions={{ headerShown: false }}
+    >
+       <Stack.Screen
+        name={'AddAddress'}
+        component={SearchAddressScreen}
+        
+      />
+      <Stack.Screen
+        name={'AddMyCar'}
+        component={CreateCarScreen}
+      />
+     
+    </Stack.Navigator>
+    // <Drawer.Navigator
+    //   drawerContent={(props) => <CustomDrawerComponent
+    //     {...props}
+    //     countCustomer={countCustomer}
+    //     getNotificaciones={getNotificaciones}
+    //     deleteNotificaciones={deleteNotificaciones}
+    //   />}
+    //   initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
+    //   screenOptions={{
+    //     headerShown: false,
+    //   }}>
 
-      <Drawer.Screen
-        name={'Autopartes'}
-        component={CustomerHomeStack}
-      />
+    //   <Drawer.Screen
+    //     name={'Autopartes'}
+    //     component={CustomerHomeStack}
+    //   />
 
-      <Drawer.Screen
-        name={'Notificaciones'}
-        component={CustomerNotificationStack}
-      />
-      <Drawer.Screen
-        name={MAIN_ROUTES.CHATSCREEN}
-        component={ChatStack}
-      />
+    //   <Drawer.Screen
+    //     name={'Notificaciones'}
+    //     component={CustomerNotificationStack}
+    //   />
+    //   <Drawer.Screen
+    //     name={MAIN_ROUTES.CHATSCREEN}
+    //     component={ChatStack}
+    //   />
 
-      <Drawer.Screen
-        name={'Garage'}
-        component={GarageScreen}
-      />
+    //   <Drawer.Screen
+    //     name={'Garage'}
+    //     component={GarageScreen}
+    //   />
 
-      <Drawer.Screen
-        name={'Mi dirección'}
-        component={AddressStack}
-      />
-      <Drawer.Screen
-        name={'Pedidos'}
-        component={OrdersNavigator}
+    //   <Drawer.Screen
+    //     name={'Mi dirección'}
+    //     component={AddressStack}
+    //   />
+    //   <Drawer.Screen
+    //     name={'Pedidos'}
+    //     component={OrdersNavigator}
 
-      />
-      <Drawer.Screen
-        name={'Reservaciones'}
-        component={BookingsStack}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Drawer.Screen
-        name={'Términos y condiciones'}
-        component={PrivacyPolicy}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Drawer.Screen
-        name={'Perfil'}
-        component={ProfileScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
+    //   />
+    //   <Drawer.Screen
+    //     name={'Reservaciones'}
+    //     component={BookingsStack}
+    //     options={{
+    //       headerShown: false,
+    //     }}
+    //   />
+    //   <Drawer.Screen
+    //     name={'Términos y condiciones'}
+    //     component={PrivacyPolicy}
+    //     options={{
+    //       headerShown: false,
+    //     }}
+    //   />
+    //   <Drawer.Screen
+    //     name={'Perfil'}
+    //     component={ProfileScreen}
+    //     options={{
+    //       headerShown: false,
+    //     }}
+    //   />
 
 
-    </Drawer.Navigator>
+    // </Drawer.Navigator>
   );
 }
 

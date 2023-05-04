@@ -23,6 +23,7 @@ export const MAIN_ROUTES = {
   AUTH_STACK:'AuthStack',
   VENDOR_STACK:'VendorStack',
   CUSTOMER_STACK:'CustomerStack',
+  CUSTOMER_HOME_STACK:'CustomerHomeStack',
   RIDER_STACK:'RiderStack',
   CHATSCREEN : 'Chats'
 }
@@ -112,8 +113,14 @@ export const PRODUCT_STATUS = {
 };
 
 export const CUSTOMER_HOME_SCREEN_ROUTES = {
-  HOME: 'Home',
-  SHOW_AUTO_PARTS: 'Auto Parts',
+  HOME: 'HomeStack',
+  SHOW_AUTO_PARTS: 'Home',
+
+  
+  NOTIFICATION_HOME: 'Notificaciones',
+
+  ACCOUNT_HOME : 'Cuenta',
+
   SHOW_REFACCIONES: 'Refacciones',
   SERVICIO: 'SERVICIO',
   MAP_SERVICES: 'Map Services',
@@ -150,7 +157,12 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   CHAT_SCREEN: 'Chat Screen',
   PERFIL: 'Perfil'
 };
-
+export const BOTTOM_TAB_CUSTOMER_ROUTES = {
+  HOME_SCREEN: 'Inicio',
+  NOTIFICATION_STACK: 'Notification Stack',
+  ACCOUNT: 'Cuenta Stack',
+  ACCOUNT2: 'Cuenta Stack2',
+};
 export const BOTTOM_TAB_RIDER_ROUTES = {
   DUMMY_SCREEN: 'Dummy Screen',
   RIDER_EXPLORE:'Rider Explore',
@@ -159,6 +171,8 @@ export const BOTTOM_TAB_RIDER_ROUTES = {
   RIDER_PROFILE:'Rider Profile', 
   RIDER_NOTIFICATION:'Rider Notification',   
 };
+
+
 export const RIDER_STACK_ROUTES = {
   RIDER_ORDER_DETAIL:'Rider Order Detail',
   DESCRIPTION:'Description',

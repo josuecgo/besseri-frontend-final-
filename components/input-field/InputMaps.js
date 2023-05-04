@@ -1,6 +1,6 @@
 import { FlatList, StyleSheet, View } from 'react-native'
 import React, { useEffect } from 'react'
-import { Avatar, HStack, Text, Input, Box, Pressable } from 'native-base'
+import { Avatar, HStack, Text, Input, Box, Pressable, Divider } from 'native-base'
 
 import Colors from '../../util/styles/colors'
 
@@ -27,7 +27,7 @@ export const InputMaps = ({ placeholder, onDebounce, addresses, onChangeDirectio
         mx="3"
         placeholder={placeholder}
         onChangeText={debounce}
-        color={Colors.dark}
+        color={Colors.white}
         value={textValue}
 
       />
@@ -38,7 +38,8 @@ export const InputMaps = ({ placeholder, onDebounce, addresses, onChangeDirectio
             data={addresses}
             renderItem={({ item }) => (
               <Box
-                pl={["0", "4"]} pr={["0", "5"]} 
+                pl={["0", "4"]} 
+                pr={["0", "5"]} 
 
               >
                 <Pressable
@@ -46,17 +47,18 @@ export const InputMaps = ({ placeholder, onDebounce, addresses, onChangeDirectio
                 >
                   <HStack
                     alignItems={'center'}
-                    justifyContent={'center'}
-                    w="100%"
+                    // justifyContent={'space-around'}
+                    space={4}
+                    w="90%"
                   >
                     <Avatar size="25px"
                       source={require('../../assets/images/iconos/ubicacion.png')}
-                      backgroundColor='transparent'
+                      backgroundColor={Colors.white}
                     />
-                    <Text width="100%" flexShrink={1}  > {item?.formatted_address} </Text>
+                    <Text width="100%" flexShrink={1} color={Colors.white} > {item?.formatted_address} </Text>
                   </HStack>
                 </Pressable>
-
+              <Divider />
               </Box>
 
             )}
@@ -72,7 +74,7 @@ export const InputMaps = ({ placeholder, onDebounce, addresses, onChangeDirectio
 
 const styles = StyleSheet.create({
   inpSearch: {
-    // backgroundColor:'red',
+    backgroundColor:'transparent',
     paddingVertical: 10,
     // flex:1
 

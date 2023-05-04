@@ -11,6 +11,8 @@ import CustomSafeAreaViewComponent from '../components/custom-safe-area-view/cus
 import {
   getUserType,
   getUserId,
+  getUserAddress,
+  getCarActive,
 } from '../util/local-storage/auth_service';
 import {MAIN_ROUTES, showToaster, USER_ROLES} from '../util/constants';
 import {
@@ -20,11 +22,13 @@ import axios from 'axios';
 import DeviceInfo from 'react-native-device-info';
 import {deviceWidth} from '../util/Dimentions';
 import Video from 'react-native-video';
+import { useDispatch } from 'react-redux';
+import { addAddressToUser, addCarActiveToUser } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 
 
 const SplashScreen = ({navigation}) => {
   const {width, height} = useWindowDimensions();
-  
+  const dispatch = useDispatch()
 
 
 
@@ -57,18 +61,29 @@ const SplashScreen = ({navigation}) => {
     }
     const user_id = await getUserId();
     const userType = await getUserType();
-    setTimeout(() => {
+    const addressCustomer = await getUserAddress();
+    const carActive = await getCarActive();
+   
+    setTimeout(async() => {
       if (user_id && userType) {
      
         if (userType == USER_ROLES.customer) {
-          navigation.replace(MAIN_ROUTES.CUSTOMER_STACK);
+          navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
         } else {
           showToaster('Usuario no encontrado.')
         }
       
       } else {
         // navigation.replace(MAIN_ROUTES.AUTH_STACK);
-        navigation.replace(MAIN_ROUTES.CUSTOMER_STACK);
+        if (addressCustomer && carActive) {
+         
+          await dispatch(addAddressToUser(addressCustomer));
+          await dispatch(addCarActiveToUser(carActive));
+          navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
+        }else{
+          navigation.replace(MAIN_ROUTES.CUSTOMER_STACK);
+        }
+       
       }
     }, 2200);
     

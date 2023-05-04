@@ -1,12 +1,13 @@
-import { Image, Platform } from 'react-native'
+import { Image, Platform, View } from 'react-native'
 import React from 'react'
 import { deviceHeight, deviceWidth } from '../../util/Dimentions'
+import Colors from '../../util/styles/colors'
 
 export const HeaderBackground = ({hios=0.12,handroid=0.10}) => {
 
   return (
     <>
-      <Image
+      {/* <Image
         source={require('../../assets/images/header2.png')}
         style={{
           position: 'absolute',
@@ -15,6 +16,14 @@ export const HeaderBackground = ({hios=0.12,handroid=0.10}) => {
           // resizeMode:'cover'
           resizeMode:'stretch'
         }}
+      /> */}
+      <View
+      style={{
+        backgroundColor:Colors.bgColor,
+        width:deviceWidth,
+        height:Platform.OS == 'ios' ? deviceHeight * hios  : deviceHeight * handroid,
+        position: 'absolute',
+      }}
       />
     </>
   )

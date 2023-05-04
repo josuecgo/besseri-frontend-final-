@@ -1,5 +1,6 @@
 const Colors = {
-  primaryColor: '#E6A832',
+  
+  primaryColor: '#5B7CF4',
   primaryColorShade: '#f8e3bc',
   secondaryColorBlueShade: '#365575',
   secondaryColorGreenShade: '#2A5223',
@@ -23,7 +24,8 @@ const Colors = {
   lightPink:'#ffe7ea',
   lightPrimary:'#fcf6e9',
   lightGreen:'#e3fbe3',
-
+  lightBlack :'#0F0F0F',
+  lightBorder: '#232323',
   primaryGradient: [ '#1b1464','#2e3192','#254da1'],
   secondaryGradient: [ '#2c954a','#004c37'],
   terciaryGradient: ['#f15a24', '#fcee21'],
@@ -33,14 +35,15 @@ const Colors = {
   terciarySolid: '#47954A',
 
   // bgColor:'#eaedf5',
-  bgColor:'#000',
+  bgColor:'#000000',
   info:'#46ade0',
   succes:'#47954A',
   attention:'#F9B410',
   alert:'#FF6D00',
   error:'#ff0000',
   textSecundary: '#5F6368',
-  textPrimary:'#666666'
+  textPrimary:'#666666',
+  
 };
 
 export default Colors;
