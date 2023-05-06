@@ -6,6 +6,7 @@ import {
   ScrollView,
   useColorScheme,
   useWindowDimensions,
+  ImageBackground,
 } from 'react-native';
 import Colors from '../../util/styles/colors';
 
@@ -23,10 +24,16 @@ const CustomSafeAreaViewComponent = ({children}) => {
 
   return (
     <View style={backgroundStyle}>
-      <KeyboardAvoidingView
+      {/* <ImageBackground
+      source={require('../../assets/images/car_fondo.png')}
+      style={backgroundStyle}
+      > */}
+         <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <ScrollView>{children}</ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false} >{children}</ScrollView>
       </KeyboardAvoidingView>
+      {/* </ImageBackground> */}
+     
     </View>
   );
 };

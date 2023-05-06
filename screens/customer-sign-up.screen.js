@@ -1,5 +1,5 @@
-import React, {useRef, useState} from 'react';
-import {StyleSheet, View,Text,Alert, Linking} from 'react-native';
+import React, { useRef, useState } from 'react';
+import { StyleSheet, View, Text, Alert, Linking, ImageBackground } from 'react-native';
 import CustomSafeAreaViewComponent from '../components/custom-safe-area-view/custom-safe-area-view.component';
 import TopCircleComponent from '../components/top-circle/top-circle.component';
 import CommonStyles from '../util/styles/styles';
@@ -17,12 +17,17 @@ import ButtonComponent from '../components/button/button.component';
 import { api_statuses, api_urls } from '../util/api/api_essentials';
 import axios from 'axios';
 import LoaderComponent from '../components/Loader/Loader.component';
-import { adjust, deviceHeight } from '../util/Dimentions';
+import { adjust, deviceHeight, deviceWidth } from '../util/Dimentions';
 import { ButtonIconoInput } from '../components/button/ButtonIconoInput';
 import { comparaText } from '../util/helpers/StatusText';
 
 import CheckboxTerms from '../components/button/CheckboxTerms';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { HeaderTitle } from '../components/Customer/HeaderTitle';
+import { NewLogo } from '../components/NewLogo';
+import { BtnPrincipal } from '../components/Customer/BtnPrincipal';
+import { InputTxt } from '../components/Customer/InputTxt';
+import { HStack } from 'native-base';
 
 
 
@@ -35,17 +40,17 @@ const CREDENTIAL_KEYS = {
   PASSWORDCONFIRM: 'Confirmar contraseña'
 };
 
-const CustomerSignUpScreen = ({navigation}) => {
-  
+const CustomerSignUpScreen = ({ navigation }) => {
 
-  const [showLoader,setShowLoader] = useState(false);
+
+  const [showLoader, setShowLoader] = useState(false);
   const [userCredentials, setUserCredentials] = useState({
     [CREDENTIAL_KEYS.FULL_NAME]: '',
     [CREDENTIAL_KEYS.LASTNAME]: '',
     [CREDENTIAL_KEYS.EMAIL_ADDRESS]: '',
     [CREDENTIAL_KEYS.PHONE_NUMBER]: '',
-    [CREDENTIAL_KEYS.PASSWORD] : '',
-    [CREDENTIAL_KEYS.CONFIRMPASSWORD] : '',
+    [CREDENTIAL_KEYS.PASSWORD]: '',
+    [CREDENTIAL_KEYS.CONFIRMPASSWORD]: '',
   });
   const [isSelected, setIsSelected] = useState(false);
   const [showPass, setShowPass] = useState(true);
@@ -55,19 +60,19 @@ const CustomerSignUpScreen = ({navigation}) => {
   const phoneNumberRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  
+
   const onChangeText = (inputText, key) => {
     setUserCredentials({
       ...userCredentials,
       [key]: inputText,
     });
   };
-  
 
 
 
-  const sendCode = async(msj) => {
-    
+
+  const sendCode = async (msj) => {
+
 
     try {
       setShowLoader(true);
@@ -77,18 +82,18 @@ const CustomerSignUpScreen = ({navigation}) => {
         name: userCredentials[CREDENTIAL_KEYS.FULL_NAME] + ' ' + userCredentials[CREDENTIAL_KEYS.LASTNAME],
         phone: userCredentials[CREDENTIAL_KEYS.PHONE_NUMBER],
         password: userCredentials[CREDENTIAL_KEYS.PASSWORD],
-        isCommonUser:true,
-        isVendor:false,
-        isRider:false,
-        msj:msj
+        isCommonUser: true,
+        isVendor: false,
+        isRider: false,
+        msj: msj
       }
-      const apiCall = await axios.post(url,body);
+      const apiCall = await axios.post(url, body);
       if (apiCall.status == api_statuses.success && apiCall.data.success == true) {
         setShowLoader(false);
-       
+
         navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.OTP_PASSWORD, {
           otp: apiCall.data.otp,
-          body:body
+          body: body
         });
       }
     } catch (e) {
@@ -102,7 +107,7 @@ const CustomerSignUpScreen = ({navigation}) => {
   const generateOtp = async () => {
     let validPhone = userCredentials[CREDENTIAL_KEYS.PHONE_NUMBER].length > 9
     let validName = userCredentials[CREDENTIAL_KEYS.FULL_NAME].length > 0 && userCredentials[CREDENTIAL_KEYS.LASTNAME].length > 0
-    let valid = comparaText(userCredentials[CREDENTIAL_KEYS.CONFIRMPASSWORD],userCredentials[CREDENTIAL_KEYS.PASSWORD]) && userCredentials[CREDENTIAL_KEYS.PASSWORD].length > 0;
+    let valid = comparaText(userCredentials[CREDENTIAL_KEYS.CONFIRMPASSWORD], userCredentials[CREDENTIAL_KEYS.PASSWORD]) && userCredentials[CREDENTIAL_KEYS.PASSWORD].length > 0;
     if (!validPhone) {
       showToaster('Introduce un numero correcto');
       return
@@ -124,7 +129,7 @@ const CustomerSignUpScreen = ({navigation}) => {
             {
               text: "SMS",
               onPress: () => sendCode('sms'),
-              
+
             },
             // { text: "Whatsapp", onPress: () => sendCode('whatsapp') }
           ]
@@ -132,19 +137,19 @@ const CustomerSignUpScreen = ({navigation}) => {
       } else {
         showToaster('Acepta términos y condiciones de uso')
       }
-    }else{
+    } else {
       showToaster('Contraseñas no coinciden')
     }
-    
-    
+
+
   }
-  
+
 
   const handlePress = () => {
 
     if (isSelected) {
       setIsSelected(!isSelected)
-    }else{
+    } else {
       Alert.alert(
         "",
         "Aceptar terminos y condiciones",
@@ -152,7 +157,7 @@ const CustomerSignUpScreen = ({navigation}) => {
           {
             text: "Leer terminos y condiciones",
             onPress: () => navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.PRIVACY_POLICY),
-           
+
           },
           { text: "Si acepto", onPress: () => setIsSelected(!isSelected) }
         ]
@@ -162,29 +167,77 @@ const CustomerSignUpScreen = ({navigation}) => {
 
   };
 
-  const goPoliticas = async() => {
+  const goPoliticas = async () => {
 
     await Linking.openURL('https://besserimx.com/');
 
   }
- 
+
   return (
+    
     <CustomSafeAreaViewComponent>
-      <LoaderComponent isVisible={showLoader}/>
-      <TopCircleComponent
-        textHeading="Crear cuenta"
-      />
-      
+       <HeaderTitle titulo={'Registrarse'} nav={() => navigation.goBack()} />
+      <ImageBackground
+          source={require('../assets/images/car_fondo.png')}
+          style={[styles.content]}
+        >
+      <LoaderComponent isVisible={showLoader} />
+     
+      <View style={styles.logoContent} >
+        <NewLogo width={deviceWidth} />
+      </View>
 
 
-      <View
-        style={[
-          CommonStyles.flexCenter,
-          CommonStyles.justifySpaceBetween,
-          styles.body,
-        ]}>
-        <View style={CommonStyles.flexCenter}>
-          <InputFieldComponent
+      <View style={[styles.body]}>
+          <InputTxt
+            label={'Email'}
+            placeholderText={'Email'}
+          />
+          <InputTxt
+            label={'Contraseña'}
+            placeholderText={'Contraseña'}
+          />
+          <InputTxt
+            label={'Numero Telefonico'}
+            placeholderText={'Numero Telefonico'}
+          />
+       
+
+        <View style={{justifyContent:'center',alignItems:'center'}} >
+          <TouchableOpacity onPress={goPoliticas} >
+            <HStack>
+              <Text style={{ ...CommonStyles.h2 }} >¿Ya tienes una cuenta? {' '}</Text>
+              <Text style={[CommonStyles.h2,{color:Colors.primaryColor}] }>INGRESA</Text>
+            </HStack>
+            
+          </TouchableOpacity>
+          <CheckboxTerms
+            isSelected={isSelected}
+            roleName={'terminos'}
+            text={'He leído y acepto los términos y condiciones de uso'}
+            txtColor={Colors.white}
+            handlePress={handlePress}
+
+          />
+          <TouchableOpacity onPress={goPoliticas} >
+            <Text style={{ ...CommonStyles.h2 }} >Politicas de privacidad</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={goPoliticas} >
+            <HStack>
+              <Text style={{ ...CommonStyles.h2 }} >¿Ya tienes una cuenta? {' '}</Text>
+              <Text style={[CommonStyles.h2,{color:Colors.primaryColor}] }>INGRESA</Text>
+            </HStack>
+            
+          </TouchableOpacity>
+          <BtnPrincipal
+          text={'Crear perfil'}
+        />
+        </View>
+        
+        
+        {/* <View style={CommonStyles.flexCenter}> */}
+
+        {/* <InputFieldComponent
             // icon={<Ionicons color={Colors.dark} size={20} name="person" />}
             keyboardType={KEYBOARD_TYPES.DEFAULT}
             onChangeText={inputText => {
@@ -282,21 +335,33 @@ const CustomerSignUpScreen = ({navigation}) => {
             buttonText="CREAR CUENTA"
             handlePress={generateOtp}
             width={200}
-          />
-        </View>
+          /> */}
+        {/* </View> */}
+        
       </View>
-    </CustomSafeAreaViewComponent>
+
+     </ImageBackground>
+     
+     </CustomSafeAreaViewComponent>
+   
   );
 };
 
 export default CustomerSignUpScreen;
 
 const styles = StyleSheet.create({
-  body:{
-    marginTop: deviceHeight * 0.15,
-    backgroundColor:Colors.white,
+  body: {
     paddingVertical: deviceHeight * 0.10,
-    marginHorizontal: SCREEN_HORIZONTAL_MARGIN_FORM,
-    elevation:1
-  }
+    marginHorizontal:10
+  },
+  logoContent: {
+    marginBottom: 0,
+    // marginTop:20
+    marginTop:15
+  },
+  content: {
+    flex: 1,
+    resizeMode: 'contain',
+  
+  },
 })

@@ -1,5 +1,5 @@
 const Colors = {
-  
+  placeholder:'#393939',
   primaryColor: '#5B7CF4',
   primaryColorShade: '#f8e3bc',
   secondaryColorBlueShade: '#365575',
@@ -14,9 +14,9 @@ const Colors = {
   lighter: '#F3F3F3',
   light: '#DAE1E7',
   dark: '#444',
-  darker: '#222',
+  darker: '#232323',
   black: '#000',
-  brightBlue:'#0096FF',
+  brightBlue:'#039EF2',
   red:'red',
   lightRed:'#ffc6c4',
   alertRed:'#ff8480',
@@ -36,6 +36,7 @@ const Colors = {
 
   // bgColor:'#eaedf5',
   bgColor:'#000000',
+  bgInput:'#0F0F0F',
   info:'#46ade0',
   succes:'#47954A',
   attention:'#F9B410',

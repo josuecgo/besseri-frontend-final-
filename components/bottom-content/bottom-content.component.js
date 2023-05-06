@@ -6,7 +6,7 @@ import {SCREEN_HORIZONTAL_MARGIN} from '../../util/constants';
 const BottomContentComponent = ({children}) => {
   return (
     <View
-      style={[CommonStyles.flexCenter, {marginTop: SCREEN_HORIZONTAL_MARGIN}]}>
+      style={[CommonStyles.flexCenter, {marginVertical: SCREEN_HORIZONTAL_MARGIN}]}>
       {children}
     </View>
   );

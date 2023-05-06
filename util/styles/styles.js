@@ -1,7 +1,44 @@
 import {StyleSheet} from 'react-native';
 import Colors from './colors';
+import { adjust } from '../Dimentions';
 
 const CommonStyles = StyleSheet.create({
+  screenY:{
+    backgroundColor:Colors.bgColor,
+    flex:1,
+    paddingVertical:20
+
+  },
+  h1:{
+    fontWeight:'700',
+    fontFamily:'Arial',
+    fontSize:adjust(20),
+    color:Colors.white
+  },
+  h2:{
+    fontWeight:'700',
+    fontFamily:'Roboto',
+    fontSize:adjust(14),
+    color:Colors.white
+  },
+  h3:{
+    fontWeight:'700',
+    fontFamily:'Arial',
+    fontSize:adjust(14),
+    color:Colors.white
+  },
+  h4:{
+    fontWeight:'700',
+    fontFamily:'Arial',
+    fontSize:adjust(18),
+    color:Colors.white
+  },
+  h5:{
+    fontWeight:'700',
+    fontFamily:'Arial',
+    fontSize:adjust(16),
+    color:'#000000'
+  },
   flexOneCenter: {
     justifyContent:'center',
     alignItems:'center',

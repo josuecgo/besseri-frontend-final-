@@ -60,10 +60,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   headerText: {
-    // ...CommonStyles.fontFamily,
-    color: Colors.white,
-    fontSize: adjust(15),
-
+    ...CommonStyles.h2,
+   
+    
   },
   btn: {
     backgroundColor:Colors.darker,

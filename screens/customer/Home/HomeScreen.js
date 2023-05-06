@@ -8,39 +8,21 @@ import Colors from '../../../util/styles/colors'
 import { getCarActive } from '../../../util/local-storage/auth_service'
 import { addCarActiveToUser } from '../../../util/ReduxStore/Actions/CustomerActions/UserInfoActions'
 import { deviceWidth } from '../../../util/Dimentions'
+import { BackgroundCar } from '../../../components/Background/BackgroundCar'
+import { MyCarActive } from '../../../components/Customer/MyCarActive'
 
 export const HomeScreen = ({navigation}) => {
-  const {address,carActive} = useSelector(state => state.user);
-  const dispatch = useDispatch()
 
 
-  // Lo puedo volver un hook
-  const getInfoUser = async() => {
-    if (carActive) {
-      return
-    }
-    const carActive = await getCarActive();
-    dispatch( addCarActiveToUser(carActive) )
-  }
-  useEffect(() => {
-    getInfoUser()
-  }, [])
+
+
   
   return (
     <View style={styles.body} >
-      <HStack alignItems={'center'} space={2} mx={2} >
-
-        <Avatar size={'lg'} ></Avatar>
-        <Heading size={'sm'} color={Colors.white} >{carActive?.marca?.name} {carActive?.modelo?.name}</Heading>
-     
-      </HStack>
+      
+      <MyCarActive/>
        
-       <Image
-       alt='car'
-       source={require('../../../assets/images/car_home.png')}
-       resizeMode='cover'
-       style={styles.img}
-       />
+      <BackgroundCar/>
      
       <HStack
       justifyContent={'space-around'}
@@ -77,8 +59,5 @@ const styles = StyleSheet.create({
     justifyContent:'space-between',
     backgroundColor:Colors.bgColor
   },
-  img:{
-    width:deviceWidth,
-    height:deviceWidth - 10
-  }
+ 
 })

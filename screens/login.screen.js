@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { StyleSheet, Text, useWindowDimensions, View, Alert } from 'react-native';
+import { StyleSheet, Text, useWindowDimensions, View, Alert, ImageBackground } from 'react-native';
 import Colors from '../util/styles/colors';
 import CommonStyles from '../util/styles/styles';
 import InputFieldComponent from '../components/input-field/input-field.component';
@@ -24,8 +24,11 @@ import Loader from '../components/Loader/Loader.component';
 import { saveAdressCustomer, saveBusinessProfile, saveBusinessStatus, saveRiderProfile, saveUserData } from '../util/local-storage/auth_service';
 import { useDispatch } from 'react-redux';
 import * as  BusinessProfileActions from '../util/ReduxStore/Actions/VendorActions/BusinessProfleActions';
-import { deviceHeight } from '../util/Dimentions';
+import { deviceHeight, deviceWidth } from '../util/Dimentions';
 import { HeaderTitle } from '../components/Customer/HeaderTitle';
+import { NewLogo } from '../components/NewLogo';
+import { InputTxt } from '../components/Customer/InputTxt';
+import { BtnPrincipal } from '../components/Customer/BtnPrincipal';
 
 
 const CREDENTIAL_KEYS = {
@@ -93,7 +96,7 @@ const LoginScreen = ({ navigation }) => {
   };
 
   const goHome = () => {
-    navigation.replace(MAIN_ROUTES.CUSTOMER_STACK);
+    navigation.goBack();
   }
 
   return (
@@ -101,10 +104,25 @@ const LoginScreen = ({ navigation }) => {
       <Loader isVisible={showLoader} />
       {/* <TopCircleComponent textHeading="Iniciar Sesión" /> */}
 
-      <HeaderTitle titulo={'Iniciar Sesión'} iconName='home' nav={goHome} />     
-
-      <View style={[styles.content]}>
-        <View style={styles.card} >
+      <HeaderTitle titulo={'Iniciar Sesión'}  nav={goHome} />  
+      <View style={styles.logoContent} >
+        <NewLogo width={deviceWidth}  />
+      </View>   
+      
+      <ImageBackground
+      source={require('../assets/images/car_fondo.png')} 
+      style={[styles.content]}
+      >
+        <Text style={{...CommonStyles.h1}} >Iniciar sesión</Text>
+        <InputTxt
+        label={'Email'}
+        placeholderText={'Email'}
+        />
+        <InputTxt
+        label={'Contraseña'}
+        placeholderText={'Contraseña'}
+        />
+        {/* <View style={styles.card} >
 
 
           <View style={CommonStyles.flexCenter}>
@@ -179,13 +197,31 @@ const LoginScreen = ({ navigation }) => {
             </Text>
           </BottomContentComponent>
 
-        </View>
-      </View>
+        </View> */}
+      </ImageBackground>
+      <BottomContentComponent>
+            <Text style={[CommonStyles.h2]}>
+              <Text style={[CommonStyles.h2]} >¿Ya tienes una cuenta? </Text>
+              <Text
+
+                onPress={() => {
+                  navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.CUSTOMER_SIGN_UP);
+                }}
+                style={[CommonStyles.h2,{textTransform:'uppercase',color:Colors.brightBlue}]}>
+                Regístrate
+              </Text>
+            </Text>
+      </BottomContentComponent>
+
+      <BtnPrincipal
+      text={'Ingresar'}
+      />
     </CustomSafeAreaViewComponent>
   );
 };
 
 const styles = StyleSheet.create({
+
   header: {
     position: 'absolute',
     top: 20,
@@ -196,9 +232,13 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingHorizontal: 15,
-    justifyContent: 'center',
-    paddingVertical: '22%'
+    resizeMode: 'contain',
+    height:deviceHeight * 0.5,
+    justifyContent:'center',
+    paddingHorizontal:16
+  },
+  logoContent:{
+    marginVertical:30
   },
   card: {
     justifyContent: 'center',

@@ -1,6 +1,6 @@
 import { ToastAndroid,Platform,Alert } from "react-native";
 
-export const SCREEN_HORIZONTAL_MARGIN = 30;
+export const SCREEN_HORIZONTAL_MARGIN = 20;
 export const SCREEN_HORIZONTAL_MARGIN_FORM = 10;
 export const INCREMENT_CONSTANT = 20;
 
@@ -120,6 +120,8 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   NOTIFICATION_HOME: 'Notificaciones',
 
   ACCOUNT_HOME : 'Cuenta',
+  ACCOUNT_MY_CARS : 'Mis autos',
+  ACCOUNT_PEDIDOS : 'Pedidos',
 
   SHOW_REFACCIONES: 'Refacciones',
   SERVICIO: 'SERVICIO',
@@ -231,15 +233,28 @@ export const showToaster = (message) => {
   }
 }
 
-export const showAlertMsg = (message) => {
+
+export const showAlertLogin = (goLogin) => {
  
-  Alert.alert('Alert Title', 'My Alert Msg', [
+  Alert.alert('Necesitas iniciar sesion!', 'Registrate o inicia sesion', [
     {
       text: 'Cancel',
-      onPress: () => console.log('Cancel Pressed'),
+      onPress: () => {},
       style: 'cancel',
     },
-    {text: 'OK', onPress: () => console.log('OK Pressed')},
+    {text: 'Iniciar', onPress: () => goLogin()},
+  ]);
+ 
+}
+export const showAlertMsg = ({titulo = '',subtitulo = '',cancel = () => {},onPress = () => {}}) => {
+ 
+  Alert.alert(titulo, subtitulo, [
+    {
+      text: 'Cancel',
+      onPress: () => cancel(),
+      style: 'cancel',
+    },
+    {text: 'OK', onPress: () => onPress()},
   ]);
  
 }

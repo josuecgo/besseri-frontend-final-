@@ -137,30 +137,7 @@ export const GarageScreen = (props) => {
 
   return (
     <View style={styles.garage} >
-      {/* <ModalCreateCar
-        showModal={showModal}
-        setShowModal={setShowModal}
-        marcas={marcas}
-        modelo={modelo}
-        typeCar={typeCar}
-        typeCarSelect={typeCarSelect}
-        valueMaker={valueMaker}
-        valueModel={valueModel}
-        valueYear={valueYear}
-        handleMarca={handleMarca}
-        handleModel={handleModel}
-        handleYear={handleYear}
-        handleTypeCar={handleTypeCar}
-        resetFiltros={resetFiltros}
-        years={years}
-        guardarCar={guardarCar}
-      />
-      <ModalDeleteCar
-       showModalDelete={showModalDelete}
-       setShowModalDelete={setShowModalDelete}
-       onDelete={onDelete}
-       carSelect={carSelect}
-      /> */}
+   
       <HeaderTitle
       titulo={'Mi auto'}
       nav={props.navigation.goBack}

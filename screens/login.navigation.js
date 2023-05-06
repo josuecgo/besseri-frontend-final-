@@ -29,15 +29,19 @@ export const LSFS = ({route}) => {
     // initialRouteName={initial}
     >
 
-      <Stack.Screen
-        name={LOGIN_SIGNUP_FORGOT_ROUTES.HOMEPAGE}
-        component={HomePageScreen}
-      />
-
+     
       <Stack.Screen
         name={LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN}
         component={LoginScreen}
       />
+
+      <Stack.Screen
+        name={LOGIN_SIGNUP_FORGOT_ROUTES.CUSTOMER_SIGN_UP}
+        component={CustomerSignUpScreen}
+      />
+
+
+
       <Stack.Screen
         name={LOGIN_SIGNUP_FORGOT_ROUTES.SIGN_UP_CUSTOMER}
         component={SignUpScreenCustomer}
@@ -60,10 +64,7 @@ export const LSFS = ({route}) => {
         component={RiderSignup}
         initialParams={{role: ROLES.BUSINESS}}
       />
-      <Stack.Screen
-        name={LOGIN_SIGNUP_FORGOT_ROUTES.CUSTOMER_SIGN_UP}
-        component={CustomerSignUpScreen}
-      />
+
       <Stack.Screen
         name={LOGIN_SIGNUP_FORGOT_ROUTES.OTP_PASSWORD}
         component={OtpPasswordScreen}

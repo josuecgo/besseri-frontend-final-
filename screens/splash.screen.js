@@ -23,7 +23,7 @@ import DeviceInfo from 'react-native-device-info';
 import {deviceWidth} from '../util/Dimentions';
 import Video from 'react-native-video';
 import { useDispatch } from 'react-redux';
-import { addAddressToUser, addCarActiveToUser } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
+import { addAddressToUser, addCarActiveToUser, addCarsToUser } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 
 
 const SplashScreen = ({navigation}) => {
@@ -79,6 +79,7 @@ const SplashScreen = ({navigation}) => {
          
           await dispatch(addAddressToUser(addressCustomer));
           await dispatch(addCarActiveToUser(carActive));
+         
           navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
         }else{
           navigation.replace(MAIN_ROUTES.CUSTOMER_STACK);
