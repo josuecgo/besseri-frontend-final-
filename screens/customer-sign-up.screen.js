@@ -27,14 +27,14 @@ import { HeaderTitle } from '../components/Customer/HeaderTitle';
 import { NewLogo } from '../components/NewLogo';
 import { BtnPrincipal } from '../components/Customer/BtnPrincipal';
 import { InputTxt } from '../components/Customer/InputTxt';
-import { HStack } from 'native-base';
+import { Center, HStack, VStack } from 'native-base';
 
 
 
 const CREDENTIAL_KEYS = {
   FULL_NAME: 'Nombre',
   LASTNAME: 'Apellidos',
-  EMAIL_ADDRESS: 'Dirección de correo electrónico',
+  EMAIL_ADDRESS: 'Email',
   PHONE_NUMBER: 'Número de teléfono',
   PASSWORD: 'Contraseña',
   PASSWORDCONFIRM: 'Confirmar contraseña'
@@ -99,24 +99,24 @@ const CustomerSignUpScreen = ({ navigation }) => {
     } catch (e) {
       // console.log(e)
       // console.log(e.response.data)
-      alert(e.response.data.message)
+      
+      showToaster(e.response.data.message)
       setShowLoader(false);
     }
   }
 
   const generateOtp = async () => {
     let validPhone = userCredentials[CREDENTIAL_KEYS.PHONE_NUMBER].length > 9
-    let validName = userCredentials[CREDENTIAL_KEYS.FULL_NAME].length > 0 && userCredentials[CREDENTIAL_KEYS.LASTNAME].length > 0
-    let valid = comparaText(userCredentials[CREDENTIAL_KEYS.CONFIRMPASSWORD], userCredentials[CREDENTIAL_KEYS.PASSWORD]) && userCredentials[CREDENTIAL_KEYS.PASSWORD].length > 0;
+    // let validName = userCredentials[CREDENTIAL_KEYS.FULL_NAME].length > 0 && userCredentials[CREDENTIAL_KEYS.LASTNAME].length > 0
+    // let valid = comparaText(userCredentials[CREDENTIAL_KEYS.CONFIRMPASSWORD], userCredentials[CREDENTIAL_KEYS.PASSWORD]) && userCredentials[CREDENTIAL_KEYS.PASSWORD].length > 0;
+    
+   
     if (!validPhone) {
       showToaster('Introduce un numero correcto');
       return
     }
-    if (!validName) {
-      showToaster('Introduce tu nombre y apellido(s)');
-      return
-    }
-    if (valid) {
+    
+    if (true) {
       if (isSelected) {
         Alert.alert(
           "Código de verificación",
@@ -174,176 +174,114 @@ const CustomerSignUpScreen = ({ navigation }) => {
   }
 
   return (
-    
+
     <CustomSafeAreaViewComponent>
-       <HeaderTitle titulo={'Registrarse'} nav={() => navigation.goBack()} />
+      <HeaderTitle titulo={'Registrarse'} nav={() => navigation.goBack()} />
       <ImageBackground
-          source={require('../assets/images/car_fondo.png')}
-          style={[styles.content]}
-        >
-      <LoaderComponent isVisible={showLoader} />
-     
-      <View style={styles.logoContent} >
-        <NewLogo width={deviceWidth} />
-      </View>
+        source={require('../assets/images/car_fondo.png')}
+        style={[styles.content]}
+      >
+        <VStack space={4} style={{height:deviceHeight * 0.85}} >
+          <LoaderComponent isVisible={showLoader} />
+
+          <View style={styles.logoContent} >
+            <NewLogo width={deviceWidth} />
+          </View>
 
 
-      <View style={[styles.body]}>
-          <InputTxt
-            label={'Email'}
-            placeholderText={'Email'}
-          />
-          <InputTxt
-            label={'Contraseña'}
-            placeholderText={'Contraseña'}
-          />
-          <InputTxt
-            label={'Numero Telefonico'}
-            placeholderText={'Numero Telefonico'}
-          />
-       
+          <View style={[styles.body]}>
 
-        <View style={{justifyContent:'center',alignItems:'center'}} >
-          <TouchableOpacity onPress={goPoliticas} >
-            <HStack>
-              <Text style={{ ...CommonStyles.h2 }} >¿Ya tienes una cuenta? {' '}</Text>
-              <Text style={[CommonStyles.h2,{color:Colors.primaryColor}] }>INGRESA</Text>
-            </HStack>
-            
-          </TouchableOpacity>
-          <CheckboxTerms
-            isSelected={isSelected}
-            roleName={'terminos'}
-            text={'He leído y acepto los términos y condiciones de uso'}
-            txtColor={Colors.white}
-            handlePress={handlePress}
+            <VStack mx={3} >
+              <InputTxt
+                label={'Email'}
+                // placeholderText={'Email'}
+                keyboardType={KEYBOARD_TYPES.EMAIL_ADDRESS}
+                onChangeText={inputText => {
+                  onChangeText(inputText, CREDENTIAL_KEYS.EMAIL_ADDRESS);
+                }}
+                placeholderText={CREDENTIAL_KEYS.EMAIL_ADDRESS}
+                secureTextEntry={false}
+                value={userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS]}
+                // ref={emailAddressRef}
+                nextFieldRef={phoneNumberRef}
+                returnType="next"
+              />
+              <InputTxt
+                label={'Contraseña'}
+                onChangeText={inputText => {
+                  onChangeText(inputText, CREDENTIAL_KEYS.PASSWORD);
+                }}
+                placeholderText={CREDENTIAL_KEYS.PASSWORD}
+                secureTextEntry={showPass}
+                value={userCredentials[CREDENTIAL_KEYS.PASSWORD]}
+                // ref={passwordRef}
+              />
+              <InputTxt
+                label={CREDENTIAL_KEYS.PHONE_NUMBER}
+               
+                keyboardType={KEYBOARD_TYPES.PHONE_PAD}
+                onChangeText={inputText => {
+                  onChangeText(inputText, CREDENTIAL_KEYS.PHONE_NUMBER);
+                }}
+                placeholderText={CREDENTIAL_KEYS.PHONE_NUMBER}
+                secureTextEntry={false}
+                value={userCredentials[CREDENTIAL_KEYS.PHONE_NUMBER]}
+                // ref={phoneNumberRef}
 
-          />
-          <TouchableOpacity onPress={goPoliticas} >
-            <Text style={{ ...CommonStyles.h2 }} >Politicas de privacidad</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={goPoliticas} >
-            <HStack>
-              <Text style={{ ...CommonStyles.h2 }} >¿Ya tienes una cuenta? {' '}</Text>
-              <Text style={[CommonStyles.h2,{color:Colors.primaryColor}] }>INGRESA</Text>
-            </HStack>
-            
-          </TouchableOpacity>
-          <BtnPrincipal
-          text={'Crear perfil'}
-        />
-        </View>
-        
-        
-        {/* <View style={CommonStyles.flexCenter}> */}
+              />
+            </VStack>
 
-        {/* <InputFieldComponent
-            // icon={<Ionicons color={Colors.dark} size={20} name="person" />}
-            keyboardType={KEYBOARD_TYPES.DEFAULT}
-            onChangeText={inputText => {
-              onChangeText(inputText, CREDENTIAL_KEYS.FULL_NAME);
-            }}
-            placeholderText={CREDENTIAL_KEYS.FULL_NAME}
-            secureTextEntry={false}
-            value={userCredentials[CREDENTIAL_KEYS.FULL_NAME]}
-            nextFieldRef={lastnameRef}
-            returnType="next"
-          />
-          <InputFieldComponent
-            // icon={<Ionicons color={Colors.dark} size={20} name="person" />}
-            keyboardType={KEYBOARD_TYPES.DEFAULT}
-            onChangeText={inputText => {
-              onChangeText(inputText, CREDENTIAL_KEYS.LASTNAME);
-            }}
-            placeholderText={CREDENTIAL_KEYS.LASTNAME}
-            
-            value={userCredentials[CREDENTIAL_KEYS.LASTNAME]}
-            nextFieldRef={emailAddressRef}
-            returnType="next"
-            ref={lastnameRef}
-          />
-          <InputFieldComponent
-            
-            keyboardType={KEYBOARD_TYPES.EMAIL_ADDRESS}
-            onChangeText={inputText => {
-              onChangeText(inputText, CREDENTIAL_KEYS.EMAIL_ADDRESS);
-            }}
-            placeholderText={CREDENTIAL_KEYS.EMAIL_ADDRESS}
-            secureTextEntry={false}
-            value={userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS]}
-            ref={emailAddressRef}
-            nextFieldRef={phoneNumberRef}
-            returnType="next"
-          />
-          <InputFieldComponent
-            keyboardType={KEYBOARD_TYPES.PHONE_PAD}
-            onChangeText={inputText => {
-              onChangeText(inputText, CREDENTIAL_KEYS.PHONE_NUMBER);
-            }}
-            placeholderText={CREDENTIAL_KEYS.PHONE_NUMBER}
-            secureTextEntry={false}
-            value={userCredentials[CREDENTIAL_KEYS.PHONE_NUMBER]}
-            ref={phoneNumberRef}
-          />
+            <Center>
+              <TouchableOpacity onPress={goPoliticas} >
+
+
+              </TouchableOpacity>
+              <CheckboxTerms
+                isSelected={isSelected}
+                roleName={'terminos'}
+                text={'He leído y acepto los términos y condiciones de uso'}
+                txtColor={Colors.white}
+                handlePress={handlePress}
+
+              />
+              <TouchableOpacity onPress={goPoliticas} >
+                <Text style={{ ...CommonStyles.h2 }} >Politicas de privacidad</Text>
+              </TouchableOpacity>
+
+            </Center>
+  {/* <ButtonComponent
+    marginTop={SCREEN_HORIZONTAL_MARGIN}
+    colorB={Colors.terciarySolid}
+    buttonText="CREAR CUENTA"
+    handlePress={generateOtp}
+    width={200}
+  />  */}
           
-          <InputFieldComponent
-            
-            onChangeText={inputText => {
-              onChangeText(inputText, CREDENTIAL_KEYS.PASSWORD);
-            }}
-            placeholderText={CREDENTIAL_KEYS.PASSWORD}
-            secureTextEntry={showPass}
-            value={userCredentials[CREDENTIAL_KEYS.PASSWORD]}
-            ref={passwordRef}
-            showPass={
-              <ButtonIconoInput name={showPass ? 'visibility-off' : 'visibility'} size={16} onPress={() => setShowPass(!showPass) } />
-            }
-          />
 
-          <InputFieldComponent
-            
-            onChangeText={inputText => {
-              onChangeText(inputText, CREDENTIAL_KEYS.CONFIRMPASSWORD);
-            }}
-            placeholderText={'Confirmar contraseña'}
-            secureTextEntry={showPass2}
-            value={userCredentials[CREDENTIAL_KEYS.CONFIRMPASSWORD]}
-            ref={passwordConfirmRef}
-            showPass={
-              <ButtonIconoInput name={showPass2 ? 'visibility-off' : 'visibility'} size={16} onPress={() => setShowPass2(!showPass2) } />
-            }
-          />
+          </View>
+          <View>
 
-          <CheckboxTerms 
-          isSelected={isSelected}
-          roleName={'terminos'} 
-          text={'He leído y acepto los términos y condiciones de uso'} 
-          txtColor='black' 
-          handlePress={handlePress} 
-          
-          />
-         
-          <TouchableOpacity onPress={goPoliticas } >
-            <Text style={{fontSize:adjust(8),borderBottomWidth:1}} >Politicas de privacidad</Text>
-          </TouchableOpacity>
-          
-         
 
-          <ButtonComponent
-            marginTop={SCREEN_HORIZONTAL_MARGIN}
-            colorB={Colors.terciarySolid}
-            buttonText="CREAR CUENTA"
-            handlePress={generateOtp}
-            width={200}
-          /> */}
-        {/* </View> */}
-        
-      </View>
 
-     </ImageBackground>
-     
-     </CustomSafeAreaViewComponent>
-   
+<TouchableOpacity onPress={goPoliticas} >
+  <HStack justifyContent={'center'} >
+    <Text style={{ ...CommonStyles.h2 }} >¿Ya tienes una cuenta? {' '}</Text>
+    <Text style={[CommonStyles.h2, { color: Colors.primaryColor }]}>INGRESA</Text>
+  </HStack>
+
+</TouchableOpacity>
+
+<BtnPrincipal
+  text={'Crear perfil'}
+  onPress={generateOtp}
+/>
+</View>
+        </VStack>
+
+      </ImageBackground>
+
+    </CustomSafeAreaViewComponent>
+
   );
 };
 
@@ -351,17 +289,23 @@ export default CustomerSignUpScreen;
 
 const styles = StyleSheet.create({
   body: {
-    paddingVertical: deviceHeight * 0.10,
-    marginHorizontal:10
+    // paddingVertical: deviceHeight * 0.10,
+    // marginHorizontal:10
+    justifyContent:'space-around',
+    flex:1,
+   
   },
   logoContent: {
-    marginBottom: 0,
+   
+    // marginBottom: 0,
     // marginTop:20
-    marginTop:15
+    // marginTop: 15
   },
   content: {
     flex: 1,
     resizeMode: 'contain',
-  
+    justifyContent:'space-around',
+    // borderWidth:3,borderColor:'red',
+    // height:deviceHeight * 0.9
   },
 })

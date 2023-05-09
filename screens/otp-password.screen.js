@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import CustomSafeAreaViewComponent from '../components/custom-safe-area-view/custom-safe-area-view.component';
 import TopCircleComponent from '../components/top-circle/top-circle.component';
-import {useWindowDimensions, View,Text} from 'react-native';
+import {useWindowDimensions, View,Text, StyleSheet} from 'react-native';
 import {INCREMENT_CONSTANT, LOGIN_SIGNUP_FORGOT_ROUTES, MAIN_ROUTES, SCREEN_HORIZONTAL_MARGIN, showToaster} from '../util/constants';
 import CommonStyles from '../util/styles/styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -14,6 +14,11 @@ import { api_statuses, api_urls, vendor_api_urls } from '../util/api/api_essenti
 import axios from 'axios';
 import LoaderComponent from '../components/Loader/Loader.component';
 import { deviceWidth } from '../util/Dimentions';
+import { HStack, Input } from 'native-base';
+import BtnCode from '../components/button/BtnCode';
+import { BtnPrincipal } from '../components/Customer/BtnPrincipal';
+import { getCarActive } from '../util/local-storage/auth_service';
+import { getUserAddress } from '../util/local-storage/auth_service';
 
 const CREDENTIAL_KEYS = {
   OTP_CODE: 'Código de verificación',
@@ -32,13 +37,16 @@ const OtpPasswordScreen = ({navigation}) => {
     [CREDENTIAL_KEYS.OTP_CODE]: '',
     [CREDENTIAL_KEYS.PASSWORD]: '',
   });
- 
+
 
   const onChangeText = (inputText, key) => {
+    
     setUserCredentials({
       ...userCredentials,
       [key]: inputText,
     });
+    
+    
   };
   
   const uploadLogo = async() => {
@@ -70,8 +78,11 @@ const OtpPasswordScreen = ({navigation}) => {
   const registerApiCall = async (path) => {
     try {
       const url = api_urls.registration;
-      
-      const body = route.params.body;
+      const carsActive = await getCarActive()
+      const address = await getUserAddress()
+
+
+      const body = carsActive && address ? {...route.params.body,car:carsActive,address} : route.params.body ;
       // if((route.params?.body?.isRider || route.params?.body?.isVendor || route.params.body.isCommonUser) && path) {
         setShowLoader(true);
         const apiCall = await axios.post(url, {
@@ -80,7 +91,7 @@ const OtpPasswordScreen = ({navigation}) => {
           ...(route.params?.body?.isRider ? {profile:path} : {}),
         });
         // console.log({a:apiCall.status,d:api_statuses.success});
-      
+        
           setShowLoader(false);
           navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN);
        
@@ -95,16 +106,16 @@ const OtpPasswordScreen = ({navigation}) => {
   }
 
 
- 
+//  console.log(route);
 
   return (
     <CustomSafeAreaViewComponent>
       <LoaderComponent isVisible={showLoader}/>
-      <TopCircleComponent textHeading="Verifique su correo electrónico" />
+      <TopCircleComponent textHeading="Perfil de verificacion" />
       <View
         style={[
           {height: height - (width + INCREMENT_CONSTANT * 3),
-            marginTop:30,backgroundColor:Colors.white,
+            marginTop:30,backgroundColor:Colors.bgColor,
             alignItems:'center',
             justifyContent:'center',
             marginHorizontal:10,
@@ -115,14 +126,33 @@ const OtpPasswordScreen = ({navigation}) => {
           {isEnteringOTP ? (
             <>
               <View style={{alignItems:'center',width:deviceWidth,marginVertical:15}} >
-                <Text>{ mensajero === 'email' ? 'Se ha enviado un correo a' : mensajero === 'sms' ? 'Se ha enviado un SMS con un codigo a' : 'Se ha enviado un Whatsapp con un codigo a' }  </Text>
-                <Text style={{fontWeight:'bold'}} >
+                <Text style={CommonStyles.h2}  >
+                  { mensajero === 'email' ? 'Se enviara un código de verificación de la cuenta por correo ' 
+                  : mensajero === 'sms' ? 'Se enviara un código de verificación de la cuenta por mensaje de texto ' 
+                  : 'Se ha enviado un Whatsapp con un codigo a' }.
+                </Text>
+                <Text style={CommonStyles.h2} >
                 { mensajero === 'email' ? correo : phone}
                 </Text>
-                { mensajero === 'email' && <Text style={{opacity:0.5}} >Revise su bandeja de correo no deseado</Text> }
+                { mensajero === 'email' && <Text style={CommonStyles.h2} >Revise su bandeja de correo no deseado</Text> }
               </View>
-              
-              <InputFieldComponent
+
+
+              <BtnCode
+              onChangeText={onChangeText}
+              />
+              {/* <Input
+              style={styles.number}
+              width={50}
+              placeholderText={CREDENTIAL_KEYS.OTP_CODE}
+              value={userCredentials[CREDENTIAL_KEYS.OTP_CODE]}
+              secureTextEntry={false}
+              keyboardType={KEYBOARD_TYPES.NUMERIC}
+              onChangeText={inputText => {
+                onChangeText(inputText, CREDENTIAL_KEYS.OTP_CODE);
+              }}
+              /> */}
+              {/* <InputFieldComponent
                 icon={
                   <MaterialCommunityIcons
                     name="key-variant"
@@ -137,13 +167,13 @@ const OtpPasswordScreen = ({navigation}) => {
                 placeholderText={CREDENTIAL_KEYS.OTP_CODE}
                 value={userCredentials[CREDENTIAL_KEYS.OTP_CODE]}
                 secureTextEntry={false}
-              />
+              /> */}
             </>
             
           ) : (
             <>
             <View style={{alignItems:'center'}} >
-              <Text>Se ha enviado un codigo a  {correo}</Text>
+              <Text style={CommonStyles.h2} >Se ha enviado un codigo a  {correo}</Text>
             </View>
               
               <InputFieldComponent
@@ -165,7 +195,23 @@ const OtpPasswordScreen = ({navigation}) => {
             </>
             
           )}
-          <ButtonComponent
+
+          <BtnPrincipal
+          text={isEnteringOTP ? 'Verificar' : 'Set Password'}
+          onPress={() => {
+            if(userCredentials[CREDENTIAL_KEYS.OTP_CODE] == route.params.otp) {
+              if(route?.params?.body?.isVendor || route?.params?.body?.isRider) {
+                uploadLogo()
+              } else {
+                registerApiCall()
+              }
+            } else {
+              showToaster('Invalid code');
+              return;
+            }
+          }}
+          />
+          {/* <ButtonComponent
             marginTop={SCREEN_HORIZONTAL_MARGIN}
             colorB={Colors.terciarySolid}
             buttonText={isEnteringOTP ? 'Verificar' : 'Set Password'}
@@ -181,7 +227,7 @@ const OtpPasswordScreen = ({navigation}) => {
                 return;
               }
             }}
-          />
+          /> */}
         </View>
       </View>
     </CustomSafeAreaViewComponent>
@@ -189,3 +235,11 @@ const OtpPasswordScreen = ({navigation}) => {
 };
 
 export default OtpPasswordScreen;
+
+
+const styles = StyleSheet.create({
+  number:{
+    color:Colors.white,
+    width:50
+  }
+})

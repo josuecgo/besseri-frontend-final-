@@ -63,6 +63,8 @@ export const CREDENTIAL_KEYS = {
   PRODUCT_MAKER: 'Product Maker',
   PRODUCT_CATEGORY: 'Product Category',
   PRODUCT_MAKERS_IDS: 'MAKER IDS',
+  OTP_CODE: 'Código de verificación',
+  PASSWORD: 'Contraseña',
 };
 export const SCREEN_TYPES = {
   SERVICE_NAME: 'Nombre del Servicio',

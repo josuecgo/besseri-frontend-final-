@@ -1,6 +1,7 @@
 import { StyleSheet,  TouchableOpacity,  View } from 'react-native'
 import React from 'react'
-import {  Box,  HStack, Center, Text } from 'native-base';
+import {  Box,  HStack, Center, Text, Image } from 'native-base';
+import SvgUri from 'react-native-svg-uri';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -36,7 +37,7 @@ export const FooterNav = ({state,navigation}) => {
   }
 
   return (
-    <View style={styles.footer}>
+    <HStack style={styles.footer}>
     {state.routes.map((route, index) => {
         
         // Quita el bottom Tab
@@ -54,7 +55,7 @@ export const FooterNav = ({state,navigation}) => {
                  <Center>
 
                   <MaterialCommunityIcons name={getIconName(route?.name)}  size={size} />
-           
+                    
                 </Center>
               </TouchableOpacity>
             );
@@ -67,14 +68,20 @@ export const FooterNav = ({state,navigation}) => {
           <TouchableOpacity
           style={styles.btnAccount}
           onPress={()=>navigation.navigate(route?.name)}
+          activeOpacity={1}
           >
-            <MaterialCommunityIcons name={getIconName(route?.name)}   size={50} />
+             <Image
+              source={require('../../assets/images/footer/volante.png')}
+              style={styles.icono}
+              alt={'menu'}
+              />
+             
           </TouchableOpacity>
         </View>
       )
 
     })}
-  </View>
+  </HStack>
 
 
   )
@@ -84,35 +91,37 @@ export const FooterNav = ({state,navigation}) => {
 const styles = StyleSheet.create({
   footer:{
     backgroundColor:Colors.white,
-    flexDirection:'row',
-    width:deviceWidth,
+    // flexDirection:'row',
+    // width:deviceWidth,
     alignItems:'center',
-    justifyContent:'center'
+    justifyContent:'space-evenly',
+    paddingHorizontal:10
     // bottom:0,
     // flex:1,
    
   },
   content:{
     backgroundColor:'#F7F7F7',
-    // backgroundColor:'red',
-    // borderRadius:200,
-    // marginVertical:10,
-    height:60
+    height:70
     
-   
   },
   btn:{
-      marginHorizontal:deviceWidth / 6
+      // marginHorizontal:deviceWidth / 7
   },
   containerButton: {
     top: -20,
-    backgroundColor:'white',
+    backgroundColor:'transparent',
     borderRadius:100
   },
   btnAccount:{
-    width: 50,
-    height: 50,
+    height:50,
+    width: 70,
     justifyContent:'center',
     alignItems:'center'
+  },icono:{
+
+    height:100,
+    width: 100,
+    resizeMode:'contain'
   }
 })

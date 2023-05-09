@@ -41,6 +41,17 @@ export const getUserAddress = async() => {
     const userAddress = await AsyncStorage.getItem(ASYNC_STORAGE_NAMES.CUSTOMER_ADDRESS);
     return JSON.parse(userAddress);
 };
+export const saveGarage = async(garage) => {
+    const addressString = JSON.stringify(garage);
+    await AsyncStorage.setItem(ASYNC_STORAGE_NAMES.GARAGE,addressString);
+ }
+export const getGarage = async() => {
+    const userAddress = await AsyncStorage.getItem(ASYNC_STORAGE_NAMES.GARAGE);
+    return JSON.parse(userAddress);
+};
+
+
+
 export const getUser = async() => {
     const user = await AsyncStorage.getItem(ASYNC_STORAGE_NAMES.USER);
     return JSON.parse(user);
@@ -48,9 +59,8 @@ export const getUser = async() => {
 export const saveUserType = async(user) => {
     const userType = user?.isVendor ? USER_ROLES.vendor : user?.isCommonUser ? USER_ROLES.customer : USER_ROLES.rider;
     await AsyncStorage.setItem(ASYNC_STORAGE_NAMES.USER_TYPE,userType);
- }
+}
  
-
  export const getUserType = async() => {
      const userType = await AsyncStorage.getItem(ASYNC_STORAGE_NAMES.USER_TYPE);
      return userType;

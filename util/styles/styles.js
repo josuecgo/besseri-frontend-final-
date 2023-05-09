@@ -45,8 +45,8 @@ const CommonStyles = StyleSheet.create({
     flex:1
   },
   flexCenter: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
   horizontalCenter: {
     alignItems: 'center',

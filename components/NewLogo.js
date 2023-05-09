@@ -4,17 +4,18 @@ import { Image } from 'native-base'
 
 export const NewLogo = ({ height= 50,width=40}) => {
   return (
-    <View>
+    <>
        <Image
             source={require('../assets/images/newLogo.png')}
             alt='logo'
             style={{
               height: height,
-              width: width
+              width: width,
+             
             }}
             resizeMode='contain'
           />
-    </View>
+    </>
   )
 }
 

@@ -26,7 +26,7 @@ export const BtnPrincipal = ({text,onPress}) => {
 
 const styles = StyleSheet.create({
   principal:{
-    marginVertical:10,
+    marginVertical:13,
     marginHorizontal:20
   },
   btn:{

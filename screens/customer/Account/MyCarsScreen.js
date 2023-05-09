@@ -7,11 +7,14 @@ import { CarsEmpty } from '../../../components/Empty/CarsEmpty'
 import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal'
 import { getUserId } from '../../../util/local-storage/auth_service'
 import { showAlertLogin, showAlertMsg, showToaster } from '../../../util/constants'
+import CommonStyles from '../../../util/styles/styles'
+
 
 export const MyCarsScreen = ({navigation}) => {
 
   const { cars } = useSelector( state => state.user );
-
+ 
+  console.log(cars.length);
  
   const crearVehiculo = async() => {
     const id = await getUserId()
@@ -22,10 +25,12 @@ export const MyCarsScreen = ({navigation}) => {
       showAlertLogin(goLogin)
     }
     
+    
   }
 
   return (
     <View style={styles.cars} >
+
       <FlatList
       data={cars}
       renderItem={({item}) => <ItemCar data={item} />}
@@ -37,6 +42,8 @@ export const MyCarsScreen = ({navigation}) => {
       onPress={crearVehiculo}
       text={'Agregar nuevo vehiculo'} 
       />
+
+      <View style={{width:10,height:15}} />
     </View>
   )
 }
@@ -45,8 +52,7 @@ export const MyCarsScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   cars:{
-    backgroundColor:Colors.bgColor,
-    flex:1,
-    paddingVertical:20
+    ...CommonStyles.screenY,
+    
   }
 })

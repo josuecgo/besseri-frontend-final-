@@ -20,7 +20,7 @@ const CustomSafeAreaViewComponent = ({children}) => {
     minHeight: height,
     backgroundColor:Colors.bgColor,
     flex:1,
-  };
+     };
 
   return (
     <View style={backgroundStyle}>

@@ -4,7 +4,7 @@ import { Input } from 'native-base'
 import Colors from '../../util/styles/colors'
 import CommonStyles from '../../util/styles/styles'
 
-export const InputTxt = ({onChangeText,keyboardType,value,placeholderText,secureTextEntry,label}) => {
+export const InputTxt = ({onChangeText,keyboardType,value,placeholderText,secureTextEntry =false,label}) => {
   return (
     <View style={{marginVertical:10}} >
       <Text style={{...CommonStyles.h2}} >{label} </Text>

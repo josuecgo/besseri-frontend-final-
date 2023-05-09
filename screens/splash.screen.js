@@ -99,7 +99,8 @@ const SplashScreen = ({navigation}) => {
         style={[
           styles.splashScreenHome,
           CommonStyles.flexCenter,
-          {width: width, height: height},
+          {width: width, height: height,justifyContent: 'center',
+          alignItems: 'center',},
         ]}>
       
       <Video source={require('../assets/besserLoading.mp4')}   // Can be a URL or a local file.

@@ -16,7 +16,7 @@ import { Modalize } from 'react-native-modalize';
 import { HeaderBackground } from '../../components/Background/HeaderBackground';
 import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
 import { useLocation } from '../../hooks/useLocation';
-import { getUserAddress, getUserId } from '../../util/local-storage/auth_service';
+import { getUserId } from '../../util/local-storage/auth_service';
 import { Cupon } from '../../components/Customer/Cupon';
 import { descuento } from '../../util/helpers/Descuento';
 import { ExploreScreen } from './Cart/ExploreScreen';

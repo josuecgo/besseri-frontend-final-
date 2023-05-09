@@ -24,16 +24,16 @@ export default (state = initialState, action) => {
                 carActive: action.data,
             }
         case ADD_CARS_TO_USER:
-            let existCar = state.cars.find( el => el._id === action.data._id );
+            // let existCar = state.cars.find( el => el._id === action.data._id );
             
-            if (existCar) {
-                return {
-                    ...state,
-                }
-            }
+            // if (existCar) {
+            //     return {
+            //         ...state,
+            //     }
+            // }
             return {
                 ...state,
-                cars: state.cars.push(action.data),
+                cars: action.data,
             }      
         default:
             return state

@@ -21,7 +21,7 @@ import { emailValidator, generalNonEmptyValidator } from '../util/validations';
 import { api_statuses, api_urls, customer_api_urls, rider_api_urls, vendor_api_urls } from '../util/api/api_essentials';
 import axios from 'axios';
 import Loader from '../components/Loader/Loader.component';
-import { saveAdressCustomer, saveBusinessProfile, saveBusinessStatus, saveRiderProfile, saveUserData } from '../util/local-storage/auth_service';
+import { saveAdressCustomer, saveBusinessProfile, saveBusinessStatus, saveCarActive, saveRiderProfile, saveUserData, saveUserId, saveUserType } from '../util/local-storage/auth_service';
 import { useDispatch } from 'react-redux';
 import * as  BusinessProfileActions from '../util/ReduxStore/Actions/VendorActions/BusinessProfleActions';
 import { deviceHeight, deviceWidth } from '../util/Dimentions';
@@ -29,15 +29,17 @@ import { HeaderTitle } from '../components/Customer/HeaderTitle';
 import { NewLogo } from '../components/NewLogo';
 import { InputTxt } from '../components/Customer/InputTxt';
 import { BtnPrincipal } from '../components/Customer/BtnPrincipal';
+import { Center } from 'native-base';
+import { useInfoUser } from '../hooks/useInfoUsers';
 
 
 const CREDENTIAL_KEYS = {
-  EMAIL_ADDRESS: 'Correo electrónico',
+  EMAIL_ADDRESS: 'Email',
   PASSWORD: 'Contraseña',
 };
 
 const LoginScreen = ({ navigation }) => {
-
+  const {getUserInfo} = useInfoUser()
 
   const [userCredentials, setUserCredentials] = useState({
     [CREDENTIAL_KEYS.EMAIL_ADDRESS]: '',
@@ -73,15 +75,25 @@ const LoginScreen = ({ navigation }) => {
         return;
       }
 
-      const data = apiCall.data.data[0];
+     
 
       if (apiCall.status == api_statuses.success) {
+        const {user,garage,address} = apiCall?.data?.data;
         setShowLoader(false);
+        
+        if (user.isCommonUser) {
 
-        if (data.isCommonUser) {
-          await saveUserData(data);
+          await saveUserId(user?._id);
+          await saveUserType(user)
+          await saveUserData(user);
+          
+          if (user?.carActive) {
+            await saveCarActive(user?.isCarActive);
 
-          navigation.replace(MAIN_ROUTES.CUSTOMER_STACK);
+
+          }
+          await getUserInfo(user)
+          navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
         } else {
           showToaster('Usuario no encontrado.')
         }
@@ -89,6 +101,7 @@ const LoginScreen = ({ navigation }) => {
       }
 
     } catch (e) {
+      console.log("🚀 ~ file: login.screen.js:95 ~ handleSignIn ~ e:", e)
       // console.log(e);
       setShowLoader(false);
       showToaster('Error con el servidor.')
@@ -104,23 +117,44 @@ const LoginScreen = ({ navigation }) => {
       <Loader isVisible={showLoader} />
       {/* <TopCircleComponent textHeading="Iniciar Sesión" /> */}
 
-      <HeaderTitle titulo={'Iniciar Sesión'}  nav={goHome} />  
+      <HeaderTitle titulo={'Iniciar Sesión'} nav={goHome} />
       <View style={styles.logoContent} >
-        <NewLogo width={deviceWidth}  />
-      </View>   
-      
+        <NewLogo width={deviceWidth} />
+      </View>
+
       <ImageBackground
-      source={require('../assets/images/car_fondo.png')} 
-      style={[styles.content]}
+        source={require('../assets/images/car_fondo.png')}
+        style={[styles.content]}
       >
-        <Text style={{...CommonStyles.h1}} >Iniciar sesión</Text>
+        <Text style={{ ...CommonStyles.h1 }} >Iniciar sesión</Text>
         <InputTxt
-        label={'Email'}
-        placeholderText={'Email'}
+          label={CREDENTIAL_KEYS.EMAIL_ADDRESS}
+         
+          keyboardType={KEYBOARD_TYPES.EMAIL_ADDRESS}
+          onChangeText={inputText => {
+            onChangeText(inputText, CREDENTIAL_KEYS.EMAIL_ADDRESS);
+          }}
+          placeholderText={CREDENTIAL_KEYS.EMAIL_ADDRESS}
+          value={userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS]}
+          secureTextEntry={false}
+         
+          returnType="next"
+          // validator={emailValidator}
+          hintText="Por favor ingresa un correo valido"
         />
         <InputTxt
-        label={'Contraseña'}
-        placeholderText={'Contraseña'}
+          label={CREDENTIAL_KEYS.PASSWORD}
+          // placeholderText={'Contraseña'}
+          keyboardType={KEYBOARD_TYPES.DEFAULT}
+          secureTextEntry={true}
+          onChangeText={inputText => {
+            onChangeText(inputText, CREDENTIAL_KEYS.PASSWORD);
+          }}
+          placeholderText={CREDENTIAL_KEYS.PASSWORD}
+          value={userCredentials[CREDENTIAL_KEYS.PASSWORD]}
+          returnType="default"
+          validator={generalNonEmptyValidator}
+          hintText="Por favor ingresa una contraseña valida"
         />
         {/* <View style={styles.card} >
 
@@ -200,21 +234,25 @@ const LoginScreen = ({ navigation }) => {
         </View> */}
       </ImageBackground>
       <BottomContentComponent>
-            <Text style={[CommonStyles.h2]}>
-              <Text style={[CommonStyles.h2]} >¿Ya tienes una cuenta? </Text>
-              <Text
+        <Center>
+          <Text style={[CommonStyles.h2]}>
+            <Text style={[CommonStyles.h2]} >¿Ya tienes una cuenta? </Text>
+            <Text
 
-                onPress={() => {
-                  navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.CUSTOMER_SIGN_UP);
-                }}
-                style={[CommonStyles.h2,{textTransform:'uppercase',color:Colors.brightBlue}]}>
-                Regístrate
-              </Text>
+              onPress={() => {
+                navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.CUSTOMER_SIGN_UP);
+              }}
+              style={[CommonStyles.h2, { textTransform: 'uppercase', color: Colors.brightBlue }]}>
+              Regístrate
             </Text>
+          </Text>
+        </Center>
+
       </BottomContentComponent>
 
       <BtnPrincipal
-      text={'Ingresar'}
+        text={'Ingresar'}
+        onPress={handleSignIn}
       />
     </CustomSafeAreaViewComponent>
   );
@@ -233,12 +271,12 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     resizeMode: 'contain',
-    height:deviceHeight * 0.5,
-    justifyContent:'center',
-    paddingHorizontal:16
+    height: deviceHeight * 0.5,
+    justifyContent: 'center',
+    paddingHorizontal: 16
   },
-  logoContent:{
-    marginVertical:30
+  logoContent: {
+    marginVertical: 30
   },
   card: {
     justifyContent: 'center',

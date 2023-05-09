@@ -20,6 +20,7 @@ export const MyCarActive = () => {
     const carActive = await getCarActive();
     dispatch( addCarActiveToUser(carActive) )
   }
+  
   useEffect(() => {
     getInfoUser()
   }, [])
