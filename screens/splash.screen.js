@@ -23,7 +23,8 @@ import DeviceInfo from 'react-native-device-info';
 import {deviceWidth} from '../util/Dimentions';
 import Video from 'react-native-video';
 import { useDispatch } from 'react-redux';
-import { addAddressToUser, addCarActiveToUser, addCarsToUser } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
+import { addAddressToUser, addCarActiveToUser, addCarsToUser, addToUser } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
+import { getUser } from '../util/local-storage/auth_service';
 
 
 const SplashScreen = ({navigation}) => {
@@ -60,13 +61,18 @@ const SplashScreen = ({navigation}) => {
       return  navigation.replace('UpdateScreen');
     }
     const user_id = await getUserId();
+    const user    = await getUser()
     const userType = await getUserType();
     const addressCustomer = await getUserAddress();
     const carActive = await getCarActive();
    
+    if (user) {
+      dispatch(addToUser(user))
+    }
     setTimeout(async() => {
       if (user_id && userType) {
-     
+        
+        
         if (userType == USER_ROLES.customer) {
           navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
         } else {

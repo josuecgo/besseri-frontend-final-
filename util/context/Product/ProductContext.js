@@ -6,6 +6,7 @@ import { showToaster } from "../../constants";
 
 import { productReducer } from "./productReducer";
 import { getUserId, getUserType } from "../../local-storage/auth_service";
+import { useDispatch } from "react-redux";
 
 
 
@@ -49,7 +50,7 @@ export const ProductProvider = ({children}) => {
     const [reset, setReset] = useState(false)
     const [activeCarLoading, setActiveCarLoading] = useState(false);
     const [cars, setCars] = useState([])
-
+    const dispatchRedux = useDispatch()
     const getCategorias = async(params) => {
         try {
             
@@ -429,6 +430,7 @@ export const ProductProvider = ({children}) => {
           years.push(i)
         }
         setYears(years);
+        
     }
 
     
@@ -481,9 +483,9 @@ export const ProductProvider = ({children}) => {
         rangeYear()
     }, [])
     
-    useEffect(() => {
-        getGarage()
-    }, [])
+    // useEffect(() => {
+    //     getGarage()
+    // }, [])
 
     return (
         <ProductContext.Provider

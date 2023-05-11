@@ -21,45 +21,37 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addCarActiveToUser, addCarsToUser } from '../../../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 
 export const CreateCarScreen = (props) => {
+
   const {
-    years,
-  } = useContext(ProductContext);
-  const {
-    marcas,
-    modelo,
-    valueMaker, 
-    valueModel, 
-    valueYear, 
     handleMarca,
     handleModel,
     handleYear
   } = useSearchStore();
   const dispatch = useDispatch()
-  const { address }  = useSelector(state => state.user);
+  const { address,marcas,marcaValue,modelos,modeloValue,yearValue,years }  = useSelector(state => state.user);
 
   
 
   const guardarCar = async () => {
-    if (!valueMaker || !valueModel || !valueYear ) {
-    
-      
+    if (!marcaValue || !modeloValue || !yearValue ) {
+
       showToaster('Faltan campos.');
       return
     }
-    const newMarca = marcas.find( (el) => el._id === valueMaker);
-    const newModel = modelo.find( (el) => el._id === valueModel);
+    const newMarca = marcas.find( (el) => el._id === marcaValue);
+    const newModel = modelos.find( (el) => el._id === modeloValue);
 
 
     await saveCarActive({
       maker: newMarca,
       model:newModel,
-      year:valueYear
+      year:yearValue
     })
 
     dispatch(addCarActiveToUser({
       maker: newMarca,
       model:newModel,
-      year:valueYear
+      year:yearValue
     }));
 
    
@@ -107,7 +99,7 @@ export const CreateCarScreen = (props) => {
 
           <Heading size="xs" mb="3" color={Colors.white}>Modelo</Heading>
           <SelectDropDownBtn
-            items={modelo}
+            items={modelos}
             onChange={handleModel}
           />
 

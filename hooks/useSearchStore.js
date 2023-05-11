@@ -4,9 +4,13 @@ import { customer_api_urls, vendor_api_urls } from '../util/api/api_essentials';
 import { showToaster } from '../util/constants';
 import { ProductContext } from '../util/context/Product/ProductContext';
 import { matchMaker, matchModel, matchYear } from '../util/utility-functions';
+import { getMakerValueCars, getMakersCars, getModelValueCars, getModelsCars, getYearValueCar } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 export const useSearchStore = (  ) => {
+    const  dispatch = useDispatch();
+    const {marcaValue} = useSelector(state => state.user )
     
     const [ isLoading, setIsLoading ] = useState(true);
     const [ marcas, setMarcas ] = useState([]);
@@ -69,14 +73,15 @@ export const useSearchStore = (  ) => {
         try {
             const apiCall = await axios.get(vendor_api_urls?.get_makers)
             if (apiCall.status == 200) {
-                setMarcas(apiCall.data?.data)
+              
+                dispatch(getMakersCars(apiCall.data?.data))
             } else {
-                setMarcas([]);
+                
                 showToaster('No tienes conexion a la red')
             }
         } catch (error) {
            
-            setMarcas([])
+           showToaster(error.response.data.message)
         }
        
     }
@@ -89,12 +94,13 @@ export const useSearchStore = (  ) => {
             const apiCall = await axios.get(`${vendor_api_urls.get_models}/${id}`,);
             
             if (apiCall?.status == 200) {
-                setModelo(apiCall.data.data);
+               
+                dispatch(getModelsCars(apiCall.data?.data))
             }
             
             } catch (e) {
                 
-              alert('Algo salió mal');
+              alert(e.response.data.message);
             }
         
     }
@@ -116,7 +122,6 @@ export const useSearchStore = (  ) => {
         setProductFilter(name);
     }  
     
-
     
     const makerFilter = () => {
        
@@ -167,117 +172,17 @@ export const useSearchStore = (  ) => {
     }
 
 
-    const  betweenNumber = (startingNumber, endingNumber, givenNumber) => {
-
-        if(givenNumber >= startingNumber && givenNumber <= endingNumber){
-            // console.log(`número dado ${givenNumber} cae entre ${startingNumber} y ${endingNumber}`);
-            return true
-        }else{
-        //   console.log(`número dado ${givenNumber} no cae entre ${startingNumber} y ${endingNumber}`);
-            return false;
-        }
-    }
-
-    const matchesForModel = (id,searchId) => {
-        
-        if (searchId?.matchs.length > 0) {
-            // console.log({id,searchId:searchId?.matchs});
-            const match = searchId?.matchs.filter(element => element?.model?._id === id);
-            if (match.length > 0) {
-                
-                return searchId;
-            }else{
-                return false;
-            }
-     
-        }
-        return false;
-
-    }
-
-
-    const servicesFilter = ()=> {
-        if (valueMaker) {
-            if (valueModel) {
-               
-                let itemData;
-                let itemModel;
-                const marca = productsData.filter((item) => {
-                    itemData = item.makersIds ? item?.makersIds : '';
-                    let searchTextData = valueMaker;
-                   
-                    return itemData.indexOf(searchTextData) > -1;
-                })
-                
-                const modelo = marca.filter((item) => {
-                  
-                    itemModel = item.model ? item?.model?._id : '';
-                    let searchTextData = valueModel;
-                   
-                    return itemModel.indexOf(searchTextData) > -1;
-                })
-
-                setProductFilter(modelo ? modelo : []);
-               
-               
-            } else {
-                const marca = productsData.filter((item) => {
-                    
-                    let itemData = item.makersIds ? item?.makersIds : '';
-                    let searchTextData = valueMaker;
-                    return itemData.indexOf(searchTextData) > -1;
-                })
-                
-                setProductFilter(marca ? marca : []);
-            }
-
-            
-          
-        }else{  
-           
-            setProductFilter(productsData)
-        }
-    }
-
-    const categoriaFilter = async (data) => {
-        
-        // setValueMaker(null);
-        // setValueModel(null);
-        // await getStore()
-        let categoria = [];
-        if (data) {
-            
-            categoria =  data.filter((item) => {
-               
-                let itemData = item.categoryId ? item?.categoryId : '';
-                let searchTextData = valueCategorias;
-                return itemData.indexOf(searchTextData) > -1;
-            });
-        }else {
-            categoria =  productos.filter((item) => {
-               
-                let itemData = item.categoryId ? item?.categoryId : '';
-                let searchTextData = valueCategorias;
-                return itemData.indexOf(searchTextData) > -1;
-            });
-        }
-       
-       
-        
-        
-        setProductFilter(categoria ? categoria : []);
-
-        
-       
-    }
-
     const resetFiltros = () => {
         setProductFilter(productsData);
         setValueCategorias(null);
-        setValueMaker("");
-        setValueModel("");
-        setValueYear("")
-        setModelo('')
+        
+        dispatch(getModelsCars([]))
+        dispatch(getMakerValueCars(null))
+        dispatch(getYearValueCar(null))
+        // setValueMaker("");
+        // setValueModel("");
+        // setValueYear("")
+        // setModelo('')
         // getStore(store);
         
 
@@ -286,22 +191,22 @@ export const useSearchStore = (  ) => {
 
     const handleMarca = (item) => {
        
-        setValueModel('')
-        setValueMaker(item)
+        dispatch(getMakerValueCars(item))
         
 
     }
     const handleModel = (item) => {
-        setValueModel(item);
-
+       
+        dispatch(getModelValueCars(item))
     }
     const handleYear = (item) => {
         
-        setValueYear(item);
+       
+        dispatch(getYearValueCar(item))
 
     }
     
-   
+
     useEffect(() => {
         handleMarca(carDefault?.maker?._id)
         handleYear(carDefault?.year)
@@ -319,17 +224,17 @@ export const useSearchStore = (  ) => {
     }, [])
 
     useEffect(() => {
-        if (valueMaker) {
-            getModelo(valueMaker);
+        if (marcaValue) {
+            getModelo(marcaValue);
             
         }
-    }, [valueMaker]);
+    }, [marcaValue]);
    
   
-    useEffect(() => {
+    // useEffect(() => {
 
-        makerFilter();
-    }, [valueMaker,valueModel,valueYear])
+    //     makerFilter();
+    // }, [marcaValue,valueModel,valueYear])
     
     
     return {

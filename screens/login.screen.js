@@ -31,6 +31,7 @@ import { InputTxt } from '../components/Customer/InputTxt';
 import { BtnPrincipal } from '../components/Customer/BtnPrincipal';
 import { Center } from 'native-base';
 import { useInfoUser } from '../hooks/useInfoUsers';
+import { addToUser } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 
 
 const CREDENTIAL_KEYS = {
@@ -40,7 +41,7 @@ const CREDENTIAL_KEYS = {
 
 const LoginScreen = ({ navigation }) => {
   const {getUserInfo} = useInfoUser()
-
+  const dispatch = useDispatch()
   const [userCredentials, setUserCredentials] = useState({
     [CREDENTIAL_KEYS.EMAIL_ADDRESS]: '',
     [CREDENTIAL_KEYS.PASSWORD]: '',
@@ -86,7 +87,7 @@ const LoginScreen = ({ navigation }) => {
           await saveUserId(user?._id);
           await saveUserType(user)
           await saveUserData(user);
-          
+          dispatch(addToUser(user))
           if (user?.carActive) {
             await saveCarActive(user?.isCarActive);
 

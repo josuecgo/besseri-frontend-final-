@@ -4,13 +4,14 @@ import { Button } from 'native-base'
 import Colors from '../../util/styles/colors'
 import CommonStyles from '../../util/styles/styles'
 
-export const BtnPrincipal = ({text,onPress}) => {
+export const BtnPrincipal = ({text,onPress,backgroundColor = Colors.primaryColor}) => {
+ 
   return (
     <View style={styles.principal} >
       <Button 
       onPress={onPress}
-      size={'lg'} 
-      backgroundColor={Colors.primaryColor} 
+      size={'md'} 
+      backgroundColor={backgroundColor} 
       _text={{
         // fontWeight:'semibold'
         ...CommonStyles.h4
@@ -26,7 +27,7 @@ export const BtnPrincipal = ({text,onPress}) => {
 
 const styles = StyleSheet.create({
   principal:{
-    marginVertical:13,
+    marginVertical:10,
     marginHorizontal:20
   },
   btn:{

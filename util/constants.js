@@ -234,6 +234,16 @@ export const showToaster = (message) => {
   }
 }
 
+export const showToasterError = (message) => {
+  let msg = message?.response?.data?.message
+  if (Platform.OS === 'ios') {
+    Alert.alert(msg)
+  }else{
+    ToastAndroid.showWithGravity(msg,ToastAndroid.SHORT,ToastAndroid.CENTER)
+
+  }
+}
+
 
 export const showAlertLogin = (goLogin) => {
  

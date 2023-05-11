@@ -105,6 +105,7 @@ export const customer_api_urls = {
     cancel_order:`${base_url}/orders/cancel-user-order`,
     create_payment_sheet_services:`${base_url}/payments/payment-sheet-services`,
     service_search:`${base_url}/services/search-api`,
+    
     create_car:`${base_url}/info-user/create-garage`,
     get_garage:`${base_url}/info-user/get-garage`,
     get_type_car:`${base_url}/info-user/get-types-cars`,

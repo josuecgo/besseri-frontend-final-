@@ -4,8 +4,13 @@ import { HStack, VStack } from 'native-base'
 import { adjust } from '../../util/Dimentions'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Colors from '../../util/styles/colors'
+import { useSelector } from 'react-redux'
+import numeral from 'numeral'
 
 const ChecksHome = () => {
+  const {carActive} = useSelector(state => state.user)
+
+
   return (
     <View style={{ flex: 1 }} >
       <HStack justifyContent={'center'} space={4} >
@@ -22,7 +27,7 @@ const ChecksHome = () => {
             style={styles.check}
           >
             <View style={styles.checkinter}>
-            <Text style={{ color: 'white', fontSize: adjust(9) }} >200,000</Text>
+            <Text style={{ color: 'white', fontSize: adjust(9) }} >{carActive?.km ? numeral(carActive?.km).format('0,0') : ''}</Text>
             </View>
           </View>
           <Text style={{ color: 'white', fontSize: adjust(9) }} >Kilometraje</Text>
