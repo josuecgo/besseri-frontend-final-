@@ -90,7 +90,7 @@ export const customer_api_urls = {
 
     get_stores:`${base_url}/business/get-stores`,
     get_store_data:`${base_url}/business/get-store`,
-    get_stores_type_services:`${base_url}/business//get-stores`,
+    get_stores_type_services:`${base_url}/business/get-stores`,
 
     get_services:`${base_url}/services/get-services`,
     get_type_services:`${base_url}/services/get-type-services`,

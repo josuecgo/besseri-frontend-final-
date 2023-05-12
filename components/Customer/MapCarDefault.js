@@ -3,27 +3,35 @@ import React, { useContext } from 'react'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { ProductContext } from '../../util/context/Product/ProductContext';
 import { adjust } from '../../util/Dimentions';
-import { Button } from 'native-base';
+import { Button, Image } from 'native-base';
+import { useSelector } from 'react-redux';
+import CommonStyles from '../../util/styles/styles';
+import Colors from '../../util/styles/colors';
 
 export const MapCarDefault = ({changeCar}) => {
-  const {carDefault} = useContext(ProductContext);
-  
+ 
+  const {carActive} = useSelector( state => state.user )
   return (
     <Pressable 
     onPress={changeCar}
     style={styles.body}
     >
       <View style={styles.left} >
-        <MaterialIcons
-        name="directions-car"
-        color='black' 
-        size={25}
+        <Image
+        source={require('../../assets/images/24.png')}
+        alt='car'
+        style={styles.icon}
         />
+        {/* <MaterialIcons
+        name="directions-car"
+        color={Colors.white} 
+        size={25}
+        /> */}
        
-        <Text style={styles.car} >{carDefault?.model?.name} {carDefault?.maker?.name}</Text>
+        <Text style={styles.car} >{carActive?.model?.name} {carActive?.maker?.name}</Text>
    
       
-         </View>
+        </View>
      
      
     </Pressable>
@@ -42,12 +50,19 @@ const styles = StyleSheet.create({
   },
   left:{
     flexDirection:'row',
-    alignItems:'baseline',
+    alignItems:'center',
+  },
+  icon:{
+    width:30,
+    height:30,
+    resizeMode:'contain',
+    marginRight:5
   },
   car:{
     fontSize:adjust(14),
     marginLeft:5,
     textAlign:'right',
-    textDecorationLine:'underline'
+    textDecorationLine:'underline',
+    ...CommonStyles.h2
   }
 })

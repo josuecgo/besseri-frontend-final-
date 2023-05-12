@@ -115,8 +115,9 @@ export const PRODUCT_STATUS = {
 export const CUSTOMER_HOME_SCREEN_ROUTES = {
   HOME: 'HomeStack',
   SHOW_AUTO_PARTS: 'Home',
+  SERVICES_STACK : 'SERVICES_STACK',
+  MAP_SERVICES : 'MAP_SERVICES',
 
-  
   NOTIFICATION_HOME: 'Notificaciones',
 
   ACCOUNT_HOME : 'Cuenta',
@@ -127,6 +128,7 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   SERVICIO: 'SERVICIO',
   MAP_SERVICES: 'Map Services',
   APPOINTMENT_SERVICES: 'APPOINTMENT Services',
+  DETAILS_SERVICES: 'Details Services',
   SERVICE: 'Services',
   APPOINTMENTS: 'Appointments',
   ORDERS: 'Orders',

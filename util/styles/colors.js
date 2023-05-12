@@ -1,4 +1,5 @@
 const Colors = {
+  borderColor : '#6B6B6B',
   placeholder:'#393939',
   primaryColor: '#5B7CF4',
   primaryColorShade: '#f8e3bc',

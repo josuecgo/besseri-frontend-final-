@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { TypeServices } from '../../../components/Services/TypeServices'
 import { Heading, Pressable } from 'native-base'
+import CommonStyles from '../../../util/styles/styles'
 
 export const ServiciosScreen = ({navigation}) => {
   const [servicios, setServicios] = useState([]);
@@ -40,7 +41,7 @@ export const ServiciosScreen = ({navigation}) => {
   return (
     <View style={styles.servicios} >
     
-      <Heading>Elegir servicio</Heading>
+      <Text style={CommonStyles.h1} >Elegir servicio</Text>
       <FlatList
       data={servicios}
       renderItem={({item}) => (
@@ -51,6 +52,8 @@ export const ServiciosScreen = ({navigation}) => {
         </Pressable>
       )}
       keyExtractor={(item) => item._id}
+      showsVerticalScrollIndicator={false}
+      ListFooterComponent={() => <View style={{width:100,height:50}} />}
       />
     </View>
   )
@@ -59,6 +62,7 @@ export const ServiciosScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   servicios:{
-    marginHorizontal:10
+    paddingHorizontal:10,
+    ...CommonStyles.screenY
   }
 })

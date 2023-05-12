@@ -13,6 +13,9 @@ import { AccountScreen } from '../Account/AccountScreen';
 import { MyCarsScreen } from '../Account/MyCarsScreen';
 import { HeaderTitle } from '../../../components/Customer/HeaderTitle';
 import { PedidosScreen } from '../Account/PedidosScreen';
+import { BookingsStack } from '../customer.navigation';
+import { ServiciosScreen } from '../Home/ServiciosScreen';
+import { MapServiceScreen } from '../Home/MapServiceScreen';
 
 
 const BottomTab = createBottomTabNavigator();
@@ -80,8 +83,32 @@ export const CustomerHomeStack = () => {
         }}
       />
 
-    
-
+  <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_STACK}
+        component={ServiciosScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props} 
+            titulo="Servicios" 
+            nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+ <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.MAP_SERVICES}
+        component={MapServiceScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props} 
+            titulo="Servicios" 
+            nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
     </Stack.Navigator>
   );
 };
@@ -90,7 +117,7 @@ export const CustomerAccountStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_HOME}
+      // initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_HOME}
     >
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_HOME}
@@ -130,6 +157,8 @@ export const CustomerAccountStack = () => {
           ),
         }}
       />
+
+    
     
 
     </Stack.Navigator>

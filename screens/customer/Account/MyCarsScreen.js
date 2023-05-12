@@ -187,11 +187,10 @@ const ModalCreateCar = ({
                 endIcon: <CheckIcon size="5" />
               }}
               rounded={'lg'}
-              
+              placeholderTextColor={Colors.white}
               onValueChange={itemValue => handleMarca(itemValue)}
-              style={styles.select}
-              // borderColor={Colors.white}
-              // backgroundColor={Colors.white}
+              textStyle={{color:Colors.white}}
+              color={Colors.white}
               borderColor={Colors.lightBorder}
               backgroundColor={Colors.lightBlack}
               dropdownIcon={<MaterialCommunityIcons 
@@ -220,9 +219,9 @@ const ModalCreateCar = ({
                     bg: "teal.600",
                     endIcon: <CheckIcon size="5" />
                   }}
-
+                  color={Colors.white}
                   onValueChange={itemValue => handleModel(itemValue)}
-                  style={styles.select}
+                
                   borderColor={Colors.lightBorder}
                   backgroundColor={Colors.lightBlack}
                   dropdownIcon={<MaterialCommunityIcons 
@@ -255,6 +254,7 @@ const ModalCreateCar = ({
               style={styles.select}
               borderColor={Colors.lightBorder}
               backgroundColor={Colors.lightBlack}
+              color={Colors.white}
               dropdownIcon={<MaterialCommunityIcons 
                 name='menu-down' 
                 color={Colors.white} 

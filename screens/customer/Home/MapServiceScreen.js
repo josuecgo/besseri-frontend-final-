@@ -3,27 +3,28 @@ import React, { useState,useEffect, useContext } from 'react'
 import { api_statuses, customer_api_urls } from '../../../util/api/api_essentials';
 import { getUserId } from '../../../util/local-storage/auth_service';
 
-import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constants';
+import { BOTTOM_TAB_CUSTOMER_ROUTES, CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constants';
 import axios from 'axios';
-import { CheckIcon, Heading, Select, VStack } from 'native-base';
+import { CheckIcon, HStack, Heading, Image, Select, VStack } from 'native-base';
 import { ServiceSkeleton } from '../../../components/Services/ServiceSkeleton';
 import { ListServices } from '../../../components/Services/ListServices';
 import { ProductContext } from '../../../util/context/Product/ProductContext';
 import { MapCarDefault } from '../../../components/Customer/MapCarDefault';
+import { useSelector } from 'react-redux';
+import Colors from '../../../util/styles/colors';
+import CommonStyles from '../../../util/styles/styles';
+import { deviceWidth } from '../../../util/Dimentions';
 
 
 
 export const MapServiceScreen = (props) => {
   const [addresses, setAddresses] = useState(null)
-  const [defaultAddress, setDefaultAddress] = useState(null)
   
+  const {carActive,address} = useSelector( state => state.user )
   const {type} = props.route.params;
   const [stores, setStores] = useState(null)
-  const {carDefault,activeCar} = useContext(ProductContext);
+  const [defaultAddress, setDefaultAddress] = useState(address)
 
-  
-  
- 
 
   const getAddresses = async() => {
     try {
@@ -58,14 +59,14 @@ export const MapServiceScreen = (props) => {
 
   const getCars = async() => {
     
-    if (!carDefault) {
+    if (!carActive) {
       Alert.alert('No tienes ningun auto seleccionado', 'Crea una o selecciona un auto', [
         {
           text: 'Cancelar',
           onPress: () => props.navigation.goBack(),
           style: 'cancel',
         },
-        {text: 'Crear', onPress: () => props.navigation.navigate('Garage')},
+        {text: 'Crear', onPress: () => changeCar()},
       ]);
     }
   }
@@ -73,7 +74,7 @@ export const MapServiceScreen = (props) => {
   const getStoreService = async() => {
     try {
       
-      const apiCall = await axios.post(`${customer_api_urls.get_stores_type_services}/${type}`,{addresses,carDefault});
+      const apiCall = await axios.post(`${customer_api_urls.get_stores_type_services}/${type}`,{addresses,carActive});
      
       setStores(apiCall?.data?.data)
     } catch (error) {
@@ -83,15 +84,16 @@ export const MapServiceScreen = (props) => {
   }
 
   const goService = (item) => {
-    props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.APPOINTMENT_SERVICES,{
+    props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.DETAILS_SERVICES,{
       service:item,
       address:defaultAddress,
-      car:carDefault
+      car:carActive
     })
   }
 
   const changeCar = () => {
-    props.navigation.navigate('Garage')
+ 
+    props.navigation.navigate(BOTTOM_TAB_CUSTOMER_ROUTES.ACCOUNT, { screen: CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_MY_CARS})
   }
 
   const handleAddress = (address) => {
@@ -110,7 +112,7 @@ export const MapServiceScreen = (props) => {
     if (addresses) {
       getStoreService()
     }
-  }, [defaultAddress,carDefault])
+  }, [defaultAddress,carActive])
   
   
   
@@ -120,41 +122,56 @@ export const MapServiceScreen = (props) => {
   
   return (
     <View style={styles.map} >
-      <Select 
-      selectedValue={defaultAddress} 
-      defaultValue={defaultAddress} 
-      minWidth="200" 
-      accessibilityLabel="Elegir direccion" 
-      placeholder={'Elegir direccion'} 
-      _selectedItem={{
-        bg: "teal.600",
-        endIcon: <CheckIcon size="5" />
-      }} 
-      mt={1} 
-      onValueChange={itemValue => handleAddress(itemValue)}
-      >
-        {
-           addresses.map((item) => (
-            <Select.Item key={item._id} label={item.formatted_address} value={item._id} />
-          ))
-        }
-         
-         
-      </Select>
+      <HStack alignItems={'center'} justifyContent={'center'} >
+      <Image
+      source={require('../../../assets/images/30.png')}
+      alt='dirrecion'
+      style={styles.icon}
+      />
+        <Select 
+        selectedValue={defaultAddress} 
+        defaultValue={defaultAddress} 
+        minWidth={deviceWidth - 50}
+        accessibilityLabel="Elegir direccion" 
+        placeholder={'Elegir direccion'} 
+        placeholderTextColor={Colors.white}
+        variant='unstyled'
+        _selectedItem={{
+          bg: "teal.600",
+          endIcon: <CheckIcon size="5" />
+        }} 
+        mt={1} 
+        onValueChange={itemValue => handleAddress(itemValue)}
+        borderColor={Colors.bgColor}
+        color={Colors.white}
+        backgroundColor={Colors.bgColor}
+        >
+          {
+            addresses.map((item) => (
+              <Select.Item key={item._id} label={item.formatted_address} value={item._id} />
+            ))
+          }
+          
+          
+        </Select>
+      </HStack>
+
       
       <MapCarDefault changeCar={changeCar}/>
       <VStack
       space={1}
-      marginTop={10}
+      marginTop={4}
       >
       <Heading
       size="sm"
       textTransform={'uppercase'}
+      style={CommonStyles.h1}
       >
         Talleres Automotriz
       </Heading>
       <Heading
       size="sm"
+      style={CommonStyles.h2}
       >
         Disponibles según tu ubicación
       </Heading>
@@ -170,6 +187,13 @@ export const MapServiceScreen = (props) => {
 
 const styles = StyleSheet.create({
   map:{
-    marginHorizontal:10
+    ...CommonStyles.screenY,
+    paddingVertical:5,
+    paddingHorizontal:10
+  },
+  icon:{
+    width:50,
+    height:50,
+    resizeMode:'contain'
   }
 })
