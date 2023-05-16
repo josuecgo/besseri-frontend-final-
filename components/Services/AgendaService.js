@@ -1,14 +1,38 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useMemo, useState } from 'react'
+import { StyleSheet,View } from 'react-native'
+import React, { useMemo } from 'react'
 
-import {Calendar, CalendarUtils} from 'react-native-calendars';
+import {Calendar, CalendarUtils, LocaleConfig} from 'react-native-calendars';
 import moment from 'moment';
+import 'moment/locale/es';
 import { useCallback } from 'react';
-import { Modal } from 'native-base';
+import { Modal, Text } from 'native-base';
+
+// Obtiene los nombres de los días en el idioma deseado
+const weekdays = moment.weekdays();
 
 const INITIAL_DATE = moment().format('YYYY-MM-DD');
 
-// const INITIAL_DATE = '1-04-2023';
+LocaleConfig.defaultLocale = 'es';
+LocaleConfig.locales['es'] = {
+  monthNames: [
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre',
+  ],
+  dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+  dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+};
+
+
 export const AgendaService = ({setDaySelected,handleCalendar,showCalendar,daySelected}) => {
 
 
@@ -59,6 +83,12 @@ export const AgendaService = ({setDaySelected,handleCalendar,showCalendar,daySel
           markedDates={marked}
           // maxDate={getDate(6)}
           disableAllTouchEventsForDisabledDays
+          renderDay={(day, item) => (
+            <View>
+              <Text>{weekdays[day.weekday()]}</Text>
+              <Text>{day.day}</Text>
+            </View>
+          )}
         />
 
 

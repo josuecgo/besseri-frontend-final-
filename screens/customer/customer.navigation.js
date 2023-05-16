@@ -364,10 +364,7 @@ export const CustomerHomeStack = () => {
         name={CUSTOMER_HOME_SCREEN_ROUTES.MAP_SERVICES}
         component={MapServiceScreen}
       />
-      <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.APPOINTMENT_SERVICES}
-        component={AppointmentScreen}
-      />
+     
       
       {/* <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS}

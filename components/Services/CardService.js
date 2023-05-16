@@ -4,6 +4,8 @@ import { AspectRatio, Box,Center,HStack,Heading,Image,Stack,Text } from 'native-
 import Colors from '../../util/styles/colors'
 import { api_urls, base_url } from '../../util/api/api_essentials'
 import CommonStyles from '../../util/styles/styles'
+import { moneda } from '../../util/Moneda'
+import { ItemServiceDetail } from './ItemServiceDetail'
 
 export const CardService = ({service}) => {
   
@@ -56,8 +58,16 @@ export const CardService = ({service}) => {
         </HStack>
        
 
-        <HStack alignItems="flex-end" space={4} justifyContent="flex-end">
-          <HStack alignItems="flex-end">
+        <HStack  space={4} justifyContent="space-between">
+       
+            <Text 
+           
+            style={CommonStyles.h2}
+            
+            >
+              {moneda(service?.price)} MXN
+            </Text>
+          <HStack>
             <Text 
             color={Colors.white} _dark={{
             color: Colors.white
@@ -70,7 +80,8 @@ export const CardService = ({service}) => {
             </Text>
           </HStack>
         </HStack>
-
+        
+     
       </Stack>
     </Box>
   </Box>

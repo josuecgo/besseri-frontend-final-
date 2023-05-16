@@ -17,6 +17,7 @@ import { BottomTabHome } from '../../screens/customer/navigation/BottomTabHome';
 import { AppointmentScreen } from '../../screens/customer/Home/AppointmentScreen';
 import { HeaderTitle } from '../../components/Customer/HeaderTitle';
 import { ServiceDetailsScreen } from '../../screens/customer/Home/ServiceDetailsScreen';
+import { AgendarScreen } from '../../screens/customer/Home/AgendarScreen';
 
 const Stack = createStackNavigator();
 
@@ -71,7 +72,21 @@ export const MainNavigation = () => {
           ),
         }}
       />
-    
+
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.AGENDAR}
+        component={AgendarScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props} 
+            titulo="Agendar" 
+            nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+
       <Stack.Screen
         name={MAIN_ROUTES.CHATSCREEN}
         component={ChatStack}

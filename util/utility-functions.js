@@ -151,3 +151,10 @@ return d.format('HH:mm');
 
   // return d.format("HH:mm:ss");
 }
+
+export const numberToKm = (number) => {
+  const formattedNumber = number.toLocaleString('en-US', { style: 'decimal' });
+
+
+  return formattedNumber
+}

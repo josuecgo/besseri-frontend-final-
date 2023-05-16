@@ -1,15 +1,18 @@
 import {  StyleSheet, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { Box, Button, HStack, Heading, ScrollView, Text,Pressable } from 'native-base';
+import { Box, Button, HStack, Heading, ScrollView, Text,Pressable, Image } from 'native-base';
 import { AgendaService } from '../../../components/Services/AgendaService';
 import axios from 'axios';
-import { customer_api_urls } from '../../../util/api/api_essentials';
+import { base_url, customer_api_urls } from '../../../util/api/api_essentials';
 import { getUserId } from '../../../util/local-storage/auth_service';
 import moment from 'moment';
 import timeZone from 'moment-timezone';
 import { dateToHour } from '../../../util/utility-functions';
 import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constants';
 import { ItemServiceDetail } from '../../../components/Services/ItemServiceDetail';
+import { deviceWidth } from '../../../util/Dimentions';
+import CommonStyles from '../../../util/styles/styles';
+import Colors from '../../../util/styles/colors';
 
 
 export const AppointmentScreen = (props) => {
@@ -54,11 +57,11 @@ export const AppointmentScreen = (props) => {
    
 
    
-    try {
+    // try {
       
       const userId = await getUserId();
       if(!userId || !service._id  || !service?.business_id._id || !hourSelected?.start || !hourSelected?.end) return showToaster('Faltan campos.')
-      
+     
       const date = new Date(hourSelected.start);
       const startDate = timeZone(date).utc();
       // const startDate = moment(date.toISOString());
@@ -76,26 +79,28 @@ export const AppointmentScreen = (props) => {
         address
       }
         
-      
-      const apiCall = await axios.post(customer_api_urls.book_service,data)
+      props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.AGENDAR,{
+        data
+      })
+      // const apiCall = await axios.post(customer_api_urls.book_service,data)
      
-      if (apiCall.data.success) {
-        showToaster(apiCall.data.message);
-        props.navigation.replace(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS)
-      }else{
-        showToaster(apiCall.data.message);
-        setCitas([]);
-        setDaySelected('')
-        setHourSelected(null)
-      }
+      // if (apiCall.data.success) {
+      //   showToaster(apiCall.data.message);
+      //   props.navigation.replace(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS)
+      // }else{
+      //   showToaster(apiCall.data.message);
+      //   setCitas([]);
+      //   setDaySelected('')
+      //   setHourSelected(null)
+      // }
 
-      } catch (error) {
+    //   } catch (error) {
       
       
-        showToaster('Error con el servidor')
+    //     showToaster('Error con el servidor')
      
       
-    }
+    // }
   }
   
 
@@ -111,7 +116,7 @@ export const AppointmentScreen = (props) => {
     
   }, [daySelected])
   
-  // console.log(citas);
+ 
   return (
     <ScrollView
       contentContainerStyle={styles.appointment}
@@ -119,103 +124,145 @@ export const AppointmentScreen = (props) => {
 
       <Box>
 
-      <ItemServiceDetail service={service} />
-     
-
-      <Heading
-        size="sm"
-        textTransform={'uppercase'}
-        marginY={'4'}
-        >
-          disponibilidad
-      </Heading>
-      <Box
-      my={'2'}
-      >
+        <HStack justifyContent={'flex-end'} mb={'5px'} >
+          <Text style={CommonStyles.h2} >10 km de tu ubicación </Text>
+        </HStack>
+        <Image 
+            source={{
+              uri: `${base_url}/${service?.business_id.logo}`
+            }} 
+            alt="image" 
+            rounded={'2xl'}
+            // marginTop={3}
+            resizeMode='stretch'
+            style={styles.img}
+        />
         
-        <Text fontSize="xs"
-        fontWeight="500" mt="-1">
-        Selecciona fecha
-        </Text>
-        <Button
-        variant={'ghost'}
-        onPress={() => handleCalendar(true)}
-        >{daySelected ? daySelected : 'Elige una fecha'}</Button>
-
-        {
-          showCalendar && (
-            <AgendaService 
-            daySelected={daySelected}
-            setDaySelected={setDaySelected}
-            handleCalendar={handleCalendar}
-            showCalendar={showCalendar}
+        <Box 
+        flexDirection={'row'} 
+        space={2}  
+      
+        my={'10px'} >
+            <Image
+              source={require('../../../assets/images/13.png')}
+              alt='dirrecion'
+              style={styles.icon}
             />
+            <Box maxWidth={295} flexWrap={'wrap'} flexDirection={'row'}>
+              <Text style={CommonStyles.h3}>
+                {service?.business_id?.location?.formatted_address}
+              </Text>
+            </Box>
+        </Box>  
+
+        <Text style={CommonStyles.h1} >Disponibilidad</Text>
+        <Box
+        my={'2'}
+        >
+        
+            <TouchableOpacity
+            onPress={() => handleCalendar(true)}
+            >
+              <HStack space={4} alignItems={'center'} >
+                <Text style={CommonStyles.h2} >
+                  Selecciona fecha
+                </Text>
+                <Image 
+                source={require('../../../assets/images/calendar.png')} 
+                alt="image"           
+                resizeMode='stretch'
+                  style={styles.icon}
+                />
+              </HStack>
+            </TouchableOpacity>
+          
+          
+
+
+          {
+            showCalendar && (
+              <AgendaService 
+              daySelected={daySelected}
+              setDaySelected={setDaySelected}
+              handleCalendar={handleCalendar}
+              showCalendar={showCalendar}
+              />
+            )
+          }
+          
+          <Text style={{...CommonStyles.h2}} >{moment(daySelected).format('DD-MM-YYYY')}</Text>
+        </Box>
+
+        
+        <Box
+        my={'2'}
+        >
+          
+        {
+          daySelected  && (
+            <>
+             
+                <HStack space={4} alignItems={'center'} mb={4}>
+                  <Text style={CommonStyles.h2} >
+                  Selecciona hora
+                  </Text>
+                  <Image 
+                  source={require('../../../assets/images/reloj.png')} 
+                  alt="image"           
+                  resizeMode='stretch'
+                    style={styles.icon}
+                  />
+                </HStack>
+              
+              
+              <HStack
+              borderWidth={daySelected ? 1 : 0}
+              rounded={'2xl'}
+              style={{flexWrap:'wrap',justifyContent:'space-around'}}
+              >
+                {
+
+                  citas ? citas.map((item) => (
+                    <TouchableOpacity 
+                    key={item.start}
+                    style={[styles.hora,{
+                      backgroundColor:item.status === 'off' ? 'gray' : hourSelected === item ? 'white' : '#404040'
+                    }]}
+                    disabled={item.status === 'off' ? true : false}
+                  
+                    onPress={()=> {
+                      if (item.status === 'off') return
+                      handleHour(item)
+                    }}
+                    >
+                      <Text color={hourSelected === item ? 'black' : '#FFFFFF'} >
+                        {dateToHour(item.start)} 
+                      </Text>
+                      
+                    </TouchableOpacity>
+                  )) : (
+                    <Box
+                    style={styles.noCitas}
+                    >
+                      <Text fontSize="xs"
+                      fontWeight="500" mt="-1">
+                      No hay citas disponibles.
+                      </Text>
+                    </Box>
+                    
+                  )
+                }
+              </HStack>
+            </>
           )
         }
+
         
+          
+          
 
-      </Box>
-
-      
-      <Box
-      my={'2'}
-      >
+        </Box>
         
-      {
-        daySelected  && (
-          <>
-            <Text fontSize="xs"
-            fontWeight="500" mt="-1">
-            Selecciona hora
-            </Text>
-            
-            <HStack
-            borderWidth={daySelected ? 1 : 0}
-            rounded={'2xl'}
-            style={{flexWrap:'wrap',justifyContent:'space-around'}}
-            >
-              {
-
-                citas ? citas.map((item) => (
-                  <TouchableOpacity 
-                  key={item.start}
-                  style={[styles.hora,{
-                    backgroundColor:item.status === 'off' ? 'gray' : hourSelected === item ? 'white' : '#404040'
-                  }]}
-                  disabled={item.status === 'off' ? true : false}
-                
-                  onPress={()=> {
-                    if (item.status === 'off') return
-                    handleHour(item)
-                  }}
-                  >
-                    <Text color={hourSelected === item ? 'black' : '#FFFFFF'} >
-                      {dateToHour(item.start)} 
-                    </Text>
-                    
-                  </TouchableOpacity>
-                )) : (
-                  <Box
-                  style={styles.noCitas}
-                  >
-                    <Text fontSize="xs"
-                    fontWeight="500" mt="-1">
-                    No hay citas disponibles.
-                    </Text>
-                  </Box>
-                  
-                )
-              }
-            </HStack>
-          </>
-        )
-      }
-
-      
-        
-        
-
-      </Box>
       </Box>
 
       <Button
@@ -234,10 +281,12 @@ export const AppointmentScreen = (props) => {
 
 
 const styles = StyleSheet.create({
+ 
   appointment: {
-    margin: 10,
+    paddingHorizontal: 10,
     justifyContent:'space-between',
-  
+    paddingVertical:20,
+    backgroundColor:Colors.bgColor
   },
   item: {
     backgroundColor: 'white',
@@ -264,6 +313,10 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     
   },
+  img:{
+    width:deviceWidth ,
+    height:deviceWidth * 0.55
+  },
   noCitas:{
     margin:5,
     padding:10,
@@ -272,5 +325,11 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center',
     
+  },
+  icon: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
+    marginRight: 5
   }
 })
