@@ -8,7 +8,8 @@ import { USER_ROLE } from './util/local-storage';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 
 import { MainNavigation } from './util/Routes/navigation.routes';
-import { combineReducers, createStore } from 'redux';
+import { combineReducers, createStore,applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import businessProfileReducer from './util/ReduxStore/Reducers/VendorReducers/BusinessProfileReducer';
 import { Provider } from 'react-redux';
 import CartReducer from './util/ReduxStore/Reducers/CustomerReducers/CartReducer';
@@ -26,6 +27,8 @@ import { ChatContext, ChatProvider } from './util/context/Chat/ChatContext';
 import { useChat } from './hooks/useChat';
 import FeedbackReducer from './util/ReduxStore/Reducers/CustomerReducers/FeedbackReducer';
 import UserInfoReducer from './util/ReduxStore/Reducers/CustomerReducers/UserInfoReducer';
+import PedidosReducer from './util/ReduxStore/Reducers/CustomerReducers/PedidosReducer';
+
 
 
 
@@ -35,14 +38,13 @@ const App = () => {
 
   const { getItem: getStoreRole } = useAsyncStorage(USER_ROLE);
   const store = combineReducers({
-    // businessActions: businessProfileReducer,
     cart: CartReducer,
-    // rider: RiderReducer,
     feedback: FeedbackReducer,
-    user: UserInfoReducer
+    user: UserInfoReducer,
+    pedidos:PedidosReducer
     
   });
-  const reduxStore = createStore(store);
+  const reduxStore = createStore(store,applyMiddleware(thunk));
   const [showSplashScreen, setSplashScreen] = useState(true);
   const [userRole, setUserRole] = useState(ROLES.UNSET);
 

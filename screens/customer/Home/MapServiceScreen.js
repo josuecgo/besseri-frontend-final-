@@ -84,9 +84,10 @@ export const MapServiceScreen = (props) => {
   }
 
   const goService = (item) => {
+    const findAddres = addresses.find(item => item._id === defaultAddress)
     props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.DETAILS_SERVICES,{
       service:item,
-      address:defaultAddress,
+      address:findAddres,
       car:carActive
     })
   }

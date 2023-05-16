@@ -6,6 +6,7 @@ import moment from 'moment';
 import 'moment/locale/es';
 import { useCallback } from 'react';
 import { Modal, Text } from 'native-base';
+import Colors from '../../util/styles/colors';
 
 // Obtiene los nombres de los días en el idioma deseado
 const weekdays = moment.weekdays();
@@ -51,8 +52,8 @@ export const AgendaService = ({setDaySelected,handleCalendar,showCalendar,daySel
       [daySelected]: {
         selected: true,
         disableTouchEvent: true,
-        selectedColor: 'orange',
-        selectedTextColor: 'red'
+        selectedColor: Colors.primaryColor,
+        selectedTextColor: Colors.white
       }
     };
   }, [daySelected]);
@@ -62,12 +63,6 @@ export const AgendaService = ({setDaySelected,handleCalendar,showCalendar,daySel
     const newDate = date.setDate(date.getDate() + count);
     return CalendarUtils.getCalendarDateString(newDate);
   };
-
-
-
- 
-
-
 
   return (
     <Modal

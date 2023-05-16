@@ -5,10 +5,10 @@ import Colors from '../../util/styles/colors'
 import CommonStyles from '../../util/styles/styles'
 import { adjust } from '../../util/Dimentions'
 
-export const BtnPrincipal = ({ text, onPress, backgroundColor = Colors.primaryColor }) => {
+export const BtnPrincipal = ({ text, onPress, backgroundColor = Colors.primaryColor, marginHorizontal = 20 }) => {
 
   return (
-    <View style={styles.principal} >
+    <View style={[styles.principal,{marginHorizontal:marginHorizontal}]} >
       <Button
         onPress={onPress}
         // size={'md'} 
@@ -33,7 +33,7 @@ export const BtnPrincipal = ({ text, onPress, backgroundColor = Colors.primaryCo
 const styles = StyleSheet.create({
   principal: {
     marginVertical: 10,
-    marginHorizontal: 20
+   
   },
   btn: {
     color: 'red'

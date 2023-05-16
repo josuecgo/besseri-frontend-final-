@@ -31,13 +31,13 @@ const CommonStyles = StyleSheet.create({
     fontWeight:'bold',
     fontFamily:'Arial',
     fontSize:adjust(18),
-    color:Colors.red
+    color:Colors.white
   },
   h5:{
-    fontWeight:'700',
+    fontWeight:'200',
     fontFamily:'Arial',
-    fontSize:adjust(16),
-    color:'#000000'
+    fontSize:adjust(10),
+    color:Colors.white
   },
   flexOneCenter: {
     justifyContent:'center',

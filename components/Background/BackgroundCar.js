@@ -4,7 +4,7 @@ import { HStack, Image } from 'native-base'
 import { deviceHeight, deviceWidth } from '../../util/Dimentions'
 import ChecksHome from '../Customer/ChecksHome'
 
-export const BackgroundCar = ({home = false}) => {
+export const BackgroundCar = ({home = false,bottom = 20}) => {
   return (
     <View style={{alignItems:'center'}} >
       <Image
@@ -19,7 +19,7 @@ export const BackgroundCar = ({home = false}) => {
           <ChecksHome/>
         </HStack>
         ):(
-          <View style={{marginBottom:20}} />
+          <View style={{marginBottom:bottom}} />
         )
        }
         

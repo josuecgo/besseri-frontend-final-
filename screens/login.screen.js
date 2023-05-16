@@ -40,7 +40,7 @@ const CREDENTIAL_KEYS = {
 };
 
 const LoginScreen = ({ navigation }) => {
-  const {getUserInfo} = useInfoUser()
+  const {getUserInfo,getPedidosUser} = useInfoUser()
   const dispatch = useDispatch()
   const [userCredentials, setUserCredentials] = useState({
     [CREDENTIAL_KEYS.EMAIL_ADDRESS]: '',
@@ -94,6 +94,7 @@ const LoginScreen = ({ navigation }) => {
 
           }
           await getUserInfo(user)
+          await getPedidosUser()
           navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
         } else {
           showToaster('Usuario no encontrado.')
@@ -102,7 +103,7 @@ const LoginScreen = ({ navigation }) => {
       }
 
     } catch (e) {
-      console.log("🚀 ~ file: login.screen.js:95 ~ handleSignIn ~ e:", e)
+     
       // console.log(e);
       setShowLoader(false);
       showToaster('Error con el servidor.')
