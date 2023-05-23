@@ -4,18 +4,18 @@ import { Box, Image,Text } from 'native-base'
 import CommonStyles from '../util/styles/styles'
 import { deviceWidth } from '../util/Dimentions'
 
-const AddressFormatted = ({address}) => {
+const AddressFormatted = ({address,color = 'white'}) => {
  
  
   return (
     <Box flexDirection={'row'} space={2} alignItems={'center'}>
           <Image
-            source={require('../assets/images/13.png')}
+            source={color === 'white' ? require('../assets/images/13.png') : require('../assets/images/1.png') }
             alt='dirrecion'
             style={styles.icon}
           />
           <Box maxWidth={deviceWidth * 0.8 } flexWrap={'wrap'} flexDirection={'row'}>
-            <Text style={CommonStyles.h3}>
+            <Text style={{...CommonStyles.h3,color:color}}>
               {address}
             </Text>
           </Box>

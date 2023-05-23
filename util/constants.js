@@ -90,6 +90,18 @@ export const STATUS_LABELS = {
   CANCELLED:'Cancelled',
   PARCEL_DELIVERED:'Parcel Delivered'
 }
+export const BookingsStatusCode = {
+   EN_PROCESO:'En proceso',
+    ESPERANDO_RIDER:'Esperando un rider',
+    RIDER_EN_CAMINO_A_CUSTOMER:'Valet en camino con cliente',
+    CUSTOMER_ENTREGADO_A_RIDER:'Cliente entrega a valet ',
+    ENTREGADO_A_TALLER:'Recepcionado por taller',
+    REVISANDO:'Revisando',
+    SERVICIO_CONCLUIDO:'Servicio concluido',
+    RIDER_EN_CAMINO_A_VENDOR:'Valet en camino a taller',
+    TALLER_ENTREGADO_A_RIDER:'Taller entrega a valet',
+    ENTREGADO_A_CUSTOMER:'Vehiculo entregado',
+}
 export const USER_ORDER_STATUSES = {
   PROCESSING: 'PROCESSING',
   PACKEd: 'PACKED',
@@ -129,6 +141,8 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   MAP_SERVICES: 'Map Services',
   APPOINTMENT_SERVICES: 'APPOINTMENT Services',
   AGENDAR: 'Agendar',
+  DETALLE: 'Detalle',
+  SEGUIMIENTO: 'Seguimiento',
   DETAILS_SERVICES: 'Details Services',
   SERVICE: 'Services',
   APPOINTMENTS: 'Appointments',
@@ -211,16 +225,7 @@ export const OrderStatusCode = {
   PACKED:'Paquete listo'
 }
 
-export const BookingsStatusCode = {
-  EN_PROCESO:'En proceso',
-  RIDER_EN_CAMINO_A_CUSTOMER:'Rider en camino',
-  CUSTOMER_ENTREGADO_A_RIDER:'Entregado a rider',
-  ENTREGADO_A_TALLER:'Recepcionado por taller',
-  REVISANDO:'Revisando',
-  SERVICIO_CONCLUIDO:'Servicio concluido',
-  TALLER_ENTREGADO_A_RIDER:'Entregado a rider',
-  ENTREGADO_A_CUSTOMER:'Vehiculo entregado',
-}
+
 
 export const KeysStripe = {
   LIVE_KEY:'pk_live_51K6fAwEZl12SIefHa7w6LJCVzATHV5n253Xlw2TcAxFrOkwEElIHpoWM9gilgxRey62ACrQMLir0SY6C7Uwdgx1M00ukntyd5k',

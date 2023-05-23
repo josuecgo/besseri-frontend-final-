@@ -8,9 +8,23 @@ import { BOTTOM_TAB_CUSTOMER_ROUTES, CUSTOMER_HOME_SCREEN_ROUTES, showToaster } 
 import { logout } from '../../../util/local-storage/auth_service'
 import { useContext } from 'react'
 import { NotificationContext } from '../../../util/context/NotificationContext'
+import { useSelector } from 'react-redux'
 
 export const AccountScreen = (props) => {
   const {getNotificaciones} = useContext(NotificationContext);
+  const {user} = useSelector(state => state.user)
+
+  
+  const loginLogout = async() => {
+    // console.log(!user);
+    if (user) {
+      await logout()
+      getNotificaciones()
+      props.navigation.navigate('Splash',{reload:true});
+    }else{
+      props.navigation.navigate('AuthStack',{reload:true});
+    }
+  }
   
   return (
     <View style={styles.account} >
@@ -32,13 +46,8 @@ export const AccountScreen = (props) => {
         />
 
         <BtnPrincipal
-        text={'Cerrar sesion'}
-        onPress={async() =>{
-          await logout()
-          getNotificaciones()
-          props.navigation.navigate(BOTTOM_TAB_CUSTOMER_ROUTES.HOME_SCREEN,{reload:true});
-          showToaster('Cerraste sesión')
-        }}
+        text={!user ? 'Iniciar sesion' : 'Cerrar sesion'}
+        onPress={loginLogout}
 
         backgroundColor={Colors.cerrarSesion}
         />

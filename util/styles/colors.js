@@ -4,6 +4,7 @@ const Colors = {
   primaryColor: '#5B7CF4',
   primaryColorShade: '#f8e3bc',
   cerrarSesion:'#03AD70',
+  seguimiento:'#2BD310',
   secondaryColorBlueShade: '#365575',
   secondaryColorGreenShade: '#2A5223',
   gray: '#f5f2f2',

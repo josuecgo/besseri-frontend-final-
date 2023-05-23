@@ -79,12 +79,12 @@ export const PartsServicesFunctionsDrawer = () => {
 
 
 
-  useEffect(() => {
-    if (Platform.OS === 'ios') {
-      iosPermisoss();
-    }
-    getToken();
-  }, [])
+  // useEffect(() => {
+  //   if (Platform.OS === 'ios') {
+  //     iosPermisoss();
+  //   }
+  //   getToken();
+  // }, [])
 
   useEffect(async () => {
     let abortController = new AbortController();

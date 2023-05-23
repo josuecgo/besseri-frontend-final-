@@ -7,13 +7,14 @@ import { useDispatch } from 'react-redux';
 import { addAddressToUser, addCarActiveToUser, addCarsToUser, addToUser, getYearsCars } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 import { useEffect } from 'react';
 import { showAlertLogin, showToaster, showToasterError } from '../util/constants';
-import { getOrdersUser } from '../util/ReduxStore/Actions/CustomerActions/PedidosAction';
+import { getOrdersUser, isLoadingOrdersUser } from '../util/ReduxStore/Actions/CustomerActions/PedidosAction';
 
 
 
 
 export const useInfoUser = (  ) => {
   const dispatch = useDispatch()
+  
 
   const getUserInfo = async(user) => {
       try {
@@ -82,7 +83,7 @@ export const useInfoUser = (  ) => {
       if (!id) {
         return showToaster('Registrate o inicia sesion')
       }
-    
+      dispatch( isLoadingOrdersUser() )
       const apiCall = await axios.get(`${customer_api_urls.get_pedidos_user}/${id}`);
 
      
@@ -94,6 +95,7 @@ export const useInfoUser = (  ) => {
 
     } catch (error) {
       showToaster(error?.response?.data?.message)
+      dispatch( getOrdersUser([]) )
     }
    
   }

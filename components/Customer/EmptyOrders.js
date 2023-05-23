@@ -6,11 +6,11 @@ import ButtonComponent from '../button/button.component'
 import { deviceHeight, deviceWidth } from '../../util/Dimentions'
 import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants'
 
-export const EmptyOrders = (props) => {
+export const EmptyOrders = ({navigation}) => {
   return (
     <View style={{ ...CommonStyles.flexOneCenter }}>
       <Image
-        source={require('../../assets/images/orderss.png')}
+        source={require('../../assets/images/newLogo.png')}
         style={{ width: 200, height: 200, resizeMode: 'contain', bottom: 40 }}
       />
       <View style={[styles.placeOrderWrapper, { deviceWidth }]}>
@@ -21,7 +21,7 @@ export const EmptyOrders = (props) => {
           colorB={Colors.primarySolid}
           width={deviceWidth / 1.5}
           margin={10}
-          handlePress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS)}
+          handlePress={() => navigation.navigate('Splash')}
         />
       </View>
     </View>
@@ -30,8 +30,8 @@ export const EmptyOrders = (props) => {
 
 
 const styles = StyleSheet.create({
-  placeOrderText: { ...CommonStyles.fontFamily, fontSize: 20 },
-  placeOrderTextDetail: { fontSize: 13, fontWeight: '300', width: '90%', alignSelf: 'center', textAlign: 'center', color: Colors.dark },
+  placeOrderText: { ...CommonStyles.h1, },
+  placeOrderTextDetail: { ...CommonStyles.h3, fontWeight: '300', width: '90%', alignSelf: 'center', textAlign: 'center' },
   placeOrderWrapper: { justifyContent: 'center', alignItems: 'center', bottom: 40 },
   header:{
     width:'100%',

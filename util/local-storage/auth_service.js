@@ -71,8 +71,8 @@ export const saveUserType = async(user) => {
      await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.USER);
      await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.USER_TYPE);
      await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.BUSINESS_PROFILE);
-     await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.BUSINESS_STATUS);
-     await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.RIDER_PROFILE);
+     await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.CAR_STORAGE);
+     await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.CUSTOMER_ADDRESS);
      return true;
  }
 

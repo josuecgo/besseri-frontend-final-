@@ -16,6 +16,10 @@ import { PedidosScreen } from '../Account/PedidosScreen';
 import { BookingsStack } from '../customer.navigation';
 import { ServiciosScreen } from '../Home/ServiciosScreen';
 import { MapServiceScreen } from '../Home/MapServiceScreen';
+import { useEffect } from 'react';
+import { Platform } from 'react-native';
+import { useContext } from 'react';
+import { NotificationContext } from '../../../util/context/NotificationContext';
 
 
 const BottomTab = createBottomTabNavigator();
@@ -23,6 +27,19 @@ const Stack = createStackNavigator();
 
 
 export const BottomTabHome = () => {
+  const {
+    iosPermisoss,
+    getToken,
+  } = useContext(NotificationContext);
+
+  useEffect(() => {
+    if (Platform.OS === 'ios') {
+      iosPermisoss();
+    }
+    getToken();
+  }, [])
+
+  
   return (
     <BottomTab.Navigator
       initialRouteName={BOTTOM_TAB_CUSTOMER_ROUTES.HOME_SCREEN}

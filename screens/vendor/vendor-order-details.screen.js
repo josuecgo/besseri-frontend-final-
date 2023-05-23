@@ -31,7 +31,7 @@ import { getUserId } from '../../util/local-storage/auth_service';
 
 
 export const CustomText = ({text, isData = false, numberOfLines = null}) => {
-  const stylesInner = isData ? {fontSize: adjust(12), opacity: 0.5} : {fontSize: 13};
+  const stylesInner = isData ? {fontSize: adjust(12)} : {fontSize: 13};
   
   
   return (
@@ -39,10 +39,10 @@ export const CustomText = ({text, isData = false, numberOfLines = null}) => {
       ellipsizeMode="tail"
       numberOfLines={numberOfLines}
       style={[
-        styles.flex1,
-        CommonStyles.fontFamily,
+       
+        CommonStyles.h2,
         stylesInner,
-        {paddingLeft: 5},
+        // {paddingLeft: 5},
       ]}>
       {text}
     </Text>

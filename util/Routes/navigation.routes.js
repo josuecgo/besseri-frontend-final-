@@ -18,6 +18,8 @@ import { AppointmentScreen } from '../../screens/customer/Home/AppointmentScreen
 import { HeaderTitle } from '../../components/Customer/HeaderTitle';
 import { ServiceDetailsScreen } from '../../screens/customer/Home/ServiceDetailsScreen';
 import { AgendarScreen } from '../../screens/customer/Home/AgendarScreen';
+import { DetalleScreen } from '../../screens/customer/Account/DetalleScreen';
+import { SeguimientoScreen } from '../../screens/customer/Account/SeguimientoScreen';
 
 const Stack = createStackNavigator();
 
@@ -86,6 +88,35 @@ export const MainNavigation = () => {
           ),
         }}
       />
+
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.DETALLE}
+        component={DetalleScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props} 
+            titulo="Detalle" 
+            nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.SEGUIMIENTO}
+        component={SeguimientoScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props} 
+            titulo="Seguimiento" 
+            nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+      
 
       <Stack.Screen
         name={MAIN_ROUTES.CHATSCREEN}

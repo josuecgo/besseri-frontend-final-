@@ -65,7 +65,7 @@ const SplashScreen = ({navigation}) => {
     const userType = await getUserType();
     const addressCustomer = await getUserAddress();
     const carActive = await getCarActive();
-   
+    
     if (user) {
       dispatch(addToUser(user))
     }

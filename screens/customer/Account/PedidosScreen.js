@@ -3,11 +3,14 @@ import React, { useEffect } from 'react'
 import CommonStyles from '../../../util/styles/styles'
 import { useInfoUser } from '../../../hooks/useInfoUsers';
 import { useSelector } from 'react-redux';
+import { ItemPedidos } from '../../../components/ItemPedidos';
+import Loading from '../../../components/Loader/Loading';
+import { EmptyOrders } from '../../../components/Customer/EmptyOrders';
 
-export const PedidosScreen = () => {
+export const PedidosScreen = ({navigation}) => {
   const {getPedidosUser} = useInfoUser();
 
-  const {orders} = useSelector(state => state.pedidos)
+  const {orders,isLoading} = useSelector(state => state.pedidos)
 
   // console.log(orders);
 
@@ -19,14 +22,17 @@ export const PedidosScreen = () => {
   return (
     <View style={styles.pedidos} >
       <Text>PedidosScreen</Text>
+     
       <FlatList
       data={orders}
       renderItem={({item}) => {
-        console.log(item);
+       
         return (
-          <Text style={{...CommonStyles.h1}} >{item.status}</Text>
+         <ItemPedidos item={item} navigation={navigation} />
         )
       }}
+      key={(item) => item?._id}
+      ListEmptyComponent={isLoading ? <Loading/> :<EmptyOrders navigation={navigation} />}
       />
     </View>
   )
