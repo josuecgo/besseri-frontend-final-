@@ -26,7 +26,13 @@ export const productReducer = (state, action) => {
         case 'getCategorias' : 
         return {
             ...state,
-            categorias:action.payload.categorias
+            categorias:action.payload.categorias,
+            activeCategory:action.payload.active,
+        }
+        case 'activeCategoria' : 
+        return {
+            ...state,
+            activeCategory:action.payload.active,
         }
         case 'getServicios' : 
         return {

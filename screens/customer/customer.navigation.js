@@ -107,14 +107,7 @@ export const PartsServicesFunctionsDrawer = () => {
     }
   }, [])
 
-  useEffect(async () => {
 
-    let abortController = new AbortController();
-    getProducts()
-    return () => {
-      abortController.abort();
-    }
-  }, [])
 
 
 
@@ -331,9 +324,9 @@ export const CustomerHomeStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
+      // initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
     >
-      <Stack.Screen
+      {/* <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS}
         component={HomeScreen}
         options={{
@@ -342,7 +335,7 @@ export const CustomerHomeStack = () => {
             <CustomHeaderComponent {...props} name="Home" />
           ),
         }}
-      />
+      /> */}
 
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES}

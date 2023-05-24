@@ -23,6 +23,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
 
 
   const {
+    getCategorias,
     categorias,
     comision,modelo,
     resetFiltro,productFiltrado,getProducts,loading,carCompatible
@@ -87,7 +88,13 @@ const CustomerProductsViewScreen = React.memo((props) => {
     // Return the function to unsubscribe from the event so it gets removed on unmount
     return unsubscribe;
   }, [props.navigation]);
-  // console.log(valueModel);
+  
+  useEffect(() => {
+   
+    getCategorias()
+  
+  }, [])
+  
   
   return (
     <View style={{ ...CommonStyles.flexOne,backgroundColor:Colors.bgColor }}>
@@ -96,11 +103,11 @@ const CustomerProductsViewScreen = React.memo((props) => {
       
       <View style={{flex:1,backgroundColor:Colors.white}} >
         
-        <View style={Platform.OS === 'ios' ? styles.filterContainer : styles.filterContainer2}>
+        {/* <View style={Platform.OS === 'ios' ? styles.filterContainer : styles.filterContainer2}>
           <SelectFilter/>
        
-        </View>
-        <View style={styles.reset} >
+        </View> */}
+        {/* <View style={styles.reset} >
           <View style={{marginVertical:10}} >
             <CarDefault navigation={props.navigation} />
           </View>
@@ -117,23 +124,27 @@ const CustomerProductsViewScreen = React.memo((props) => {
             
           }
           
-        </View>
+        </View> */}
 
-          
+       
+         
         <View style={{ 
           paddingVertical: 5,
           backgroundColor: 'transparent',
-          alignSelf: 'flex-start', flexDirection: 'row' ,
+          // alignSelf: 'flex-start', flexDirection: 'row' ,
          
         }}>
-         
-          <FlatList
+
+        <Text style={{...CommonStyles.h1, color:Colors.black,fontWeight:'bold',marginLeft:10}} >
+          Categorías
+        </Text>
+         <FlatList
           data={categorias}
           horizontal
           keyExtractor={item => item?._id}
           renderItem={memorizedValueCategoria}
           showsHorizontalScrollIndicator={false}
-          
+         
           />
         </View>
         

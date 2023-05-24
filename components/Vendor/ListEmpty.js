@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { deviceHeight, deviceWidth } from '../../util/Dimentions'
+import CommonStyles from '../../util/styles/styles'
 
 export const ListEmpty = ({msg}) => {
+  
   return (
     <View style={styles.container} >
-      <Text>{msg}</Text>
+      <Text >{msg}</Text>
     </View>
   )
 }

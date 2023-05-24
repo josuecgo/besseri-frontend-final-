@@ -90,6 +90,15 @@ export const STATUS_LABELS = {
   CANCELLED:'Cancelled',
   PARCEL_DELIVERED:'Parcel Delivered'
 }
+export const OrderStatusCode = {
+  OUT_FOR_DELIVERY:'Fuera para entrega',
+  PARCEL_PICKED:'Pedido recogido',
+  PARCEL_DELIVERED:'Paquete entregado',
+  RIDER_ASSIGNED:'Repartidor asignado',
+  PROCESSING:'Procesando',
+  PACKED:'Paquete listo'
+}
+
 export const BookingsStatusCode = {
    EN_PROCESO:'En proceso',
     ESPERANDO_RIDER:'Esperando un rider',
@@ -216,14 +225,7 @@ export const USER_ROLES = {
   rider:'rider'
 }
 
-export const OrderStatusCode = {
-  OUT_FOR_DELIVERY:'Fuera para entrega',
-  PARCEL_PICKED:'Pedido recogido',
-  PARCEL_DELIVERED:'Paquete entregado',
-  RIDER_ASSIGNED:'Repartidor asignado',
-  PROCESSING:'Procesando',
-  PACKED:'Paquete listo'
-}
+
 
 
 

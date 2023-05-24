@@ -13,44 +13,25 @@ import { useCart } from '../../hooks/useCart';
 import axios from 'axios';
 import { customer_api_urls } from '../../util/api/api_essentials';
 import { Empty } from '../Customer/Empty';
+import { ListEmpty } from '../Vendor/ListEmpty';
 
 const ProductListing = ({category,products,navigation,comision,carCompatible}) => {
   
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
 
   const {addItemToCart} = useCart()
-  
-  
-  if (products <= 0) {
-    return null;
-  }
-  
+ 
   
   
   return (
     <View style={styles.container}>
-        <View style={styles.buttonAndTextContainer}>
-            <View>
-              <Text style={{...CommonStyles.fontFamily,fontSize:adjust(14),color:Colors.textPrimary}}>{category?.name}</Text>
-            </View>
-          
-            <TouchableOpacity
-            onPress={() => {
-              carCompatible(false)
-              navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.MORE_PRODUCTS,{category:category})
-            
-            }}
-            >
-              <Text style={{textDecorationLine:'underline', right:10,color:Colors.primarySolid,fontSize:adjust(10)}} >Ver más</Text>
-              {/* <Ionicons name="ios-arrow-forward-outline" color="red" size={18} /> */}
-            </TouchableOpacity>  
-        </View>
+
 
         <FlatList
         data={products}
         contentContainerStyle={{marginTop:15,paddingHorizontal:5}}
-        horizontal
-        showsHorizontalScrollIndicator={false}
+        // horizontal
+        // showsHorizontalScrollIndicator={false}
         renderItem={itemData => (
            <ProductCardComponent
            onViewDetail={() => {
@@ -66,7 +47,8 @@ const ProductListing = ({category,products,navigation,comision,carCompatible}) =
            comision={comision}
            />
         )}
-        ListEmptyComponent={() => (<Empty/>) }
+        ListEmptyComponent={() => <ListEmpty msg={'No hay productos para tu vehiculo'} />}
+               
         />
     </View>
   );

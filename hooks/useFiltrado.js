@@ -5,6 +5,7 @@ import { showToaster } from '../util/constants';
 import { ProductContext } from '../util/context/Product/ProductContext';
 import { getUserId } from '../util/local-storage/auth_service';
 import { matchMaker, matchModel, matchYear } from '../util/utility-functions';
+import { useSelector } from 'react-redux';
 
 export const useFiltrado = ( isServicios ) => {
     const [productFilter, setProductFilter] = useState([]);
@@ -12,14 +13,12 @@ export const useFiltrado = ( isServicios ) => {
     const {
         productos,
         servicios,
-        carActive,
-        valueMaker,
-        valueModel, valueYear,carCompatible,modelo
     } = useContext(ProductContext)
     const [loadingFilter, setLoadingFilter] = useState(false)
 
+    const {carActive} = useSelector(state => state.user);
 
-
+   
 
     const servicesFilter = ()=> {
         
@@ -67,20 +66,17 @@ export const useFiltrado = ( isServicios ) => {
     }
 
     const makerFilter = async() => {
-        if (valueModel && valueYear && modelo) {
-            let carModel = modelo.find((item) => item._id === valueModel )
-            carCompatible({model:carModel,year:valueYear})
-        }else{
-            carCompatible(false)
-        }
+        let valueMaker = carActive?.maker?._id
+        let valueModel = carActive?.model?._id;
+        let valueYear = carActive?.year;
+        
+      
         setLoadingFilter(true)
         
         let filtrado = []
         if (valueMaker) {
             if (valueModel) {
-
-                // const marca = await matchMaker(productos,valueMaker,valueModel,valueYear);
-               
+              
                 const modelo = await matchModel(productos,valueMaker,valueModel,valueYear)
         
         
@@ -127,9 +123,11 @@ export const useFiltrado = ( isServicios ) => {
     
 
     useEffect(() => {
-
-        makerFilter();
-    }, [productos,valueMaker,valueModel,valueYear])
+        if (productos) {
+            makerFilter();
+        }
+        
+    }, [productos,carActive])
    
  
 

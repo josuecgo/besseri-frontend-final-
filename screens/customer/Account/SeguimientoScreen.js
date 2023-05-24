@@ -1,16 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View,PanResponder } from 'react-native'
 import React from 'react'
 import { Box, Center, HStack, Image, Slider, VStack } from 'native-base';
 import { adjust, deviceHeight, deviceWidth } from '../../../util/Dimentions';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../../../util/styles/colors';
-import { BookingsStatusCode, ORDER_STATUSES } from '../../../util/constants';
+import { BookingsStatusCode, ORDER_STATUSES, OrderStatusCode, USER_ORDER_STATUSES } from '../../../util/constants';
 import CommonStyles from '../../../util/styles/styles';
 
+
+
+
+
 export const SeguimientoScreen = ({ route }) => {
- 
+
   const progress = route.params;
- 
+  
   const steps = progress.type == 'servicio' ? [
     {
       name: "Servicio aceptado"
@@ -42,31 +46,18 @@ export const SeguimientoScreen = ({ route }) => {
     },
   ] : progress.type == 'refaccion' ? [ {
     name: "Procesando pedido"
-  },    {
-    name: "Repartidor asignado"
   },
   {
-    name: "Entregado a valet"
-  },
+    name:"Paquete listo"
+  },    
   {
-    name: "Recepcionado por taller"
+    name: "Pedido recogido por repartidor"
   },
   {
     name:
-      "Vehículo en revisión"
+      "Paquete entregado"
   },
-  {
-    name: "Servicio concluido "
-  },
-  {
-    name: "Taller entregado a valet"
-  },
-  {
-    name: "Vehiculo entregado a cliente"
-  },
-  {
-    name: "Cierre de servicio"
-  } ] : [
+  ] : [
     {
       name: "Lavado aceptada"
     },    {
@@ -119,31 +110,22 @@ export const SeguimientoScreen = ({ route }) => {
     // ON_GOING:'ON_GOING',
     // PARCEL_DELIVERED:'PARCEL DELIVERED'
     if (progress.type === 'refaccion') {
-      switch (progress.status) {
-        case BookingsStatusCode.EN_PROCESO:
-  
-          return 0;
-        case BookingsStatusCode.ESPERANDO_RIDER:
-          return 1;
-  
-        case BookingsStatusCode.RIDER_EN_CAMINO_A_CUSTOMER:
-        
-          return 2;
-        case BookingsStatusCode.CUSTOMER_ENTREGADO_A_RIDER:
-            return 3;
-        case BookingsStatusCode.ENTREGADO_A_TALLER:
-          return 4; 
-        case BookingsStatusCode.REVISANDO:
-            return 5; 
-        case BookingsStatusCode.SERVICIO_CONCLUIDO:
-          return 6;
-        case BookingsStatusCode.TALLER_ENTREGADO_A_RIDER:
-          return 7;
-        case BookingsStatusCode.ENTREGADO_A_CUSTOMER:
+      switch (progress.status_code) {
+        case USER_ORDER_STATUSES.PROCESSING:
        
-            return 9;
+  
+          return 1;
+        case USER_ORDER_STATUSES.PACKEd:
+          return 2;
+  
+        case USER_ORDER_STATUSES.ORDER_OUT_FOR_DELIVERY:
+        case ORDER_STATUSES.ON_GOING:
+          return 3;
+        case USER_ORDER_STATUSES.PARCEL_DELIVERED:
+            return 4;
+       
         default:
-          return 9;
+          return 0;
       }
 
       return
@@ -186,7 +168,7 @@ export const SeguimientoScreen = ({ route }) => {
     }
   }
 
-
+    
   return (
     <View style={{ ...CommonStyles.screenY }} >
 
@@ -315,6 +297,10 @@ export const SeguimientoScreen = ({ route }) => {
 
     </View>
   )
+
+
+
+
 }
 
 
@@ -400,3 +386,5 @@ const styles = StyleSheet.create({
     ...CommonStyles.h2
   }
 })
+
+

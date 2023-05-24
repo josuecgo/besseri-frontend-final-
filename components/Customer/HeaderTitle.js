@@ -9,7 +9,7 @@ import { Divider, HStack } from 'native-base'
 import { NewLogo } from '../NewLogo'
 
 
-export const HeaderTitle = ({ nav, titulo, iconName = 'keyboard-backspace', subtitulo }) => {
+export const HeaderTitle = ({ nav, titulo, iconName = 'keyboard-backspace', tienda=false }) => {
 
 
   return (
@@ -34,7 +34,12 @@ export const HeaderTitle = ({ nav, titulo, iconName = 'keyboard-backspace', subt
 
           <Text style={styles.headerText}>{titulo}</Text>
         </HStack>
+
+
         <NewLogo/>
+      
+
+
       
       </View>
       <Divider

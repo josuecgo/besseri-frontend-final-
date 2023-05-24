@@ -8,8 +8,7 @@ import { moneda } from '../../util/Moneda'
 import OrderProductItemComponent from '../vendor-shared/order-product-item.component'
 
 const CardServicio = ({data}) => {
-  console.log(data.store.location.formatted_address);
-
+  
   if(data.type === 'refaccion') return (
     <>
     <AddressFormatted address={data.store.location.formatted_address} />

@@ -6,7 +6,7 @@ import { showToaster } from "../../constants";
 
 import { productReducer } from "./productReducer";
 import { getUserId, getUserType } from "../../local-storage/auth_service";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 
 
@@ -17,6 +17,7 @@ const productInicialState = {
     productos:null,
     servicios:[],
     categorias:[],
+    activeCategory:null,
     marcas:[],
     modelo:null,
     comision:false,
@@ -51,18 +52,30 @@ export const ProductProvider = ({children}) => {
     const [activeCarLoading, setActiveCarLoading] = useState(false);
     const [cars, setCars] = useState([])
     const dispatchRedux = useDispatch()
+    const {carActive} = useSelector(state => state.user);
+
+    
     const getCategorias = async(params) => {
         try {
             
             const apiCall = await axios.get(customer_api_urls.get_products,{params});
-            await dispatch({
-                type:'getCategorias',
-                payload: {
-                   
-                    categorias: apiCall?.data?.data?.categories
-                }
-            });
+           
 
+            if (apiCall?.data?.data?.categories.length > 0) {
+                let cate = apiCall?.data?.data?.categories[0]
+                
+                getProducts(cate);
+                await dispatch({
+                    type:'getCategorias',
+                    payload: {
+                        active:cate,
+                        categorias: apiCall?.data?.data?.categories
+                    }
+                });
+            }
+
+            
+         
           } catch(e) {
             // console.log({getProducts:e})
             showToaster('No hay conexion con el servidor - C01');
@@ -71,32 +84,74 @@ export const ProductProvider = ({children}) => {
     }
 
 
-
-    const getProducts =  async() => {
-            try {
-                setLoading(true)
-                const apiCall = await axios.get(customer_api_urls.get_products);
+    const activarCategoria = (cate) => {
+       
+        dispatch({
+            type:'activeCategoria',
+            payload: {
+                active:cate,
                
-                if (apiCall?.status === 200) {
-                    await dispatch({
-                        type:'getProductos',
-                        payload: {
-                            productos: apiCall.data.data.products,
-                            // categorias: apiCall?.data?.data?.categories
-                        }
-                    });
-                    setDowload(apiCall.data.data.products)
-                    filterProduct(apiCall.data.data.products)
-                  
-                }
-
-                setLoading(false)
-              } catch(e) {
-               
-                showToaster('No hay conexion con el servidor - 01');
-                setLoading(false)
             }
+        });
+
+        getProducts(cate)
     }
+
+
+    // const getProducts =  async() => {
+    //         try {
+    //             setLoading(true)
+    //             const apiCall = await axios.get(customer_api_urls.get_products);
+               
+    //             if (apiCall?.status === 200) {
+    //                 await dispatch({
+    //                     type:'getProductos',
+    //                     payload: {
+    //                         productos: apiCall.data.data.products,
+    //                         // categorias: apiCall?.data?.data?.categories
+    //                     }
+    //                 });
+    //                 setDowload(apiCall.data.data.products)
+    //                 filterProduct(apiCall.data.data.products)
+                  
+    //             }
+
+    //             setLoading(false)
+    //           } catch(e) {
+               
+    //             showToaster('No hay conexion con el servidor - 01');
+    //             setLoading(false)
+    //         }
+    // }
+
+    const getProducts = async (category) => {
+        try {
+ 
+            const apiCall = await axios.post(
+                `${customer_api_urls.get_category_products}/${category._id}`,{carActive}
+            );
+
+            if (apiCall?.status === 200) {
+
+                console.log('data',apiCall.data.data);
+                await dispatch({
+                    type:'getProductos',
+                    payload: {
+                        productos: apiCall.data.data,
+                        // categorias: apiCall?.data?.data?.categories
+                    }
+                });
+                setDowload(apiCall.data.data)
+                // filterProduct(apiCall.data.data)
+              
+            }
+            
+
+        } catch (e) {
+            console.log(e);
+            showToaster('No se pudieron traer los productos. Por favor, vuelva a intentarlo');
+        }
+    };
 
     const filterProduct = async(data) => {
         
@@ -370,7 +425,8 @@ export const ProductProvider = ({children}) => {
         setValueYear("")
         setModelo(false);
         getMarcas();
-        getProducts();
+        // getProducts();
+        getCategorias()
         setCarDefault(false)
         setReset(true)
         carCompatible(false)
@@ -483,9 +539,9 @@ export const ProductProvider = ({children}) => {
         rangeYear()
     }, [])
     
-    // useEffect(() => {
-    //     getGarage()
-    // }, [])
+    useEffect(() => {
+        getComision()
+    }, [])
 
     return (
         <ProductContext.Provider
@@ -505,6 +561,7 @@ export const ProductProvider = ({children}) => {
             dowload,
             getProducts,
             getCategorias,
+            activarCategoria,
             getComision,
             getServices,
             getMarcas,
