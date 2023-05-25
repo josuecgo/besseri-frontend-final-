@@ -1,4 +1,4 @@
-import { ADD_ITEM_TO_CART, INCREASE_QUANTITY,DECRASE_QUANTITY, REMOVE_ITEM,RESET_CART,DELETE_ITEM, DESCUENTO } from "../../Actions/CustomerActions/CartActions"
+import { ADD_ITEM_TO_CART, INCREASE_QUANTITY,DECRASE_QUANTITY, REMOVE_ITEM,RESET_CART,DELETE_ITEM, DESCUENTO, SELECT_ITEM } from "../../Actions/CustomerActions/CartActions"
 import { ADD_NOTIFICATION } from "../../Actions/NotificationActions"
 
 const initialState = {
@@ -8,7 +8,8 @@ const initialState = {
     businessId:null,
     notifications:[],
     descuento:0,
-    idDesc:false
+    idDesc:false,
+    productDetail:null
 }
 export default (state = initialState, action) => {
     switch (action.type) {
@@ -40,7 +41,8 @@ export default (state = initialState, action) => {
                 total_amount:state?.total_amount - productAmount,
                 businessId:id
                 
-            }  
+        } 
+         
         case REMOVE_ITEM:
             
             const removeItem = state?.cart_items?.filter(item => item?._id != action?.data._id)
@@ -102,7 +104,18 @@ export default (state = initialState, action) => {
                 ...state,
                 cart_items: [...state.cart_items, action.data]
             }
+        case SELECT_ITEM:
            
+            let p = state.cart_items.find(item => {
+               
+              return  item?._id === action.data
+            });
+           
+        return {
+            ...state,
+            productDetail:p
+                    
+        }    
         default:
             return state
     }

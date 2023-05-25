@@ -47,7 +47,7 @@ const Colors = {
   error:'#ff0000',
   textSecundary: '#5F6368',
   textPrimary:'#666666',
-  
+  bgGray:'#F1F1F1'
 };
 
 export default Colors;

@@ -7,9 +7,14 @@ export const productReducer = (state, action) => {
             ...state,
             errorMessage:'',
             productos: action.payload.productos,
+            isLoading: false,
+        }
+        case 'isLoading' : 
+        return {
+            ...state,
+            isLoading: action.payload.isLoading,
             // categorias:action.payload.categorias
         }
-        
         case 'filterProducts' : 
         return {
             ...state,

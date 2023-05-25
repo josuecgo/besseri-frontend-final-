@@ -6,7 +6,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ProductCardComponent from './product-card.component';
 import * as CartActions from '../../util/ReduxStore/Actions/CustomerActions/CartActions';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants';
 import { adjust, deviceWidth } from '../../util/Dimentions';
 import { useCart } from '../../hooks/useCart';
@@ -15,8 +15,8 @@ import { customer_api_urls } from '../../util/api/api_essentials';
 import { Empty } from '../Customer/Empty';
 import { ListEmpty } from '../Vendor/ListEmpty';
 
-const ProductListing = ({category,products,navigation,comision,carCompatible}) => {
-  
+const ProductListing = ({products,navigation,comision}) => {
+  const dispatch = useDispatch()
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
 
   const {addItemToCart} = useCart()
@@ -35,6 +35,7 @@ const ProductListing = ({category,products,navigation,comision,carCompatible}) =
         renderItem={itemData => (
            <ProductCardComponent
            onViewDetail={() => {
+            dispatch(CartActions.selectItemFromCart(itemData.item._id, itemData.item?.price));
              navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL,{
                product:itemData.item,
                comision

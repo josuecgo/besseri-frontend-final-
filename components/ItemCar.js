@@ -27,14 +27,15 @@ export const ItemCar = ({ data,handleModalizeDelete,isDisabled }) => {
 
     const fetchDeleteCar = async(car) => {
         try {
+
             const apiCall = await axios.delete(`${customer_api_urls.delete_garage}/${car._id}`);
 
             if (apiCall.data.success) {
                 getUserInfo();
-                showToaster(apiCall?.data?.message)
+                showToaster(apiCall?.data?.message);
             }
         } catch (error) {
-            console.log("🚀 ~ file: ItemCar.js:26 ~ fetchDeleteCar ~ error:", error)
+            
             showToaster(error)
         }
     }
@@ -76,6 +77,7 @@ export const ItemCar = ({ data,handleModalizeDelete,isDisabled }) => {
                         <Text  style={CommonStyles.h2} >{data?.maker?.name}</Text>
                         <Text  style={CommonStyles.h2} >{data?.model?.name}</Text>
                         <Text  style={CommonStyles.h2} >{data?.model?.type?.type}</Text>
+                        <Text  style={CommonStyles.h2} >{data?.year}</Text>
                     </VStack>
                     
                 </HStack>

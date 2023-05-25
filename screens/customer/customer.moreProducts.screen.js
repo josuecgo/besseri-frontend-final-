@@ -87,13 +87,13 @@ const CustomerMoreProductsScreen = props => {
   
 
 
-    useEffect(() => {
-        let abortController = new AbortController();  
-        getProducts();
-        return () => {  
-            abortController.abort();  
-        }  
-    }, []);
+    // useEffect(() => {
+    //     let abortController = new AbortController();  
+    //     getProducts();
+    //     return () => {  
+    //         abortController.abort();  
+    //     }  
+    // }, []);
 
     const getProducts = async () => {
         try {

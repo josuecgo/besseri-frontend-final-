@@ -16,7 +16,7 @@ const ButtonComponent = ({
   buttonText,
   handlePress,
   width = undefined,
-  colorB = Colors.primarySolid ,
+  colorB = Colors.black ,
   disabled,
   disabledColor,
   height = 50,
@@ -44,7 +44,7 @@ const ButtonComponent = ({
           borderRadius,
           padding:padding ? padding : 15
         }}>
-        <Text style={[CommonStyles.fontFamily, styles.buttonText,{color:colorT?colorT:'white'}]}>
+        <Text style={[CommonStyles.h2, styles.buttonText,{color:colorT?colorT:'white'}]}>
           {buttonText}
         </Text>
         {icon}
@@ -68,8 +68,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   buttonText: {
-    color: 'white',
-    fontSize: adjust(12),
+    // color: 'white',
+    // fontSize: adjust(12),
+    fontWeight:'bold'
   },
   loader: {
     marginLeft: 10,

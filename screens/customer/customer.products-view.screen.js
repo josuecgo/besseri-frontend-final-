@@ -164,7 +164,7 @@ const CustomerProductsViewScreen = React.memo((props) => {
               showsVerticalScrollIndicator={false}
               onRefresh={() => {
                 
-                getProducts();
+                // getProducts();
 
               }}
               refreshing={loading}

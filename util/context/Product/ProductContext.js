@@ -1,4 +1,4 @@
-import React,{ createContext, useCallback, useEffect, useReducer,useState } from "react";
+import React, { createContext, useCallback, useEffect, useReducer, useRef, useState } from "react";
 import axios from 'axios';
 import { api_statuses, customer_api_urls, vendor_api_urls } from "../../api/api_essentials";
 import { showToaster } from "../../constants";
@@ -14,19 +14,19 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 const productInicialState = {
-    productos:null,
-    servicios:[],
-    categorias:[],
-    activeCategory:null,
-    marcas:[],
-    modelo:null,
-    comision:false,
-    isLoading:false,
+    productos: null,
+    servicios: [],
+    categorias: [],
+    activeCategory: null,
+    marcas: [],
+    modelo: null,
+    comision: false,
+    isLoading: false,
     productFiltrado: false,
-    store:[],
-    productosStore:[],
-    productFiltradoStore:false,
-    carActive:null
+    store: [],
+    productosStore: [],
+    productFiltradoStore: false,
+    carActive: null
 }
 
 
@@ -35,14 +35,14 @@ const productInicialState = {
 
 export const ProductContext = createContext({});
 
-export const ProductProvider = ({children}) => {
+export const ProductProvider = ({ children }) => {
 
     const [state, dispatch] = useReducer(productReducer, productInicialState);
     const [carDefault, setCarDefault] = useState(false)
     const [valueMaker, setValueMaker] = useState(null);
     const [valueModel, setValueModel] = useState(null);
     const [valueYear, setValueYear] = useState("")
-    const [ marcas, setMarcas ] = useState([]);
+    const [marcas, setMarcas] = useState([]);
     const [modelo, setModelo] = useState(false);
     const [years, setYears] = useState([]);
     const [servicios, setServicios] = useState(false)
@@ -52,45 +52,52 @@ export const ProductProvider = ({children}) => {
     const [activeCarLoading, setActiveCarLoading] = useState(false);
     const [cars, setCars] = useState([])
     const dispatchRedux = useDispatch()
-    const {carActive} = useSelector(state => state.user);
+    const { carActive } = useSelector(state => state.user);
 
-    
-    const getCategorias = async(params) => {
+    const getComisionCleanup = useRef(null);
+
+    const getCategorias = async () => {
         try {
-            
-            const apiCall = await axios.get(customer_api_urls.get_products,{params});
            
+           
+
+
+            const apiCall = await axios.get(customer_api_urls.get_products);
+
 
             if (apiCall?.data?.data?.categories.length > 0) {
                 let cate = apiCall?.data?.data?.categories[0]
+
                 
-                getProducts(cate);
-                await dispatch({
-                    type:'getCategorias',
+                 dispatch({
+                    type: 'getCategorias',
                     payload: {
-                        active:cate,
+                        active: cate,
                         categorias: apiCall?.data?.data?.categories
                     }
                 });
-            }
+             
+                getProducts(cate);
+            } 
 
-            
-         
-          } catch(e) {
+
+
+        } catch (e) {
             // console.log({getProducts:e})
             showToaster('No hay conexion con el servidor - C01');
-           
-          }
+            
+        }
     }
 
 
-    const activarCategoria = (cate) => {
+    const activarCategoria = async(cate) => {
+
        
-        dispatch({
-            type:'activeCategoria',
+        await dispatch({
+            type: 'activeCategoria',
             payload: {
-                active:cate,
-               
+                active: cate,
+
             }
         });
 
@@ -98,11 +105,12 @@ export const ProductProvider = ({children}) => {
     }
 
 
+
     // const getProducts =  async() => {
     //         try {
     //             setLoading(true)
     //             const apiCall = await axios.get(customer_api_urls.get_products);
-               
+
     //             if (apiCall?.status === 200) {
     //                 await dispatch({
     //                     type:'getProductos',
@@ -113,12 +121,12 @@ export const ProductProvider = ({children}) => {
     //                 });
     //                 setDowload(apiCall.data.data.products)
     //                 filterProduct(apiCall.data.data.products)
-                  
+
     //             }
 
     //             setLoading(false)
     //           } catch(e) {
-               
+
     //             showToaster('No hay conexion con el servidor - 01');
     //             setLoading(false)
     //         }
@@ -126,16 +134,21 @@ export const ProductProvider = ({children}) => {
 
     const getProducts = async (category) => {
         try {
- 
+            await dispatch({
+                type: 'isLoading',
+                payload: {
+                    isLoading: true,
+                }
+            });
             const apiCall = await axios.post(
-                `${customer_api_urls.get_category_products}/${category._id}`,{carActive}
+                `${customer_api_urls.get_category_products}/${category._id}`, { carActive }
             );
 
             if (apiCall?.status === 200) {
 
-                console.log('data',apiCall.data.data);
+              
                 await dispatch({
-                    type:'getProductos',
+                    type: 'getProductos',
                     payload: {
                         productos: apiCall.data.data,
                         // categorias: apiCall?.data?.data?.categories
@@ -143,22 +156,35 @@ export const ProductProvider = ({children}) => {
                 });
                 setDowload(apiCall.data.data)
                 // filterProduct(apiCall.data.data)
-              
+                
+             
+
+            }else{
+                await dispatch({
+                    type: 'isLoading',
+                    payload: {
+                        isLoading: false,
+                    }
+                });
             }
             
-
         } catch (e) {
-            console.log(e);
+             dispatch({
+                type: 'isLoading',
+                payload: {
+                    isLoading: false,
+                }
+            });
             showToaster('No se pudieron traer los productos. Por favor, vuelva a intentarlo');
         }
     };
 
-    const filterProduct = async(data) => {
-        
+    const filterProduct = async (data) => {
+
         await dispatch({
-            type:'filterProducts',
+            type: 'filterProducts',
             payload: {
-                productos:data,
+                productos: data,
                 // categorias: apiCall?.data?.data?.categories
             }
         });
@@ -166,7 +192,7 @@ export const ProductProvider = ({children}) => {
 
 
     const getServices = useCallback(
-        async() => {
+        async () => {
             // try {
             //     const apiCall = await axios.get(customer_api_urls.get_services);
             //     if (apiCall?.status == 200) {
@@ -174,140 +200,139 @@ export const ProductProvider = ({children}) => {
             //             type:'getServicios',
             //             payload: {
             //                 servicios: apiCall.data.data,
-                           
+
             //             }
             //         });
             //     }
 
-              
+
             //   } catch(e) {
             //     showToaster('No hay conexion con los servicios')
             //     // console.log({getServices:e});
-                
+
             //   }
-    },[])
+        }, [])
 
     const getComision = useCallback(
-        async() => {
-          try {
-            const getFee = await axios.get(customer_api_urls?.get_fees);
+        async () => {
+            try {
+                const getFee = await axios.get(customer_api_urls?.get_fees);
 
-            dispatch({
-                type:'getComision',
-                payload: {
-                    comision: getFee.data.data[0]?.besseri_comission,
-                }
-            });
-
-            
+                dispatch({
+                    type: 'getComision',
+                    payload: {
+                        comision: getFee.data.data[0]?.besseri_comission,
+                    }
+                });
 
 
-          
-           
-          } catch(e) {
-            // console.log({productContext:e})
-            showToaster('No hay conexion con el servidor ');
-           
-          }
-    },[])
+
+
+
+
+            } catch (e) {
+                // console.log({productContext:e})
+                showToaster('No hay conexion con el servidor ');
+
+            }
+        }, [])
 
     const getMarcas = useCallback(
-      async() => {
-        try {
-            const apiCall = await axios.get(vendor_api_urls?.get_makers)
-            if (apiCall?.status == 200) {
-                
-            setMarcas(apiCall.data?.data)
+        async () => {
+            try {
+                const apiCall = await axios.get(vendor_api_urls?.get_makers)
+                if (apiCall?.status == 200) {
+
+                    setMarcas(apiCall.data?.data)
+                }
+                // dispatch({
+                //     type:'getMarcas',
+                //     payload: {
+                //         marcas: apiCall.data?.data,
+                //     }
+                // });
+
+            } catch (error) {
+                // console.log({productContext:error})
+
             }
-            // dispatch({
-            //     type:'getMarcas',
-            //     payload: {
-            //         marcas: apiCall.data?.data,
-            //     }
-            // });
-        
-        } catch (error) {
-            // console.log({productContext:error})
-           
-        }
-      },
-      [],
+        },
+        [],
     )
 
     const getModelo = useCallback(
-      async(id) => {
-        try {
-            if (valueMaker.length > 0) {
-                
-               
-                const apiCall = await axios.get(`${vendor_api_urls.get_models}/${id}`);
-                
-                if (apiCall?.status == 200) {
-                    setModelo(apiCall.data.data);
+        async (id) => {
+            try {
+                if (valueMaker.length > 0) {
+
+
+                    const apiCall = await axios.get(`${vendor_api_urls.get_models}/${id}`);
+
+                    if (apiCall?.status == 200) {
+                        setModelo(apiCall.data.data);
+                    }
                 }
-            }
-           
-            
+
+
             } catch (e) {
-                
-              alert('Algo salió mal modelo');
+
+                alert('Algo salió mal modelo');
             }
-      },
-      [valueMaker],
+        },
+        [valueMaker],
     )
 
     const searchCall = useCallback(
-        async(st,isServices) => {
+        async (st, isServices) => {
             setLoading(true);
             setServicios(isServices)
-           
-        try 
-        {
-           
-            if(isServices === 'Servicios') {
-                const apiCall = await axios.post(customer_api_urls?.service_search,{
-                searchText:st,
-                });
-            
-                if (apiCall?.status == 200) {
-                    dispatch({
-                        type:'getServicios',
-                        payload: {
-                            servicios: apiCall.data.Data,
-                        
-                        }
+
+            try {
+
+                if (isServices === 'Servicios') {
+                    const apiCall = await axios.post(customer_api_urls?.service_search, {
+                        searchText: st,
                     });
+
+                    if (apiCall?.status == 200) {
+                        dispatch({
+                            type: 'getServicios',
+                            payload: {
+                                servicios: apiCall.data.Data,
+
+                            }
+                        });
+                    }
+
+                    setLoading(false);
+
+                } else {
+
+                    const apiCall = await axios.post(customer_api_urls.search_api, { searchText: st });
+
+                    if (apiCall?.status == 200) {
+                        dispatch({
+                            type: 'getProductos',
+                            payload: {
+                                productos: apiCall.data.Data,
+                            }
+                        });
+                        filterProduct(apiCall.data.Data)
+                    }
+
+                    setLoading(false);
+
                 }
 
-                setLoading(false);
 
-            } else {
-                
-                const apiCall = await axios.post(customer_api_urls.search_api,{searchText:st});
-           
-                if (apiCall?.status == 200) {
-                    dispatch({
-                        type:'getProductos',
-                        payload: {
-                            productos: apiCall.data.Data,
-                        }
-                    });
-                    filterProduct(apiCall.data.Data)
-                }
-                
+            } catch (e) {
+                // console.log(e)
                 setLoading(false);
-
+                showToaster('No hay conexion con el servidor')
             }
-            
-            
-        } catch(e) {
-            // console.log(e)
-            setLoading(false);
-            showToaster('No hay conexion con el servidor')
-        }
-    },[]);
+        }, []);
 
-    const activeCar = async(data) => {
+    const activeCar = async (data) => {
         const userId = await getUserId();
         try {
             if (!userId) {
@@ -315,100 +340,100 @@ export const ProductProvider = ({children}) => {
             }
             setLoading(true)
             // setCarDefault(data)
-         
-            const apiCall = await axios.post(`${customer_api_urls.active_car}/${userId}`,{data});
-                
+
+            const apiCall = await axios.post(`${customer_api_urls.active_car}/${userId}`, { data });
+
             if (apiCall.status == api_statuses.success) {
                 await getActiveCar()
-               showToaster('Nuevo Auto activado');
+                showToaster('Nuevo Auto activado');
             }
             setLoading(false)
         } catch (error) {
-         
-          setLoading(false)
-         
-          setCarDefault(false)
+
+            setLoading(false)
+
+            setCarDefault(false)
         }
-       
+
     }
 
-    const getActiveCar = async() => {
+    const getActiveCar = async () => {
         setActiveCarLoading(true)
-        
+
         try {
             const userId = await getUserId();
             if (!userId) {
-                
+
                 setCarDefault(false)
 
                 return
             }
-        
-          const apiCall = await axios.get(`${customer_api_urls.get_active_car}/${userId}`);
-            
-          
-          if (apiCall.status == api_statuses.success) {
-            let data = apiCall.data.data;
 
-         
-            if (data?.isCarActive) {
-                setCarDefault(data.isCarActive)
-                // carCompatible(data.isCarActive)
-             
+            const apiCall = await axios.get(`${customer_api_urls.get_active_car}/${userId}`);
+
+
+            if (apiCall.status == api_statuses.success) {
+                let data = apiCall.data.data;
+
+
+                if (data?.isCarActive) {
+                    setCarDefault(data.isCarActive)
+                    // carCompatible(data.isCarActive)
+
+                }
+
+
             }
-           
-           
-          }
-          setActiveCarLoading(false)
-    
+            setActiveCarLoading(false)
+
         } catch (error) {
-          
-          setCarDefault(false)
-          setActiveCarLoading(false)
-       
-        //   await dispatch({
-        //     type:'activeCar',
-        //     payload: {
-        //         car:false,
-        //         // categorias: apiCall?.data?.data?.categories
-        //     }
-        // }); 
+
+            setCarDefault(false)
+            setActiveCarLoading(false)
+
+            //   await dispatch({
+            //     type:'activeCar',
+            //     payload: {
+            //         car:false,
+            //         // categorias: apiCall?.data?.data?.categories
+            //     }
+            // }); 
         }
     }
 
     const getGarage = async () => {
         const userId = await getUserId();
         try {
-          if (!userId) {
-            // showToaster('Inicia sesión')
-            return
-          }
-          const apiCall = await axios.get(`${customer_api_urls.get_garage}/${userId}`);
-    
-          if (apiCall.status == api_statuses.success) {
-    
-            setCars(apiCall.data.data)
-          
-          } else {
-            showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
-          }
-    
+            if (!userId) {
+                // showToaster('Inicia sesión')
+                return
+            }
+            const apiCall = await axios.get(`${customer_api_urls.get_garage}/${userId}`);
+
+            if (apiCall.status == api_statuses.success) {
+
+                setCars(apiCall.data.data)
+
+            } else {
+                showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
+            }
+
         } catch (error) {
-          
-          showToaster('No hay conexion con el servidor')
+
+            showToaster('No hay conexion con el servidor')
         }
     }
 
 
     const carCompatible = async (car) => {
-       
+
         await dispatch({
-            type:'activeCar',
+            type: 'activeCar',
             payload: {
-                car:car,
-                
+                car: car,
+
             }
-        }); 
+        });
     }
 
     const resetCarDefault = (update) => {
@@ -418,8 +443,8 @@ export const ProductProvider = ({children}) => {
         })
     }
 
-   
-    const resetFiltro = async() => {
+
+    const resetFiltro = async () => {
         setValueMaker("");
         setValueModel("");
         setValueYear("")
@@ -431,37 +456,37 @@ export const ProductProvider = ({children}) => {
         setReset(true)
         carCompatible(false)
     }
-    
+
 
 
     const getProductStore = useCallback(
-        async(store) => {
+        async (store) => {
             try {
-                
+
                 await dispatch({
-                    type:'getStore',
+                    type: 'getStore',
                     payload: {
                         store: store,
-                          
+
                     }
                 });
             } catch (e) {
-              
-              showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
-            }
-    },[])
 
-    const filterProductStore = async(data) => {
+                showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
+            }
+        }, [])
+
+    const filterProductStore = async (data) => {
         // console.log(data,'--data');
         await dispatch({
-            type:'filterProductsStore',
+            type: 'filterProductsStore',
             payload: {
-                productFiltradoStore:data,
+                productFiltradoStore: data,
                 // categorias: apiCall?.data?.data?.categories
             }
         });
     }
-    const productStore = async(data) => {
+    const productStore = async (data) => {
         console.log('--data');
         // await dispatch({
         //     type:'productStore',
@@ -474,116 +499,116 @@ export const ProductProvider = ({children}) => {
         // });
     }
 
-    
+
 
     const rangeYear = () => {
         const max = new Date().getFullYear() + 1
-    
+
         const min = max - 33
         const years = []
-    
+
         for (let i = max; i >= min; i--) {
-          years.push(i)
+            years.push(i)
         }
         setYears(years);
-        
+
     }
 
-    
 
-    const storeProduct = async(store) => {
+
+    const storeProduct = async (store) => {
         try {
-           
+
             const apiCall = await axios.get(`${customer_api_urls.get_store_data}/${store?._id}`);
-    
+
             let cate = apiCall.data?.data?.categories;
-              
-               
+
+
             // let result  = cate.filter((elem, index) => {
             //         const firstIndex = cate.findIndex(({ _id, name }) => {
             //             return _id === elem._id && name === elem.name
             //         });
             //         return firstIndex === index
             // });
-                
-    
-               
-        
+
+
+
+
             if (apiCall?.status === 200) {
-                
+
                 // setProductsData(apiCall.data.data.products);
                 await productStore({
                     // productosStore:apiCall.data.data?.products,
-                    productosStore:[],
-                    minimumPrice:apiCall.data.data.minPrice,
-                    categories:[],
+                    productosStore: [],
+                    minimumPrice: apiCall.data.data.minPrice,
+                    categories: [],
                 })
-                
+
                 // setMinimumPrice(apiCall.data.data.minPrice);
                 // setServices(apiCall?.data?.data?.services);
 
                 filterProductStore(apiCall.data.data.products);
-               
-                
+
+
             }
 
-          } catch(e) {
+        } catch (e) {
             // console.log({getProducts:e})
             showToaster('No hay conexion con el servidor - 01STR');
-           
+
         }
-   
+
     }
 
     useEffect(() => {
         rangeYear()
     }, [])
-    
+
     useEffect(() => {
         getComision()
-    }, [])
+    }, []);
 
     return (
         <ProductContext.Provider
-        value={{
-            ...state,
-            marcas, 
-            setMarcas,
-            modelo, 
-            setModelo,
-            valueMaker, 
-            setValueMaker,
-            valueModel, 
-            setValueModel,
-            resetFiltro,
-            searchCall,
-            filterProduct,
-            dowload,
-            getProducts,
-            getCategorias,
-            activarCategoria,
-            getComision,
-            getServices,
-            getMarcas,
-            getModelo,
-            getProductStore,
-            filterProductStore,
-            productStore,
-            storeProduct,
-            loading,
-            valueYear,
-            setValueYear,
-            years,
-            activeCar,
-            getActiveCar,
-            reset,
-            carDefault,
-            activeCarLoading,
-            getGarage,
-            cars,
-            carCompatible,
-            resetCarDefault
-        }}
+            value={{
+                ...state,
+                marcas,
+                setMarcas,
+                modelo,
+                setModelo,
+                valueMaker,
+                setValueMaker,
+                valueModel,
+                setValueModel,
+                resetFiltro,
+                searchCall,
+                filterProduct,
+                dowload,
+                getProducts,
+                getCategorias,
+                activarCategoria,
+                getComision,
+                getServices,
+                getMarcas,
+                getModelo,
+                getProductStore,
+                filterProductStore,
+                productStore,
+                storeProduct,
+                loading,
+                valueYear,
+                setValueYear,
+                years,
+                activeCar,
+                getActiveCar,
+                reset,
+                carDefault,
+                activeCarLoading,
+                getGarage,
+                cars,
+                carCompatible,
+                resetCarDefault
+            }}
         >
             {children}
         </ProductContext.Provider>
@@ -592,4 +617,4 @@ export const ProductProvider = ({children}) => {
 
 
 
- 
+

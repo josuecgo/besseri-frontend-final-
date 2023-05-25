@@ -20,6 +20,11 @@ import { ServiceDetailsScreen } from '../../screens/customer/Home/ServiceDetails
 import { AgendarScreen } from '../../screens/customer/Home/AgendarScreen';
 import { DetalleScreen } from '../../screens/customer/Account/DetalleScreen';
 import { SeguimientoScreen } from '../../screens/customer/Account/SeguimientoScreen';
+import CustomerCartScreen from '../../screens/customer/customer.cartscreen';
+import { EnvioScreen } from '../../screens/customer/customer.envio.screen';
+import { MetodoScreen } from '../../screens/customer/customer.metodoscreen';
+import CustomerOrderSummaryFree from '../../screens/customer/customer.orderSummaryFree.screen';
+import { OrderSuccessful } from '../../screens/customer/customer.order-successful';
 
 const Stack = createStackNavigator();
 
@@ -117,7 +122,10 @@ export const MainNavigation = () => {
         }}
       />
       
-
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK}
+        component={OrderStack}
+      />
       <Stack.Screen
         name={MAIN_ROUTES.CHATSCREEN}
         component={ChatStack}
@@ -132,3 +140,39 @@ export const MainNavigation = () => {
     </Stack.Navigator>
   );
 };
+
+
+const OrderStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
+    >
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.CART}
+        component={CustomerCartScreen}
+      // component={CartScreen}
+      />
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.ENVIO}
+        component={EnvioScreen}
+      />
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.METODO}
+        component={MetodoScreen}
+      />
+      {/* <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_SUMMARY}
+        component={CustomerOrderSummaryScreen}
+      /> */}
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_SUMMARY_FREE}
+        component={CustomerOrderSummaryFree}
+      />
+      <Stack.Screen
+        name={'OrderSuccessful'}
+        component={OrderSuccessful}
+      />
+    </Stack.Navigator>
+  )
+}

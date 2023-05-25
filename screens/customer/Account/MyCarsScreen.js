@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import Colors from '../../../util/styles/colors'
 import { useSelector } from 'react-redux'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -17,6 +17,7 @@ import { deviceWidth } from '../../../util/Dimentions'
 import axios from 'axios'
 import { customer_api_urls } from '../../../util/api/api_essentials'
 import { useInfoUser } from '../../../hooks/useInfoUsers'
+import { ProductContext } from '../../../util/context/Product/ProductContext';
 
 
 export const MyCarsScreen = ({ navigation }) => {
@@ -31,6 +32,8 @@ export const MyCarsScreen = ({ navigation }) => {
     modeloValue, years, yearValue, 
     isLoading,userId 
   } = useSelector(state => state.user);
+
+
   const { getUserInfo } = useInfoUser()
   const [km, setKm] = useState('')
 
@@ -78,8 +81,9 @@ export const MyCarsScreen = ({ navigation }) => {
       const apiCall = await axios.post(`${customer_api_urls.create_car}`,data);
       
       if (apiCall.data.success) {
-        getUserInfo();
+        await getUserInfo();
         showToaster(apiCall?.data?.message)
+       
       }
       resetFiltros()
       setKm('')
@@ -274,6 +278,7 @@ const ModalCreateCar = ({
             keyboardType='numeric'
             onChangeText={handleTextChange}
             borderColor={Colors.lightBorder}
+            color={Colors.white}
             />
           </FormControl>
         </Modal.Body>

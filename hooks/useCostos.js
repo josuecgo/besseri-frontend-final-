@@ -7,6 +7,7 @@ import { customer_api_urls } from '../util/api/api_essentials';
 
 
 export const useCostos = () => {
+    const getComisionCleanup = useRef(null);
     const [costoEnvio, setCostoEnvio] = useState(0)
     const [distancia, setDistancia] = useState(0);
     const [comision, setComision] = useState(10)
@@ -47,8 +48,13 @@ export const useCostos = () => {
     }
 
     useEffect(() => {
-        getComision();
-    }, [])
+        getComisionCleanup.current = getComision(); // Assign the function to the ref
+        return () => {
+            if (getComisionCleanup.current && getComisionCleanup.current.cancel) {
+                getComisionCleanup.current.cancel(); // Cancel the effect if the function is defined
+            }
+        };
+    }, []);
     
     
 

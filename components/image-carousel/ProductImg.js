@@ -2,7 +2,7 @@ import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { base_url } from '../../util/api/api_essentials'
 import { deviceWidth } from '../../util/Dimentions'
-import { Image } from 'native-base'
+import { AspectRatio, Image } from 'native-base'
 import { useState } from 'react'
 import Carousel from 'react-native-snap-carousel'
 import { useMemo } from 'react'
@@ -40,12 +40,17 @@ export const ProductImg = ({imgs}) => {
             <TouchableOpacity
             onPress={()=> setIsOpen(true) }
             >
-                <Image
-                source={{uri: `${base_url}/${item?.path}`}}
-                style={styles.productImg}
-                alt="Image"
-                resizeMode="contain"
-                /> 
+                <AspectRatio
+                w="100%" ratio={16 / 9}
+                >
+                    <Image
+                    source={{uri: `${base_url}/${item?.path}`}}
+                    // style={styles.productImg}
+                    alt="Image"
+                    resizeMode="contain"
+                    /> 
+                </AspectRatio>
+               
             </TouchableOpacity>
         </>
         )

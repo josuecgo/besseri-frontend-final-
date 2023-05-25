@@ -1,20 +1,27 @@
 
 import axios from 'axios';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { api_statuses, customer_api_urls } from '../util/api/api_essentials';
 import { getUser, getUserAddress, getUserId, saveAdressCustomer, saveCarActive, saveGarage } from '../util/local-storage/auth_service';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addAddressToUser, addCarActiveToUser, addCarsToUser, addToUser, getYearsCars } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 import { useEffect } from 'react';
 import { showAlertLogin, showToaster, showToasterError } from '../util/constants';
 import { getOrdersUser, isLoadingOrdersUser } from '../util/ReduxStore/Actions/CustomerActions/PedidosAction';
+import { ProductContext } from '../util/context/Product/ProductContext';
 
 
 
 
 export const useInfoUser = (  ) => {
   const dispatch = useDispatch()
-  
+  const {
+      getCategorias
+  } = useContext(ProductContext)
+
+  const {carActive} = useSelector(state => state.user);
+
+
 
   const getUserInfo = async(user) => {
       try {
@@ -39,6 +46,10 @@ export const useInfoUser = (  ) => {
           dispatch( addAddressToUser(myAddresses[0]) )
           
           dispatch( addCarsToUser(garage) )
+          if (carActive) {
+             getCategorias()
+          }
+         
         }
       
         

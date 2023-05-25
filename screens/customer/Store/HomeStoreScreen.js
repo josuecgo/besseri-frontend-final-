@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { TouchableOpacity, View, StyleSheet, FlatList, ActivityIndicator, Dimensions, Animated, Pressable } from 'react-native';
 
 
@@ -24,13 +24,10 @@ const HomeStoreScreen = React.memo((props) => {
     getCategorias,
     categorias,activeCategory,activarCategoria,
     comision,
-    productFiltrado,  loading, carCompatible,productos
+   loading, carCompatible,productos,isLoading
   } = useContext(ProductContext);
   
   
-
-  
-  const { productFilter, loadingFilter } = useFiltrado();
 
 
   const CategoryButton = ({ category, onPress }) => {
@@ -60,7 +57,7 @@ const HomeStoreScreen = React.memo((props) => {
       <ProductListing
         navigation={props.navigation}
         category={item}
-        products={productFilter}
+        products={productos}
         comision={comision}
         carCompatible={carCompatible}
       />
@@ -70,7 +67,7 @@ const HomeStoreScreen = React.memo((props) => {
   const renderItemCategorias = ({ item }) => (
     <CategoryButton
       onPress={() => {
-        
+      
         activarCategoria(item)
       }}
       category={item.name}
@@ -94,18 +91,21 @@ const HomeStoreScreen = React.memo((props) => {
   }, [props.navigation]);
 
   useEffect(() => {
-    
-    getCategorias()
+    const unsubscribe = props.navigation.addListener('focus', () => {
 
-  }, [])
+      getCategorias()
+
+    });
+
+    return unsubscribe;
+}, []);
 
 
 
 
-// console.log(productFilter);
 
  
-
+  
 
 
   return (
@@ -130,7 +130,7 @@ const HomeStoreScreen = React.memo((props) => {
           <Text style={{ ...CommonStyles.h1, color: Colors.black, fontWeight: 'bold', marginLeft: 10,paddingVertical:10 }} >
             Categorías
           </Text>
-        
+         
           <FlatList
           data={categorias}
           horizontal
@@ -144,7 +144,7 @@ const HomeStoreScreen = React.memo((props) => {
 
         <View style={{ flexGrow: 1, marginTop: 5 }}>
           {
-            comision && !!productFiltrado && !loadingFilter
+            comision && productos && !isLoading
               ?
               (
                 <FlatList
@@ -171,7 +171,7 @@ const HomeStoreScreen = React.memo((props) => {
                     justifyContent: 'center',
                   }}>
                   <ActivityIndicator />
-                  <Text>Cargando</Text>
+                  <Text>Cargando...</Text>
                 </View>
               )
           }

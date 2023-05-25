@@ -32,7 +32,7 @@ export const useSearchStore = (  ) => {
     const [comision, setComision] = useState(10);
 
     const {
-        productos,
+        getCategorias,
         carDefault,carCompatible
     } = useContext(ProductContext)
 

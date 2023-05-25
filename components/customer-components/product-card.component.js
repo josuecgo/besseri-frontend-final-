@@ -25,17 +25,12 @@ import { AspectRatio, Box, Card } from 'native-base';
 
 
 const ProductCardComponent = ({
-  cartProduct,
-  inCart,
   data,
   onAddToCart,
-  increaseQuantity,
-  decreaseQuantity,
   horizontal,
-  onRemoveFromCart,
   onViewDetail,
 }) => {
-  const { carDefault, comision, carActive } = useContext(ProductContext)
+  const { comision, carActive } = useContext(ProductContext)
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
 
 
@@ -133,16 +128,18 @@ const ProductCardComponent = ({
 
       <Card style={styles.card}>
         <Box alignItems={'center'} >
-          <AspectRatio ratio={16 / 9} w={'100%'} >
+          {/* <AspectRatio ratio={16 / 9} w={'100%'} > */}
             <Image
               source={{ uri: `${base_url}/${data?.productImg}` }}
+              style={styles.productImg}
+              resizeMode='stretch'
             />
-          </AspectRatio>
+          {/* </AspectRatio> */}
         </Box>
       </Card>
 
 
-      <Box>
+      <Box mt={'5px'}>
 
         <Text style={styles.productTitle}>{data?.name}</Text>
         <Text style={styles.productPrice}>
@@ -183,8 +180,8 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   productImg: {
-
-    borderRadius: 100
+    width:'90%',
+    height:100
 
   },
   productTitle: {

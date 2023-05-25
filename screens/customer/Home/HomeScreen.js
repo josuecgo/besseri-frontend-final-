@@ -16,7 +16,7 @@ import { useInfoUser } from '../../../hooks/useInfoUsers'
 export const HomeScreen = ({navigation}) => {
 
   const {getUserInfo} = useInfoUser();
-
+  const {carActive} = useSelector(state => state.user);
 
 
 
@@ -51,7 +51,14 @@ export const HomeScreen = ({navigation}) => {
         <ButtonService
         label={'Refacciones'}
         icono={require('../../../assets/images/home/refaccion.png')}
-        onPress={()=>{ navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES) }}
+        onPress={()=>{ 
+          if (!carActive) {
+            
+            showToaster('Active un vehiculo para ver los productos.')
+            return
+          }
+          navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES) 
+        }}
         style={85}
         />
         <ButtonService

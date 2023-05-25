@@ -23,6 +23,8 @@ import { NotificationContext } from '../../../util/context/NotificationContext';
 import CustomerProductsViewScreen from '../customer.products-view.screen';
 import HeaderStore from '../../../components/Customer/HeaderStore';
 import HomeStoreScreen from '../Store/HomeStoreScreen';
+import CustomerProductDetailScreen from '../customer.productdetail.screen';
+import ProductDetailScreen from '../Store/ProductDetailScreen';
 
 
 const BottomTab = createBottomTabNavigator();
@@ -133,6 +135,21 @@ export const CustomerHomeStack = () => {
     <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES}
         component={HomeStoreScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderStore {...props} 
+            titulo="Tienda" 
+            nav={props.navigation.goBack}
+            tienda={true}
+            />
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL}
+        component={ProductDetailScreen}
         options={{
           headerShown: true,
           header: props => (

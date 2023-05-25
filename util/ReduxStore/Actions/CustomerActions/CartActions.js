@@ -4,6 +4,7 @@ export const INCREASE_QUANTITY = 'INCREASE_QUANTITY';
 export const DECRASE_QUANTITY = 'DECRASE_QUANTITY';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const DELETE_ITEM = 'DELETE_ITEM';
+export const SELECT_ITEM = 'SELECT_ITEM';
 export const RESET_CART = 'RESET_CART';
 
 export const addItemToCart = (item) => {
@@ -60,5 +61,12 @@ export const deleteItemFromCart = (productId,price) => {
         type:DELETE_ITEM,
         data:productId,
         price:price,
+    })
+}
+
+export const selectItemFromCart = (productId,price) => {
+    return({
+        type:SELECT_ITEM,
+        data:productId,
     })
 }

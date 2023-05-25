@@ -9,6 +9,12 @@ const CommonStyles = StyleSheet.create({
     paddingVertical:20
 
   },
+  screenWhiteY:{
+    backgroundColor:Colors.white,
+    flex:1,
+
+
+  },
   h1:{
     fontWeight:'700',
     fontFamily:'Arial',
