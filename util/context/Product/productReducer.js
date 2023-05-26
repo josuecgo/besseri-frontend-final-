@@ -32,12 +32,12 @@ export const productReducer = (state, action) => {
         return {
             ...state,
             categorias:action.payload.categorias,
-            activeCategory:action.payload.active,
+            activeCategory:action.payload.activeCategory,
         }
         case 'activeCategoria' : 
         return {
             ...state,
-            activeCategory:action.payload.active,
+            activeCategory:action.payload.activeCategory,
         }
         case 'getServicios' : 
         return {

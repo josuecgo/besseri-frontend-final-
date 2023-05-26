@@ -23,7 +23,6 @@ import { NotificationContext } from '../../../util/context/NotificationContext';
 import CustomerProductsViewScreen from '../customer.products-view.screen';
 import HeaderStore from '../../../components/Customer/HeaderStore';
 import HomeStoreScreen from '../Store/HomeStoreScreen';
-import CustomerProductDetailScreen from '../customer.productdetail.screen';
 import ProductDetailScreen from '../Store/ProductDetailScreen';
 
 

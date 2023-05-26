@@ -15,6 +15,13 @@ const CommonStyles = StyleSheet.create({
 
 
   },
+  modal:{
+    backgroundColor:Colors.black,
+    paddingVertical:30,
+    borderRadius:14,
+    paddingHorizontal:15,
+  
+  },
   h1:{
     fontWeight:'700',
     fontFamily:'Arial',

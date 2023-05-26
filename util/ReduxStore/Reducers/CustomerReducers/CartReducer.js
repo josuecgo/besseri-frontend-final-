@@ -15,7 +15,7 @@ export default (state = initialState, action) => {
     switch (action.type) {
  
         case ADD_ITEM_TO_CART:
-            
+            console.log(action?.data);
             return {
                 ...state,
                 cart_items: state.cart_items.concat(action.data),

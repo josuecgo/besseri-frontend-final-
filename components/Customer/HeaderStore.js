@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -12,35 +12,22 @@ import Colors from '../../util/styles/colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants';
 import { useSelector } from 'react-redux';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
+import {  deviceHeight, deviceWidth } from '../../util/Dimentions';
 import { HeaderBackground } from '../Background/HeaderBackground';
 import { getUserId } from '../../util/local-storage/auth_service';
 
-import { Badge } from '../Badge';
-import { NotificationContext } from '../../util/context/NotificationContext';
 
-import { ProductContext } from '../../util/context/Product/ProductContext';
-
-import { ChatContext } from '../../util/context/Chat/ChatContext';
 import { HStack, Image } from 'native-base';
 
 
 
 
-const HeaderStore = props => {
+const HeaderStore = (props) => {
 
   const cart_items = useSelector(state => state.cart.cart_items);
-  const [searchText, setSearchText] = useState('')
-  let screenName = props?.route?.name;
-  const {
-    searchCall,
-    loading,
-    resetFiltro,
-    carCompatible
-  } = useContext(ProductContext)
-
-
+ 
+  let screenName = props?.titulo;
+  
 
   const goCart = async () => {
     const user_id = await getUserId();
@@ -57,13 +44,7 @@ const HeaderStore = props => {
 
 
 
-  useEffect(() => {
-    if (searchText.length > 0) {
-      searchCall(searchText, props?.route?.name);
-    } else {
-      resetFiltro();
-    }
-  }, [searchText]);
+
 
 
 
@@ -96,7 +77,7 @@ const HeaderStore = props => {
             />
           </Pressable>
 
-          <Text style={styles.titulo}>Tienda</Text>
+          <Text style={styles.titulo}>{screenName}</Text>
 
         </HStack>
 

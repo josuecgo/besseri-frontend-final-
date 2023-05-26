@@ -51,10 +51,8 @@ export const ProductProvider = ({ children }) => {
     const [reset, setReset] = useState(false)
     const [activeCarLoading, setActiveCarLoading] = useState(false);
     const [cars, setCars] = useState([])
-    const dispatchRedux = useDispatch()
-    const { carActive } = useSelector(state => state.user);
 
-    const getComisionCleanup = useRef(null);
+   
 
     const getCategorias = async () => {
         try {
@@ -69,15 +67,15 @@ export const ProductProvider = ({ children }) => {
                 let cate = apiCall?.data?.data?.categories[0]
 
                 
-                 dispatch({
+                await dispatch({
                     type: 'getCategorias',
                     payload: {
-                        active: cate,
+                        activeCategory: cate,
                         categorias: apiCall?.data?.data?.categories
                     }
                 });
              
-                getProducts(cate);
+                // getProducts(cate);
             } 
 
 
@@ -92,48 +90,24 @@ export const ProductProvider = ({ children }) => {
 
     const activarCategoria = async(cate) => {
 
-       
-        await dispatch({
+      
+        dispatch({
             type: 'activeCategoria',
             payload: {
-                active: cate,
+                activeCategory: cate,
 
             }
         });
 
-        getProducts(cate)
+        // getProducts(cate)
     }
 
 
 
-    // const getProducts =  async() => {
-    //         try {
-    //             setLoading(true)
-    //             const apiCall = await axios.get(customer_api_urls.get_products);
 
-    //             if (apiCall?.status === 200) {
-    //                 await dispatch({
-    //                     type:'getProductos',
-    //                     payload: {
-    //                         productos: apiCall.data.data.products,
-    //                         // categorias: apiCall?.data?.data?.categories
-    //                     }
-    //                 });
-    //                 setDowload(apiCall.data.data.products)
-    //                 filterProduct(apiCall.data.data.products)
-
-    //             }
-
-    //             setLoading(false)
-    //           } catch(e) {
-
-    //             showToaster('No hay conexion con el servidor - 01');
-    //             setLoading(false)
-    //         }
-    // }
-
-    const getProducts = async (category) => {
+    const getProducts = async (category,carActive) => {
         try {
+           
             await dispatch({
                 type: 'isLoading',
                 payload: {
@@ -169,6 +143,7 @@ export const ProductProvider = ({ children }) => {
             }
             
         } catch (e) {
+             console.log("🚀 ~ file: ProductContext.js:146 ~ getProducts ~ e:", e)
              dispatch({
                 type: 'isLoading',
                 payload: {

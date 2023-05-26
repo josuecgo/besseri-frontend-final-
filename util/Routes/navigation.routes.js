@@ -25,6 +25,9 @@ import { EnvioScreen } from '../../screens/customer/customer.envio.screen';
 import { MetodoScreen } from '../../screens/customer/customer.metodoscreen';
 import CustomerOrderSummaryFree from '../../screens/customer/customer.orderSummaryFree.screen';
 import { OrderSuccessful } from '../../screens/customer/customer.order-successful';
+import HeaderStore from '../../components/Customer/HeaderStore';
+import { CartScreen } from '../../screens/customer/Store/CartScreen';
+import { PayScreen } from '../../screens/customer/Store/PayScreen';
 
 const Stack = createStackNavigator();
 
@@ -124,7 +127,18 @@ export const MainNavigation = () => {
       
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK}
-        component={OrderStack}
+        component={CartScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderStore {...props} 
+            titulo="Resumen de pago" 
+            nav={props.navigation.goBack}
+            tienda={true}
+            />
+          ),
+        }}
+        
       />
       <Stack.Screen
         name={MAIN_ROUTES.CHATSCREEN}
@@ -150,12 +164,31 @@ const OrderStack = () => {
     >
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.CART}
-        component={CustomerCartScreen}
-      // component={CartScreen}
+        component={CartScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderStore {...props} 
+            titulo="Resumen de pago" 
+            nav={props.navigation.goBack}
+            tienda={true}
+            />
+          ),
+        }}
       />
       <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.ENVIO}
-        component={EnvioScreen}
+        name={CUSTOMER_HOME_SCREEN_ROUTES.PAGO}
+        component={PayScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderStore {...props} 
+            titulo="PAGO" 
+            nav={props.navigation.goBack}
+            tienda={false}
+            />
+          ),
+        }}
       />
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.METODO}

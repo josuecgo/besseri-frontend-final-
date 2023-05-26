@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
-  Text,
+  
   View,
   StyleSheet,
   Image,
@@ -9,19 +9,17 @@ import {
 } from 'react-native';
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import { base_url, customer_api_urls } from '../../util/api/api_essentials';
-import RatingComponent from '../Ratings/rating.component';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import { useSelector } from 'react-redux';
 import { adjust, deviceWidth } from '../../util/Dimentions';
-import LinearGradient from 'react-native-linear-gradient';
 import { moneda } from '../../util/Moneda';
 import axios from 'axios';
 import { showToaster } from '../../util/constants';
 import { ProductContext } from '../../util/context/Product/ProductContext';
 import { Compatible } from '../Customer/Compatible';
-import { AspectRatio, Box, Card } from 'native-base';
+import { Text, Box, Card, HStack } from 'native-base';
+import { BtnCantidad } from '../button/BtnCantidad';
 
 
 const ProductCardComponent = ({
@@ -29,6 +27,9 @@ const ProductCardComponent = ({
   onAddToCart,
   horizontal,
   onViewDetail,
+  cartProduct = false,
+  increaseQuantity,
+  decreaseQuantity
 }) => {
   const { comision, carActive } = useContext(ProductContext)
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
@@ -49,75 +50,39 @@ const ProductCardComponent = ({
   }
 
 
-  if (horizontal) {
-    const horizontalCardStyles = {
-      cardContainer: {
-        width: '100%',
-        padding: 20,
+  if (cartProduct) {
 
-        borderBottomWidth: 0.3,
-        backgroundColor: Colors.white,
-
-      },
-      img: {
-        width: 50,
-        height: 60,
-        borderWidth: 1,
-        borderColor: 'transparent',
-        borderRadius: 10,
-      },
-      wrapper: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      },
-    };
     return (
-      <Pressable
-        onPress={onViewDetail}
-        style={horizontalCardStyles.cardContainer}>
-        <View style={horizontalCardStyles.wrapper}>
-          <View>
-            <Text style={{ ...CommonStyles.fontFamily, fontSize: 15 }}>
-              {data?.name}
-            </Text>
-            <Text style={{ color: 'grey', ...CommonStyles.fontFamily }}>
-              {moneda(Number(data?.price) + Number((comision * data?.price) / 100))}
-              {' '} MXN
-            </Text>
-            <Text style={{ color: 'grey', textTransform: 'uppercase', fontSize: adjust(10) }}>{data?.maker?.name}</Text>
-            <Text style={{ color: 'grey' }}>{data?.model?.name}</Text>
-            {
-              carActive && carActive?.model?._id != data?.model?._id && (
-                <Compatible carDefault={carActive} />
-              )
-              // carDefault  && (
-              //   <Compatible carDefault={carDefault}/>
-              // )
-            }
-            <TouchableOpacity onPress={handleChange}>
-              <Text
-                style={{
-                  ...CommonStyles.fontFamily,
-                  color: Colors.brightBlue,
-                  marginTop: 10,
-                }}>
-                {cartProductIds?.includes(data?._id)
-                  ? 'QUITAR DEL CARRITO'
-                  : 'AÑADIR AL CARRITO'}
-              </Text>
-            </TouchableOpacity>
-            {/* <RatingComponent numOfStars={2}/> */}
-          </View>
-          <Image
-            source={{
-              uri: `${base_url}/${data?.productImg}`,
-            }}
-            style={horizontalCardStyles.img}
-          />
+      <View style={{ marginVertical: 10 }} >
 
-        </View>
-      </Pressable>
+        <HStack space={2} justifyContent={'space-around'} alignItems={'center'} >
+          <Image
+            source={{ uri: `${base_url}/${data?.productImg}` }}
+            style={{
+              width: deviceWidth * 0.25,
+              height: deviceWidth * 0.25
+            }}
+            resizeMode='cover'
+          />
+          <Box flexWrap="wrap" alignItems="center" maxWidth={deviceWidth * 0.3}>
+            <Text  numberOfLines={2}  style={[CommonStyles.h3,{color:Colors.black}]}>{data?.name}</Text>
+            <Text  style={[CommonStyles.h3,{color:Colors.black}]}>
+              {moneda(
+                Number(data?.price) + Number((comision * data?.price) / 100),
+              )}
+            </Text>
+          </Box>
+
+
+          <BtnCantidad 
+          decreaseQuantity={decreaseQuantity}  
+          increaseQuantity={increaseQuantity}
+          product={data}
+          />
+        </HStack>
+
+
+      </View>
     );
   }
 
@@ -129,11 +94,11 @@ const ProductCardComponent = ({
       <Card style={styles.card}>
         <Box alignItems={'center'} >
           {/* <AspectRatio ratio={16 / 9} w={'100%'} > */}
-            <Image
-              source={{ uri: `${base_url}/${data?.productImg}` }}
-              style={styles.productImg}
-              resizeMode='stretch'
-            />
+          <Image
+            source={{ uri: `${base_url}/${data?.productImg}` }}
+            style={styles.productImg}
+            resizeMode='stretch'
+          />
           {/* </AspectRatio> */}
         </Box>
       </Card>
@@ -149,7 +114,12 @@ const ProductCardComponent = ({
         </Text>
 
 
-        <Compatible autopart={data?.model?._id} />
+        {
+          !cartProduct && (
+            <Compatible autopart={data?.model?._id} />
+          )
+        }
+
 
 
       </Box>
@@ -162,7 +132,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginVertical: 4
   },
-  card:{
+  card: {
     backgroundColor: 'white', shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -180,8 +150,8 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   productImg: {
-    width:'90%',
-    height:100
+    width: '90%',
+    height: 100
 
   },
   productTitle: {

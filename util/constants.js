@@ -179,6 +179,7 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   ORDER_STACK:'ORDER_STACK',
   INICIAR:'AuthStack',
   ENVIO: 'Envio',
+  PAGO: 'PAGO',
   METODO: 'Metodo de pago',
   CARDS: 'Tarjetas',
   CREATE_CARD: 'Guardar Tarjeta',

@@ -255,10 +255,10 @@ const OrderStack = () => {
         component={CustomerCartScreen}
       // component={CartScreen}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ENVIO}
         component={EnvioScreen}
-      />
+      /> */}
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.METODO}
         component={MetodoScreen}
@@ -345,21 +345,7 @@ export const CustomerHomeStack = () => {
         component={MapServiceScreen}
       />
      
-      
-      {/* <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS}
-        component={CustomerProductsViewScreen}
-        options={{
-          headerShown: true,
-          header: props => (
-            <CustomHeaderComponent {...props} name="Autopartes" />
-          ),
-        }}
-      /> */}
-      <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK}
-        component={OrderStack}
-      />
+
 
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.MAP_STORES}

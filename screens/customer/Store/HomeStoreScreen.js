@@ -14,6 +14,7 @@ import { adjust, deviceHeight, deviceWidth } from '../../../util/Dimentions';
 import { ProductContext } from '../../../util/context/Product/ProductContext';
 import { useFiltrado } from '../../../hooks/useFiltrado';
 import { ListEmpty } from '../../../components/Vendor/ListEmpty';
+import { useSelector } from 'react-redux';
 
 
 
@@ -24,10 +25,10 @@ const HomeStoreScreen = React.memo((props) => {
     getCategorias,
     categorias,activeCategory,activarCategoria,
     comision,
-   loading, carCompatible,productos,isLoading
+   loading, carCompatible,productos,isLoading,getProducts
   } = useContext(ProductContext);
   
-  
+  const { carActive } = useSelector(state => state.user);
 
 
   const CategoryButton = ({ category, onPress }) => {
@@ -79,26 +80,35 @@ const HomeStoreScreen = React.memo((props) => {
   const memorizedValue = useMemo(() => renderItem, [productos]);
 
 
-  useEffect(() => {
-    const unsubscribe = props.navigation.addListener('focus', () => {
 
-      carCompatible(false)
-
-    });
-
-    // Return the function to unsubscribe from the event so it gets removed on unmount
-    return unsubscribe;
-  }, [props.navigation]);
 
   useEffect(() => {
-    const unsubscribe = props.navigation.addListener('focus', () => {
+    let isMounted = true; // Variable para rastrear si el componente está montado
+  
+    const fetchData = async () => {
+      // Realizar la solicitud de API u otras operaciones asíncronas
+      try {
+        await getProducts(activeCategory, carActive);
+        if (isMounted) {
+          
+        }
+      } catch (error) {
+        
+      }
+    };
+  
+    if (activeCategory && carActive) {
+      fetchData(); // Llamar a la función asíncrona
+    }
+  
+    return () => {
+      isMounted = false; 
+    };
+  }, [activeCategory, carActive]);
+  
 
-      getCategorias()
 
-    });
-
-    return unsubscribe;
-}, []);
+  // console.log({activeCategory,carActive});
 
 
 

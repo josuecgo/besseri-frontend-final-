@@ -33,14 +33,14 @@ export const useCart = () => {
         if(cartProductIds.includes(item?._id)) {
           dispatch(CartActions.deleteItemFromCart(item?._id));
          
-          return;
+          return false ;
         }
         
         // Si el articulo es de vendedor diferente se prohibe agregar
         if(item?.business_id != businessIdInCart && businessIdInCart != null) {
           showToaster('Solo puede agregar artículos al carrito de una tienda a la vez');
           
-          return;
+          return false;
         }
 
         // Si no cumple ninguna se agrega al carrito
@@ -49,6 +49,7 @@ export const useCart = () => {
           quantity:1
         }))
 
+        return true
        
        
     }

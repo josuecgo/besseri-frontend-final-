@@ -5,10 +5,9 @@ import CommonStyles from '../../util/styles/styles'
 import Colors from '../../util/styles/colors'
 import { useSelector } from 'react-redux'
 
-export const BtnCantidad = ({increaseQuantity, decreaseQuantity}) => {
-  const product = useSelector(state => state.cart.productDetail);
+export const BtnCantidad = ({increaseQuantity, decreaseQuantity,product}) => {
   
-  console.log( product?.quantity);
+  // console.log( product?.quantity);
   
   return (
     <HStack alignItems={'center'} style={styles.container} s >

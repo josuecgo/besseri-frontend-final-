@@ -19,10 +19,12 @@ import { ProductImg } from '../../../components/image-carousel/ProductImg';
 import { ChatContext } from '../../../util/context/Chat/ChatContext';
 import { getUserId } from '../../../util/local-storage/auth_service';
 import { CardFeedback } from '../../../components/Feedback/CardFeedback';
-import { Card, Center, HStack, VStack } from 'native-base';
+import { Box, Button, Card, Center, HStack, VStack } from 'native-base';
 import { decreaseQuantity, increaseQuantity } from '../../../util/ReduxStore/Actions/CustomerActions/CartActions';
 import { useDispatch } from 'react-redux';
 import { BtnCantidad } from '../../../components/button/BtnCantidad';
+import ModalChildren from '../../../components/ModalChildren';
+import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal';
 
 
 
@@ -38,7 +40,7 @@ const ProductDetailScreen = (props) => {
   const { addItemToCart, inTheCart } = useCart()
   const isChange = useRef(false);
   const [isDisable, setIsDisable] = useState(false);
-
+  const [showModal, setShowModal] = useState(false)
 
 
   useEffect(() => {
@@ -47,19 +49,29 @@ const ProductDetailScreen = (props) => {
 
 
   const handleChange = async () => {
-    setIsDisable(true)
-    const { data } = await axios.get(`${customer_api_urls.inStock_product}/${product._id}`)
+    try {
+      if (isDisable) {
+        return
+      }
+      setIsDisable(true)
+ 
+      const { data } = await axios.get(`${customer_api_urls.inStock_product}/${product._id}`)
 
-    if (data?.product) {
+      if (data?.product) {
+        let resp = addItemToCart(product)
+     
+        setShowModal(resp)
+        isChange.current = !isChange.current
 
-      addItemToCart(product)
+      } else {
+        showToaster('Producto sin existencias, lamentamos el inconveniente.')
+      }
+    
 
-      isChange.current = !isChange.current
-
-    } else {
-      showToaster('Producto sin existencias, lamentamos el inconveniente.')
-    }
     setIsDisable(false)
+    } catch (error) {
+      setIsDisable(false)
+    }
 
   }
 
@@ -80,28 +92,21 @@ const ProductDetailScreen = (props) => {
     }
   }
 
-  const increaseQuantity = () => {
-    dispatch(CartActions.increaseQuantity(product._id, product?.price));
+// console.log(product);
+
+  const goCart = async () => {
+    const user_id = await getUserId();
+    if (user_id) {
+      props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK)
+    } else {
+      props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR)
+    }
+
   }
-  const decreaseQuantity = () => {
-    dispatch(CartActions.decreaseQuantity(product._id, product?.price));
-  }
-
-
-
-
-
-
 
   useEffect(() => {
     getBusinessDetails()
   }, []);
-
- 
-
-
-  
-
 
   return (
     <>
@@ -150,16 +155,8 @@ const ProductDetailScreen = (props) => {
             <Text style={{...CommonStyles.h2,color:Colors.black}} >{`${moneda(Number(product?.price) + Number(comision * product?.price / 100))} MXN`}</Text>
             
 
-            <HStack justifyContent={'space-between'} alignItems={'center'} >
-              <Text style={{...CommonStyles.h2,color:Colors.black,fontWeight:'bold'}} >Cantidad</Text>
-              <BtnCantidad 
-              increaseQuantity={increaseQuantity} 
-              decreaseQuantity={decreaseQuantity} 
-              product={product}
-              />
-
-            </HStack>
-            <Center>
+            
+            <Center mt={'15px'}>
               <ButtonComponent
                 disabled={isDisable}
                 buttonText={
@@ -176,35 +173,60 @@ const ProductDetailScreen = (props) => {
             
 
           </VStack>
-          <View style={{ backgroundColor: Colors.white, elevation: 1, marginTop: 10, padding: 10 }} >
-           
+
+          <View style={styles.description}>
             <Text
               style={styles.cardSubtitle}>
               {product?.description}
             </Text>
           </View>
+          <ModalChildren showModal={showModal} handleModal={(e) => setShowModal(e)} >
+            <Box style={CommonStyles.modal}  >
+              <TouchableOpacity style={styles.btnClose} 
+              onPress={() => setShowModal(false)}
+              >
+                <Image
+                source={require('../../../assets/images/close.png')}
+                style={styles.close}
+                />
+              </TouchableOpacity>
+              <VStack space={2} >
+                <Center mb={10}>
+                  <Text style={[CommonStyles.h1,{fontWeight:'bold',marginBottom:10}]} >Producto Agregado</Text>
+                  <Text style={CommonStyles.h2} >Tu producto ha sido agregado con éxito</Text>
+                </Center>
+                
+                  
+                <Button 
+                variant={'outline'}  
+                _text={{
+                  fontWeight: '700',
+                  fontSize: '18px',
+                  color: Colors.white,
+                  fontStyle:'normal'
+                }} 
+                onPress={() => setShowModal(false)}
+                >
+                  Seguir en tienda
+                </Button>
+              
+                
 
+                <BtnPrincipal
+                text={'Pagar'}
+                marginHorizontal={0}
+                onPress={goCart}
+                />
+              </VStack>
+              
+            </Box>
+          </ModalChildren>
 
 
 
         </ScrollView>
 
-        <View style={{ position: 'absolute', bottom: 0 }} >
-
-
-          <ButtonComponent
-            disabled={isDisable}
-            buttonText={
-              enCarrito
-                ? 'QUITAR DEL CARRITO'
-                : 'AÑADIR AL CARRITO'
-            }
-            borderRadius={0}
-            colorB={Colors.terciarySolid}
-            width={width}
-            handlePress={handleChange}
-          />
-        </View>
+        
 
       </View>
     </>
@@ -263,6 +285,20 @@ const styles = StyleSheet.create({
     ...CommonStyles.h3,
     marginVertical: 20,
     color:Colors.black
+  },
+  description:{ 
+    backgroundColor: Colors.white, 
+    marginTop: 10, 
+    padding: 10 
+  },
+  close:{
+    width:30,
+    height:30
+  },
+  btnClose:{
+    position:'absolute',
+    right:10,
+    top:5
   }
 })
 
