@@ -15,7 +15,7 @@ import { api_statuses, api_urls, rider_api_urls } from '../../util/api/api_essen
 import axios from 'axios';
 
 export const RiderNotification = ({navigation}) => {
-  const {notificaciones,getNotificaciones} = useContext(NotificationContext);
+  const {notificaciones} = useContext(NotificationContext);
   const {updateUbication} = useLocation()
  
 
@@ -63,7 +63,7 @@ export const RiderNotification = ({navigation}) => {
         try {
           
             await axios.post(`${api_urls.viewNotification}/${id}`);
-            getNotificaciones();
+
       
         } catch(e) {
         //  console.log({detail:e});
@@ -80,9 +80,7 @@ export const RiderNotification = ({navigation}) => {
     location();
   }, []);
 
-  useEffect(() => {
-    getNotificaciones()
-  }, [])
+  
   
  
 

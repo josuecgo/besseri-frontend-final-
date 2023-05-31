@@ -67,8 +67,8 @@ export const NotificationProvider = ({children}) => {
         
 
         try {
-          
-          
+          console.log(msg);
+          getNotificaciones();
           PushNotification.createChannel(
             {
               channelId: "channel-id", // (required)
@@ -84,18 +84,18 @@ export const NotificationProvider = ({children}) => {
          
 
    
-            await PushNotification.localNotification({
+          await PushNotification.localNotification({
               title:msg?.data?.title,
               message:msg?.data?.message,
               channelId:'channel-id'
            });
            
            
-          getNotificaciones();
+       
           
         } catch(e) {
           alert('No se pudo recibir notificacion');
-          // console.log(e)
+          console.log({e})
         }
 
 
@@ -104,56 +104,7 @@ export const NotificationProvider = ({children}) => {
 
 
 
-    // const getNotificaciones = async() => {
-    //     try {
-    //         const id = await getUserId();
-    //         const userType = await getUser();
-
-           
-    //         if (id) {
-    //           const url = `${api_urls.getNotification}/${id}`;
-              
-    //           const apiCall = await axios.get(url);
-    //           const data = apiCall?.data?.data;
-    //           const count = apiCall?.data?.count;
-
-    //           await dispatch({
-    //               type:'getNotification',
-    //               payload: {
-    //                 notificaciones:data,
-    //                 countRider:count,
-    //                 count:count,
-    //                 countCustomer:count,
-    //               }
-    //           });
-    //           setNotificaciones(data)
-    //           setCount(count)
-    //           setCountRider(count)
-    //           setCountCustomer(count);
-              
-    //           if (Platform.OS === 'ios') {
-    //             PushNotificationIOS.setApplicationIconBadgeNumber(count);
-    //           }
-              
-
-    //         }else{
-    //           setNotificaciones([])
-    //           setCount(0)
-    //           setCountRider(0)
-    //           setCountCustomer(0)
-    //         }
-            
-           
-    //     } catch (e) {
-    //         // console.log({ getNot: e })
-    //         setNotificaciones([])
-    //         setCount(0)
-    //         setCountRider(0)
-    //         setCountCustomer(0)
-    //     }
-    //    // PushNotificationIOS.addEventListener('localNotification',pushIos);
-       
-    // }
+    
 
     const deleteNotificaciones = async() => {
 
@@ -273,14 +224,14 @@ export const NotificationProvider = ({children}) => {
   
     const onRemoteNotification = (notification) => {
         // console.log({notification});
-        getNotificaciones();
-      // const isClicked = notification.getData().userInteraction === 1;
+       
+      const isClicked = notification.getData().userInteraction === 1;
       
-      // if (isClicked) {
-      //   getNotificaciones();
-      // } else {
-      //   getNotificaciones();
-      // }
+      if (isClicked) {
+        getNotificaciones();
+      } else {
+        getNotificaciones();
+      }
     };
 
 
@@ -288,8 +239,6 @@ export const NotificationProvider = ({children}) => {
         <NotificationContext.Provider
         value={{
             ...state,
-            getNotificaciones,
-
             setNotificaciones,
             deleteNotificaciones,
             getToken,

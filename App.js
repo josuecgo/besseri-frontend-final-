@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useContext } from 'react';
-import {  Platform, StatusBar,useColorScheme } from 'react-native';
+import { StatusBar,useColorScheme } from 'react-native';
 
 import { KeysStripe, ROLES } from './util/constants';
 import { NavigationContainer } from '@react-navigation/native';
@@ -10,11 +10,9 @@ import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { MainNavigation } from './util/Routes/navigation.routes';
 import { combineReducers, createStore,applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import businessProfileReducer from './util/ReduxStore/Reducers/VendorReducers/BusinessProfileReducer';
 import { Provider } from 'react-redux';
 import CartReducer from './util/ReduxStore/Reducers/CustomerReducers/CartReducer';
 import { StripeProvider } from '@stripe/stripe-react-native';
-import RiderReducer from './util/ReduxStore/Reducers/RiderReducers/RiderReducer';
 
 import messaging from '@react-native-firebase/messaging';
 import {  NativeBaseProvider,  extendTheme } from 'native-base';
@@ -36,6 +34,7 @@ const config = {
 };
 
 const customTheme = extendTheme({ config });
+
 const App = () => {
 
 
@@ -48,18 +47,9 @@ const App = () => {
     
   });
   const reduxStore = createStore(store,applyMiddleware(thunk));
-  const [showSplashScreen, setSplashScreen] = useState(true);
-  const [userRole, setUserRole] = useState(ROLES.UNSET);
 
-  useEffect(() => {
-    (async () => {
-      const data = await getStoreRole();
-      if (data) {
-        setUserRole(data);
-      }
-      setSplashScreen(false);
-    })();
-  }, []);
+
+
 
 
    

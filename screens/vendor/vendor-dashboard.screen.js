@@ -136,7 +136,7 @@ const VendorDashboardScreen = ({ navigation, route }) => {
         try {
           
             await axios.post(`${api_urls.viewNotification}/${id}`,{user:'customer'});
-            getNotificaciones();
+         
       
         } catch(e) {
         //  console.log({detail:e});
@@ -183,9 +183,6 @@ const VendorDashboardScreen = ({ navigation, route }) => {
     }, []);
 
     
-    useEffect(() => {
-        getNotificaciones()
-    }, [])
     
     
     

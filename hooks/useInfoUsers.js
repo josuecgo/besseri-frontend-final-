@@ -168,7 +168,8 @@ export const useInfoUser = (  ) => {
   return {
     getUserInfo,
     activeCar,
-    getPedidosUser
+    getPedidosUser,
+    getNotificaciones
   }
 
 }

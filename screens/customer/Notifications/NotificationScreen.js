@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Box, Text, Pressable, Icon, HStack, Avatar, VStack, Spacer, ScrollView, Divider } from 'native-base';
@@ -7,6 +7,10 @@ import { useState } from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import CommonStyles from '../../../util/styles/styles';
 import Colors from '../../../util/styles/colors';
+import { useInfoUser } from '../../../hooks/useInfoUsers';
+import axios from 'axios';
+import { api_urls } from '../../../util/api/api_essentials';
+import { BOTTOM_TAB_CUSTOMER_ROUTES, CUSTOMER_HOME_SCREEN_ROUTES } from '../../../util/constants';
 
 const data = [{
   id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -39,33 +43,39 @@ const data = [{
   recentText: 'I will call today.',
   avatarUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwgu1A5zgPSvfE83nurkuzNEoXs9DMNr8Ww&usqp=CAU'
 }];
-export const NotificationScreen = () => {
-  const { notificaciones } = useSelector(state => state.user)
+export const NotificationScreen = (props) => {
+  const { notificaciones } = useSelector(state => state.user);
+  const {getNotificaciones} = useInfoUser()
   const [openedRow, setOpenedRow] = useState(null);
   
-
-
-  const [listData, setListData] = useState(data);
-
-  const closeRow = (rowMap, rowKey) => {
-    console.log({rowMap, rowKey});
-    if (rowMap[rowKey]) {
-      rowMap[rowKey].closeRow();
+  const orderDetail = (data,item) => {
+  
+    props.navigation.navigate(BOTTOM_TAB_CUSTOMER_ROUTES.ACCOUNT,{screen:CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_PEDIDOS})
+    
+    if (!item?.isView)  {
+        viewItem(item._id);
+        
     }
-  };
+}
 
-  const deleteRow = (rowMap, rowKey) => {
-    closeRow(rowMap, rowKey);
-    const newData = [...listData];
-    const prevIndex = listData.findIndex(item => item.key === rowKey);
-    newData.splice(prevIndex, 1);
-    setListData(newData);
-  };
+const viewItem = async(id) => {
+    try {
+       
+        await axios.post(`${api_urls.viewNotification}/${id}`,{user:'customer'});
+        getNotificaciones();
+        
+    
+    } catch(e) {
+     console.log({detail:e});
+    }
+}
 
-  const onRowDidOpen = rowKey => {
-    console.log('This row opened', rowKey);
-    setOpenedRow(rowKey);
-  };
+ 
+
+
+
+
+
 
   const renderItem = ({
     item,
@@ -73,7 +83,7 @@ export const NotificationScreen = () => {
   }) => {
     return (
       <Box>
-      <Pressable onPress={() => console.log('You touched me')} _dark={{
+      <Pressable onPress={() => orderDetail(item?.body,item)} _dark={{
         bg: Colors.bgColor
       }} _light={{
         bg: Colors.bgColor
@@ -100,12 +110,12 @@ export const NotificationScreen = () => {
 
 
   const renderHiddenItem = (data, rowMap) => {
-   
+   console.log(rowMap);
     return (
       <Box  h={'100%'} justifyContent={'center'} alignItems="center" >
         <TouchableOpacity
           style={{ width: 70, marginLeft: 'auto' }}
-          onPress={() => deleteRow(rowMap, data.item.key)}
+          onPress={() => viewItem(data.item._id,rowMap,data.item)}
         >
           <VStack justifyContent={'center'} alignItems="center" space={2}>
             <MaterialCommunityIcons name='delete' size={30}  color={Colors.white}/>
@@ -119,7 +129,7 @@ export const NotificationScreen = () => {
     <View style={CommonStyles.screenY} >
 
       <Box safeArea flex="1">
-        <SwipeListView
+        {/* <SwipeListView
           data={notificaciones}
           renderItem={renderItem}
           renderHiddenItem={renderHiddenItem}
@@ -128,6 +138,12 @@ export const NotificationScreen = () => {
           previewOpenValue={-40}
           previewOpenDelay={3000}
           onRowDidOpen={onRowDidOpen}
+        /> */}
+
+        <FlatList
+        data={notificaciones}
+        renderItem={renderItem}
+        keyExtractor={(item) => item._id}
         />
       </Box>
 

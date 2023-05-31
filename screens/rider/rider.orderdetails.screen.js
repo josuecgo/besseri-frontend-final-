@@ -66,7 +66,6 @@ const RiderOrderDetail = props => {
     
     const totalAmount = Number(order?.total_amount);
     const [direccion, setDireccion] = useState(null);
-    const { getNotificaciones } = useContext(NotificationContext);
     useEffect(() => {
         if (order?.user._id) {
             getMyAddress();
@@ -182,10 +181,7 @@ const RiderOrderDetail = props => {
         }
     }
 
-    useEffect(() => {
-        viewItem();
-        getNotificaciones();
-    }, [])
+   
 
 
     return (

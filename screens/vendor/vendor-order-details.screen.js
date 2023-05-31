@@ -50,7 +50,6 @@ export const CustomText = ({text, isData = false, numberOfLines = null}) => {
 };
 
 const VendorOrderDetailsScreen = ({navigation, route}) => {
-  const {getNotificaciones} = useContext(NotificationContext);
   const {orderNumber} = route.params
   
   const [loading,setLoading] = useState(false);

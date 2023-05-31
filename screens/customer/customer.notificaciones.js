@@ -16,7 +16,7 @@ export const CustomerNotificationViewScreen = React.memo((props) => {
 
     const [comision, setComision] = useState(0);
     const [delivery, setDelivery] = useState(0)
-    const {notificaciones,getNotificaciones} = useContext(NotificationContext);
+    const {notificaciones} = useContext(NotificationContext);
   
     const orderDetail = (body,item) => {
         // const {orderNumber,orderId} = route.params

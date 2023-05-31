@@ -159,7 +159,7 @@ export const VendorNavigation = ({navigation}) => {
           tabPress: async(e) => {
             // Prevent default action
             e.preventDefault();
-            // getNotificaciones();
+           
             // Do something with the `navigation` object
             navigation.navigate(BOTTOM_TAB_VENDOR_ROUTES.DASHBOARD);
             
