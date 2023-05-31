@@ -96,6 +96,8 @@ const ProductDetailScreen = (props) => {
 
   const goCart = async () => {
     const user_id = await getUserId();
+
+    setShowModal(false)
     if (user_id) {
       props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK)
     } else {

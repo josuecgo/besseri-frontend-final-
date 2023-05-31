@@ -28,6 +28,8 @@ import { OrderSuccessful } from '../../screens/customer/customer.order-successfu
 import HeaderStore from '../../components/Customer/HeaderStore';
 import { CartScreen } from '../../screens/customer/Store/CartScreen';
 import { PayScreen } from '../../screens/customer/Store/PayScreen';
+import { OrderSummary } from '../../screens/customer/Store/OrderSummary';
+import CustomerOrderSummary from '../../screens/customer/customer.ordersummary.screen';
 
 const Stack = createStackNavigator();
 
@@ -139,6 +141,28 @@ export const MainNavigation = () => {
           ),
         }}
         
+      />
+
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.PAGO}
+        // component={OrderSummary}
+        component={CustomerOrderSummary}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props} 
+            titulo="Pago" 
+            nav={props.navigation.goBack}
+            tienda={false}
+            />
+          ),
+        }}
+        
+      />
+
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.PAGO_COMPLETED}
+        component={OrderSuccessful}
       />
       <Stack.Screen
         name={MAIN_ROUTES.CHATSCREEN}

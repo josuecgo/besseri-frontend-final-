@@ -45,8 +45,8 @@ export const CartScreen = (props) => {
   let businessIds = [];
   const address = useSelector( state => state.user.address );
   const [pickup, setPickup] = useState(false)
-  const [total, setTotal] = useState(0)
- 
+
+
 
   const goDirecctions = () => {
     props.navigation.navigate('Mi dirección')
@@ -85,25 +85,25 @@ export const CartScreen = (props) => {
 
   const getAddresses = async (userID) => {
 
-    try {
+    // try {
 
-      const apiCall = await axios.get(`${customer_api_urls.get_addresses}/${userID}`);
+    //   const apiCall = await axios.get(`${customer_api_urls.get_addresses}/${userID}`);
 
-      if (apiCall.status == api_statuses.success) {
-        setDireccion({
-          long: apiCall.data.data[0].longitude,
-          lat: apiCall.data.data[0].latitude,
-          label: apiCall.data.data[0].label
-        });
-      } else {
-        showToaster('Error para obtener su direccion :/');
-        setDireccion(false);
-      }
-    } catch (e) {
-      // console.log({error:e})
-      setDireccion(false);
-      showToaster('Crea una direccion para poder realizar tu compra')
-    }
+    //   if (apiCall.status == api_statuses.success) {
+    //     setDireccion({
+    //       long: apiCall.data.data[0].longitude,
+    //       lat: apiCall.data.data[0].latitude,
+    //       label: apiCall.data.data[0].label
+    //     });
+    //   } else {
+    //     showToaster('Error para obtener su direccion :/');
+    //     setDireccion(false);
+    //   }
+    // } catch (e) {
+    //   // console.log({error:e})
+    //   setDireccion(false);
+    //   showToaster('Crea una direccion para poder realizar tu compra')
+    // }
   }
 
 
@@ -115,19 +115,19 @@ export const CartScreen = (props) => {
         businessIds: [businessId]
       });
       setBusinessProfiles(getBusinessDetails.data.data);
-      calculateDelivery(getBusinessDetails.data.data)
+      
     } catch (e) {
       // console.log(e?.response);
       showToaster('Algo salió mal');
     }
   }
 
-  const calculateDelivery = (businessProfiles) => {
-
+  const calculateDelivery = () => {
+    
     const distance = Math.sqrt(
-      Math.pow(69.1 * (Number(businessProfiles[0]?.location?.latitude) - [direccion?.lat]), 2) +
-      Math.pow(69.1 * ([direccion?.long] - Number(businessProfiles[0]?.location?.longitude)) * Math.cos(Number(businessProfiles[0]?.location?.latitude) / 57.3), 2));
-      console.log('sssss');
+      Math.pow(69.1 * (Number(businessProfiles[0]?.location?.latitude) - [address.latitude]), 2) +
+      Math.pow(69.1 * ([address?.longitude] - Number(businessProfiles[0]?.location?.longitude)) * Math.cos(Number(businessProfiles[0]?.location?.latitude) / 57.3), 2));
+   
     setTotalDeliveryFee(Math.round(distance) * delivery_fee);
     setDeliveryDistance(Math.round(distance));
 
@@ -150,19 +150,27 @@ export const CartScreen = (props) => {
 
       if (businessProfiles[0]?.wallet_id && !businessProfiles[0]?.isBlocked) {
         let allProducts = products?.filter(prod => prod?.business_id == businessProfiles[0]?._id);
-        let totalProductsPrice = 0;
+        let totalProductsPrice = [];
+
+      
         for (var a = 0; a < allProducts?.length; a++) {
-          totalProductsPrice += allProducts[a]?.price * allProducts[a]?.quantity
+          let precio =((totalDeliveryFee + Number(allProducts[a]?.price) + comission * Number(allProducts[a]?.price) / 100 - descuento ) * allProducts[a]?.quantity).toFixed(2) 
+          
+          
+          totalProductsPrice.push(
+            {
+              precio:((totalDeliveryFee + Number(allProducts[a]?.price) + comission * Number(allProducts[a]?.price) / 100 - descuento ) * allProducts[a]?.quantity).toFixed(2) ,
+              ...allProducts[a]
+            }
+          )
         }
         let subtotal = totalAmount;
-
         props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PAGO, {
           deliveryDistance: deliveryDistance,
           storeId: businessProfiles[0]?._id,
           products: allProducts,
           business: businessProfiles[0],
-          // totalAmount: Math.round(totalProductsPrice + Math.round((Number(comission) * Number(subtotal)) / 100)),
-          totalAmount: totalAmount,
+          totalAmount: (totalDeliveryFee + totalAmount + comission * totalAmount / 100 - descuento ).toFixed(2),
           comission: Math.round((comission * subtotal) / 100),
           delivery_fee: delivery_fee,
           subtotal: Math.round(totalAmount),
@@ -170,7 +178,9 @@ export const CartScreen = (props) => {
           cupon: idDesc,
           descuento,
           envio:totalDeliveryFee,
-          pickup
+          pickup,
+          address,
+          totalProductsPrice
         })
       } else {
         showToaster('No puedes hacer pedidos en esta tienda en este momento.')
@@ -186,7 +196,7 @@ export const CartScreen = (props) => {
   const servicioValet = (value) => {
     setPickup(value)
     if (value) {
-      fetchBusinessDetails()
+      calculateDelivery()
       // setTotal(totalDeliveryFee)
     }else{
       setTotalDeliveryFee(0);
@@ -233,10 +243,13 @@ export const CartScreen = (props) => {
   }, [products])
 
 
+
+
   const increaseQuantity = (id, price) => {
     dispatch(CartActions.increaseQuantity(id, price));
   }
   const decreaseQuantity = (id, price) => {
+
     dispatch(CartActions.decreaseQuantity(id, price));
   }
   const removeItemFromCart = (id) => {
@@ -256,8 +269,13 @@ export const CartScreen = (props) => {
     )
   }
 
-  console.log({total,delivery_fee,totalDeliveryFee});
- 
+  
+  useEffect(() => {
+    
+    fetchBusinessDetails()
+  
+  }, [])
+  
   
   return (
     <VStack alignItems={'center'} style={{ ...CommonStyles.screenWhiteY }} >
@@ -328,6 +346,7 @@ export const CartScreen = (props) => {
                 value="test"
                 accessibilityLabel="This is a dummy checkbox"
                 onChange={(value) => servicioValet(value)}
+                backgroundColor={Colors.white}
               >
 
 

@@ -10,12 +10,14 @@ import { CUSTOMER_HOME_SCREEN_ROUTES } from '../util/constants';
 
 export const ItemPedidos = ({ item,navigation }) => {
 
-  // if (item.type === 'refaccion') {
-  //   console.log(item);
-  // }
+  if (item.type === 'refaccion') {
+    console.log(item.ordered_on);
+  }
   const goDetalle = (data) => {
     navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.DETALLE,data)
   }
+
+  
   return (
     <Box backgroundColor={Colors.white} style={styles.card} rounded={'lg'} >
       <TouchableOpacity

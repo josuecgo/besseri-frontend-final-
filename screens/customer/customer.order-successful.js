@@ -1,58 +1,66 @@
-import { View, Text } from 'react-native'
-import React, { useEffect } from 'react'
-import { BackgroundImage } from '../../components/Background/BackgroundImage'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import React from 'react'
 import CommonStyles from '../../util/styles/styles'
 import Colors from '../../util/styles/colors'
-import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants'
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import ButtonComponent from '../../components/button/button.component'
+import { BOTTOM_TAB_CUSTOMER_ROUTES, CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants'
+import ModalChildren from '../../components/ModalChildren'
+import { Box, Center, Image, VStack } from 'native-base'
+import { BtnPrincipal } from '../../components/Customer/BtnPrincipal'
 
 export const OrderSuccessful = (props) => {
     
-    
-    const navigation = props.route.params;
-    // useEffect(() => {
-    //     deleteCart();
-    // }, [])
+    console.log(props);
 
-    // const deleteCart = () => {
-    //     for (var a=0;a<productos?.length;a++) {
-    //         dispatch(deleteItemFromCart(products[a]?._id,products[a]?.price))
-    //     }
-    // }
-    
     return (
-    <>
-        <BackgroundImage/>
+    <View style={CommonStyles.screenY} >
+      
             <View style={{...CommonStyles.flexOneCenter}}>
                
-             <Ionicons
-             name='checkmark-circle'
-             color={Colors.terciarySolid} 
-             size={160}
-             />
-                <Text style={{fontSize:30,...CommonStyles.fontFamily,color:Colors.white}}>Pedido realizado</Text>
-                <Text style={{fontSize:15,fontWeight:'300',width:'75%',alignSelf:'center',textAlign:'center',color:Colors.white}}>
-                Tu pedido ha sido realizado con éxito, pronto recibirás tu paquete
-                </Text>
-
-            <ButtonComponent
-            handlePress={() => {
+            <ModalChildren showModal={true} handleModal={(e) => {}} >
+            <Box style={CommonStyles.modal}  >
+              <TouchableOpacity style={styles.btnClose} 
+              onPress={() => setShowModal(false)}
+              >
+                <Image
+                source={require('../../assets/images/close.png')}
+                style={styles.close}
+                alt='close'
+                />
+              </TouchableOpacity>
+              <VStack space={4} >
+                <Center mb={10}>
+                  <Text style={[CommonStyles.h1,{fontWeight:'bold',marginBottom:10}]} >PAGO REALIZADO</Text>
+                  <Text style={CommonStyles.h2} >Tu pago ha sido realizado con éxito.
+Revisa en tu zona de pedidos </Text>
+                </Center>
                 
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS }],
-                  });
-            }}
-            borderRadius={10}
-            colorT={Colors.white}
-            buttonText={'Continuar'}
-            colorB={Colors.terciarySolid}
-            width={200}
-            margin={30}
-            />
+                  
+            
+              
+                
+
+                <BtnPrincipal
+                text={'Aceptar'}
+                marginHorizontal={0}
+                onPress={() => { props.navigation.replace('CustomerHomeStack',{screen:BOTTOM_TAB_CUSTOMER_ROUTES.ACCOUNT}) }}
+                />
+              </VStack>
+              
+            </Box>
+          </ModalChildren>
             </View>
-    </>
+    </View>
   )
 }
 
+const styles = StyleSheet.create({
+  close:{
+    width:30,
+    height:30
+  },
+  btnClose:{
+    position:'absolute',
+    right:10,
+    top:5
+  }
+})

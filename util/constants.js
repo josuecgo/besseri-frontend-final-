@@ -25,7 +25,8 @@ export const MAIN_ROUTES = {
   CUSTOMER_STACK:'CustomerStack',
   CUSTOMER_HOME_STACK:'CustomerHomeStack',
   RIDER_STACK:'RiderStack',
-  CHATSCREEN : 'Chats'
+  CHATSCREEN : 'Chats',
+  
 }
 
 export const ROLES = {
@@ -180,6 +181,7 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   INICIAR:'AuthStack',
   ENVIO: 'Envio',
   PAGO: 'PAGO',
+  PAGO_COMPLETED: 'PAGO COMPLETED',
   METODO: 'Metodo de pago',
   CARDS: 'Tarjetas',
   CREATE_CARD: 'Guardar Tarjeta',

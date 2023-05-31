@@ -8,7 +8,7 @@ export const GET_MAKER_VALUE_CARS = 'GET_MAKER_VALUE_CARS';
 export const GET_MODEL_VALUE_CARS = 'GET_MODEL_VALUE_CARS';
 export const GET_YEARS_CARS = 'GET_YEARS_CARS';
 export const GET_YEAR_VALUE_CAR = 'GET_YEAR_VALUE_CAR';
-
+export const SAVE_NOTIFICATION = 'SAVE_NOTIFICATION';
 
 
 export const addToUser = (item) => {
@@ -97,6 +97,15 @@ export const getYearValueCar = (item) => {
     
   return({
       type:GET_YEAR_VALUE_CAR,
+      data:item,
+     
+  })
+}
+
+export const saveNotification = (item) => {
+    
+  return({
+      type:SAVE_NOTIFICATION,
       data:item,
      
   })

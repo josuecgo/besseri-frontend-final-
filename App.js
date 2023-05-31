@@ -17,7 +17,7 @@ import { StripeProvider } from '@stripe/stripe-react-native';
 import RiderReducer from './util/ReduxStore/Reducers/RiderReducers/RiderReducer';
 
 import messaging from '@react-native-firebase/messaging';
-import { NativeBaseProvider, extendTheme } from 'native-base';
+import {  NativeBaseProvider,  extendTheme } from 'native-base';
 
 import { NotificationContext, NotificationProvider } from './util/context/NotificationContext';
 
@@ -30,9 +30,12 @@ import UserInfoReducer from './util/ReduxStore/Reducers/CustomerReducers/UserInf
 import PedidosReducer from './util/ReduxStore/Reducers/CustomerReducers/PedidosReducer';
 
 
+const config = {
+  useSystemColorMode: false,
+  initialColorMode: 'dark',
+};
 
-
-
+const customTheme = extendTheme({ config });
 const App = () => {
 
 
@@ -63,7 +66,7 @@ const App = () => {
   
   return(
     <StripeProvider
-    publishableKey={KeysStripe.LIVE_KEY}
+    publishableKey={KeysStripe.TEST_KEY}
     >
     <Provider store={reduxStore}>
     
@@ -71,7 +74,7 @@ const App = () => {
           
           <ProductProvider>
             <ChatProvider>
-              <NativeBaseProvider  >
+              <NativeBaseProvider theme={customTheme} >
                 <App2/>
               </NativeBaseProvider>
             </ChatProvider>

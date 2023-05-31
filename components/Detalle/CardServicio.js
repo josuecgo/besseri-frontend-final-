@@ -6,9 +6,13 @@ import CommonStyles from '../../util/styles/styles'
 import moment from 'moment'
 import { moneda } from '../../util/Moneda'
 import OrderProductItemComponent from '../vendor-shared/order-product-item.component'
+import { ProductContext } from '../../util/context/Product/ProductContext'
+import { useContext } from 'react'
 
 const CardServicio = ({data}) => {
-  
+  const {
+    comision
+} = useContext(ProductContext)
   if(data.type === 'refaccion') return (
     <>
     <AddressFormatted address={data.store.location.formatted_address} />
@@ -33,6 +37,7 @@ const CardServicio = ({data}) => {
                       productPrice={item?.price}
                       qtyOrdered={item?.quantity}
                       img={item?.productImg}
+                      comision={comision}
                     />
                 
                     <Divider/>
@@ -47,7 +52,7 @@ const CardServicio = ({data}) => {
         <Text style={{...CommonStyles.h2}} >Código:</Text>
         <Text style={{...CommonStyles.h2}} >{data?.delivery_security_code}</Text>
       </HStack>
-      <Text style={{...CommonStyles.h2}}>Servicio de VALET incluido</Text>
+      <Text style={{...CommonStyles.h2}}> {data.storePickup ? 'Servicio de VALET incluido' : 'Recoger en' } </Text>
       <AddressFormatted address={data.store.location.formatted_address} />
       <HStack alignItems={'center'} justifyContent={'space-between'} >
         <Text style={{...CommonStyles.h2}} >Total:</Text>

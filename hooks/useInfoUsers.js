@@ -1,10 +1,10 @@
 
 import axios from 'axios';
 import { useContext, useState } from 'react';
-import { api_statuses, customer_api_urls } from '../util/api/api_essentials';
+import { api_statuses, api_urls, customer_api_urls } from '../util/api/api_essentials';
 import { getUser, getUserAddress, getUserId, saveAdressCustomer, saveCarActive, saveGarage } from '../util/local-storage/auth_service';
 import { useDispatch, useSelector } from 'react-redux';
-import { addAddressToUser, addCarActiveToUser, addCarsToUser, addToUser, getYearsCars } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
+import { addAddressToUser, addCarActiveToUser, addCarsToUser, addToUser, getYearsCars, saveNotification } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 import { useEffect } from 'react';
 import { showAlertLogin, showToaster, showToasterError } from '../util/constants';
 import { getOrdersUser, isLoadingOrdersUser } from '../util/ReduxStore/Actions/CustomerActions/PedidosAction';
@@ -19,7 +19,6 @@ export const useInfoUser = (  ) => {
       getCategorias
   } = useContext(ProductContext)
 
-  const {carActive} = useSelector(state => state.user);
 
 
 
@@ -111,6 +110,24 @@ export const useInfoUser = (  ) => {
    
   }
 
+  const getNotificaciones = async() => {
+    try {
+        const id = await getUserId();
+        
+        const url = `${api_urls.getNotification}/${id}`;
+
+        const apiCall = await axios.get(url);
+        const data = apiCall.data.data;
+        
+        dispatch( saveNotification(data) )
+
+       
+    } catch (e) {
+        // console.log({ eaAndData: e })
+        showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
+    }
+}
+
   
 
 
@@ -132,7 +149,12 @@ export const useInfoUser = (  ) => {
   }, [])
   
 
-
+  useEffect(() => {
+    
+    getNotificaciones()
+   
+  }, [])
+  
 
 
  

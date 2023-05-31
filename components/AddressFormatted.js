@@ -14,7 +14,9 @@ const AddressFormatted = ({address,color = 'white'}) => {
             alt='dirrecion'
             style={styles.icon}
           />
-          <Box maxWidth={deviceWidth * 0.8 } flexWrap={'wrap'} flexDirection={'row'}>
+          <Box maxWidth={deviceWidth * 0.8 } flexWrap={'wrap'} flexDirection={'row'}
+          
+          >
             <Text style={{...CommonStyles.h3,color:color}}>
               {address}
             </Text>

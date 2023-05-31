@@ -12,29 +12,31 @@ import { getRiderProfile, getUserId } from '../util/local-storage/auth_service';
 export const useNotification = () => {
     const [notificaciones, setNotificaciones] = useState([]);
     const [newNotification, setNewNotification] = useState([]);
-    
+    const dispatch = useDispatch()
     
     
     const getNotificaciones = async() => {
-        try {
-            const id = await getUserId();
+        // try {
+        //     // const id = await getUserId();
             
-            const url = `${api_urls.getNotification}/${id}`;
+        //     // const url = `${api_urls.getNotification}/${id}`;
 
-            const apiCall = await axios.get(url);
-            const data = apiCall.data.data;
-            
-            setNotificaciones(data);
+        //     // const apiCall = await axios.get(url);
+        //     // const data = apiCall.data.data;
+        //     // console.log(data,'noti');
+        //     // setNotificaciones(data);
+        //     // dispatch()
            
-        } catch (e) {
-            // console.log({ eaAndData: e })
-            showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
-        }
+        // } catch (e) {
+        //     // console.log({ eaAndData: e })
+        //     showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
+        // }
     }
 
    
     
-
+  
+    
 
     return {
         getNotificaciones,

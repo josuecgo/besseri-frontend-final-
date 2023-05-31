@@ -4,14 +4,23 @@ import { Button, HStack } from 'native-base'
 import CommonStyles from '../../util/styles/styles'
 import Colors from '../../util/styles/colors'
 import { useSelector } from 'react-redux'
+import { showToaster } from '../../util/constants'
 
-export const BtnCantidad = ({increaseQuantity, decreaseQuantity,product}) => {
+export const BtnCantidad = ({increaseQuantity, decreaseQuantity,onRemoveFromCart,product}) => {
   
-  // console.log( product?.quantity);
+  const quitarProducto = () => {
+   
+    if (product?.quantity === 1) {
+      onRemoveFromCart();
+      showToaster('Producto eliminado del carrito')
+     return
+    }
+    decreaseQuantity()
+  }
   
   return (
     <HStack alignItems={'center'} style={styles.container} s >
-      <Button onPress={decreaseQuantity} variant={'ghost'} _text={{...CommonStyles.h1,color:Colors.black}} >-</Button>
+      <Button onPress={quitarProducto} variant={'ghost'} _text={{...CommonStyles.h1,color:Colors.black}} >-</Button>
       <Text>{product?.quantity ? product?.quantity : 1 }</Text>
       <Button  onPress={increaseQuantity} variant={'ghost'} _text={{...CommonStyles.h1,color:Colors.black}} >+</Button>
     </HStack>

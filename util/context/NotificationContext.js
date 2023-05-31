@@ -14,6 +14,7 @@ import messaging, { firebase } from '@react-native-firebase/messaging';
 
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import { useInfoUser } from "../../hooks/useInfoUsers";
 
 
 
@@ -40,7 +41,7 @@ export const NotificationProvider = ({children}) => {
     const [countRider, setCountRider] = useState(0);
     const [countCustomer, setCountCustomer] = useState(0);
     const [notificaciones, setNotificaciones] = useState([])
-   
+    const {getNotificaciones} = useInfoUser()
     const firebaseConfig = {
         apiKey: "AIzaSyAjyGdmeJ8fyRP7eKPJ2ODtF0JEbqEbw8o",
         authDomain: "besseri-334619.firebaseapp.com",
@@ -89,7 +90,7 @@ export const NotificationProvider = ({children}) => {
               channelId:'channel-id'
            });
            
-         
+           
           getNotificaciones();
           
         } catch(e) {
@@ -103,56 +104,56 @@ export const NotificationProvider = ({children}) => {
 
 
 
-    const getNotificaciones = async() => {
-        try {
-            const id = await getUserId();
-            const userType = await getUser();
+    // const getNotificaciones = async() => {
+    //     try {
+    //         const id = await getUserId();
+    //         const userType = await getUser();
 
            
-            if (id) {
-              const url = `${api_urls.getNotification}/${id}`;
+    //         if (id) {
+    //           const url = `${api_urls.getNotification}/${id}`;
               
-              const apiCall = await axios.get(url);
-              const data = apiCall?.data?.data;
-              const count = apiCall?.data?.count;
+    //           const apiCall = await axios.get(url);
+    //           const data = apiCall?.data?.data;
+    //           const count = apiCall?.data?.count;
 
-              await dispatch({
-                  type:'getNotification',
-                  payload: {
-                    notificaciones:data,
-                    countRider:count,
-                    count:count,
-                    countCustomer:count,
-                  }
-              });
-              setNotificaciones(data)
-              setCount(count)
-              setCountRider(count)
-              setCountCustomer(count);
+    //           await dispatch({
+    //               type:'getNotification',
+    //               payload: {
+    //                 notificaciones:data,
+    //                 countRider:count,
+    //                 count:count,
+    //                 countCustomer:count,
+    //               }
+    //           });
+    //           setNotificaciones(data)
+    //           setCount(count)
+    //           setCountRider(count)
+    //           setCountCustomer(count);
               
-              if (Platform.OS === 'ios') {
-                PushNotificationIOS.setApplicationIconBadgeNumber(count);
-              }
+    //           if (Platform.OS === 'ios') {
+    //             PushNotificationIOS.setApplicationIconBadgeNumber(count);
+    //           }
               
 
-            }else{
-              setNotificaciones([])
-              setCount(0)
-              setCountRider(0)
-              setCountCustomer(0)
-            }
+    //         }else{
+    //           setNotificaciones([])
+    //           setCount(0)
+    //           setCountRider(0)
+    //           setCountCustomer(0)
+    //         }
             
            
-        } catch (e) {
-            // console.log({ getNot: e })
-            setNotificaciones([])
-            setCount(0)
-            setCountRider(0)
-            setCountCustomer(0)
-        }
-       // PushNotificationIOS.addEventListener('localNotification',pushIos);
+    //     } catch (e) {
+    //         // console.log({ getNot: e })
+    //         setNotificaciones([])
+    //         setCount(0)
+    //         setCountRider(0)
+    //         setCountCustomer(0)
+    //     }
+    //    // PushNotificationIOS.addEventListener('localNotification',pushIos);
        
-    }
+    // }
 
     const deleteNotificaciones = async() => {
 

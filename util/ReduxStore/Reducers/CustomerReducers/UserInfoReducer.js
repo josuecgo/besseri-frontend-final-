@@ -1,4 +1,4 @@
-import { ADD_ADDRESS, ADD_CARS_TO_USER, ADD_CAR_ACTIVE_TO_USER, ADD_USER, GET_MAKERS_CARS, GET_MAKER_VALUE_CARS, GET_MODELS_CARS, GET_MODEL_VALUE_CARS, GET_YEARS_CARS, GET_YEAR_VALUE_CAR } from "../../Actions/CustomerActions/UserInfoActions"
+import { ADD_ADDRESS, ADD_CARS_TO_USER, ADD_CAR_ACTIVE_TO_USER, ADD_USER, GET_MAKERS_CARS, GET_MAKER_VALUE_CARS, GET_MODELS_CARS, GET_MODEL_VALUE_CARS, GET_YEARS_CARS, GET_YEAR_VALUE_CAR, SAVE_NOTIFICATION } from "../../Actions/CustomerActions/UserInfoActions"
 
 
 const initialState = {
@@ -13,7 +13,8 @@ const initialState = {
   modeloValue:null,
   yearValue:null,
   isLoading:false,
-  years:[]
+  years:[],
+  notificaciones:[]
 }
 export default (state = initialState, action) => {
    
@@ -95,6 +96,11 @@ export default (state = initialState, action) => {
                 ...state,
                 yearValue: action.data,
                 isLoading:false
+            }
+        case SAVE_NOTIFICATION:
+            return {
+                ...state,
+                notificaciones:action.data
             }
         default:
             return state

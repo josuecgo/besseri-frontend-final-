@@ -29,7 +29,8 @@ const ProductCardComponent = ({
   onViewDetail,
   cartProduct = false,
   increaseQuantity,
-  decreaseQuantity
+  decreaseQuantity,
+  onRemoveFromCart
 }) => {
   const { comision, carActive } = useContext(ProductContext)
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
@@ -77,6 +78,7 @@ const ProductCardComponent = ({
           <BtnCantidad 
           decreaseQuantity={decreaseQuantity}  
           increaseQuantity={increaseQuantity}
+          onRemoveFromCart={onRemoveFromCart}
           product={data}
           />
         </HStack>
