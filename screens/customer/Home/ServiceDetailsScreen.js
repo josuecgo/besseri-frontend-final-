@@ -11,7 +11,7 @@ import { ItemServiceDetail } from '../../../components/Services/ItemServiceDetai
 export const ServiceDetailsScreen = ({ route, navigation }) => {
 
   const { service, address, car } = route.params;
-  
+ 
   return (
     <View style={styles.container} >
       <ScrollView showsVerticalScrollIndicator={false} >
@@ -63,8 +63,10 @@ export const ServiceDetailsScreen = ({ route, navigation }) => {
           <Text style={CommonStyles.h2} >10 km de tu ubicación</Text>
         </HStack>
 
+      
+            <ItemServiceDetail service={service} />
+       
         
-        <ItemServiceDetail service={service} />
       </ScrollView>
 
 

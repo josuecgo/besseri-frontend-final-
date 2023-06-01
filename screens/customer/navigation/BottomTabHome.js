@@ -24,6 +24,7 @@ import CustomerProductsViewScreen from '../customer.products-view.screen';
 import HeaderStore from '../../../components/Customer/HeaderStore';
 import HomeStoreScreen from '../Store/HomeStoreScreen';
 import ProductDetailScreen from '../Store/ProductDetailScreen';
+import { LavadoMaps } from '../Home/LavadoMaps';
 
 
 const BottomTab = createBottomTabNavigator();
@@ -43,32 +44,32 @@ export const BottomTabHome = () => {
     getToken();
   }, [])
 
-  
+
   return (
     <BottomTab.Navigator
       initialRouteName={BOTTOM_TAB_CUSTOMER_ROUTES.HOME_SCREEN}
       tabBar={props => <FooterNav {...props} />}
-      
-      screenOptions={ ({route}) => ({
+
+      screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarShowLabel:false,
+        tabBarShowLabel: false,
         tabBarActiveTintColor: Colors.primarySolid,
-       
-        
+
+
       })
       }
 
-      
-      >
+
+    >
       <BottomTab.Screen
         name={BOTTOM_TAB_CUSTOMER_ROUTES.HOME_SCREEN}
         component={CustomerHomeStack}
         options={{
-          title:'Home',
-  
+          title: 'Home',
+
         }}
       />
-      
+
       <BottomTab.Screen
         name={BOTTOM_TAB_CUSTOMER_ROUTES.ACCOUNT}
         component={CustomerAccountStack}
@@ -81,8 +82,8 @@ export const BottomTabHome = () => {
         component={CustomerNotificationStack}
 
       />
-      
-      
+
+
     </BottomTab.Navigator>
   );
 }
@@ -104,43 +105,57 @@ export const CustomerHomeStack = () => {
         }}
       />
 
-  <Stack.Screen
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_STACK}
         component={ServiciosScreen}
         options={{
           headerShown: true,
           header: props => (
-            <HeaderTitle {...props} 
-            titulo="Servicios" 
-            nav={props.navigation.goBack}
+            <HeaderTitle {...props}
+              titulo="Servicios"
+              nav={props.navigation.goBack}
             />
           ),
         }}
       />
-    <Stack.Screen
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.MAP_SERVICES}
         component={MapServiceScreen}
         options={{
           headerShown: true,
           header: props => (
-            <HeaderTitle {...props} 
-            titulo="Servicios" 
-            nav={props.navigation.goBack}
+            <HeaderTitle {...props}
+              titulo="Servicios"
+              nav={props.navigation.goBack}
             />
           ),
         }}
       />
 
-    <Stack.Screen
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.LAVADO}
+        component={LavadoMaps}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props}
+              titulo="Lavado"
+              nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES}
         component={HomeStoreScreen}
         options={{
           headerShown: true,
           header: props => (
-            <HeaderStore {...props} 
-            titulo="Tienda" 
-            nav={props.navigation.goBack}
-            tienda={true}
+            <HeaderStore {...props}
+              titulo="Tienda"
+              nav={props.navigation.goBack}
+              tienda={true}
             />
           ),
         }}
@@ -152,15 +167,15 @@ export const CustomerHomeStack = () => {
         options={{
           headerShown: true,
           header: props => (
-            <HeaderStore {...props} 
-            titulo="Tienda" 
-            nav={props.navigation.goBack}
-            tienda={true}
+            <HeaderStore {...props}
+              titulo="Tienda"
+              nav={props.navigation.goBack}
+              tienda={true}
             />
           ),
         }}
       />
-      
+
     </Stack.Navigator>
   );
 };
@@ -169,7 +184,7 @@ export const CustomerAccountStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      // initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_HOME}
+    // initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_HOME}
     >
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_HOME}
@@ -188,30 +203,30 @@ export const CustomerAccountStack = () => {
         options={{
           headerShown: true,
           header: props => (
-            <HeaderTitle {...props} 
-            titulo="Mis autos" 
-            nav={props.navigation.goBack}
+            <HeaderTitle {...props}
+              titulo="Mis autos"
+              nav={props.navigation.goBack}
             />
           ),
         }}
       />
-      
+
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_PEDIDOS}
         component={PedidosScreen}
         options={{
           headerShown: true,
           header: props => (
-            <HeaderTitle {...props} 
-            titulo="Pedidos" 
-            nav={props.navigation.goBack}
+            <HeaderTitle {...props}
+              titulo="Pedidos"
+              nav={props.navigation.goBack}
             />
           ),
         }}
       />
 
-    
-    
+
+
 
     </Stack.Navigator>
   );
@@ -234,7 +249,7 @@ export const CustomerNotificationStack = () => {
         }}
       />
 
-    
+
 
     </Stack.Navigator>
   );

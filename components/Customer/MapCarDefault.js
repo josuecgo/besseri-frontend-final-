@@ -42,7 +42,7 @@ export const MapCarDefault = ({changeCar}) => {
 
 const styles = StyleSheet.create({
   body:{
-    marginVertical:10,
+    marginVertical:5,
     flexDirection:'row',
     // alignItems:'center',
     justifyContent:'space-between',
@@ -53,16 +53,16 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   icon:{
-    width:30,
-    height:30,
+    width:25,
+    height:25,
     resizeMode:'contain',
     marginRight:5
   },
   car:{
-    fontSize:adjust(14),
+   
     marginLeft:5,
     textAlign:'right',
     textDecorationLine:'underline',
-    ...CommonStyles.h2
+    ...CommonStyles.h3
   }
 })

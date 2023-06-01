@@ -45,8 +45,7 @@ const data = [{
 }];
 export const NotificationScreen = (props) => {
   const { notificaciones } = useSelector(state => state.user);
-  const {getNotificaciones} = useInfoUser()
-  const [openedRow, setOpenedRow] = useState(null);
+  const {getNotificaciones} = useInfoUser();
   
   const orderDetail = (data,item) => {
   
@@ -56,51 +55,33 @@ export const NotificationScreen = (props) => {
         viewItem(item._id);
         
     }
-}
+  }
 
-const viewItem = async(id) => {
-    try {
-       
-        await axios.post(`${api_urls.viewNotification}/${id}`,{user:'customer'});
-        getNotificaciones();
+  const viewItem = async(id) => {
+      try {
         
-    
-    } catch(e) {
-     console.log({detail:e});
-    }
-}
+          await axios.post(`${api_urls.viewNotification}/${id}`,{user:'customer'});
+          getNotificaciones();
+          
+      
+      } catch(e) {
+      console.log({detail:e});
+      }
+  }
 
  
-
-
-
-
-
 
   const renderItem = ({
     item,
     index
   }) => {
     return (
-      <Box>
-      <Pressable onPress={() => orderDetail(item?.body,item)} _dark={{
-        bg: Colors.bgColor
-      }} _light={{
-        bg: Colors.bgColor
-      }}>
+      <Box py={'2'} >
+      <Pressable onPress={() => orderDetail(item?.body,item)}>
         <Box pl="4" pr="5" py="2">
-          <HStack alignItems="center" space={3}>
-
-            <VStack>
-              <Text color="coolGray.800" _dark={{
-                color: 'warmGray.50'
-              }} bold>
-                {item.titulo}
-              </Text>
-            </VStack>
-            <Spacer />
-          
-          </HStack>
+          <Text style={CommonStyles.h2} bold>
+          {item.titulo}
+          </Text>
         </Box>
       </Pressable>
       <Divider/>
@@ -109,36 +90,11 @@ const viewItem = async(id) => {
   };
 
 
-  const renderHiddenItem = (data, rowMap) => {
-   console.log(rowMap);
-    return (
-      <Box  h={'100%'} justifyContent={'center'} alignItems="center" >
-        <TouchableOpacity
-          style={{ width: 70, marginLeft: 'auto' }}
-          onPress={() => viewItem(data.item._id,rowMap,data.item)}
-        >
-          <VStack justifyContent={'center'} alignItems="center" space={2}>
-            <MaterialCommunityIcons name='delete' size={30}  color={Colors.white}/>
-          </VStack>
-        </TouchableOpacity>
-      </Box>
-    )
-  };
-
   return (
     <View style={CommonStyles.screenY} >
 
-      <Box safeArea flex="1">
-        {/* <SwipeListView
-          data={notificaciones}
-          renderItem={renderItem}
-          renderHiddenItem={renderHiddenItem}
-          rightOpenValue={-100}
-          previewRowKey={'0'}
-          previewOpenValue={-40}
-          previewOpenDelay={3000}
-          onRowDidOpen={onRowDidOpen}
-        /> */}
+      <Box>
+       
 
         <FlatList
         data={notificaciones}

@@ -36,31 +36,38 @@ export const ItemServiceDetail = ({service}) => {
           Servicio para autos tipo {service?.type_car?.type}
           </Text>
           <Text style={CommonStyles.h2}>
-          Duración del servicio <Text fontWeight="bold" >{service?.duration / 60 == 0.5 ? `30 minutos` : `${service?.duration  / 60} horas ` }.</Text>
+          Duración del servicio <Text fontWeight="bold" >{service?.duration / 60 == 0.5 ? `30 minutos` : `${service?.duration  / 60} hr` }.</Text>
           </Text>
         </Stack>
 
 
 
     
-
         
-        <HStack justifyContent={'space-around'}>
-          <VStack>
-          <Text style={CommonStyles.h2} >Garantía</Text>
-          
-          <Text style={CommonStyles.h2}>&#8226; {service.warranty.tiempo} meses</Text>
-          <Text style={CommonStyles.h2}>&#8226; {numberToKm(service.warranty.km) } kilometros</Text>
-          </VStack>
-          <VStack>
-            <Text style={CommonStyles.h2}>Incluye</Text>
-            {
-              service.consumables.map((item,i) => (
-                <Text key={i} style={CommonStyles.h2}>&#8226; {item} </Text>
-              ))
-            }
-          </VStack>
-        </HStack>
+        
+       
+          {
+            service?.type_services?.type != 'ESTETICA' && (
+              <HStack justifyContent={'space-around'}>
+              <VStack>
+                <Text style={CommonStyles.h2} >Garantía</Text>
+                
+                <Text style={CommonStyles.h2}>&#8226; {service.warranty.tiempo} meses</Text>
+                <Text style={CommonStyles.h2}>&#8226; {numberToKm(service.warranty.km) } kilometros</Text>
+              </VStack>
+              <VStack>
+                <Text style={CommonStyles.h2}>Incluye</Text>
+                {
+                  service.consumables.map((item,i) => (
+                    <Text key={i} style={CommonStyles.h2}>&#8226; {item} </Text>
+                  ))
+                }
+              </VStack>
+              </HStack>
+            )
+          }
+         
+        
        
       </Stack>
     </Box>

@@ -26,7 +26,7 @@ export const ListServices = ({ services,goService }) => {
           </Pressable>
         )}
         key={(item) => item._id}
-        ListFooterComponent={() => <View style={{width:100,height:100}} />}
+        ListFooterComponent={() => <View style={{width:100,height:200}} />}
       />
     </View>
   )

@@ -261,7 +261,7 @@ export const AppointmentScreen = (props) => {
                         }}
                       >
                         <Text color={hourSelected === item ? 'black' : '#FFFFFF'} >
-                          {dateToHour(item.start)}
+                          {moment(item.start).format('HH:mm')}
                         </Text>
 
                       </TouchableOpacity>

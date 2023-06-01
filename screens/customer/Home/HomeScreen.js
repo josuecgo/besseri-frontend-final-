@@ -64,7 +64,7 @@ export const HomeScreen = ({navigation}) => {
         <ButtonService
         label={'Lavado'}
         icono={require('../../../assets/images/home/lavado.png')}
-        onPress={()=>{ showToaster('Proximamente') }}
+        onPress={()=>{ navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.LAVADO) }}
         
         />
       </HStack>

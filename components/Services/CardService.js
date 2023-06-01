@@ -8,11 +8,12 @@ import { moneda } from '../../util/Moneda'
 import { ItemServiceDetail } from './ItemServiceDetail'
 
 export const CardService = ({service}) => {
+
   
   return (
     <Box >
     <Box 
-    // maxW="80" 
+    my={'5px'} 
     rounded="2xl" 
     overflow="hidden" 
     borderColor="coolGray.200" 
@@ -56,7 +57,7 @@ export const CardService = ({service}) => {
           </Heading>
         
         </HStack>
-       
+          <Text style={CommonStyles.h2} > Tipo de {service?.type_services.type === 'ESTETICA' ? 'Lavado' : 'Servicio'} {service?.type_services?.name}</Text>
 
         <HStack  space={4} justifyContent="space-between">
        
@@ -68,6 +69,7 @@ export const CardService = ({service}) => {
               {moneda(service?.price)} MXN
             </Text>
           <HStack>
+           
             <Text 
             color={Colors.white} _dark={{
             color: Colors.white
