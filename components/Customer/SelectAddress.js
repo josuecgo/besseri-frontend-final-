@@ -9,6 +9,7 @@ import axios from 'axios'
 import { showToaster } from '../../util/constants'
 import { useDispatch } from 'react-redux'
 import Colors from '../../util/styles/colors';
+import CommonStyles from '../../util/styles/styles';
 
 export const SelectAddress = ({address,navigation}) => {
   const {label,phone,latitude,longitude,address_components,formatted_address,place_id} = address;
@@ -72,13 +73,13 @@ export const SelectAddress = ({address,navigation}) => {
       marginBottom={5}
       _dark={{
       borderColor: "coolGray.600",
-      backgroundColor: "gray.700"
+      backgroundColor: Colors.darker
       }}
       _light={{
         backgroundColor: "gray.50"
       }}
       >
-        <Text style={{textAlign:'center'}} >{address.formatted_address}</Text>
+        <Text style={{textAlign:'center',...CommonStyles.h3}} >{address.formatted_address}</Text>
       </Box>
 
 

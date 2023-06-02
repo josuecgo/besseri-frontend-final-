@@ -14,6 +14,7 @@ import { SelectAddress } from '../../../components/Customer/SelectAddress'
 import { AddressHeader } from '../../../components/Customer/AddressHeader'
 import Colors from '../../../util/styles/colors'
 import { Box, Text } from 'native-base'
+import CommonStyles from '../../../util/styles/styles'
 
 export const SearchAddressScreen = (props) => {
   const mapStyle = [
@@ -422,7 +423,8 @@ const styles = StyleSheet.create({
   search: {
     backgroundColor: Colors.bgColor,
     flex: 1,
-    // justifyContent: 'space-between'
+    ...CommonStyles.screenY,
+    paddingBottom:30
   },
  
   map: {
