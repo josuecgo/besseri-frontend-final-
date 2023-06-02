@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,PanResponder } from 'react-native'
+import { StyleSheet, Text, View, PanResponder } from 'react-native'
 import React from 'react'
 import { Box, Center, HStack, Image, Slider, VStack } from 'native-base';
 import { adjust, deviceHeight, deviceWidth } from '../../../util/Dimentions';
@@ -14,7 +14,7 @@ import CommonStyles from '../../../util/styles/styles';
 export const SeguimientoScreen = ({ route }) => {
 
   const progress = route.params;
-  
+  console.log(progress.type);
   const steps = progress.type == 'servicio' ? [
     {
       name: "Servicio aceptado"
@@ -44,12 +44,12 @@ export const SeguimientoScreen = ({ route }) => {
     {
       name: "Cierre de servicio"
     },
-  ] : progress.type == 'refaccion' ? [ {
+  ] : progress.type == 'refaccion' ? [{
     name: "Procesando pedido"
   },
   {
-    name:"Paquete listo"
-  },    
+    name: "Paquete listo"
+  },
   {
     name: "Pedido recogido por repartidor"
   },
@@ -59,87 +59,58 @@ export const SeguimientoScreen = ({ route }) => {
   },
   ] : [
     {
-      name: "Lavado aceptada"
-    },    {
-      name: "Rider en camino"
+      name: "Lavado aceptado"
+    },
+    {
+      name: "Valet en camino"
     },
     {
       name: "Entregado a valet"
     },
     {
-      name: "Recepcionado por taller"
+      name: "Recepcionado por Lavadora"
     },
     {
-      name:
-        "Vehículo en revisión"
+      name: "Vehículo en revisión"
     },
     {
-      name: "Servicio concluido "
+      name: "Lavado concluido"
     },
     {
-      name: "Taller entregado a valet"
+      name: "Vehiculo entregado a valet"
     },
     {
       name: "Vehiculo entregado a cliente"
     },
     {
       name: "Cierre de servicio"
-    }
+    },
   ]
 
   const positionStep = () => {
-    //?  ORDERS
-  //   OUT_FOR_DELIVERY:'Fuera para entrega',
-  // PARCEL_PICKED:'Pedido recogido',
-  // PARCEL_DELIVERED:'Paquete entregado',
-  // RIDER_ASSIGNED:'Repartidor asignado',
-  // PROCESSING:'Procesando',
-  // PACKED:'Paquete listo'
-    // OUT_FOR_DELIVERY:'Fuera para entrega',
-    // PARCEL_PICKED:'Pedido recogido',
-    // PARCEL_DELIVERED:'Paquete entregado',
-    // RIDER_ASSIGNED:'Repartidor asignado',
-    // PROCESSING:'Procesando',
-    // PACKED:'Paquete listo'
-    // PENDING:'PENDING',
-    // PROCESSING: 'PROCESSING',
-    // PACKED: 'PACKED',
-    // DELIVERY: 'OUT_FOR_DELIVERY',
-    // CANCELLED: 'CANCELLED',
-    // COMPLETED:'PARCEL_DELIVERED',
-    // ON_GOING:'ON_GOING',
-    // PARCEL_DELIVERED:'PARCEL DELIVERED'
+
     if (progress.type === 'refaccion') {
       switch (progress.status_code) {
         case USER_ORDER_STATUSES.PROCESSING:
-       
-  
+
+
           return 1;
         case USER_ORDER_STATUSES.PACKEd:
           return 2;
-  
+
         case USER_ORDER_STATUSES.ORDER_OUT_FOR_DELIVERY:
         case ORDER_STATUSES.ON_GOING:
           return 3;
         case USER_ORDER_STATUSES.PARCEL_DELIVERED:
-            return 4;
-       
+          return 4;
+
         default:
           return 0;
       }
 
       return
     }
-    //  ?Servicios
-    // EN_PROCESO:'En proceso',
-    // RIDER_EN_CAMINO_A_CUSTOMER:'Rider en camino',
-    // CUSTOMER_ENTREGADO_A_RIDER:'Entregado a rider',
-    // ENTREGADO_A_TALLER:'Recepcionado por taller',
-    // REVISANDO:'Revisando',
-    // SERVICIO_CONCLUIDO:'Servicio concluido',
-    // TALLER_ENTREGADO_A_RIDER:'Entregado a rider',
-    // ENTREGADO_A_CUSTOMER:'Vehiculo entregado',
-    // console.log(progress.status);
+
     switch (progress.status) {
       case BookingsStatusCode.EN_PROCESO:
 
@@ -148,27 +119,27 @@ export const SeguimientoScreen = ({ route }) => {
         return 1;
 
       case BookingsStatusCode.RIDER_EN_CAMINO_A_CUSTOMER:
-      
+
         return 2;
       case BookingsStatusCode.CUSTOMER_ENTREGADO_A_RIDER:
-          return 3;
+        return 3;
       case BookingsStatusCode.ENTREGADO_A_TALLER:
-        return 4; 
+        return 4;
       case BookingsStatusCode.REVISANDO:
-          return 5; 
+        return 5;
       case BookingsStatusCode.SERVICIO_CONCLUIDO:
         return 6;
       case BookingsStatusCode.TALLER_ENTREGADO_A_RIDER:
         return 7;
       case BookingsStatusCode.ENTREGADO_A_CUSTOMER:
-     
-          return 9;
+
+        return 9;
       default:
         return 9;
     }
   }
 
-    
+
   return (
     <View style={{ ...CommonStyles.screenY }} >
 
@@ -193,43 +164,43 @@ export const SeguimientoScreen = ({ route }) => {
 
               {
                 i !== 0 && (
-                <View
-                style={{
-                  width: 1,
-                  height: deviceHeight * 0.06,
-                  // backgroundColor: "#636363",
-                  zIndex: 0,
-                  borderWidth: 2,
-                  borderColor:  positionStep() > i ? '#5B21FF' : Colors.textSecundary ,
-                  position:'absolute',
-                  left:12,
-                  top:-36
-              
-                }}
-                />
-                )
-              }
-
-{
-               ( i + 1) === positionStep() && (
                   <View
-                  style={{
-                    width: deviceWidth,
-                    height: deviceHeight * 0.042,
-                    // backgroundColor: "#636363",
-                    zIndex: 0,
-                    borderBottomWidth: 4,
-                    borderColor:  positionStep() > i ? '#5B21FF' : Colors.textSecundary ,
-                    position:'absolute',
-                    left:12,
-                    // top:
-                    // bottom:-8
-                
-                  }}
+                    style={{
+                      width: 1,
+                      height: deviceHeight * 0.06,
+                      // backgroundColor: "#636363",
+                      zIndex: 0,
+                      borderWidth: 2,
+                      borderColor: positionStep() > i ? '#5B21FF' : Colors.textSecundary,
+                      position: 'absolute',
+                      left: 12,
+                      top: -36
+
+                    }}
                   />
                 )
               }
-             
+
+              {
+                (i + 1) === positionStep() && (
+                  <View
+                    style={{
+                      width: deviceWidth,
+                      height: deviceHeight * 0.042,
+                      // backgroundColor: "#636363",
+                      zIndex: 0,
+                      borderBottomWidth: 4,
+                      borderColor: positionStep() > i ? '#5B21FF' : Colors.textSecundary,
+                      position: 'absolute',
+                      left: 12,
+                      // top:
+                      // bottom:-8
+
+                    }}
+                  />
+                )
+              }
+
               <HStack space={12} >
                 <VStack>
                   {
@@ -239,55 +210,22 @@ export const SeguimientoScreen = ({ route }) => {
                       </View>
                     ) : (
                       <View style={{
-                        // backgroundColor:Colors.textSecundary,
-                        // borderWidth: 3,
-                        // borderColor: positionStep() > i ? '#5B21FF' : Colors.textSecundary,
                         backgroundColor: positionStep() > i ? '#5B21FF' : Colors.textSecundary,
-                     
+
                         width: 28,
                         height: 28,
-                        borderRadius:100
+                        borderRadius: 100
                       }} />
                     )
                   }
                 </VStack>
-                  
-              
+
+
                 <View style={styles.step}>
                   <Text style={styles.name} >{step.name}</Text>
                 </View>
               </HStack>
-              {/* <View style={styles.stepContainer}>
-
-
-                <View style={styles.stepIndicator}>
-
-                  {
-                    positionStep() == (i + 1) ? (
-                      <View style={styles.contentImg} >
-                        <MaterialCommunityIcons name='check' color={Colors.white} size={20} />
-                      </View>
-                    ) : (
-                      <View style={[styles.stepIndicatorText, {
-                        backgroundColor: positionStep() > i ? Colors.primaryColor : Colors.textSecundary,
-                      }]} />
-                    )
-                  }
-                </View>
-                <View style={styles.step}>
-                  <Text style={styles.name} >{step.name}</Text>
-                </View>
-              </View>
-
-
-              {
-                positionStep() == (i + 1) && (
-                  <View
-                    style={styles.borderBottom }
-                  />
-                )
-              } */}
-
+            
             </View>
 
           ))}
@@ -306,17 +244,17 @@ export const SeguimientoScreen = ({ route }) => {
 
 
 const styles = StyleSheet.create({
-  borderBottom:{
-    borderBottomWidth:3,
-    borderBottomColor:'#5B21FF',
-  
-    zIndex:1,
-    width:deviceWidth,
-    position:'absolute',
+  borderBottom: {
+    borderBottomWidth: 3,
+    borderBottomColor: '#5B21FF',
+
+    zIndex: 1,
+    width: deviceWidth,
+    position: 'absolute',
     // bottom:0,
-    left:-25,
-    top:39
-   },
+    left: -25,
+    top: 39
+  },
   stepLineContainer: {
 
     width: 50,

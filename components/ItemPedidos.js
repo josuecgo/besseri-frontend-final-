@@ -10,9 +10,9 @@ import { CUSTOMER_HOME_SCREEN_ROUTES } from '../util/constants';
 
 export const ItemPedidos = ({ item,navigation }) => {
 
-  if (item.type === 'refaccion') {
-    console.log(item.ordered_on);
-  }
+  // if (item.type === 'refaccion') {
+  //   console.log(item.ordered_on);
+  // }
   const goDetalle = (data) => {
     navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.DETALLE,data)
   }
@@ -82,7 +82,31 @@ export const ItemPedidos = ({ item,navigation }) => {
         }
         {
           item.type === 'lavado' && (
-            <Text>lavado</Text>
+            <VStack space={2} >
+            <HStack justifyContent={'space-between'} >
+              <Box backgroundColor={Colors.bgColor} rounded={'lg'} py={'8px'} px={'5px'} width={'40%'} alignItems={'center'} >
+                <Text style={styles.type} >{item.type}</Text>
+              </Box>
+
+              <Text style={styles.plan} >{item?.serviceId?.type_services?.name} </Text>
+            </HStack>
+            <AddressFormatted address={item?.businessId?.location?.formatted_address} color={Colors.bgColor} />
+            <HStack space={12} >
+              <VStack>
+                <Text style={styles.txt} >Dia:</Text>
+                <Text style={styles.txt}>Hora:</Text>
+              </VStack>
+              <VStack>
+
+                <Text style={styles.txt}>{moment(item.startDate).format('DD')} de {moment(item.startDate).format('MMMM')} del {moment(item.startDate).format('YYYY')} </Text>
+                <Text style={styles.txt}>{moment(item.startDate).format('HH:mm')}</Text>
+              </VStack>
+
+            </HStack>
+
+
+
+          </VStack>
           )
         }
       </TouchableOpacity>

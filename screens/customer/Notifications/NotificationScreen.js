@@ -78,7 +78,8 @@ export const NotificationScreen = (props) => {
     return (
       <Box py={'2'} >
       <Pressable onPress={() => orderDetail(item?.body,item)}>
-        <Box pl="4" pr="5" py="2">
+        <Box flexDirection={'row'} alignItems={'center'}  pl="4" pr="5" py="2">
+          {/* <MaterialCommunityIcons name='bell' color={Colors.white} size={20} /> */}
           <Text style={CommonStyles.h2} bold>
           {item.titulo}
           </Text>

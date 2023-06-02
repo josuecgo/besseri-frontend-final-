@@ -10,7 +10,7 @@ import { ItemServiceDetail } from '../../../components/Services/ItemServiceDetai
 
 export const ServiceDetailsScreen = ({ route, navigation }) => {
 
-  const { service, address, car } = route.params;
+  const { service, address, car,type } = route.params;
  
   return (
     <View style={styles.container} >
@@ -41,7 +41,8 @@ export const ServiceDetailsScreen = ({ route, navigation }) => {
           onPress={() => navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.APPOINTMENT_SERVICES, {
             service: service,
             address,
-            car
+            car,
+            type
           })}
         />
 

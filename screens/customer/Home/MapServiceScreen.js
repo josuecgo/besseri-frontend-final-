@@ -88,7 +88,8 @@ export const MapServiceScreen = (props) => {
     props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.DETAILS_SERVICES, {
       service: item,
       address: findAddres,
-      car: carActive
+      car: carActive,
+      type:'servicio'
     })
   }
 

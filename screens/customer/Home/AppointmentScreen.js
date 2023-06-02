@@ -16,7 +16,7 @@ import Colors from '../../../util/styles/colors';
 
 
 export const AppointmentScreen = (props) => {
-  const { service, car, address } = props.route.params;
+  const { service, car, address,type } = props.route.params;
   const [daySelected, setDaySelected] = useState('');
   const [hourSelected, setHourSelected] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
@@ -76,7 +76,8 @@ export const AppointmentScreen = (props) => {
       startDate: startDate.tz('America/Mexico_City'),
       endDate: endDate.tz('America/Mexico_City'),
       car,
-      address
+      address,
+      type
     }
     
     

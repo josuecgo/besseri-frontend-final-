@@ -17,7 +17,7 @@ export const DetalleScreen = ({ route,navigation }) => {
 
   const data = route.params;
 
-  console.log(data);
+ 
   const goSeguimiento = () => {
     // 
     let status;

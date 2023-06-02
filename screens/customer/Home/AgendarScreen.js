@@ -19,10 +19,12 @@ export const AgendarScreen = (props) => {
   const {
     booked_by_id, serviceId,
     businessId, startDate,
-    endDate, car, address
+    endDate, car, address,type
   } = props.route.params.data;
   const [showModal, setShowModal] = useState(false)
   const [fetchLoading, setFetchLoading] = useState(false)
+  
+  
   const agendarCita = async () => {
     try {
       if (fetchLoading) {
@@ -37,7 +39,8 @@ export const AgendarScreen = (props) => {
         startDate,
         endDate,
         car,
-        address: address._id
+        address: address._id,
+        type
       }
       const apiCall = await axios.post(customer_api_urls.book_service, data)
       setFetchLoading(false)
@@ -50,7 +53,7 @@ export const AgendarScreen = (props) => {
 
     } catch (error) {
       setFetchLoading(false)
-
+      
       showToaster('Error con el servidor')
 
 
@@ -114,10 +117,10 @@ export const AgendarScreen = (props) => {
       >
         <Box backgroundColor={Colors.bgColor} rounded={'md'} padding={5} m={5} >
           <Center mb={'30px'} >
-            <Text style={{...CommonStyles.h2,textTransform:'uppercase' }} >Pago realizado</Text>
+            <Text style={{...CommonStyles.h2,textTransform:'uppercase' }} >Reservacion exitosa</Text>
           </Center>
           <Center mb={'30px'} >
-            <Text style={{...CommonStyles.h5,textTransform:'uppercase' }} >Tu pago ha sido realizado con éxito.
+            <Text style={{...CommonStyles.h5,textTransform:'uppercase' }} >Pronto uno de nuestros valets recogera tu vehiculo.
               Revisa en tu zona de pedidos 
             </Text>
           </Center>

@@ -81,7 +81,7 @@ export const LavadoMaps = (props) => {
       }
       );
 
-     
+      
       setStores(apiCall?.data?.data)
     } catch (error) {
 
@@ -96,7 +96,8 @@ export const LavadoMaps = (props) => {
     props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.DETAILS_SERVICES, {
       service: item,
       address: findAddres,
-      car: carActive
+      car: carActive,
+      type:'lavado'
     })
   }
 
