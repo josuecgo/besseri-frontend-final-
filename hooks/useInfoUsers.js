@@ -113,7 +113,9 @@ export const useInfoUser = (  ) => {
   const getNotificaciones = async() => {
     try {
         const id = await getUserId();
-        
+        if (!id) {
+          return
+        }
         const url = `${api_urls.getNotification}/${id}`;
 
         const apiCall = await axios.get(url);
@@ -124,7 +126,7 @@ export const useInfoUser = (  ) => {
        
     } catch (e) {
         // console.log({ eaAndData: e })
-        showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
+        showToaster('Algo salió mal. Por favor, vuelva a intentarlo - N')
     }
 }
 

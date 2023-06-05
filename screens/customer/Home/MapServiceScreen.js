@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { api_statuses, customer_api_urls } from '../../../util/api/api_essentials';
 import { getUserId } from '../../../util/local-storage/auth_service';
 
-import { BOTTOM_TAB_CUSTOMER_ROUTES, CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constants';
+import { BOTTOM_TAB_CUSTOMER_ROUTES, CUSTOMER_HOME_SCREEN_ROUTES, showAlertLogin, showToaster } from '../../../util/constants';
 import axios from 'axios';
 import { CheckIcon, HStack, Heading, Image, Select, VStack } from 'native-base';
 import { ServiceSkeleton } from '../../../components/Services/ServiceSkeleton';
@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 import Colors from '../../../util/styles/colors';
 import CommonStyles from '../../../util/styles/styles';
 import { deviceWidth } from '../../../util/Dimentions';
+import { MAIN_ROUTES } from '../../../util/constants';
 
 
 
@@ -30,6 +31,10 @@ export const MapServiceScreen = (props) => {
     try {
 
       const userId = await getUserId();
+      if (!userId) {
+        showAlertLogin(goLogin,goCancel)
+        return
+      }
       const apiCall = await axios.get(`${customer_api_urls.get_addresses}/${userId}`);
 
 
@@ -75,7 +80,7 @@ export const MapServiceScreen = (props) => {
     try {
 
       const apiCall = await axios.post(`${customer_api_urls.get_stores_type_services}/${type}`, { addresses, carActive });
-
+      
       setStores(apiCall?.data?.data)
     } catch (error) {
 
@@ -93,14 +98,27 @@ export const MapServiceScreen = (props) => {
     })
   }
 
-  const changeCar = () => {
-
+  const changeCar = async() => {
+    const id = await getUserId();
+    if (!id) {
+      showAlertLogin(goLogin,goCancel)
+      return
+    }
     props.navigation.navigate(BOTTOM_TAB_CUSTOMER_ROUTES.ACCOUNT, { screen: CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_MY_CARS })
   }
 
   const handleAddress = (address) => {
 
     setDefaultAddress(address)
+  }
+
+  const goLogin = () => {
+    props.navigation.navigate(MAIN_ROUTES.AUTH_STACK)
+
+  }
+
+  const goCancel = () => {
+    props.navigation.goBack()
   }
 
 
@@ -111,9 +129,9 @@ export const MapServiceScreen = (props) => {
   }, [])
 
   useEffect(() => {
-    if (addresses) {
-      getStoreService()
-    }
+    
+    getStoreService()
+    
   }, [defaultAddress, carActive])
 
 

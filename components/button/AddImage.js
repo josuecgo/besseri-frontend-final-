@@ -18,7 +18,7 @@ export const AddImage = ({logo,setLogo}) => {
           
           setLogo(res);
         }).catch(e => {
-          showToaster('Algo salio mal')
+          showToaster('Algo salio mal, image not found')
         })
     }
     

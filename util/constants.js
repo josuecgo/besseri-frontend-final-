@@ -259,12 +259,12 @@ export const showToasterError = (message) => {
 }
 
 
-export const showAlertLogin = (goLogin) => {
+export const showAlertLogin = (goLogin,goCancel = () => {} ) => {
  
   Alert.alert('Necesitas iniciar sesion!', 'Registrate o inicia sesion', [
     {
-      text: 'Cancel',
-      onPress: () => {},
+      text: 'Cancelar',
+      onPress: () => {goCancel ()},
       style: 'cancel',
     },
     {text: 'Iniciar', onPress: () => goLogin()},

@@ -55,7 +55,7 @@ export const SelectAddress = ({address,navigation}) => {
     } catch(e) {
       
       
-      showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
+      showToaster('Algo salió mal. Por favor, vuelva a intentarlo - Address');
     //  console.log(e?.response?.data)
     }
   }
