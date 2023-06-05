@@ -115,8 +115,7 @@ const HomeStoreScreen = React.memo((props) => {
 
 
  
-  
-
+    
 
   return (
     <View style={{ ...CommonStyles.flexOne, backgroundColor: Colors.bgColor }}>

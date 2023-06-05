@@ -57,12 +57,8 @@ export const ProductProvider = ({ children }) => {
     const getCategorias = async () => {
         try {
            
-           
-
-
             const apiCall = await axios.get(customer_api_urls.get_products);
-
-
+           
             if (apiCall?.data?.data?.categories.length > 0) {
                 let cate = apiCall?.data?.data?.categories[0]
 
@@ -117,10 +113,10 @@ export const ProductProvider = ({ children }) => {
             const apiCall = await axios.post(
                 `${customer_api_urls.get_category_products}/${category._id}`, { carActive }
             );
-
+            console.log(apiCall.data.data,'sss');
             if (apiCall?.status === 200) {
 
-              
+              console.log(apiCall.data.data,'sss');
                 await dispatch({
                     type: 'getProductos',
                     payload: {
@@ -143,7 +139,7 @@ export const ProductProvider = ({ children }) => {
             }
             
         } catch (e) {
-             console.log("🚀 ~ file: ProductContext.js:146 ~ getProducts ~ e:", e)
+          
              dispatch({
                 type: 'isLoading',
                 payload: {
@@ -541,7 +537,11 @@ export const ProductProvider = ({ children }) => {
 
     useEffect(() => {
         getComision()
+        getCategorias()
     }, []);
+
+  
+    
 
     return (
         <ProductContext.Provider
