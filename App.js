@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useContext } from 'react';
-import { StatusBar,useColorScheme } from 'react-native';
+import { SafeAreaView, StatusBar,useColorScheme } from 'react-native';
 
 import { KeysStripe, ROLES } from './util/constants';
 import { NavigationContainer } from '@react-navigation/native';
@@ -65,7 +65,10 @@ const App = () => {
           <ProductProvider>
             <ChatProvider>
               <NativeBaseProvider theme={customTheme} >
-                <App2/>
+                
+                   <App2/>
+               
+               
               </NativeBaseProvider>
             </ChatProvider>
           </ProductProvider>

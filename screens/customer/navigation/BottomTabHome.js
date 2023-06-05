@@ -194,6 +194,7 @@ export const CustomerAccountStack = () => {
           header: props => (
             <CustomHeaderComponent {...props} name="Home" />
           ),
+          
         }}
       />
 

@@ -263,7 +263,7 @@ const CustomerSignUpScreen = ({ navigation }) => {
 
 
 
-<TouchableOpacity onPress={goPoliticas} >
+<TouchableOpacity onPress={() => navigation.goBack()} >
   <HStack justifyContent={'center'} >
     <Text style={{ ...CommonStyles.h2 }} >¿Ya tienes una cuenta? {' '}</Text>
     <Text style={[CommonStyles.h2, { color: Colors.primaryColor }]}>INGRESA</Text>

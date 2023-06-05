@@ -114,7 +114,7 @@ const HeaderStore = (props) => {
 
       </View>
       <View style={styles.top}>
-        {/* <CarDefault/> */}
+        
       </View>
     </>
   );
@@ -123,17 +123,13 @@ const HeaderStore = (props) => {
 const styles = StyleSheet.create({
   header: {
     width: deviceWidth,
-    height: Platform.OS == 'ios' ? deviceHeight * 0.16 : deviceHeight * 0.10,
-
-    // padding: 10,
-    // borderWidth: 1,
-    // borderColor: Colors.primaryColor,
-    // backgroundColor: Colors.primaryColor,
-    // ...CommonStyles.horizontalCenter,
+    height: Platform.OS == 'ios' ? deviceHeight * 0.13 : deviceHeight * 0.10,
     paddingHorizontal: 15,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    backgroundColor:Colors.bgColor,
+    paddingTop:15
   },
   titulo: {
 

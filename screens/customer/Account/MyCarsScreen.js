@@ -52,6 +52,7 @@ export const MyCarsScreen = ({ navigation }) => {
 
 
       showAlertLogin(goLogin)
+      return
     }
     setShowModal(true)
 

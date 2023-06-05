@@ -165,8 +165,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5
   },
   garage: {
-    backgroundColor: Colors.bgColor,
-    flex: 1
+   ...CommonStyles.screenY
   },
   titulo: {
     color: Colors.white,

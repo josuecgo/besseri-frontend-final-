@@ -1,12 +1,16 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import Colors from './colors';
 import { adjust } from '../Dimentions';
+
+
 
 const CommonStyles = StyleSheet.create({
   screenY:{
     backgroundColor:Colors.bgColor,
     flex:1,
-    paddingVertical:20
+    paddingVertical:30,
+    
+
 
   },
   screenWhiteY:{
@@ -25,13 +29,13 @@ const CommonStyles = StyleSheet.create({
   h1:{
     fontWeight:'700',
     fontFamily:'Arial',
-    fontSize:adjust(20),
+    fontSize:adjust(19),
     color:Colors.white
   },
   h2:{
     fontWeight:'700',
     fontFamily:'Arial',
-    fontSize:adjust(14),
+    fontSize:adjust(13),
     color:Colors.white
   },
   h3:{
@@ -43,7 +47,7 @@ const CommonStyles = StyleSheet.create({
   h4:{
     fontWeight:'bold',
     fontFamily:'Arial',
-    fontSize:adjust(18),
+    fontSize:adjust(17),
     color:Colors.white
   },
   h5:{

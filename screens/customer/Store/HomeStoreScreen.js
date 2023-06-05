@@ -118,7 +118,10 @@ const HomeStoreScreen = React.memo((props) => {
     
 
   return (
-    <View style={{ ...CommonStyles.flexOne, backgroundColor: Colors.bgColor }}>
+    <View style={{ 
+      ...CommonStyles.flexOne, 
+      backgroundColor: Colors.white 
+      }}>
 
 
 
@@ -131,7 +134,7 @@ const HomeStoreScreen = React.memo((props) => {
         <View style={{
           // paddingVertical: 5,
           backgroundColor: 'transparent',
-          paddingVertical:10
+          paddingVertical:0
           // alignSelf: 'flex-start', flexDirection: 'row' ,
 
         }}>
