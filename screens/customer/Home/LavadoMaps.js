@@ -29,6 +29,11 @@ export const LavadoMaps = (props) => {
     try {
 
       const userId = await getUserId();
+      if (!userId) {
+        setAddresses([{...address,_id:1}])
+        setDefaultAddress({_id:1})
+        return
+      }
       const apiCall = await axios.get(`${customer_api_urls.get_addresses}/${userId}`);
 
 
@@ -52,7 +57,7 @@ export const LavadoMaps = (props) => {
       }
 
     } catch (e) {
-      console.log(e);
+     
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 2')
     }
   }
@@ -124,8 +129,7 @@ export const LavadoMaps = (props) => {
     }
   }, [defaultAddress, carActive])
 
-
-
+ 
   if (!addresses) return <ServiceSkeleton />
 
   return (

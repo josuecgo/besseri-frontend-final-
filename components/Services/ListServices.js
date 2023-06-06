@@ -5,13 +5,14 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { moneda } from '../../util/Moneda';
 import { CardService } from './CardService';
 import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants';
+import { Empty } from '../Customer/Empty';
 
 
 
 export const ListServices = ({ services,goService }) => {
  
 
-
+  
   return (
     <View style={styles.list} >
       <FlatList
@@ -27,6 +28,7 @@ export const ListServices = ({ services,goService }) => {
         )}
         key={(item) => item._id}
         ListFooterComponent={() => <View style={{width:100,height:200}} />}
+        ListEmptyComponent={() => <Empty/> }
       />
     </View>
   )

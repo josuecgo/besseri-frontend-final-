@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View } from 'react-native'
+import { KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { InputMaps } from '../../../components/input-field/InputMaps'
 
@@ -323,7 +323,7 @@ export const SearchAddressScreen = (props) => {
 
   return (
     <View style={styles.search} >
-     
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
      
       <ScrollView contentContainerStyle={{justifyContent:'space-around'}} >
       <AddressHeader />
@@ -412,7 +412,7 @@ export const SearchAddressScreen = (props) => {
         )
       }
 
-
+</KeyboardAvoidingView>
     </View>
   )
 }

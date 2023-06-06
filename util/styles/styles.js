@@ -29,25 +29,25 @@ const CommonStyles = StyleSheet.create({
   h1:{
     fontWeight:'700',
     fontFamily:'Arial',
-    fontSize:adjust(19),
+    fontSize:adjust(18),
     color:Colors.white
   },
   h2:{
     fontWeight:'700',
     fontFamily:'Arial',
-    fontSize:adjust(13),
+    fontSize:adjust(12),
     color:Colors.white
   },
   h3:{
     fontWeight:'700',
     fontFamily:'Arial',
-    fontSize:adjust(12),
+    fontSize:adjust(10),
     color:Colors.white
   },
   h4:{
     fontWeight:'bold',
     fontFamily:'Arial',
-    fontSize:adjust(17),
+    fontSize:adjust(16),
     color:Colors.white
   },
   h5:{
