@@ -1,8 +1,8 @@
 export const env = 'prod';
 
-// export const base_url = env == 'prod' ? 'https://api.besseri.mx' : env == 'dev' ?  'http://192.168.1.19:5001' : 'https://besser-api-developer.up.railway.app';
+export const base_url = env == 'prod' ? 'https://api.besseri.mx' : env == 'dev' ?  'http://192.168.1.19:5001' : 'https://besser-api-developer.up.railway.app';
 // export const base_url = false ? 'http://192.168.100.72:3005' : 'http://192.168.1.17:3005'
-export const base_url = 'http://192.168.1.11:3005'
+
 export const api_urls = {
     registration:`${base_url}/user/signup`,
     login:`${base_url}/user/login`,
