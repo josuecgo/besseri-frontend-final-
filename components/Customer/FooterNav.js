@@ -37,7 +37,7 @@ export const FooterNav = ({state,navigation}) => {
   }
 
   return (
-    <HStack style={styles.footer}>
+    <HStack style={[styles.footer,{paddingBottom:bottom}]}>
     {state.routes.map((route, index) => {
         
         // Quita el bottom Tab

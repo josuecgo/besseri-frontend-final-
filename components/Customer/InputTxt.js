@@ -1,12 +1,12 @@
-import { View, Text } from 'react-native'
+import { View, Text, Platform } from 'react-native'
 import React from 'react'
 import { Input } from 'native-base'
 import Colors from '../../util/styles/colors'
 import CommonStyles from '../../util/styles/styles'
 
-export const InputTxt = ({onChangeText,keyboardType,value,placeholderText,secureTextEntry =false,label}) => {
+export const InputTxt = ({onChangeText,keyboardType,value,placeholderText,secureTextEntry =false,label,autoCapitalize='words'}) => {
   return (
-    <View style={{marginVertical:10}} >
+    <View style={{marginVertical:10}}  >
       <Text style={{...CommonStyles.h2}} >{label} </Text>
       <Input
         backgroundColor={Colors.bgInput}
@@ -21,7 +21,8 @@ export const InputTxt = ({onChangeText,keyboardType,value,placeholderText,secure
         placeholder={placeholderText}
         secureTextEntry={secureTextEntry}
         mt={'13px'}
-        // height={'42px'}
+        size={Platform.OS === 'ios' ? '2xl' : 'lg'}
+        autoCapitalize={autoCapitalize}
       />
     </View>
   )

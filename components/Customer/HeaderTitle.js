@@ -7,15 +7,16 @@ import { HeaderBackground } from '../Background/HeaderBackground'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Divider, HStack } from 'native-base'
 import { NewLogo } from '../NewLogo'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 
 export const HeaderTitle = ({ nav, titulo, iconName = 'keyboard-backspace', tienda=false }) => {
-
+  const { top } = useSafeAreaInsets()
 
   return (
     <>
       <HeaderBackground />
-      <View style={styles.header}>
+      <View style={[styles.header,{paddingTop:top}]}>
         <HStack space={4} alignItems={'center'} >
           {
             nav && (
@@ -58,8 +59,8 @@ export const HeaderTitle = ({ nav, titulo, iconName = 'keyboard-backspace', tien
 const styles = StyleSheet.create({
   header: {
     width: '100%',
-    height: Platform.OS == 'ios' ? deviceHeight * 0.12 : deviceHeight * 0.10,
-    paddingHorizontal: 10,
+    // height: Platform.OS == 'ios' ? deviceHeight * 0.12 : deviceHeight * 0.10,
+    padding: 10,
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row'

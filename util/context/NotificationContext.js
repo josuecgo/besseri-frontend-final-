@@ -38,8 +38,6 @@ export const NotificationContext = createContext({});
 export const NotificationProvider = ({children}) => {
     const [state, dispatch] = useReducer(notificationReducer, authInicialState);
     const [count, setCount] = useState(0);
-    const [countRider, setCountRider] = useState(0);
-    const [countCustomer, setCountCustomer] = useState(0);
     const [notificaciones, setNotificaciones] = useState([])
     const {getNotificaciones} = useInfoUser()
     const firebaseConfig = {

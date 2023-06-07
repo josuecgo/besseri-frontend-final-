@@ -54,12 +54,8 @@ const CustomerSignUpScreen = ({ navigation }) => {
   });
   const [isSelected, setIsSelected] = useState(false);
   const [showPass, setShowPass] = useState(true);
-  const [showPass2, setShowPass2] = useState(true);
-  const lastnameRef = useRef();
-  const emailAddressRef = useRef();
   const phoneNumberRef = useRef();
-  const passwordRef = useRef();
-  const passwordConfirmRef = useRef();
+
 
   const onChangeText = (inputText, key) => {
     setUserCredentials({
@@ -99,7 +95,7 @@ const CustomerSignUpScreen = ({ navigation }) => {
     } catch (e) {
       // console.log(e)
       // console.log(e.response.data)
-      
+
       showToaster(e.response.data.message)
       setShowLoader(false);
     }
@@ -109,13 +105,13 @@ const CustomerSignUpScreen = ({ navigation }) => {
     let validPhone = userCredentials[CREDENTIAL_KEYS.PHONE_NUMBER].length > 9
     // let validName = userCredentials[CREDENTIAL_KEYS.FULL_NAME].length > 0 && userCredentials[CREDENTIAL_KEYS.LASTNAME].length > 0
     // let valid = comparaText(userCredentials[CREDENTIAL_KEYS.CONFIRMPASSWORD], userCredentials[CREDENTIAL_KEYS.PASSWORD]) && userCredentials[CREDENTIAL_KEYS.PASSWORD].length > 0;
-    
-   
+
+
     if (!validPhone) {
       showToaster('Introduce un numero correcto');
       return
     }
-    
+
     if (true) {
       if (isSelected) {
         Alert.alert(
@@ -181,11 +177,11 @@ const CustomerSignUpScreen = ({ navigation }) => {
         source={require('../assets/images/car_fondo.png')}
         style={[styles.content]}
       >
-        <VStack space={4} style={{height:deviceHeight * 0.85}} >
+        <VStack space={12}  >
           <LoaderComponent isVisible={showLoader} />
 
           <View style={styles.logoContent} >
-            <NewLogo width={deviceWidth} />
+            <NewLogo width={deviceWidth * 0.3} height={deviceWidth * 0.12} />
           </View>
 
 
@@ -214,11 +210,11 @@ const CustomerSignUpScreen = ({ navigation }) => {
                 placeholderText={CREDENTIAL_KEYS.PASSWORD}
                 secureTextEntry={showPass}
                 value={userCredentials[CREDENTIAL_KEYS.PASSWORD]}
-                // ref={passwordRef}
+              // ref={passwordRef}
               />
               <InputTxt
                 label={CREDENTIAL_KEYS.PHONE_NUMBER}
-               
+
                 keyboardType={KEYBOARD_TYPES.PHONE_PAD}
                 onChangeText={inputText => {
                   onChangeText(inputText, CREDENTIAL_KEYS.PHONE_NUMBER);
@@ -226,7 +222,7 @@ const CustomerSignUpScreen = ({ navigation }) => {
                 placeholderText={CREDENTIAL_KEYS.PHONE_NUMBER}
                 secureTextEntry={false}
                 value={userCredentials[CREDENTIAL_KEYS.PHONE_NUMBER]}
-                // ref={phoneNumberRef}
+              // ref={phoneNumberRef}
 
               />
             </VStack>
@@ -249,33 +245,31 @@ const CustomerSignUpScreen = ({ navigation }) => {
               </TouchableOpacity>
 
             </Center>
-  {/* <ButtonComponent
+            {/* <ButtonComponent
     marginTop={SCREEN_HORIZONTAL_MARGIN}
     colorB={Colors.terciarySolid}
     buttonText="CREAR CUENTA"
     handlePress={generateOtp}
     width={200}
   />  */}
-          
+
 
           </View>
+
           <View>
+            <TouchableOpacity onPress={() => navigation.goBack()} >
+              <HStack justifyContent={'center'} >
+                <Text style={{ ...CommonStyles.h2 }} >¿Ya tienes una cuenta? {' '}</Text>
+                <Text style={[CommonStyles.h2, { color: Colors.primaryColor }]}>INGRESA</Text>
+              </HStack>
 
+            </TouchableOpacity>
 
-
-<TouchableOpacity onPress={() => navigation.goBack()} >
-  <HStack justifyContent={'center'} >
-    <Text style={{ ...CommonStyles.h2 }} >¿Ya tienes una cuenta? {' '}</Text>
-    <Text style={[CommonStyles.h2, { color: Colors.primaryColor }]}>INGRESA</Text>
-  </HStack>
-
-</TouchableOpacity>
-
-<BtnPrincipal
-  text={'Crear perfil'}
-  onPress={generateOtp}
-/>
-</View>
+            <BtnPrincipal
+              text={'Crear perfil'}
+              onPress={generateOtp}
+            />
+          </View>
         </VStack>
 
       </ImageBackground>
@@ -289,22 +283,22 @@ export default CustomerSignUpScreen;
 
 const styles = StyleSheet.create({
   body: {
-    // paddingVertical: deviceHeight * 0.10,
-    // marginHorizontal:10
-    justifyContent:'space-around',
-    flex:1,
-   
+
+    // justifyContent:'space-around',
+    flex: 1,
+
   },
   logoContent: {
-   
+    justifyContent: 'center',
+    alignItems: 'center',
     // marginBottom: 0,
-    // marginTop:20
+    marginTop: 5
     // marginTop: 15
   },
   content: {
     flex: 1,
     resizeMode: 'contain',
-    justifyContent:'space-around',
+    justifyContent: 'space-around',
     // borderWidth:3,borderColor:'red',
     // height:deviceHeight * 0.9
   },

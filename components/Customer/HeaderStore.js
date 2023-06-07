@@ -18,12 +18,13 @@ import { getUserId } from '../../util/local-storage/auth_service';
 
 
 import { HStack, Image } from 'native-base';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
 
 
 const HeaderStore = (props) => {
-
+  const {top} = useSafeAreaInsets()
   const cart_items = useSelector(state => state.cart.cart_items);
  
   let screenName = props?.titulo;
@@ -39,25 +40,10 @@ const HeaderStore = (props) => {
 
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   return (
     <>
       <HeaderBackground />
-      <View style={[styles.header]}>
+      <View style={[styles.header,{paddingTop:top + 10,paddingBottom:10}]}>
         <HStack alignItems={'center'} space={3}>
           <Pressable
             onPress={() => {
@@ -123,13 +109,13 @@ const HeaderStore = (props) => {
 const styles = StyleSheet.create({
   header: {
     width: deviceWidth,
-    height: Platform.OS == 'ios' ? deviceHeight * 0.13 : deviceHeight * 0.10,
+    // height: Platform.OS == 'ios' ? deviceHeight * 0.13 : deviceHeight * 0.10,
     paddingHorizontal: 15,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor:Colors.bgColor,
-    paddingTop:15
+    
   },
   titulo: {
 

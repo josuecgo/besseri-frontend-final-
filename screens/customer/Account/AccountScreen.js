@@ -4,17 +4,17 @@ import Colors from '../../../util/styles/colors'
 import { MyCarActive } from '../../../components/Customer/MyCarActive'
 import { BackgroundCar } from '../../../components/Background/BackgroundCar'
 import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal'
-import { BOTTOM_TAB_CUSTOMER_ROUTES, CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constants'
+import {  CUSTOMER_HOME_SCREEN_ROUTES } from '../../../util/constants'
 import { logout } from '../../../util/local-storage/auth_service'
-import { useContext } from 'react'
-import { NotificationContext } from '../../../util/context/NotificationContext'
+
 import { useSelector } from 'react-redux'
+import { useInfoUser } from '../../../hooks/useInfoUsers'
 
 export const AccountScreen = (props) => {
-  const {getNotificaciones} = useContext(NotificationContext);
+  const {getNotificaciones} = useInfoUser()
   const {user} = useSelector(state => state.user)
 
-  
+ 
   const loginLogout = async() => {
     // console.log(!user);
     if (user) {
