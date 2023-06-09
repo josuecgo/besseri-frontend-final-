@@ -29,7 +29,7 @@ import { HeaderTitle } from '../components/Customer/HeaderTitle';
 import { NewLogo } from '../components/NewLogo';
 import { InputTxt } from '../components/Customer/InputTxt';
 import { BtnPrincipal } from '../components/Customer/BtnPrincipal';
-import { Center } from 'native-base';
+import { Center, VStack } from 'native-base';
 import { useInfoUser } from '../hooks/useInfoUsers';
 import { addToUser } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 
@@ -40,7 +40,7 @@ const CREDENTIAL_KEYS = {
 };
 
 const LoginScreen = ({ navigation }) => {
-  const {getUserInfo,getPedidosUser} = useInfoUser()
+  const { getUserInfo, getPedidosUser } = useInfoUser()
   const dispatch = useDispatch()
   const [userCredentials, setUserCredentials] = useState({
     [CREDENTIAL_KEYS.EMAIL_ADDRESS]: '',
@@ -48,7 +48,7 @@ const LoginScreen = ({ navigation }) => {
   });
   const [showLoader, setShowLoader] = useState(false);
 
-  const passwordRef = useRef();
+
 
   const onChangeText = (inputText, key) => {
     setUserCredentials({
@@ -76,12 +76,12 @@ const LoginScreen = ({ navigation }) => {
         return;
       }
 
-     
+
 
       if (apiCall.status == api_statuses.success) {
-        const {user,garage,address} = apiCall?.data?.data;
+        const { user, garage, address } = apiCall?.data?.data;
         setShowLoader(false);
-        
+
         if (user.isCommonUser) {
 
           await saveUserId(user?._id);
@@ -103,159 +103,79 @@ const LoginScreen = ({ navigation }) => {
       }
 
     } catch (e) {
-     
+
       // console.log(e);
       setShowLoader(false);
       showToaster('Error con el servidor.')
     }
   };
 
-  const goHome = () => {
-    navigation.goBack();
-  }
 
   return (
     <CustomSafeAreaViewComponent>
       <Loader isVisible={showLoader} />
-      {/* <TopCircleComponent textHeading="Iniciar Sesión" /> */}
+      <VStack>
+        <ImageBackground
+          source={require('../assets/images/car_fondo.png')}
+          style={[styles.content]}
+        >
+          <Text style={{ ...CommonStyles.h1 }} >Iniciar sesión</Text>
+          <InputTxt
+            label={CREDENTIAL_KEYS.EMAIL_ADDRESS}
 
-      <HeaderTitle titulo={'Iniciar Sesión'} nav={goHome} />
-      <View style={styles.logoContent} >
-        <NewLogo width={deviceWidth} />
-      </View>
+            keyboardType={KEYBOARD_TYPES.EMAIL_ADDRESS}
+            onChangeText={inputText => {
+              onChangeText(inputText, CREDENTIAL_KEYS.EMAIL_ADDRESS);
+            }}
+            placeholderText={CREDENTIAL_KEYS.EMAIL_ADDRESS}
+            value={userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS]}
+            secureTextEntry={false}
+            autoCapitalize="none"
+            returnType="next"
+            // validator={emailValidator}
+            hintText="Por favor ingresa un correo valido"
+          />
+          <InputTxt
+            label={CREDENTIAL_KEYS.PASSWORD}
+            // placeholderText={'Contraseña'}
+            keyboardType={KEYBOARD_TYPES.DEFAULT}
+            secureTextEntry={true}
+            onChangeText={inputText => {
+              onChangeText(inputText, CREDENTIAL_KEYS.PASSWORD);
+            }}
+            placeholderText={CREDENTIAL_KEYS.PASSWORD}
+            value={userCredentials[CREDENTIAL_KEYS.PASSWORD]}
+            returnType="default"
+            validator={generalNonEmptyValidator}
+            hintText="Por favor ingresa una contraseña valida"
+          />
+          
+        </ImageBackground>
 
-      <ImageBackground
-        source={require('../assets/images/car_fondo.png')}
-        style={[styles.content]}
-      >
-        <Text style={{ ...CommonStyles.h1 }} >Iniciar sesión</Text>
-        <InputTxt
-          label={CREDENTIAL_KEYS.EMAIL_ADDRESS}
-         
-          keyboardType={KEYBOARD_TYPES.EMAIL_ADDRESS}
-          onChangeText={inputText => {
-            onChangeText(inputText, CREDENTIAL_KEYS.EMAIL_ADDRESS);
-          }}
-          placeholderText={CREDENTIAL_KEYS.EMAIL_ADDRESS}
-          value={userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS]}
-          secureTextEntry={false}
-          autoCapitalize="none"
-          returnType="next"
-          // validator={emailValidator}
-          hintText="Por favor ingresa un correo valido"
-        />
-        <InputTxt
-          label={CREDENTIAL_KEYS.PASSWORD}
-          // placeholderText={'Contraseña'}
-          keyboardType={KEYBOARD_TYPES.DEFAULT}
-          secureTextEntry={true}
-          onChangeText={inputText => {
-            onChangeText(inputText, CREDENTIAL_KEYS.PASSWORD);
-          }}
-          placeholderText={CREDENTIAL_KEYS.PASSWORD}
-          value={userCredentials[CREDENTIAL_KEYS.PASSWORD]}
-          returnType="default"
-          validator={generalNonEmptyValidator}
-          hintText="Por favor ingresa una contraseña valida"
-        />
-        {/* <View style={styles.card} >
-
-
-          <View style={CommonStyles.flexCenter}>
-            <InputFieldComponent
-              icon={
-                <MaterialIcons
-                  color={Colors.dark}
-                  size={24}
-                  name="alternate-email"
-                />
-              }
-              keyboardType={KEYBOARD_TYPES.EMAIL_ADDRESS}
-              onChangeText={inputText => {
-                onChangeText(inputText, CREDENTIAL_KEYS.EMAIL_ADDRESS);
-              }}
-              placeholderText={CREDENTIAL_KEYS.EMAIL_ADDRESS}
-              value={userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS]}
-              secureTextEntry={false}
-              nextFieldRef={passwordRef}
-              returnType="next"
-              validator={emailValidator}
-              hintText="Por favor ingresa un correo valido"
-            />
-            <InputFieldComponent
-              icon={
-                <MaterialCommunityIcons
-                  name="key-variant"
-                  color={Colors.dark}
-                  size={24}
-                />
-              }
-              keyboardType={KEYBOARD_TYPES.DEFAULT}
-              onChangeText={inputText => {
-                onChangeText(inputText, CREDENTIAL_KEYS.PASSWORD);
-              }}
-              placeholderText={CREDENTIAL_KEYS.PASSWORD}
-              value={userCredentials[CREDENTIAL_KEYS.PASSWORD]}
-              secureTextEntry={true}
-              ref={passwordRef}
-              returnType="default"
-              validator={generalNonEmptyValidator}
-              hintText="Por favor ingresa una contraseña valida"
-            />
-
-            <View style={{ alignSelf: 'flex-end' }} >
-              <SideOptionComponent
-                text="¿Olvidaste tu contraseña?"
-                textAlign="right"
-                navigation={navigation}
-                keyToRoute={LOGIN_SIGNUP_FORGOT_ROUTES.FORGOT_PASSWORD}
-              />
-            </View>
-
-            <ButtonComponent
-              width={160}
-              marginTop={20}
-              colorB={Colors.terciarySolid}
-              buttonText="INICIAR SESIÓN"
-              handlePress={handleSignIn}
-            />
-          </View>
-          <BottomContentComponent>
-            <Text style={[CommonStyles.fontFamily]}>
-              <Text>¿No tienes una cuenta? </Text>
+        <BottomContentComponent>
+          <Center>
+            <Text style={[CommonStyles.h2]}>
+              <Text style={[CommonStyles.h2]} >¿Ya tienes una cuenta? </Text>
               <Text
+
                 onPress={() => {
                   navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.CUSTOMER_SIGN_UP);
                 }}
-                style={styles.signUpText}>
+                style={[CommonStyles.h2, { textTransform: 'uppercase', color: Colors.brightBlue }]}>
                 Regístrate
               </Text>
             </Text>
-          </BottomContentComponent>
+          </Center>
 
-        </View> */}
-      </ImageBackground>
-      <BottomContentComponent>
-        <Center>
-          <Text style={[CommonStyles.h2]}>
-            <Text style={[CommonStyles.h2]} >¿Ya tienes una cuenta? </Text>
-            <Text
+        </BottomContentComponent>
 
-              onPress={() => {
-                navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.CUSTOMER_SIGN_UP);
-              }}
-              style={[CommonStyles.h2, { textTransform: 'uppercase', color: Colors.brightBlue }]}>
-              Regístrate
-            </Text>
-          </Text>
-        </Center>
+        <BtnPrincipal
+          text={'Ingresar'}
+          onPress={handleSignIn}
+        />
+      </VStack>
 
-      </BottomContentComponent>
 
-      <BtnPrincipal
-        text={'Ingresar'}
-        onPress={handleSignIn}
-      />
     </CustomSafeAreaViewComponent>
   );
 };
@@ -273,7 +193,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     resizeMode: 'contain',
-    height: deviceHeight * 0.5,
+    height: deviceHeight * 0.65,
     justifyContent: 'center',
     paddingHorizontal: 16
   },

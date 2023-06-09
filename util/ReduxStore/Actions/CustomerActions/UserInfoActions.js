@@ -9,7 +9,7 @@ export const GET_MODEL_VALUE_CARS = 'GET_MODEL_VALUE_CARS';
 export const GET_YEARS_CARS = 'GET_YEARS_CARS';
 export const GET_YEAR_VALUE_CAR = 'GET_YEAR_VALUE_CAR';
 export const SAVE_NOTIFICATION = 'SAVE_NOTIFICATION';
-
+export const RESET_FILTROS ='RESET_FILTROS'
 
 export const addToUser = (item) => {
    
@@ -107,6 +107,14 @@ export const saveNotification = (item) => {
   return({
       type:SAVE_NOTIFICATION,
       data:item,
+     
+  })
+}
+
+export const resetFiltros = () => {
+    
+  return({
+      type:RESET_FILTROS,
      
   })
 }

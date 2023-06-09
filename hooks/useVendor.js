@@ -114,15 +114,15 @@ export const useVendor = () => {
   const getMarcas = useCallback(
     async () => {
       try {
-        const apiCall = await axios.get(vendor_api_urls?.get_makers)
-        if (apiCall?.status == 200) {
+        // const apiCall = await axios.get(vendor_api_urls?.get_makers)
+        // if (apiCall?.status == 200) {
 
-          setMarcas(apiCall.data?.data)
-        }
+        //   setMarcas(apiCall.data?.data)
+        // }
 
 
       } catch (error) {
-        showToaster('No hay marcas disponibles')
+        // showToaster('No hay marcas disponibles')
 
       }
     },

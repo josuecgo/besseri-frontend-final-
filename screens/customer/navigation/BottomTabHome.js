@@ -25,6 +25,8 @@ import HeaderStore from '../../../components/Customer/HeaderStore';
 import HomeStoreScreen from '../Store/HomeStoreScreen';
 import ProductDetailScreen from '../Store/ProductDetailScreen';
 import { LavadoMaps } from '../Home/LavadoMaps';
+import { AddCarScreen } from '../Account/AddCarScreen';
+import { CreateCarScreen } from '../Garage/customer.createCar.screen';
 
 
 const BottomTab = createBottomTabNavigator();
@@ -184,7 +186,6 @@ export const CustomerAccountStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-    // initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_HOME}
     >
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_HOME}
@@ -201,6 +202,20 @@ export const CustomerAccountStack = () => {
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_MY_CARS}
         component={MyCarsScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props}
+              titulo="Mis autos"
+              nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.ADD_MY_CAR}
+        component={AddCarScreen}
         options={{
           headerShown: true,
           header: props => (

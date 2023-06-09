@@ -31,20 +31,21 @@ export const useInfoUser = (  ) => {
         if (!id) {
           return
         }
-      
+     
         const apiCall = await axios(`${customer_api_urls.get_info_user}/${id}`);
 
         if (apiCall.status === api_statuses.success) {
           const { carActive,myAddresses,garage } = apiCall.data.data
-          await  saveCarActive(carActive)
-          
-          await  saveAdressCustomer(myAddresses)
-          await  saveGarage(garage)
           dispatch( addToUser(user) )
           dispatch( addCarActiveToUser(carActive) )
           dispatch( addAddressToUser(myAddresses[0]) )
           
           dispatch( addCarsToUser(garage) )
+          await  saveCarActive(carActive)
+          
+          await  saveAdressCustomer(myAddresses)
+          await  saveGarage(garage)
+         
           if (carActive) {
              getCategorias()
           }

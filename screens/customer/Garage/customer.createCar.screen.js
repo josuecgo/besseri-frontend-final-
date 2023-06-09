@@ -1,14 +1,14 @@
 import {  Platform, StyleSheet, Text,  View } from 'react-native'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 
 import Colors from '../../../util/styles/colors'
 import CommonStyles from '../../../util/styles/styles';
 import { adjust, deviceHeight, deviceWidth } from '../../../util/Dimentions';
-import { Box, Button,  Heading, Image } from "native-base";
+import { Box, Button,  Heading, Image, Input } from "native-base";
 import { ScrollView } from 'native-base';
 import { ProductContext } from '../../../util/context/Product/ProductContext';
 import { useSearchStore } from '../../../hooks/useSearchStore';
-import { getUserId, saveCarActive } from '../../../util/local-storage/auth_service';
+import { getUser, getUserId, saveCarActive } from '../../../util/local-storage/auth_service';
 import { showToaster } from '../../../util/constants';
 import { api_statuses, customer_api_urls } from '../../../util/api/api_essentials';
 import axios from 'axios';
@@ -29,10 +29,11 @@ export const CreateCarScreen = (props) => {
   } = useSearchStore();
   const dispatch = useDispatch()
   const { address,marcas,marcaValue,modelos,modeloValue,yearValue,years }  = useSelector(state => state.user);
-
+  const [km, setKm ] = useState('')
   
 
   const guardarCar = async () => {
+    const user = await getUser();
     if (!marcaValue || !modeloValue || !yearValue ) {
 
       showToaster('Faltan campos.');
@@ -40,20 +41,45 @@ export const CreateCarScreen = (props) => {
     }
     const newMarca = marcas.find( (el) => el._id === marcaValue);
     const newModel = modelos.find( (el) => el._id === modeloValue);
-
-
-    await saveCarActive({
-      maker: newMarca,
-      model:newModel,
-      year:yearValue
-    })
-
-    dispatch(addCarActiveToUser({
-      maker: newMarca,
-      model:newModel,
-      year:yearValue
-    }));
-
+    if (!user) {
+     
+  
+  
+      await saveCarActive({
+        maker: newMarca,
+        model:newModel,
+        year:yearValue
+      })
+  
+      dispatch(addCarActiveToUser({
+        maker: newMarca,
+        model:newModel,
+        year:yearValue
+      }));
+    }
+    
+    try {
+     
+      const data = {
+        userId,
+        maker: newMarca,
+        model: newModel,
+        type: newModel?.type?._id,
+        year: yearValue,
+        km,
+      };
+      const apiCall = await axios.post(`${customer_api_urls.create_car}`, data);
+      if (apiCall.data.success) {
+        await getUserInfo();
+        showToaster(apiCall?.data?.message);
+      }
+      resetFiltros();
+      setKm('');
+      setShowModal(false);
+      setRefreshKey(refreshKey + 1);
+    } catch (error) {
+      
+    }
    
     
 
@@ -62,7 +88,12 @@ export const CreateCarScreen = (props) => {
   
   }
 
-
+  const handleTextChange = text => {
+    const regex = /^[0-9]*$/; // Expresión regular que solo permite números
+    if (regex.test(text)) {
+      setKm(text);
+    }
+  };
 
  
 
@@ -72,10 +103,7 @@ export const CreateCarScreen = (props) => {
   return (
     <View style={styles.garage} >
 
-      <HeaderTitle
-        titulo={'Mi auto'}
-        nav={props.navigation.goBack}
-      />
+    
 
       <ScrollView>
         <Box style={styles.contentTitle} >
@@ -109,6 +137,18 @@ export const CreateCarScreen = (props) => {
             onChange={handleYear}
             years={true}
           />
+
+
+            <Heading size="xs" mb="3" color={Colors.white}>kilometraje</Heading>
+           
+            <Input
+              value={km.toString()}
+              keyboardType="numeric"
+              onChangeText={handleTextChange}
+              borderColor={Colors.lightBorder}
+              color={Colors.white}
+            />
+        
 
           <Heading size="xs" mb="3" color={Colors.white}>Dirección</Heading>
           <Box

@@ -12,11 +12,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export const HeaderTitle = ({ nav, titulo, iconName = 'keyboard-backspace', tienda=false }) => {
   const { top } = useSafeAreaInsets()
-
+  
   return (
     <>
       <HeaderBackground />
-      <View style={[styles.header,{paddingTop:top}]}>
+      <View style={[styles.header,{paddingTop:top }]}>
         <HStack space={4} alignItems={'center'} >
           {
             nav && (

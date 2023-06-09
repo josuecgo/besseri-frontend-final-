@@ -13,6 +13,7 @@ import ChangePasswordScreen from './change-password.screen';
 import { HomePageScreen } from './HomePageScreen';
 import SignUpScreenCustomer from './sign-up.screen-customer';
 import PrivacyPolicy from './privacypolicy.screen';
+import { HeaderTitle } from '../components/Customer/HeaderTitle';
 
 
 const Stack = createStackNavigator();
@@ -33,11 +34,29 @@ export const LSFS = ({route}) => {
       <Stack.Screen
         name={LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN}
         component={LoginScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props} 
+            titulo="Iniciar Sesión" 
+            nav={props.navigation.goBack}
+            />
+          ),
+        }}
       />
 
       <Stack.Screen
         name={LOGIN_SIGNUP_FORGOT_ROUTES.CUSTOMER_SIGN_UP}
         component={CustomerSignUpScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props} 
+            titulo="Registrarse" 
+            nav={props.navigation.goBack}
+            />
+          ),
+        }}
       />
 
 

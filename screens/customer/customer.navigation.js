@@ -54,6 +54,7 @@ import { BookingScreen } from './Bookings/BookingScreen';
 import { BookingDetailsScreen } from './Bookings/BookingDetailsScreen';
 import { CreateCarScreen } from './Garage/customer.createCar.screen';
 import { BottomTabHome } from './navigation/BottomTabHome';
+import { HeaderTitle } from '../../components/Customer/HeaderTitle';
 
 
 const Stack = createStackNavigator();
@@ -132,11 +133,21 @@ export const PartsServicesFunctionsDrawer = () => {
        <Stack.Screen
         name={'AddAddress'}
         component={SearchAddressScreen}
+
         
       />
       <Stack.Screen
         name={'AddMyCar'}
         component={CreateCarScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props}
+              titulo="Mi Auto"
+              nav={props.navigation.goBack}
+            />
+          ),
+        }}
       />
      
     </Stack.Navigator>

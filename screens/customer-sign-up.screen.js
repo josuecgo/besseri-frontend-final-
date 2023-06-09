@@ -172,7 +172,7 @@ const CustomerSignUpScreen = ({ navigation }) => {
   return (
 
     <CustomSafeAreaViewComponent>
-      <HeaderTitle titulo={'Registrarse'} nav={() => navigation.goBack()} />
+      {/* <HeaderTitle titulo={'Registrarse'} nav={() => navigation.goBack()} /> */}
       <ImageBackground
         source={require('../assets/images/car_fondo.png')}
         style={[styles.content]}

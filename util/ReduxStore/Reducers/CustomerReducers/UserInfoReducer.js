@@ -1,4 +1,4 @@
-import { ADD_ADDRESS, ADD_CARS_TO_USER, ADD_CAR_ACTIVE_TO_USER, ADD_USER, GET_MAKERS_CARS, GET_MAKER_VALUE_CARS, GET_MODELS_CARS, GET_MODEL_VALUE_CARS, GET_YEARS_CARS, GET_YEAR_VALUE_CAR, SAVE_NOTIFICATION } from "../../Actions/CustomerActions/UserInfoActions"
+import { ADD_ADDRESS, ADD_CARS_TO_USER, ADD_CAR_ACTIVE_TO_USER, ADD_USER, GET_MAKERS_CARS, GET_MAKER_VALUE_CARS, GET_MODELS_CARS, GET_MODEL_VALUE_CARS, GET_YEARS_CARS, GET_YEAR_VALUE_CAR, RESET_FILTROS, SAVE_NOTIFICATION } from "../../Actions/CustomerActions/UserInfoActions"
 
 
 const initialState = {
@@ -75,6 +75,15 @@ export default (state = initialState, action) => {
                 ...state,
                 marcaValue: action.data,
                 modeloValue: null,
+                isLoading:false
+            } 
+        case RESET_FILTROS:
+           
+            return {
+                ...state,
+                marcaValue: '',
+                modeloValue: '',
+                yearValue:'',
                 isLoading:false
             } 
         case GET_MODEL_VALUE_CARS:

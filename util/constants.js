@@ -145,6 +145,7 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
 
   ACCOUNT_HOME : 'Cuenta',
   ACCOUNT_MY_CARS : 'Mis autos',
+  ADD_MY_CAR : 'Add My Car',
   ACCOUNT_PEDIDOS : 'Pedidos',
 
   SHOW_REFACCIONES: 'Refacciones',

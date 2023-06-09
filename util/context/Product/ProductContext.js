@@ -113,10 +113,10 @@ export const ProductProvider = ({ children }) => {
             const apiCall = await axios.post(
                 `${customer_api_urls.get_category_products}/${category._id}`, { carActive }
             );
-            console.log(apiCall.data.data,'sss');
+        
             if (apiCall?.status === 200) {
 
-              console.log(apiCall.data.data,'sss');
+              
                 await dispatch({
                     type: 'getProductos',
                     payload: {

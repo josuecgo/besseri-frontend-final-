@@ -56,12 +56,12 @@ const CustomerSearchScreen = React.memo((props) => {
     const getMakersModels = async() => {
 
         try {
-            const apiCall = await axios.get(vendor_api_urls?.get_makers)
-            if (apiCall.status == 200) {
-                setMarcas(apiCall.data?.data)
-            } else {
+            // const apiCall = await axios.get(vendor_api_urls?.get_makers)
+            // if (apiCall.status == 200) {
+            //     setMarcas(apiCall.data?.data)
+            // } else {
                 
-            }
+            // }
         } catch (error) {
             // console.log(error);
         }

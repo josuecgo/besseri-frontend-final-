@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ButtonService } from '../../../components/Home/ButtonService'
 import { Avatar, Box, HStack, Heading, Image } from 'native-base'
 import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constants'
@@ -12,6 +12,7 @@ import { BackgroundCar } from '../../../components/Background/BackgroundCar'
 import { MyCarActive } from '../../../components/Customer/MyCarActive'
 import ChecksHome from '../../../components/Customer/ChecksHome'
 import { useInfoUser } from '../../../hooks/useInfoUsers'
+import { AgendaService } from '../../../components/Services/AgendaService'
 
 export const HomeScreen = ({navigation}) => {
 
@@ -26,15 +27,13 @@ export const HomeScreen = ({navigation}) => {
   }, [])
   
 
-
-  
   return (
     <View style={styles.body} >
       
       <MyCarActive/>
        
       <BackgroundCar home={true} />
-     
+   
       <HStack
       justifyContent={'space-around'}
       alignItems={'center'}

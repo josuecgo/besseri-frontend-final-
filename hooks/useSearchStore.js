@@ -44,12 +44,7 @@ export const useSearchStore = (  ) => {
             const apiCall = await axios.get(`${customer_api_urls.get_store_data}/${tienda?._id}`);
             
             let cate = apiCall?.data?.data?.categories;
-            // let result  = cate.filter((elem, index) => {
-            //     const firstIndex = cate.findIndex(({ _id, name }) => {
-            //         return _id === elem._id && name === elem.name
-            //     });
-            //     return firstIndex === index
-            // });
+          
             
            
             setCategories(cate);
@@ -73,8 +68,8 @@ export const useSearchStore = (  ) => {
         try {
             const apiCall = await axios.get(vendor_api_urls?.get_makers)
             if (apiCall.status == 200) {
-              
-                dispatch(getMakersCars(apiCall.data?.data))
+                console.log('get marcas');
+                await dispatch(getMakersCars(apiCall.data?.data))
             } else {
                 
                 showToaster('No tienes conexion a la red')
@@ -172,13 +167,12 @@ export const useSearchStore = (  ) => {
     }
 
 
-    const resetFiltros = () => {
+    const resetFiltros = async() => {
         setProductFilter(productsData);
         setValueCategorias(null);
         
-        dispatch(getModelsCars([]))
-        dispatch(getMakerValueCars(null))
-        dispatch(getYearValueCar(null))
+        dispatch(resetFiltros())
+       
         // setValueMaker("");
         // setValueModel("");
         // setValueYear("")
@@ -219,9 +213,9 @@ export const useSearchStore = (  ) => {
     }, [modelo,carDefault])
     
    
-    useEffect(() => {
-        getMarcas();
-    }, [])
+    // useEffect(() => {
+    //     getMarcas();
+    // }, [])
 
     useEffect(() => {
         if (marcaValue) {
