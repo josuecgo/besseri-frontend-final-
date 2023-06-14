@@ -54,34 +54,40 @@ export const ProductProvider = ({ children }) => {
 
    
 
-    const getCategorias = async () => {
-        try {
-           
-            const apiCall = await axios.get(customer_api_urls.get_products);
-           
-            if (apiCall?.data?.data?.categories.length > 0) {
-                let cate = apiCall?.data?.data?.categories[0]
+    
 
+    const getCategorias = useCallback(
+        async () => {
+            try {
+               
+                const apiCall = await axios.get(customer_api_urls.get_products);
+               
+                if (apiCall?.data?.data?.categories.length > 0) {
+                    let cate = apiCall?.data?.data?.categories[0]
+    
+                    
+                    await dispatch({
+                        type: 'getCategorias',
+                        payload: {
+                            activeCategory: cate,
+                            categorias: apiCall?.data?.data?.categories
+                        }
+                    });
+                 
+                    // getProducts(cate);
+                } 
+    
+    
+    
+            } catch (e) {
+                // console.log({getProducts:e})
+                showToaster('No hay conexion con el servidor - C01');
                 
-                await dispatch({
-                    type: 'getCategorias',
-                    payload: {
-                        activeCategory: cate,
-                        categorias: apiCall?.data?.data?.categories
-                    }
-                });
-             
-                // getProducts(cate);
-            } 
-
-
-
-        } catch (e) {
-            // console.log({getProducts:e})
-            showToaster('No hay conexion con el servidor - C01');
-            
-        }
-    }
+            }
+        },
+      [],
+    )
+    
 
 
     const activarCategoria = async(cate) => {

@@ -9,7 +9,7 @@ import numeral from 'numeral'
 
 const ChecksHome = () => {
   const {carActive} = useSelector(state => state.user)
-
+  
 
   return (
     <View style={{ flex: 1 }} >
@@ -27,7 +27,7 @@ const ChecksHome = () => {
             style={styles.check}
           >
             <View style={styles.checkinter}>
-            <Text style={{ color: 'white', fontSize: adjust(9) }} >{carActive?.km ? numeral(carActive?.km).format('0,0') : ''}</Text>
+            <Text style={{ color: 'white', fontSize: adjust(8) }} >{carActive?.km ? numeral(carActive?.km).format('0,0') : ''}</Text>
             </View>
           </View>
           <Text style={{ color: 'white', fontSize: adjust(9) }} >Kilometraje</Text>
@@ -44,8 +44,8 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderColor: '#0593E3',
     borderWidth: 0.2,
-    width: 50,
-    height: 50,
+    width: 65,
+    height: 65,
     alignItems: 'center',
     justifyContent: 'center',
 

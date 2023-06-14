@@ -130,9 +130,10 @@ const ProductCardComponent = ({
 };
 const styles = StyleSheet.create({
   cardContainer: {
-    width: deviceWidth / 2.2,
+    width: '45%',
     marginHorizontal: 10,
-    marginVertical: 4
+    marginVertical: 4,
+    
   },
   card: {
     backgroundColor: 'white', shadowColor: "#000",

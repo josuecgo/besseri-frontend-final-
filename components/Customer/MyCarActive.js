@@ -11,8 +11,7 @@ import { base_url } from '../../util/api/api_essentials'
 export const MyCarActive = () => {
   const {carActive} = useSelector(state => state.user);
   const dispatch = useDispatch()
-
-
+ 
   // // Lo puedo volver un hook
   // const getInfoUser = async() => {
   //   if (carActive) {

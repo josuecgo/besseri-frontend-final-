@@ -123,12 +123,14 @@ export const CreateCarScreen = (props) => {
           <SelectDropDownBtn
             items={marcas}
             onChange={handleMarca}
+            value={marcaValue}
           />
 
           <Heading size="xs" mb="3" color={Colors.white}>Modelo</Heading>
           <SelectDropDownBtn
             items={modelos}
             onChange={handleModel}
+            value={modeloValue}
           />
 
           <Heading size="xs" mb="3" color={Colors.white}>Año</Heading>
@@ -136,6 +138,7 @@ export const CreateCarScreen = (props) => {
             items={years}
             onChange={handleYear}
             years={true}
+            value={yearValue}
           />
 
 

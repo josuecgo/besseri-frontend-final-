@@ -29,7 +29,7 @@ const CommonStyles = StyleSheet.create({
   h1:{
     fontWeight:'700',
     fontFamily:'Arial',
-    fontSize:adjust(18),
+    fontSize:adjust(17),
     color:Colors.white
   },
   h2:{

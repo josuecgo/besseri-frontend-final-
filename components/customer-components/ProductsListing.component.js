@@ -27,30 +27,29 @@ const ProductListing = ({products,navigation,comision}) => {
     <View style={styles.container}>
 
 
-        <FlatList
-        data={products}
-        contentContainerStyle={{marginTop:15,paddingHorizontal:5}}
-        // horizontal
-        // showsHorizontalScrollIndicator={false}
-        renderItem={itemData => (
-           <ProductCardComponent
-           onViewDetail={() => {
-            dispatch(CartActions.selectItemFromCart(itemData.item._id, itemData.item?.price));
-             navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL,{
-               product:itemData.item,
-               comision
-             });
-           }}
-           increaseQuantity={() => CartActions.increaseQuantity(itemData.item?._id)}
-           onAddToCart={() => addItemToCart(itemData.item)}
-           data={itemData.item}
-           inCart={cartProductIds.includes(itemData.item._id)}
-           comision={comision}
-           />
-        )}
-        ListEmptyComponent={() => <ListEmpty msg={'No hay productos para tu vehiculo'} />}
-               
-        />
+      <FlatList
+          data={products}
+          contentContainerStyle={{ marginTop: 15, paddingHorizontal: 5 }}
+          numColumns={2}
+          columnWrapperStyle={{ justifyContent: 'space-between' }} // Agrega esta línea para ajustar el espaciado entre las columnas
+          renderItem={itemData => (
+              <ProductCardComponent
+                  onViewDetail={() => {
+                      dispatch(CartActions.selectItemFromCart(itemData.item._id, itemData.item?.price));
+                      navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL, {
+                          product: itemData.item,
+                          comision
+                      });
+                  }}
+                  increaseQuantity={() => CartActions.increaseQuantity(itemData.item?._id)}
+                  onAddToCart={() => addItemToCart(itemData.item)}
+                  data={itemData.item}
+                  inCart={cartProductIds.includes(itemData.item._id)}
+                  comision={comision}
+              />
+          )}
+          ListEmptyComponent={() => <ListEmpty msg={'No hay productos para tu vehiculo'} />}
+      />
     </View>
   );
 };

@@ -27,6 +27,7 @@ import ProductDetailScreen from '../Store/ProductDetailScreen';
 import { LavadoMaps } from '../Home/LavadoMaps';
 import { AddCarScreen } from '../Account/AddCarScreen';
 import { CreateCarScreen } from '../Garage/customer.createCar.screen';
+import { CategoriesServicesScreen } from '../Home/CategoriesServicesScreen';
 
 
 const BottomTab = createBottomTabNavigator();
@@ -108,13 +109,27 @@ export const CustomerHomeStack = () => {
       />
 
       <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_CATEGORIES}
+        component={CategoriesServicesScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props}
+              titulo="Servicios"
+              nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_STACK}
         component={ServiciosScreen}
         options={{
           headerShown: true,
           header: props => (
             <HeaderTitle {...props}
-              titulo="Servicios"
+              titulo="Tipo de servicio"
               nav={props.navigation.goBack}
             />
           ),
@@ -234,7 +249,7 @@ export const CustomerAccountStack = () => {
           headerShown: true,
           header: props => (
             <HeaderTitle {...props}
-              titulo="Pedidos"
+              titulo="Historial"
               nav={props.navigation.goBack}
             />
           ),

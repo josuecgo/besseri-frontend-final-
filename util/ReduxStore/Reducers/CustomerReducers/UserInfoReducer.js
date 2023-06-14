@@ -1,4 +1,4 @@
-import { ADD_ADDRESS, ADD_CARS_TO_USER, ADD_CAR_ACTIVE_TO_USER, ADD_USER, GET_MAKERS_CARS, GET_MAKER_VALUE_CARS, GET_MODELS_CARS, GET_MODEL_VALUE_CARS, GET_YEARS_CARS, GET_YEAR_VALUE_CAR, RESET_FILTROS, SAVE_NOTIFICATION } from "../../Actions/CustomerActions/UserInfoActions"
+import { ADD_ADDRESS, ADD_CARS_TO_USER, ADD_CAR_ACTIVE_TO_USER, ADD_USER, DELETE_TO_USER, GET_MAKERS_CARS, GET_MAKER_VALUE_CARS, GET_MODELS_CARS, GET_MODEL_VALUE_CARS, GET_YEARS_CARS, GET_YEAR_VALUE_CAR, RESET_FILTROS, SAVE_NOTIFICATION } from "../../Actions/CustomerActions/UserInfoActions"
 
 
 const initialState = {
@@ -9,9 +9,9 @@ const initialState = {
   carActive: null,
   marcas:[],
   modelos:[],
-  marcaValue:null,
-  modeloValue:null,
-  yearValue:null,
+  marcaValue:'',
+  modeloValue:'',
+  yearValue:'',
   isLoading:false,
   years:[],
   notificaciones:[]
@@ -27,6 +27,21 @@ export default (state = initialState, action) => {
             user: action.data,
             userId:action.data._id,
             isLoading:false
+        }
+        case DELETE_TO_USER:
+            
+        return {
+            ...state,
+            user:null,
+            userId: null,
+            address:null,
+            cars:[],
+            carActive: null,
+            marcaValue:'',
+            modeloValue:'',
+            yearValue:'',
+            isLoading:false,
+            notificaciones:[]
         }
         case ADD_ADDRESS:
             

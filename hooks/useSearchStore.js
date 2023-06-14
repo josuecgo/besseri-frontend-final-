@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState,useEffect, useContext } from 'react';
+import { useState,useEffect, useContext, useCallback } from 'react';
 import { customer_api_urls, vendor_api_urls } from '../util/api/api_essentials';
 import { showToaster } from '../util/constants';
 import { ProductContext } from '../util/context/Product/ProductContext';
@@ -63,23 +63,29 @@ export const useSearchStore = (  ) => {
         }
     };
 
-    const getMarcas = async () => {
+   
+
+    const getMarcas = useCallback(
+        async () => {
         
-        try {
-            const apiCall = await axios.get(vendor_api_urls?.get_makers)
-            if (apiCall.status == 200) {
-                console.log('get marcas');
-                await dispatch(getMakersCars(apiCall.data?.data))
-            } else {
-                
-                showToaster('No tienes conexion a la red')
+            try {
+                const apiCall = await axios.get(vendor_api_urls?.get_makers)
+                if (apiCall.status == 200) {
+                   
+                    await dispatch(getMakersCars(apiCall.data?.data))
+                } else {
+                    
+                    showToaster('No tienes conexion a la red')
+                }
+            } catch (error) {
+               
+               showToaster(error.response.data.message)
             }
-        } catch (error) {
            
-           showToaster(error.response.data.message)
-        }
-       
-    }
+        },
+      [],
+    )
+    
 
     const getModelo = async(id) => {
         
@@ -173,11 +179,7 @@ export const useSearchStore = (  ) => {
         
         dispatch(resetFiltros())
        
-        // setValueMaker("");
-        // setValueModel("");
-        // setValueYear("")
-        // setModelo('')
-        // getStore(store);
+      
         
 
     }
@@ -213,9 +215,9 @@ export const useSearchStore = (  ) => {
     }, [modelo,carDefault])
     
    
-    // useEffect(() => {
-    //     getMarcas();
-    // }, [])
+    useEffect(() => {
+        getMarcas();
+    }, [])
 
     useEffect(() => {
         if (marcaValue) {

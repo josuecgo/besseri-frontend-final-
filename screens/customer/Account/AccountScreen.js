@@ -7,22 +7,24 @@ import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal'
 import {  CUSTOMER_HOME_SCREEN_ROUTES } from '../../../util/constants'
 import { logout } from '../../../util/local-storage/auth_service'
 
-import { useSelector } from 'react-redux'
+import { useSelector,useDispatch } from 'react-redux'
 import { useInfoUser } from '../../../hooks/useInfoUsers'
+import { deleteToUser } from '../../../util/ReduxStore/Actions/CustomerActions/UserInfoActions'
 
 export const AccountScreen = (props) => {
-  const {getNotificaciones} = useInfoUser()
+  
   const {user} = useSelector(state => state.user)
-
+  const dispatch = useDispatch()
  
   const loginLogout = async() => {
-    // console.log(!user);
-    if (user) {
-      await logout()
-      getNotificaciones()
-      props.navigation.navigate('Splash',{reload:true});
+    
+     if (user) {
+      await logout();
+      dispatch(deleteToUser())
+   
+      props.navigation.replace('Splash',{reload:true});
     }else{
-      props.navigation.navigate('AuthStack',{reload:true});
+       props.navigation.replace('AuthStack',{reload:true});
     }
   }
   
@@ -41,7 +43,7 @@ export const AccountScreen = (props) => {
         />
 
         <BtnPrincipal
-        text={'Pedidos'}
+        text={'Historial'}
         onPress={() =>  props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_PEDIDOS)}
         />
 

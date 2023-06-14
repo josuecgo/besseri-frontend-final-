@@ -1,4 +1,5 @@
 export const ADD_USER = 'ADD_USER';
+export const DELETE_TO_USER = 'DELETE_TO_USER';
 export const ADD_ADDRESS = 'ADD_ADDRESS';
 export const ADD_CAR_ACTIVE_TO_USER = 'ADD_CAR_ACTIVE_TO_USER';
 export const ADD_CARS_TO_USER = 'ADD_CARS_TO_USER';
@@ -16,6 +17,15 @@ export const addToUser = (item) => {
   return({
       type:ADD_USER,
       data:item,
+     
+  })
+}
+
+export const deleteToUser = () => {
+   
+  return({
+      type:DELETE_TO_USER,
+     
      
   })
 }

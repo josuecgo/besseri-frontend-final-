@@ -5,12 +5,12 @@ import { Box, CheckIcon, Input, ScrollView, Select, Text } from 'native-base'
 import Colors from '../../util/styles/colors';
 import { deviceWidth } from '../../util/Dimentions';
 
-export const SelectDropDownBtn = ({items,onChange,years = false}) => {
-  const [value, setValue] = useState('');
+export const SelectDropDownBtn = ({value,items,onChange,years = false}) => {
+ 
 
   const changeValue = (item) => {
     onChange(item)
-    setValue(item)
+   
   }
   return (
     <View style={styles.body} >
@@ -39,6 +39,7 @@ export const SelectDropDownBtn = ({items,onChange,years = false}) => {
                 borderColor={Colors.lightBorder}
                 backgroundColor={Colors.lightBlack}
                 textTransform={'uppercase'}
+                size={'2xl'}
             >
                 {
                     items.map((item) => <Select.Item 
@@ -50,9 +51,10 @@ export const SelectDropDownBtn = ({items,onChange,years = false}) => {
                     />)
                 }
 
-      </Select>
+            </Select>
           ):(
             <Select
+            size={'2xl'}
             dropdownIcon={<MaterialCommunityIcons 
               name='menu-down' 
               color={Colors.white} 
@@ -83,7 +85,7 @@ export const SelectDropDownBtn = ({items,onChange,years = false}) => {
                 value={item} />)
               }
 
-      </Select>
+          </Select>
           )
         }
       

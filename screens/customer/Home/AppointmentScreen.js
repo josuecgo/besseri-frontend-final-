@@ -1,15 +1,12 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { Box, Button, HStack, Heading, ScrollView, Text, Pressable, Image } from 'native-base';
+import { Box, Button, HStack, ScrollView, Text, Image } from 'native-base';
 import { AgendaService } from '../../../components/Services/AgendaService';
 import axios from 'axios';
 import { base_url, customer_api_urls } from '../../../util/api/api_essentials';
 import { getUserId } from '../../../util/local-storage/auth_service';
 import moment from 'moment';
-import timeZone from 'moment-timezone';
-import { dateToHour } from '../../../util/utility-functions';
 import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constants';
-import { ItemServiceDetail } from '../../../components/Services/ItemServiceDetail';
 import { deviceHeight, deviceWidth } from '../../../util/Dimentions';
 import CommonStyles from '../../../util/styles/styles';
 import Colors from '../../../util/styles/colors';
@@ -34,18 +31,24 @@ export const AppointmentScreen = (props) => {
       setHourSelected(null)
       const url = `${customer_api_urls.get_availability_services}/${service._id}`
       
-      const apiCall = await axios.post(url, { date: daySelected })
+      const apiCall = await axios.post(url, { 
+        date: daySelected, 
+        timezone: "America/Mexico_City",
+        scheduleId:service._id
+      })
 
-      if (apiCall.data.data.length <= 0) {
+      
+      if (apiCall.status != 200) {
         setCitas(null);
       } else {
-        setCitas(apiCall.data.data);
+        setCitas(apiCall.data);
 
       }
 
     } catch (error) {
       setHourSelected(null)
       showToaster(error?.response?.data?.message)
+      
 
     }
   }
@@ -61,29 +64,35 @@ export const AppointmentScreen = (props) => {
 
     const userId = await getUserId();
     if (!userId || !service._id || !service?.business_id._id || !hourSelected?.start || !hourSelected?.end) return showToaster('Faltan campos.')
-  
+    
     const date = new Date(hourSelected.start);
-    const startDate = timeZone(date).utc();
+    // const date = moment(hourSelected.start).local()
+    const startDate = moment(date).local();
     // const startDate = moment(date.toISOString());
-    const date2 = new Date(hourSelected.end);
-    const endDate = timeZone(date2).utc()
+    const date2  = new Date(hourSelected.end);
+ 
 
-   
+    const endDate = moment(date2).local()
+
+
     const data = {
       booked_by_id: userId,
       serviceId: service,
       businessId: service?.business_id._id,
-      startDate: startDate.tz('America/Mexico_City'),
-      endDate: endDate.tz('America/Mexico_City'),
+      startDate: startDate,
+      endDate: endDate,
       car,
       address,
       type
     }
     
+   
     
     props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.AGENDAR, {
       data
     })
+
+
     // const apiCall = await axios.post(customer_api_urls.book_service,data)
 
     // if (apiCall.data.success) {
@@ -118,7 +127,7 @@ export const AppointmentScreen = (props) => {
 
   }, [daySelected])
 
-
+  console.log(daySelected);
   return (
     <ScrollView
       contentContainerStyle={styles.appointment}
@@ -204,7 +213,8 @@ export const AppointmentScreen = (props) => {
                 alignItems={'center'}
               >
                 <Text style={{ ...CommonStyles.h2 }} >
-                  {moment(daySelected).format('DD-MM-YYYY')}
+                  {/* {moment(daySelected).format('DD-MM-YYYY')} */}
+                  {daySelected}
                 </Text>
               </Box>
 
@@ -248,25 +258,38 @@ export const AppointmentScreen = (props) => {
                 >
                   {
 
-                    citas ? citas.map((item) => (
-                      <TouchableOpacity
-                        key={item.start}
-                        style={[styles.hora, {
-                          backgroundColor: item.status === 'off' ? 'gray' : hourSelected === item ? 'white' : '#404040'
-                        }]}
-                        disabled={item.status === 'off' ? true : false}
+                    citas ? citas.map((item) => {
+                      var fecha = new Date(item.start);
+                      var hora = fecha.getHours();
+                      var minutos = fecha.getMinutes();
+                      var horaFormateada = hora.toString().padStart(2, "0");
+                      var minutosFormateados = minutos.toString().padStart(2, "0");
+                      
+                      
+                     
+                    
 
-                        onPress={() => {
-                          if (item.status === 'off') return
-                          handleHour(item)
-                        }}
-                      >
-                        <Text color={hourSelected === item ? 'black' : '#FFFFFF'} >
-                          {moment(item.start).format('HH:mm')}
-                        </Text>
-
-                      </TouchableOpacity>
-                    )) : (
+                      return (
+                        <TouchableOpacity
+                          key={item.start}
+                          style={[styles.hora, {
+                            backgroundColor: item.status === 'off' ? 'gray' : hourSelected === item ? 'white' : '#404040'
+                          }]}
+                          disabled={item.status === 'off' ? true : false}
+  
+                          onPress={() => {
+                            if (item.status === 'off') return
+                            handleHour(item)
+                          }}
+                        >
+                          <Text color={hourSelected === item ? 'black' : '#FFFFFF'} >
+                            {horaFormateada + ":" + minutosFormateados}
+                          </Text>
+  
+                        </TouchableOpacity>
+                      )
+                    }
+                    ) : (
                       <Box
                         style={styles.noCitas}
                       >

@@ -38,7 +38,7 @@ const customTheme = extendTheme({ config });
 const App = () => {
 
 
-  const { getItem: getStoreRole } = useAsyncStorage(USER_ROLE);
+  
   const store = combineReducers({
     cart: CartReducer,
     feedback: FeedbackReducer,

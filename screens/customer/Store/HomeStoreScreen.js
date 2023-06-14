@@ -107,14 +107,6 @@ const HomeStoreScreen = React.memo((props) => {
   }, [activeCategory, carActive]);
   
 
-
-  // console.log({activeCategory,carActive});
-
-
-
-
-
- 
     
 
   return (
@@ -123,20 +115,10 @@ const HomeStoreScreen = React.memo((props) => {
       backgroundColor: Colors.white 
       }}>
 
-
-
       <View style={{ flex: 1, backgroundColor: Colors.white }} >
-
-
-
-
-
         <View style={{
-          // paddingVertical: 5,
           backgroundColor: 'transparent',
           paddingVertical:0
-          // alignSelf: 'flex-start', flexDirection: 'row' ,
-
         }}>
 
           <Text style={{ ...CommonStyles.h1, color: Colors.black, fontWeight: 'bold', marginLeft: 10,paddingVertical:10 }} >
@@ -164,7 +146,7 @@ const HomeStoreScreen = React.memo((props) => {
                   initialNumToRender={5}
                   keyExtractor={item => item?._id}
                   renderItem={memorizedValue}
-
+                  
                   ListFooterComponent={<View style={{ width: '100%', marginBottom: 10, height: deviceHeight * 20 / 100 }} />}
                   showsVerticalScrollIndicator={false}
                   onRefresh={() => {

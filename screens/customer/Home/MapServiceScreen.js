@@ -25,8 +25,8 @@ export const MapServiceScreen = (props) => {
   const { type } = props.route.params;
   const [stores, setStores] = useState(null)
   const [defaultAddress, setDefaultAddress] = useState(address)
-
-
+  
+  
   const getAddresses = async () => {
     try {
 

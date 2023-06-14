@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { api_statuses, api_urls, customer_api_urls } from '../util/api/api_essentials';
 import { getUser, getUserAddress, getUserId, saveAdressCustomer, saveCarActive, saveGarage } from '../util/local-storage/auth_service';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,116 +20,93 @@ export const useInfoUser = (  ) => {
   } = useContext(ProductContext)
 
 
-
-
-  const getUserInfo = async(user) => {
-      try {
-
-      
-        const id = await getUserId();
-        const user = await getUser()
-        if (!id) {
-          return
-        }
-     
-        const apiCall = await axios(`${customer_api_urls.get_info_user}/${id}`);
-
-        if (apiCall.status === api_statuses.success) {
-          const { carActive,myAddresses,garage } = apiCall.data.data
-          dispatch( addToUser(user) )
-          dispatch( addCarActiveToUser(carActive) )
-          dispatch( addAddressToUser(myAddresses[0]) )
-          
-          dispatch( addCarsToUser(garage) )
-          await  saveCarActive(carActive)
-          
-          await  saveAdressCustomer(myAddresses)
-          await  saveGarage(garage)
-         
-          if (carActive) {
-             getCategorias()
-          }
-         
-        }
-      
-        
-
-      } catch (error) {
-        showToaster(error.response.data.message)
+  const getUserInfo = useCallback(async () => {
+    try {
+      const id = await getUserId();
+      const user = await getUser();
+      if (!id) {
+        return;
       }
-   
-   
-  }
-
-  const activeCar = async(data) => {
+  
+      const apiCall = await axios(`${customer_api_urls.get_info_user}/${id}`);
+  
+      if (apiCall.status === api_statuses.success) {
+        const { carActive, myAddresses, garage } = apiCall.data.data;
+        dispatch(addToUser(user));
+        dispatch(addCarActiveToUser(carActive));
+        dispatch(addAddressToUser(myAddresses[0]));
+  
+        dispatch(addCarsToUser(garage));
+        await saveCarActive(carActive);
+  
+        await saveAdressCustomer(myAddresses);
+        await saveGarage(garage);
+  
+        if (carActive) {
+          getCategorias();
+        }
+      }
+    } catch (error) {
+      showToaster(error.response.data.message);
+    }
+  }, []);
+  
+  const activeCar = useCallback(async (data) => {
     const userId = await getUserId();
     try {
-        if (!userId) {
-            showAlertLogin();
-            return
-        }
-      
-     
-        const apiCall = await axios.post(`${customer_api_urls.active_car}/${userId}`,{garage:data});
-            
-        if (apiCall.status == api_statuses.success) {
-          getUserInfo()
-          showToaster('Nuevo Auto activado');
-        }
-       
+      if (!userId) {
+        showAlertLogin();
+        return;
+      }
+  
+      const apiCall = await axios.post(`${customer_api_urls.active_car}/${userId}`, { garage: data });
+  
+      if (apiCall.status === api_statuses.success) {
+        getUserInfo();
+        showToaster('Nuevo Auto activado');
+      }
     } catch (error) {
-     
       showToasterError(error);
-      
     }
-   
-  }
-
-  const getPedidosUser = async() => {
+  }, []);
+  
+  const getPedidosUser = useCallback(async () => {
     try {
-
-      
       const id = await getUserId();
-      const user = await getUser()
-      if (!id) {
-        return showToaster('Registrate o inicia sesion')
-      }
-      dispatch( isLoadingOrdersUser() )
-      const apiCall = await axios.get(`${customer_api_urls.get_pedidos_user}/${id}`);
-
-     
-      if (apiCall.status === api_statuses.success) {    
-        dispatch( getOrdersUser(apiCall?.data?.data) )
-      }
     
-      
-
+      if (!id) {
+        return showToaster('Registrate o inicia sesion');
+      }
+      dispatch(isLoadingOrdersUser());
+      const apiCall = await axios.get(`${customer_api_urls.get_pedidos_user}/${id}`);
+  
+      if (apiCall.status === api_statuses.success) {
+        dispatch(getOrdersUser(apiCall?.data?.data));
+      }
     } catch (error) {
-      showToaster(error?.response?.data?.message)
-      dispatch( getOrdersUser([]) )
+      showToaster(error?.response?.data?.message);
+      dispatch(getOrdersUser([]));
     }
-   
-  }
-
-  const getNotificaciones = async() => {
+  }, []);
+  
+  const getNotificaciones = useCallback(async () => {
     try {
-        const id = await getUserId();
-        if (!id) {
-          return
-        }
-        const url = `${api_urls.getNotification}/${id}`;
-
-        const apiCall = await axios.get(url);
-        const data = apiCall.data.data;
-        
-        dispatch( saveNotification(data) )
-
-       
+      const id = await getUserId();
+      if (!id) {
+        return;
+      }
+      const url = `${api_urls.getNotification}/${id}`;
+  
+      const apiCall = await axios.get(url);
+      const data = apiCall.data.data;
+  
+      dispatch(saveNotification(data));
     } catch (e) {
-        // console.log({ eaAndData: e })
-        showToaster('Algo salió mal. Por favor, vuelva a intentarlo - N')
+      // console.log({ eaAndData: e })
+      showToaster('Algo salió mal. Por favor, vuelva a intentarlo - N');
     }
-}
+  }, []);
+  
 
   
 

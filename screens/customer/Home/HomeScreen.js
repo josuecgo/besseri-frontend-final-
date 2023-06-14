@@ -43,7 +43,7 @@ export const HomeScreen = ({navigation}) => {
         <ButtonService
         label={'Servicios'}
         icono={require('../../../assets/images/home/servicios.png')}
-        onPress={()=>{ navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_STACK) }}
+        onPress={()=>{ navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_CATEGORIES) }}
         style={74}
         
         />

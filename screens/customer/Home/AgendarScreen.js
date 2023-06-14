@@ -42,6 +42,8 @@ export const AgendarScreen = (props) => {
         address: address._id,
         type
       }
+      
+      
       const apiCall = await axios.post(customer_api_urls.book_service, data)
       setFetchLoading(false)
       if (apiCall.data.success) {
@@ -59,6 +61,7 @@ export const AgendarScreen = (props) => {
 
     }
   }
+
 
 
   return (

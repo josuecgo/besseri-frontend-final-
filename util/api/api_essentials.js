@@ -1,6 +1,6 @@
-export const env = 'prod';
+export const env = 'dev';
 
-export const base_url = env == 'prod' ? 'https://api.besseri.mx' : env == 'dev' ?  'http://192.168.1.19:5001' : 'https://besser-api-developer.up.railway.app';
+export const base_url = env == 'prod' ? 'https://api.besseri.mx' : env == 'dev' ?  'http://192.168.1.6:3005' : 'https://besser-api-developer.up.railway.app';
 // export const base_url = false ? 'http://192.168.100.72:3005' : 'http://192.168.1.17:3005'
 
 export const api_urls = {
@@ -96,6 +96,7 @@ export const customer_api_urls = {
 
     get_services:`${base_url}/services/get-services`,
     get_type_services:`${base_url}/services/get-type-services`,
+    get_categories_services:`${base_url}/services/get-categories-services`,
     get_availability_services:`${base_url}/services/availability-services`,
    
     book_service:`${base_url}/appointment/book-service`,
