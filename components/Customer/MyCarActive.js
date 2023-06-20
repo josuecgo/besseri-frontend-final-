@@ -12,21 +12,10 @@ export const MyCarActive = () => {
   const {carActive} = useSelector(state => state.user);
   const dispatch = useDispatch()
  
-  // // Lo puedo volver un hook
-  // const getInfoUser = async() => {
-  //   if (carActive) {
-  //     return
-  //   }
-  //   const carActive = await getCarActive();
-  //   dispatch( addCarActiveToUser(carActive) )
-  // }
- 
-  // useEffect(() => {
-  //   getInfoUser()
-  // }, [])
+
 
   return (
-    <View>
+    <View style={{top:-10}} >
       <HStack alignItems={'center'} space={2} mx={2} >
 
         {
@@ -43,8 +32,7 @@ export const MyCarActive = () => {
             </>
           ):(
             <VStack justifyContent={'center'} alignItems={'center'} width={'100%'} >
-              {/* <Heading size={'xs'} color={Colors.white} >No tienes un auto activado</Heading>
-              <Button variant={'link'}  >Activalo</Button> */}
+            
             </VStack>
           )
         }

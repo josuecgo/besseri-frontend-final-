@@ -76,7 +76,7 @@ export const HomeScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   body:{
-    paddingTop:20,
+    // paddingTop:20,
     flex:1,
     justifyContent:'space-around',
     backgroundColor:Colors.bgColor,
