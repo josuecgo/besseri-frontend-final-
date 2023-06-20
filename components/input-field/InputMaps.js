@@ -33,7 +33,7 @@ export const InputMaps = ({ placeholder, onDebounce, addresses, onChangeDirectio
       />
 
       {
-        addresses.length > 0 && (
+        addresses && addresses.length > 0 && (
           <FlatList
             data={addresses}
             renderItem={({ item }) => (

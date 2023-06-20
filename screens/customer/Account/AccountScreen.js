@@ -38,8 +38,8 @@ export const AccountScreen = (props) => {
 
       <View style={{marginBottom:25}} >
         <BtnPrincipal
-        text={'Mis autos'}
-        onPress={() =>  props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_MY_CARS)}
+        text={'Mi cuenta'}
+        onPress={() =>  props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.MY_ACCOUNT)}
         />
 
         <BtnPrincipal

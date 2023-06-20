@@ -6,6 +6,8 @@ const { width,height } = Dimensions.get('screen');
 import RenderHtml from 'react-native-render-html'
 import { deviceHeight } from '../util/Dimentions';
 import { HeaderBackground } from '../components/Background/HeaderBackground';
+import { NewLogo } from '../components/NewLogo';
+import { Center } from 'native-base';
 
 const PrivacyPolicy = ({navigation}) => {
     var htmlCode = `  <html>
@@ -16,8 +18,8 @@ const PrivacyPolicy = ({navigation}) => {
       <style> body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; padding:1em; } </style>
     </head>
     <body>
-    <strong>Privacy Policy</strong>
-    <p>Pol&iacute;tica de privacidad</p>
+    
+    <h4>Pol&iacute;tica de privacidad</h4>
 
     <p>En besseri lo mas importante para nosotros es tu proteccion, por ello nos encargamos de hacer un uso responsable de la informacion personal, ya que no solo protegemos la informacion sino que te damos la seguridad de que besseri se preocupa por ti y tu privacidad.</p>
     
@@ -263,14 +265,16 @@ const PrivacyPolicy = ({navigation}) => {
 `;
   return (
     <View style={styles.container}>
-      <HeaderBackground/>
-    <View
-     style={styles.header}
-    > 
-      <Text style={{...CommonStyles.fontFamily,color:Colors.white}}>{'Privacy Policy'}</Text>
-    </View>
+
     <ScrollView contentContainerStyle={{flexGrow:1,padding:5}}>
-                <RenderHtml
+        <Center>
+            <Center backgroundColor={Colors.bgColor} width={150} rounded={'3xl'}  >
+                <NewLogo height={100} width={100}  /> 
+            </Center>
+        </Center>
+        
+       
+        <RenderHtml
             contentWidth={width}
             source={{html:htmlCode}}
           />

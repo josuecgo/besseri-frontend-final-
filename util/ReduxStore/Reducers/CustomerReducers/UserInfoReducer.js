@@ -5,6 +5,7 @@ const initialState = {
   user:null,
   userId: null,
   address:null,
+  addresses:[],
   cars:[],
   carActive: null,
   marcas:[],
@@ -47,7 +48,8 @@ export default (state = initialState, action) => {
             
             return {
                 ...state,
-                address: action.data,
+                address: action.data[0],
+                addresses:action.data,
                 isLoading:false
             }
         case ADD_CAR_ACTIVE_TO_USER:

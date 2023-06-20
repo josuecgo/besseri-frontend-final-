@@ -15,6 +15,7 @@ import { AddressHeader } from '../../../components/Customer/AddressHeader'
 import Colors from '../../../util/styles/colors'
 import { Box, Text } from 'native-base'
 import CommonStyles from '../../../util/styles/styles'
+import { useSelector } from 'react-redux'
 
 export const SearchAddressScreen = (props) => {
   const mapStyle = [
@@ -203,6 +204,7 @@ export const SearchAddressScreen = (props) => {
       ]
     }
   ]
+  const {user} = useSelector(state => state.user)
   const [term, setTerm] = useState('');
   const [addresses, setAddresses] = useState([]);
   const [direccion, setDireccion] = useState()
@@ -320,13 +322,18 @@ export const SearchAddressScreen = (props) => {
     editData()
   }, [props])
 
-
+  
   return (
     <View style={styles.search} >
       <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
      
       <ScrollView contentContainerStyle={{justifyContent:'space-around'}} >
-      <AddressHeader />
+        {
+          !user && (
+            <AddressHeader />
+          )
+        }
+     
         <MapView
           userInterfaceStyle={'dark'}
           ref={(el) => mapViewRef.current = el}

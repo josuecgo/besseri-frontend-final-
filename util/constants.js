@@ -145,9 +145,15 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   NOTIFICATION_HOME: 'Notificaciones',
 
   ACCOUNT_HOME : 'Cuenta',
+  MY_ACCOUNT : 'Mi cuenta',
   ACCOUNT_MY_CARS : 'Mis autos',
+  ACCOUNT_MY_ADDRESS : 'Mis direcciones',
+  ACCOUNT_VIEW_MY_ADDRESS : 'Ver mis direcciones',
+  ACCOUNT_SEARCH_MY_ADDRESS : 'Search Address',
   ADD_MY_CAR : 'Add My Car',
   ACCOUNT_PEDIDOS : 'Pedidos',
+  PRIVACY_POLICY : 'Politicas de privacidad',
+ 
 
   SHOW_REFACCIONES: 'Refacciones',
   SERVICIO: 'SERVICIO',

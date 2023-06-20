@@ -11,9 +11,10 @@ const LoaderComponent = ({isVisible}) => {
   return (
     <Modal
     isVisible={isVisible}
+    backdropOpacity={0.9}
     >
-       <View style={CommonStyles.flexOneCenter}>
-           <View style={styles.loaderWrapperStyle}>
+       <View style={[CommonStyles.flexOneCenter]}>
+           <View style={[styles.loaderWrapperStyle]}>
                <SpinKit
                type='Circle'
                isVisible={isVisible}

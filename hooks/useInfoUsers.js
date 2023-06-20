@@ -34,7 +34,7 @@ export const useInfoUser = (  ) => {
         const { carActive, myAddresses, garage } = apiCall.data.data;
         dispatch(addToUser(user));
         dispatch(addCarActiveToUser(carActive));
-        dispatch(addAddressToUser(myAddresses[0]));
+        dispatch(addAddressToUser(myAddresses));
   
         dispatch(addCarsToUser(garage));
         await saveCarActive(carActive);

@@ -1,25 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet, Image, FlatList, ScrollView, Platform, Pressable } from 'react-native';
-import { Modalize } from 'react-native-modalize';
+import React, { useEffect, useState } from 'react';
+import { Text, View, StyleSheet,  ScrollView, Platform } from 'react-native';
+
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import AntDesign from 'react-native-vector-icons/AntDesign'
+
 import CommonStyles from '../../../util/styles/styles';
 import ProductCardComponent from '../../../components/customer-components/product-card.component';
-import ButtonComponent from '../../../components/button/button.component';
 import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constants';
 import * as CartActions from '../../../util/ReduxStore/Actions/CustomerActions/CartActions';
-import { api_statuses, base_url, customer_api_urls, vendor_api_urls } from '../../../util/api/api_essentials';
-import { HeaderBackground } from '../../../components/Background/HeaderBackground';
-import { adjust, deviceHeight, deviceWidth } from '../../../util/Dimentions';
+import {  customer_api_urls, vendor_api_urls } from '../../../util/api/api_essentials';
+
+import {  deviceHeight, deviceWidth } from '../../../util/Dimentions';
 import { getUserId } from '../../../util/local-storage/auth_service';
-import { Cupon } from '../../../components/Customer/Cupon';
+
 import { ExploreScreen } from '.././Cart/ExploreScreen';
 import Colors from '../../../util/styles/colors';
 import { Box, Checkbox, HStack, VStack } from 'native-base';
 import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal';
-import { moneda } from '../../../util/Moneda';
 import AddressFormatted from '../../../components/AddressFormatted';
 
 

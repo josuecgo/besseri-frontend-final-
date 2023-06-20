@@ -1,65 +1,58 @@
 import React from 'react';
-import {Text, View,StyleSheet,Image,TouchableOpacity} from 'react-native';
+import { View,StyleSheet} from 'react-native';
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons'
+
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-const AddressComponent = ({label,addressLine,onPress,phone,info,width,selected}) => {
+import { Box, Menu, Pressable, Text } from 'native-base';
+
+
+const AddressComponent = ({deleteAddress,phone,width,selected,item}) => {
+ 
   return (
-    <TouchableOpacity 
-    onPress={onPress}
-    activeOpacity={1}
-    style={[styles.cardContainer,{width:width?width:'95%',borderColor:selected ? Colors.darkPink : 'white'}]}>
-    <View style={styles.labelCircle}>
-      {
-          label == 'Home' ? 
-          <Ionicons size={20} name='home-sharp' color={Colors.darkPink}/>
-          :
-          label == 'Work' ?
-          <MaterialIcons size={20} name='work' color={Colors.darkPink}/> 
-          :
-          null
-      }
-    </View>
-    <View style={{width:'90%',paddingLeft:10}}>
-        <Text style={{fontSize:13,...CommonStyles.fontFamily,paddingLeft:10}}>{addressLine}</Text>
-       {
-           phone ?
-           <View style={styles.flexWrapper}>
-           <MaterialCommunityIcons name='phone' size={18} color={Colors.dark}/>
-           <Text style={{paddingLeft:5,...CommonStyles.fontFamily,color:Colors.dark}}>{phone}</Text>
-       </View>
-       :
-       null
-       }
-      {
-          info ? 
-          <View style={styles.flexWrapper}>
-          <MaterialCommunityIcons name='information' size={18} color={Colors.dark}/>
-          <Text style={{paddingLeft:5,...CommonStyles.fontFamily,color:Colors.dark}}>{info}</Text>
+    <Box 
+   
+    style={[styles.cardContainer,{width:width?width:'95%',borderColor:'white'}]}>
+  
+      <View style={{width:'90%',paddingLeft:10}}>
+          <Text style={{fontSize:13,...CommonStyles.fontFamily,paddingLeft:10}}>{item.formatted_address}</Text>
+        {
+            phone ?
+            <View style={styles.flexWrapper}>
+              <MaterialCommunityIcons name='phone' size={18} color={Colors.white}/>
+            <Text style={{paddingLeft:5,...CommonStyles.fontFamily}}>{phone}</Text>
+            </View>
+        :
+        null
+        }
       </View>
-      :
-      null
-      }
-    </View>
-    </TouchableOpacity>
+
+      
+      <Menu w="190" trigger={triggerProps => {
+      return <Pressable accessibilityLabel="More options menu" {...triggerProps}>
+              <MaterialCommunityIcons name='dots-vertical' size={35} color={Colors.white} />
+            </Pressable>;
+    }}>
+      
+        <Menu.Item onPress={() => deleteAddress(item._id)}  _text={{color:'danger.600'}} >Eliminar</Menu.Item>
+      
+      </Menu>
+    </Box>
   );
 };
 const styles = StyleSheet.create({
   cardContainer:{
     width:'95%',
     minHeight:100,
-    borderWidth:2,
+    borderWidth:1,
     borderColor:Colors.white,
-    backgroundColor:'white',
-    elevation:1,
     margin:5,
     flexDirection:'row',
     alignItems:'center',
     alignSelf:'center',
     paddingHorizontal:10,
-    paddingVertical:10
+    paddingVertical:10,
+    borderRadius:10
 },
  labelCircle:{
      width:40,

@@ -13,7 +13,7 @@ export const BackgroundCar = ({home = false,bottom = 20}) => {
        resizeMode='contain'
        style={styles.img}
        />
-       {
+       {/* {
         home ? (
         <HStack>
           <ChecksHome/>
@@ -21,7 +21,7 @@ export const BackgroundCar = ({home = false,bottom = 20}) => {
         ):(
           <View style={{marginBottom:bottom}} />
         )
-       }
+       } */}
         
     </View>
   )

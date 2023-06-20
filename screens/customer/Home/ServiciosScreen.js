@@ -8,21 +8,22 @@ import { useEffect } from 'react'
 import { TypeServices } from '../../../components/Services/TypeServices'
 import { Heading, Pressable } from 'native-base'
 import CommonStyles from '../../../util/styles/styles'
+import { Empty } from '../../../components/Customer/Empty'
 
-export const ServiciosScreen = ({navigation}) => {
+export const ServiciosScreen = ({navigation,route}) => {
+  const {category} = route.params
   const [servicios, setServicios] = useState([]);
  
-  
-
+ 
   const getServicios = async() => {
     try {
        
-      const apiCall = await axios.get(customer_api_urls.get_type_services);
-
-      setServicios(apiCall?.data.data.existServices);
+      const apiCall = await axios.get(`${customer_api_urls.get_type_services_customer}/${category}`);
+     
+      setServicios(apiCall?.data.data);
 
     } catch (error) {
-      
+     
       showToaster('No hay conexion')
     }
   }
@@ -42,19 +43,22 @@ export const ServiciosScreen = ({navigation}) => {
     <View style={styles.servicios} >
     
       <Text style={CommonStyles.h1} >Elegir servicio</Text>
-      <FlatList
-      data={servicios}
-      renderItem={({item}) => (
-        <Pressable
-        onPress={() => goMapServices(item._id)}
-        >
-          <TypeServices service={item}  />
-        </Pressable>
-      )}
-      keyExtractor={(item) => item._id}
-      showsVerticalScrollIndicator={false}
-      ListFooterComponent={() => <View style={{width:100,height:50}} />}
-      />
+        <FlatList
+        data={servicios}
+        renderItem={({item}) => (
+          <Pressable
+          onPress={() => goMapServices(item._id)}
+          >
+            <TypeServices service={item}  />
+            
+          
+          </Pressable>
+        )}
+        keyExtractor={(item) => item._id}
+        showsVerticalScrollIndicator={false}
+        // ListFooterComponent={() => <View style={{width:100,height:50}} />}
+        ListEmptyComponent={<Empty/>}
+        />
     </View>
   )
 }

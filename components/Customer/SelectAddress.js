@@ -10,10 +10,14 @@ import { showToaster } from '../../util/constants'
 import { useDispatch } from 'react-redux'
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
+import { useInfoUser } from '../../hooks/useInfoUsers';
 
 export const SelectAddress = ({address,navigation}) => {
   const {label,phone,latitude,longitude,address_components,formatted_address,place_id} = address;
   const dispatch = useDispatch()
+  const {getUserInfo} = useInfoUser()
+
+
   const setUpLocation = async() => {
     try {
      
@@ -28,6 +32,7 @@ export const SelectAddress = ({address,navigation}) => {
             place_id,
             userId,
         });
+        await getUserInfo()
         navigation.pop();
       } else{
 

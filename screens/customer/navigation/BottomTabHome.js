@@ -28,13 +28,19 @@ import { LavadoMaps } from '../Home/LavadoMaps';
 import { AddCarScreen } from '../Account/AddCarScreen';
 import { CreateCarScreen } from '../Garage/customer.createCar.screen';
 import { CategoriesServicesScreen } from '../Home/CategoriesServicesScreen';
+import { MyAccountScreen } from '../Account/MyAccountScreen';
+import PrivacyPolicy from '../../privacypolicy.screen';
+import CustomerAddressesScreen from '../customer.addresses.screen';
+import { SearchAddressScreen } from '../Address/SearchAddressScreen';
+import { AccountAddressScreen } from '../Account/AccountAddressScreen';
 
+import messaging from '@react-native-firebase/messaging';
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 
-export const BottomTabHome = () => {
+export const BottomTabHome = (props) => {
   const {
     iosPermisoss,
     getToken,
@@ -45,7 +51,17 @@ export const BottomTabHome = () => {
       iosPermisoss();
     }
     getToken();
-  }, [])
+  }, []);
+
+
+  useEffect(() => {
+    const unsubscribe = messaging().onNotificationOpenedApp((remoteMessage) => {
+      // Aquí puedes manejar la lógica cuando se presione una notificación
+      props.navigation.navigate(BOTTOM_TAB_CUSTOMER_ROUTES.NOTIFICATION_STACK)
+    });
+  
+    return unsubscribe;
+  }, []);
 
 
   return (
@@ -57,11 +73,11 @@ export const BottomTabHome = () => {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarActiveTintColor: Colors.primarySolid,
-
+        
 
       })
       }
-
+    
 
     >
       <BottomTab.Screen
@@ -69,7 +85,7 @@ export const BottomTabHome = () => {
         component={CustomerHomeStack}
         options={{
           title: 'Home',
-
+          
         }}
       />
 
@@ -215,6 +231,19 @@ export const CustomerAccountStack = () => {
       />
 
       <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.MY_ACCOUNT}
+        component={MyAccountScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props}
+              titulo="Mi cuenta"
+              nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_MY_CARS}
         component={MyCarsScreen}
         options={{
@@ -227,7 +256,33 @@ export const CustomerAccountStack = () => {
           ),
         }}
       />
-
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.PRIVACY_POLICY}
+        component={PrivacyPolicy}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props}
+              titulo="Politicas de privacidad"
+              nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_MY_ADDRESS}
+        component={AddressStack}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props}
+              titulo="Politicas de privacidad"
+              nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+      
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ADD_MY_CAR}
         component={AddCarScreen}
@@ -285,3 +340,22 @@ export const CustomerNotificationStack = () => {
     </Stack.Navigator>
   );
 };
+
+const AddressStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+    >
+
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_VIEW_MY_ADDRESS}
+        component={AccountAddressScreen}
+      />
+
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_SEARCH_MY_ADDRESS}
+        component={SearchAddressScreen}
+      />
+    </Stack.Navigator>
+  )
+}
