@@ -28,9 +28,10 @@ export const CreateCarScreen = (props) => {
     handleYear
   } = useSearchStore();
   const dispatch = useDispatch()
-  const { address,marcas,marcaValue,modelos,modeloValue,yearValue,years }  = useSelector(state => state.user);
+  const { address,marcas,marcaValue,modelos,modeloValue,yearValue,years,addresses }  = useSelector(state => state.user);
   const [km, setKm ] = useState('')
   
+  console.log({addresses});
 
   const guardarCar = async () => {
     const user = await getUser();

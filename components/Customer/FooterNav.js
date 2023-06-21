@@ -6,7 +6,7 @@ import SvgUri from 'react-native-svg-uri';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { BOTTOM_TAB_CUSTOMER_ROUTES } from '../../util/constants';
+import { BOTTOM_TAB_CUSTOMER_ROUTES, CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants';
 import Colors from '../../util/styles/colors';
 import { deviceWidth } from '../../util/Dimentions';
 
@@ -23,16 +23,33 @@ export const FooterNav = ({state,navigation}) => {
    
     switch (route) {
       case  BOTTOM_TAB_CUSTOMER_ROUTES.HOME_SCREEN:
-        
+      
         return 'home'
       case  BOTTOM_TAB_CUSTOMER_ROUTES.ACCOUNT:
         
         return 'steering'
       case  BOTTOM_TAB_CUSTOMER_ROUTES.NOTIFICATION_STACK:
-        
+   
         return 'bell'
       default:
         return 'home'
+    }
+  }
+
+  const getRouteName = (route) => {
+   
+    switch (route) {
+      case  BOTTOM_TAB_CUSTOMER_ROUTES.HOME_SCREEN:
+      
+        return CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS
+      case  BOTTOM_TAB_CUSTOMER_ROUTES.ACCOUNT:
+       
+        return CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_HOME
+      case  BOTTOM_TAB_CUSTOMER_ROUTES.NOTIFICATION_STACK:
+       
+        return BOTTOM_TAB_CUSTOMER_ROUTES.NOTIFICATION_STACK
+      default:
+        return CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS
     }
   }
 
@@ -40,15 +57,15 @@ export const FooterNav = ({state,navigation}) => {
     <HStack style={[styles.footer,{paddingBottom:bottom}]}>
     {state.routes.map((route, index) => {
         
-        // Quita el bottom Tab
-        // if (state.index == 3) {
-        //     return null
-        // }
+       
         if (route.name !== BOTTOM_TAB_CUSTOMER_ROUTES.ACCOUNT) {
         
             return (
               <TouchableOpacity
-                onPress={()=>navigation.navigate(route?.name)}
+                onPress={()=> {
+                  navigation.navigate(getRouteName(route?.name))
+                 
+                }}
                 key={index}
                 style={styles.btn}
                 >
@@ -67,7 +84,17 @@ export const FooterNav = ({state,navigation}) => {
         key={index} >
           <TouchableOpacity
           style={styles.btnAccount}
-          onPress={()=>navigation.navigate(route?.name)}
+          onPress={()=>{
+           
+            
+            if (route?.state?.index == 0 || !route?.state) {
+              navigation.navigate('Cuenta Stack')
+            }else{
+              navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_HOME)
+            }
+           
+
+          }}
           activeOpacity={1}
           >
              <Image

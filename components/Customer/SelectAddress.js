@@ -36,6 +36,7 @@ export const SelectAddress = ({address,navigation}) => {
         navigation.pop();
       } else{
 
+       
         await saveAdressCustomer({
           latitude:latitude,
           longitude:longitude,
@@ -44,14 +45,14 @@ export const SelectAddress = ({address,navigation}) => {
           place_id,
           userId,
         })
-        dispatch(UserInfoActions.addAddressToUser({
+        dispatch(UserInfoActions.addAddressToUser([{
           latitude:latitude,
           longitude:longitude,
           address_components,
           formatted_address,
           place_id,
           userId,
-        }));
+        }]));
         
         navigation.navigate('AddMyCar');
       }

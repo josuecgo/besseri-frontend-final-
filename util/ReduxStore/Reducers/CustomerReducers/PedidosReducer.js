@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
             
         return {
             ...state,
-            isLoading:true
+            isLoading:action.data
         }
 
 

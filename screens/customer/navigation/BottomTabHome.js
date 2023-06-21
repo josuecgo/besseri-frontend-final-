@@ -111,7 +111,7 @@ export const CustomerHomeStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
+      initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS}
     >
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS}

@@ -11,11 +11,11 @@ export const getOrdersUser = (item) => {
   })
 }
 
-export const isLoadingOrdersUser = () => {
+export const isLoadingOrdersUser = (item) => {
    
   return({
-      type:IS_LOADING_DATA,
-     
+    type:IS_LOADING_DATA,
+    data:item
      
   })
 }

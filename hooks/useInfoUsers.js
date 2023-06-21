@@ -77,7 +77,7 @@ export const useInfoUser = (  ) => {
       if (!id) {
         return showToaster('Registrate o inicia sesion');
       }
-      dispatch(isLoadingOrdersUser());
+      dispatch(isLoadingOrdersUser(true));
       const apiCall = await axios.get(`${customer_api_urls.get_pedidos_user}/${id}`);
   
       if (apiCall.status === api_statuses.success) {
