@@ -12,7 +12,7 @@ export const Review = ({review}) => {
 
   
 
-  // console.log(review.general);
+  // //console.log(review.general);
   return (
     <View style={styles.content} >
         

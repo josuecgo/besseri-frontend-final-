@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { showAlertLogin, showToaster, showToasterError } from '../util/constants';
 import { getOrdersUser, isLoadingOrdersUser } from '../util/ReduxStore/Actions/CustomerActions/PedidosAction';
 import { ProductContext } from '../util/context/Product/ProductContext';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 
 
@@ -75,7 +76,7 @@ export const useInfoUser = (  ) => {
       const id = await getUserId();
     
       if (!id) {
-        return showToaster('Registrate o inicia sesion');
+        return 
       }
       dispatch(isLoadingOrdersUser(true));
       const apiCall = await axios.get(`${customer_api_urls.get_pedidos_user}/${id}`);
@@ -95,14 +96,16 @@ export const useInfoUser = (  ) => {
       if (!id) {
         return;
       }
+     
       const url = `${api_urls.getNotification}/${id}`;
   
       const apiCall = await axios.get(url);
-      const data = apiCall.data.data;
-  
+      const data = apiCall.data;
+      
       dispatch(saveNotification(data));
+      PushNotificationIOS.setApplicationIconBadgeNumber(data.count);
     } catch (e) {
-      // console.log({ eaAndData: e })
+      // //console.log({ eaAndData: e })
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo - N');
     }
   }, []);

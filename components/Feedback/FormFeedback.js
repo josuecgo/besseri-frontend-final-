@@ -33,7 +33,7 @@ export const FormFeedback = ({ product,valueInputs, setValueInputs }) => {
       
       return obj;
     });
-    // console.log(newState);
+    // //console.log(newState);
 
     setValueInputs(newState)
    

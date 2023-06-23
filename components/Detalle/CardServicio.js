@@ -13,12 +13,18 @@ const CardServicio = ({data}) => {
   const {
     comision
 } = useContext(ProductContext)
+
+
+  
   if(data.type === 'refaccion') return (
     <>
     <AddressFormatted address={data.store.location.formatted_address} />
     <VStack  space={3} marginTop={'10px'} >
-      <Text style={{ ...CommonStyles.h2 }} >Servicio:</Text>
-      <Text style={{ ...CommonStyles.h3,textTransform:'uppercase' }} >{data.type}</Text>
+      <HStack alignItems={'center'} space={3} >
+        <Text style={{ ...CommonStyles.h2 }} >Servicio:</Text>
+        <Text style={{ ...CommonStyles.h3,textTransform:'uppercase' }} >{data.type}</Text>
+      </HStack>
+      
 
 
       <HStack alignItems={'center'} justifyContent={'space-between'} >
@@ -53,7 +59,17 @@ const CardServicio = ({data}) => {
         <Text style={{...CommonStyles.h2}} >{data?.delivery_security_code}</Text>
       </HStack>
       <Text style={{...CommonStyles.h2}}> {data.storePickup ? 'Servicio de VALET incluido' : 'Recoger en' } </Text>
-      <AddressFormatted address={data.store.location.formatted_address} />
+      {
+        data.storePickup ? (
+          <AddressFormatted address={data?.delivery_address?.formatted_address} />
+        ): (
+          <AddressFormatted address={data?.store?.location?.formatted_address} />
+        )
+      }
+     
+
+      
+      
       <HStack alignItems={'center'} justifyContent={'space-between'} >
         <Text style={{...CommonStyles.h2}} >Total:</Text>
         <Text style={{...CommonStyles.h2}} >{moneda(data?.total_amount)} MXN</Text>

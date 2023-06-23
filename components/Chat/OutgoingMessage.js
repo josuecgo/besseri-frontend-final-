@@ -5,7 +5,7 @@ import Colors from '../../util/styles/colors'
 import { adjust } from '../../util/Dimentions'
 
 export const OutgoingMessage = ({msg}) => {
-    // console.log(props);
+    // //console.log(props);
     return (
         <View style={styles.content} >
             <View style={styles.globo} >

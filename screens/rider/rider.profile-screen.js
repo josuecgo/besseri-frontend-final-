@@ -68,7 +68,7 @@ const RiderProfileScreen = ({ navigation }) => {
     ];
     const getUserData = async () => {
         const data = await getRiderProfile();
-        // console.log(`${base_url}/${riderProfile?.profile}`);
+        // //console.log(`${base_url}/${riderProfile?.profile}`);
         setRiderProfile(data);
         getWalletDetails();
     };
@@ -77,7 +77,7 @@ const RiderProfileScreen = ({ navigation }) => {
     }, []);
     const getWalletDetails = async () => {
         try {
-            // console.log({riderProfile,wallet:riderProfile?.wallet_id});
+            // //console.log({riderProfile,wallet:riderProfile?.wallet_id});
             if (!riderProfile || !riderProfile?.wallet_id) {
                 return;
             } else {
@@ -90,9 +90,9 @@ const RiderProfileScreen = ({ navigation }) => {
                     return;
                 }
             }
-            // console.log('line 57', rider_wallet?.charges_enabled);
+            // //console.log('line 57', rider_wallet?.charges_enabled);
         } catch (e) {
-            // console.log('line 38', e);
+            // //console.log('line 38', e);
             showToaster('Perdón por la interrupción, esta solicitud falló');
         }
     };
@@ -134,11 +134,11 @@ const RiderProfileScreen = ({ navigation }) => {
                 await saveRiderProfile([apiCall?.data?.profile]);
             }
         } catch (e) {
-            // console.log(e);
+            // //console.log(e);
             showToaster('Algo salió mal, intenta de nuevo');
         }
     };
-    // console.log(rider_wallet);
+    // //console.log(rider_wallet);
     return (
         <View style={{ flex: 1, backgroundColor:Colors.bgColor }}>
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>

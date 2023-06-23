@@ -107,7 +107,7 @@ const VendorAddProductScreen = ({navigation}) => {
   const toBeEditedProduct = params?.product;
   
   let images = []; 
-  // console.log(toBeEditedProduct.urlsImg);
+  // //console.log(toBeEditedProduct.urlsImg);
   if (isEditMode) {
     if (toBeEditedProduct.urlsImg && toBeEditedProduct?.urlsImg?.length > 0) {
       
@@ -202,7 +202,7 @@ const VendorAddProductScreen = ({navigation}) => {
     ? inputValues[CREDENTIAL_KEYS.PRICE]
     : '';
 
-  // console.log(isDeliveryScreen);
+  // //console.log(isDeliveryScreen);
   const textinputKeys = isProductNameScreen
     ? CREDENTIAL_KEYS.NAME
     : isDescriptionScreen
@@ -239,7 +239,7 @@ const VendorAddProductScreen = ({navigation}) => {
       }
     } catch (e) {
       setShowLoader(false);
-      // console.log(e.response.data);
+      // //console.log(e.response.data);
       alert('Algo salió mal');
     }
   };
@@ -254,7 +254,7 @@ const VendorAddProductScreen = ({navigation}) => {
         setBrands(apiCall.data.data);
       }
     } catch (e) {
-      // console.log(e?.response?.data);
+      // //console.log(e?.response?.data);
       setShowLoader(false);
       alert('Algo salió mal');
     }
@@ -308,7 +308,7 @@ const VendorAddProductScreen = ({navigation}) => {
             setSelectedcategory(apiData[d]);
           }
         }
-        // console.log(selectedCategory);
+        // //console.log(selectedCategory);
       }
     } catch (e) {
       setShowLoader(false);
@@ -335,12 +335,12 @@ const VendorAddProductScreen = ({navigation}) => {
               setSelectedSubCategory(apiData[d]);
             }
           }
-          // console.log(selectedCategory);
+          // //console.log(selectedCategory);
         }
       }
      
     } catch (e) {
-      // console.log(e?.response?.data);
+      // //console.log(e?.response?.data);
       setShowLoader(false);
     }
   };
@@ -358,7 +358,7 @@ const VendorAddProductScreen = ({navigation}) => {
       
       setAplication(apiCall.data.data)
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -390,7 +390,7 @@ const VendorAddProductScreen = ({navigation}) => {
       }
     } catch (e) {
       setShowLoader(false);
-      // console.log(e.response.data);
+      // //console.log(e.response.data);
       alert('Algo salió mal');
     }
   };
@@ -533,7 +533,7 @@ const VendorAddProductScreen = ({navigation}) => {
     setShowLoader(true);
     const imageFormData = new FormData();
     let images = inputValues[CREDENTIAL_KEYS.PRODUCT_IMAGE];
-    console.log({images});
+    //console.log({images});
     for (let index = 0; index < images.length; index++) {  
       
       imageFormData.append('imageFormData', {
@@ -555,7 +555,7 @@ const VendorAddProductScreen = ({navigation}) => {
     let resp = await  fetch(vendor_api_urls.upload_product_image,requestoptions);
     
     const data = await resp.json();
-    // console.log(data);
+    // //console.log(data);
     if (data?.success) {
       return data?.data
     }
@@ -571,7 +571,7 @@ const VendorAddProductScreen = ({navigation}) => {
 
       
       const productImgUpload = await uploadProductImg();
-      // console.log({productImgUpload});
+      // //console.log({productImgUpload});
       if (productImgUpload) {
         const apiBody = {
           name: inputValues[CREDENTIAL_KEYS.NAME],
@@ -614,7 +614,7 @@ const VendorAddProductScreen = ({navigation}) => {
       setShowLoader(false);
     } catch (e) {
       setShowLoader(false);
-      // console.log(e,'create');
+      // //console.log(e,'create');
   
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
     }
@@ -677,8 +677,8 @@ const VendorAddProductScreen = ({navigation}) => {
       }
     } catch (e) {
       setShowLoader(false);
-      // console.log(e,'e');
-      // console.log(e.response.data);
+      // //console.log(e,'e');
+      // //console.log(e.response.data);
       showToaster(
         'Algo salió mal, inténtalo de nuevo, contacte con él administrador',
       );
@@ -838,7 +838,7 @@ const VendorAddProductScreen = ({navigation}) => {
 
   }
   
-  // console.log(inputValues[CREDENTIAL_KEYS.PRODUCT_IMAGE]);
+  // //console.log(inputValues[CREDENTIAL_KEYS.PRODUCT_IMAGE]);
   return (
     <View style={styles.container}>
       <AddBrandModal
@@ -914,7 +914,7 @@ const VendorAddProductScreen = ({navigation}) => {
                 data={aplication}
                 keyExtractor={item => item?._id}
                 renderItem={ ({item}) => {
-                  // console.log(inputValues[CREDENTIAL_KEYS?.PRODUCT_APLICATION]);
+                  // //console.log(inputValues[CREDENTIAL_KEYS?.PRODUCT_APLICATION]);
                   return ( 
                     <RenderItemAplication 
                     handleChange={ handleChange}
@@ -993,7 +993,7 @@ const VendorAddProductScreen = ({navigation}) => {
                 }
                 keyExtractor={item => item?._id}
                 renderItem={itemData => {
-                  // console.log(itemData.item.name);
+                  // //console.log(itemData.item.name);
                   return (
                     <ListCard
                       selected={

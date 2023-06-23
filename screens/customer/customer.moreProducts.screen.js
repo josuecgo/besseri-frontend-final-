@@ -60,7 +60,7 @@ const CustomerMoreProductsScreen = props => {
 
     const handleMarca = (item) => {
        
-        // console.log(item);
+        // //console.log(item);
         setValueMaker(item)
         setValueYear('')
 
@@ -211,7 +211,7 @@ const CustomerMoreProductsScreen = props => {
                 showToaster('No tienes conexion a la red');
             }
         } catch (error) {
-            // console.log(error);
+            // //console.log(error);
             setMarcas([]);
         }
         setIsLoading(false);

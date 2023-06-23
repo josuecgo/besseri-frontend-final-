@@ -75,7 +75,7 @@ const CustomerAddressesScreen = (props) => {
                 showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
             }
         } catch (e) {
-            // console.log(e.response)
+            // //console.log(e.response)
             setLoading(false);
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
         }
@@ -105,7 +105,7 @@ const CustomerAddressesScreen = (props) => {
                 }
 
             } catch (e) {
-                // console.log(e.response.data)
+                // //console.log(e.response.data)
                 setLoading(false);
                 showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
             }
@@ -130,7 +130,7 @@ const CustomerAddressesScreen = (props) => {
                 showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
             }
         } catch (e) {
-            // console.log(e.response.data)
+            // //console.log(e.response.data)
             setLoading(false);
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
         }

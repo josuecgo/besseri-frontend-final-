@@ -15,7 +15,7 @@ moment.locale('es');
 
 
 const OrderCard = ({ data, onPress, isRider,isDelivered,onFeedback }) => {
-  // console.log(isDelivered);
+  // //console.log(isDelivered);
   const { products } = data;
   
   return (

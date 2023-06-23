@@ -6,7 +6,7 @@ import { adjust } from '../../util/Dimentions';
 
 export const IncomingMessage = ({msg}) => {
 
-    // console.log(msg);
+    // //console.log(msg);
     return (
         <View style={styles.content} >
             <View style={styles.globo} >

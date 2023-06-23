@@ -71,7 +71,7 @@ export const useCompras = () => {
                 setLoading(false)
                 return apiCall?.status
             } catch (e) {
-                // console.log(e?.response?.status);
+                // //console.log(e?.response?.status);
                 setLoading(false);
                 showToaster(e?.response?.data?.message);
                 
@@ -88,7 +88,7 @@ export const useCompras = () => {
                 setLoading(false)
                 return {cupon:apiCall.data,status:apiCall.status}
             } catch (e) {
-                // console.log(e?.response?.status);
+                // //console.log(e?.response?.status);
                 setLoading(false);
                 showToaster(e?.response?.data?.message);
                 

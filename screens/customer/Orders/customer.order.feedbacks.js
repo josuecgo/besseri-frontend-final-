@@ -19,7 +19,7 @@ export const CustomerOrderFeedbacks = ({navigation,route}) => {
   const totalFeedbacks = () => {
     
     let sumatoriaObjeto = feedbacks.reduce(function(acumulador, siguienteValor){
-      // console.log(acumulador);
+      // //console.log(acumulador);
       return {
         general: acumulador.general + siguienteValor.general,
         installation: acumulador.installation + siguienteValor.installation,

@@ -79,8 +79,8 @@ const CustomerStoreScreen = props => {
   };
 
 
-  // console.log(productFiltradoStore[0]?.business_id);
-  // console.log(params?.data);
+  // //console.log(productFiltradoStore[0]?.business_id);
+  // //console.log(params?.data);
   useEffect(() => {
     if (params?.data) {
 

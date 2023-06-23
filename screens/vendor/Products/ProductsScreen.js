@@ -59,7 +59,7 @@ export const ProductsScreen = ({navigation}) => {
   const {  showLoader, categorias,setSelectedcategory,selectedCategory, business_profile,
     business } = useVendor();
  
-  // console.log({ showLoader, products, categorias });
+  // //console.log({ showLoader, products, categorias });
   const floatButtonHandler = () => {
       if(!business?.location?.latitude || !business?.location?.longitude || !business?.location?.city || !business?.location?.state) {
         showToaster('Su ubicación no está configurada completamente, configúrela desde la configuración');

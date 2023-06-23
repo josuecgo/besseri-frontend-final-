@@ -371,7 +371,7 @@ export const SearchAddressScreen = (props) => {
               latitude: e.nativeEvent.coordinate.latitude,
               longitude: e.nativeEvent.coordinate.longitude,
             }
-            // console.log(e.nativeEvent);
+            // //console.log(e.nativeEvent);
 
             onMovePositionMaker(loc)
           }}

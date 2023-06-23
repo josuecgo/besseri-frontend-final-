@@ -98,7 +98,7 @@ export const useCart = () => {
         }
             
         } catch (e) {
-          // console.log(e?.response?.status);
+          // //console.log(e?.response?.status);
           showToaster('ESTE DESCUENTO YA FUE APLICADO.');
           return {status:e?.response?.status}
         }

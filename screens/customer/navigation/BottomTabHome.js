@@ -35,6 +35,7 @@ import { SearchAddressScreen } from '../Address/SearchAddressScreen';
 import { AccountAddressScreen } from '../Account/AccountAddressScreen';
 
 import messaging from '@react-native-firebase/messaging';
+import { HeaderPedidos } from '../../../components/Customer/HeaderPedidos';
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -303,9 +304,9 @@ export const CustomerAccountStack = () => {
         options={{
           headerShown: true,
           header: props => (
-            <HeaderTitle {...props}
+            <HeaderPedidos {...props}
               titulo="Historial"
-              nav={props.navigation.goBack}
+              nav={props.navigation}
             />
           ),
         }}

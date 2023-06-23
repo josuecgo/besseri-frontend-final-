@@ -81,14 +81,14 @@ export const matchYear = (filtrado,valueModel = '',valueYear) => {
     let allModel = item.model._id === '639cb2dbcd30bfa4463f12af' ? true : false;
 
     let compatible = item?.matchs.find(element =>  {
-        // console.log(element?.model._id);
-        // console.log({modell:valueModel});
+        // //console.log(element?.model._id);
+        // //console.log({modell:valueModel});
         let model = valueModel ? element?.model._id === valueModel : ""
 
         let result = betweenNumber(element?.de,element?.al,valueYear)
 
-        // console.log(result,'result');
-        // console.log(model,'model');
+        // //console.log(result,'result');
+        // //console.log(model,'model');
         if (result && model ) {
             return element
         }else{
@@ -112,10 +112,10 @@ export const matchYear = (filtrado,valueModel = '',valueYear) => {
 const  betweenNumber = (startingNumber, endingNumber, givenNumber) => {
 
   if(givenNumber >= startingNumber && givenNumber <= endingNumber){
-      // console.log(`número dado ${givenNumber} cae entre ${startingNumber} y ${endingNumber}`);
+      // //console.log(`número dado ${givenNumber} cae entre ${startingNumber} y ${endingNumber}`);
       return true
   }else{
-    // console.log(`número dado ${givenNumber} no cae entre ${startingNumber} y ${endingNumber}`);
+    // //console.log(`número dado ${givenNumber} no cae entre ${startingNumber} y ${endingNumber}`);
       return false;
   }
 }

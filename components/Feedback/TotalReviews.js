@@ -6,7 +6,7 @@ import Colors from '../../util/styles/colors'
 import { Box } from 'native-base'
 
 export const TotalReviews = ({ total }) => {
-  // console.log( total );
+  // //console.log( total );
   return (
     <>
       <Box>

@@ -152,7 +152,7 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
       }
     } catch (e) {
       alert(e.response.data.message)
-      // console.log(e.response.data)
+      // //console.log(e.response.data)
       setShowLoader(false);
     }
   }
@@ -162,7 +162,7 @@ const VendorSsSignUpScreen = ({ navigation, route }) => {
       height: 400,
       cropping: true,
     }).then(res => {
-      // console.log(res);
+      // //console.log(res);
       setLogo(res);
     }).catch(e => {
       showToaster('Algo salio mal')

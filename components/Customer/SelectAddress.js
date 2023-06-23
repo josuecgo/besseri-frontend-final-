@@ -62,7 +62,7 @@ export const SelectAddress = ({address,navigation}) => {
       
       
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo - Address');
-    //  console.log(e?.response?.data)
+    //  //console.log(e?.response?.data)
     }
   }
   return (

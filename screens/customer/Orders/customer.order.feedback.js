@@ -109,7 +109,7 @@ export const CustomerOrderFeedback = ({ navigation, route }) => {
      
      
     } catch (error) {
-      console.log(error, 'upload');
+      //console.log(error, 'upload');
       setIsLoading(false)
       return false
     }
@@ -118,8 +118,8 @@ export const CustomerOrderFeedback = ({ navigation, route }) => {
   };
 
   
-  // console.log(form);
-  // console.log(valueInputs);
+  // //console.log(form);
+  // //console.log(valueInputs);
   const enviarValoracion = async (data) => {
     try {
       
@@ -136,7 +136,7 @@ export const CustomerOrderFeedback = ({ navigation, route }) => {
       
 
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       await dispatch(resetForm());
       setIsLoading(false)
       showToaster('No hay conexion con el servidor.')

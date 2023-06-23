@@ -98,7 +98,7 @@ const CustomerOrdersViewScreen = (props) => {
       });
       setLoading(false);
       if(apiCall?.status == api_statuses?.success) {
-        // console.log(apiCall.data.data);
+        // //console.log(apiCall.data.data);
         if(apiCall?.data?.data) {
           await saveBusinessProfile(apiCall?.data?.data);
           getBusiness();
@@ -112,7 +112,7 @@ const CustomerOrdersViewScreen = (props) => {
     } catch(e) {
       setLoading(false);
      showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
-    //  console.log(e?.response?.data)
+    //  //console.log(e?.response?.data)
     }
   }
 
@@ -223,7 +223,7 @@ const CustomerOrdersViewScreen = (props) => {
               setState(locationData?.location?.state);
               setAddressLine(locationData?.location?.address)
             }
-              // console.log(ShowSetUpLocationRef);
+              // //console.log(ShowSetUpLocationRef);
             ShowSetUpLocationRef?.current?.open();
           }}
           style={{width:150,height:50,borderWidth:1,borderColor:Colors.lightRed,backgroundColor:Colors.lightRed,justifyContent:'center',alignItems:'center',borderRadius:5,alignSelf:'center'}}>

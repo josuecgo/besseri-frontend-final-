@@ -17,7 +17,7 @@ export const HomeScreen = (props) => {
     }
 
     const editarCupon = (data) => {
-    //   console.log({editar:data});
+    //   //console.log({editar:data});
     }
 
     const eliminarCupon = (data) => {

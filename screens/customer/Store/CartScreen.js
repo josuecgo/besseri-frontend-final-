@@ -34,20 +34,27 @@ export const CartScreen = (props) => {
   })
   const [businessProfiles, setBusinessProfiles] = useState([]);
   const [comission, setComission] = useState();
-  const [delivery_fee, setDeliveryFee] = useState();
+  const [delivery_fee, setDeliveryFee] = useState(null);
   const [totalDeliveryFee, setTotalDeliveryFee] = useState(0);
+  const [tempTotalDeliveryFee, setTempTotalDeliveryFee] = useState(null)
   const [billComission, setBillComission] = useState()
   const [deliveryDistance, setDeliveryDistance] = useState(null);
+  const [tempDeliveryDistance, setTempDeliveryDistance] = useState(null)
   const [isLogin, setIsLogin] = useState(false)
   let businessIds = [];
   const address = useSelector( state => state.user.address );
   const [pickup, setPickup] = useState(false)
 
-
+ 
 
   const goDirecctions = () => {
     props.navigation.navigate('Mi dirección')
   }
+  useEffect(() => {
+    
+    fetchBusinessDetails()
+  
+  }, [])
 
   useEffect(async () => {
     let abortController = new AbortController();
@@ -74,7 +81,7 @@ export const CartScreen = (props) => {
       setBillComission(getFee.data.data[0]?.besseri_comission);
 
     } catch (e) {
-      // console.log({error:e})
+      // //console.log({error:e})
 
       showToaster('Error')
     }
@@ -97,7 +104,7 @@ export const CartScreen = (props) => {
     //     setDireccion(false);
     //   }
     // } catch (e) {
-    //   // console.log({error:e})
+    //   // //console.log({error:e})
     //   setDireccion(false);
     //   showToaster('Crea una direccion para poder realizar tu compra')
     // }
@@ -107,43 +114,62 @@ export const CartScreen = (props) => {
 
   const fetchBusinessDetails = async () => {
     try {
-      // console.log(businessId);
+     
       const getBusinessDetails = await axios.post(vendor_api_urls?.get_multiple_stores, {
         businessIds: [businessId]
       });
       setBusinessProfiles(getBusinessDetails.data.data);
+
+      return getBusinessDetails.data.data
       
     } catch (e) {
-      // console.log(e?.response);
-      showToaster('Algo salió mal');
+      props.navigation.goBack()
+      showToaster('Algo salió mal,intentalo mas tarde.');
     }
   }
 
-  const calculateDelivery = () => {
-    
-    const distance = Math.sqrt(
-      Math.pow(69.1 * (Number(businessProfiles[0]?.location?.latitude) - [address.latitude]), 2) +
-      Math.pow(69.1 * ([address?.longitude] - Number(businessProfiles[0]?.location?.longitude)) * Math.cos(Number(businessProfiles[0]?.location?.latitude) / 57.3), 2));
-   
-    setTotalDeliveryFee(Math.round(distance) * delivery_fee);
-    setDeliveryDistance(Math.round(distance));
+  const calculateDelivery = async() => {
+    let vendor = businessProfiles;
+    if (businessProfiles.length <= 0) {
+      vendor = await fetchBusinessDetails()
+      
+    }
 
-    return 
+    const distance = Math.sqrt(
+      Math.pow(69.1 * (Number(vendor[0]?.location?.latitude) - [address.latitude]), 2) +
+      Math.pow(69.1 * ([address?.longitude] - Number(vendor[0]?.location?.longitude)) * Math.cos(Number(vendor[0]?.location?.latitude) / 57.3), 2));
+      
+      
+    
+      let dis = Math.round(distance)
+      let del = Math.round(distance) * delivery_fee
+    
+      setTotalDeliveryFee(del);
+    
+      setDeliveryDistance(dis);
+      return {
+        distancia: dis,
+        delivery: del
+      }
+    
+     
+    
+
+     
   }
 
 
+
+
   const goPurchase = () => {
-    // console.log('click1');
+    // console.log(pickup);
 
     if (isLogin) {
       if (!direccion) {
         showToaster('Crea una direccion para poder realizar tu compra')
         return
       }
-      // if ((totalAmount + comission * totalAmount / 100 - descuento).toFixed(2) <= 300) {
-      //   showToaster('Compra minima $300.00.')
-      //   return
-      // }
+     
 
       if (businessProfiles[0]?.wallet_id && !businessProfiles[0]?.isBlocked) {
         let allProducts = products?.filter(prod => prod?.business_id == businessProfiles[0]?._id);
@@ -175,7 +201,7 @@ export const CartScreen = (props) => {
           cupon: idDesc,
           descuento,
           envio:totalDeliveryFee,
-          pickup,
+          pickup:pickup,
           address,
           totalProductsPrice
         })
@@ -189,12 +215,14 @@ export const CartScreen = (props) => {
       props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR)
     }
   }
-
-  const servicioValet = (value) => {
+  
+  const servicioValet = async(value) => {
     setPickup(value)
-    if (value) {
+   
+   
+    if (value ) {
       calculateDelivery()
-      // setTotal(totalDeliveryFee)
+      
     }else{
       setTotalDeliveryFee(0);
     }
@@ -207,11 +235,11 @@ export const CartScreen = (props) => {
     try {
 
       const getFee = await axios.get(customer_api_urls?.get_fees);
-      // console.log(getFee.data)
+      // //console.log(getFee.data)
       setComission(getFee.data.data[0]?.besseri_comission);
       setDeliveryFee(getFee.data.data[0]?.delivery_fee);
     } catch (e) {
-      // console.log(e?.response);
+      // //console.log(e?.response);
       showToaster('something went wrong');
     }
   }
@@ -239,6 +267,14 @@ export const CartScreen = (props) => {
 
   }, [products])
 
+  
+  useEffect(() => {
+    if (businessProfiles.length > 0 && delivery_fee) {
+      // calculateDelivery()
+    }
+   
+  }, [businessProfiles,delivery_fee,tempDeliveryDistance,tempTotalDeliveryFee])
+  
 
 
 
@@ -267,11 +303,7 @@ export const CartScreen = (props) => {
   }
 
   
-  useEffect(() => {
-    
-    fetchBusinessDetails()
-  
-  }, [])
+ 
   
   
   return (
@@ -341,8 +373,11 @@ export const CartScreen = (props) => {
             <HStack justifyContent={'space-between'} mt={'10px'} >
               <Checkbox
                 value="test"
-                accessibilityLabel="This is a dummy checkbox"
-                onChange={(value) => servicioValet(value)}
+                accessibilityLabel="Valet"
+                onChange={(value) => {
+                 
+                  servicioValet(value)
+                }}
                 backgroundColor={Colors.white}
               >
 

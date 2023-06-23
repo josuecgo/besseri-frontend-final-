@@ -112,7 +112,7 @@ const SplashScreen = ({navigation}) => {
       
       <Video source={require('../assets/besserLoading.mp4')}   // Can be a URL or a local file.
        ref={(ref) => {
-        //  console.log(ref);
+        //  //console.log(ref);
        }}                                      // Store reference
        onBuffer={()=>{}}                // Callback when remote video is buffering
        onError={()=>{}}               // Callback when video cannot be loaded

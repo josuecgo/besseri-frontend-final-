@@ -15,7 +15,7 @@ export const AllProduct = (props) => {
     const [marcaSelect, setMarcaSelect] = useState("")
     const [modeloSelect, setModeloSelect] = useState("");
     const [yearSelect, setYearSelect] = useState("")
-    // console.log(marcaSelect);
+    // //console.log(marcaSelect);
 
     useEffect(() => {
         productSubCategoria(idSubCategoria)

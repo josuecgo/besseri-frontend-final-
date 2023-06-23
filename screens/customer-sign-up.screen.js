@@ -93,8 +93,8 @@ const CustomerSignUpScreen = ({ navigation }) => {
         });
       }
     } catch (e) {
-      // console.log(e)
-      // console.log(e.response.data)
+      // //console.log(e)
+      // //console.log(e.response.data)
 
       showToaster(e.response.data.message)
       setShowLoader(false);

@@ -63,7 +63,7 @@ const CustomerSearchScreen = React.memo((props) => {
                 
             // }
         } catch (error) {
-            // console.log(error);
+            // //console.log(error);
         }
 
     }
@@ -92,7 +92,7 @@ const CustomerSearchScreen = React.memo((props) => {
         }
         setLoading(false);
         } catch(e) {
-            // console.log(e?.response?.data)
+            // //console.log(e?.response?.data)
             setLoading(false);
         showToaster('something went wrong')
         }

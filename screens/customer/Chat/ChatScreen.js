@@ -18,7 +18,7 @@ export const ChatScreen = (props) => {
     const { mensajes, getMensajes} = useContext(ChatContext);
     const [uid, setUid] = useState(0);
     const [store, setStore] = useState(null);
-    // console.log(product);
+    // //console.log(product);
     const getVendor = async() => {
         
         try {
@@ -34,14 +34,14 @@ export const ChatScreen = (props) => {
             
            
         } catch(e) {
-            // console.log({getProducts:e})
+            // //console.log({getProducts:e})
             showToaster('No hay conexion con el servidor ');
            
         }
         
     }
 
-    // console.log(store);
+    // //console.log(store);
 
     useEffect(() => {
         getVendor();

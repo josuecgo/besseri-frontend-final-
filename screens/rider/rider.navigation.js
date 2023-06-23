@@ -43,7 +43,7 @@ export const RiderNavigation = () => {
 useEffect(() => {
   getLocationHook()
 }, [])
-  // console.log({countRider,notificaciones});
+  // //console.log({countRider,notificaciones});
   return (
     <BottomTab.Navigator
       initialRouteName={BOTTOM_TAB_RIDER_ROUTES.DUMMY_SCREEN}

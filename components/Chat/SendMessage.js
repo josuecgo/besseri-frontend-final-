@@ -16,7 +16,7 @@ export const SendMessage = (props) => {
             enviarMensaje({...props,mensaje})
             setMensaje('')
         }else{
-            // console.log('vacio');
+            // //console.log('vacio');
         }
         
     }

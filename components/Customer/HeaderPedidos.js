@@ -1,0 +1,81 @@
+import { Platform, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import React from 'react'
+import CommonStyles from '../../util/styles/styles'
+import Colors from '../../util/styles/colors'
+import { adjust, deviceHeight } from '../../util/Dimentions'
+import { HeaderBackground } from '../Background/HeaderBackground'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Divider, HStack } from 'native-base'
+import { NewLogo } from '../NewLogo'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants'
+
+
+export const HeaderPedidos = ({ nav, titulo, iconName = 'keyboard-backspace', tienda=false }) => {
+  const { top } = useSafeAreaInsets()
+  
+  return (
+    <>
+      <HeaderBackground />
+      <View style={[styles.header,{paddingTop:top }]}>
+        <HStack space={4} alignItems={'center'} >
+          {
+            nav && (
+              <TouchableOpacity
+                onPress={() => nav.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS)}
+                style={styles.btn}
+              >
+                <MaterialCommunityIcons
+                  name={iconName}
+                  color={Colors.white}
+                  size={24}
+                />
+              </TouchableOpacity>
+            )
+          }
+
+          <Text style={styles.headerText}>{titulo}</Text>
+        </HStack>
+
+
+        <NewLogo/>
+      
+
+
+      
+      </View>
+      <Divider
+      _light={{
+        bg: "#2C2A2A"
+      }} _dark={{
+        bg: "#2C2A2A"
+      }}
+      />
+    </>
+  )
+}
+
+
+
+const styles = StyleSheet.create({
+  header: {
+    width: '100%',
+    // height: Platform.OS == 'ios' ? deviceHeight * 0.12 : deviceHeight * 0.10,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row'
+  },
+  headerText: {
+    ...CommonStyles.h2,
+   
+    
+  },
+  btn: {
+    backgroundColor:Colors.darker,
+    borderRadius:5,
+    padding:2
+
+  },
+
+})

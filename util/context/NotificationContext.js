@@ -65,7 +65,7 @@ export const NotificationProvider = ({children}) => {
         
 
         try {
-          console.log(msg);
+         
           getNotificaciones();
           PushNotification.createChannel(
             {
@@ -93,7 +93,7 @@ export const NotificationProvider = ({children}) => {
           
         } catch(e) {
           alert('No se pudo recibir notificacion');
-          console.log({e})
+          //console.log({e})
         }
 
 
@@ -105,7 +105,7 @@ export const NotificationProvider = ({children}) => {
     
 
     const deleteNotificaciones = async() => {
-
+      
       await dispatch({
         type:'getNotification',
         payload: {
@@ -148,7 +148,7 @@ export const NotificationProvider = ({children}) => {
         if(permission) {
           const fcmToken =  await firebase.messaging().getToken();
           const userId = await getUserId();
-          console.log({fcmToken});
+          //console.log({fcmToken});
           if(fcmToken && userId) {
             const r = await axios.post(api_urls?.save_fcm_token,{
               token:fcmToken,
@@ -165,7 +165,7 @@ export const NotificationProvider = ({children}) => {
       async function pushIos(){
        
         // const unsubscribe = await messaging().onMessage(async (remoteMsg) => {
-        //   console.log('remote push ios');
+        //   //console.log('remote push ios');
         //   // await PushNotificationIOS.addNotificationRequest({
         //   //   alertTitle:remoteMsg?.data?.title,
         //   //   alertBody:remoteMsg?.data?.message
@@ -178,38 +178,16 @@ export const NotificationProvider = ({children}) => {
         return unsubscribe
       }
 
-      // async function pushIos2(){
-       
-      //   const unsubscribe = await messaging().setBackgroundMessageHandler(async (remoteMsg) => {
-      //     PushNotificationIOS.addNotificationRequest({
-      //       alertTitle:remoteMsg.data.title,
-      //       alertBody:remoteMsg.data.message
-      //     })
-
-      //   })
-      //   getNotificaciones();
-
-      //   return unsubscribe
-      // }
+   
 
 
       const iosPermisoss = () => {
         PushNotificationIOS.requestPermissions()
-        // PushNotificationIOS.addEventListener('localNotification',pushIos);
+       
        
       }
 
-    // useEffect(() => {
-    //     if (Platform.OS === 'ios') {
-          
-    //       iosPermisoss();
-          
-    //     }
-    //     getToken();
-        
-    // }, [])
-
-
+   
 
     useEffect(async() => {
       const type = 'notification';
@@ -221,7 +199,7 @@ export const NotificationProvider = ({children}) => {
     });
   
     const onRemoteNotification = (notification) => {
-        // console.log({notification});
+        // //console.log({notification});
        
       const isClicked = notification.getData().userInteraction === 1;
       

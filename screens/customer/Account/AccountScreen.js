@@ -10,18 +10,23 @@ import { logout } from '../../../util/local-storage/auth_service'
 import { useSelector,useDispatch } from 'react-redux'
 import { useInfoUser } from '../../../hooks/useInfoUsers'
 import { deleteToUser } from '../../../util/ReduxStore/Actions/CustomerActions/UserInfoActions'
+import { resetOrdersUser } from '../../../util/ReduxStore/Actions/CustomerActions/PedidosAction'
+import { useContext } from 'react'
+import { NotificationContext } from '../../../util/context/NotificationContext'
 
 export const AccountScreen = (props) => {
   
   const {user} = useSelector(state => state.user)
   const dispatch = useDispatch()
+  const {deleteNotificaciones} = useContext(NotificationContext)
  
   const loginLogout = async() => {
     
      if (user) {
       await logout();
+      await deleteNotificaciones()
       dispatch(deleteToUser())
-   
+      dispatch(resetOrdersUser())
       props.navigation.replace('Splash',{reload:true});
     }else{
        props.navigation.replace('AuthStack',{reload:true});

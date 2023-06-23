@@ -83,7 +83,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
      }
     } catch(e) {
       setLoading(false);
-      // console.log(e?.response?.data)
+      // //console.log(e?.response?.data)
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
     }
   } 
@@ -105,7 +105,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
        navigation.goBack()
      }
     } catch(e) {
-      // console.log(e?.response?.data)
+      // //console.log(e?.response?.data)
       setLoading(false);
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
       navigation.goBack()
@@ -149,7 +149,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
      });
      setLoading(false);
      if(apiCall.status == api_statuses.success) {
-      //  console.log(apiCall.data)
+      //  //console.log(apiCall.data)
         await getOrderDetails()
         
      } else {
@@ -157,7 +157,7 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
        navigation.goBack()
      }
     } catch(e) {
-      // console.log(e.response.data)
+      // //console.log(e.response.data)
       setLoading(false);
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
       navigation.goBack()
@@ -174,14 +174,14 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
      });
      setLoading(false);
      if(apiCall.status == api_statuses.success) {
-      //  console.log(apiCall.data)
+      //  //console.log(apiCall.data)
         await getOrderDetails()
      } else {
        showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
        navigation.goBack()
      }
     } catch(e) {
-      // console.log(e.response.data)
+      // //console.log(e.response.data)
       setLoading(false);
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
       navigation.goBack()
@@ -198,14 +198,14 @@ const VendorOrderDetailsScreen = ({navigation, route}) => {
      });
      setLoading(false);
      if(apiCall.status == api_statuses.success) {
-      //  console.log(apiCall.data)
+      //  //console.log(apiCall.data)
         await getOrderDetails()
      } else {
        showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
        navigation.goBack()
      }
     } catch(e) {
-      // console.log(e.response.data)
+      // //console.log(e.response.data)
       setLoading(false);
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
       navigation.goBack()

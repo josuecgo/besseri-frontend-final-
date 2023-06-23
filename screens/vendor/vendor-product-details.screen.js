@@ -53,7 +53,7 @@ const VendorProductDetailsScreen = ({ navigation, route }) => {
             setShowLoader(false);
             if (apiCall.status == api_statuses.success) {
                 setProduct(apiCall.data.data);
-                // console.log(apiCall.data);
+                // //console.log(apiCall.data);
                 showToaster(
                     `Este producto fue marcado como ${product?.inStock ? 'sin' : 'con'
                     } stock.`,
@@ -62,7 +62,7 @@ const VendorProductDetailsScreen = ({ navigation, route }) => {
                 showToaster('Algo salió mal, inténtalo de nuevo más tarde. -1');
             }
         } catch (e) {
-            // console.log(e);
+            // //console.log(e);
             setShowLoader(false);
             showToaster('Algo salió mal, inténtalo de nuevo más tarde.');
         }
@@ -81,21 +81,21 @@ const VendorProductDetailsScreen = ({ navigation, route }) => {
             setShowLoader(false);
             if (apiCall.status == api_statuses.success) {
                 setProduct(apiCall.data.data);
-                // console.log(apiCall.data);
+                // //console.log(apiCall.data);
                 showToaster('Este producto fue eliminado con éxito.');
                 navigation.navigate(VENDOR_DETAILS_ROUTES.PRODUCT_LISTING);
             } else {
                 showToaster('Algo salió mal, inténtalo de nuevo más tarde.');
-                // console.log(apiCall.data);
+                // //console.log(apiCall.data);
             }
         } catch (e) {
-            // console.log('Error', e.response.data);
+            // //console.log('Error', e.response.data);
             setShowLoader(false);
             showToaster('Algo salió mal, inténtalo de nuevo más tarde.');
         }
     };
 
-    // console.log(product);
+    // //console.log(product);
     return (
         <>
             <HeaderBackground />

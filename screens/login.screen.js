@@ -104,7 +104,7 @@ const LoginScreen = ({ navigation }) => {
 
     } catch (e) {
 
-      // console.log(e);
+      // //console.log(e);
       setShowLoader(false);
       showToaster('Error con el servidor.')
     }

@@ -52,7 +52,7 @@ export const ProfileScreen = ({navigation}) => {
             }
 
           } catch(e) {
-            console.log({delet:e})
+            //console.log({delet:e})
             showToaster('No hay conexion con el servidor');
            
           }

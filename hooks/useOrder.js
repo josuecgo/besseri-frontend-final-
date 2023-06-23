@@ -32,7 +32,7 @@ export const useOrder = () => {
           showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
         }
       } catch (e) {
-        // console.log(e)
+        // //console.log(e)
         setLoading(false);
         showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
       }

@@ -45,7 +45,7 @@ const CustomerBookingDetail = (props) => {
       } catch(e) {
           setLoading(false);
           showToaster('Something went wrong');
-        //   console.log(e.response)
+        //   //console.log(e.response)
       }
   }
   const DetailItem = ({label,value,orderStatus}) => {

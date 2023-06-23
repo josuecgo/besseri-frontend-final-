@@ -1,4 +1,4 @@
-import { StyleSheet,  View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import { CheckIcon, HStack, Image, Select, Text, VStack } from 'native-base'
@@ -7,18 +7,19 @@ import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { ServiceSkeleton } from '../../../components/Services/ServiceSkeleton'
 import { customer_api_urls } from '../../../util/api/api_essentials'
-import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constants'
+import { CUSTOMER_HOME_SCREEN_ROUTES, MAIN_ROUTES, showAlertLogin, showToaster } from '../../../util/constants'
 import { getUserId } from '../../../util/local-storage/auth_service'
 import axios from 'axios'
 import { deviceWidth } from '../../../util/Dimentions'
 import Colors from '../../../util/styles/colors'
 import CommonStyles from '../../../util/styles/styles'
 import { ListServices } from '../../../components/Services/ListServices'
+import { useIsFocused } from '@react-navigation/native'
 
 export const LavadoMaps = (props) => {
 
   const [addresses, setAddresses] = useState(null)
-
+  const isFocus = useIsFocused()
   const { carActive, address } = useSelector(state => state.user)
 
   const [stores, setStores] = useState(null)
@@ -30,8 +31,7 @@ export const LavadoMaps = (props) => {
 
       const userId = await getUserId();
       if (!userId) {
-        setAddresses([{...address,_id:1}])
-        setDefaultAddress({_id:1})
+        showAlertLogin(goLogin, goCancel)
         return
       }
       const apiCall = await axios.get(`${customer_api_urls.get_addresses}/${userId}`);
@@ -57,7 +57,7 @@ export const LavadoMaps = (props) => {
       }
 
     } catch (e) {
-     
+
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 2')
     }
   }
@@ -79,14 +79,14 @@ export const LavadoMaps = (props) => {
   const getStoreService = async () => {
     try {
 
-      const apiCall = await axios.post(`${customer_api_urls.get_carwash}`, 
-      { 
-        addresses, 
-        carActive 
-      }
+      const apiCall = await axios.post(`${customer_api_urls.get_carwash}`,
+        {
+          addresses,
+          carActive
+        }
       );
 
-      
+
       setStores(apiCall?.data?.data)
     } catch (error) {
 
@@ -102,7 +102,7 @@ export const LavadoMaps = (props) => {
       service: item,
       address: findAddres,
       car: carActive,
-      type:'lavado'
+      type: 'lavado'
     })
   }
 
@@ -116,12 +116,24 @@ export const LavadoMaps = (props) => {
     setDefaultAddress(address)
   }
 
+  const goLogin = () => {
+    props.navigation.navigate(MAIN_ROUTES.AUTH_STACK)
+
+  }
+
+  const goCancel = () => {
+    props.navigation.goBack()
+  }
+
 
 
   useEffect(() => {
-    getAddresses()
-    getCars();
-  }, [])
+    if (isFocus) {
+      getAddresses()
+      getCars();
+    }
+
+  }, [isFocus])
 
   useEffect(() => {
     if (addresses) {
@@ -129,12 +141,13 @@ export const LavadoMaps = (props) => {
     }
   }, [defaultAddress, carActive])
 
- 
+
+
   if (!addresses) return <ServiceSkeleton />
 
   return (
     <View style={styles.map} >
-    
+
       <HStack alignItems={'center'} justifyContent={'center'} >
         <Image
           source={require('../../../assets/images/30.png')}
@@ -175,14 +188,14 @@ export const LavadoMaps = (props) => {
         space={1}
       >
         <Text
-        
+
           textTransform={'uppercase'}
           style={CommonStyles.h2}
         >
           Talleres Automotriz
         </Text>
         <Text
-          
+
           style={CommonStyles.h3}
         >
           Disponibles según tu ubicación

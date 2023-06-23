@@ -127,7 +127,7 @@ export const AppointmentScreen = (props) => {
 
   }, [daySelected])
 
-  console.log(daySelected);
+
   return (
     <ScrollView
       contentContainerStyle={styles.appointment}
@@ -266,7 +266,7 @@ export const AppointmentScreen = (props) => {
                       var minutosFormateados = minutos.toString().padStart(2, "0");
                       
                       
-                      console.log(item.status);
+                      
                     
 
                       return (

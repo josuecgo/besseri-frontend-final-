@@ -14,7 +14,7 @@ import CommonStyles from '../../../util/styles/styles';
 export const SeguimientoScreen = ({ route }) => {
 
   const progress = route.params;
-  console.log(progress.type);
+  
   const steps = progress.type == 'servicio' ? [
     {
       name: "Servicio aceptado"

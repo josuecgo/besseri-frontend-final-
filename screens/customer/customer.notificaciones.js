@@ -39,9 +39,9 @@ export const CustomerNotificationViewScreen = React.memo((props) => {
           
             await axios.post(`${api_urls.viewNotification}/${id}`,{user:'customer'});
             getNotificaciones();
-        //   console.log(apiCall.status);
+        //   //console.log(apiCall.status);
         } catch(e) {
-        //  console.log({detail:e});
+        //  //console.log({detail:e});
         }
     }
 

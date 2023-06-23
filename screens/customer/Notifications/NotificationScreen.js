@@ -19,12 +19,13 @@ export const NotificationScreen = (props) => {
   
   const orderDetail = async(data,item) => {
     await getPedidosUser()
-    props.navigation.navigate(BOTTOM_TAB_CUSTOMER_ROUTES.ACCOUNT,{screen:CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_PEDIDOS})
-    
-    if (!item?.isView)  {
-        viewItem(item._id);
+    // props.navigation.navigate(BOTTOM_TAB_CUSTOMER_ROUTES.ACCOUNT,{screen:CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_PEDIDOS})
+    console.log(data);
+    // props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.DETALLE,data)
+    // if (!item?.isView)  {
+    //     viewItem(item._id);
         
-    }
+    // }
   }
 
   const viewItem = async(id) => {
@@ -35,7 +36,7 @@ export const NotificationScreen = (props) => {
           
       
       } catch(e) {
-      console.log({detail:e});
+      
       }
   }
 

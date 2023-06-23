@@ -35,7 +35,7 @@ export const ChatsScreen = ({ navigation }) => {
 
     const renderItem = ({ item }) => {
         const { product, para } = item;
-        // console.log(item?.updatedAt);
+        // //console.log(item?.updatedAt);
         let img = `${base_url}/${product?.productImg}`
         return (
             <Box

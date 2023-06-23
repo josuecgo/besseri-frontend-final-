@@ -10,13 +10,14 @@ import { CUSTOMER_HOME_SCREEN_ROUTES } from '../util/constants';
 
 export const ItemPedidos = ({ item,navigation }) => {
 
-  // if (item.type === 'refaccion') {
-  //   console.log(item.ordered_on);
-  // }
+//  if (item.type === 'refaccion') {
+//   console.log(item.storePickup);
+//  }
   const goDetalle = (data) => {
     navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.DETALLE,data)
+    // console.log(data);
   }
-
+ 
   
   return (
     <Box backgroundColor={Colors.white} style={styles.card} rounded={'lg'} >
@@ -34,6 +35,7 @@ export const ItemPedidos = ({ item,navigation }) => {
                 <Text style={styles.plan} >Productos</Text>
               </HStack>
               <AddressFormatted address={item?.store?.location?.formatted_address} color={Colors.bgColor} />
+              
 
               <HStack space={12} >
                 <VStack>
@@ -69,8 +71,8 @@ export const ItemPedidos = ({ item,navigation }) => {
                 </VStack>
                 <VStack>
 
-                  <Text style={styles.txt}>{moment(item.startDate).format('DD')} de {moment(item.startDate).format('MMMM')} del {moment(item.startDate).format('YYYY')} </Text>
-                  <Text style={styles.txt}>{moment(item.startDate).format('HH:mm')}</Text>
+                <Text style={styles.txt}>{moment(item?.ordered_on).format('DD')} de {moment(item?.ordered_on).format('MMMM')} del {moment(item?.ordered_on).format('YYYY')} </Text>
+                  <Text style={styles.txt}>{moment(item?.ordered_on).format('HH:mm')}</Text>
                 </VStack>
 
               </HStack>
@@ -98,8 +100,8 @@ export const ItemPedidos = ({ item,navigation }) => {
               </VStack>
               <VStack>
 
-                <Text style={styles.txt}>{moment(item.startDate).format('DD')} de {moment(item.startDate).format('MMMM')} del {moment(item.startDate).format('YYYY')} </Text>
-                <Text style={styles.txt}>{moment(item.startDate).format('HH:mm')}</Text>
+              <Text style={styles.txt}>{moment(item?.ordered_on).format('DD')} de {moment(item?.ordered_on).format('MMMM')} del {moment(item?.ordered_on).format('YYYY')} </Text>
+                  <Text style={styles.txt}>{moment(item?.ordered_on).format('HH:mm')}</Text>
               </VStack>
 
             </HStack>

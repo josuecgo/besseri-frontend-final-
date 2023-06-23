@@ -15,6 +15,7 @@ import Colors from '../../../util/styles/colors';
 import CommonStyles from '../../../util/styles/styles';
 import { deviceWidth } from '../../../util/Dimentions';
 import { MAIN_ROUTES } from '../../../util/constants';
+import { useIsFocused } from '@react-navigation/native';
 
 
 
@@ -25,7 +26,7 @@ export const MapServiceScreen = (props) => {
   const { type } = props.route.params;
   const [stores, setStores] = useState(null)
   const [defaultAddress, setDefaultAddress] = useState(address)
-  
+  const isFocus = useIsFocused()
   
   const getAddresses = async () => {
     try {
@@ -124,9 +125,12 @@ export const MapServiceScreen = (props) => {
 
 
   useEffect(() => {
-    getAddresses()
-    getCars();
-  }, [])
+    if (isFocus) {
+      getAddresses()
+      getCars();
+    }
+   
+  }, [isFocus])
 
   useEffect(() => {
     

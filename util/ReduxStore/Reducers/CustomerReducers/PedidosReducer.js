@@ -1,4 +1,4 @@
-import { GET_PEDIDOS_USER, IS_LOADING_DATA } from "../../Actions/CustomerActions/PedidosAction"
+import { GET_PEDIDOS_USER, IS_LOADING_DATA,RESET_PEDIDOS_USER } from "../../Actions/CustomerActions/PedidosAction"
 
 
 const initialState = {
@@ -23,6 +23,13 @@ export default (state = initialState, action) => {
         return {
             ...state,
             isLoading:action.data
+        }
+        case RESET_PEDIDOS_USER:
+            
+        return {
+            ...state,
+            orders: [],
+            isLoading:false
         }
 
 

@@ -20,7 +20,7 @@ export const dateFeedback = ( fecha ) => {
 export const fechaMensaje = ( fecha ) => {
     const now = moment()
     const hoyMes = moment( fecha );
-    // console.log(now);
+    // //console.log(now);
     let diff = now.diff(hoyMes,'days');
    
     if (diff <= 0) {

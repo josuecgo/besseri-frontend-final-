@@ -40,11 +40,11 @@ const CustomerProductsViewScreen = (props) => {
   //         // setState(res.coords,SCREEN_STATES.USER_LOCATION);
   //       });
   //     } else {
-  //       console.log("Location permission denied")
+  //       //console.log("Location permission denied")
   //     }
   
   //   } catch(e) {
-  //     console.log(e)
+  //     //console.log(e)
   //    showToaster('No se pudo obtener la ubicación actual.')
   //   }
   // }

@@ -64,7 +64,7 @@ export const screenFocus = (value) => {
            
             break;
         default:
-            // console.log('estas en nombre');
+            // //console.log('estas en nombre');
             break;
     }
 

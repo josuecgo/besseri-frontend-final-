@@ -20,13 +20,13 @@ export const getStoreEarnings = async(storeId) => {
     try {
      const apiCall = await axios.get(`${rider_api_urls.get_earnings}/${riderId}`);
      if(apiCall.status == api_statuses.success) {
-      //  console.log(apiCall.data.data)
+      //  //console.log(apiCall.data.data)
        return apiCall.data.data
      } else {
        showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
      }
     } catch(e) {
-      // console.log(e?.response?.data)
+      // //console.log(e?.response?.data)
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
     }
   }  
@@ -47,7 +47,7 @@ export const getLocation = async() => {
         });
         return loc;
       } else {
-        // console.log("location permission denied")
+        // //console.log("location permission denied")
         showToaster("Permiso de ubicación denegado");
       }
     } catch(e) {

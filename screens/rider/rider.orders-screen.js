@@ -38,7 +38,7 @@ const RidersOrdersViewScreen = (props) => {
         showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
       }
     } catch (e) {
-      // console.log(e?.response?.data)
+      // //console.log(e?.response?.data)
       setLoading(false);
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
     }
@@ -49,7 +49,7 @@ const RidersOrdersViewScreen = (props) => {
     getMyOrders()
   }, [isFocused]);
 
-  // console.log(orders[0]);
+  // //console.log(orders[0]);
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
         {/* <ImageBackground  source={require('../../assets/images/header2.png')} resizeMode='stretch'> */}

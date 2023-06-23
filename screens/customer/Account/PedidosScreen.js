@@ -6,17 +6,40 @@ import { useSelector } from 'react-redux';
 import { ItemPedidos } from '../../../components/ItemPedidos';
 import Loading from '../../../components/Loader/Loading';
 import { EmptyOrders } from '../../../components/Customer/EmptyOrders';
+import { getUserId } from '../../../util/local-storage/auth_service';
+import { MAIN_ROUTES, showAlertLogin } from '../../../util/constants';
+import { useIsFocused } from '@react-navigation/native';
 
 export const PedidosScreen = ({navigation}) => {
   const {getPedidosUser} = useInfoUser();
-
+  const isFocus = useIsFocused()
   const {orders,isLoading} = useSelector(state => state.pedidos)
 
-  // console.log(orders);
+ const isLogin = async() => {
+  const id = await  getUserId();
+  if (!id) {
+    showAlertLogin(goLogin,goCancel)
+    return 
+  }
+  getPedidosUser()
+ }
+
+
+ const goLogin = () => {
+  navigation.navigate(MAIN_ROUTES.AUTH_STACK)
+
+}
+
+const goCancel = () => {
+  navigation.goBack()
+}
 
   useEffect(() => {
-    getPedidosUser()
-  }, []);
+    if (isFocus) {
+      isLogin()
+    }
+    
+  }, [isFocus]);
 
 
   return (

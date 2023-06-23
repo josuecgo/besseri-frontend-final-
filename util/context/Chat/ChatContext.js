@@ -43,7 +43,7 @@ export const ChatProvider = ({ children }) => {
             })
 
         } catch (error) {
-            console.log(error?.response?.data,'getMensajes');
+            //console.log(error?.response?.data,'getMensajes');
         }
     }
 
@@ -55,7 +55,7 @@ export const ChatProvider = ({ children }) => {
                 type:'enviando',
                 payload:true
             })
-            // console.log({
+            // //console.log({
             //     para,
             //     de:de,
             //     room:room,
@@ -81,7 +81,7 @@ export const ChatProvider = ({ children }) => {
             })
 
         } catch (error) {
-            console.log(error?.response);
+            //console.log(error?.response);
             showToaster('No hay conexion :(');
             setMensaje('')
             dispatch({
@@ -111,7 +111,7 @@ export const ChatProvider = ({ children }) => {
             }
             setLoadingChats(false)
         } catch (error) {
-            console.log(error,'getChats');
+            //console.log(error,'getChats');
             setLoadingChats(false)
         }
        
@@ -129,7 +129,7 @@ export const ChatProvider = ({ children }) => {
     const typeUser = async() => {
         const userType  = await getUserType()
         const id = userType === 'customer' ? await getUserId() : await getBusinessProfile();
-        // console.log({id});
+        // //console.log({id});
         if (userType === 'customer') {
             dispatch({
                 type:'userActive',
@@ -153,13 +153,13 @@ export const ChatProvider = ({ children }) => {
            
           
             if (apiCall.status === 200) {
-                console.log(apiCall.data);
+                //console.log(apiCall.data);
                 getChats(chatState.chatActivo.de)
                 
             }
 
         } catch (error) {
-            console.log(error);
+            //console.log(error);
         }
     }
 

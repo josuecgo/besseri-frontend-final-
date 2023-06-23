@@ -62,11 +62,11 @@ const ChangePasswordScreen = ({navigation}) => {
         showToaster('Contraseña cambiada con éxito');
         navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN);
      } else {
-        //  console.log(e)
+        //  //console.log(e)
        showToaster('Algo salió mal')
      }
     } catch(e) {
-      // console.log(e)
+      // //console.log(e)
       setLoading(false);
       showToaster(e?.response?.data?.message ?  e?.response?.data?.message :'Something went wrong')
     }

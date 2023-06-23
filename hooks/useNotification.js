@@ -23,12 +23,12 @@ export const useNotification = () => {
 
         //     // const apiCall = await axios.get(url);
         //     // const data = apiCall.data.data;
-        //     // console.log(data,'noti');
+        //     // //console.log(data,'noti');
         //     // setNotificaciones(data);
         //     // dispatch()
            
         // } catch (e) {
-        //     // console.log({ eaAndData: e })
+        //     // //console.log({ eaAndData: e })
         //     showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
         // }
     }

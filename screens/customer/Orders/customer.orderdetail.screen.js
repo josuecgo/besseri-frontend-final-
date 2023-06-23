@@ -62,12 +62,12 @@ const CustomerOrderDetail = props => {
   const getStore = async () => {
     const url = `${customer_api_urls.get_store_data}/${params?.order.storeId}`;
     const apiCall = await axios.get(url);
-    // console.log(apiCall?.data?.data?.profile);
+    // //console.log(apiCall?.data?.data?.profile);
 
     setStoreId(apiCall?.data?.data?.profile);
   };
 
-  // console.log(order.order_status_code);
+  // //console.log(order.order_status_code);
 
   useEffect(() => {
     if (!store) {

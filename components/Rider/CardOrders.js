@@ -12,8 +12,8 @@ import { useCostos } from '../../hooks/useCostos';
 export const CardOrders = ({data,requestRide}) => {
     const [store, setStore] = useState(false);
     const { CalcularDistancia, costoEnvio   } = useCostos()
-   // console.log(store.location);
-   //console.log(data.delivery_address)
+   // //console.log(store.location);
+   ////console.log(data.delivery_address)
     useEffect(() => {
        nameStore(data.storeId);
       

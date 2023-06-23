@@ -57,8 +57,8 @@ export const useSearchStore = (  ) => {
             //  setState(apiCall.data.data.categories,SCREEN_STATES.CATEGORIES);
         } catch (e) {
           setIsLoading(false);
-        //   console.log(e);
-        //   console.log(e.response.data);
+        //   //console.log(e);
+        //   //console.log(e.response.data);
           showToaster('Algo salió mal. Por favor, vuelva a intentarlo get store');
         }
     };

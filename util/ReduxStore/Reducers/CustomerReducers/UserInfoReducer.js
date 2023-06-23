@@ -15,7 +15,8 @@ const initialState = {
   yearValue:'',
   isLoading:false,
   years:[],
-  notificaciones:[]
+  notificaciones:[],
+  count:0
 }
 export default (state = initialState, action) => {
    
@@ -126,7 +127,8 @@ export default (state = initialState, action) => {
         case SAVE_NOTIFICATION:
             return {
                 ...state,
-                notificaciones:action.data
+                notificaciones:action.data?.data,
+                count:action.data?.count
             }
         default:
             return state

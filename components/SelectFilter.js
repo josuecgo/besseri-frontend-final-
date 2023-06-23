@@ -55,12 +55,12 @@ export const SelectFilter = () => {
         }
     }, [carDefault])
     
-    // console.log({
+    // //console.log({
     //     valueMaker,
     //     valueModel,
     //     valueYear,carActive
     // });
-    // console.log(carDefault);
+    // //console.log(carDefault);
     
 
     return (

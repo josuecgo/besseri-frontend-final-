@@ -92,7 +92,7 @@ const ProductDetailScreen = (props) => {
     }
   }
 
-// console.log(product);
+// //console.log(product);
 
   const goCart = async () => {
     const user_id = await getUserId();

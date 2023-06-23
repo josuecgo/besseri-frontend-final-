@@ -39,7 +39,7 @@ const CustomerBookingsView = (props) => {
           showToaster('Algo salió mal. Por favor, vuelva a intentarlo');
         }
       } catch (e) {
-        // console.log(e.response.data)
+        // //console.log(e.response.data)
         setLoading(false);
         showToaster('Algo salió mal. Por favor, vuelva a intentarlo')
       }

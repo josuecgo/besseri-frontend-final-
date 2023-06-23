@@ -53,7 +53,7 @@ const ServicesCardComponent = ({onViewDetail, data}) => {
 
       setComision(getFee.data.data[0]?.besseri_comission);
     } catch (error) {
-      // console.log(error);
+      // //console.log(error);
       showToaster('No hay conexion - code 02')
     }
   };

@@ -77,7 +77,7 @@ const CustomerCartScreen = (props) => {
       setBillComission(getFee.data.data[0]?.besseri_comission);
 
     } catch (e) {
-      // console.log({error:e})
+      // //console.log({error:e})
 
       showToaster('Error')
     }
@@ -100,7 +100,7 @@ const CustomerCartScreen = (props) => {
         setDireccion(false);
       }
     } catch (e) {
-      // console.log({error:e})
+      // //console.log({error:e})
       setDireccion(false);
       showToaster('Crea una direccion para poder realizar tu compra')
     }
@@ -110,14 +110,14 @@ const CustomerCartScreen = (props) => {
 
   const fetchBusinessDetails = async () => {
     try {
-      // console.log(businessId);
+      // //console.log(businessId);
       const getBusinessDetails = await axios.post(vendor_api_urls?.get_multiple_stores, {
         businessIds: [businessId]
       });
       setBusinessProfiles(getBusinessDetails.data.data);
       calculateDelivery()
     } catch (e) {
-      // console.log(e?.response);
+      // //console.log(e?.response);
       showToaster('Algo salió mal');
     }
   }
@@ -132,11 +132,11 @@ const CustomerCartScreen = (props) => {
     setDeliveryDistance(Math.round(distance));
   }
 
-  // console.log({businessId});
-  // console.log(products.length);
-  // console.log(businessProfiles,'businessProfiles');
+  // //console.log({businessId});
+  // //console.log(products.length);
+  // //console.log(businessProfiles,'businessProfiles');
   const goPurchase = () => {
-    // console.log('click1');
+    // //console.log('click1');
 
     if (isLogin) {
       if (!direccion) {
@@ -198,11 +198,11 @@ const CustomerCartScreen = (props) => {
     try {
 
       const getFee = await axios.get(customer_api_urls?.get_fees);
-      // console.log(getFee.data)
+      // //console.log(getFee.data)
       setComission(getFee.data.data[0]?.besseri_comission);
       setDeliveryFee(getFee.data.data[0]?.delivery_fee);
     } catch (e) {
-      // console.log(e?.response);
+      // //console.log(e?.response);
       showToaster('something went wrong');
     }
   }

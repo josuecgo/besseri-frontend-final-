@@ -92,22 +92,7 @@ const CustomerOrderSummary = (props) => {
 
 
     const getAddresses = async () => {
-        // try {
-        //     setLoading(true);
-        //  const apiCall = await axios.get(`${customer_api_urls.get_addresses}/${user?._id}`);
-        //  setLoading(false);
-        //  if(apiCall.status == api_statuses.success) {
-        //      setAddresses(order.address);
-        //  } else {
-        //      showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 1')
-        //  }
-
-        // } catch(e) 
-        // { 
-        //     // console.log(e.response)
-
-        //     showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 2')
-        // }
+       
     }
 
    
@@ -120,6 +105,7 @@ const CustomerOrderSummary = (props) => {
 
         try {
             setLoading(true);
+            console.log(order.pickup);
             const body = {
                 ordered_by_id: user?._id,
                 products: order.products,
@@ -144,7 +130,7 @@ const CustomerOrderSummary = (props) => {
                     dispatch(deleteItemFromCart(products[a]?._id, products[a]?.price))
                 }
                 getPedidosUser()
-                showToaster('Pedido realizado');
+               
                 props.navigation.replace(CUSTOMER_HOME_SCREEN_ROUTES.PAGO_COMPLETED)
                 // setshowModal(true)
                 setIsVisible(false)
@@ -154,7 +140,7 @@ const CustomerOrderSummary = (props) => {
             }
         } catch (e) {
             setLoading(false);
-            console.log({ code4: e });
+           
             setLoading(false);
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo 2 code: 4')
             refundPayment()
@@ -180,18 +166,18 @@ const CustomerOrderSummary = (props) => {
             //  Alert.alert('Refund failed',JSON.stringify(e))
             setIsVisible(false);
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 5')
-            // console.log(e?.response?.data)
+            // //console.log(e?.response?.data)
         }
     }
 
 
     const fetchPaymentSheetParams = async (walletId) => {
         let ids = [];
-
+        
         cartProduct?.cart_items.map((item) => {
 
             for (let index = 0; index < item.quantity; index++) {
-                // console.log(item._id)
+                // //console.log(item._id)
                 ids.push(item._id);
             }
         })
@@ -230,7 +216,7 @@ const CustomerOrderSummary = (props) => {
                 publishableKey: response?.data?.publishableKey
             };
         } catch (e) {
-            //    console.log('line 183',e)
+               console.log('code 6',e)
 
             showToaster('Algo salió mal, intenta de nuevo code: 6')
         }
@@ -260,10 +246,10 @@ const CustomerOrderSummary = (props) => {
             });
 
             if (!error) {
-                console.log({ initializePay: error })
+                //console.log({ initializePay: error })
             }
         } catch (error) {
-            // console.log({ init: error });
+            console.log({ init: error });
             showToaster('No hay conexion en este momento')
         }
 
@@ -331,6 +317,7 @@ const CustomerOrderSummary = (props) => {
         props.navigation.navigate('CustomerHomeStack', { screen: BOTTOM_TAB_CUSTOMER_ROUTES.HOME_SCREEN });
     }
 
+   
 
 
     return (

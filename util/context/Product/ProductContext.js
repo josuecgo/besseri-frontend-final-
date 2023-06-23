@@ -80,7 +80,7 @@ export const ProductProvider = ({ children }) => {
     
     
             } catch (e) {
-                // console.log({getProducts:e})
+                // //console.log({getProducts:e})
                 showToaster('No hay conexion con el servidor - C01');
                 
             }
@@ -185,7 +185,7 @@ export const ProductProvider = ({ children }) => {
 
             //   } catch(e) {
             //     showToaster('No hay conexion con los servicios')
-            //     // console.log({getServices:e});
+            //     // //console.log({getServices:e});
 
             //   }
         }, [])
@@ -208,7 +208,7 @@ export const ProductProvider = ({ children }) => {
 
 
             } catch (e) {
-                // console.log({productContext:e})
+                // //console.log({productContext:e})
                 showToaster('No hay conexion con el servidor ');
 
             }
@@ -230,7 +230,7 @@ export const ProductProvider = ({ children }) => {
                 // });
 
             } catch (error) {
-                // console.log({productContext:error})
+                // //console.log({productContext:error})
 
             }
         },
@@ -303,7 +303,7 @@ export const ProductProvider = ({ children }) => {
 
 
             } catch (e) {
-                // console.log(e)
+                // //console.log(e)
                 setLoading(false);
                 showToaster('No hay conexion con el servidor')
             }
@@ -454,7 +454,7 @@ export const ProductProvider = ({ children }) => {
         }, [])
 
     const filterProductStore = async (data) => {
-        // console.log(data,'--data');
+        // //console.log(data,'--data');
         await dispatch({
             type: 'filterProductsStore',
             payload: {
@@ -464,7 +464,7 @@ export const ProductProvider = ({ children }) => {
         });
     }
     const productStore = async (data) => {
-        console.log('--data');
+        //console.log('--data');
         // await dispatch({
         //     type:'productStore',
         //     payload: {
@@ -530,7 +530,7 @@ export const ProductProvider = ({ children }) => {
             }
 
         } catch (e) {
-            // console.log({getProducts:e})
+            // //console.log({getProducts:e})
             showToaster('No hay conexion con el servidor - 01STR');
 
         }

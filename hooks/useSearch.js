@@ -28,7 +28,7 @@ export const useSearch = (  ) => {
                 showToaster('No tienes conexion a la red')
             }
         } catch (error) {
-            // console.log(error);
+            // //console.log(error);
             setMarcas([])
         }
         setIsLoading( false );
@@ -79,7 +79,7 @@ export const useSearch = (  ) => {
             }
             
         } catch(e) {
-            // console.log(e?.response?.data)
+            // //console.log(e?.response?.data)
             setLoading(false);
             showToaster('No hay conexion con el servidor')
         }

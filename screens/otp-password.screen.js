@@ -69,8 +69,8 @@ const OtpPasswordScreen = ({ navigation }) => {
       registerApiCall(apiCall?.data?.path);
 
     } catch (e) {
-      // console.log(e)
-      // console.log(e?.response?.data)
+      // //console.log(e)
+      // //console.log(e?.response?.data)
       setShowLoader(false)
       showToaster('Algo salió mal')
     }
@@ -95,13 +95,13 @@ const OtpPasswordScreen = ({ navigation }) => {
 
     } catch (e) {
       setShowLoader(false);
-      console.log({ e })
+      //console.log({ e })
     }
     setShowLoader(false);
   }
 
 
-  //  console.log(route);
+  //  //console.log(route);
 
   return (
     <CustomSafeAreaViewComponent>

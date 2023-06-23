@@ -58,7 +58,7 @@ const VendorProductsScreen = ({navigation, route}) => {
     alert('No hay conexion con el servidor');
     } catch(e) {
       setShowLoader(false);
-      //  console.log(e.response.data);
+      //  //console.log(e.response.data);
        alert('ocurrió un error');
     }
   }

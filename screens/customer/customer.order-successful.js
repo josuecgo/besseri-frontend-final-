@@ -9,7 +9,7 @@ import { BtnPrincipal } from '../../components/Customer/BtnPrincipal'
 
 export const OrderSuccessful = (props) => {
     
-    console.log(props);
+   
 
     return (
     <View style={CommonStyles.screenY} >

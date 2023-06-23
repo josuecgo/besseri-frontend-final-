@@ -92,7 +92,7 @@ export const useLocation = () => {
          }
         } catch(e) 
         { 
-            // console.log(e.response)
+            // //console.log(e.response)
             
             showToaster('Something went wrong please try again :/')
         }
@@ -113,7 +113,7 @@ export const useLocation = () => {
                         }
                     );
             } catch (error) {   
-                // console.log(error,'--location');
+                // //console.log(error,'--location');
             }
            
  
@@ -136,11 +136,11 @@ export const useLocation = () => {
                 });
               });
             } else {
-              console.log("Location permission denied")
+              //console.log("Location permission denied")
             }
         
           } catch(e) {
-            // console.log(e)
+            // //console.log(e)
            showToaster('No se pudo obtener la ubicación actual.')
           }
         }
@@ -151,10 +151,10 @@ export const useLocation = () => {
     
         try {
             const riderId = await getRiderId();
-            // console.log(userLocation, '---enviando location');
+            // //console.log(userLocation, '---enviando location');
             if (userLocation.latitude == 0 || userLocation.longitude == 0) {
                 await getLocationHook()
-                // console.log(userLocation, '---verificando location');
+                // //console.log(userLocation, '---verificando location');
             }
             await axios.put(`${rider_api_urls.update_coords}`, {
                 lat: userLocation?.latitude,
@@ -165,7 +165,7 @@ export const useLocation = () => {
          
     
         } catch (error) {
-          console.log({updateUbication:error});
+        
         }
     }
    

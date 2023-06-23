@@ -38,7 +38,7 @@ export const useVendor = () => {
       // alert('No hay conexion con el servidor');
     } catch (e) {
       setShowLoader(false);
-      //  console.log(e.response.data);
+      //  //console.log(e.response.data);
       alert('ocurrió un error');
     }
   }
@@ -55,7 +55,7 @@ export const useVendor = () => {
 
 
     } catch (e) {
-      // console.log({getProducts:e})
+      // //console.log({getProducts:e})
       showToaster('No hay conexion con el servidor - C01');
       setShowLoader(false)
     }
@@ -79,7 +79,7 @@ export const useVendor = () => {
       }
 
     } catch (e) {
-      // console.log(e?.response?.data);
+      // //console.log(e?.response?.data);
       showToaster('No hay conexion con el servidor')
       setShowLoader(false);
     }
@@ -105,7 +105,7 @@ export const useVendor = () => {
       }
 
     } catch (e) {
-      // console.log(e?.response?.data);
+      // //console.log(e?.response?.data);
       showToaster('No hay conexion con el servidor')
       setShowLoader(false);
     }
@@ -234,7 +234,7 @@ export const useVendor = () => {
           }
         });
         
-        // console.log({
+        // //console.log({
         //   name:item.name,
         //   bde:item?.aplicacion?.de,
         //   bbollDe: item?.aplicacion?.de <= valueYear,
@@ -265,10 +265,10 @@ export const useVendor = () => {
     const  betweenNumber = (startingNumber, endingNumber, givenNumber) => {
 
       if(givenNumber >= startingNumber && givenNumber <= endingNumber){
-          // console.log(`número dado ${givenNumber} cae entre ${startingNumber} y ${endingNumber}`);
+          // //console.log(`número dado ${givenNumber} cae entre ${startingNumber} y ${endingNumber}`);
           return true
       }else{
-        // console.log(`número dado ${givenNumber} no cae entre ${startingNumber} y ${endingNumber}`);
+        // //console.log(`número dado ${givenNumber} no cae entre ${startingNumber} y ${endingNumber}`);
           return false;
       }
     }
