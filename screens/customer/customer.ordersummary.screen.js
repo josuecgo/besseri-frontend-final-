@@ -52,7 +52,7 @@ const CustomerOrderSummary = (props) => {
     const {  CalcularDistancia, distancia } = useCostos()
 
     const [allCharges, setallCharges] = useState({
-        delivery_charges: order.delivery_fee,
+        delivery_charges: order.envio,
         besseri_commission: order?.comission,
         totalAmount: Number(order?.totalAmount),
         subtotal: order?.subtotal,

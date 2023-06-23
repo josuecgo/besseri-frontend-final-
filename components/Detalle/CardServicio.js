@@ -18,7 +18,7 @@ const CardServicio = ({data}) => {
   
   if(data.type === 'refaccion') return (
     <>
-    <AddressFormatted address={data.store.location.formatted_address} />
+    <AddressFormatted address={data?.store?.location?.formatted_address} />
     <VStack  space={3} marginTop={'10px'} >
       <HStack alignItems={'center'} space={3} >
         <Text style={{ ...CommonStyles.h2 }} >Servicio:</Text>

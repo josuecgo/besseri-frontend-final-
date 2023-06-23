@@ -18,25 +18,26 @@ export const NotificationScreen = (props) => {
   const {getNotificaciones,getPedidosUser} = useInfoUser();
   
   const orderDetail = async(data,item) => {
-    await getPedidosUser()
+    
     // props.navigation.navigate(BOTTOM_TAB_CUSTOMER_ROUTES.ACCOUNT,{screen:CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_PEDIDOS})
-    console.log(data);
-    // props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.DETALLE,data)
-    // if (!item?.isView)  {
-    //     viewItem(item._id);
+   getPedidosUser()
+    props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.DETALLE,data)
+   
+    if (!item?.isView)  {
+        viewItem(item._id);
         
-    // }
+    }
   }
 
   const viewItem = async(id) => {
       try {
         
-          await axios.post(`${api_urls.viewNotification}/${id}`,{user:'customer'});
-          getNotificaciones();
+        await axios.post(`${api_urls.viewNotification}/${id}`,{user:'customer'});
+        getNotificaciones();
           
       
       } catch(e) {
-      
+        console.log(e,'viewItem');
       }
   }
 
@@ -47,15 +48,15 @@ export const NotificationScreen = (props) => {
     index
   }) => {
     return (
-      <Box py={'2'} >
-      <Pressable onPress={() => orderDetail(item?.body,item)}>
+      <Box py={'2'}  >
+      <TouchableOpacity onPress={() => orderDetail(item?.body,item)}>
         <Box flexDirection={'row'} alignItems={'center'}  pl="4" pr="5" py="2">
           {/* <MaterialCommunityIcons name='bell' color={Colors.white} size={20} /> */}
           <Text style={CommonStyles.h2} bold>
           {item.titulo}
           </Text>
         </Box>
-      </Pressable>
+      </TouchableOpacity>
       <Divider/>
     </Box>
     )

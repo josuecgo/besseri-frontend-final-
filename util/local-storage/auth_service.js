@@ -66,7 +66,7 @@ export const saveUserType = async(user) => {
      return userType;
  }
  export const logout = async() => {
- 
+    
      await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.USER_ID);
      await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.USER);
      await AsyncStorage.removeItem(ASYNC_STORAGE_NAMES.USER_TYPE);

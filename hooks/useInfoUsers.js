@@ -101,7 +101,7 @@ export const useInfoUser = (  ) => {
   
       const apiCall = await axios.get(url);
       const data = apiCall.data;
-      
+     
       dispatch(saveNotification(data));
       PushNotificationIOS.setApplicationIconBadgeNumber(data.count);
     } catch (e) {

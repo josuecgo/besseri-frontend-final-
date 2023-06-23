@@ -43,7 +43,8 @@ export default (state = initialState, action) => {
             modeloValue:'',
             yearValue:'',
             isLoading:false,
-            notificaciones:[]
+            notificaciones:[],
+            count:0
         }
         case ADD_ADDRESS:
             

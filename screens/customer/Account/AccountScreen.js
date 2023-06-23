@@ -8,11 +8,11 @@ import {  CUSTOMER_HOME_SCREEN_ROUTES } from '../../../util/constants'
 import { logout } from '../../../util/local-storage/auth_service'
 
 import { useSelector,useDispatch } from 'react-redux'
-import { useInfoUser } from '../../../hooks/useInfoUsers'
 import { deleteToUser } from '../../../util/ReduxStore/Actions/CustomerActions/UserInfoActions'
 import { resetOrdersUser } from '../../../util/ReduxStore/Actions/CustomerActions/PedidosAction'
 import { useContext } from 'react'
 import { NotificationContext } from '../../../util/context/NotificationContext'
+import PushNotificationIOS from '@react-native-community/push-notification-ios'
 
 export const AccountScreen = (props) => {
   
@@ -27,6 +27,7 @@ export const AccountScreen = (props) => {
       await deleteNotificaciones()
       dispatch(deleteToUser())
       dispatch(resetOrdersUser())
+      PushNotificationIOS.setApplicationIconBadgeNumber(0);
       props.navigation.replace('Splash',{reload:true});
     }else{
        props.navigation.replace('AuthStack',{reload:true});
