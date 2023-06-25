@@ -58,12 +58,12 @@ const CardServicio = ({data}) => {
         <Text style={{...CommonStyles.h2}} >Código:</Text>
         <Text style={{...CommonStyles.h2}} >{data?.delivery_security_code}</Text>
       </HStack>
-      <Text style={{...CommonStyles.h2}}> {data.storePickup ? 'Servicio de VALET incluido' : 'Recoger en' } </Text>
+      <Text style={{...CommonStyles.h2}}> {data.storePickup ? 'Recoger en' : 'Servicio de VALET incluido'  } </Text>
       {
         data.storePickup ? (
+            <AddressFormatted address={data?.store?.location?.formatted_address} />
+        ): ( 
           <AddressFormatted address={data?.delivery_address?.formatted_address} />
-        ): (
-          <AddressFormatted address={data?.store?.location?.formatted_address} />
         )
       }
      

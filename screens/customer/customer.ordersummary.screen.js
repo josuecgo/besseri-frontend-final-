@@ -105,7 +105,7 @@ const CustomerOrderSummary = (props) => {
 
         try {
             setLoading(true);
-            console.log(order.pickup);
+           
             const body = {
                 ordered_by_id: user?._id,
                 products: order.products,
@@ -117,7 +117,7 @@ const CustomerOrderSummary = (props) => {
                 besseri_comission: allCharges?.besseri_commission,
                 intentId: stripeEssentials?.intentId,
                 cupon: order?.cupon,
-                storePickup:order.pickup
+                storePickup:!order.pickup
             }
 
 
