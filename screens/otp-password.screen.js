@@ -83,6 +83,7 @@ const OtpPasswordScreen = ({ navigation }) => {
 
       const body = carsActive && address ? { ...route.params.body, car: carsActive, address } : route.params.body;
       setShowLoader(true);
+     
       const apiCall = await axios.post(url, {
         ...body,
         ...(route.params?.body?.isVendor ? { logo: path } : {}),
