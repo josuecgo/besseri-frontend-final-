@@ -120,6 +120,21 @@ export const AppointmentScreen = (props) => {
     setHourSelected(hour);
   }
 
+  const compararFechas = (fecha1, fecha2) => {
+    var actual = moment(fecha1);
+    var reserva = moment(fecha2);
+    if (actual.isBefore(reserva)) {
+
+      return true;
+    } else if (actual.isAfter(reserva)) {
+    
+      return false;
+    } else {
+   
+      return false;
+    }
+  }
+
   useEffect(() => {
     if (daySelected) {
       citasDisponibles()
@@ -264,9 +279,16 @@ export const AppointmentScreen = (props) => {
                       var minutos = fecha.getMinutes();
                       var horaFormateada = hora.toString().padStart(2, "0");
                       var minutosFormateados = minutos.toString().padStart(2, "0");
-                      
-                      
-                      
+                     
+                      var fechaActual = new Date();
+                     
+                      let comp = compararFechas(fechaActual,fecha)
+                    
+
+                      if (!comp) {
+                        
+                        return
+                      }
                     
 
                       return (

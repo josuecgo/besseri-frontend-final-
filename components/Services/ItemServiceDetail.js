@@ -52,8 +52,8 @@ export const ItemServiceDetail = ({service}) => {
               <VStack>
                 <Text style={CommonStyles.h2} >Garantía</Text>
                 
-                <Text style={CommonStyles.h2}>&#8226; {service.warranty.tiempo} meses</Text>
-                <Text style={CommonStyles.h2}>&#8226; {numberToKm(service.warranty.km) } kilometros</Text>
+                <Text style={CommonStyles.h2}>&#8226; {service?.warranty?.tiempo} meses</Text>
+                <Text style={CommonStyles.h2}>&#8226; {numberToKm(service?.warranty?.km) } kilometros</Text>
               </VStack>
               <VStack>
                 <Text style={CommonStyles.h2}>Incluye</Text>

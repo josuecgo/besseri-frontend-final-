@@ -75,7 +75,8 @@ const CustomerSignUpScreen = ({ navigation }) => {
       const url = api_urls.generate_otp;
       const body = {
         email: userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS],
-        name: userCredentials[CREDENTIAL_KEYS.FULL_NAME] + ' ' + userCredentials[CREDENTIAL_KEYS.LASTNAME],
+        name: userCredentials[CREDENTIAL_KEYS.FULL_NAME],
+        lastname:userCredentials[CREDENTIAL_KEYS.LASTNAME],
         phone: userCredentials[CREDENTIAL_KEYS.PHONE_NUMBER],
         password: userCredentials[CREDENTIAL_KEYS.PASSWORD],
         isCommonUser: true,
@@ -188,6 +189,37 @@ const CustomerSignUpScreen = ({ navigation }) => {
           <View style={[styles.body]}>
 
             <VStack mx={3} >
+              <HStack justifyContent={'space-between'} >
+              <InputTxt
+                label={'Nombre'}
+                // placeholderText={'Email'}
+                keyboardType={KEYBOARD_TYPES.DEFAULT}
+                onChangeText={inputText => {
+                  onChangeText(inputText, CREDENTIAL_KEYS.FULL_NAME);
+                }}
+                placeholderText={CREDENTIAL_KEYS.FULL_NAME}
+                secureTextEntry={false}
+                value={userCredentials[CREDENTIAL_KEYS.FULL_NAME]}
+                // ref={emailAddressRef}
+                returnType="next"
+                double={true}
+              />
+              <InputTxt
+                label={'Apellidos'}
+                // placeholderText={'Email'}
+                keyboardType={KEYBOARD_TYPES.EMAIL_ADDRESS}
+                onChangeText={inputText => {
+                  onChangeText(inputText, CREDENTIAL_KEYS.LASTNAME);
+                }}
+                placeholderText={CREDENTIAL_KEYS.LASTNAME}
+                secureTextEntry={false}
+                value={userCredentials[CREDENTIAL_KEYS.LASTNAME]}
+                
+                returnType="next"
+                double={true}
+
+              />
+              </HStack>
               <InputTxt
                 label={'Email'}
                 // placeholderText={'Email'}

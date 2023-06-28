@@ -153,6 +153,9 @@ return d.format('HH:mm');
 }
 
 export const numberToKm = (number) => {
+  if(!number){
+    return 0
+  }
   const formattedNumber = number.toLocaleString('en-US', { style: 'decimal' });
 
 

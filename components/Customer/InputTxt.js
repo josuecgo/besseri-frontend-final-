@@ -3,10 +3,11 @@ import React from 'react'
 import { Input } from 'native-base'
 import Colors from '../../util/styles/colors'
 import CommonStyles from '../../util/styles/styles'
+import { deviceWidth } from '../../util/Dimentions'
 
-export const InputTxt = ({onChangeText,keyboardType,value,placeholderText,secureTextEntry =false,label,autoCapitalize='words'}) => {
+export const InputTxt = ({onChangeText,keyboardType,value,placeholderText,secureTextEntry =false,label,autoCapitalize='words',double= false}) => {
   return (
-    <View style={{marginVertical:10}}  >
+    <View style={{marginVertical:10, width:double ? deviceWidth / 2 - 20: deviceWidth - 30}}  >
       <Text style={{...CommonStyles.h2}} >{label} </Text>
       <Input
         backgroundColor={Colors.bgInput}
