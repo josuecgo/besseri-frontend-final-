@@ -77,13 +77,15 @@ const LoginScreen = ({ navigation }) => {
       }
 
 
+     
 
       if (apiCall.status == api_statuses.success) {
-        const { user, garage, address } = apiCall?.data?.data;
+        const { user } = apiCall?.data?.data;
         setShowLoader(false);
 
+     
         if (user.isCommonUser) {
-
+        
           await saveUserId(user?._id);
           await saveUserType(user)
           await saveUserData(user);
@@ -96,6 +98,8 @@ const LoginScreen = ({ navigation }) => {
           await getUserInfo(user)
           await getPedidosUser()
           navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
+        
+          
         } else {
           showToaster('Usuario no encontrado.')
         }
@@ -104,7 +108,7 @@ const LoginScreen = ({ navigation }) => {
 
     } catch (e) {
 
-      // //console.log(e);
+      
       setShowLoader(false);
       showToaster('Error con el servidor.')
     }

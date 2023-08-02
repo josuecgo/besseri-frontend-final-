@@ -14,7 +14,7 @@ export const ServiciosScreen = ({navigation,route}) => {
   const {category} = route.params
   const [servicios, setServicios] = useState([]);
  
- 
+  console.log(category);
   const getServicios = async() => {
     try {
        

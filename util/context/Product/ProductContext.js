@@ -47,7 +47,6 @@ export const ProductProvider = ({ children }) => {
     const [years, setYears] = useState([]);
     const [servicios, setServicios] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [dowload, setDowload] = useState(false)
     const [reset, setReset] = useState(false)
     const [activeCarLoading, setActiveCarLoading] = useState(false);
     const [cars, setCars] = useState([])
@@ -129,10 +128,7 @@ export const ProductProvider = ({ children }) => {
                         productos: apiCall.data.data,
                         // categorias: apiCall?.data?.data?.categories
                     }
-                });
-                setDowload(apiCall.data.data)
-                // filterProduct(apiCall.data.data)
-                
+                }); 
              
 
             }else{
@@ -142,17 +138,31 @@ export const ProductProvider = ({ children }) => {
                         isLoading: false,
                     }
                 });
+                dispatch({
+                    type: 'getProductos',
+                    payload: {
+                        productos: [],
+                       
+                    }
+                });
             }
             
         } catch (e) {
-          
+            console.log(e);
+            dispatch({
+                type: 'getProductos',
+                payload: {
+                    productos: [],
+                    // categorias: apiCall?.data?.data?.categories
+                }
+            });
              dispatch({
                 type: 'isLoading',
                 payload: {
                     isLoading: false,
                 }
             });
-            showToaster('No se pudieron traer los productos. Por favor, vuelva a intentarlo');
+            // showToaster('No se pudieron traer los productos. Por favor, vuelva a intentarlo');
         }
     };
 
@@ -564,7 +574,7 @@ export const ProductProvider = ({ children }) => {
                 resetFiltro,
                 searchCall,
                 filterProduct,
-                dowload,
+                
                 getProducts,
                 getCategorias,
                 activarCategoria,

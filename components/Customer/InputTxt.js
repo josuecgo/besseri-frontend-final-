@@ -6,6 +6,7 @@ import CommonStyles from '../../util/styles/styles'
 import { deviceWidth } from '../../util/Dimentions'
 
 export const InputTxt = ({onChangeText,keyboardType,value,placeholderText,secureTextEntry =false,label,autoCapitalize='words',double= false}) => {
+  
   return (
     <View style={{marginVertical:10, width:double ? deviceWidth / 2 - 20: deviceWidth - 30}}  >
       <Text style={{...CommonStyles.h2}} >{label} </Text>

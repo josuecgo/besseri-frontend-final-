@@ -10,6 +10,7 @@ import { showAlertLogin, showToaster, showToasterError } from '../util/constants
 import { getOrdersUser, isLoadingOrdersUser } from '../util/ReduxStore/Actions/CustomerActions/PedidosAction';
 import { ProductContext } from '../util/context/Product/ProductContext';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import { Platform } from 'react-native';
 
 
 
@@ -19,6 +20,7 @@ export const useInfoUser = (  ) => {
   const {
       getCategorias
   } = useContext(ProductContext)
+  const { modeloValue,modelos }  = useSelector(state => state.user);
 
 
   const getUserInfo = useCallback(async () => {
@@ -28,27 +30,44 @@ export const useInfoUser = (  ) => {
       if (!id) {
         return;
       }
+
+     
   
       const apiCall = await axios(`${customer_api_urls.get_info_user}/${id}`);
   
       if (apiCall.status === api_statuses.success) {
         const { carActive, myAddresses, garage } = apiCall.data.data;
+        console.log({ carActive, myAddresses });
         dispatch(addToUser(user));
-        dispatch(addCarActiveToUser(carActive));
-        dispatch(addAddressToUser(myAddresses));
+        if (carActive) {
+          dispatch(addCarActiveToUser(carActive));
+          await saveCarActive(carActive);
+        }
+
+        if (myAddresses) {
+          dispatch(addAddressToUser(myAddresses));
+          await saveAdressCustomer(myAddresses);
+        }
+        if (garage) {
+          dispatch(addCarsToUser(garage));
+          await saveGarage(garage);
+        }
+       
+       
   
-        dispatch(addCarsToUser(garage));
-        await saveCarActive(carActive);
+      
+      
   
-        await saveAdressCustomer(myAddresses);
-        await saveGarage(garage);
+      
+     
   
         if (carActive) {
           getCategorias();
         }
       }
     } catch (error) {
-      showToaster(error.response.data.message);
+      console.log('info user');
+      showToaster(error?.response?.data?.message, 'code - IU56');
     }
   }, []);
   
@@ -103,9 +122,11 @@ export const useInfoUser = (  ) => {
       const data = apiCall.data;
      
       dispatch(saveNotification(data));
-      PushNotificationIOS.setApplicationIconBadgeNumber(data.count);
+      if (Platform.OS === 'ios') {
+        PushNotificationIOS.setApplicationIconBadgeNumber(data.count);
+      }
     } catch (e) {
-      // //console.log({ eaAndData: e })
+     
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo - N');
     }
   }, []);
@@ -115,9 +136,19 @@ export const useInfoUser = (  ) => {
 
 
   const rangeYear = () => {
-    const max = new Date().getFullYear() + 1
+    
+    if (!modeloValue) {
+      return
+    }
+    let modelo = modelos.find(item => item._id === modeloValue);
 
-    const min = max - 33
+   
+
+    
+
+    const max = modelo?.years?.al
+
+    const min = modelo?.years?.de
     const years = []
 
     for (let i = max; i >= min; i--) {
@@ -129,7 +160,7 @@ export const useInfoUser = (  ) => {
 
   useEffect(() => {
     rangeYear()
-  }, [])
+  }, [modeloValue])
   
 
   useEffect(() => {

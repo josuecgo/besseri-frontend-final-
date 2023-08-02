@@ -110,16 +110,22 @@ export const AddCarScreen = (props) => {
             value={modeloValue}
           />
 
-          <Heading size="xs" mb="3" color={Colors.white}>Año</Heading>
-          <SelectDropDownBtn
-            value={yearValue}
-            items={years}
-            onChange={handleYear}
-            years={true}
-          />
+          {
+            modeloValue && (
+              <>
+                <Heading size="xs" mb="3" color={Colors.white}>Año</Heading>
+                <SelectDropDownBtn
+                  value={yearValue}
+                  items={years}
+                  onChange={handleYear}
+                  years={true}
+                />
+              </>
+            )
+          }
 
 
-            <Heading size="xs" mb="3" color={Colors.white}>kilometraje</Heading>
+            <Heading size="xs" mb="3" color={Colors.white}>Kilometraje</Heading>
            
             <Input
               value={km.toString()}
@@ -129,6 +135,7 @@ export const AddCarScreen = (props) => {
               color={Colors.white}
               size={'2xl'}
               backgroundColor={Colors.lightBlack}
+              placeholder='Kilometraje'
             />
         
 

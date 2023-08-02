@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Platform } from 'react-native'
 import React from 'react'
 import Colors from '../../../util/styles/colors'
 import { MyCarActive } from '../../../components/Customer/MyCarActive'
@@ -27,7 +27,9 @@ export const AccountScreen = (props) => {
       await deleteNotificaciones()
       dispatch(deleteToUser())
       dispatch(resetOrdersUser())
-      PushNotificationIOS.setApplicationIconBadgeNumber(0);
+      if (Platform.OS === 'ios') {
+        PushNotificationIOS.setApplicationIconBadgeNumber(0);
+      }
       props.navigation.replace('Splash',{reload:true});
     }else{
        props.navigation.replace('AuthStack',{reload:true});

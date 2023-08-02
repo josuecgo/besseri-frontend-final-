@@ -124,10 +124,7 @@ export const GarageScreen = (props) => {
     setValue(car)
   }
 
-  const handleTypeCar = (car) => {
-   
-    setTypeCarSelect(car)
-  }
+
 
 
   useEffect(() => {
@@ -206,7 +203,7 @@ const ModalCreateCar = ({
   resetFiltros,
   guardarCar
 }) => {
-
+  
   return (
     <Modal isOpen={showModal} onClose={() => {
       setShowModal(false)
@@ -293,7 +290,10 @@ const ModalCreateCar = ({
             )
           }
           <FormControl>
-            <FormControl.Label>Año</FormControl.Label>
+            {
+              valueModel && (
+                <>
+                <FormControl.Label>Año</FormControl.Label>
             <Select
               selectedValue={valueYear}
               minWidth={deviceWidth * 0.25}
@@ -313,6 +313,10 @@ const ModalCreateCar = ({
                 years.map((item, i) => <Select.Item key={item} label={item.toString()} value={item} />)
               }
             </Select>
+            </>
+              )
+            }
+            
           </FormControl>
 
         </Modal.Body>

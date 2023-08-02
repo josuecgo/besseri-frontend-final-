@@ -613,7 +613,7 @@
 					"$(inherited)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 3;
+				MARKETING_VERSION = 4;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -622,7 +622,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.josue.oropeza.refacciones.besseri;
 				PRODUCT_NAME = Besseri;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/mario-dev/Documents/trabajo/native/besser/besseri-frontend-final-/ios/Besseri/AppDelegate.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Volumes/Externo-SSD/Documentos/trabajo/native/besser/besseri-frontend-final-/ios/Besseri/AppDelegate.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "arm64 x86_64";
@@ -653,7 +653,7 @@
 					"$(inherited)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 3;
+				MARKETING_VERSION = 4;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -663,7 +663,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.josue.oropeza.refacciones.besseri;
 				PRODUCT_NAME = Besseri;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/mario-dev/Documents/trabajo/native/besser/besseri-frontend-final-/ios/Besseri/AppDelegate.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Volumes/Externo-SSD/Documentos/trabajo/native/besser/besseri-frontend-final-/ios/Besseri/AppDelegate.h";
 				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "arm64 x86_64";
 				VERSIONING_SYSTEM = "apple-generic";

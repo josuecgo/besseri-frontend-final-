@@ -227,10 +227,7 @@ export const useSearchStore = (  ) => {
     }, [marcaValue]);
    
   
-    // useEffect(() => {
-
-    //     makerFilter();
-    // }, [marcaValue,valueModel,valueYear])
+   
     
     
     return {

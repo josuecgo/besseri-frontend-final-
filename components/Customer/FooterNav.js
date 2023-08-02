@@ -1,14 +1,14 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import { Box, HStack, Center, Text, Image } from 'native-base';
-import SvgUri from 'react-native-svg-uri';
+import { Box, HStack, Center, Image } from 'native-base';
+
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BOTTOM_TAB_CUSTOMER_ROUTES, CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants';
 import Colors from '../../util/styles/colors';
-import { deviceWidth } from '../../util/Dimentions';
+
 import { Badge } from '../Badge';
 import { useSelector } from 'react-redux';
 

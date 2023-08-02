@@ -134,13 +134,20 @@ export const CreateCarScreen = (props) => {
             value={modeloValue}
           />
 
-          <Heading size="xs" mb="3" color={Colors.white}>Año</Heading>
-          <SelectDropDownBtn
-            items={years}
-            onChange={handleYear}
-            years={true}
-            value={yearValue}
-          />
+          {
+            modeloValue && (
+              <>
+              <Heading size="xs" mb="3" color={Colors.white}>Año</Heading>
+              <SelectDropDownBtn
+                items={years}
+                onChange={handleYear}
+                years={true}
+                value={yearValue}
+              />
+              </>
+            )
+          }
+         
 
 
             <Heading size="xs" mb="3" color={Colors.white}>kilometraje</Heading>
@@ -154,7 +161,7 @@ export const CreateCarScreen = (props) => {
             />
         
 
-          <Heading size="xs" mb="3" color={Colors.white}>Dirección</Heading>
+          <Heading size="xs" my="3" color={Colors.white}>Dirección</Heading>
           <Box
             rounded={'lg'}
             borderColor={Colors.lightBorder}

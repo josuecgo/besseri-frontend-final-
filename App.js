@@ -1,11 +1,9 @@
-import React, { useEffect, useState,useContext } from 'react';
-import { SafeAreaView, StatusBar,useColorScheme } from 'react-native';
+import React, { useEffect,useContext } from 'react';
+import {  StatusBar,useColorScheme } from 'react-native';
 
-import { KeysStripe, ROLES } from './util/constants';
+import { KeysStripe } from './util/constants';
 import { NavigationContainer } from '@react-navigation/native';
-import { USER_ROLE } from './util/local-storage';
 
-import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 
 import { MainNavigation } from './util/Routes/navigation.routes';
 import { combineReducers, createStore,applyMiddleware } from 'redux';
@@ -21,7 +19,7 @@ import { NotificationContext, NotificationProvider } from './util/context/Notifi
 
 import { ProductProvider } from './util/context/Product/ProductContext';
 
-import { ChatContext, ChatProvider } from './util/context/Chat/ChatContext';
+import { ChatProvider } from './util/context/Chat/ChatContext';
 import { useChat } from './hooks/useChat';
 import FeedbackReducer from './util/ReduxStore/Reducers/CustomerReducers/FeedbackReducer';
 import UserInfoReducer from './util/ReduxStore/Reducers/CustomerReducers/UserInfoReducer';

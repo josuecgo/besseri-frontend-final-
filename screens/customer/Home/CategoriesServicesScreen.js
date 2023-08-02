@@ -20,19 +20,23 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 export const CategoriesServicesScreen = ({navigation}) => {
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
-    const {bottom} = useSafeAreaInsets()
+
     const getCategories = async () => {
         try {
             setIsLoading(true)
+           
             const apiCall = await axios.get(customer_api_urls.get_categories_services)
-
+           
             setCategories(apiCall.data.data)
             setIsLoading(false)
         } catch (error) {
+           
             setIsLoading(false)
             showToaster(error?.response?.data?.message);
         }
     }
+
+    
 
     useEffect(() => {
         getCategories()

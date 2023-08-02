@@ -1,18 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native'
+import {  View } from 'react-native'
 import React from 'react'
-import { Avatar, Button, HStack, Heading, Image, VStack } from 'native-base'
+import { HStack, Heading, Image, VStack } from 'native-base'
 import Colors from '../../util/styles/colors'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { getCarActive } from '../../util/local-storage/auth_service'
-import { addCarActiveToUser } from '../../util/ReduxStore/Actions/CustomerActions/UserInfoActions'
+import {  useSelector } from 'react-redux'
+
 import { base_url } from '../../util/api/api_essentials'
 
 export const MyCarActive = () => {
   const {carActive} = useSelector(state => state.user);
-  const dispatch = useDispatch()
+  
  
-
+  
 
   return (
     <View style={{top:-10}} >
@@ -43,4 +41,3 @@ export const MyCarActive = () => {
 }
 
  
-const styles = StyleSheet.create({})
