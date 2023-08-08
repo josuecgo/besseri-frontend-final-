@@ -57,7 +57,7 @@ export const LavadoMaps = (props) => {
       }
 
     } catch (e) {
-
+      
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 2')
     }
   }

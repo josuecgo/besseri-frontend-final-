@@ -18,11 +18,11 @@ const CustomSafeAreaViewComponent = ({children}) => {
   const backgroundStyle = {
     // backgroundColor: isDarkMode ? Colors.darker : Colors.white,
     width: width,
-    minHeight: height,
+    // minHeight: height,
     backgroundColor:Colors.bgColor,
     flex:1,
     // paddingTop:top,
-    paddingBottom: bottom
+    paddingBottom: bottom 
   };
 
   return (

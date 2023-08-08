@@ -301,6 +301,8 @@ const CustomerSignUpScreen = ({ navigation }) => {
               text={'Crear perfil'}
               onPress={generateOtp}
             />
+
+            
           </View>
         </VStack>
 

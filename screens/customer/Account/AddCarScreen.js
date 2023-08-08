@@ -24,7 +24,7 @@ export const AddCarScreen = (props) => {
   const dispatch = useDispatch()
   const { address,marcas,marcaValue,modelos,modeloValue,yearValue,years }  = useSelector(state => state.user);
   const [km, setKm ] = useState('');
-  const [value, setValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false)
   const {bottom} = useSafeAreaInsets()
   const { getUserInfo } = useInfoUser()
 
@@ -35,9 +35,10 @@ export const AddCarScreen = (props) => {
       showToaster('Faltan campos.');
       return
     }
+    setIsLoading(true)
     const newMarca = marcas.find( (el) => el._id === marcaValue);
     const newModel = modelos.find( (el) => el._id === modeloValue);
-
+    
     const userId = await getUserId()    
     try {
      
@@ -59,10 +60,11 @@ export const AddCarScreen = (props) => {
      
      
       resetInputs()
-    
+      setIsLoading(false)
     } catch (error) {
       showToaster('No hay conexion con el servidor')
       resetInputs()
+      setIsLoading(false)
       props.navigation.goBack();
     }
    
@@ -152,8 +154,9 @@ export const AddCarScreen = (props) => {
         size={'lg'} 
         onPress={guardarCar} 
         width={'90%' }
+        disabled={isLoading}
         >
-        Crear mi auto
+        {isLoading ? 'Creando...' : 'Crear mi auto'}
         </Button>
 
       </View>

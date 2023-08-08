@@ -1,4 +1,4 @@
-import {  Platform, StyleSheet, Text,  View } from 'react-native'
+import {  Keyboard, TouchableWithoutFeedback, Platform, StyleSheet, Text,  View } from 'react-native'
 import React, { useContext, useState } from 'react'
 
 import Colors from '../../../util/styles/colors'
@@ -96,15 +96,21 @@ export const CreateCarScreen = (props) => {
     }
   };
 
- 
+  const handleScreenPress = () => {
+    Keyboard.dismiss();
+  };
 
 
 
  
   return (
+    <TouchableWithoutFeedback onPress={handleScreenPress}>
     <View style={styles.garage} >
 
-    
+{/* <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}> */}
+
+        
 
       <ScrollView>
         <Box style={styles.contentTitle} >
@@ -176,7 +182,7 @@ export const CreateCarScreen = (props) => {
           
         </Box>
       </ScrollView>
-
+      {/* </KeyboardAvoidingView> */}
       <View style={{alignItems:'center' }} >
 
         <Button 
@@ -191,9 +197,10 @@ export const CreateCarScreen = (props) => {
       </View>
       
 
-
+     
 
     </View>
+    </TouchableWithoutFeedback>
   )
 }
 
@@ -202,19 +209,7 @@ export const CreateCarScreen = (props) => {
 
 
 const styles = StyleSheet.create({
-  header: {
-    width: '100%',
-    height: Platform.OS == 'ios' ? deviceHeight * 0.15 : deviceHeight * 0.10,
-    paddingHorizontal: 20,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  headerText: { ...CommonStyles.fontFamily, color: Colors.white, fontSize: 20, position: 'absolute' },
-  box: {
-    marginHorizontal: 10,
-    paddingHorizontal: 5,
-    paddingVertical: 5
-  },
+
   garage: {
    ...CommonStyles.screenY
   },

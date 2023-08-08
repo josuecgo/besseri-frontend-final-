@@ -14,7 +14,7 @@ export const ServiciosScreen = ({navigation,route}) => {
   const {category} = route.params
   const [servicios, setServicios] = useState([]);
  
-  console.log(category);
+  
   const getServicios = async() => {
     try {
        
@@ -37,7 +37,7 @@ export const ServiciosScreen = ({navigation,route}) => {
     getServicios()
   }, [])
   
-  
+ 
 
   return (
     <View style={styles.servicios} >
@@ -67,6 +67,7 @@ export const ServiciosScreen = ({navigation,route}) => {
 const styles = StyleSheet.create({
   servicios:{
     paddingHorizontal:10,
-    ...CommonStyles.screenY
+    ...CommonStyles.screenY,
+    paddingTop:10
   }
 })
