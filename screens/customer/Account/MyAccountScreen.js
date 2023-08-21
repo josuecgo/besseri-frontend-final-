@@ -94,7 +94,7 @@ export const MyAccountScreen = (props) => {
                     })
                 }
 
-<HStack  justifyContent={'space-between'} alignItems={'center'} marginY={'10px'} >
+                            <HStack  justifyContent={'space-between'} alignItems={'center'} marginY={'10px'} >
                                 <Text style={[CommonStyles.h4,{color:Colors.alertRed}]} >
                                 Eliminar cuenta
                                 </Text>

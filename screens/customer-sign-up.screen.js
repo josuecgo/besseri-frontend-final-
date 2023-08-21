@@ -207,7 +207,7 @@ const CustomerSignUpScreen = ({ navigation }) => {
               <InputTxt
                 label={'Apellidos'}
                 // placeholderText={'Email'}
-                keyboardType={KEYBOARD_TYPES.EMAIL_ADDRESS}
+                keyboardType={KEYBOARD_TYPES.DEFAULT}
                 onChangeText={inputText => {
                   onChangeText(inputText, CREDENTIAL_KEYS.LASTNAME);
                 }}
