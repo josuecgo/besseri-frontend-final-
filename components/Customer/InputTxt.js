@@ -5,7 +5,7 @@ import Colors from '../../util/styles/colors'
 import CommonStyles from '../../util/styles/styles'
 import { deviceWidth } from '../../util/Dimentions'
 
-export const InputTxt = ({onChangeText,keyboardType,value,placeholderText,secureTextEntry =false,label,autoCapitalize='words',double= false}) => {
+export const InputTxt = ({onChangeText,keyboardType,value,placeholderText,secureTextEntry = false,label,autoCapitalize='words',double= false}) => {
   
   return (
     <View style={{marginVertical:10, width:double ? deviceWidth / 2 - 20: deviceWidth - 30}}  >
@@ -21,7 +21,8 @@ export const InputTxt = ({onChangeText,keyboardType,value,placeholderText,secure
         keyboardType={keyboardType}    
         value={value}
         placeholder={placeholderText}
-        secureTextEntry={secureTextEntry}
+        secureTextEntry={true}
+        
         mt={'13px'}
         size={Platform.OS === 'ios' ? '2xl' : 'lg'}
         autoCapitalize={autoCapitalize}

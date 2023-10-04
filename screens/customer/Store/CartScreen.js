@@ -128,12 +128,14 @@ export const CartScreen = (props) => {
     }
   }
 
+  
   const calculateDelivery = async() => {
     let vendor = businessProfiles;
     if (businessProfiles.length <= 0) {
       vendor = await fetchBusinessDetails()
       
     }
+   
 
     const distance = Math.sqrt(
       Math.pow(69.1 * (Number(vendor[0]?.location?.latitude) - [address.latitude]), 2) +
@@ -158,7 +160,7 @@ export const CartScreen = (props) => {
      
   }
 
-
+ 
 
 
   const goPurchase = () => {
@@ -169,16 +171,15 @@ export const CartScreen = (props) => {
         showToaster('Crea una direccion para poder realizar tu compra')
         return
       }
-     
+    
 
       if (businessProfiles[0]?.wallet_id && !businessProfiles[0]?.isBlocked) {
-        let allProducts = products?.filter(prod => prod?.business_id == businessProfiles[0]?._id);
+        let allProducts = products
         let totalProductsPrice = [];
 
       
         for (var a = 0; a < allProducts?.length; a++) {
-          let precio =((totalDeliveryFee + Number(allProducts[a]?.price) + comission * Number(allProducts[a]?.price) / 100 - descuento ) * allProducts[a]?.quantity).toFixed(2) 
-          
+       
           
           totalProductsPrice.push(
             {
@@ -304,7 +305,11 @@ export const CartScreen = (props) => {
 
   
  
-  
+  // console.log({
+  //   totalDeliveryFee,
+  //   totalAmount,
+  //   comission
+  // });
   
   return (
     <VStack alignItems={'center'} style={{ ...CommonStyles.screenWhiteY }} >

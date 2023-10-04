@@ -8,7 +8,7 @@ const CommonStyles = StyleSheet.create({
   screenY:{
     backgroundColor:Colors.bgColor,
     flex:1,
-    paddingVertical:30,
+    paddingVertical:3,
     
 
 

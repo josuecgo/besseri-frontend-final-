@@ -26,8 +26,8 @@ export const CategoriesServicesScreen = ({navigation}) => {
             setIsLoading(true)
            
             const apiCall = await axios.get(customer_api_urls.get_categories_services)
-           
-            setCategories(apiCall.data.data)
+            
+            setCategories(apiCall?.data?.data)
             setIsLoading(false)
         } catch (error) {
            

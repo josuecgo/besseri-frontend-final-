@@ -8,6 +8,7 @@ import { BookingDetails } from '../../../components/Booking/BookingDetails';
 export const BookingDetailsScreen = ({navigation,route}) => {
  
   const booking = route.params;
+  
   return (
     <View>
       <HeaderTitle

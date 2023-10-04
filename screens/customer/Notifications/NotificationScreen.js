@@ -73,6 +73,7 @@ export const NotificationScreen = (props) => {
         data={notificaciones}
         renderItem={renderItem}
         keyExtractor={(item) => item._id}
+        ListFooterComponent={<View style={{width:10,height:30}} />}
         />
       </Box>
 

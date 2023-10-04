@@ -17,7 +17,7 @@ export const AppointmentScreen = (props) => {
   const [daySelected, setDaySelected] = useState('');
   const [hourSelected, setHourSelected] = useState(null);
   const [showCalendar, setShowCalendar] = useState(false);
-  const [citas, setCitas] = useState([])
+  const [citas, setCitas] = useState([]);
 
   const handleCalendar = (data) => {
     setShowCalendar(data)
@@ -165,11 +165,7 @@ export const AppointmentScreen = (props) => {
           style={styles.img}
         />
 
-        <Box
-          flexDirection={'row'}
-          space={2}
-
-          my={'10px'} >
+        <Box flexDirection={'row'} space={2} my={'10px'} >
           <Image
             source={require('../../../assets/images/13.png')}
             alt='dirrecion'
@@ -183,10 +179,7 @@ export const AppointmentScreen = (props) => {
         </Box>
 
         <Text style={CommonStyles.h1} >Disponibilidad</Text>
-        <Box
-          my={'2'}
-        >
-
+        <Box my={'2'}>
           <TouchableOpacity
             onPress={() => handleCalendar(true)}
           >

@@ -6,12 +6,13 @@ import { moneda } from '../../util/Moneda';
 import { CardService } from './CardService';
 import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants';
 import { Empty } from '../Customer/Empty';
+import { ProductContext } from '../../util/context/Product/ProductContext';
 
 
 
 export const ListServices = ({ services,goService }) => {
  
-
+  const {comision} = useContext(ProductContext)
   
   return (
     <View style={styles.list} >
@@ -23,7 +24,7 @@ export const ListServices = ({ services,goService }) => {
           onPress={() => goService(item)}
           >
             
-            <CardService service={item} />
+            <CardService service={item} comision={comision} />
           </Pressable>
         )}
         key={(item) => item._id}

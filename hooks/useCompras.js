@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
-import { paymentApis, vendor_api_urls } from '../util/api/api_essentials';
+import { customer_api_urls, paymentApis, vendor_api_urls } from '../util/api/api_essentials';
 
 import { getUser, getUserId } from '../util/local-storage/auth_service';
 
@@ -97,24 +97,25 @@ export const useCompras = () => {
     }
 
 
-    
+    const buyAdditional = async(data) => {
+        try {
+            setLoading(true)
+            const apiCall = await axios.put(`${customer_api_urls.update_additional_service}`,data);
 
-    
+            console.log(apiCall.data);
+            showToaster('Cambio hecho correctamente')
 
-    
-    
-    // useEffect(() => {
-    //     getCards()
-    // }, []);
+            setLoading(false)
+            return apiCall?.data?.data
+        } catch (error) {
+            showToaster('Error al hacer la operación')
+            setLoading(false)
+            return false
+        }
+    }
 
-    useEffect(() => {
-        let abortController = new AbortController();
-        getCupones()
-        return () => {  
-            abortController.abort();  
-        } 
-    }, [])
-        
+
+
 
        
 
@@ -123,6 +124,7 @@ export const useCompras = () => {
         cupones,
         deleteCupones,
         createCupones,
-        aplicarCupones
+        aplicarCupones,
+        buyAdditional
     }
 }

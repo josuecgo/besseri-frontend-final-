@@ -78,7 +78,7 @@ export const FooterNav = ({ state, navigation }) => {
               <Center>
                 {
                   route.name === BOTTOM_TAB_CUSTOMER_ROUTES.NOTIFICATION_STACK && (
-                    <Box zIndex={2} >
+                    <Box zIndex={2} position={'absolute'} top={-9}>
                       <Badge count={count} />
                     </Box>
                   )

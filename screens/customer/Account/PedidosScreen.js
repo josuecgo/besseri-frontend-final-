@@ -44,7 +44,7 @@ const goCancel = () => {
 
   return (
     <View style={styles.pedidos} >
-      <Text>PedidosScreen</Text>
+   
      
       <FlatList
       data={orders}
@@ -56,6 +56,7 @@ const goCancel = () => {
       }}
       key={(item) => item?._id}
       ListEmptyComponent={isLoading ? <Loading/> :<EmptyOrders navigation={navigation} />}
+      ListFooterComponent={<View style={{width:10,height:40}} />}
       />
     </View>
   )
@@ -64,6 +65,7 @@ const goCancel = () => {
 
 const styles = StyleSheet.create({
   pedidos:{
-    ...CommonStyles.screenY
+    ...CommonStyles.screenY,
+    paddingVertical:0
   }
 })

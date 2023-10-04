@@ -1,6 +1,5 @@
 import moment from "moment";
-import timeZone from "moment-timezone";
-import { log } from "react-native-reanimated";
+
 export const getFormattedDate = () => {
   const monthNames = [
     'Jan',

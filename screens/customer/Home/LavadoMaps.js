@@ -17,7 +17,7 @@ import { ListServices } from '../../../components/Services/ListServices'
 import { useIsFocused } from '@react-navigation/native'
 
 export const LavadoMaps = (props) => {
-
+  const isHome = props.route.params
   const [addresses, setAddresses] = useState(null)
   const isFocus = useIsFocused()
   const { carActive, address } = useSelector(state => state.user)
@@ -82,7 +82,8 @@ export const LavadoMaps = (props) => {
       const apiCall = await axios.post(`${customer_api_urls.get_carwash}`,
         {
           addresses,
-          carActive
+          carActive,
+          isHome
         }
       );
 
@@ -151,7 +152,7 @@ export const LavadoMaps = (props) => {
       <HStack alignItems={'center'} justifyContent={'center'} >
         <Image
           source={require('../../../assets/images/30.png')}
-          alt='dirrecion'
+          alt='dirección'
           style={styles.icon}
         />
         <Select
@@ -192,12 +193,9 @@ export const LavadoMaps = (props) => {
           textTransform={'uppercase'}
           style={CommonStyles.h2}
         >
-          Talleres Automotriz
+          Lavados Automotriz
         </Text>
-        <Text
-
-          style={CommonStyles.h3}
-        >
+        <Text style={CommonStyles.h3}>
           Disponibles según tu ubicación
         </Text>
       </VStack>

@@ -37,7 +37,7 @@ export const useInfoUser = (  ) => {
   
       if (apiCall.status === api_statuses.success) {
         const { carActive, myAddresses, garage } = apiCall.data.data;
-        console.log({ carActive, myAddresses });
+       
         dispatch(addToUser(user));
         if (carActive) {
           dispatch(addCarActiveToUser(carActive));
@@ -66,7 +66,7 @@ export const useInfoUser = (  ) => {
         }
       }
     } catch (error) {
-      console.log('info user');
+     
       showToaster(error?.response?.data?.message, 'code - IU56');
     }
   }, []);

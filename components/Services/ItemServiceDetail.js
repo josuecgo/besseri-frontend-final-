@@ -1,13 +1,17 @@
 import { StyleSheet } from 'react-native'
 import React from 'react'
 import { Box, HStack, Heading, Stack, Text, VStack } from 'native-base'
-import { moneda } from '../../util/Moneda';
+import { comisionMoneda, moneda } from '../../util/Moneda';
 import CommonStyles from '../../util/styles/styles';
 import { numberToKm } from '../../util/utility-functions';
+import { useContext } from 'react';
+import { ProductContext } from '../../util/context/Product/ProductContext';
 
 
 export const ItemServiceDetail = ({service}) => {
-  
+  const {comision} = useContext(ProductContext)
+
+
   return (
     <Box alignItems="center">
     <Box 
@@ -28,7 +32,7 @@ export const ItemServiceDetail = ({service}) => {
           </Text>
 
           <Text style={CommonStyles.h2}>
-            Precio {moneda(service?.price)}
+            Precio {comisionMoneda(service?.price,comision)}
           </Text>
 
 

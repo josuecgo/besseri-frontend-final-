@@ -4,7 +4,7 @@ import CommonStyles from '../../util/styles/styles';
 import {CustomText} from '../../screens/vendor/vendor-order-details.screen';
 import Colors from '../../util/styles/colors';
 import { base_url } from '../../util/api/api_essentials';
-import { moneda } from '../../util/Moneda';
+import { comisionMoneda, moneda } from '../../util/Moneda';
 import { Box, HStack } from 'native-base';
 import { deviceWidth } from '../../util/Dimentions';
 
@@ -15,14 +15,7 @@ const OrderProductItemComponent = ({
   img,
   comision
 }) => {
-  const valor = Number(productPrice);
-  
-  const porcentaje = Number(comision) / 100;
-  const resultado = valor * porcentaje;
-  
 
-  
-  let total = valor + resultado;
   return (
     <HStack space={2} justifyContent={'space-between'} alignItems={'center'} flex={1} my={1}  >
       <Box 
@@ -40,7 +33,7 @@ const OrderProductItemComponent = ({
       </Box>
       <CustomText isData={true} text={`x${qtyOrdered}`} />
       
-      <CustomText isData={true} text={moneda(total)} />
+      <CustomText isData={true} text={comisionMoneda(productPrice,comision)} />
      
     </HStack>
   

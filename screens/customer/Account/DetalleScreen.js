@@ -1,22 +1,23 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
 import { MyCarActive } from '../../../components/Customer/MyCarActive';
 import { deviceHeight, deviceWidth } from '../../../util/Dimentions';
 import Colors from '../../../util/styles/colors';
-import { Box, Center, HStack, Image, VStack } from 'native-base';
-import AddressFormatted from '../../../components/AddressFormatted';
-import CommonStyles from '../../../util/styles/styles';
-import moment from 'moment';
-import { moneda } from '../../../util/Moneda';
-import { CardService } from '../../../components/Services/CardService';
+import { Box, Center,  Image } from 'native-base';
+
 import CardServicio from '../../../components/Detalle/CardServicio';
 import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal';
 import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../../util/constants';
+import CardServiceAdditional from '../../../components/Detalle/CardServiceAdditional';
+import { useContext } from 'react';
+import { ProductContext } from '../../../util/context/Product/ProductContext';
+import { useCompras } from '../../../hooks/useCompras';
+import LoaderComponent from '../../../components/Loader/Loader.component';
 
 export const DetalleScreen = ({ route,navigation }) => {
-
-  const data = route.params;
-
+  const [data, setData] = useState(route.params)
+  const {comision} = useContext(ProductContext)
+  const { buyAdditional,loading } = useCompras()
  
   const goSeguimiento = () => {
     // 
@@ -40,8 +41,42 @@ export const DetalleScreen = ({ route,navigation }) => {
     navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SEGUIMIENTO,status )
   }
 
+  const aceptedAdditional = async(item,status) => {
+    const title = status === 'RECHAZADO' ? 'Rechazar' : 'Aceptar';
+    const description = status === 'RECHAZADO' ? 'Estas a punto de rechazar un servicio adicional' : 'Estas a punto de aceptar un servicio adicional';
+
+    Alert.alert(title, description, [
+      {
+        text: 'Cancelar',
+        onPress: () => {},
+        style: 'cancel',
+      },
+      {text: 'Aceptar', onPress: async() => {
+        const result = await buyAdditional({
+          additional:item,
+          status
+        })
+    
+        if (!result) {
+          
+          return
+        }
+        navigation.goBack()
+    
+      }},
+  ]);
+   
+   
+
+   
+    // setData(result)
+
+  }
+
+
   return (
     <ScrollView contentContainerStyle={styles.container} >
+      <LoaderComponent isVisible={loading} /> 
       <MyCarActive />
       <Center>
         <Image
@@ -52,8 +87,11 @@ export const DetalleScreen = ({ route,navigation }) => {
       </Center>
 
       <Box rounded={'lg'} borderWidth={'1px'} borderColor={Colors.white} padding={'10px'}>
-        <CardServicio data={data} />
+        <CardServicio data={data} comision={comision} />
       </Box>
+     
+      <CardServiceAdditional data={data} comision={comision} aceptedAdditional={aceptedAdditional} />
+    
 
       <BtnPrincipal 
       text={'Ver seguimiento'}

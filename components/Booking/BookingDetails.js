@@ -5,10 +5,14 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { moneda } from '../../util/Moneda';
 import moment from 'moment';
 import { dateToHour } from '../../util/utility-functions';
+import { useContext } from 'react';
+import { ProductContext } from '../../util/context/Product/ProductContext';
 
 export const BookingDetails = ({ booking }) => {
   const service = booking.serviceId;
- 
+  const {comision} = useContext(ProductContext);
+
+
   return (
     <Box alignItems="center">
       <Box
@@ -36,7 +40,7 @@ export const BookingDetails = ({ booking }) => {
             <Text color="coolGray.600" _dark={{
               color: "warmGray.200"
             }} fontWeight="700">
-              {moneda(service?.price)}
+              {moneda(service?.price + comision)}
             </Text>
             <Text fontWeight={'bold'} >Dia: {moment(booking.startDate).format('LL') } </Text>
             <Text fontWeight={'bold'} >Hora: {dateToHour(booking.startDate)} </Text>

@@ -44,7 +44,9 @@ export const HomeScreen = ({navigation}) => {
         <ButtonService
         label={'Servicios'}
         icono={require('../../../assets/images/home/servicios.png')}
-        onPress={()=>{ navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_CATEGORIES) }}
+        onPress={()=>{ 
+          
+          navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_CATEGORIES) }}
         style={74}
         
         />
@@ -54,7 +56,7 @@ export const HomeScreen = ({navigation}) => {
         onPress={()=>{ 
           if (!carActive) {
             
-            showToaster('Active un vehiculo para ver los productos.')
+            showToaster('Active un vehículo para ver los productos.')
             return
           }
           navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES) 
@@ -64,7 +66,9 @@ export const HomeScreen = ({navigation}) => {
         <ButtonService
         label={'Lavado'}
         icono={require('../../../assets/images/home/lavado.png')}
-        onPress={()=>{ navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.LAVADO) }}
+        onPress={()=>{
+         
+          navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.HOME_VALET) }}
         
         />
       </HStack>

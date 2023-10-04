@@ -148,7 +148,7 @@ export const ProductProvider = ({ children }) => {
             }
             
         } catch (e) {
-            console.log(e);
+            
             dispatch({
                 type: 'getProductos',
                 payload: {

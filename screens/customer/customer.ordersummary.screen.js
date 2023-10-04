@@ -109,7 +109,7 @@ const CustomerOrderSummary = (props) => {
             const body = {
                 ordered_by_id: user?._id,
                 products: order.products,
-                storeId: order.business?._id,
+                storeId: order.storeId,
                 total_amount: allCharges.totalAmount,
                 delivery_address: order.address,
                 ordered_on: new Date(),
@@ -378,7 +378,7 @@ const CustomerOrderSummary = (props) => {
                     )
                         : (
                             <VStack mt={'10px'} space={3} >
-                                {/* <Text style={CommonStyles.h2} >Metodo de pago</Text> */}
+                               
                                 <BtnPrincipal text={'Pagar'} onPress={openPaymentSheet} marginHorizontal={0} />
                             </VStack>
                         )

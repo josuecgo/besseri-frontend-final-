@@ -36,6 +36,7 @@ import { AccountAddressScreen } from '../Account/AccountAddressScreen';
 
 import messaging from '@react-native-firebase/messaging';
 import { HeaderPedidos } from '../../../components/Customer/HeaderPedidos';
+import { ValetHomeScreen } from '../Home/ValetHomeScreen';
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -166,6 +167,19 @@ export const CustomerHomeStack = () => {
         }}
       />
 
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.HOME_VALET}
+        component={ValetHomeScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props}
+              titulo="Tipo de servicio"
+              nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.LAVADO}
         component={LavadoMaps}

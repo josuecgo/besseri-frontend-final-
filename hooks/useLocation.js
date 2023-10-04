@@ -92,7 +92,7 @@ export const useLocation = () => {
          }
         } catch(e) 
         { 
-            // //console.log(e.response)
+           
             
             showToaster('Something went wrong please try again :/')
         }
@@ -113,7 +113,7 @@ export const useLocation = () => {
                         }
                     );
             } catch (error) {   
-                // //console.log(error,'--location');
+               
             }
            
  
@@ -136,7 +136,7 @@ export const useLocation = () => {
                 });
               });
             } else {
-              //console.log("Location permission denied")
+            
             }
         
           } catch(e) {
@@ -151,10 +151,10 @@ export const useLocation = () => {
     
         try {
             const riderId = await getRiderId();
-            // //console.log(userLocation, '---enviando location');
+           
             if (userLocation.latitude == 0 || userLocation.longitude == 0) {
                 await getLocationHook()
-                // //console.log(userLocation, '---verificando location');
+              
             }
             await axios.put(`${rider_api_urls.update_coords}`, {
                 lat: userLocation?.latitude,

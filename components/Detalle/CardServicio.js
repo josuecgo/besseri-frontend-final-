@@ -4,15 +4,13 @@ import AddressFormatted from '../AddressFormatted'
 import { Divider, HStack, VStack } from 'native-base'
 import CommonStyles from '../../util/styles/styles'
 import moment from 'moment'
-import { moneda } from '../../util/Moneda'
+import { comisionMoneda, moneda } from '../../util/Moneda'
 import OrderProductItemComponent from '../vendor-shared/order-product-item.component'
 import { ProductContext } from '../../util/context/Product/ProductContext'
 import { useContext } from 'react'
 
 const CardServicio = ({data}) => {
-  const {
-    comision
-} = useContext(ProductContext)
+  const {comision} = useContext(ProductContext)
 
 
   
@@ -106,7 +104,7 @@ const CardServicio = ({data}) => {
 
           <HStack alignItems={'center'} justifyContent={'space-between'} >
             <Text style={{...CommonStyles.h2}} >Total servicio:</Text>
-            <Text style={{...CommonStyles.h2}} >{moneda(data?.serviceId?.price)} MXN</Text>
+            <Text style={{...CommonStyles.h2}} >{comisionMoneda(data?.serviceId?.price, comision)} MXN</Text>
           </HStack>
         </VStack>
     </>

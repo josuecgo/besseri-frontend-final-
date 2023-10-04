@@ -4,11 +4,10 @@ import { AspectRatio, Box,Center,HStack,Heading,Image,Stack,Text } from 'native-
 import Colors from '../../util/styles/colors'
 import { api_urls, base_url } from '../../util/api/api_essentials'
 import CommonStyles from '../../util/styles/styles'
-import { moneda } from '../../util/Moneda'
+import { comisionMoneda, moneda } from '../../util/Moneda'
 import { ItemServiceDetail } from './ItemServiceDetail'
 
-export const CardService = ({service}) => {
-
+export const CardService = ({service,comision}) => {
   
   return (
     <Box >
@@ -66,7 +65,7 @@ export const CardService = ({service}) => {
             style={CommonStyles.h2}
             
             >
-              {moneda(service?.price)} MXN
+              {comisionMoneda(service?.price , comision)} MXN
             </Text>
           <HStack>
            

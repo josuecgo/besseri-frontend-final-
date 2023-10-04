@@ -1,6 +1,6 @@
-export const env = 'prod';
+export const env = 'dev';
 
-export const base_url = env === 'prod' ? 'https://api.besseri.mx' : env === 'dev' ?  'http://192.168.1.8:3005' : 'http://192.168.1.2:3005';
+export const base_url = env === 'prod' ? 'https://api.besseri.mx' : env === 'dev' ?  'http://192.168.1.3:3005' : 'http://192.168.1.2:3005';
 // export const base_url = false ? 'http://192.168.100.72:3005' : 'http://192.168.1.17:3005'
 
 export const api_urls = {
@@ -99,6 +99,8 @@ export const customer_api_urls = {
     get_categories_services:`${base_url}/services/get-categories-services`,
     get_availability_services:`${base_url}/services/availability-services`,
    
+    update_additional_service:`${base_url}/appointment/update-service-additional`,
+    
     book_service:`${base_url}/appointment/book-service`,
     get_my_bookings:`${base_url}/appointment/get-my-bookings`,
     cancel_booking:`${base_url}/appointment/cancel-appointment`,

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { StyleSheet, Text, useWindowDimensions, View, Alert, ImageBackground } from 'react-native';
+import { StyleSheet, Text, useWindowDimensions, View, Alert, ImageBackground, Pressable } from 'react-native';
 import Colors from '../util/styles/colors';
 import CommonStyles from '../util/styles/styles';
 import InputFieldComponent from '../components/input-field/input-field.component';
@@ -29,7 +29,7 @@ import { HeaderTitle } from '../components/Customer/HeaderTitle';
 import { NewLogo } from '../components/NewLogo';
 import { InputTxt } from '../components/Customer/InputTxt';
 import { BtnPrincipal } from '../components/Customer/BtnPrincipal';
-import { Center, VStack } from 'native-base';
+import { Center, Input, VStack } from 'native-base';
 import { useInfoUser } from '../hooks/useInfoUsers';
 import { addToUser } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 
@@ -47,7 +47,7 @@ const LoginScreen = ({ navigation }) => {
     [CREDENTIAL_KEYS.PASSWORD]: '',
   });
   const [showLoader, setShowLoader] = useState(false);
-
+  const [show, setShow] = useState(false)
 
 
   const onChangeText = (inputText, key) => {
@@ -77,15 +77,15 @@ const LoginScreen = ({ navigation }) => {
       }
 
 
-     
+
 
       if (apiCall.status == api_statuses.success) {
         const { user } = apiCall?.data?.data;
         setShowLoader(false);
 
-     
+
         if (user.isCommonUser) {
-        
+
           await saveUserId(user?._id);
           await saveUserType(user)
           await saveUserData(user);
@@ -98,8 +98,8 @@ const LoginScreen = ({ navigation }) => {
           await getUserInfo(user)
           await getPedidosUser()
           navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
-        
-          
+
+
         } else {
           showToaster('Usuario no encontrado.')
         }
@@ -108,7 +108,7 @@ const LoginScreen = ({ navigation }) => {
 
     } catch (e) {
 
-      
+
       setShowLoader(false);
       showToaster('Error con el servidor.')
     }
@@ -139,21 +139,37 @@ const LoginScreen = ({ navigation }) => {
             // validator={emailValidator}
             hintText="Por favor ingresa un correo valido"
           />
-          <InputTxt
-            label={CREDENTIAL_KEYS.PASSWORD}
-            // placeholderText={'Contraseña'}
-            keyboardType={KEYBOARD_TYPES.DEFAULT}
-            secureTextEntry={true}
-            onChangeText={inputText => {
-              onChangeText(inputText, CREDENTIAL_KEYS.PASSWORD);
-            }}
-            placeholderText={CREDENTIAL_KEYS.PASSWORD}
-            value={userCredentials[CREDENTIAL_KEYS.PASSWORD]}
-            returnType="default"
-            validator={generalNonEmptyValidator}
-            hintText="Por favor ingresa una contraseña valida"
-          />
+
+
+          <View style={{ marginVertical: 10, width: deviceWidth - 30 }}  >
+            <Text style={{ ...CommonStyles.h2 }} >{CREDENTIAL_KEYS.PASSWORD}</Text>
           
+            <Input
+              backgroundColor={Colors.bgInput}
+              borderColor={Colors.darker}
+              borderWidth={'1px'}
+              borderRadius={'10px'}
+              onChangeText={inputText => {
+                onChangeText(inputText, CREDENTIAL_KEYS.PASSWORD);
+              }}
+              color={Colors.white}
+              placeholder={CREDENTIAL_KEYS.PASSWORD}
+              value={userCredentials[CREDENTIAL_KEYS.PASSWORD]}
+              mt={'13px'}
+              size={Platform.OS === 'ios' ? '2xl' : 'lg'}
+              type={show ? "text" : "password"}
+              InputRightElement={<Pressable onPress={() => setShow(!show)}
+              style={{padding:10}}
+              >
+                <MaterialIcons name={show ? "visibility" : "visibility-off"}
+                  size={25}
+                  color={Colors.white}
+                />
+              </Pressable>}
+
+            />
+          </View>
+
         </ImageBackground>
 
         <BottomContentComponent>

@@ -24,7 +24,8 @@ export const AgendarScreen = (props) => {
   const [showModal, setShowModal] = useState(false)
   const [fetchLoading, setFetchLoading] = useState(false)
   
-  
+
+
   const agendarCita = async () => {
     try {
       if (fetchLoading) {
