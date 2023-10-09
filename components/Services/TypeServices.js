@@ -2,9 +2,10 @@ import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Box, HStack, Image } from 'native-base';
+import { Box, HStack, Image, VStack } from 'native-base';
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
+import { deviceWidth } from '../../util/Dimentions';
 
 
 export const TypeServices = ({service}) => {
@@ -25,7 +26,10 @@ export const TypeServices = ({service}) => {
         alt='odometro'
         />
         <Box>
-          <Text style={styles.name} >{service.name}</Text>
+          <VStack w={deviceWidth/2} >
+            <Text style={styles.name} >{service.name}</Text>
+          </VStack>
+          
           <Text style={styles.sub} >{service.type}</Text>
         </Box>
         

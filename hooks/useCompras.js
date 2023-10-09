@@ -100,14 +100,15 @@ export const useCompras = () => {
     const buyAdditional = async(data) => {
         try {
             setLoading(true)
-            const apiCall = await axios.put(`${customer_api_urls.update_additional_service}`,data);
+             const apiCall = await axios.put(`${customer_api_urls.update_additional_service}`,data);
 
-            console.log(apiCall.data);
+            
             showToaster('Cambio hecho correctamente')
 
             setLoading(false)
             return apiCall?.data?.data
         } catch (error) {
+           
             showToaster('Error al hacer la operación')
             setLoading(false)
             return false
