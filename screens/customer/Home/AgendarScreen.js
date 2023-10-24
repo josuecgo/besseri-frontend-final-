@@ -55,6 +55,7 @@ export const AgendarScreen = (props) => {
       }
 
     } catch (error) {
+      
       setFetchLoading(false)
       
       showToaster('Error con el servidor')
