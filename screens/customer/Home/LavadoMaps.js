@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native'
+import { Alert, StyleSheet, View } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import { CheckIcon, HStack, Image, Select, Text, VStack } from 'native-base'

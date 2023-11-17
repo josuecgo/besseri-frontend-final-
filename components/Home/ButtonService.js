@@ -1,25 +1,18 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet,  TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { deviceWidth } from '../../util/Dimentions'
-import { Image } from 'native-base'
+import { Image, Text } from 'native-base'
 import CommonStyles from '../../util/styles/styles'
 
 export const ButtonService = ({label,icono,onPress,style=100}) => {
   return (
-    <View 
-    style={[styles.btnService]}
-    >
-      <TouchableOpacity
-      onPress={onPress}
-      style={[styles.btn]}
-      >
-        <Image
-         source={icono}
-         style={[styles.icono,{width:style,height:style}]}alt={label}
-        />
-      </TouchableOpacity>
-      <Text style={CommonStyles.h2} >{label}</Text>
-    </View>
+    <View style={[styles.btnService]}>
+    <TouchableOpacity onPress={onPress} style={[styles.btn]}>
+      <Image source={icono} style={[styles.icono, { width: style, height: style }]} alt={label} />
+    </TouchableOpacity>
+    <Text style={styles.labelText}>{label}</Text>
+  </View>
+  
     
   )
 }
@@ -27,26 +20,22 @@ export const ButtonService = ({label,icono,onPress,style=100}) => {
  
 
 const styles = StyleSheet.create({
-  btnService:{
-    alignItems:'center',
-    // justifyContent:'center',
-   
-    height:100,
+  btnService: {
+    alignItems: 'center',
+    height: 100,
     width: 100,
   },
-  btn:{
-    
-    width:'100%',
-    height:'100%',
-    alignItems:'center',
-    justifyContent:'center',
-    // marginHorizontal:5,
-    // overflow:'hidden'
+  btn: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  icono:{
-    height:100,
+  icono: {
+    height: 100,
     width: 100,
-    // resizeMode:'contain',
-   
-  }
-})
+  },
+  labelText: {
+    flexWrap: 'nowrap', // Evita saltos de línea
+  },
+});

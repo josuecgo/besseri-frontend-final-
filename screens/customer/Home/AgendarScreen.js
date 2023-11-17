@@ -44,7 +44,7 @@ export const AgendarScreen = (props) => {
         type
       }
       
-      
+   
       const apiCall = await axios.post(customer_api_urls.book_service, data)
       setFetchLoading(false)
       if (apiCall.data.success) {

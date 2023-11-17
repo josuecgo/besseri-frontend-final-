@@ -133,7 +133,7 @@ const LoginScreen = ({ navigation }) => {
             }}
             placeholderText={CREDENTIAL_KEYS.EMAIL_ADDRESS}
             value={userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS]}
-            secureTextEntry={false}
+            
             autoCapitalize="none"
             returnType="next"
             // validator={emailValidator}

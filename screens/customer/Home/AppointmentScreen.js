@@ -86,7 +86,7 @@ export const AppointmentScreen = (props) => {
       type
     }
     
-   
+    
     
     props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.AGENDAR, {
       data
