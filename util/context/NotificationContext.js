@@ -15,7 +15,7 @@ import messaging, { firebase } from '@react-native-firebase/messaging';
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import { useInfoUser } from "../../hooks/useInfoUsers";
-
+import DeviceInfo from 'react-native-device-info';
 
 
 
@@ -37,7 +37,7 @@ export const NotificationContext = createContext({});
 
 export const NotificationProvider = ({children}) => {
     const [state, dispatch] = useReducer(notificationReducer, authInicialState);
-    const [count, setCount] = useState(0);
+   
     const [notificaciones, setNotificaciones] = useState([])
     const {getNotificaciones} = useInfoUser()
     const firebaseConfig = {
@@ -116,6 +116,17 @@ export const NotificationProvider = ({children}) => {
         }
       });
 
+      const userId = await getUserId();
+      let version = DeviceInfo.getDeviceId();
+      if(userId) {
+        const r =  axios.post(api_urls?.delete_fcm_token,{
+          userId:userId,
+          deviceId:version
+        })
+        
+
+      }
+
     }
 
     
@@ -148,11 +159,12 @@ export const NotificationProvider = ({children}) => {
         if(permission) {
           const fcmToken =  await firebase.messaging().getToken();
           const userId = await getUserId();
-          //console.log({fcmToken});
+          let version = DeviceInfo.getDeviceId();
           if(fcmToken && userId) {
             const r = await axios.post(api_urls?.save_fcm_token,{
               token:fcmToken,
-              userId:userId
+              userId:userId,
+              deviceId:version
             })
             
     

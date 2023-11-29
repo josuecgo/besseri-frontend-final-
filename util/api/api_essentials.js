@@ -1,6 +1,6 @@
 export const env = 'prod';
 
-export const base_url = env === 'prod' ? 'https://api.besseri.mx' : env === 'dev' ?  'http://192.168.1.7:3005' : 'http://192.168.1.2:3005';
+export const base_url = env === 'prod' ? 'https://api.besseri.mx' : env === 'dev' ?  'http://192.168.1.3:3005' : 'http://192.168.1.2:3005';
 // export const base_url = false ? 'http://192.168.100.72:3005' : 'http://192.168.1.17:3005'
 
 export const api_urls = {
@@ -12,6 +12,7 @@ export const api_urls = {
     forget_password:`${base_url}/forgot-password/generatecode`,
     reset_password:`${base_url}/forgot-password/resetpassword`,
     save_fcm_token:`${base_url}/fcm/save-fcm-token`,
+    delete_fcm_token:`${base_url}/fcm/delete-fcm-token`,
     getNotification:`${base_url}/user/getNotification`,
     viewNotification:`${base_url}/user/viewNotification`,
     createAccountOpenpay:`${base_url}/openpay/create-openpay`,

@@ -4,7 +4,6 @@ import { Box, HStack, Heading, Pressable, Stack, Text, VStack } from 'native-bas
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { adjust } from '../../util/Dimentions';
-import { dateToHour } from '../../util/utility-functions';
 import moment from 'moment';
 
 export const ItemAgenda = ({ service,goBooking }) => {

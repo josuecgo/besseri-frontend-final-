@@ -1,8 +1,7 @@
 import { StyleSheet,  TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import { deviceWidth } from '../../util/Dimentions'
 import { Image, Text } from 'native-base'
-import CommonStyles from '../../util/styles/styles'
+
 
 export const ButtonService = ({label,icono,onPress,style=100}) => {
   return (

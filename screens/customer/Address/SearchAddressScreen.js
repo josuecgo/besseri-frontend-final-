@@ -13,7 +13,6 @@ import Loading from '../../../components/Loader/Loading'
 import { SelectAddress } from '../../../components/Customer/SelectAddress'
 import { AddressHeader } from '../../../components/Customer/AddressHeader'
 import Colors from '../../../util/styles/colors'
-import { Box, Text } from 'native-base'
 import CommonStyles from '../../../util/styles/styles'
 import { useSelector } from 'react-redux'
 
@@ -223,11 +222,6 @@ export const SearchAddressScreen = (props) => {
 
     mapViewRef.current?.animateCamera({
       center: loc,
-      // pitch: 45,
-      // heading: 90,
-      // altitude: 10,
-      // zoom: 100,
-
     })
   }
 
@@ -330,7 +324,7 @@ export const SearchAddressScreen = (props) => {
       <ScrollView contentContainerStyle={{justifyContent:'space-around'}} >
         {
           !user && (
-            <AddressHeader />
+            <AddressHeader navigation={props.navigation} />
           )
         }
      
