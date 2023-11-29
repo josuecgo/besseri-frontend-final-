@@ -21,7 +21,7 @@ export const InputTxt = ({onChangeText,keyboardType,value,placeholderText,secure
         keyboardType={keyboardType}    
         value={value}
         placeholder={placeholderText}
-        secureTextEntry={true}
+        secureTextEntry={secureTextEntry}
         
         mt={'13px'}
         size={Platform.OS === 'ios' ? '2xl' : 'lg'}

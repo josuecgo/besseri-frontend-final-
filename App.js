@@ -54,7 +54,7 @@ const App = () => {
   
   return(
     <StripeProvider
-    publishableKey={KeysStripe.TEST_KEY}
+    publishableKey={KeysStripe.LIVE_KEY}
     >
     <Provider store={reduxStore}>
     
@@ -63,10 +63,7 @@ const App = () => {
           <ProductProvider>
             <ChatProvider>
               <NativeBaseProvider theme={customTheme} >
-                
-                   <App2/>
-               
-               
+                <App2/>
               </NativeBaseProvider>
             </ChatProvider>
           </ProductProvider>
