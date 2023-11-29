@@ -56,12 +56,6 @@ export const AppointmentScreen = (props) => {
 
   const agendarCita = async () => {
 
-
-
-
-
-    // try {
-
     const userId = await getUserId();
     if (!userId || !service._id || !service?.business_id._id || !hourSelected?.start || !hourSelected?.end) return showToaster('Faltan campos.')
     

@@ -12,6 +12,7 @@ export const api_urls = {
     forget_password:`${base_url}/forgot-password/generatecode`,
     reset_password:`${base_url}/forgot-password/resetpassword`,
     save_fcm_token:`${base_url}/fcm/save-fcm-token`,
+    delete_fcm_token:`${base_url}/fcm/delete-fcm-token`,
     getNotification:`${base_url}/user/getNotification`,
     viewNotification:`${base_url}/user/viewNotification`,
     createAccountOpenpay:`${base_url}/openpay/create-openpay`,
