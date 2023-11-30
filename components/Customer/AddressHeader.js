@@ -5,11 +5,12 @@ import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { adjust, deviceWidth } from '../../util/Dimentions'
 import Colors from '../../util/styles/colors'
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const AddressHeader = ({navigation}) => {
-  
+  const {top} = useSafeAreaInsets()
   return (
-    <View style={styles.header} >
+    <View style={[styles.header,{top:top}]} >
       <VStack>
         <HStack justifyContent={'space-between'} w={deviceWidth - 30} alignItems={'center'} >
          
