@@ -122,12 +122,23 @@ export const AgendarScreen = (props) => {
       >
         <Box backgroundColor={Colors.bgColor} rounded={'md'} padding={5} m={5} >
           <Center mb={'30px'} >
-            <Text style={{...CommonStyles.h2,textTransform:'uppercase' }} >Reservacion exitosa</Text>
+            <Text style={{...CommonStyles.h2,textTransform:'uppercase' }} >Reservación exitosa</Text>
           </Center>
           <Center mb={'30px'} >
-            <Text style={{...CommonStyles.h5,textTransform:'uppercase' }} >Pronto uno de nuestros valets recogera tu vehiculo.
-              Revisa en tu zona de pedidos 
-            </Text>
+            {
+              serviceId?.is_home ? (
+                <Text style={{...CommonStyles.h5,textTransform:'uppercase' }} >
+                Pronto uno de nuestros lavadores estará en tu domicilio.
+                Revisa en tu zona de pedidos 
+              </Text>
+              ): (
+                <Text style={{...CommonStyles.h5,textTransform:'uppercase' }} >
+                Pronto uno de nuestros valets recogerá tu vehículo.
+                Revisa en tu zona de pedidos 
+              </Text>
+              )
+            }
+           
           </Center>
           <BtnPrincipal
           text={'Aceptar'}
