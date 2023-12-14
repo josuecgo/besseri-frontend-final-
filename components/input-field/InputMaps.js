@@ -5,11 +5,12 @@ import { Avatar, HStack, Text, Input, Box, Pressable, Divider } from 'native-bas
 import Colors from '../../util/styles/colors'
 
 import { useDebouncedValue } from "../../hooks/useDebouncedValue";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
 export const InputMaps = ({ placeholder, onDebounce, addresses, onChangeDirection, textValue, setTextValue }) => {
 
-
+  const {top} = useSafeAreaInsets()
   const deboncedValue = useDebouncedValue(textValue);
   const debounce = async (txt) => {
 
@@ -22,7 +23,7 @@ export const InputMaps = ({ placeholder, onDebounce, addresses, onChangeDirectio
   }, [deboncedValue])
 
   return (
-    <View style={styles.inpSearch} >
+    <View style={[styles.inpSearch,{paddingTop:top}]} >
       <Input
         mx="3"
         placeholder={placeholder}

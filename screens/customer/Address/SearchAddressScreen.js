@@ -15,6 +15,7 @@ import { AddressHeader } from '../../../components/Customer/AddressHeader'
 import Colors from '../../../util/styles/colors'
 import CommonStyles from '../../../util/styles/styles'
 import { useSelector } from 'react-redux'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export const SearchAddressScreen = (props) => {
   const mapStyle = [
@@ -218,6 +219,7 @@ export const SearchAddressScreen = (props) => {
     show: false,
     msg: ''
   })
+  const {top} = useSafeAreaInsets()
   const centerPosition = async (loc) => {
 
     mapViewRef.current?.animateCamera({
@@ -321,7 +323,7 @@ export const SearchAddressScreen = (props) => {
     <View style={styles.search} >
       <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
      
-      <ScrollView contentContainerStyle={{justifyContent:'space-around'}} >
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }} >
         {
           !user && (
             <AddressHeader navigation={props.navigation} />
@@ -429,8 +431,9 @@ const styles = StyleSheet.create({
   },
  
   map: {
-    height: deviceHeight * 0.60,
+    height: deviceHeight * 0.50,
 
+    flex:1
   },
   alertInfo: {
 

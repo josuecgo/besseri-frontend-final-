@@ -602,7 +602,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 68MC32N55Z;
 				ENABLE_BITCODE = NO;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				EXCLUDED_ARCHS = i386;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				INFOPLIST_FILE = Besseri/Info.plist;
@@ -624,7 +624,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.josue.oropeza.refacciones.besseri;
 				PRODUCT_NAME = Besseri;
-				SWIFT_OBJC_BRIDGING_HEADER = "/Volumes/Externo-SSD/Documentos/trabajo/native/besser/besseri-frontend-final-/ios/Besseri/AppDelegate.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/josuegarcia/Downloads/pruebareactnative/BesseriDev/app/besseri-frontend-final-/ios/Besseri/AppDelegate.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "arm64 x86_64";
@@ -643,7 +643,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 68MC32N55Z;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				EXCLUDED_ARCHS = i386;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				INFOPLIST_FILE = Besseri/Info.plist;
@@ -666,7 +666,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.josue.oropeza.refacciones.besseri;
 				PRODUCT_NAME = Besseri;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Volumes/Externo-SSD/Documentos/trabajo/native/besser/besseri-frontend-final-/ios/Besseri/AppDelegate.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/josuegarcia/Downloads/pruebareactnative/BesseriDev/app/besseri-frontend-final-/ios/Besseri/AppDelegate.h";
 				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "arm64 x86_64";
 				VERSIONING_SYSTEM = "apple-generic";

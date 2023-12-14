@@ -10,7 +10,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 export const AddressHeader = ({navigation}) => {
   const {top} = useSafeAreaInsets()
   return (
-    <View style={[styles.header,{top:top}]} >
+    <View style={[styles.header,{top:top * 0.56}]} >
       <VStack>
         <HStack justifyContent={'space-between'} w={deviceWidth - 30} alignItems={'center'} >
          
@@ -34,7 +34,7 @@ export const AddressHeader = ({navigation}) => {
             
         </HStack>
         
-        <Box>
+        <Box  zIndex={99} >
           <Text style={styles.titulo} >Vive la experiencia</Text>
           <Text style={styles.subtitulo} >desde ti casa u oficina</Text>
         </Box>
