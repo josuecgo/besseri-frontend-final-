@@ -27,7 +27,7 @@ import CustomerOrderSummaryFree from '../../screens/customer/customer.orderSumma
 import { OrderSuccessful } from '../../screens/customer/customer.order-successful';
 import HeaderStore from '../../components/Customer/HeaderStore';
 import { CartScreen } from '../../screens/customer/Store/CartScreen';
-import { PayScreen } from '../../screens/customer/Store/PayScreen';
+import PaymentScreen, { PayScreen } from '../../screens/customer/Store/PayScreen';
 import { OrderSummary } from '../../screens/customer/Store/OrderSummary';
 import CustomerOrderSummary from '../../screens/customer/customer.ordersummary.screen';
 
@@ -93,6 +93,19 @@ export const MainNavigation = () => {
           header: props => (
             <HeaderTitle {...props} 
             titulo="Agendar" 
+            nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.PAYMENT}
+        component={PaymentScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props} 
+            titulo="Pagar" 
             nav={props.navigation.goBack}
             />
           ),

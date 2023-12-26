@@ -161,6 +161,7 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   MAP_SERVICES: 'Map Services',
   APPOINTMENT_SERVICES: 'APPOINTMENT Services',
   AGENDAR: 'Agendar',
+  PAYMENT:'Payment',
   DETALLE: 'Detalle',
   SEGUIMIENTO: 'Seguimiento',
   DETAILS_SERVICES: 'Details Services',

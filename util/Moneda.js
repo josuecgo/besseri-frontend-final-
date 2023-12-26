@@ -23,3 +23,13 @@ export const comisionMoneda = (price,comision) => {
 
     return moneda(resultado + valor)
 }
+
+export const comisionFormatted = (price,comision) => {
+   
+    const valor = Number(price);
+  
+    const porcentaje = Number(comision) / 100;
+    const resultado = valor * porcentaje;
+
+    return resultado + valor
+}
