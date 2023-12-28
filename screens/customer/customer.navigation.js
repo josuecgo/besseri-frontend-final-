@@ -151,144 +151,11 @@ export const PartsServicesFunctionsDrawer = () => {
       />
      
     </Stack.Navigator>
-    // <Drawer.Navigator
-    //   drawerContent={(props) => <CustomDrawerComponent
-    //     {...props}
-    //     countCustomer={countCustomer}
-    //     getNotificaciones={getNotificaciones}
-    //     deleteNotificaciones={deleteNotificaciones}
-    //   />}
-    //   initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
-    //   screenOptions={{
-    //     headerShown: false,
-    //   }}>
 
-    //   <Drawer.Screen
-    //     name={'Autopartes'}
-    //     component={CustomerHomeStack}
-    //   />
-
-    //   <Drawer.Screen
-    //     name={'Notificaciones'}
-    //     component={CustomerNotificationStack}
-    //   />
-    //   <Drawer.Screen
-    //     name={MAIN_ROUTES.CHATSCREEN}
-    //     component={ChatStack}
-    //   />
-
-    //   <Drawer.Screen
-    //     name={'Garage'}
-    //     component={GarageScreen}
-    //   />
-
-    //   <Drawer.Screen
-    //     name={'Mi dirección'}
-    //     component={AddressStack}
-    //   />
-    //   <Drawer.Screen
-    //     name={'Pedidos'}
-    //     component={OrdersNavigator}
-
-    //   />
-    //   <Drawer.Screen
-    //     name={'Reservaciones'}
-    //     component={BookingsStack}
-    //     options={{
-    //       headerShown: false,
-    //     }}
-    //   />
-    //   <Drawer.Screen
-    //     name={'Términos y condiciones'}
-    //     component={PrivacyPolicy}
-    //     options={{
-    //       headerShown: false,
-    //     }}
-    //   />
-    //   <Drawer.Screen
-    //     name={'Perfil'}
-    //     component={ProfileScreen}
-    //     options={{
-    //       headerShown: false,
-    //     }}
-    //   />
-
-
-    // </Drawer.Navigator>
   );
 }
 
-const OrdersNavigator = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false }}
-    >
 
-      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS} component={CustomerOrdersViewScreen} />
-      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_ALL} component={CustomerOrdersAllScreen} />
-      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_PENDING} component={CustomerOrdersPending} />
-      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_SENDING} component={CustomerOrdersSending} />
-      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_FEEDBACK} component={CustomerOrderFeedback} />
-
-      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDERS_DELIVERED} component={CustomerOrdersDelivered} />
-
-      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_DETAIL} component={CustomerOrderDetail} />
-    </Stack.Navigator>
-  )
-}
-
-const AddressStack = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false }}
-    >
-
-      <Stack.Screen
-        name={'HomeAddress'}
-        component={CustomerAddressesScreen}
-      />
-      <Stack.Screen
-        name={'Search Address'}
-        component={SearchAddressScreen}
-      />
-    </Stack.Navigator>
-  )
-}
-
-const OrderStack = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false }}
-      initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
-    >
-      <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.CART}
-        component={CustomerCartScreen}
-      // component={CartScreen}
-      />
-      {/* <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.ENVIO}
-        component={EnvioScreen}
-      /> */}
-      <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.METODO}
-        component={MetodoScreen}
-      />
-      <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_SUMMARY}
-        component={CustomerOrderSummaryScreen}
-      />
-      <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_SUMMARY_FREE}
-        component={CustomerOrderSummaryFree}
-      />
-      <Stack.Screen
-        name={'OrderSuccessful'}
-        component={OrderSuccessful}
-      />
-    </Stack.Navigator>
-  )
-}
 
 export const CustomerNotificationStack = () => {
   return (
@@ -324,16 +191,7 @@ export const CustomerHomeStack = () => {
       screenOptions={{ headerShown: false }}
       // initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
     >
-      {/* <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS}
-        component={HomeScreen}
-        options={{
-          headerShown: true,
-          header: props => (
-            <CustomHeaderComponent {...props} name="Home" />
-          ),
-        }}
-      /> */}
+    
 
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES}
@@ -450,23 +308,7 @@ export const AutoPartsAndServices = () => {
   );
 };
 
-const CustomerServicesStack = () => {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}
-      initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES?.SERVICE}
-    >
-      <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.SERVICE}
-        component={CustomerServicesViewScreen}
-      />
-      <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.BOOK_SERVICE}
-        component={CustomerServiceBook}
-      />
-      <Stack.Screen />
-    </Stack.Navigator>
-  )
-}
+
 
 export const BookingsStack = () => {
   return (

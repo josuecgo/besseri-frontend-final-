@@ -11,9 +11,10 @@ import CommonStyles from '../../../util/styles/styles'
 import { Empty } from '../../../components/Customer/Empty'
 
 export const ServiciosScreen = ({navigation,route}) => {
-  const {category} = route.params
+  const {category,isHome} = route.params
   const [servicios, setServicios] = useState([]);
- 
+  
+  
   
   const getServicios = async() => {
     try {
@@ -30,7 +31,7 @@ export const ServiciosScreen = ({navigation,route}) => {
 
   const goMapServices = async(type) => {
    
-    navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.MAP_SERVICES,{type})
+    navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.MAP_SERVICES,{type,isHome})
   }
 
   useEffect(() => {

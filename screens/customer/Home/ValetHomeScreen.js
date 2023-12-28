@@ -7,10 +7,17 @@ import Colors from '../../../util/styles/colors'
 import { deviceWidth } from '../../../util/Dimentions'
 import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../../util/constants'
 
-export const ValetHomeScreen = ({navigation}) => {
+export const ValetHomeScreen = ({navigation,route}) => {
+    const { lavado } = route.params
+    
 
     const goLavadoScreen = (type) => {
-        navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.LAVADO,type) 
+        if (lavado) {
+            navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.LAVADO,type)
+        } else {
+            navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_CATEGORIES,type)
+        }
+         
     }
 
     return (
@@ -28,13 +35,25 @@ export const ValetHomeScreen = ({navigation}) => {
                         <Text>Mi domicilio</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity 
+                    {
+                        lavado ? (
+                            <TouchableOpacity 
                     onPress={()=> goLavadoScreen(false) }
                     style={styles.btn}
                     >
                         <MaterialCommunityIcons name='car-wash' size={40} color={Colors.white} />
                         <Text>Lavadora</Text>
                     </TouchableOpacity>
+                        ):(
+                            <TouchableOpacity 
+                    onPress={()=> goLavadoScreen(false) }
+                    style={styles.btn}
+                    >
+                        <MaterialCommunityIcons name='car-cog' size={40} color={Colors.white} />
+                        <Text>Taller</Text>
+                    </TouchableOpacity>
+                        )
+                    }
 
                 </HStack>
             </VStack>

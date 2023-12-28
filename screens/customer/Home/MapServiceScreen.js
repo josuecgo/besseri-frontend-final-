@@ -23,10 +23,11 @@ export const MapServiceScreen = (props) => {
   const [addresses, setAddresses] = useState(null)
 
   const { carActive, address } = useSelector(state => state.user)
-  const { type } = props.route.params;
+  const { type,isHome } = props.route.params;
   const [stores, setStores] = useState(null)
   const [defaultAddress, setDefaultAddress] = useState(address)
   const isFocus = useIsFocused()
+  
   
   const getAddresses = async () => {
     try {
@@ -80,7 +81,7 @@ export const MapServiceScreen = (props) => {
   const getStoreService = async () => {
     try {
 
-      const apiCall = await axios.post(`${customer_api_urls.get_stores_type_services}/${type}`, { addresses, carActive });
+      const apiCall = await axios.post(`${customer_api_urls.get_stores_type_services}/${type}`, { addresses, carActive,isHome });
       
       setStores(apiCall?.data?.data)
     } catch (error) {

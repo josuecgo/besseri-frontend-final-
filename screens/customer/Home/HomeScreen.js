@@ -46,8 +46,8 @@ export const HomeScreen = ({ navigation }) => {
           label={'Servicios'}
           icono={require('../../../assets/images/home/servicios.png')}
           onPress={() => {
-
-            navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_CATEGORIES)
+            navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.HOME_VALET,{lavado:false})
+            // navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_CATEGORIES)
           }}
           style={74}
 
@@ -70,7 +70,7 @@ export const HomeScreen = ({ navigation }) => {
           icono={require('../../../assets/images/home/lavado.png')}
           onPress={() => {
 
-            navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.HOME_VALET)
+            navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.HOME_VALET,{lavado:true})
           }}
 
         />

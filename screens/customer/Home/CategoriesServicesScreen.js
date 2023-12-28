@@ -17,10 +17,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 
 
-export const CategoriesServicesScreen = ({navigation}) => {
+export const CategoriesServicesScreen = ({navigation,route}) => {
     const [categories, setCategories] = useState([]);
-    const [isLoading, setIsLoading] = useState(false)
-
+    const [isLoading, setIsLoading] = useState(false);
+    const isHome = route.params;
+   
     const getCategories = async () => {
         try {
             setIsLoading(true)
@@ -57,7 +58,7 @@ export const CategoriesServicesScreen = ({navigation}) => {
                       
                         return (
                             <Pressable
-                            onPress={() =>  navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_STACK,{category:item._id}) }
+                            onPress={() =>  navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_STACK,{category:item._id,isHome}) }
                             >
                                 <HStack
                                     justifyContent={'space-between'}
