@@ -32,9 +32,9 @@ export const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.body} >
 
-      <MyCarActive />
+      <MyCarActive navigation={navigation} />
 
-      <BackgroundCar home={true} />
+      <BackgroundCar home={true}  />
 
       <HStack
         justifyContent={'space-around'}

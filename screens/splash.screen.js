@@ -45,11 +45,11 @@ const SplashScreen = ({navigation}) => {
         version: parseInt(version),
       });
 
-	  
+      console.log(apiCall.data);
 	  return apiCall?.data?.success
      
     } catch (error) {
-     
+     console.log(error);
 	    return  false
     }
   };

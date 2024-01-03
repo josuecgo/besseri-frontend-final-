@@ -30,6 +30,7 @@ import { CartScreen } from '../../screens/customer/Store/CartScreen';
 import PaymentScreen, { PayScreen } from '../../screens/customer/Store/PayScreen';
 import { OrderSummary } from '../../screens/customer/Store/OrderSummary';
 import CustomerOrderSummary from '../../screens/customer/customer.ordersummary.screen';
+import { ChecksStack } from './ChecksStack';
 
 const Stack = createStackNavigator();
 
@@ -181,6 +182,12 @@ export const MainNavigation = () => {
         name={MAIN_ROUTES.CHATSCREEN}
         component={ChatStack}
       />
+
+
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.CHECK_STACK}
+        component={ChecksStack}
+      />  
       
        
   
