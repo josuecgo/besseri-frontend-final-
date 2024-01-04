@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 
+
 export const SemaforoChecks = ({ value }) => {
-    const [redOn, setRedOn] = useState(value === 'malo');
-    const [yellowOn, setYellowOn] = useState(value === 'regular');
-    const [greenOn, setGreenOn] = useState(value === 'bueno');
+    const redOn = value === 'malo';
+    const yellowOn = value === 'regular';
+    const greenOn = value === 'bueno';
+
+
 
     return (
         <View style={styles.container}>
@@ -12,7 +15,9 @@ export const SemaforoChecks = ({ value }) => {
                 style={[
                     styles.light,
                     {
-                        backgroundColor: redOn ? '#FF3366' : '#FF3366'
+                        backgroundColor: redOn ? '#FF0000' : 'rgba(255, 0, 0, 0.1)',
+                        shadowColor: redOn ? '#FF0000' : "rgba(255, 0, 0, 0.2)", 
+                        borderColor : redOn ? '#FF0000' : "rgba(255, 0, 0, 0.2)", 
                     },
                 ]}
             />
@@ -20,14 +25,21 @@ export const SemaforoChecks = ({ value }) => {
                 style={[
                     styles.light,
                     {
-                        backgroundColor: yellowOn ? '#FFFF33' : '#FFFF33'
+                        backgroundColor: yellowOn ? '#FFFF00' : 'rgba(255, 255, 0, 0.1)',
+                        shadowColor: yellowOn ? '#FFFF00' : "rgba(255, 255, 0, 0.2)",
+                        borderColor: yellowOn ? '#FFFF00' : "rgba(255, 255, 0, 0.2)",
+
                     },
                 ]}
             />
             <View
                 style={[
                     styles.light,
-                    { backgroundColor: greenOn ? '#33FF33' : '#33FF33' },
+                    { 
+                        backgroundColor: greenOn ? '#00FF00' : 'rgba(0, 255, 0, 0.1)',
+                        shadowColor: greenOn ? '#33FF66' : "rgba(0, 255, 0, 0.2)",
+                        borderColor:  greenOn ? '#33FF66' : "rgba(0, 255, 0, 0.2)",
+                    },
                 ]}
             />
         </View>
@@ -39,18 +51,25 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        // Ajusta según sea necesario
+        backgroundColor:'#424242',
+        borderRadius:10
     },
     light: {
-        width: 30,
-        height: 30,
+        width: 22,
+        height: 22,
         margin: 5,
-        borderRadius: 25,
-        borderWidth: 1,
-        shadowColor: 'rgba(0, 0, 0, 0.5)',
-        shadowOffset: { width: 0, height: 2 },
-        shadowRadius: 4,
-        shadowOpacity: 0.8,
+        borderRadius: 15,
+        borderWidth:0.5,
+       
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+        
+        elevation: 6,
     },
+    
 
 });
