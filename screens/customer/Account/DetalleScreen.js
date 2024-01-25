@@ -1,24 +1,30 @@
-import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { MyCarActive } from '../../../components/Customer/MyCarActive';
 import { deviceHeight, deviceWidth } from '../../../util/Dimentions';
 import Colors from '../../../util/styles/colors';
-import { Box, Center,  Image } from 'native-base';
+import { Box, Center,  HStack,  Image } from 'native-base';
 
 import CardServicio from '../../../components/Detalle/CardServicio';
 import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal';
-import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../../util/constants';
+import { CUSTOMER_HOME_SCREEN_ROUTES, MAIN_ROUTES } from '../../../util/constants';
 import CardServiceAdditional from '../../../components/Detalle/CardServiceAdditional';
 import { useContext } from 'react';
 import { ProductContext } from '../../../util/context/Product/ProductContext';
 import { useCompras } from '../../../hooks/useCompras';
 import LoaderComponent from '../../../components/Loader/Loader.component';
+import { customer_api_urls } from '../../../util/api/api_essentials';
+import axios from 'axios';
+import { useEffect } from 'react';
 
 export const DetalleScreen = ({ route,navigation }) => {
   const [data, setData] = useState(route.params)
   const {comision} = useContext(ProductContext)
   const { buyAdditional,loading } = useCompras()
- 
+  const [reception, setReception] = useState(null)
+
+
+
   const goSeguimiento = () => {
     // 
     let status;
@@ -74,6 +80,26 @@ export const DetalleScreen = ({ route,navigation }) => {
   }
 
 
+  const receptionViewCar = async () => {
+    try {
+      if (data.type === 'refaccion') return
+      
+      const apiCall = await axios.get(`${customer_api_urls.get_car_reception}/${data._id}`);
+
+
+      if (apiCall?.data?.success) {
+        setReception(apiCall.data?.data)
+      }
+    } catch (error) {
+
+    }
+  }
+
+  useEffect(() => {
+    receptionViewCar()
+  }, [])
+  
+
   return (
     <ScrollView contentContainerStyle={styles.container} >
       <LoaderComponent isVisible={loading} /> 
@@ -91,7 +117,30 @@ export const DetalleScreen = ({ route,navigation }) => {
       </Box>
      
       <CardServiceAdditional data={data} comision={comision} aceptedAdditional={aceptedAdditional} />
-    
+      {
+                reception && (
+                  <HStack mt={2}  alignItems={'center'} justifyContent={'center'} >
+                    
+                      <Box alignItems={'center'} p={2} w={'50%'} backgroundColor={Colors.white}  rounded={'lg'} justifyContent={'center'} >
+                      <Pressable
+                     onPress={() => navigation.navigate(MAIN_ROUTES.VIEW_RECEPTION_CAR,{reception,car:data?.car})}
+                    >
+                        <Image
+                        source={require('../../../assets/images/hoja.png')}
+                        alt='img'
+                        style={{
+                          width:60,height:40
+                        }}
+                        resizeMode='contain'
+                        />
+                         </Pressable>
+                      </Box>
+                   
+                    
+                  </HStack>
+                  
+                )
+              }
 
       <BtnPrincipal 
       text={'Ver seguimiento'}
@@ -99,6 +148,15 @@ export const DetalleScreen = ({ route,navigation }) => {
       backgroundColor={Colors.seguimiento} 
       />
 
+
+{
+          data?.car && (
+            <BtnPrincipal text={'Ver Diagnostico'}
+              onPress={() => navigation.navigate(MAIN_ROUTES.VIEW_DIAGNOSTIC_CAR, data?.car)}
+              marginHorizontal={10}
+            />
+          )
+        }
     </ScrollView>
   )
 }

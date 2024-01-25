@@ -26,7 +26,8 @@ export const MAIN_ROUTES = {
   CUSTOMER_HOME_STACK:'CustomerHomeStack',
   RIDER_STACK:'RiderStack',
   CHATSCREEN : 'Chats',
-  
+  VIEW_RECEPTION_CAR: 'VIEW_RECEPTION_CAR',
+  VIEW_DIAGNOSTIC_CAR:'VIEW_DIAGNOSTIC_CAR'
 }
 
 export const ROLES = {

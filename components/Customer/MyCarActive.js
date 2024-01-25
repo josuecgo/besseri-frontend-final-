@@ -38,7 +38,7 @@ export const MyCarActive = ({navigation}) => {
                     <TouchableOpacity
                     onPress={() => navigation.navigate(
                       CUSTOMER_HOME_SCREEN_ROUTES.CHECK_STACK,
-                      { checks: carActive?.checks }
+                      { checks: carActive }
                     )}
                     >
                       <MaterialCommunityIcons

@@ -1,6 +1,6 @@
 // Main stack
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import { LSFS } from '../../screens/login.navigation';
 import { VendorNavigation } from '../../screens/vendor/vendor.navigation';
 import { AutoPartsAndServices, PartsServicesFunctionsDrawer } from '../../screens/customer/customer.navigation';
@@ -31,15 +31,17 @@ import PaymentScreen, { PayScreen } from '../../screens/customer/Store/PayScreen
 import { OrderSummary } from '../../screens/customer/Store/OrderSummary';
 import CustomerOrderSummary from '../../screens/customer/customer.ordersummary.screen';
 import { ChecksStack } from './ChecksStack';
+import { ViewReceptionCarScreen } from '../../screens/customer/Bookings/ViewReceptionCarScreen';
+import { ChecksCarScreen } from '../../screens/customer/Garage/customer.checksCar.screen';
 
 const Stack = createStackNavigator();
 
 export const MainNavigation = () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
-      name={'Splash'}
-      component={Splash}
+        name={'Splash'}
+        component={Splash}
       />
       <Stack.Screen
         name={'AuthStack'}
@@ -65,9 +67,9 @@ export const MainNavigation = () => {
         options={{
           headerShown: true,
           header: props => (
-            <HeaderTitle {...props} 
-            titulo="Detalles de servicio" 
-            nav={props.navigation.goBack}
+            <HeaderTitle {...props}
+              titulo="Detalles de servicio"
+              nav={props.navigation.goBack}
             />
           ),
         }}
@@ -78,9 +80,9 @@ export const MainNavigation = () => {
         options={{
           headerShown: true,
           header: props => (
-            <HeaderTitle {...props} 
-            titulo="Servicios" 
-            nav={props.navigation.goBack}
+            <HeaderTitle {...props}
+              titulo="Servicios"
+              nav={props.navigation.goBack}
             />
           ),
         }}
@@ -92,9 +94,9 @@ export const MainNavigation = () => {
         options={{
           headerShown: true,
           header: props => (
-            <HeaderTitle {...props} 
-            titulo="Agendar" 
-            nav={props.navigation.goBack}
+            <HeaderTitle {...props}
+              titulo="Agendar"
+              nav={props.navigation.goBack}
             />
           ),
         }}
@@ -105,9 +107,9 @@ export const MainNavigation = () => {
         options={{
           headerShown: true,
           header: props => (
-            <HeaderTitle {...props} 
-            titulo="Pagar" 
-            nav={props.navigation.goBack}
+            <HeaderTitle {...props}
+              titulo="Pagar"
+              nav={props.navigation.goBack}
             />
           ),
         }}
@@ -119,9 +121,9 @@ export const MainNavigation = () => {
         options={{
           headerShown: true,
           header: props => (
-            <HeaderTitle {...props} 
-            titulo="Detalle" 
-            nav={props.navigation.goBack}
+            <HeaderTitle {...props}
+              titulo="Detalle"
+              nav={props.navigation.goBack}
             />
           ),
         }}
@@ -133,28 +135,28 @@ export const MainNavigation = () => {
         options={{
           headerShown: true,
           header: props => (
-            <HeaderTitle {...props} 
-            titulo="Seguimiento" 
-            nav={props.navigation.goBack}
+            <HeaderTitle {...props}
+              titulo="Seguimiento"
+              nav={props.navigation.goBack}
             />
           ),
         }}
       />
-      
+
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK}
         component={CartScreen}
         options={{
           headerShown: true,
           header: props => (
-            <HeaderStore {...props} 
-            titulo="Resumen de pago" 
-            nav={props.navigation.goBack}
-            tienda={true}
+            <HeaderStore {...props}
+              titulo="Resumen de pago"
+              nav={props.navigation.goBack}
+              tienda={true}
             />
           ),
         }}
-        
+
       />
 
       <Stack.Screen
@@ -164,14 +166,14 @@ export const MainNavigation = () => {
         options={{
           headerShown: true,
           header: props => (
-            <HeaderTitle {...props} 
-            titulo="Pago" 
-            nav={props.navigation.goBack}
-            tienda={false}
+            <HeaderTitle {...props}
+              titulo="Pago"
+              nav={props.navigation.goBack}
+              tienda={false}
             />
           ),
         }}
-        
+
       />
 
       <Stack.Screen
@@ -187,69 +189,46 @@ export const MainNavigation = () => {
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.CHECK_STACK}
         component={ChecksStack}
-      />  
-      
-       
-  
-        <Stack.Screen
-      name={LOGIN_SIGNUP_FORGOT_ROUTES.PRIVACY_POLICY}
-      component={PrivacyPolicy}
+      />
+
+
+
+      <Stack.Screen
+        name={LOGIN_SIGNUP_FORGOT_ROUTES.PRIVACY_POLICY}
+        component={PrivacyPolicy}
+      />
+
+      <Stack.Screen
+        name={MAIN_ROUTES.VIEW_RECEPTION_CAR
+        }
+        component={ViewReceptionCarScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props}
+              titulo="Detalle de recepción"
+              nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+
+<Stack.Screen
+        name={MAIN_ROUTES.VIEW_DIAGNOSTIC_CAR
+        }
+        component={ChecksCarScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props}
+              titulo="Detalle de vehículo"
+              nav={props.navigation.goBack}
+            />
+          ),
+        }}
       />
     </Stack.Navigator>
   );
 };
 
 
-const OrderStack = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false }}
-      initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
-    >
-      <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.CART}
-        component={CartScreen}
-        options={{
-          headerShown: true,
-          header: props => (
-            <HeaderStore {...props} 
-            titulo="Resumen de pago" 
-            nav={props.navigation.goBack}
-            tienda={true}
-            />
-          ),
-        }}
-      />
-      <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.PAGO}
-        component={PayScreen}
-        options={{
-          headerShown: true,
-          header: props => (
-            <HeaderStore {...props} 
-            titulo="PAGO" 
-            nav={props.navigation.goBack}
-            tienda={false}
-            />
-          ),
-        }}
-      />
-      <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.METODO}
-        component={MetodoScreen}
-      />
-      {/* <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_SUMMARY}
-        component={CustomerOrderSummaryScreen}
-      /> */}
-      <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.ORDER_SUMMARY_FREE}
-        component={CustomerOrderSummaryFree}
-      />
-      <Stack.Screen
-        name={'OrderSuccessful'}
-        component={OrderSuccessful}
-      />
-    </Stack.Navigator>
-  )
-}
