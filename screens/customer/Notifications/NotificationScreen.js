@@ -11,6 +11,7 @@ import { useInfoUser } from '../../../hooks/useInfoUsers';
 import axios from 'axios';
 import { api_urls } from '../../../util/api/api_essentials';
 import { BOTTOM_TAB_CUSTOMER_ROUTES, CUSTOMER_HOME_SCREEN_ROUTES } from '../../../util/constants';
+import { NotificationEmpty } from '../../../components/NotificationEmpty';
 
 
 export const NotificationScreen = (props) => {
@@ -74,6 +75,7 @@ export const NotificationScreen = (props) => {
         renderItem={renderItem}
         keyExtractor={(item) => item._id}
         ListFooterComponent={<View style={{width:10,height:30}} />}
+        ListEmptyComponent={<NotificationEmpty/>}
         />
       </Box>
 

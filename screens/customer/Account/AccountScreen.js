@@ -1,4 +1,4 @@
-import { View, StyleSheet, Platform } from 'react-native'
+import { View, StyleSheet, Platform, Linking } from 'react-native'
 import React from 'react'
 import Colors from '../../../util/styles/colors'
 import { MyCarActive } from '../../../components/Customer/MyCarActive'
@@ -13,6 +13,7 @@ import { resetOrdersUser } from '../../../util/ReduxStore/Actions/CustomerAction
 import { useContext } from 'react'
 import { NotificationContext } from '../../../util/context/NotificationContext'
 import PushNotificationIOS from '@react-native-community/push-notification-ios'
+import { Button } from 'native-base'
 
 export const AccountScreen = (props) => {
   
@@ -35,6 +36,18 @@ export const AccountScreen = (props) => {
        props.navigation.replace('AuthStack',{reload:true});
     }
   }
+
+  const openWhatsApp = (phoneNumber) => {
+    const whatsappUrl = `whatsapp://send?phone=${phoneNumber}`;
+  
+    Linking.canOpenURL(whatsappUrl).then((supported) => {
+      if (supported) {
+        return Linking.openURL(whatsappUrl);
+      } else {
+        console.error("WhatsApp is not installed on the device");
+      }
+    }).catch((err) => console.error("An error occurred", err));
+  };
   
   return (
     <View style={styles.account} >
@@ -53,6 +66,13 @@ export const AccountScreen = (props) => {
         <BtnPrincipal
         text={'Historial'}
         onPress={() =>  props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_PEDIDOS)}
+        />
+
+        
+        <BtnPrincipal
+        text={'Quejas'}
+        backgroundColor={Colors.attention}
+        onPress={() =>  openWhatsApp('+5215534715331')}
         />
 
         <BtnPrincipal
