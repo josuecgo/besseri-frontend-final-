@@ -6,7 +6,7 @@ import { BackgroundCar } from '../../../components/Background/BackgroundCar'
 import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal'
 import {  CUSTOMER_HOME_SCREEN_ROUTES } from '../../../util/constants'
 import { logout } from '../../../util/local-storage/auth_service'
-
+import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector,useDispatch } from 'react-redux'
 import { deleteToUser } from '../../../util/ReduxStore/Actions/CustomerActions/UserInfoActions'
 import { resetOrdersUser } from '../../../util/ReduxStore/Actions/CustomerActions/PedidosAction'
@@ -57,7 +57,7 @@ export const AccountScreen = (props) => {
       </View>
      
 
-      <View style={{marginBottom:25}} >
+      <View style={{marginBottom:20}} >
         <BtnPrincipal
         text={'Mi cuenta'}
         onPress={() =>  props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.MY_ACCOUNT)}
@@ -69,11 +69,6 @@ export const AccountScreen = (props) => {
         />
 
         
-        <BtnPrincipal
-        text={'Quejas'}
-        backgroundColor={Colors.attention}
-        onPress={() =>  openWhatsApp('+5215534715331')}
-        />
 
         <BtnPrincipal
         text={!user ? 'Iniciar sesion' : 'Cerrar sesion'}
@@ -81,7 +76,24 @@ export const AccountScreen = (props) => {
 
         backgroundColor={Colors.cerrarSesion}
         />
+         <Button 
+          variant={'ghost'}
+          leftIcon={<MaterialIcons  name="whatsapp" size={25} color={Colors.white} />}
+          onPress={() =>  openWhatsApp('+5215534715331')}
+          _text={{
+            fontWeight: '700',
+            fontSize: '18px',
+            color: Colors.white,
+            // fontFamily:'Arial',
+            fontStyle:'normal'
+          }}
+          >
+            Quejas
+          </Button>
       </View>
+
+
+     
     </View>
   )
 }

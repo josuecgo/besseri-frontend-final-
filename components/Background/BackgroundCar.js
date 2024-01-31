@@ -13,15 +13,7 @@ export const BackgroundCar = ({home = false,bottom = 20}) => {
        resizeMode='contain'
        style={styles.img}
        />
-       {/* {
-        home ? (
-        <HStack>
-          <ChecksHome/>
-        </HStack>
-        ):(
-          <View style={{marginBottom:bottom}} />
-        )
-       } */}
+      
         
     </View>
   )
@@ -32,6 +24,6 @@ export const BackgroundCar = ({home = false,bottom = 20}) => {
 const styles = StyleSheet.create({
   img:{
     width:deviceWidth ,
-    height:deviceHeight * 0.35
+    height:deviceHeight * 0.30
   }
 })
