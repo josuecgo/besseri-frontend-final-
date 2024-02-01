@@ -28,6 +28,7 @@ export const AddCarScreen = (props) => {
   const {bottom} = useSafeAreaInsets()
   const { getUserInfo } = useInfoUser()
 
+  
   const guardarCar = async () => {
     
     if (!marcaValue || !modeloValue || !yearValue ) {
@@ -62,6 +63,7 @@ export const AddCarScreen = (props) => {
       resetInputs()
       setIsLoading(false)
     } catch (error) {
+      console.log(error);
       showToaster('No hay conexion con el servidor')
       resetInputs()
       setIsLoading(false)
@@ -97,7 +99,7 @@ export const AddCarScreen = (props) => {
 
        
 
-        <Box marginX={4} marginTop={10} >
+        <Box marginX={4} marginTop={10} mb={10} >
           <Heading size="xs" mb="3" color={Colors.white}>Marca de vehículo</Heading>
           <SelectDropDownBtn
             items={marcas}
@@ -145,21 +147,23 @@ export const AddCarScreen = (props) => {
           
           
         </Box>
+
+        <View style={{alignItems:'center',marginVertical:bottom }} >
+
+          <Button
+          backgroundColor={Colors.primaryColor} 
+          size={'lg'} 
+          onPress={guardarCar} 
+          width={'90%' }
+          disabled={isLoading}
+          >
+          {isLoading ? 'Creando...' : 'Crear mi auto'}
+          </Button>
+
+          </View>
       </ScrollView>
 
-      <View style={{alignItems:'center',paddingBottom:bottom }} >
-
-        <Button
-        backgroundColor={Colors.primaryColor} 
-        size={'lg'} 
-        onPress={guardarCar} 
-        width={'90%' }
-        disabled={isLoading}
-        >
-        {isLoading ? 'Creando...' : 'Crear mi auto'}
-        </Button>
-
-      </View>
+     
     </View>
   )
 }
