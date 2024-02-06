@@ -48,6 +48,24 @@ export const AccountScreen = (props) => {
       }
     }).catch((err) => console.error("An error occurred", err));
   };
+
+  const abrirWhatsApp = (numero) => {
+    const enlaceWhatsApp = `https://wa.me/${numero}`;
+    
+    if (!numero) {
+      return;
+    }
+    
+    Linking.canOpenURL(enlaceWhatsApp)
+      .then((supported) => {
+        if (supported) {
+          return Linking.openURL(enlaceWhatsApp);
+        } else {
+          showToaster("No se puede abrir WhatsApp.");
+        }
+      })
+      .catch((error) => console.log(error));
+  };
   
   return (
     <View style={styles.account} >
@@ -79,7 +97,7 @@ export const AccountScreen = (props) => {
          <Button 
           variant={'ghost'}
           leftIcon={<MaterialIcons  name="whatsapp" size={25} color={Colors.white} />}
-          onPress={() =>  openWhatsApp('+5215534715331')}
+          onPress={() =>  abrirWhatsApp('+5215534715331')}
           _text={{
             fontWeight: '700',
             fontSize: '18px',
