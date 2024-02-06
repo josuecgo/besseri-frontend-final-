@@ -120,8 +120,8 @@ export const AgendarScreen = (props) => {
 
     if (error) {
       setFetchLoading(false)
-
-      Alert.alert(`Error.Pago cancelado`);
+      
+      Alert.alert(`Pago cancelado`);
 
     } else {
       agendarCita()
@@ -221,7 +221,7 @@ export const AgendarScreen = (props) => {
 
         <VStack space={4} mt={'10px'} >
           <Text style={{ ...CommonStyles.h2 }} >Dia: {moment(startDate).format('LLLL')}</Text>
-          <Text style={{ ...CommonStyles.h2 }} >Hora: </Text>
+          {/* <Text style={{ ...CommonStyles.h2 }} >Hora: </Text> */}
         </VStack>
 
         <HStack justifyContent={'space-between'} mt={'10px'} flexWrap={'wrap'} >
