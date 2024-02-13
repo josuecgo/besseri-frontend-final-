@@ -254,7 +254,8 @@ export const showToaster = (message) => {
   if (Platform.OS === 'ios') {
     Alert.alert(message)
   }else{
-    ToastAndroid.showWithGravity(message,ToastAndroid.SHORT,ToastAndroid.CENTER)
+    Alert.alert(message)
+    // ToastAndroid.showWithGravity(message,ToastAndroid.SHORT,ToastAndroid.CENTER)
 
   }
 }

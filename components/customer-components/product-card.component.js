@@ -35,7 +35,7 @@ const ProductCardComponent = ({
   const { comision, carActive } = useContext(ProductContext)
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
 
-
+  // console.log(data.name);
   const handleChange = async () => {
 
     const stock = await axios.get(`${customer_api_urls.inStock_product}/${data._id}`)
@@ -95,13 +95,13 @@ const ProductCardComponent = ({
 
       <Card style={styles.card}>
         <Box alignItems={'center'} >
-          {/* <AspectRatio ratio={16 / 9} w={'100%'} > */}
+         
           <Image
             source={{ uri: `${base_url}/${data?.productImg}` }}
             style={styles.productImg}
             resizeMode='stretch'
           />
-          {/* </AspectRatio> */}
+         
         </Box>
       </Card>
 

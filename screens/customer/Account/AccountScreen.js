@@ -106,7 +106,7 @@ export const AccountScreen = (props) => {
             fontStyle:'normal'
           }}
           >
-            Quejas
+            Soporte
           </Button>
       </View>
 

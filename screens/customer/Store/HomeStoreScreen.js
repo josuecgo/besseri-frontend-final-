@@ -50,18 +50,26 @@ const HomeStoreScreen = React.memo((props) => {
     )
   }
 
-  
+
 
   const renderItem = ({ item }) => {
-
+   
     return (
-      <ProductListing
+      <View key={item._id} style={{
+        flex: 1, 
+        // alignItems: 'center', 
+        marginVertical: 5, 
+        marginHorizontal: 10
+        }} >
+        <ProductListing
         navigation={props.navigation}
         category={item}
-        products={productos}
+        products={item}
         comision={comision}
         carCompatible={carCompatible}
-      />
+        />
+      </View>
+
     )
   }
 
@@ -107,7 +115,6 @@ const HomeStoreScreen = React.memo((props) => {
   }, [activeCategory, carActive]);
   
 
-    
 
   return (
     <View style={{ 
@@ -136,27 +143,45 @@ const HomeStoreScreen = React.memo((props) => {
         </View>
 
 
-        <View style={{ flexGrow: 1, marginTop: 5 }}>
+        <View style={{  marginTop: 5 }}>
           {
             comision && productos && !isLoading
               ?
               (
                 <FlatList
-                  data={productos}
-                  initialNumToRender={5}
-                  keyExtractor={item => item?._id}
-                  renderItem={memorizedValue}
-                  
-                  ListFooterComponent={<View style={{ width: '100%', marginBottom: 10, height: deviceHeight * 20 / 100 }} />}
-                  showsVerticalScrollIndicator={false}
-                  onRefresh={() => {
+                data={productos}
+                keyExtractor={item => item?._id}
+                renderItem={renderItem}
+                contentContainerStyle={{ marginTop: 15}}
+                numColumns={2} // Set the number of columns to 2
+                columnWrapperStyle={{ justifyContent: 'center' }}
+                ListFooterComponent={<View style={{ width: '100%', marginBottom: 10, height: deviceHeight * 20 / 100 }} />}
+                showsVerticalScrollIndicator={false}
+                onRefresh={() => {
+                  getCategorias();
+                }}
+                refreshing={loading}
+                ListEmptyComponent={() => <Center><ListEmpty msg={'No hay productos para tu vehiculo'} /></Center>}
+              />
+                // <FlatList
+                //   data={productos}
+                 
+                //   keyExtractor={item => item?._id}
+                //   renderItem={memorizedValue}
+                //   contentContainerStyle={{ marginTop: 15, paddingHorizontal: 5 }}
+                //   // numColumns={2}
+                //   // columnWrapperStyle={{ justifyContent: 'space-between' }}
 
-                    getCategorias();
+                //   ListFooterComponent={<View style={{ width: '100%', marginBottom: 10, height: deviceHeight * 20 / 100 }} />}
+                //   showsVerticalScrollIndicator={false}
+                //   onRefresh={() => {
 
-                  }}
-                  refreshing={loading}
-                  ListEmptyComponent={() => <Center><ListEmpty msg={'No hay productos para tu vehiculo'} /></Center>}
-                 />
+                //     getCategorias();
+
+                //   }}
+                //   refreshing={loading}
+                //   ListEmptyComponent={() => <Center><ListEmpty msg={'No hay productos para tu vehiculo'} /></Center>}
+                //  />
 
               ) : (
                 <View

@@ -25,9 +25,22 @@ const ProductListing = ({products,navigation,comision}) => {
   
   return (
     <View style={styles.container}>
+            <ProductCardComponent
+                  onViewDetail={() => {
+                      dispatch(CartActions.selectItemFromCart(products._id, products.price));
+                      navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL, {
+                          product: products,
+                          comision
+                      });
+                  }}
+                  increaseQuantity={() => CartActions.increaseQuantity(products?._id)}
+                  onAddToCart={() => addItemToCart(products)}
+                  data={products}
+                  inCart={cartProductIds.includes(products._id)}
+                  comision={comision}
+              />
 
-
-      <FlatList
+      {/* <FlatList
           data={products}
           contentContainerStyle={{ marginTop: 15, paddingHorizontal: 5 }}
           numColumns={2}
@@ -49,21 +62,24 @@ const ProductListing = ({products,navigation,comision}) => {
               />
           )}
           ListEmptyComponent={() => <ListEmpty msg={'No hay productos para tu vehiculo'} />}
-      />
+      /> */}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container:{marginVertical:15,width:deviceWidth},
+  container:{
+   
+    width:deviceWidth * 0.8
+  },
   buttonAndTextContainer:{
-    flexDirection:'row',
-    justifyContent:'space-between',
-    alignItems:'baseline',
-    paddingHorizontal:10,
+    // flexDirection:'row',
+    // justifyContent:'space-between',
+    // alignItems:'baseline',
+    // paddingHorizontal:10,
     // backgroundColor:'red'
   },
-  seeMoreButton:{paddingHorizontal:15,backgroundColor:Colors.primaryColor,justifyContent:'center',alignItems:'center',padding:10,borderWidth:1,borderColor:Colors.primaryColor,borderRadius:30},
+  // seeMoreButton:{paddingHorizontal:15,backgroundColor:Colors.primaryColor,justifyContent:'center',alignItems:'center',padding:10,borderWidth:1,borderColor:Colors.primaryColor,borderRadius:30},
  
 })
 

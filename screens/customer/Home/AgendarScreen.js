@@ -37,7 +37,9 @@ export const AgendarScreen = (props) => {
   const [stripeEssentials, setStripeEssentials] = useState(null);
 
 
-  
+
+
+
   const fetchPaymentSheetParams = async () => {
     try {
       const customerData = await getUser();
@@ -55,10 +57,12 @@ export const AgendarScreen = (props) => {
           // Add any other headers you need
         },
       };
-  
-  
+      
+     
+      
       const response = await axios.post(customer_api_urls?.create_payment_sheet_services, data, axiosConfig);
-      const { paymentIntent, ephemeralKey, customer,publishableKey,intentId } = response.data;
+     
+      const { paymentIntent, ephemeralKey, customer,publishableKey,intentId } = response?.data;
       setStripeEssentials({ paymentIntent, ephemeralKey, customer,publishableKey,intentId })
       return {
         paymentIntent,
@@ -69,41 +73,51 @@ export const AgendarScreen = (props) => {
     } catch (error) {
       
       showToaster('Error de conexión')
+
+      return false
     }
 
   };
 
   const initializePaymentSheet = async () => {
     try {
+      // const {
+      //   paymentIntent,
+      //   ephemeralKey,
+      //   customer,
+      //   publishableKey,
+      // } = await fetchPaymentSheetParams();
+      const data = await fetchPaymentSheetParams();
+      if (!data) {
+        return
+      }
       const {
-        paymentIntent,
-        ephemeralKey,
-        customer,
-        publishableKey,
-      } = await fetchPaymentSheetParams();
-
-
+          paymentIntent,
+          ephemeralKey,
+          customer,
+          publishableKey,
+        } = data
 
       const { error } = await initPaymentSheet({
         customerId: customer,
         customerEphemeralKeySecret: ephemeralKey,
         paymentIntentClientSecret: paymentIntent,
-        // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
-        //methods that complete payment after a delay, like SEPA Debit and Sofort.
         allowsDelayedPaymentMethods: true,
         merchantDisplayName: 'Besseri',
 
       });
 
 
-      console.log(error,'errorr');
+      
       if (!error) {
         // Es solo para cargar el loading
         setLoading(true);
       }
     } catch (error) {
       console.log(error);
-      showToaster('No hay conexion en este momento')
+      showToaster('No hay conexion en este momento');
+      setLoading(false);
+      setFetchLoading(false)
     }
   };
 

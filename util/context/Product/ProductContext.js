@@ -119,6 +119,7 @@ export const ProductProvider = ({ children }) => {
                 `${customer_api_urls.get_category_products}/${category._id}`, { carActive }
             );
         
+          
             if (apiCall?.status === 200) {
 
               

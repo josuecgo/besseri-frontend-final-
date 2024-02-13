@@ -65,9 +65,9 @@ export const AddCarScreen = (props) => {
     } catch (error) {
       console.log(error);
       showToaster('No hay conexion con el servidor')
-      resetInputs()
+      // resetInputs()
       setIsLoading(false)
-      props.navigation.goBack();
+      // props.navigation.goBack();
     }
    
     

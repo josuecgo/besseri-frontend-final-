@@ -198,8 +198,9 @@ const CustomerOrderSummary = (props) => {
                 props.navigation.goBack()
                 return;
             }
+            console.log(customer_api_urls.create_payment_sheet);
             const response = await axios.post(customer_api_urls?.create_payment_sheet, data);
-
+            
             const apiResponse = {
                 paymentIntent: response?.data?.paymentIntent,
                 ephemeralKey: response?.data?.ephemeralKey,
@@ -216,11 +217,11 @@ const CustomerOrderSummary = (props) => {
                 publishableKey: response?.data?.publishableKey
             };
         } catch (e) {
-               console.log('code 6',e)
-
+             
             showToaster('Algo salió mal, intenta de nuevo code: 6')
+            setIsVisible(false);
         }
-        setIsVisible(false);
+            
     };
 
 
@@ -249,7 +250,7 @@ const CustomerOrderSummary = (props) => {
                 //console.log({ initializePay: error })
             }
         } catch (error) {
-            console.log({ init: error });
+           
             showToaster('No hay conexion en este momento')
         }
 
