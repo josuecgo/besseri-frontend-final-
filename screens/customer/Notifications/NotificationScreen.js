@@ -24,10 +24,10 @@ export const NotificationScreen = (props) => {
    getPedidosUser()
     props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.DETALLE,data)
    
-    if (!item?.isView)  {
-        viewItem(item._id);
+    // if (!item?.isView)  {
+    //     viewItem(item._id);
         
-    }
+    // }
   }
 
   const viewItem = async(id) => {

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View,Linking, TouchableOpacity } from 'react-native'
 import React from 'react'
 import AddressFormatted from '../AddressFormatted'
 import { Divider, HStack, VStack } from 'native-base'
@@ -13,7 +13,16 @@ const CardServicio = ({data}) => {
   const {comision} = useContext(ProductContext)
 
 
-  
+  const openMapsApp = (latitude, longitude) => {
+
+    const url = Platform.select({
+      ios: `http://maps.apple.com/?ll=${data?.store?.location.latitude},${data?.store?.location?.longitude}`,
+      android: `http://maps.google.com/maps?q=${data?.store?.location.latitude},${data?.store?.location?.longitude}`,
+    });
+    Linking.openURL(url);
+
+  };
+  console.log(data?.store?.location.longitude);
   if(data.type === 'refaccion') return (
     <>
     <AddressFormatted address={data?.store?.location?.formatted_address} />
@@ -59,7 +68,10 @@ const CardServicio = ({data}) => {
       <Text style={{...CommonStyles.h2}}> {data.storePickup ? 'Recoger en' : 'Servicio de VALET incluido'  } </Text>
       {
         data.storePickup ? (
-            <AddressFormatted address={data?.store?.location?.formatted_address} />
+          <TouchableOpacity onPress={openMapsApp} >
+             <AddressFormatted address={data?.store?.location?.formatted_address}   />
+          </TouchableOpacity>
+           
         ): ( 
           <AddressFormatted address={data?.delivery_address?.formatted_address} />
         )

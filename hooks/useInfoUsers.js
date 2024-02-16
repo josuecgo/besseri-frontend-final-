@@ -37,7 +37,7 @@ export const useInfoUser = (  ) => {
   
       if (apiCall.status === api_statuses.success) {
         const { carActive, myAddresses, garage } = apiCall.data.data;
-       
+        
         dispatch(addToUser(user));
         if (carActive) {
           dispatch(addCarActiveToUser(carActive));

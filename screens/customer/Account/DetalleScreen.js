@@ -100,6 +100,7 @@ export const DetalleScreen = ({ route,navigation }) => {
   }, [])
   
 
+  
   return (
     <ScrollView contentContainerStyle={styles.container} >
       <LoaderComponent isVisible={loading} /> 
@@ -150,7 +151,7 @@ export const DetalleScreen = ({ route,navigation }) => {
 
 
 {
-          data?.car && (
+          data?.car &&  data?.type !== 'refaccion' && (
             <BtnPrincipal text={'Ver Diagnostico'}
               onPress={() => navigation.navigate(MAIN_ROUTES.VIEW_DIAGNOSTIC_CAR, data?.car)}
               marginHorizontal={10}
