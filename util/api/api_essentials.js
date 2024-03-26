@@ -1,6 +1,6 @@
-export const env = 'prod';
+export const env = 'dev';
 
-export const base_url = env === 'prod' ? 'https://api.besseri.mx'  : env === 'dev' ?  'http://192.168.1.41:3005' : 'http://192.168.100.4:3005';
+export const base_url = env === 'prod' ? 'https://api.besseri.mx'  : env === 'dev' ?  'http://192.168.1.34:3005' : 'http://192.168.100.4:3005';
 // export const base_url = false ? 'http://192.168.100.72:3005' : 'http://192.168.1.17:3005'
 
 export const api_urls = {
@@ -125,6 +125,11 @@ export const customer_api_urls = {
     create_feedback: `${base_url}/feedback/create-feedback`,
     get_feedback: `${base_url}/feedback/get-feedback`,
     upload_imgs_feedback: `${base_url}/feedback/upload-feedback-images`,
+
+    create_driver:`${base_url}/fuel/drivers`,
+    get_driver:`${base_url}/fuel/drivers`,
+    create_consumption:`${base_url}/fuel/create-consumption`,
+    get_consumption:`${base_url}/fuel/consumption`,
 }
 export const rider_api_urls = {
     get_details:`${base_url}/rider/get-riderinfo`,

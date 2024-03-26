@@ -33,6 +33,8 @@ export const MyCarActive = ({navigation}) => {
                 <Heading size={'sm'} color={Colors.white} >{carActive?.maker?.name} {carActive?.model?.name}</Heading>
               </HStack>
 
+              
+
                 {
                   carActive.checks && navigation && (
                     <TouchableOpacity
@@ -47,8 +49,26 @@ export const MyCarActive = ({navigation}) => {
                         size={adjust(30)}
                       />
                     </TouchableOpacity>
-                )
-              }
+                  )
+                }
+
+                {
+                  navigation && (
+                    <TouchableOpacity
+                    onPress={() => navigation.navigate(
+                      CUSTOMER_HOME_SCREEN_ROUTES.FUEL_CHECK,
+                      {  carActive }
+                    )}
+                   >
+                     <MaterialCommunityIcons
+                     name='gas-station'
+                     color={'white'}
+                     size={adjust(30)}
+                     />
+                   </TouchableOpacity>
+                  )
+                }
+                  
               
             </>
           ) : (

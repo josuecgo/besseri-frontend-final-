@@ -33,6 +33,8 @@ import CustomerOrderSummary from '../../screens/customer/customer.ordersummary.s
 import { ChecksStack } from './ChecksStack';
 import { ViewReceptionCarScreen } from '../../screens/customer/Bookings/ViewReceptionCarScreen';
 import { ChecksCarScreen } from '../../screens/customer/Garage/customer.checksCar.screen';
+import { FuelCheckScreen } from '../../screens/customer/Home/FuelCheckScreen';
+import { FormFuelCheckScreen } from '../../screens/customer/Home/FormFuelCheckScreen';
 
 const Stack = createStackNavigator();
 
@@ -189,6 +191,34 @@ export const MainNavigation = () => {
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.CHECK_STACK}
         component={ChecksStack}
+      />
+
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.FUEL_CHECK}
+        component={FuelCheckScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props}
+              titulo="Combustible"
+              nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+
+    <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.FORM_FUEL_CHECK}
+        component={FormFuelCheckScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props}
+              titulo="Crear registro"
+              nav={props.navigation.goBack}
+            />
+          ),
+        }}
       />
 
 

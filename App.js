@@ -24,6 +24,7 @@ import { useChat } from './hooks/useChat';
 import FeedbackReducer from './util/ReduxStore/Reducers/CustomerReducers/FeedbackReducer';
 import UserInfoReducer from './util/ReduxStore/Reducers/CustomerReducers/UserInfoReducer';
 import PedidosReducer from './util/ReduxStore/Reducers/CustomerReducers/PedidosReducer';
+import FuelReducer from './util/ReduxStore/Reducers/CustomerReducers/FuelReducer';
 
 
 const config = {
@@ -41,7 +42,8 @@ const App = () => {
     cart: CartReducer,
     feedback: FeedbackReducer,
     user: UserInfoReducer,
-    pedidos:PedidosReducer
+    pedidos:PedidosReducer,
+    fuel:FuelReducer
     
   });
   const reduxStore = createStore(store,applyMiddleware(thunk));
