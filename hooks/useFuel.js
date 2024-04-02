@@ -9,6 +9,7 @@ export const useFuel = (  ) => {
     const [loading, setLoading] = useState(false);
     const { carActive } = useSelector(state => state.user);
     const dispatch = useDispatch()
+    const [averageGasConsumption, setAverageGasConsumption] = useState(null)
 
     const getDrivers = async() => {
         try {
@@ -62,6 +63,51 @@ export const useFuel = (  ) => {
         }
     }
 
+    const createTravel = async(data) => {
+        try {
+            setLoading(true)
+            const id = await getUserId()
+          
+            const apiCall = await axios.post(`${customer_api_urls.create_travel}/${id}`,{
+                ...data,
+                garage:carActive._id,
+                km_anterior:data.km
+            });
+            
+           
+            
+            await getFuelConsumption()
+            setLoading(false)
+           
+            
+           
+        } catch (error) {
+            setLoading(false)
+        }
+    }
+
+    const closeTravel = async(data) => {
+        try {
+            setLoading(true)
+           
+          
+            const apiCall = await axios.put(`${customer_api_urls.close_travel}/${data.id}`,{
+                ...data,
+                km_actual:data.km
+            });
+            
+           
+            
+            dispatch(getAllFuelConsumption(apiCall.data.data));
+            setLoading(false)
+           
+            
+           
+        } catch (error) {
+            setLoading(false)
+        }
+    }
+
     const getFuelConsumption = async() => {
         try {
             setLoading(true)
@@ -76,13 +122,44 @@ export const useFuel = (  ) => {
         }
     }
 
+    const calcularConsumoEntreRecargas = (registros) => {
+        if (registros.length < 2) {
+            return 0; // No se pueden calcular consumos sin al menos dos registros
+        }
+    
+        let totalKm = 0;
+        let totalLitros = 0;
+      
+        // Sumar los kilómetros recorridos y los litros de cada registro
+        for (let i = 1; i < registros.length; i++) {
+            const registroActual = registros[i];
+            const registroAnterior = registros[i - 1];
+    
+            totalKm += registroActual.km_recorrido;
+            totalLitros += registroActual.liters;
+        }
+    
+       
+        // Calcular el consumo promedio de gasolina
+        const consumoPromedio = totalLitros / totalKm;
+        console.log({
+            totalLitros,totalKm,consumoPromedio
+        });
+        setAverageGasConsumption(consumoPromedio)
+        return consumoPromedio;
+    }
+
     return {
         getDrivers,
         loading,
         
         createDriver,
         createFuelConsumption,
-        getFuelConsumption
+        getFuelConsumption,
+        calcularConsumoEntreRecargas,
+        averageGasConsumption,
+        createTravel,
+        closeTravel
       
     }
 

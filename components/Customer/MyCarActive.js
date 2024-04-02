@@ -13,7 +13,7 @@ import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants'
 export const MyCarActive = ({navigation}) => {
   const { carActive } = useSelector(state => state.user);
 
-
+ 
   
 
   return (

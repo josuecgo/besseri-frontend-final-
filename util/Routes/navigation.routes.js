@@ -211,13 +211,13 @@ export const MainNavigation = () => {
         name={CUSTOMER_HOME_SCREEN_ROUTES.FORM_FUEL_CHECK}
         component={FormFuelCheckScreen}
         options={{
-          headerShown: true,
-          header: props => (
-            <HeaderTitle {...props}
-              titulo="Crear registro"
-              nav={props.navigation.goBack}
-            />
-          ),
+          headerShown: false,
+          // header: props => (
+            // <HeaderTitle {...props}
+            //   titulo="Crear registro"
+            //   nav={props.navigation.goBack}
+            // />
+          // ),
         }}
       />
 

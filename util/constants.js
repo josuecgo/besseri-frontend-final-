@@ -1,4 +1,4 @@
-import { ToastAndroid,Platform,Alert } from "react-native";
+import { ToastAndroid,Platform,Alert,StyleSheet } from "react-native";
 
 export const SCREEN_HORIZONTAL_MARGIN = 20;
 export const SCREEN_HORIZONTAL_MARGIN_FORM = 10;
@@ -252,11 +252,40 @@ export const KeysStripe = {
  
 }
 
+const customAlertStyles = StyleSheet.create({
+  alertContainer: {
+    backgroundColor: "lightblue",
+    borderRadius: 10,
+    padding: 10,
+  },
+});
+
 export const showToaster = (message) => {
   if (Platform.OS === 'ios') {
-    Alert.alert(message)
+    // Alert.alert(message)
+    Alert.alert(
+      "BESSER INFO",
+      message,
+      [
+        { text: "OK", onPress: () => console.log("OK presionado") }
+      ],
+      {
+        cancelable: false,
+        alertContainerStyle: customAlertStyles.alertContainer, // Aplicar el estilo personalizado
+      }
+    );
   }else{
-    Alert.alert(message)
+    Alert.alert(
+      "BESSER INFO",
+      message,
+      [
+        { text: "OK", onPress: () => console.log("OK presionado") }
+      ],
+      {
+        cancelable: false,
+        alertContainerStyle: customAlertStyles.alertContainer, // Aplicar el estilo personalizado
+      }
+    );
     // ToastAndroid.showWithGravity(message,ToastAndroid.SHORT,ToastAndroid.CENTER)
 
   }
