@@ -19,8 +19,9 @@ import { MyCarActive } from '../../../components/Customer/MyCarActive'
 
 export const FuelCheckScreen = ({ navigation }) => {
     const { getFuelConsumption, loading, calcularConsumoEntreRecargas } = useFuel()
-    const { consumption, averageGasConsumption } = useSelector(state => state.fuel);
+    const { consumption, kmPerByDay, totalKmTraveled,daysPassed } = useSelector(state => state.fuel);
 
+    // console.log({kmPerByDay,totalKmTraveled});
     const calculateGasConsumption = (km, liters) => {
         return km / liters;
     };
@@ -29,22 +30,22 @@ export const FuelCheckScreen = ({ navigation }) => {
         getFuelConsumption()
     }, [])
 
-
+    
 
     const goForm = (type) => {
 
         const ultimoKmActualNull = verificarUltimoKmActualNull(consumption);
-
+        const ultimoRegistro = consumption[0];
         
-        if (ultimoKmActualNull) {
+        if (!ultimoKmActualNull) {
             // No dejes avanzar a otra pantalla
             showToaster("Aun no cierras tu ultimo recorrido. No se puede avanzar.");
             return
         } else{
             if (type === 'travel') {
-                navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.FORM_FUEL_CHECK, { type,finish:false })
+                navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.FORM_FUEL_CHECK, { type,finish:false,km_actual:ultimoRegistro?.km_actual })
             }else{
-                navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.FORM_FUEL_CHECK, { type })
+                navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.FORM_FUEL_CHECK, { type,km_actual:ultimoRegistro?.km_actual })
             }
         }
 
@@ -58,15 +59,17 @@ export const FuelCheckScreen = ({ navigation }) => {
 
     const verificarUltimoKmActualNull = (registros) => {
         // Obtener el último objeto del arreglo
-        const ultimoRegistro = registros[registros.length - 1];
+        const ultimoRegistro = registros[0];
        
         // Verificar si el campo km_actual es null en el último objeto
-        if (ultimoRegistro.km_actual === null) {
-            return true; // El último registro tiene km_actual en null
+        if (ultimoRegistro?.km_actual === null && registros.length > 0) {
+            return false; // El último registro tiene km_actual en null
         } else {
-            return false; // El último registro tiene un valor en km_actual
+            return true; 
         }
     };
+
+    
 
 
     const renderItem = ({ item }) => {
@@ -77,7 +80,7 @@ export const FuelCheckScreen = ({ navigation }) => {
                 <View style={styles.card}>
                     
                     <Text>Chofer: {item.driver?.name}</Text>
-                    <Text>Fecha: {moment(item.createdAt).format('L')}</Text>
+                    <Text>Fecha: {moment(item.createdAt).format('L LT')}</Text>
                     <Text>Kilometraje inicial: {item?.km_anterior ?? 'Primer registro'}</Text>
 
                     {
@@ -121,11 +124,8 @@ export const FuelCheckScreen = ({ navigation }) => {
         )
     };
 
-    useEffect(() => {
-        calcularConsumoEntreRecargas(consumption)
-    }, [consumption])
-
    
+
     return (
         <View style={styles.body} >
 
@@ -161,8 +161,10 @@ export const FuelCheckScreen = ({ navigation }) => {
                     Nueva carga
                 </Button>
             </HStack>
-            {/* <Text style={{ alignSelf: 'center', marginVertical: 10 }}>Promedio de Consumo:{averageGasConsumption}  km/l</Text> */}
-
+            <Text style={{ alignSelf: 'center' }}>Total de Kilómetros recorridos: {totalKmTraveled} km</Text>
+            <Text style={{ alignSelf: 'center'}}>Kilómetros por dia recorridos: {kmPerByDay} km</Text>
+            <Text style={{ alignSelf: 'center' }}>Dias transcurridos: {daysPassed} dias</Text>
+            
             <FlatList
                 data={consumption}
                 renderItem={renderItem}

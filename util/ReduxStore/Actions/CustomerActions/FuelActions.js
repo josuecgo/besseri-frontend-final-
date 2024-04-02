@@ -3,6 +3,9 @@ export const ADD_DRIVER = 'ADD_DRIVER';
 export const GET_ALL_DRIVERS = 'GET_ALL_DRIVERS';
 export const GET_ALL_FUEL_CONSUMPTION = 'GET_ALL_FUEL_CONSUMPTION';
 export const ADD_FUEL = 'ADD_FUEL';
+export const ADD_KM_RECORRIDO = 'ADD_KM_RECORRIDO';
+
+
 
 export const addToDriver = (item) => {
    
@@ -13,7 +16,14 @@ export const addToDriver = (item) => {
   })
 }
 
+export const addKmRecorrido = (item) => {
 
+  return({
+      type:ADD_KM_RECORRIDO,
+      data:item,
+     
+  })
+}
 
 
 

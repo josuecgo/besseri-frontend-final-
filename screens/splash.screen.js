@@ -38,6 +38,7 @@ const SplashScreen = ({navigation}) => {
       let version = DeviceInfo.getBuildNumber();
       
       let os = Platform.OS;
+     
       const url = `${api_urls.check_version}`;
 
       const apiCall = await axios.post(url, {
@@ -49,7 +50,7 @@ const SplashScreen = ({navigation}) => {
 	  return apiCall?.data?.success
      
     } catch (error) {
-     console.log(error,'error');
+     console.log(error,'errors');
 	    return  false
     }
   };
@@ -112,10 +113,10 @@ const SplashScreen = ({navigation}) => {
       
       <Video source={require('../assets/besserLoading.mp4')}   // Can be a URL or a local file.
        ref={(ref) => {
-        //  //console.log(ref);
-       }}                                      // Store reference
-       onBuffer={()=>{}}                // Callback when remote video is buffering
-       onError={()=>{}}               // Callback when video cannot be loaded
+       
+       }}                                    
+       onBuffer={()=>{}}           
+       onError={()=>{}}          
        style={styles.backgroundVideo} 
        repeat={false}
        resizeMode='cover'

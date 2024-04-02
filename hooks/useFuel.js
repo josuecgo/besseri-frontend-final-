@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { customer_api_urls } from '../util/api/api_essentials';
 import { getUserId } from '../util/local-storage/auth_service';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToDriver, addToFuel, getAllDrivers, getAllFuelConsumption } from '../util/ReduxStore/Actions/CustomerActions/FuelActions';
+import { addKmRecorrido, addToDriver, addToFuel, getAllDrivers, getAllFuelConsumption } from '../util/ReduxStore/Actions/CustomerActions/FuelActions';
+import moment from 'moment';
 
 export const useFuel = (  ) => {
     const [loading, setLoading] = useState(false);
@@ -99,6 +100,7 @@ export const useFuel = (  ) => {
            
             
             dispatch(getAllFuelConsumption(apiCall.data.data));
+            calcularTotalKm(apiCall.data.data)
             setLoading(false)
            
             
@@ -115,8 +117,9 @@ export const useFuel = (  ) => {
             const apiCall = await axios.get(`${customer_api_urls.get_consumption}/${id}`);
             setLoading(false)
            
-            
+           
             dispatch(getAllFuelConsumption(apiCall.data.data));
+            calcularTotalKm(apiCall.data.data)
         } catch (error) {
             setLoading(false)
         }
@@ -142,11 +145,45 @@ export const useFuel = (  ) => {
        
         // Calcular el consumo promedio de gasolina
         const consumoPromedio = totalLitros / totalKm;
-        console.log({
-            totalLitros,totalKm,consumoPromedio
-        });
+      
         setAverageGasConsumption(consumoPromedio)
         return consumoPromedio;
+    }
+
+    const calcularTotalKm = (response) => {
+       try {
+        if (response.length <= 0) {
+            dispatch(addKmRecorrido({
+                kmPerByDay:null,
+                totalKmTraveled:null,
+                daysPassed:null
+            }));
+            return
+        }
+        const ultimoRegistro = response[0];
+        const count = response.length
+        const primerRegistro = response[count - 1];
+        const actual = ultimoRegistro?.km_actual ?? ultimoRegistro?.km_anterior;
+        const totalKmRecorridos = actual - primerRegistro?.km_anterior;
+
+        const primeraFecha = moment(primerRegistro.createdAt);
+
+        const ultimaFecha = moment(ultimoRegistro.createdAt);
+     
+        const diasTranscurridos = ultimaFecha.diff(primeraFecha, 'days');
+
+        const kmPorDia = diasTranscurridos <= 0 ? totalKmRecorridos :  totalKmRecorridos / diasTranscurridos;
+     
+        
+        dispatch(addKmRecorrido({
+            kmPerByDay:kmPorDia,
+            totalKmTraveled:totalKmRecorridos,
+            daysPassed:diasTranscurridos
+        }));
+       } catch (error) {
+        console.log(error);
+       }
+            
     }
 
     return {

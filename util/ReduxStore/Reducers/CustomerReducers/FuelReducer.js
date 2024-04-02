@@ -1,11 +1,15 @@
-import { ADD_DRIVER, ADD_FUEL, GET_ALL_DRIVERS, GET_ALL_FUEL_CONSUMPTION } from "../../Actions/CustomerActions/FuelActions"
+import moment from "moment"
+import { ADD_DRIVER, ADD_FUEL, ADD_KM_RECORRIDO, GET_ALL_DRIVERS, GET_ALL_FUEL_CONSUMPTION } from "../../Actions/CustomerActions/FuelActions"
 
 
 
 const initialState = {
     drivers:[],
-    consumption:[]
-
+    consumption:[],
+    kmPerByDay:null,
+    totalKmTraveled:null,
+    daysPassed:null
+    
 }
 export default (state = initialState, action) => {
    
@@ -33,11 +37,20 @@ export default (state = initialState, action) => {
                     
             }
         case GET_ALL_FUEL_CONSUMPTION:
-           
             return {
                 ...state,
                 consumption: action.data,
-            }     
+              
+            } 
+        case ADD_KM_RECORRIDO:
+            
+            return {
+                ...state,
+                // kmPerByDay:action.data?.kmPerByDay,
+                // totalKmTraveled:action.data?.totalKmTraveled,
+                // daysPassed:action.data?.daysPassed
+                ...action.data
+            }
        
         default:
             return state
