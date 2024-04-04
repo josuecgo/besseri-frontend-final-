@@ -50,11 +50,61 @@ export const useFuel = (  ) => {
             setLoading(true)
             const id = await getUserId()
           
-            const apiCall = await axios.post(`${customer_api_urls.create_consumption}/${id}`,{...data,garage:carActive._id});
+            const apiCall = await axios.post(`${customer_api_urls.create_consumption}/${id}`,{
+                ...data,
+                garage:carActive._id,
+                km_actual:data.km
+            });
             
            
             
             await getFuelConsumption()
+            setLoading(false)
+           
+            
+           
+        } catch (error) {
+            setLoading(false)
+        }
+    }
+
+    const createFuelConsumptionInitial = async(data) => {
+        try {
+            setLoading(true)
+            const id = await getUserId()
+          
+             await axios.post(`${customer_api_urls.create_consumption_initial}/${id}`,{
+                ...data,
+                garage:carActive._id,
+                km_anterior:data.km
+            });
+            
+           
+            
+            await getFuelConsumption()
+            setLoading(false)
+           
+            
+           
+        } catch (error) {
+            setLoading(false)
+        }
+    }
+
+    const closeFuelConsumption = async(data) => {
+        try {
+            setLoading(true)
+           
+          
+            const apiCall = await axios.put(`${customer_api_urls.close_consumption}/${data.id}`,{
+                ...data,
+                km_actual:data.km
+            });
+            
+           
+            
+            dispatch(getAllFuelConsumption(apiCall.data.data));
+            await calcularTotalKm(apiCall.data.data)
             setLoading(false)
            
             
@@ -100,7 +150,7 @@ export const useFuel = (  ) => {
            
             
             dispatch(getAllFuelConsumption(apiCall.data.data));
-            calcularTotalKm(apiCall.data.data)
+            await calcularTotalKm(apiCall.data.data)
             setLoading(false)
            
             
@@ -115,11 +165,14 @@ export const useFuel = (  ) => {
             setLoading(true)
             const id = await getUserId()
             const apiCall = await axios.get(`${customer_api_urls.get_consumption}/${id}`);
-            setLoading(false)
+           
            
            
             dispatch(getAllFuelConsumption(apiCall.data.data));
-            calcularTotalKm(apiCall.data.data)
+            await calcularTotalKm(apiCall.data.data);
+            
+            setLoading(false)
+
         } catch (error) {
             setLoading(false)
         }
@@ -156,7 +209,9 @@ export const useFuel = (  ) => {
             dispatch(addKmRecorrido({
                 kmPerByDay:null,
                 totalKmTraveled:null,
-                daysPassed:null
+                daysPassed:null,
+                fuelTotal:null,
+                amountTotal:null
             }));
             return
         }
@@ -166,37 +221,62 @@ export const useFuel = (  ) => {
         const actual = ultimoRegistro?.km_actual ?? ultimoRegistro?.km_anterior;
         const totalKmRecorridos = actual - primerRegistro?.km_anterior;
 
-        const primeraFecha = moment(primerRegistro.createdAt);
-
-        const ultimaFecha = moment(ultimoRegistro.createdAt);
-     
-        const diasTranscurridos = ultimaFecha.diff(primeraFecha, 'days');
+        const fechaInicialDate = new Date(primerRegistro.createdAt);
+        const fechaFinalDate = new Date(ultimoRegistro.createdAt);
+      
+        const diferenciaMilisegundos = fechaFinalDate - fechaInicialDate;
+      
+        const diasTranscurridos = Math.round(diferenciaMilisegundos / (1000 * 60 * 60 * 24)) ;
+       
 
         const kmPorDia = diasTranscurridos <= 0 ? totalKmRecorridos :  totalKmRecorridos / diasTranscurridos;
+
+
      
         
+       
+
+        let sumaAmounts = 0;
+        let sumaLiters = 0;
+
+        response.forEach(registro => {
+            if (registro.amount !== null && !isNaN(registro.amount)) {
+                sumaAmounts += registro.amount;
+            }
+            if (registro.liters !== null && !isNaN(registro.liters)) {
+                sumaLiters += registro.liters;
+            }
+        });
+
+
         dispatch(addKmRecorrido({
             kmPerByDay:kmPorDia,
             totalKmTraveled:totalKmRecorridos,
-            daysPassed:diasTranscurridos
+            daysPassed:diasTranscurridos,
+            fuelTotal:sumaLiters,
+            amountTotal:sumaAmounts
         }));
+
+
        } catch (error) {
         console.log(error);
+        setLoading(false)
        }
             
     }
 
     return {
         getDrivers,
-        loading,
-        
+        loading, 
         createDriver,
         createFuelConsumption,
         getFuelConsumption,
         calcularConsumoEntreRecargas,
         averageGasConsumption,
         createTravel,
-        closeTravel
+        closeTravel,
+        createFuelConsumptionInitial,
+        closeFuelConsumption
       
     }
 

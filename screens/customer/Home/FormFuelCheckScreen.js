@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CommonStyles from '../../../util/styles/styles'
-import { Button, Center, HStack, Input, Modal, Select, Text, VStack } from 'native-base'
+import { Box, Button, Center, HStack, Input, Modal, Radio, ScrollView, Select, Text, VStack } from 'native-base'
 import { useFuel } from '../../../hooks/useFuel'
 import Colors from '../../../util/styles/colors'
 import { ModalDriver } from '../../../components/Customer/ModalDriver'
@@ -13,17 +13,17 @@ import { HeaderTitle } from '../../../components/Customer/HeaderTitle'
 import { showToaster } from '../../../util/constants'
 
 export const FormFuelCheckScreen = ({ navigation, route }) => {
-    const { type, finish, data,km_actual } = route.params
+    const { type, finish, data, km_actual } = route.params
     const [driver, setDriver] = useState('');
-   
-    const [km, setKm] = useState( km_actual ? km_actual.toString() : '');
-    const [liters, setLiters] = useState('');
-    const [amount, setAmount] = useState('');
-    const { getDrivers, loading, createFuelConsumption, createTravel, closeTravel } = useFuel()
+    const [value, setValue] = useState("inicio");
+    const [km, setKm] = useState(km_actual && type === 'travel' ? km_actual.toString() : '');
+    const [liters, setLiters] = useState(data?.liters ? data.liters.toString() :'');
+    const [amount, setAmount] = useState(data?.amount  ? data.amount.toString() : '');
+    const { getDrivers, loading, createFuelConsumption, createFuelConsumptionInitial, createTravel, closeTravel } = useFuel()
     const [isOpenModal, setIsOpenModal] = useState(false)
     const { drivers } = useSelector(state => state.fuel)
 
-
+   
 
     const handleSubmit = async () => {
         // Aquí podrías enviar los datos a tu backend o hacer algo con ellos
@@ -37,11 +37,37 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
         }
 
         if (type === 'gas') {
-            if ( !driver || !km || !liters || !amount) {
+            if (!driver || !km || !liters || !amount) {
                 showToaster('Por favor, completa todos los campos.'); // Mostrar un mensaje de alerta o manejar de alguna otra manera la falta de kilómetraje
                 return;
             }
-            await createFuelConsumption({ driver, km, liters, amount, type })
+
+            if (finish) {
+                await closeTravel({
+
+                    km,
+                    liters,
+                    amount,
+                    // type,
+                    id: data._id,
+                    data
+
+                })
+
+
+            }else{
+                if (value === 'inicio') {
+                    console.log('ssssss');
+                    await createFuelConsumptionInitial({ driver, km, liters, amount, type })
+                  
+                }else{
+                    await createFuelConsumption({ driver, km, liters, amount, type })
+                    
+                }
+            }
+           
+            
+            
         } else {
             if (finish) {
                 await closeTravel({
@@ -55,7 +81,7 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
 
                 })
             } else {
-                if ( !driver || !km ) {
+                if (!driver || !km) {
                     showToaster('Por favor, completa todos los campos.'); // Mostrar un mensaje de alerta o manejar de alguna otra manera la falta de kilómetraje
                     return;
                 }
@@ -85,89 +111,122 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
     if (type === 'gas') {
         return (
             (
-                <VStack style={styles.body} space={2} >
-                    <HeaderTitle
-                        titulo={!finish ? "Iniciar recorrido" : "Terminar recorrido"}
-                        nav={navigation.goBack}
-                    />
-                    <LoaderComponent isVisible={loading} />
+                <VStack style={styles.body} >
+                    <ScrollView  >
+
+                        <HeaderTitle
+                            titulo={!finish ? "Iniciar recorrido" : "Terminar recorrido"}
+                            nav={navigation.goBack}
+                        />
+                        <LoaderComponent isVisible={loading} />
 
 
-                    <MyCarActive />
+                        <MyCarActive />
 
-                    <ModalDriver modalVisible={isOpenModal} openCloseModal={openCloseModal} />
 
-                    {
-                        data ? (
-                            <Center>
-                                <Text>{data.driver.name}</Text>
-                            </Center>
-                        ) : (
-                            <>
-                                <HStack justifyContent={'flex-end'} >
-                                    <Button variant={'outline'}
-                                        onPress={openCloseModal}
-                                        _text={{ color: Colors.white }}
-                                    >
-                                        Agregar chofer
-                                    </Button>
+                        <ModalDriver modalVisible={isOpenModal} openCloseModal={openCloseModal} />
+
+                        {
+                            data ? (
+                                <Center>
+                                    <Text>{data.driver.name}</Text>
+                                </Center>
+                            ) : (
+                                <>
+                                    <HStack justifyContent={'flex-end'} >
+                                        <Button variant={'outline'}
+                                            onPress={openCloseModal}
+                                            _text={{ color: Colors.white }}
+                                        >
+                                            Agregar chofer
+                                        </Button>
+                                    </HStack>
+
+
+                                    <Text>Chofer</Text>
+
+                                    <Select selectedValue={driver} minWidth="200"
+                                        accessibilityLabel="Elegir chofer"
+                                        placeholder="Elegir chofer"
+                                        _selectedItem={{
+                                            bg: "teal.600",
+                                            // endIcon: <CheckIcon size="5" />
+                                        }}
+                                        onValueChange={itemValue => setDriver(itemValue)}>
+
+                                        {
+                                            drivers.map((item) => (
+                                                <Select.Item key={item._id} label={item.name} value={item._id} />
+                                            ))
+                                        }
+                                    </Select>
+                                </>
+                            )
+                        }
+
+                        <Text>Fase del recorrido</Text>
+                        <Box justifyContent={'center'} alignItems={'center'} >
+
+
+                            <Radio.Group
+                                name="myRecorrido"
+                                accessibilityLabel="Fase del recorrido"
+                                value={value}
+                                onChange={nextValue => {
+                                    setValue(nextValue);
+                                }}
+
+                            >
+                                <HStack space={12} justifyContent={'space-around'} >
+                                    <Radio value="inicio" >
+                                        Inicio
+                                    </Radio>
+                                    <Radio value="final" >
+                                        Final
+                                    </Radio>
                                 </HStack>
+                            </Radio.Group>
+                        </Box>
 
 
+                        <Text>Litros</Text>
+                        <Input
+                            placeholder="Litros"
+                            value={liters}
+                            onChangeText={setLiters}
+                            keyboardType="numeric"
+                        />
+
+                        <Text>Carga de combustible</Text>
+                        <Input
+                            placeholder="Carga"
+                            value={amount}
+                            onChangeText={setAmount}
+                            keyboardType="numeric"
+                        />
 
 
-                                <Select selectedValue={driver} minWidth="200"
-                                    accessibilityLabel="Elegir chofer"
-                                    placeholder="Elegir chofer"
-                                    _selectedItem={{
-                                        bg: "teal.600",
-                                        // endIcon: <CheckIcon size="5" />
-                                    }}
-                                    onValueChange={itemValue => setDriver(itemValue)}>
+                        <Text>Kilómetraje</Text>
+                        <Input
+                            placeholder="Kilómetraje"
+                            value={km}
+                            onChangeText={setKm}
+                            keyboardType="numeric"
+                        />
 
-                                    {
-                                        drivers.map((item) => (
-                                            <Select.Item key={item._id} label={item.name} value={item._id} />
-                                        ))
-                                    }
-                                </Select>
-                            </>
-                        )
-                    }
-
-                    <Input
-                        placeholder="Litros"
-                        value={liters}
-                        onChangeText={setLiters}
-                        keyboardType="numeric"
-                    />
-
-                    <Input
-                        placeholder="Carga"
-                        value={amount}
-                        onChangeText={setAmount}
-                        keyboardType="numeric"
-                    />
+                        
 
 
+                        <BtnPrincipal
 
-                    <Input
-                        placeholder="Kilómetraje"
-                        value={km}
-                        onChangeText={setKm}
-                        keyboardType="numeric"
-                    />
+                            text={'Guardar'}
+                            onPress={handleSubmit}
+                        />
 
 
-
-
-                    <BtnPrincipal
-
-                        text={'Guardar'}
-                        onPress={handleSubmit}
-                    />
-
+                    </ScrollView>
                 </VStack>
+
             )
         )
     }
@@ -203,7 +262,7 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
 
 
 
-                        <Text>Seleccionar chofer</Text> 
+                        <Text>Seleccionar chofer</Text>
                         <Select selectedValue={driver} minWidth="200"
                             accessibilityLabel="Elegir chofer"
                             placeholder="Elegir chofer"
@@ -226,46 +285,46 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
 
 
 
-{
-    // type === 'gas' ? (
-    finish ? (
-        <>
-            <Text>Litros</Text> 
-            <Input
-                placeholder="Litros"
-                value={liters}
-                onChangeText={setLiters}
-                keyboardType="numeric"
-            />
+            {
+                // type === 'gas' ? (
+                finish ? (
+                    <>
+                        <Text>Litros</Text>
+                        <Input
+                            placeholder="Litros"
+                            value={liters}
+                            onChangeText={setLiters}
+                            keyboardType="numeric"
+                        />
 
-            <Text>Carga</Text> 
-            <Input
-                placeholder="Carga"
-                value={amount}
-                onChangeText={setAmount}
-                keyboardType="numeric"
-            />
+                        <Text>Carga</Text>
+                        <Input
+                            placeholder="Carga"
+                            value={amount}
+                            onChangeText={setAmount}
+                            keyboardType="numeric"
+                        />
 
-            <Text>Kilómetraje final</Text> 
-            <Input
-                placeholder="Kilómetraje final"
-                value={km}
-                onChangeText={setKm}
-                keyboardType="numeric"
-            />
-        </>
-    ) : (
-        <>
-            <Text>Kilómetraje inicial</Text> 
-            <Input
-                placeholder="Kilómetraje inicial"
-                value={km}
-                onChangeText={setKm}
-                keyboardType="numeric"
-            />
-        </>
-    )
-}
+                        <Text>Kilómetraje final</Text>
+                        <Input
+                            placeholder="Kilómetraje final"
+                            value={km}
+                            onChangeText={setKm}
+                            keyboardType="numeric"
+                        />
+                    </>
+                ) : (
+                    <>
+                        <Text>Kilómetraje inicial</Text>
+                        <Input
+                            placeholder="Kilómetraje inicial"
+                            value={km}
+                            onChangeText={setKm}
+                            keyboardType="numeric"
+                        />
+                    </>
+                )
+            }
 
 
 

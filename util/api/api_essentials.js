@@ -128,8 +128,10 @@ export const customer_api_urls = {
     create_driver:`${base_url}/fuel/drivers`,
     get_driver:`${base_url}/fuel/drivers`,
     create_consumption:`${base_url}/fuel/create-consumption`,
+    create_consumption_initial:`${base_url}/fuel/create-consumption-initial`,
     create_travel:`${base_url}/fuel/create-travel`,
     close_travel:`${base_url}/fuel/close-travel`,
+    close_consumption:`${base_url}/fuel/close-consumption`,
     get_consumption:`${base_url}/fuel/consumption`,
 }
 export const rider_api_urls = {

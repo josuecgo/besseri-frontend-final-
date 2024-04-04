@@ -8,7 +8,9 @@ const initialState = {
     consumption:[],
     kmPerByDay:null,
     totalKmTraveled:null,
-    daysPassed:null
+    daysPassed:null,
+    fuelTotal:null,
+    amountTotal:null
     
 }
 export default (state = initialState, action) => {
