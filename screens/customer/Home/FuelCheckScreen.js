@@ -20,10 +20,10 @@ import { CardFuel } from '../../../components/Customer/CardFuel'
 
 
 export const FuelCheckScreen = ({ navigation }) => {
-    const { getFuelConsumption, loading, calcularConsumoEntreRecargas } = useFuel()
-    const { consumption, kmPerByDay, totalKmTraveled,daysPassed,fuelTotal,amountTotal } = useSelector(state => state.fuel);
+    const { getFuelConsumption, loading } = useFuel()
+    const { consumption } = useSelector(state => state.fuel);
 
-    // console.log({kmPerByDay,totalKmTraveled});
+
    
 
     useEffect(() => {
@@ -85,7 +85,7 @@ export const FuelCheckScreen = ({ navigation }) => {
     return (
         <View style={styles.body} >
             <Box 
-            // backgroundColor={'#1e1e1e'}  
+             
             overflow={'hidden'} >
                 <MyCarActive />
                 <LevelCheck/>

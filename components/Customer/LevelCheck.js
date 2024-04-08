@@ -10,7 +10,7 @@ export const LevelCheck = () => {
   const {
     kmPerByDay,
     totalKmTraveled,
-    daysPassed,
+   
     fuelTotal,
     amountTotal
   } = useSelector(state => state.fuel);
