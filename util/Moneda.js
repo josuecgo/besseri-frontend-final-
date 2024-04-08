@@ -33,3 +33,12 @@ export const comisionFormatted = (price,comision) => {
 
     return resultado + valor
 }
+
+export const formatNumberWithCommas = (number) => {
+    
+    if (number === null || isNaN(number)) {
+        return ' '; // Si no es un número válido o es null, no retornamos nada
+    }
+   
+    return `${number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} km`;
+}

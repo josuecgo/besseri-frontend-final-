@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, useDisclose, IconButton, Stagger, HStack, Icon, Center, NativeBaseProvider } from "native-base";
+import { Box, useDisclose, IconButton, Stagger, HStack } from "native-base";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../../util/styles/colors';
 import { adjust } from '../../util/Dimentions';
@@ -48,7 +48,10 @@ export const FabFuel = ({goForm}) => {
           bg="indigo.500"
           colorScheme="indigo" 
           borderRadius="full" 
-          onPress={() => goForm('travel')}
+          onPress={() => {
+            goForm('travel')
+            onToggle()
+          }}
           icon={ <MaterialCommunityIcons
             name='car-traction-control'
             color={Colors.white}
@@ -61,7 +64,10 @@ export const FabFuel = ({goForm}) => {
           bg={Colors.succes}
          
           borderRadius="full" 
-          onPress={() => goForm('gas')}
+          onPress={() => {
+            goForm('gas') 
+            onToggle()
+          }}
           icon={ <MaterialCommunityIcons
             name='gas-station'
             color={Colors.white}

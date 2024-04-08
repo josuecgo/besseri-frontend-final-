@@ -17,7 +17,9 @@ export const MyCarActive = ({navigation}) => {
   
 
   return (
-    <View style={{ top: -10 }} >
+    <View 
+    // style={{ top: -10 }}
+    >
       <HStack justifyContent={'space-between'} alignItems={'center'} mx={4} >
 
         {

@@ -16,9 +16,11 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
     const { type, finish, data, km_actual } = route.params
     const [driver, setDriver] = useState('');
     const [value, setValue] = useState("inicio");
+    const [gasolineType, setGasolineType] = useState("regular");
     const [km, setKm] = useState(km_actual && type === 'travel' ? km_actual.toString() : '');
     const [liters, setLiters] = useState(data?.liters ? data.liters.toString() :'');
     const [amount, setAmount] = useState(data?.amount  ? data.amount.toString() : '');
+    const [gasolinePrice, setGasolinePrice] = useState(data?.gasolinePrice ?data?.gasolinePrice.toString() : '' )
     const { getDrivers, loading, createFuelConsumption, createFuelConsumptionInitial, createTravel, closeTravel } = useFuel()
     const [isOpenModal, setIsOpenModal] = useState(false)
     const { drivers } = useSelector(state => state.fuel)
@@ -26,7 +28,7 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
    
 
     const handleSubmit = async () => {
-        // Aquí podrías enviar los datos a tu backend o hacer algo con ellos
+       
         if (loading) {
             return
         }
@@ -37,17 +39,18 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
         }
 
         if (type === 'gas') {
-            if (!driver || !km || !liters || !amount) {
+            if (!driver || !km || !liters  || !gasolinePrice || !gasolineType ) {
                 showToaster('Por favor, completa todos los campos.'); // Mostrar un mensaje de alerta o manejar de alguna otra manera la falta de kilómetraje
                 return;
             }
 
             if (finish) {
                 await closeTravel({
-
+                    gasolinePrice,
+                    gasolineType,
                     km,
                     liters,
-                    amount,
+                    amount: liters * gasolinePrice,
                     // type,
                     id: data._id,
                     data
@@ -57,11 +60,26 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
 
             }else{
                 if (value === 'inicio') {
-                    console.log('ssssss');
-                    await createFuelConsumptionInitial({ driver, km, liters, amount, type })
+                    
+                    await createFuelConsumptionInitial({ 
+                        gasolinePrice,
+                        gasolineType,
+                        driver, 
+                        km, 
+                        liters, 
+                        amount: liters * gasolinePrice, 
+                        type 
+                    })
                   
                 }else{
-                    await createFuelConsumption({ driver, km, liters, amount, type })
+                    await createFuelConsumption({ 
+                        gasolinePrice,
+                        gasolineType,
+                        driver, 
+                        km, 
+                        liters, 
+                        amount: liters * gasolinePrice,  
+                        type })
                     
                 }
             }
@@ -71,10 +89,11 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
         } else {
             if (finish) {
                 await closeTravel({
-
+                    gasolinePrice,
+                    gasolineType,
                     km,
                     liters,
-                    amount,
+                    amount: liters * gasolinePrice,  
                     // type,
                     id: data._id,
                     data
@@ -85,7 +104,15 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
                     showToaster('Por favor, completa todos los campos.'); // Mostrar un mensaje de alerta o manejar de alguna otra manera la falta de kilómetraje
                     return;
                 }
-                await createTravel({ driver, km, liters, amount, type })
+                await createTravel({ 
+                    gasolinePrice,
+                    gasolineType,
+                    driver, 
+                    km, 
+                    liters,  
+                    amount: liters * gasolinePrice,   
+                    type 
+                })
             }
 
         }
@@ -93,10 +120,11 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
 
         // También puedes restablecer el estado del formulario después de enviar los datos
         setDriver('');
-        navigation.goBack()
+       
         setKm('');
         setLiters('');
         setAmount('');
+        navigation.goBack()
     };
 
     const openCloseModal = () => {
@@ -137,6 +165,7 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
                                         <Button variant={'outline'}
                                             onPress={openCloseModal}
                                             _text={{ color: Colors.white }}
+                                            size="sm"
                                         >
                                             Agregar chofer
                                         </Button>
@@ -178,10 +207,10 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
 
                             >
                                 <HStack space={12} justifyContent={'space-around'} >
-                                    <Radio value="inicio" >
+                                    <Radio value="inicio"  size="sm">
                                         Inicio
                                     </Radio>
-                                    <Radio value="final" >
+                                    <Radio value="final"  size="sm">
                                         Final
                                     </Radio>
                                 </HStack>
@@ -189,7 +218,7 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
                         </Box>
 
 
-                        <Text>Litros</Text>
+                        <Text>Litros totales</Text>
                         <Input
                             placeholder="Litros"
                             value={liters}
@@ -197,13 +226,43 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
                             keyboardType="numeric"
                         />
 
-                        <Text>Carga de combustible</Text>
+                        <Text>Precio por litro</Text>
                         <Input
-                            placeholder="Carga"
-                            value={amount}
-                            onChangeText={setAmount}
+                            placeholder="Precio por litro"
+                            value={gasolinePrice}
+                            onChangeText={setGasolinePrice}
                             keyboardType="numeric"
                         />
+
+
+                        <Text>Tipo de combustible</Text>
+                        <Box justifyContent={'center'} alignItems={'center'} mx={5} >
+
+
+                        <Radio.Group
+                                name="mycombustible"
+                                accessibilityLabel="Tipo de combustible"
+                                value={gasolineType}
+                                onChange={nextValue => {
+                                    setGasolineType(nextValue);
+                                }}
+
+                            >
+                                <HStack space={6} justifyContent={'space-around'} >
+                                    <Radio value="regular"  size="sm" >
+                                        Regular
+                                    </Radio>
+                                    <Radio value="premium" size="sm">
+                                        Premium
+                                    </Radio>
+                                    <Radio value="diesel"  size="sm">
+                                        Diesel
+                                    </Radio>
+                                </HStack>
+                            </Radio.Group>
+                        </Box>
+
+                     
 
 
                         <Text>Kilómetraje</Text>
@@ -297,13 +356,42 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
                             keyboardType="numeric"
                         />
 
-                        <Text>Carga</Text>
+<Text>Precio por litro</Text>
                         <Input
-                            placeholder="Carga"
-                            value={amount}
-                            onChangeText={setAmount}
+                            placeholder="Precio por litro"
+                            value={gasolinePrice}
+                            onChangeText={setGasolinePrice}
                             keyboardType="numeric"
                         />
+
+
+                        <Text>Tipo de combustible</Text>
+                        <Box justifyContent={'center'} alignItems={'center'} mx={5} >
+
+
+                        <Radio.Group
+                                name="mycombustible"
+                                accessibilityLabel="Tipo de combustible"
+                                value={gasolineType}
+                                onChange={nextValue => {
+                                    setGasolineType(nextValue);
+                                }}
+
+                            >
+                                <HStack space={6} justifyContent={'space-around'} >
+                                    <Radio value="regular"  size="sm" >
+                                        Regular
+                                    </Radio>
+                                    <Radio value="premium" size="sm">
+                                        Premium
+                                    </Radio>
+                                    <Radio value="diesel"  size="sm">
+                                        Diesel
+                                    </Radio>
+                                </HStack>
+                            </Radio.Group>
+                        </Box>
+
 
                         <Text>Kilómetraje final</Text>
                         <Input
