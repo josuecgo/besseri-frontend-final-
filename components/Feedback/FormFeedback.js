@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet,  View } from 'react-native'
 import React from 'react'
-import { Heading, Image, TextArea } from 'native-base';
+import { Heading, Image, TextArea,Text } from 'native-base';
 import { AirbnbRating } from 'react-native-ratings';
 
 import { base_url } from '../../util/api/api_essentials';
@@ -33,7 +33,7 @@ export const FormFeedback = ({ product,valueInputs, setValueInputs }) => {
       
       return obj;
     });
-    // //console.log(newState);
+   
 
     setValueInputs(newState)
    
@@ -87,45 +87,50 @@ export const FormFeedback = ({ product,valueInputs, setValueInputs }) => {
 
        
 
-        <Heading size="sm" >Valora la facilidad de la instalación:</Heading>
+        <Heading size="xs" >Valora la facilidad de la instalación:</Heading>
         <AirbnbRating
           showRating={false}
           count={5}
           defaultRating={3}
           starContainerStyle={styles.starContainer}
           onFinishRating={(rating) => ratingCompleted('installation',rating)}
+          size={20}
         />
-        <Heading size="sm" >Durabilidad:</Heading>
+        <Heading size="xs" >Durabilidad:</Heading>
         <AirbnbRating
           showRating={false}
           count={5}
           defaultRating={3}
           starContainerStyle={styles.starContainer}
           onFinishRating={(rating) => ratingCompleted('durability',rating)}
+          size={20}
         />
-        <Heading size="sm" >Relacion calidad precio:</Heading>
+        <Heading size="xs" >Relacion calidad precio:</Heading>
         <AirbnbRating
           showRating={false}
           count={5}
           defaultRating={3}
           starContainerStyle={styles.starContainer}
           onFinishRating={(rating) => ratingCompleted('price_quality',rating)}
+          size={20}
         />
-        <Heading size="sm" >General:</Heading>
+        <Heading size="xs" >General:</Heading>
         <AirbnbRating
           showRating={false}
           count={5}
           defaultRating={3}
           starContainerStyle={styles.starContainer}
           onFinishRating={(rating) => ratingCompleted('general',rating)}
+          size={20}
         />
-        <Heading size="sm" >Comentarios</Heading>
+        <Heading size="xs" >Comentarios</Heading>
         <TextArea
           placeholder='Comentanos tu experiencia con el producto.'
           onChangeText={(text) => ratingCompleted('comments',text) }
+
         />
 
-        <Heading size="sm" >Imágenes</Heading>
+        <Heading size="xs" >Imágenes</Heading>
         <UploadImages 
         form={valueInputs.find((item) => item.product === product._id)}
         onChange={ratingCompleted} 
@@ -141,19 +146,20 @@ export const FormFeedback = ({ product,valueInputs, setValueInputs }) => {
 
 const styles = StyleSheet.create({
   content: {
-    width: '95%',
+    // width: '100%',
     minHeight: 100,
     borderRadius: 7,
     borderWidth: 2,
     borderColor: Colors.white,
-    elevation: 3,
+   
     margin: 15,
-    alignSelf: 'center',
+    padding:10,
+    // alignSelf: 'center',
     paddingHorizontal: 5,
     paddingVertical: 5,
     borderWidth: 1,
-    elevation: 2,
-    backgroundColor: Colors.white,
+   
+    // backgroundColor: Colors.white,
   },
   cardTop: {
     flexDirection: 'row'

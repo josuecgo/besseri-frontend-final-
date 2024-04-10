@@ -291,7 +291,7 @@ export const CustomerAccountStack = () => {
           headerShown: true,
           header: props => (
             <HeaderTitle {...props}
-              titulo="Politicas de privacidad"
+              titulo="Dirección"
               nav={props.navigation.goBack}
             />
           ),

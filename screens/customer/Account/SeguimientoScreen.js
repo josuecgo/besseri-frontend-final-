@@ -15,7 +15,8 @@ export const SeguimientoScreen = ({ route }) => {
 
   const progress = route.params;
   
-  const steps = progress.type == 'servicio' ? [
+
+  const stepsServicio =  progress.service.is_home ? [
     {
       name: "Servicio aceptado"
     },
@@ -34,17 +35,39 @@ export const SeguimientoScreen = ({ route }) => {
     },
     {
       name: "Servicio concluido "
+    }
+  ] :  [
+    {
+      name: "Servicio aceptado"
     },
     {
-      name: "Taller entregado a valet"
+      name: "Rider en camino"
     },
     {
-      name: "Vehiculo entregado a cliente"
+      name: "Entregado a valet"
     },
     {
-      name: "Cierre de servicio"
+      name: "Recepcionado por taller"
     },
-  ] : progress.type == 'refaccion' ? [{
+    {
+      name:
+        "Vehículo en revisión"
+    },
+    {
+      name: "Servicio concluido "
+    }, 
+    {
+        name: "Taller entregado a valet"
+    },
+    {
+        name: "Vehiculo entregado a cliente"
+    },
+    {
+        name: "Cierre de servicio"
+    }
+  ]
+
+  const stepsRefaccion = [{
     name: "Procesando pedido"
   },
   {
@@ -57,7 +80,27 @@ export const SeguimientoScreen = ({ route }) => {
     name:
       "Paquete entregado"
   },
-  ] : [
+  ]
+  const stepsLavado =  progress.service.is_home ? [
+    {
+      name: "Lavado aceptado"
+    },
+    {
+      name: "Valet en camino"
+    },
+    {
+      name: "Entregado a valet"
+    },
+    {
+      name: "Recepcionado por Lavadora"
+    },
+    {
+      name: "Vehículo en revisión"
+    },
+    {
+      name: "Lavado concluido"
+    }
+  ] :  [
     {
       name: "Lavado aceptado"
     },
@@ -86,6 +129,10 @@ export const SeguimientoScreen = ({ route }) => {
       name: "Cierre de servicio"
     },
   ]
+
+  const steps = progress.type == 'servicio'  ? stepsServicio 
+                : progress.type == 'refaccion' 
+                ? stepsRefaccion : stepsLavado
 
   const positionStep = () => {
 

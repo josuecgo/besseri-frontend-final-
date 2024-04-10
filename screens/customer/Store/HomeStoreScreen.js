@@ -85,8 +85,6 @@ const HomeStoreScreen = React.memo((props) => {
 
   const memorizedValueCategoria = useMemo(() => renderItemCategorias, [categorias,activeCategory]);
 
-  const memorizedValue = useMemo(() => renderItem, [productos]);
-
 
 
 

@@ -31,8 +31,8 @@ import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal';
 
 const ProductDetailScreen = (props) => {
   const { width } = useWindowDimensions();
-  const dispatch = useDispatch();
-  const [business, setBusiness] = useState(null);
+  const {bottom} = useSafeAreaInsets()
+  const [feedback, setFeedback] = useState([]);
   const { params } = useRoute();
   const [enCarrito, setEnCarrito] = useState(false)
   const product = params?.product;
@@ -74,25 +74,44 @@ const ProductDetailScreen = (props) => {
     }
 
   }
-
-  const getBusinessDetails = async () => {
-    try {
-     
-      const businessDetailsAPi = await axios.get(`${customer_api_urls.get_business_details}/${product?.business_id}`)
-      if (businessDetailsAPi.status == api_statuses.success) {
-        setBusiness(businessDetailsAPi.data.data.store);
-
-      } else {
-        showToaster('Algo salio mal code 1')
-      }
-    } catch (e) {
-      showToaster('No se pudo traer informacion del vendedor')
-
-
+  const goReviews = () => {
+    if (feedback.length === 0) {
+      return
     }
+    props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_REVIEWS,feedback)
   }
 
-// //console.log(product);
+  // const getBusinessDetails = async () => {
+  //   try {
+     
+  //     const businessDetailsAPi = await axios.get(`${customer_api_urls.get_business_details}/${product?.business_id}`)
+  //     if (businessDetailsAPi.status == api_statuses.success) {
+  //       setBusiness(businessDetailsAPi.data.data.store);
+
+  //     } else {
+  //       showToaster('Algo salio mal code 1')
+  //     }
+  //   } catch (e) {
+  //     showToaster('No se pudo traer informacion del vendedor')
+
+
+  //   }
+  // }
+
+  const getFeedbacks = async() => {
+    try {
+      const apiCall = await axios.get(`${customer_api_urls.get_feedback}/${product?._id}`);
+
+      
+      if (apiCall.status === 200) {
+        setFeedback(apiCall?.data?.data)
+      }
+     } catch(e) {
+        //  showToaster('No se pudo traer informacion del vendedor')
+        
+         
+     }
+  }
 
   const goCart = async () => {
     const user_id = await getUserId();
@@ -107,17 +126,25 @@ const ProductDetailScreen = (props) => {
   }
 
   useEffect(() => {
-    getBusinessDetails()
+    getFeedbacks()
   }, []);
 
+  
   return (
     <>
       <View
-      style={[CommonStyles.screenWhiteY]}
+      style={[CommonStyles.screenWhiteY,{paddingBottom:bottom + 20}]}
       >
 
 
-        <Card 
+       
+
+
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ flexGrow: 1 }}
+        >
+           <Card 
         style={styles.cardImg} >
           <Text style={[CommonStyles.h2,{color:Colors.black,fontWeight:'bold',marginBottom:10}]} >{product?.category?.name} / {product?.subCategory?.name}</Text>
           
@@ -145,12 +172,6 @@ const ProductDetailScreen = (props) => {
 
 
         </Card>
-
-
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ flexGrow: 1 }}
-        >
           <VStack space={2} style={styles.detailCard} >
             <Text style={{...CommonStyles.h1,color:Colors.black, fontWeight:'bold'}} >{product?.name}</Text>
 
@@ -182,6 +203,13 @@ const ProductDetailScreen = (props) => {
               {product?.description}
             </Text>
           </View>
+
+          {
+              feedback.length > 0 && ( 
+                <CardFeedback feedback={feedback} onPress={goReviews} />
+              )
+            }
+          
           <ModalChildren showModal={showModal} handleModal={(e) => setShowModal(e)} >
             <Box style={CommonStyles.modal}  >
               <TouchableOpacity style={styles.btnClose} 

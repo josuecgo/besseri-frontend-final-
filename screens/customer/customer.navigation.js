@@ -1,76 +1,51 @@
 import React, { useContext, useEffect } from 'react';
-import { CUSTOMER_HOME_SCREEN_ROUTES, LOGIN_SIGNUP_FORGOT_ROUTES, MAIN_ROUTES } from '../../util/constants';
+import { CUSTOMER_HOME_SCREEN_ROUTES, LOGIN_SIGNUP_FORGOT_ROUTES } from '../../util/constants';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import CustomerHomeViewScreen from './customer.home-view.screen';
 import CustomerProductsViewScreen from './customer.products-view.screen';
 import CustomerServicesViewScreen from './customer.services-view.screen';
 import CustomHeaderComponent from '../../components/customer-components/custom-header.component';
-import CustomDrawerComponent from '../../components/customer-components/custom-drawer.component';
 
-import CustomerCartScreen from '../customer/customer.cartscreen';
-import CustomerOrderSummaryScreen from '../customer/customer.ordersummary.screen';
+
 import CustomerMapStores from './customer.mapstores.screen';
-import CustomerAddressesScreen from './customer.addresses.screen';
 import CustomerMoreProductsScreen from './customer.moreProducts.screen';
 import CustomerStoreScreen from './customer.store.screen';
-import CustomerAppointments from './customer.bookings.screen';
+
 import CustomerServiceBook from './customer.servicebook.screen';
-import CustomerBookingDetail from './customer.bookingDetail.screen';
 
 import CustomerProductDetailScreen from './customer.productdetail.screen';
-
 import LoginScreen from '../login.screen';
 import SignUpScreen from '../sign-up.screen';
 import SignUpScreenCustomer from '../sign-up.screen-customer';
-import { OrderSuccessful } from './customer.order-successful';
 import { SearchScreen } from './SearchScreen';
 import { CustomerNotificationViewScreen } from './customer.notificaciones';
-import { NotificationContext } from '../../util/context/NotificationContext';
-import { EnvioScreen } from './customer.envio.screen';
-import CustomerOrderSummaryFree from './customer.orderSummaryFree.screen';
-import { MetodoScreen } from './customer.metodoscreen';
-import PrivacyPolicy from '../privacypolicy.screen';
+
 import { ProfileScreen } from './ProfileScreen';
-import { Platform } from 'react-native';
+
 import { ProductContext } from '../../util/context/Product/ProductContext';
-import { GarageScreen } from './Garage/customer.garage.screen';
-import { ChatStack } from '../../util/Routes/ChatStack';
+
 import { PrivateScreen } from '../Chat/PrivateScreen';
-import CustomerOrdersViewScreen from './Orders/customer.orders-view.screen';
-import { CustomerOrdersAllScreen } from './Orders/customer.orders.all.screen';
-import { CustomerOrdersPending } from './Orders/customer.orders.pending.screen';
+
 import CustomerOrderDetail from './Orders/customer.orderdetail.screen';
-import { CustomerOrdersSending } from './Orders/customer.orders.sending';
-import { CustomerOrdersDelivered } from './Orders/customer.orders.delivered';
-import { CustomerOrderFeedback } from './Orders/customer.order.feedback';
+
 import { CustomerOrderFeedbacks } from './Orders/customer.order.feedbacks';
 import { SearchAddressScreen } from './Address/SearchAddressScreen';
-import { HomeScreen } from './Home/HomeScreen';
+
 import { ServiciosScreen } from './Home/ServiciosScreen';
 import { MapServiceScreen } from './Home/MapServiceScreen';
-import { AppointmentScreen } from './Home/AppointmentScreen';
 import { BookingScreen } from './Bookings/BookingScreen';
 import { BookingDetailsScreen } from './Bookings/BookingDetailsScreen';
 import { CreateCarScreen } from './Garage/customer.createCar.screen';
-import { BottomTabHome } from './navigation/BottomTabHome';
 import { HeaderTitle } from '../../components/Customer/HeaderTitle';
 
 
 const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
 
 export const PartsServicesFunctionsDrawer = () => {
-  const {
-    countCustomer,
-    getNotificaciones,
-    iosPermisoss,
-    getToken,
-    deleteNotificaciones
-  } = useContext(NotificationContext);
 
-  const { getCategorias, getProducts,
-    comision, getMarcas, getServices, getModelo,
+
+  const {
+    comision, getMarcas, getModelo,
     valueMaker, getComision
   } = useContext(ProductContext)
 
@@ -128,13 +103,13 @@ export const PartsServicesFunctionsDrawer = () => {
 
   return (
     <Stack.Navigator
-    screenOptions={{ headerShown: false }}
+      screenOptions={{ headerShown: false }}
     >
-       <Stack.Screen
+      <Stack.Screen
         name={'AddAddress'}
         component={SearchAddressScreen}
 
-        
+
       />
       <Stack.Screen
         name={'AddMyCar'}
@@ -149,7 +124,7 @@ export const PartsServicesFunctionsDrawer = () => {
           ),
         }}
       />
-     
+
     </Stack.Navigator>
 
   );
@@ -189,9 +164,9 @@ export const CustomerHomeStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      // initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
+    // initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
     >
-    
+
 
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES}
@@ -213,7 +188,7 @@ export const CustomerHomeStack = () => {
         name={CUSTOMER_HOME_SCREEN_ROUTES.MAP_SERVICES}
         component={MapServiceScreen}
       />
-     
+
 
 
       <Stack.Screen
@@ -232,7 +207,7 @@ export const CustomerHomeStack = () => {
         name={CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL}
         component={CustomerProductDetailScreen}
       />
-      <Stack.Screen name={CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_REVIEWS} component={CustomerOrderFeedbacks} />
+      
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.STORE_SCREEN}
         component={CustomerStoreScreen}
@@ -315,7 +290,7 @@ export const BookingsStack = () => {
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
       initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.HOME}
-      >
+    >
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.APPOINTMENTS}
         component={BookingScreen}

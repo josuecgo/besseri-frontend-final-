@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet,  View } from 'react-native'
 import React from 'react'
 import { HeaderTitle } from '../../../components/Customer/HeaderTitle'
 import { TotalReviews } from '../../../components/Feedback/TotalReviews'
@@ -7,19 +7,19 @@ import { Review } from '../../../components/Feedback/Review'
 import { ImagesFeedback } from '../../../components/Feedback/ImagesFeedback'
 import { useEffect } from 'react'
 import { useState } from 'react'
-
+import { HStack,Divider } from 'native-base';
 
 export const CustomerOrderFeedbacks = ({navigation,route}) => {
   const feedbacks = route.params
   const [total, setTotal] = useState({
-    general:0,
-    installation:0,
+    general: 0,
+    installation: 0,
+    durability: 0,
+    price_quality: 0,
   });
  
   const totalFeedbacks = () => {
-    
-    let sumatoriaObjeto = feedbacks.reduce(function(acumulador, siguienteValor){
-      // //console.log(acumulador);
+    let sumatoriaObjeto = feedbacks.reduce(function(acumulador, siguienteValor) {
       return {
         general: acumulador.general + siguienteValor.general,
         installation: acumulador.installation + siguienteValor.installation,
@@ -28,24 +28,26 @@ export const CustomerOrderFeedbacks = ({navigation,route}) => {
       };
     }, {
       general: 0,
-      installation:0,
-      durability:0,
+      installation: 0,
+      durability: 0,
       price_quality: 0,
     }); 
-    
-
-
-    let promedioGeneral = sumatoriaObjeto.general / feedbacks.length;
-   
-    
+  
+    // Calcular el promedio de cada valor y aplicar redondeo
+    let promedioGeneral = Math.round((sumatoriaObjeto.general / feedbacks.length) * 10) / 10;
+    let promedioInstallation = Math.round((sumatoriaObjeto.installation / feedbacks.length) * 10) / 10;
+    let promedioDurability = Math.round((sumatoriaObjeto.durability / feedbacks.length) * 10) / 10;
+    let promedioPriceQuality = Math.round((sumatoriaObjeto.price_quality / feedbacks.length) * 10) / 10;
+  
+    // Asignar los valores redondeados al estado total
     setTotal({
-      general: promedioGeneral,
-      installation: sumatoriaObjeto.installation / feedbacks.length,
-      durability: sumatoriaObjeto.durability / feedbacks.length,
-      price_quality: sumatoriaObjeto.price_quality / feedbacks.length,
-    })
-
+      general: Math.round(promedioGeneral),
+      installation: Math.round(promedioInstallation),
+      durability: Math.round(promedioDurability),
+      price_quality:Math.round(promedioPriceQuality) ,
+    });
   }
+  
 
   useEffect(() => {
     totalFeedbacks();
@@ -59,6 +61,7 @@ export const CustomerOrderFeedbacks = ({navigation,route}) => {
       iconName='keyboard-backspace' 
       />
       <TotalReviews total={total} reviews={feedbacks.length} />
+      <Divider/>
       <FlatList
       data={feedbacks}
       renderItem={({item})=> {
@@ -66,8 +69,9 @@ export const CustomerOrderFeedbacks = ({navigation,route}) => {
         return(
           <>
             <View style={{borderBottomWidth:0.3,borderColor:Colors.bgColor}} >
-              <Review review={item} />
               <ImagesFeedback imgs={item?.imgs} />
+              <Review review={item} />
+              <Divider/>
             </View>
 
            

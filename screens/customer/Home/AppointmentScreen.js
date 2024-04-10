@@ -7,7 +7,7 @@ import { base_url, customer_api_urls } from '../../../util/api/api_essentials';
 import { getUserId } from '../../../util/local-storage/auth_service';
 import moment from 'moment';
 import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constants';
-import { deviceHeight, deviceWidth } from '../../../util/Dimentions';
+import { adjust, deviceHeight, deviceWidth } from '../../../util/Dimentions';
 import CommonStyles from '../../../util/styles/styles';
 import Colors from '../../../util/styles/colors';
 
@@ -86,26 +86,6 @@ export const AppointmentScreen = (props) => {
       data
     })
 
-
-    // const apiCall = await axios.post(customer_api_urls.book_service,data)
-
-    // if (apiCall.data.success) {
-    //   showToaster(apiCall.data.message);
-    //   props.navigation.replace(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS)
-    // }else{
-    //   showToaster(apiCall.data.message);
-    //   setCitas([]);
-    //   setDaySelected('')
-    //   setHourSelected(null)
-    // }
-
-    //   } catch (error) {
-
-
-    //     showToaster('Error con el servidor')
-
-
-    // }
   }
 
 
@@ -291,7 +271,7 @@ export const AppointmentScreen = (props) => {
                             handleHour(item)
                           }}
                         >
-                          <Text color={hourSelected === item ? 'black' : '#FFFFFF'} >
+                          <Text fontSize={adjust(12)} color={hourSelected === item ? 'black' : '#FFFFFF'} >
                             {horaFormateada + ":" + minutosFormateados}
                           </Text>
   

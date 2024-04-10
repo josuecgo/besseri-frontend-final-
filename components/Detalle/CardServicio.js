@@ -1,13 +1,14 @@
 import { StyleSheet, Text, View,Linking, TouchableOpacity } from 'react-native'
 import React from 'react'
 import AddressFormatted from '../AddressFormatted'
-import { Divider, HStack, VStack } from 'native-base'
+import { Divider, HStack, VStack,Center } from 'native-base'
 import CommonStyles from '../../util/styles/styles'
 import moment from 'moment'
 import { comisionMoneda, moneda } from '../../util/Moneda'
 import OrderProductItemComponent from '../vendor-shared/order-product-item.component'
 import { ProductContext } from '../../util/context/Product/ProductContext'
 import { useContext } from 'react'
+import Colors from '../../util/styles/colors'
 
 const CardServicio = ({data}) => {
   const {comision} = useContext(ProductContext)
@@ -22,7 +23,7 @@ const CardServicio = ({data}) => {
     Linking.openURL(url);
 
   };
-  console.log(data?.store?.location.longitude);
+ 
   if(data.type === 'refaccion') return (
     <>
     <AddressFormatted address={data?.store?.location?.formatted_address} />
@@ -87,12 +88,22 @@ const CardServicio = ({data}) => {
     </VStack>
     </>
   )
+
+ 
   return (
     <>
        <AddressFormatted address={data?.businessId?.location?.formatted_address} />
-        <VStack  space={3} marginTop={'10px'} >
+        <VStack  space={1} marginTop={'10px'} >
           <Text style={{ ...CommonStyles.h2 }} >Servicio:</Text>
-          <Text style={{ ...CommonStyles.h3 }} >{data?.serviceId?.type_services?.name}  {data?.serviceId?.type_services?.type}</Text>
+          <HStack justifyContent={'space-between'} alignItems={'center'}>
+            <Text style={{ ...CommonStyles.h2 }} >{data?.serviceId?.type_services?.name}  {data?.serviceId?.type_services?.type}</Text>
+            <Center backgroundColor={Colors.white} rounded={'full'} alignItems={'center'} justifyContent={'center'} p={1} >
+              <Text style={{ ...CommonStyles.h3,textTransform:'uppercase',color:Colors.bgColor,fontWeight:'bold'}}  
+              >{data.serviceId.is_home ? 'Domicilio' : 'Valet'}  </Text>
+
+            </Center>
+            
+          </HStack>
 
           <HStack space={12} marginY={'10px'} >
             <VStack>
@@ -106,8 +117,16 @@ const CardServicio = ({data}) => {
             </VStack>
 
           </HStack>
-          <Text style={{...CommonStyles.h2}} >Servicio de VALET incluido</Text>
-          <Text style={{...CommonStyles.h3}} >{data?.address?.formatted_address}</Text>
+
+          {
+            !data.serviceId.is_home && (
+              <>
+               <Text style={{...CommonStyles.h2}} >Servicio de VALET incluido</Text>
+              <Text style={{...CommonStyles.h3}} >{data?.address?.formatted_address}</Text>
+              </>
+            )
+          }
+         
 
           <HStack alignItems={'center'} justifyContent={'space-between'} >
             <Text style={{...CommonStyles.h2}} >Código:</Text>

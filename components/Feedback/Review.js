@@ -1,18 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet,  View } from 'react-native'
 import React from 'react'
 import Colors from '../../util/styles/colors';
 import { adjust } from '../../util/Dimentions';
 import { dateFeedback } from '../../util/helpers/horaMes';
-import { HStack } from 'native-base';
-import { AirbnbRating, Rating } from 'react-native-ratings';
+import { HStack,Text } from 'native-base';
+import { AirbnbRating } from 'react-native-ratings';
 
 export const Review = ({review}) => {
   
   const {customer} = review;
 
   
-
-  // //console.log(review.general);
   return (
     <View style={styles.content} >
         
@@ -53,9 +51,10 @@ const styles = StyleSheet.create({
     
   },
   name:{
-    color:Colors.textSecundary,
+    color:Colors.white,
     fontSize:adjust(10),
-    fontWeight:'bold'
+    fontWeight:'bold',
+    textTransform:'capitalize'
   },
   txtFeedback:{
     fontSize:adjust(10)

@@ -1,33 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { TouchableOpacity, View, StyleSheet, LogBox, ScrollView, Alert, Platform } from 'react-native';
+import {  View,  LogBox, ScrollView, Alert } from 'react-native';
 import Colors from '../../util/styles/colors';
-
-
-import Entypo from 'react-native-vector-icons/Entypo'
 import CommonStyles from '../../util/styles/styles';
-import ButtonComponent from '../../components/button/button.component';
-import { ThinlineSeparator } from '../../components/CommonComponents';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../util/local-storage/auth_service';
 import axios from 'axios';
 import { api_statuses, customer_api_urls, paymentApis } from '../../util/api/api_essentials';
 import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../util/constants';
 import LoaderComponent from '../../components/Loader/Loader.component';
-import AddressComponent from '../../components/customer-components/customer.addresscard.component';
 import { useStripe } from '@stripe/stripe-react-native';
 import { useRoute } from '@react-navigation/native';
 import { useCostos } from '../../hooks/useCostos';
-import { adjust, deviceHeight, deviceWidth } from '../../util/Dimentions';
+import {  deviceWidth } from '../../util/Dimentions';
 import { moneda } from '../../util/Moneda';
 import SpinKit from 'react-native-spinkit';
-import { OrderSuccessful } from './customer.order-successful';
-import { Text, Box, HStack, VStack, Button, Image, Center } from 'native-base';
+import { Text, Box, HStack, VStack } from 'native-base';
 import AddressFormatted from '../../components/AddressFormatted';
 import { ProductosPago } from '../../components/Customer/ProductosPago';
 import { BtnPrincipal } from '../../components/Customer/BtnPrincipal';
 import { deleteItemFromCart } from '../../util/ReduxStore/Actions/CustomerActions/CartActions';
-import ModalChildren from '../../components/ModalChildren';
+
 import { BOTTOM_TAB_CUSTOMER_ROUTES } from '../../util/constants';
 import { useInfoUser } from '../../hooks/useInfoUsers';
 
@@ -198,7 +190,7 @@ const CustomerOrderSummary = (props) => {
                 props.navigation.goBack()
                 return;
             }
-            console.log(customer_api_urls.create_payment_sheet);
+            
             const response = await axios.post(customer_api_urls?.create_payment_sheet, data);
             
             const apiResponse = {
@@ -395,32 +387,6 @@ const CustomerOrderSummary = (props) => {
         </View>
     );
 };
-const styles = StyleSheet.create({
-    header: {
-        height: Platform.OS == 'ios' ? deviceHeight * 0.13 : deviceHeight * 0.10,
-        width: deviceWidth,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingHorizontal: 20,
-        alignItems: 'center'
-    },
-    headerText: { ...CommonStyles.fontFamily, color: Colors.white, fontSize: 20 },
-    detailCard: {
-        width: '100%',
-        backgroundColor: 'white',
-        elevation: 5,
-        alignSelf: 'center',
-        padding: 20,
-    },
-    close:{
-        width:30,
-        height:30
-      },
-      btnClose:{
-        position:'absolute',
-        right:10,
-        top:5
-      }
-})
+
 
 export default CustomerOrderSummary;

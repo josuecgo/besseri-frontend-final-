@@ -61,9 +61,7 @@ export const CartScreen = (props) => {
     const user = await getUserId();
     setIsLogin(user)
     getComision();
-    if (user) {
-      getAddresses(user);
-    }
+   
 
     return () => {
       abortController.abort();
@@ -87,28 +85,7 @@ export const CartScreen = (props) => {
     }
   }
 
-  const getAddresses = async (userID) => {
-
-    // try {
-
-    //   const apiCall = await axios.get(`${customer_api_urls.get_addresses}/${userID}`);
-
-    //   if (apiCall.status == api_statuses.success) {
-    //     setDireccion({
-    //       long: apiCall.data.data[0].longitude,
-    //       lat: apiCall.data.data[0].latitude,
-    //       label: apiCall.data.data[0].label
-    //     });
-    //   } else {
-    //     showToaster('Error para obtener su direccion :/');
-    //     setDireccion(false);
-    //   }
-    // } catch (e) {
-    //   // //console.log({error:e})
-    //   setDireccion(false);
-    //   showToaster('Crea una direccion para poder realizar tu compra')
-    // }
-  }
+  
 
 
 

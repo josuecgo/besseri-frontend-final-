@@ -1,19 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet,  View } from 'react-native'
 import React from 'react'
 import { adjust } from '../../util/Dimentions'
 import { AirbnbRating } from 'react-native-ratings'
 import Colors from '../../util/styles/colors'
-import { Box } from 'native-base'
+import { Box,Text } from 'native-base'
 
 export const TotalReviews = ({ total }) => {
-  // //console.log( total );
+  
   return (
     <>
       <Box>
         <Box  overflow="hidden" borderColor={Colors.bgColor} borderWidth="1" >
           <View style={styles.header} >
              <View style={styles.count} >
-            <Text style={styles.total} >{total?.general}</Text>
+            <Text style={styles.total} >{total?.general.toFixed(0)}</Text>
             <AirbnbRating
               showRating={false}
               count={5}
@@ -25,7 +25,7 @@ export const TotalReviews = ({ total }) => {
             />
             <Text style={styles.txt}>General</Text>
 
-            <Text style={styles.total} >{total?.installation}</Text>
+            <Text style={styles.total} >{total?.installation.toFixed(0)}</Text>
             <AirbnbRating
               showRating={false}
               count={5}
@@ -39,7 +39,7 @@ export const TotalReviews = ({ total }) => {
 
           </View>
           <View style={styles.count} >
-            <Text style={styles.total} >{total?.durability}</Text>
+            <Text style={styles.total} >{total?.durability.toFixed(0)}</Text>
             <AirbnbRating
               showRating={false}
               count={5}
@@ -51,7 +51,7 @@ export const TotalReviews = ({ total }) => {
             />
             <Text style={styles.txt} >Durabilidad</Text>
 
-            <Text style={styles.total} >{total?.price_quality}</Text>
+            <Text style={styles.total} >{total?.price_quality.toFixed(0)}</Text>
             <AirbnbRating
               showRating={false}
               count={5}
@@ -81,28 +81,18 @@ export const TotalReviews = ({ total }) => {
 
 const styles = StyleSheet.create({
   header: {
-    // backgroundColor:Colors.white,
+   
     alignItems: 'center',
     justifyContent: 'space-around',
     flexDirection: 'row',
     paddingVertical: 4,
-    // borderBottomWidth: 0.3,
-    // borderColor: Colors.textSecundary,
-    // shadowColor: Colors.textSecundary,
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2,
-    // },
-    // shadowOpacity: 0.9,
-    // shadowRadius: 2.62,
-
-    // elevation: 4,
+ 
   },
   count: {
     alignItems: 'center',
   },
   total: {
-    fontSize: adjust(22),
+    fontSize: adjust(19),
     fontWeight: 'bold'
   },
   starContainer: {
@@ -111,6 +101,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 0,
   },
   txt: {
-    color: Colors.textSecundary
+    color: Colors.textSecundary,
+    fontSize: adjust(12),
   }
 })

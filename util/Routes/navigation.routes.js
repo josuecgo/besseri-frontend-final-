@@ -35,6 +35,9 @@ import { ViewReceptionCarScreen } from '../../screens/customer/Bookings/ViewRece
 import { ChecksCarScreen } from '../../screens/customer/Garage/customer.checksCar.screen';
 import { FuelCheckScreen } from '../../screens/customer/Home/FuelCheckScreen';
 import { FormFuelCheckScreen } from '../../screens/customer/Home/FormFuelCheckScreen';
+import { CustomerFormFeedback } from '../../screens/customer/Orders/customer.order.feedback';
+import { CustomerOrderFeedbacks } from '../../screens/customer/Orders/customer.order.feedbacks';
+import { ServiceFormFeedback } from '../../screens/customer/Orders/customer.form-service.feedback';
 
 const Stack = createStackNavigator();
 
@@ -83,7 +86,7 @@ export const MainNavigation = () => {
           headerShown: true,
           header: props => (
             <HeaderTitle {...props}
-              titulo="Servicios"
+              titulo="Seleccionar fecha"
               nav={props.navigation.goBack}
             />
           ),
@@ -211,17 +214,23 @@ export const MainNavigation = () => {
         name={CUSTOMER_HOME_SCREEN_ROUTES.FORM_FUEL_CHECK}
         component={FormFuelCheckScreen}
         options={{
-          headerShown: false,
-          // header: props => (
-            // <HeaderTitle {...props}
-            //   titulo="Crear registro"
-            //   nav={props.navigation.goBack}
-            // />
-          // ),
+          headerShown: false
         }}
       />
 
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.FORM_PRODUCT_REVIEWS}
+        component={CustomerFormFeedback}
+      />
 
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.FORM_SERVICE_REVIEWS}
+        component={ServiceFormFeedback}
+      />
+    <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_REVIEWS}
+        component={CustomerOrderFeedbacks}
+      />
 
       <Stack.Screen
         name={LOGIN_SIGNUP_FORGOT_ROUTES.PRIVACY_POLICY}

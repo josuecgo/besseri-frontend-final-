@@ -27,7 +27,7 @@ export const ProductosPago = ({productos}) => {
         justifyContent={'space-between'}
         key={i}
         >
-            <Box w={'50%'} >
+            <Box w={'55%'} >
               <Text style={CommonStyles.h2} isTruncated >{item?.name}</Text>
             </Box>
             <Box>

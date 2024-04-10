@@ -22,7 +22,7 @@ export const CardFeedback = ({feedback,onPress}) => {
           feedback.map((item,i) => {
             imgan += item?.imgs ? item?.imgs.length : 10
            
-            if (imgan > 5) return <View key={item._id}/>
+            if (imgan > 3) return <View key={item._id}/>
             
             return(
             <View key={item._id} >
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     height: deviceWidth * 0.18,
     borderRadius: 10,
     marginHorizontal: 5,
-    backgroundColor:Colors.bgColor,
+    // backgroundColor:Colors.bgColor,
     justifyContent:'center',
     alignItems:'center'
   }

@@ -15,26 +15,26 @@ import { getUserId } from '../../../util/local-storage/auth_service';
 import { useInfoUser } from '../../../hooks/useInfoUsers';
 
 
-export const CustomerFormFeedback = ({ navigation, route }) => {
+export const ServiceFormFeedback = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
   const { order,id } = route.params;
 
 
-  const [valueInputs, setValueInputs] = useState(order.map((item, i) => {
+//   const [valueInputs, setValueInputs] = useState(order.map((item, i) => {
    
    
-    return {
-      product: item._id,
-      installation: 3,
-      durability: 3,
-      price_quality: 3,
-      general: 3,
-      comments: '',
-      imgs: []
-    }
-  }
-  ));
+//     return {
+//       product: item._id,
+//       installation: 3,
+//       durability: 3,
+//       price_quality: 3,
+//       general: 3,
+//       comments: '',
+//       imgs: []
+//     }
+//   }
+//   ));
 
   const {getPedidosUser} = useInfoUser();
   
@@ -155,11 +155,11 @@ export const CustomerFormFeedback = ({ navigation, route }) => {
     <View style={styles.body} >
       <HeaderTitle
         nav={() => navigation.goBack()}
-        titulo={'Dejar comentarios'}
+        titulo={'Califica el servicio'}
       />
 
 
-      <FlatList
+      {/* <FlatList
         data={order}
         renderItem={({ item }) => {
 
@@ -176,7 +176,7 @@ export const CustomerFormFeedback = ({ navigation, route }) => {
         }
         keyExtractor={(item) => item._id}
         showsVerticalScrollIndicator={false}
-      />
+      /> */}
 
 
       <ButtonComponent
