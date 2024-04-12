@@ -123,8 +123,11 @@ export const customer_api_urls = {
     get_info_user:`${base_url}/info-user/user`,
     get_pedidos_user:`${base_url}/info-user/pedidos`,
     create_feedback: `${base_url}/feedback/create-feedback`,
+    create_service_feedback: `${base_url}/feedback/create-service-rating`,
+    close_service_feedback: `${base_url}/feedback/close-service-rating`,
     get_feedback: `${base_url}/feedback/get-feedback`,
     upload_imgs_feedback: `${base_url}/feedback/upload-feedback-images`,
+    get_service_feedback: `${base_url}/feedback/get-service-feedback`,
 
     create_driver:`${base_url}/fuel/drivers`,
     get_driver:`${base_url}/fuel/drivers`,

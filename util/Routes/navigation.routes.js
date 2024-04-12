@@ -38,6 +38,7 @@ import { FormFuelCheckScreen } from '../../screens/customer/Home/FormFuelCheckSc
 import { CustomerFormFeedback } from '../../screens/customer/Orders/customer.order.feedback';
 import { CustomerOrderFeedbacks } from '../../screens/customer/Orders/customer.order.feedbacks';
 import { ServiceFormFeedback } from '../../screens/customer/Orders/customer.form-service.feedback';
+import { CustomerServiceFeedbacks } from '../../screens/customer/Bookings/CustomerServiceFeedbacks';
 
 const Stack = createStackNavigator();
 
@@ -228,6 +229,11 @@ export const MainNavigation = () => {
         component={ServiceFormFeedback}
       />
     <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.SERVICE_REVIEWS}
+        component={CustomerServiceFeedbacks}
+      />
+
+<Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_REVIEWS}
         component={CustomerOrderFeedbacks}
       />
