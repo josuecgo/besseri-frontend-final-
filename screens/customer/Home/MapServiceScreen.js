@@ -16,6 +16,7 @@ import CommonStyles from '../../../util/styles/styles';
 import { deviceWidth } from '../../../util/Dimentions';
 import { MAIN_ROUTES } from '../../../util/constants';
 import { useIsFocused } from '@react-navigation/native';
+import LoaderComponent from '../../../components/Loader/Loader.component';
 
 
 
@@ -27,7 +28,7 @@ export const MapServiceScreen = (props) => {
   const [stores, setStores] = useState(null)
   const [defaultAddress, setDefaultAddress] = useState(address)
   const isFocus = useIsFocused()
-  
+  const [loading, setLoading] = useState(false)
   
   const getAddresses = async () => {
     try {
@@ -80,13 +81,21 @@ export const MapServiceScreen = (props) => {
 
   const getStoreService = async () => {
     try {
+      setLoading(true)
+      
+      if (!addresses) return
+      const findAddres =  addresses.find(item => item?._id === defaultAddress  ) 
 
-      const apiCall = await axios.post(`${customer_api_urls.get_stores_type_services}/${type}`, { addresses, carActive,isHome });
+      const apiCall = await axios.post(`${customer_api_urls.get_stores_type_services}/${type}`, {
+         addresses:findAddres, carActive,isHome 
+        });
       
       setStores(apiCall?.data?.data)
+      setLoading(false)
     } catch (error) {
-
-      showToaster('Error con el servidor')
+      setLoading(false);
+      console.log(error);
+      showToaster('Error con el servidor');
     }
   }
 
@@ -134,8 +143,10 @@ export const MapServiceScreen = (props) => {
   }, [isFocus])
 
   useEffect(() => {
-    
-    getStoreService()
+    if (defaultAddress) {
+       getStoreService()
+    }
+   
     
   }, [defaultAddress, carActive])
 
@@ -201,7 +212,8 @@ export const MapServiceScreen = (props) => {
           Disponibles según tu ubicación
         </Text>
       </VStack>
-
+        
+        <LoaderComponent isVisible={loading} />
 
       <ListServices services={stores} goService={goService} />
     </View>

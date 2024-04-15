@@ -219,7 +219,7 @@ export const SearchAddressScreen = (props) => {
     show: false,
     msg: ''
   })
-  const {top} = useSafeAreaInsets()
+  
   const centerPosition = async (loc) => {
 
     mapViewRef.current?.animateCamera({
