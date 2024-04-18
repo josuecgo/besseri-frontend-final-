@@ -46,7 +46,7 @@ export const ServiceFormFeedback = ({ navigation, route }) => {
      
       setIsLoading(false)
 
-      navigation.goBack()
+      await navigation.goBack()
       navigation.goBack()
 
     } catch (error) {

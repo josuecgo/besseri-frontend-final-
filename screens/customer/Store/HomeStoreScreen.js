@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { TouchableOpacity, View, StyleSheet, FlatList, ActivityIndicator, Dimensions, Animated, Pressable } from 'react-native';
+import { TouchableOpacity, View, StyleSheet, FlatList, ActivityIndicator, Dimensions, Animated, Pressable, Alert } from 'react-native';
 
 
-import { Center, Text, } from 'native-base';
+import { Center, CheckIcon, HStack, Image, Select, Text, } from 'native-base';
 
 import Colors from '../../../util/styles/colors';
 import CommonStyles from '../../../util/styles/styles';
 
-import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../../util/constants';
+import { CUSTOMER_HOME_SCREEN_ROUTES, MAIN_ROUTES, showAlertLogin } from '../../../util/constants';
 import ProductListing from '../../../components/customer-components/ProductsListing.component';
 import { adjust, deviceHeight, deviceWidth } from '../../../util/Dimentions';
 
@@ -15,6 +15,10 @@ import { ProductContext } from '../../../util/context/Product/ProductContext';
 import { useFiltrado } from '../../../hooks/useFiltrado';
 import { ListEmpty } from '../../../components/Vendor/ListEmpty';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { customer_api_urls } from '../../../util/api/api_essentials';
+import { getUserId } from '../../../util/local-storage/auth_service';
+import { ServiceSkeleton } from '../../../components/Services/ServiceSkeleton';
 
 
 
@@ -27,9 +31,10 @@ const HomeStoreScreen = React.memo((props) => {
     comision,
    loading, carCompatible,productos,isLoading,getProducts
   } = useContext(ProductContext);
-  
-  const { carActive } = useSelector(state => state.user);
-
+  const [addresses, setAddresses] = useState(null)
+  const { carActive, address } = useSelector(state => state.user)
+  const [defaultAddress, setDefaultAddress] = useState(address?._id ?? null)
+ 
 
   const CategoryButton = ({ category, onPress }) => {
    
@@ -85,40 +90,85 @@ const HomeStoreScreen = React.memo((props) => {
 
   const memorizedValueCategoria = useMemo(() => renderItemCategorias, [categorias,activeCategory]);
 
+  const getAddresses = async () => {
+    try {
 
+      const userId = await getUserId();
+    
+      const apiCall = await axios.get(`${customer_api_urls.get_addresses}/${userId}`);
 
+      
 
+      if (apiCall?.data?.data.length <= 0) {
+        Alert.alert('No tienes ninguna direccion', 'Crea una direccion', [
+          {
+            text: 'Cancelar',
+            onPress: () => props.navigation.goBack(),
+            style: 'cancel',
+          },
+          { text: 'Crear', onPress: () => props.navigation.navigate('Mi dirección') },
+        ]);
+      } else {
+        setAddresses(apiCall.data.data);
+        if (apiCall?.data?.data.length > 0) {
+          setDefaultAddress(apiCall.data.data[0]._id)
+
+        } else {
+          setDefaultAddress(null)
+        }
+      }
+
+    } catch (e) {
+      showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 2')
+    }
+  }
+
+  useEffect(() => {
+     getAddresses();
+  }, [])
+  
   useEffect(() => {
     let isMounted = true; // Variable para rastrear si el componente está montado
   
     const fetchData = async () => {
       // Realizar la solicitud de API u otras operaciones asíncronas
       try {
-        await getProducts(activeCategory, carActive);
+        
         if (isMounted) {
-          
+        
+          if (!addresses) return
+          const findAddres =  addresses.find(item => item?._id === defaultAddress  ) 
+          await getProducts(activeCategory, carActive,findAddres);
         }
       } catch (error) {
         
       }
     };
   
-    if (activeCategory && carActive) {
+    if (activeCategory && carActive && defaultAddress && addresses) {
       fetchData(); // Llamar a la función asíncrona
     }
   
     return () => {
       isMounted = false; 
     };
-  }, [activeCategory, carActive]);
+  }, [activeCategory, carActive,defaultAddress,addresses]);
   
+ 
 
+  const handleAddress = (address) => {
+
+    setDefaultAddress(address)
+  }
+
+  if (!addresses) return <ServiceSkeleton />
 
   return (
     <View style={{ 
       ...CommonStyles.flexOne, 
       backgroundColor: Colors.white 
       }}>
+        
 
       <View style={{ flex: 1, backgroundColor: Colors.white }} >
         <View style={{
@@ -139,7 +189,40 @@ const HomeStoreScreen = React.memo((props) => {
          
           />
         </View>
+        <HStack alignItems={'center'} justifyContent={'center'} space={1} mt={1} size={'xs'} >
+        <Image
+          source={require('../../../assets/images/1.png')}
+          alt='dirrecion'
+          style={styles.icon}
+        />
+        <Select
+          selectedValue={defaultAddress}
+          defaultValue={defaultAddress}
+          minWidth={deviceWidth - 60}
+          accessibilityLabel="Elegir direccion"
+          placeholder={'Elegir direccion'}
+          placeholderTextColor={Colors.white}
+          variant='unstyled'
+          _selectedItem={{
+            bg: "teal.600",
+            endIcon: <CheckIcon size="5" />
+          }}
+         
+          onValueChange={itemValue => handleAddress(itemValue)}
+          borderColor={Colors.bgColor}
+          color={Colors.bgColor}
+          backgroundColor={Colors.white}
+          size={'xs'}
+        >
+          {
+            addresses.map((item) => (
+              <Select.Item key={item._id} label={item.formatted_address} value={item._id} />
+            ))
+          }
 
+
+        </Select>
+      </HStack>
 
         <View style={{  marginTop: 5 }}>
           {
@@ -257,6 +340,11 @@ const styles = StyleSheet.create({
     color: Colors.primarySolid,
     borderColor: Colors.primarySolid,
     fontSize: adjust(10)
+  },
+  icon: {
+    width: 30,
+    height: 30,
+    resizeMode: 'contain'
   }
 })
 export default HomeStoreScreen;

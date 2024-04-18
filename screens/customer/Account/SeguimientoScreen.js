@@ -15,8 +15,8 @@ export const SeguimientoScreen = ({ route }) => {
 
   const progress = route.params;
   
-
-  const stepsServicio =  progress.service.is_home ? [
+  
+  const stepsServicio =  progress?.service?.is_home ? [
     {
       name: "Servicio aceptado"
     },
@@ -81,7 +81,7 @@ export const SeguimientoScreen = ({ route }) => {
       "Paquete entregado"
   },
   ]
-  const stepsLavado =  progress.service.is_home ? [
+  const stepsLavado =  progress?.service?.is_home ? [
     {
       name: "Lavado aceptado"
     },

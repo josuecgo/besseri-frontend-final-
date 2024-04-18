@@ -19,7 +19,7 @@ export const CustomerFormFeedback = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
   const { order,id } = route.params;
-
+  
 
   const [valueInputs, setValueInputs] = useState(order.map((item, i) => {
    
@@ -45,7 +45,8 @@ export const CustomerFormFeedback = ({ navigation, route }) => {
     
     try {
       const user = await getUserId()
-      // await dispatch(resetForm());
+      let result = ''
+
       setIsLoading(true)
       valueInputs.map( async(item,i) => {
         let formData = new FormData()
@@ -54,7 +55,7 @@ export const CustomerFormFeedback = ({ navigation, route }) => {
         if (item?.imgs.length === 0) {
          
          
-          enviarValoracion({
+          result =  await enviarValoracion({
             customer:user,
             product:item.product,
             installation: item.installation,
@@ -99,7 +100,7 @@ export const CustomerFormFeedback = ({ navigation, route }) => {
             }
 
            
-            enviarValoracion(response)
+             result =  await enviarValoracion(response)
             
         }
 
@@ -109,8 +110,9 @@ export const CustomerFormFeedback = ({ navigation, route }) => {
       
       await dispatch(resetForm());
       await getPedidosUser();
-      navigation.goBack();
      
+      navigation.goBack();
+      navigation.goBack();
      
     } catch (error) {
       console.log(error, 'upload');
@@ -128,16 +130,17 @@ export const CustomerFormFeedback = ({ navigation, route }) => {
       
      
       
-       await axios.post(`${customer_api_urls.create_feedback}/${id}`,
+      const result  = await axios.post(`${customer_api_urls.create_feedback}/${id}`,
         {data:[data]}
       );
 
-
-      await dispatch(resetForm());
-      setIsLoading(false)
-     
+    
+      // await dispatch(resetForm());
+      // await getPedidosUser()
+      // setIsLoading(false)
       
-
+      
+      return result.data
     } catch (error) {
       //console.log(error);
       await dispatch(resetForm());

@@ -206,7 +206,7 @@ const ProductDetailScreen = (props) => {
 
           {
               feedback.length > 0 && ( 
-                <CardFeedback feedback={feedback} onPress={goReviews} />
+                <CardFeedback feedback={feedback} onPress={goReviews} colorTxt={Colors.bgColor} />
               )
             }
           

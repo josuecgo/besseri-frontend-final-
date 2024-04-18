@@ -106,7 +106,7 @@ export const ProductProvider = ({ children }) => {
 
 
 
-    const getProducts = async (category,carActive) => {
+    const getProducts = async (category,carActive,address) => {
         try {
            
             await dispatch({
@@ -115,8 +115,12 @@ export const ProductProvider = ({ children }) => {
                     isLoading: true,
                 }
             });
+            
+            const body = {
+                address,carActive
+            }
             const apiCall = await axios.post(
-                `${customer_api_urls.get_category_products}/${category._id}`, { carActive }
+                `${customer_api_urls.get_category_products}/${category._id}`, body
             );
         
           

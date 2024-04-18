@@ -6,7 +6,7 @@ import { dateFeedback } from '../../util/helpers/horaMes';
 import { HStack,Text } from 'native-base';
 import { AirbnbRating } from 'react-native-ratings';
 
-export const Review = ({review}) => {
+export const Review = ({review,colorTxt = Colors.white }) => {
   
   const {customer} = review;
 
@@ -17,8 +17,8 @@ export const Review = ({review}) => {
 
         
       <HStack justifyContent={'space-between'} marginX={'1'} >
-        <Text style={styles.name} >{customer?.name}</Text>
-        <Text style={styles.name} >{ dateFeedback(review.updatedAt) }</Text>
+        <Text style={[styles.name,{ color:colorTxt}]} >{customer?.name}</Text>
+        <Text style={[styles.name,{ color:colorTxt}]} >{ dateFeedback(review.updatedAt) }</Text>
       </HStack>
       
       <AirbnbRating
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     
   },
   name:{
-    color:Colors.white,
+   
     fontSize:adjust(10),
     fontWeight:'bold',
     textTransform:'capitalize'

@@ -7,7 +7,7 @@ import { ImagesFeedback } from './ImagesFeedback'
 import { Button, ThreeDotsIcon } from 'native-base'
 import { Review } from './Review'
 
-export const CardFeedback = ({feedback,onPress}) => {
+export const CardFeedback = ({feedback,onPress,colorTxt}) => {
   let imgan = 0;
   return (
     <View style={styles.card} >
@@ -44,7 +44,7 @@ export const CardFeedback = ({feedback,onPress}) => {
             if(i >= 3 ) return null;
             return (
             <View key={item._id} >
-              <Review review={item} />
+              <Review review={item} colorTxt={colorTxt} />
             </View>
           )})
         }

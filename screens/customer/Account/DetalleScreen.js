@@ -23,9 +23,8 @@ export const DetalleScreen = ({ route, navigation }) => {
   const { buyAdditional, loading } = useCompras()
   const [reception, setReception] = useState(null)
 
-  
-
-  if(data.type === 'refaccion') return <DetailRefaccion data={data} />
+ 
+  if(data.type === 'refaccion') return <DetailRefaccion data={data} navigation={navigation} />
 
   const goSeguimiento = () => {
     // 
@@ -181,7 +180,7 @@ export const DetalleScreen = ({ route, navigation }) => {
 }
 
 
-const DetailRefaccion = ({data}) => {
+const DetailRefaccion = ({data,navigation}) => {
 
   const { comision } = useContext(ProductContext)
   const {  loading } = useCompras()
