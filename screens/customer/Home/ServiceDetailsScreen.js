@@ -15,6 +15,7 @@ export const ServiceDetailsScreen = ({ route, navigation }) => {
   const [feedback, setFeedback] = useState([]);
   const { service, address, car,type } = route.params;
 
+  
   const getFeedbacks = async() => {
     try {
       const apiCall = await axios.get(`${customer_api_urls.get_service_feedback}/${service?._id}`);

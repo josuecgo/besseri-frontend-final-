@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CommonStyles from '../../../util/styles/styles'
-import { Box, Button, Center, HStack, Input, Modal, Radio, ScrollView, Select, Text, VStack } from 'native-base'
+import { Box, Button, Center, HStack, Input, KeyboardAvoidingView, Modal, Radio, ScrollView, Select, Slider, Text, VStack } from 'native-base'
 import { useFuel } from '../../../hooks/useFuel'
 import Colors from '../../../util/styles/colors'
 import { ModalDriver } from '../../../components/Customer/ModalDriver'
@@ -11,16 +11,22 @@ import { MyCarActive } from '../../../components/Customer/MyCarActive'
 import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal'
 import { HeaderTitle } from '../../../components/Customer/HeaderTitle'
 import { showToaster } from '../../../util/constants'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 
 export const FormFuelCheckScreen = ({ navigation, route }) => {
-    const { type, finish, data, km_actual } = route.params
+    const { type, finish, data, km_actual  } = route.params
     const [driver, setDriver] = useState('');
     const [value, setValue] = useState("inicio");
     const [gasolineType, setGasolineType] = useState("regular");
+    const [gasolineLevel, setGasolineLevel] = useState(data?.fuel_level ? data?.fuel_level : 0);
     const [km, setKm] = useState(km_actual && type === 'travel' ? km_actual.toString() : '');
     const [liters, setLiters] = useState(data?.liters ? data.liters.toString() :'');
     const [amount, setAmount] = useState(data?.amount  ? data.amount.toString() : '');
     const [gasolinePrice, setGasolinePrice] = useState(data?.gasolinePrice ?data?.gasolinePrice.toString() : '' )
+
+
+
     const { getDrivers, loading, createFuelConsumption, createFuelConsumptionInitial, createTravel, closeTravel } = useFuel()
     const [isOpenModal, setIsOpenModal] = useState(false)
     const { drivers } = useSelector(state => state.fuel)
@@ -32,99 +38,109 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
         if (loading) {
             return
         }
+   
 
         if (!km) {
             showToaster('Por favor, ingresa el kilómetraje.'); // Mostrar un mensaje de alerta o manejar de alguna otra manera la falta de kilómetraje
             return;
         }
 
-        if (type === 'gas') {
-            if (!driver || !km || !liters  || !gasolinePrice || !gasolineType ) {
-                showToaster('Por favor, completa todos los campos.'); // Mostrar un mensaje de alerta o manejar de alguna otra manera la falta de kilómetraje
-                return;
-            }
-
-            if (finish) {
-                await closeTravel({
-                    gasolinePrice,
-                    gasolineType,
-                    km,
-                    liters,
-                    amount: liters * gasolinePrice,
-                    // type,
-                    id: data._id,
-                    data
-
-                })
-
-
-            }else{
-                if (value === 'inicio') {
-                    
-                    await createFuelConsumptionInitial({ 
-                        gasolinePrice,
-                        gasolineType,
-                        driver, 
-                        km, 
-                        liters, 
-                        amount: liters * gasolinePrice, 
-                        type 
-                    })
-                  
-                }else{
-                    await createFuelConsumption({ 
-                        gasolinePrice,
-                        gasolineType,
-                        driver, 
-                        km, 
-                        liters, 
-                        amount: liters * gasolinePrice,  
-                        type })
-                    
-                }
-            }
-           
-            
-            
-        } else {
-            if (finish) {
-                await closeTravel({
-                    gasolinePrice,
-                    gasolineType,
-                    km,
-                    liters,
-                    amount: liters * gasolinePrice,  
-                    // type,
-                    id: data._id,
-                    data
-
-                })
-            } else {
-                if (!driver || !km) {
+        try {
+            if (type === 'gas') {
+                if (!driver || !km || !liters  || !gasolinePrice || !gasolineType ) {
                     showToaster('Por favor, completa todos los campos.'); // Mostrar un mensaje de alerta o manejar de alguna otra manera la falta de kilómetraje
                     return;
                 }
-                await createTravel({ 
-                    gasolinePrice,
-                    gasolineType,
-                    driver, 
-                    km, 
-                    liters,  
-                    amount: liters * gasolinePrice,   
-                    type 
-                })
+    
+                if (finish) {
+                    await closeTravel({
+                        fuel_level:gasolineLevel,
+                        gasolinePrice,
+                        gasolineType,
+                        km,
+                        liters,
+                        amount: liters * gasolinePrice,
+                        // type,
+                        id: data._id,
+                        data
+    
+                    })
+    
+    
+                }else{
+                    if (value === 'inicio') {
+                        
+                        await createFuelConsumptionInitial({ 
+                            fuel_level:gasolineLevel,
+                            gasolinePrice,
+                            gasolineType,
+                            driver, 
+                            km, 
+                            liters, 
+                            amount: liters * gasolinePrice, 
+                            type 
+                        })
+                      
+                    }else{
+                        await createFuelConsumption({ 
+                            fuel_level:gasolineLevel,
+                            gasolinePrice,
+                            gasolineType,
+                            driver, 
+                            km, 
+                            liters, 
+                            amount: liters * gasolinePrice,  
+                            type })
+                        
+                    }
+                }
+               
+                
+                
+            } else {
+                if (finish) {
+                    await closeTravel({
+                        fuel_level:gasolineLevel,
+                        gasolinePrice,
+                        gasolineType,
+                        km,
+                        liters,
+                        amount: liters * gasolinePrice,  
+                        // type,
+                        id: data._id,
+                        data
+    
+                    })
+                } else {
+                    if (!driver || !km) {
+                        showToaster('Por favor, completa todos los campos.'); // Mostrar un mensaje de alerta o manejar de alguna otra manera la falta de kilómetraje
+                        return;
+                    }
+                    await createTravel({ 
+                        fuel_level:gasolineLevel,
+                        gasolinePrice,
+                        gasolineType,
+                        driver, 
+                        km, 
+                        liters,  
+                        amount: liters * gasolinePrice,   
+                        type 
+                    })
+                }
+    
             }
-
+    
+    
+            // También puedes restablecer el estado del formulario después de enviar los datos
+            setDriver('');
+           
+            setKm('');
+            setLiters('');
+            setAmount('');
+            navigation.goBack()
+        } catch (error) {
+            console.log(error,'create fuel');
         }
-
-
-        // También puedes restablecer el estado del formulario después de enviar los datos
-        setDriver('');
-       
-        setKm('');
-        setLiters('');
-        setAmount('');
-        navigation.goBack()
     };
 
     const openCloseModal = () => {
@@ -139,7 +155,9 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
     if (type === 'gas') {
         return (
             (
-                <VStack style={styles.body} >
+                <KeyboardAvoidingView style={styles.body}>
+                    <ScrollView>
+                    <VStack style={styles.body} >
                     <ScrollView  >
 
                         <HeaderTitle
@@ -234,12 +252,16 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
                             keyboardType="numeric"
                         />
 
+                        
+                        <GasolineSlider 
+                        onChangeValue={gasolineLevel} 
+                        setOnChangeValue={setGasolineLevel} 
+                        defaultValue={gasolineLevel}
+                        />
 
                         <Text>Tipo de combustible</Text>
                         <Box justifyContent={'center'} alignItems={'center'} mx={5} >
-
-
-                        <Radio.Group
+                            <Radio.Group
                                 name="mycombustible"
                                 accessibilityLabel="Tipo de combustible"
                                 value={gasolineType}
@@ -285,148 +307,190 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
 
                     </ScrollView>
                 </VStack>
+                    </ScrollView>
+
+                </KeyboardAvoidingView>
+               
 
             )
         )
     }
 
     return (
-        <VStack style={styles.body} space={2} >
-            <HeaderTitle
-                titulo={!finish ? "Iniciar recorrido" : "Terminar recorrido"}
-                nav={navigation.goBack}
-            />
-            <LoaderComponent isVisible={loading} />
+        <KeyboardAvoidingView style={styles.body}>
+            <ScrollView>
+            <VStack style={styles.body} space={2} >
+                <HeaderTitle
+                    titulo={!finish ? "Iniciar recorrido" : "Terminar recorrido"}
+                    nav={navigation.goBack}
+                />
+                <LoaderComponent isVisible={loading} />
 
 
-            <MyCarActive />
+                <MyCarActive />
 
-            <ModalDriver modalVisible={isOpenModal} openCloseModal={openCloseModal} />
+                <ModalDriver modalVisible={isOpenModal} openCloseModal={openCloseModal} />
 
-            {
-                data ? (
-                    <Center>
-                        <Text>{data.driver.name}</Text>
-                    </Center>
-                ) : (
-                    <>
-                        <HStack justifyContent={'flex-end'} >
-                            <Button variant={'outline'}
-                                onPress={openCloseModal}
-                                _text={{ color: Colors.white }}
-                            >
-                                Agregar chofer
-                            </Button>
-                        </HStack>
-
-
-
-                        <Text>Seleccionar chofer</Text>
-                        <Select selectedValue={driver} minWidth="200"
-                            accessibilityLabel="Elegir chofer"
-                            placeholder="Elegir chofer"
-                            _selectedItem={{
-                                bg: "teal.600",
-                                // endIcon: <CheckIcon size="5" />
-                            }}
-                            onValueChange={itemValue => setDriver(itemValue)}>
-
-                            {
-                                drivers.map((item) => (
-                                    <Select.Item key={item._id} label={item.name} value={item._id} />
-                                ))
-                            }
-                        </Select>
-                    </>
-                )
-            }
+                {
+                    data ? (
+                        <Center>
+                            <Text>{data.driver.name}</Text>
+                        </Center>
+                    ) : (
+                        <>
+                            <HStack justifyContent={'flex-end'} >
+                                <Button variant={'outline'}
+                                    onPress={openCloseModal}
+                                    _text={{ color: Colors.white }}
+                                >
+                                    Agregar chofer
+                                </Button>
+                            </HStack>
 
 
 
-
-            {
-                // type === 'gas' ? (
-                finish ? (
-                    <>
-                        <Text>Litros</Text>
-                        <Input
-                            placeholder="Litros"
-                            value={liters}
-                            onChangeText={setLiters}
-                            keyboardType="numeric"
-                        />
-
-<Text>Precio por litro</Text>
-                        <Input
-                            placeholder="Precio por litro"
-                            value={gasolinePrice}
-                            onChangeText={setGasolinePrice}
-                            keyboardType="numeric"
-                        />
-
-
-                        <Text>Tipo de combustible</Text>
-                        <Box justifyContent={'center'} alignItems={'center'} mx={5} >
-
-
-                        <Radio.Group
-                                name="mycombustible"
-                                accessibilityLabel="Tipo de combustible"
-                                value={gasolineType}
-                                onChange={nextValue => {
-                                    setGasolineType(nextValue);
+                            <Text>Seleccionar chofer</Text>
+                            <Select selectedValue={driver} minWidth="200"
+                                accessibilityLabel="Elegir chofer"
+                                placeholder="Elegir chofer"
+                                _selectedItem={{
+                                    bg: "teal.600",
+                                    // endIcon: <CheckIcon size="5" />
                                 }}
+                                onValueChange={itemValue => setDriver(itemValue)}>
 
-                            >
-                                <HStack space={6} justifyContent={'space-around'} >
-                                    <Radio value="regular"  size="sm" >
-                                        Regular
-                                    </Radio>
-                                    <Radio value="premium" size="sm">
-                                        Premium
-                                    </Radio>
-                                    <Radio value="diesel"  size="sm">
-                                        Diesel
-                                    </Radio>
-                                </HStack>
-                            </Radio.Group>
-                        </Box>
-
-
-                        <Text>Kilómetraje final</Text>
-                        <Input
-                            placeholder="Kilómetraje final"
-                            value={km}
-                            onChangeText={setKm}
-                            keyboardType="numeric"
-                        />
-                    </>
-                ) : (
-                    <>
-                        <Text>Kilómetraje inicial</Text>
-                        <Input
-                            placeholder="Kilómetraje inicial"
-                            value={km}
-                            onChangeText={setKm}
-                            keyboardType="numeric"
-                        />
-                    </>
-                )
-            }
+                                {
+                                    drivers.map((item) => (
+                                        <Select.Item key={item._id} label={item.name} value={item._id} />
+                                    ))
+                                }
+                            </Select>
+                        </>
+                    )
+                }
 
 
 
-            <BtnPrincipal
 
-                text={'Guardar'}
-                onPress={handleSubmit}
-            />
+                {
+                    // type === 'gas' ? (
+                    finish ? (
+                        <>
+                            <Text>Litros</Text>
+                            <Input
+                                placeholder="Litros"
+                                value={liters}
+                                onChangeText={setLiters}
+                                keyboardType="numeric"
+                            />
 
-        </VStack>
+                            <Text>Precio por litro</Text>
+                            <Input
+                                placeholder="Precio por litro"
+                                value={gasolinePrice}
+                                onChangeText={setGasolinePrice}
+                                keyboardType="numeric"
+                            />
+                            
+                            <GasolineSlider onChangeValue={gasolineLevel} setOnChangeValue={setGasolineLevel}  defaultValue={gasolineLevel} />
+
+
+                            <Text>Tipo de combustible</Text>
+                            <Box justifyContent={'center'} alignItems={'center'} mx={5} >
+
+
+                            <Radio.Group
+                                    name="mycombustible"
+                                    accessibilityLabel="Tipo de combustible"
+                                    value={gasolineType}
+                                    onChange={nextValue => {
+                                        setGasolineType(nextValue);
+                                    }}
+
+                                >
+                                    <HStack space={6} justifyContent={'space-around'} >
+                                        <Radio value="regular"  size="sm" >
+                                            Regular
+                                        </Radio>
+                                        <Radio value="premium" size="sm">
+                                            Premium
+                                        </Radio>
+                                        <Radio value="diesel"  size="sm">
+                                            Diesel
+                                        </Radio>
+                                    </HStack>
+                                </Radio.Group>
+                            </Box>
+
+
+                            <Text>Kilómetraje final</Text>
+                            <Input
+                                placeholder="Kilómetraje final"
+                                value={km}
+                                onChangeText={setKm}
+                                keyboardType="numeric"
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <Text>Kilómetraje inicial</Text>
+                            <Input
+                                placeholder="Kilómetraje inicial"
+                                value={km}
+                                onChangeText={setKm}
+                                keyboardType="numeric"
+                                mb={30}
+                            />
+                        </>
+                    )
+                }
+
+
+
+                <BtnPrincipal
+
+                    text={'Guardar'}
+                    onPress={handleSubmit}
+                />
+
+            </VStack>
+            </ScrollView>
+           
+           
+        </KeyboardAvoidingView>
     )
 }
 
-
+const GasolineSlider = ({ onChangeValue, setOnChangeValue,defaultValue }) => {
+   
+    return (
+        <VStack marginY={2} >
+          <Text style={styles.label} textAlign="center">Nivel de combustible - {onChangeValue}%</Text>
+          <Center>
+            <HStack>
+            <Text textAlign="center">0 </Text>
+            <Slider
+              defaultValue={defaultValue}
+              colorScheme="cyan"
+              size="lg"
+              w={'60%'}
+              onChange={(v) => {
+                setOnChangeValue(Math.floor(v));
+                
+              }}>
+              <Slider.Track bg="gray.500">
+                <Slider.FilledTrack bg={Colors.terciarySolid} />
+              </Slider.Track>
+              <Slider.Thumb borderWidth="0" bg="transparent">
+                <MaterialCommunityIcons name="gas-station" size={24} color={Colors.white} />
+              </Slider.Thumb>
+            </Slider>
+            <Text textAlign="center"> 100</Text>
+            </HStack>
+          </Center>
+        </VStack>
+      )
+};
 
 const styles = StyleSheet.create({
     body: {

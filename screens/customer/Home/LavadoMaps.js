@@ -15,13 +15,14 @@ import Colors from '../../../util/styles/colors'
 import CommonStyles from '../../../util/styles/styles'
 import { ListServices } from '../../../components/Services/ListServices'
 import { useIsFocused } from '@react-navigation/native'
+import LoaderComponent from '../../../components/Loader/Loader.component'
 
 export const LavadoMaps = (props) => {
   const isHome = props.route.params
   const [addresses, setAddresses] = useState(null)
   const isFocus = useIsFocused()
   const { carActive, address } = useSelector(state => state.user)
-
+  const [isLoading, setIsLoading] = useState(false)
   const [stores, setStores] = useState(null)
   const [defaultAddress, setDefaultAddress] = useState(address)
 
@@ -76,22 +77,28 @@ export const LavadoMaps = (props) => {
     }
   }
 
+  
   const getStoreService = async () => {
     try {
 
+      if (!addresses) return
+      setIsLoading(true)
+      const findAddres =  addresses.find(item => item?._id === defaultAddress  );
       
       const apiCall = await axios.post(`${customer_api_urls.get_carwash}`,
         {
-          addresses,
+          addresses:findAddres,
           carActive,
           isHome
         }
       );
 
 
-      setStores(apiCall?.data?.data)
+      setStores(apiCall?.data?.data);
+      setIsLoading(false)
     } catch (error) {
-
+      console.log(error);
+      setIsLoading(false)
       showToaster('Error con el servidor')
     }
   }
@@ -149,7 +156,7 @@ export const LavadoMaps = (props) => {
 
   return (
     <View style={styles.map} >
-
+      <LoaderComponent isVisible={isLoading} /> 
       <HStack alignItems={'center'} justifyContent={'center'} >
         <Image
           source={require('../../../assets/images/30.png')}

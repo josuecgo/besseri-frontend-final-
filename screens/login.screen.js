@@ -77,7 +77,7 @@ const LoginScreen = ({ navigation }) => {
       }
 
 
-
+     
 
       if (apiCall.status == api_statuses.success) {
         const { user } = apiCall?.data?.data;
@@ -108,7 +108,7 @@ const LoginScreen = ({ navigation }) => {
 
     } catch (e) {
 
-
+console.log(e,'erro loging');
       setShowLoader(false);
       showToaster('Error con el servidor.')
     }

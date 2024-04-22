@@ -3,12 +3,14 @@ import { Box, useDisclose, IconButton, Stagger, HStack } from "native-base";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../../util/styles/colors';
 import { adjust } from '../../util/Dimentions';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const FabFuel = ({goForm}) => {
   const { isOpen, onToggle } = useDisclose();
+  const {bottom} = useSafeAreaInsets()
   
   return (
-    <Box position="absolute" bottom={0} right={2}>
+    <Box position="absolute" bottom={bottom + 5} right={3}>
       <Stagger
         visible={isOpen}
         initial={{

@@ -203,6 +203,7 @@ const ModalGas = ({ data, showModal, setShowModal, gasConsumption }) => {
 
     }
 
+    console.log(data.fuel_level);
     return (
         <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="lg">
             <Modal.Content maxWidth="350">
@@ -223,6 +224,11 @@ const ModalGas = ({ data, showModal, setShowModal, gasConsumption }) => {
                         <HStack alignItems="center" justifyContent="space-between">
                             <Text fontWeight="medium">Precio por litro</Text>
                             <Text color="blueGray.400"> {moneda(data.gasolinePrice)} </Text>
+                        </HStack>
+
+                        <HStack alignItems="center" justifyContent="space-between">
+                            <Text fontWeight="medium">Nivel de combustible</Text>
+                            <Text color="blueGray.400"> {data?.fuel_level}% </Text>
                         </HStack>
                         <HStack alignItems="center" justifyContent="space-between">
                             <Text fontWeight="medium">Total</Text>

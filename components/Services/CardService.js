@@ -2,13 +2,13 @@ import { StyleSheet,  View } from 'react-native'
 import React from 'react'
 import { AspectRatio, Box,Center,HStack,Heading,Image,Stack,Text } from 'native-base'
 import Colors from '../../util/styles/colors'
-import { api_urls, base_url } from '../../util/api/api_essentials'
+import {  base_url } from '../../util/api/api_essentials'
 import CommonStyles from '../../util/styles/styles'
 import { comisionMoneda, moneda } from '../../util/Moneda'
 import { ItemServiceDetail } from './ItemServiceDetail'
+import { AirbnbRating } from 'react-native-ratings'
 
 export const CardService = ({service,comision}) => {
-  
   return (
     <Box >
     <Box 
@@ -67,6 +67,17 @@ export const CardService = ({service,comision}) => {
             >
               {comisionMoneda(service?.price , comision)} MXN
             </Text>
+
+
+            <AirbnbRating
+              showRating={false}
+              count={5}
+              defaultRating={service?.business_id?.averageRating}
+              // starContainerStyle={styles.starContainer}
+              // onFinishRating={(rating) => setValueInputs({ ...valueInputs, rating })}
+              size={10}
+              isDisabled
+            />
           <HStack>
            
             <Text 

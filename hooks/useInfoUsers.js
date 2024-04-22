@@ -66,7 +66,7 @@ export const useInfoUser = (  ) => {
         }
       }
     } catch (error) {
-     
+      console.log(error,'getUserInfo');
       showToaster(error?.response?.data?.message, 'code - IU56');
     }
   }, []);
@@ -86,6 +86,7 @@ export const useInfoUser = (  ) => {
         showToaster('Nuevo Auto activado');
       }
     } catch (error) {
+      console.log(error,'activeCar');
       showToasterError(error);
     }
   }, []);
@@ -104,6 +105,7 @@ export const useInfoUser = (  ) => {
         dispatch(getOrdersUser(apiCall?.data?.data));
       }
     } catch (error) {
+      console.log(error,'getPedidosUser');
       showToaster(error?.response?.data?.message);
       dispatch(getOrdersUser([]));
     }

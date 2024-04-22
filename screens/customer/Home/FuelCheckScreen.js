@@ -15,6 +15,7 @@ import { SkeletonScreen } from '../SkeletonScreen'
 import { FabFuel } from '../../../components/button/FabFuel'
 import { LevelCheck } from '../../../components/Customer/LevelCheck'
 import { CardFuel } from '../../../components/Customer/CardFuel'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 
 
@@ -22,7 +23,7 @@ import { CardFuel } from '../../../components/Customer/CardFuel'
 export const FuelCheckScreen = ({ navigation }) => {
     const { getFuelConsumption, loading } = useFuel()
     const { consumption } = useSelector(state => state.fuel);
-
+    const {bottom} = useSafeAreaInsets()
 
    
 
@@ -43,9 +44,13 @@ export const FuelCheckScreen = ({ navigation }) => {
             return
         } else{
             if (type === 'travel') {
-                navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.FORM_FUEL_CHECK, { type,finish:false,km_actual:ultimoRegistro?.km_actual })
+                navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.FORM_FUEL_CHECK, { 
+                    type,finish:false,km_actual:ultimoRegistro?.km_actual 
+                })
             }else{
-                navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.FORM_FUEL_CHECK, { type,km_actual:ultimoRegistro?.km_actual })
+                navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.FORM_FUEL_CHECK, { 
+                    type,km_actual:ultimoRegistro?.km_actual 
+                })
             }
         }
 
@@ -83,7 +88,7 @@ export const FuelCheckScreen = ({ navigation }) => {
     if (loading) return <SkeletonScreen/>
 
     return (
-        <View style={styles.body} >
+        <View style={[styles.body,{paddingBottom:bottom + 20}]} >
             <Box 
              
             overflow={'hidden'} >

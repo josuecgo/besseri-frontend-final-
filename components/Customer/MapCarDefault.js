@@ -22,11 +22,7 @@ export const MapCarDefault = ({changeCar}) => {
         alt='car'
         style={styles.icon}
         />
-        {/* <MaterialIcons
-        name="directions-car"
-        color={Colors.white} 
-        size={25}
-        /> */}
+       
        
         <Text style={styles.car} >{carActive?.model?.name} {carActive?.maker?.name}</Text>
    

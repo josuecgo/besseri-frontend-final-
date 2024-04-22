@@ -14,9 +14,10 @@ import CommonStyles from '../../../util/styles/styles';
 export const SeguimientoScreen = ({ route }) => {
 
   const progress = route.params;
+
+  console.log(progress?.service?.is_home);
   
-  
-  const stepsServicio =  progress?.service?.is_home ? [
+  const stepsServicio =  progress?.service?.is_home  ? [
     {
       name: "Servicio aceptado"
     },
@@ -130,6 +131,8 @@ export const SeguimientoScreen = ({ route }) => {
     },
   ]
 
+
+  
   const steps = progress.type == 'servicio'  ? stepsServicio 
                 : progress.type == 'refaccion' 
                 ? stepsRefaccion : stepsLavado
@@ -157,6 +160,8 @@ export const SeguimientoScreen = ({ route }) => {
 
       return
     }
+
+   
 
     switch (progress.status) {
       case BookingsStatusCode.EN_PROCESO:
@@ -186,6 +191,7 @@ export const SeguimientoScreen = ({ route }) => {
     }
   }
 
+  
 
   return (
     <View style={{ ...CommonStyles.screenY }} >

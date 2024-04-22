@@ -18,7 +18,7 @@ const LoaderComponent = ({isVisible}) => {
                <SpinKit
                type='Circle'
                isVisible={isVisible}
-               color={Colors.primaryColor}
+               color={Colors.white}
                size={30}
                />
              </View>
@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
         width:60,
         height:60,
         borderWidth:1,
-        borderColor:Colors.white,
-        backgroundColor:Colors.white,
+        borderColor:Colors.bgColor,
+        backgroundColor:Colors.bgColor,
         borderRadius:10,
         justifyContent: 'center',
         alignItems: 'center',
