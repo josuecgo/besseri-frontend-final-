@@ -12,7 +12,7 @@ import Colors from '../../util/styles/colors'
 
 const CardServicio = ({data}) => {
   const {comision} = useContext(ProductContext)
-
+  console.log(data);
 
   const openMapsApp = (latitude, longitude) => {
 
@@ -66,6 +66,8 @@ const CardServicio = ({data}) => {
         <Text style={{...CommonStyles.h2}} >Código:</Text>
         <Text style={{...CommonStyles.h2}} >{data?.delivery_security_code}</Text>
       </HStack>
+
+     
       <Text style={{...CommonStyles.h2}}> {data.storePickup ? 'Recoger en' : 'Servicio de VALET incluido'  } </Text>
       {
         data.storePickup ? (

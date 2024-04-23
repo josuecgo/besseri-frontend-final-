@@ -111,7 +111,7 @@ export const useInfoUser = (  ) => {
     }
   }, []);
   
-  const getNotificaciones = useCallback(async () => {
+  const getNotificaciones = async () => {
     try {
       const id = await getUserId();
       if (!id) {
@@ -131,7 +131,7 @@ export const useInfoUser = (  ) => {
      
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo - N');
     }
-  }, []);
+  };
   
 
   

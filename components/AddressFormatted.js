@@ -6,7 +6,8 @@ import { deviceWidth } from '../util/Dimentions'
 
 const AddressFormatted = ({address,color = 'white'}) => {
  
- 
+
+  if(!address) return null
   return (
     <Box flexDirection={'row'} space={2} alignItems={'center'}>
           <Image

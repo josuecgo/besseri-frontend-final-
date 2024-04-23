@@ -10,6 +10,7 @@ import {  api_urls } from '../../util/api/api_essentials';
 import { NotificationContext } from '../../util/context/NotificationContext';
 import { NotificationCard } from '../../components/NotificationCard';
 import { NotificationEmpty } from '../../components/NotificationEmpty';
+import { useInfoUser } from '../../hooks/useInfoUsers';
 
 
 export const CustomerNotificationViewScreen = React.memo((props) => {
@@ -17,7 +18,9 @@ export const CustomerNotificationViewScreen = React.memo((props) => {
     const [comision, setComision] = useState(0);
     const [delivery, setDelivery] = useState(0)
     const {notificaciones} = useContext(NotificationContext);
-  
+    const {getNotificaciones} = useInfoUser()
+    
+    
     const orderDetail = (body,item) => {
         // const {orderNumber,orderId} = route.params
         

@@ -1,14 +1,17 @@
 import { StyleSheet,  View } from 'react-native'
 import React from 'react'
-import { AspectRatio, Box,Center,HStack,Heading,Image,Stack,Text } from 'native-base'
+import { AspectRatio, Box,Center,HStack,Heading,Image,Stack,Text, VStack } from 'native-base'
 import Colors from '../../util/styles/colors'
 import {  base_url } from '../../util/api/api_essentials'
 import CommonStyles from '../../util/styles/styles'
 import { comisionMoneda, moneda } from '../../util/Moneda'
 import { ItemServiceDetail } from './ItemServiceDetail'
 import { AirbnbRating } from 'react-native-ratings'
+import { adjust } from '../../util/Dimentions'
 
 export const CardService = ({service,comision}) => {
+
+  
   return (
     <Box >
     <Box 
@@ -39,7 +42,23 @@ export const CardService = ({service,comision}) => {
         </AspectRatio>
   
       </Box>
-      <Stack p="4" space={3}>
+      <Stack p="4" >
+        <HStack justifyContent={'space-between'} >
+          {/* <VStack> */}
+              <Text>{service?.business_id?.storeName}</Text>
+              <HStack alignItems={'center'} >
+              <AirbnbRating
+              showRating={false}
+              count={5}
+              defaultRating={service?.business_id?.averageRating}
+              size={10}
+              isDisabled
+              />
+              <Text fontSize={adjust(9)} color={Colors.placeholder} >({service?.business_id?.numberOfRatings})</Text>
+              </HStack>
+          {/* </VStack> */}
+            
+        </HStack>
         <HStack space={2} alignItems={'center'} >
         <Image 
           source={require('../../assets/images/13.png')} 
@@ -56,7 +75,11 @@ export const CardService = ({service,comision}) => {
           </Heading>
         
         </HStack>
-          <Text style={CommonStyles.h2} > Tipo de {service?.type_services.type === 'ESTETICA' ? 'Lavado' : 'Servicio'} {service?.type_services?.name}</Text>
+        
+        <Text style={CommonStyles.h2} >
+          Tipo de {service?.type_services.type === 'ESTETICA' ? 'Lavado' : 'Servicio'} 
+          {service?.type_services?.name}
+        </Text>
 
         <HStack  space={4} justifyContent="space-between">
        
@@ -69,15 +92,7 @@ export const CardService = ({service,comision}) => {
             </Text>
 
 
-            <AirbnbRating
-              showRating={false}
-              count={5}
-              defaultRating={service?.business_id?.averageRating}
-              // starContainerStyle={styles.starContainer}
-              // onFinishRating={(rating) => setValueInputs({ ...valueInputs, rating })}
-              size={10}
-              isDisabled
-            />
+            
           <HStack>
            
             <Text 

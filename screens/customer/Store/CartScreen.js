@@ -18,6 +18,7 @@ import Colors from '../../../util/styles/colors';
 import { Box, Checkbox, HStack, VStack } from 'native-base';
 import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal';
 import AddressFormatted from '../../../components/AddressFormatted';
+import LoaderComponent from '../../../components/Loader/Loader.component';
 
 
 export const CartScreen = (props) => {
@@ -27,29 +28,27 @@ export const CartScreen = (props) => {
   const descuento = useSelector(state => state.cart.descuento);
   const idDesc = useSelector(state => state.cart.idDesc);
   const businessId = useSelector(state => state?.cart?.businessId);
-  const [direccion, setDireccion] = useState({
-    long: 0,
-    lat: 0,
-    label: ''
-  })
+  // const [direccion, setDireccion] = useState({
+  //   long: 0,
+  //   lat: 0,
+  //   label: ''
+  // })
   const [businessProfiles, setBusinessProfiles] = useState([]);
   const [comission, setComission] = useState();
   const [delivery_fee, setDeliveryFee] = useState(null);
   const [totalDeliveryFee, setTotalDeliveryFee] = useState(0);
-  const [tempTotalDeliveryFee, setTempTotalDeliveryFee] = useState(null)
+  // const [tempTotalDeliveryFee, setTempTotalDeliveryFee] = useState(null)
   const [billComission, setBillComission] = useState()
   const [deliveryDistance, setDeliveryDistance] = useState(null);
-  const [tempDeliveryDistance, setTempDeliveryDistance] = useState(null)
+  // const [tempDeliveryDistance, setTempDeliveryDistance] = useState(null)
   const [isLogin, setIsLogin] = useState(false)
   let businessIds = [];
   const address = useSelector( state => state.user.address );
   const [pickup, setPickup] = useState(false)
-
+  const [loading, setLoading] = useState(false)
  
 
-  const goDirecctions = () => {
-    props.navigation.navigate('Mi dirección')
-  }
+  
   useEffect(() => {
     
     fetchBusinessDetails()
@@ -73,15 +72,17 @@ export const CartScreen = (props) => {
   const getComision = async () => {
     try {
 
-
+      setLoading(true)
       const getFee = await axios.get(customer_api_urls?.get_fees);
 
       setBillComission(getFee.data.data[0]?.besseri_comission);
-
+      setLoading(false)
     } catch (e) {
       // //console.log({error:e})
+      setLoading(false)
 
-      showToaster('Error')
+      showToaster('Error por favor intenta mas tarde')
+      props.navigation.goBack()
     }
   }
 
@@ -91,23 +92,26 @@ export const CartScreen = (props) => {
 
   const fetchBusinessDetails = async () => {
     try {
-     
+      setLoading(true)
       const getBusinessDetails = await axios.post(vendor_api_urls?.get_multiple_stores, {
         businessIds: [businessId]
       });
       setBusinessProfiles(getBusinessDetails.data.data);
-
+      setLoading(false)
       return getBusinessDetails.data.data
       
     } catch (e) {
       props.navigation.goBack()
-      showToaster('Algo salió mal,intentalo mas tarde.');
+      showToaster('Algo salió mal, inténtalo mas tarde.');
+      setLoading(false)
     }
   }
 
   
   const calculateDelivery = async() => {
-    let vendor = businessProfiles;
+    try {
+      let vendor = businessProfiles;
+    setLoading(true)
     if (businessProfiles.length <= 0) {
       vendor = await fetchBusinessDetails()
       
@@ -126,10 +130,17 @@ export const CartScreen = (props) => {
       setTotalDeliveryFee(del);
     
       setDeliveryDistance(dis);
+
+      setLoading(false)
       return {
         distancia: dis,
         delivery: del
       }
+    } catch (error) {
+      setLoading(false);
+      props.navigation.goBack()
+      showToaster('Error, por favor intente mas tarde o ingrese otra dirección')
+    }
     
      
     
@@ -141,11 +152,12 @@ export const CartScreen = (props) => {
 
 
   const goPurchase = () => {
-    // console.log(pickup);
+   
 
     if (isLogin) {
-      if (!direccion) {
-        showToaster('Crea una direccion para poder realizar tu compra')
+      
+      if (!address) {
+        showToaster('Crea una dirección para poder realizar tu compra')
         return
       }
     
@@ -195,15 +207,20 @@ export const CartScreen = (props) => {
   }
   
   const servicioValet = async(value) => {
+    setLoading(true)
     setPickup(value)
    
+    if (!value) {
+      // Si no se selecciona el servicio de VALET, restablece los valores relacionados
+      setTotalDeliveryFee(0);
+      setDeliveryDistance(null);
+    }
    
     if (value ) {
-      calculateDelivery()
+      await calculateDelivery()
       
-    }else{
-      setTotalDeliveryFee(0);
     }
+    setLoading(false)
   }
 
 
@@ -211,14 +228,17 @@ export const CartScreen = (props) => {
 
   const fetchFees = async () => {
     try {
-
+      setLoading(true)
       const getFee = await axios.get(customer_api_urls?.get_fees);
       // //console.log(getFee.data)
       setComission(getFee.data.data[0]?.besseri_comission);
       setDeliveryFee(getFee.data.data[0]?.delivery_fee);
+      setLoading(false)
     } catch (e) {
       // //console.log(e?.response);
-      showToaster('something went wrong');
+      showToaster('No cuentas con conexión a internet, intenta mas tarde.');
+      setLoading(false)
+      props.navigation.goBack()
     }
   }
   useEffect(() => {
@@ -246,12 +266,12 @@ export const CartScreen = (props) => {
   }, [products])
 
   
-  useEffect(() => {
-    if (businessProfiles.length > 0 && delivery_fee) {
-      // calculateDelivery()
-    }
+  // useEffect(() => {
+  //   if (businessProfiles.length > 0 && delivery_fee) {
+  //     // calculateDelivery()
+  //   }
    
-  }, [businessProfiles,delivery_fee,tempDeliveryDistance,tempTotalDeliveryFee])
+  // }, [businessProfiles,delivery_fee,tempDeliveryDistance,tempTotalDeliveryFee])
   
 
 
@@ -280,7 +300,6 @@ export const CartScreen = (props) => {
     )
   }
 
-  
  
   // console.log({
   //   totalDeliveryFee,
@@ -300,6 +319,7 @@ export const CartScreen = (props) => {
 
 
             <ScrollView >
+          <LoaderComponent isVisible={loading} />
               <View style={{ width: deviceWidth, marginTop: 20 }} >
                 {
                   products.map((item) => (

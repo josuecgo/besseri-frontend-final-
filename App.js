@@ -56,7 +56,7 @@ const App = () => {
   
   return(
     <StripeProvider
-    publishableKey={KeysStripe.TEST_KEY}
+    publishableKey={KeysStripe.LIVE_KEY}
     >
     <Provider store={reduxStore}>
     
@@ -80,7 +80,7 @@ const App = () => {
 }
 const App2 = () => {
  
-  const {showNotification,notificaciones  } = useContext(NotificationContext);
+  const {showNotification,getNotificaciones  } = useContext(NotificationContext);
 
   const { allChats}  = useChat()
   
@@ -88,18 +88,21 @@ const App2 = () => {
 
   useEffect(() => {
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-    
+      await getNotificaciones()
       showNotification(remoteMessage)
       
     
     });
   },[])
 
+
+ 
+
   useEffect(() => {
     
   
-    messaging().onMessage(msg => {
-     
+    messaging().onMessage( async(msg) => {
+      await getNotificaciones();
       showNotification(msg)
      
 
@@ -110,9 +113,11 @@ const App2 = () => {
   },[]);
 
 
-  useEffect(() => {
-    allChats()
-  }, [notificaciones])
+
+
+  // useEffect(() => {
+  //   allChats()
+  // }, [notificaciones])
 
 
   

@@ -38,7 +38,7 @@ export const NotificationContext = createContext({});
 export const NotificationProvider = ({children}) => {
     const [state, dispatch] = useReducer(notificationReducer, authInicialState);
    
-    const [notificaciones, setNotificaciones] = useState([])
+    
     const {getNotificaciones} = useInfoUser()
     const firebaseConfig = {
         apiKey: "AIzaSyAjyGdmeJ8fyRP7eKPJ2ODtF0JEbqEbw8o",
@@ -66,7 +66,7 @@ export const NotificationProvider = ({children}) => {
 
         try {
          
-          getNotificaciones();
+          // await getNotificaciones();
           PushNotification.createChannel(
             {
               channelId: "channel-id", // (required)
@@ -227,7 +227,7 @@ export const NotificationProvider = ({children}) => {
         <NotificationContext.Provider
         value={{
             ...state,
-            setNotificaciones,
+            getNotificaciones,
             deleteNotificaciones,
             getToken,
             showNotification,
