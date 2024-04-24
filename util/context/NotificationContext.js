@@ -66,7 +66,7 @@ export const NotificationProvider = ({children}) => {
 
         try {
          
-          // await getNotificaciones();
+          // 
           PushNotification.createChannel(
             {
               channelId: "channel-id", // (required)
@@ -90,7 +90,7 @@ export const NotificationProvider = ({children}) => {
            
            
        
-          
+          getNotificaciones();
         } catch(e) {
           alert('No se pudo recibir notificacion');
           //console.log({e})

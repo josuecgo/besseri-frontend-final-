@@ -36,7 +36,7 @@ export const AddressHeader = ({navigation}) => {
         
         <Box  zIndex={99} >
           <Text style={styles.titulo} >Vive la experiencia</Text>
-          <Text style={styles.subtitulo} >desde ti casa u oficina</Text>
+          <Text style={styles.subtitulo} >desde tu casa u oficina</Text>
         </Box>
       </VStack>
 

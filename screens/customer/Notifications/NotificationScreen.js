@@ -12,12 +12,16 @@ import axios from 'axios';
 import { api_urls } from '../../../util/api/api_essentials';
 import { BOTTOM_TAB_CUSTOMER_ROUTES, CUSTOMER_HOME_SCREEN_ROUTES } from '../../../util/constants';
 import { NotificationEmpty } from '../../../components/NotificationEmpty';
+import { useEffect } from 'react';
+import { useIsFocused } from '@react-navigation/native';
 
 
 export const NotificationScreen = (props) => {
   const { notificaciones } = useSelector(state => state.user);
   const {getNotificaciones,getPedidosUser} = useInfoUser();
   
+  const isFocused = useIsFocused()
+
   const orderDetail = async(data,item) => {
     
     // props.navigation.navigate(BOTTOM_TAB_CUSTOMER_ROUTES.ACCOUNT,{screen:CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_PEDIDOS})
@@ -63,6 +67,15 @@ export const NotificationScreen = (props) => {
     )
   };
 
+
+  useEffect(() => {
+    if (isFocused) {
+      getNotificaciones()
+    }
+    
+  }, [isFocused])
+  
+  
 
   return (
     <View style={CommonStyles.screenY} >

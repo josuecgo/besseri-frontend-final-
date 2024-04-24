@@ -19,6 +19,8 @@ import { usePayment } from '../../../hooks/usePayment';
 import { getUser } from '../../../util/local-storage/auth_service';
 import { useContext } from 'react';
 import { ProductContext } from '../../../util/context/Product/ProductContext';
+import { Cupon } from '../../../components/Customer/Cupon';
+import { useCompras } from '../../../hooks/useCompras';
 
 
 
@@ -35,7 +37,7 @@ export const AgendarScreen = (props) => {
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const [loading, setLoading] = useState(false);
   const [stripeEssentials, setStripeEssentials] = useState(null);
-
+  const {aplicarCupones} = useCompras()
 
 
 
@@ -259,6 +261,8 @@ export const AgendarScreen = (props) => {
       >
         <Text style={{ color: Colors.white }} >{address?.formatted_address}</Text>
       </Box>
+
+      {/* <Cupon /> */}
 
       <BtnPrincipal
         text={ fetchLoading ? 'Enviando...' : 'Reservar'}

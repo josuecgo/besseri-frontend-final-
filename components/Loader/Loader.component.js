@@ -11,7 +11,7 @@ const LoaderComponent = ({isVisible}) => {
   return (
     <Modal
     isVisible={isVisible}
-    backdropOpacity={0.9}
+    // backdropOpacity={0.9}
     >
        <View style={[CommonStyles.flexOneCenter]}>
            <View style={[styles.loaderWrapperStyle]}>
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     loaderWrapperStyle:{ 
         width:60,
         height:60,
-        borderWidth:1,
+        borderWidth:0.2,
         borderColor:Colors.bgColor,
         backgroundColor:Colors.bgColor,
         borderRadius:10,

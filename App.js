@@ -88,7 +88,7 @@ const App2 = () => {
 
   useEffect(() => {
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-      await getNotificaciones()
+      getNotificaciones()
       showNotification(remoteMessage)
       
     
@@ -102,7 +102,7 @@ const App2 = () => {
     
   
     messaging().onMessage( async(msg) => {
-      await getNotificaciones();
+      getNotificaciones();
       showNotification(msg)
      
 

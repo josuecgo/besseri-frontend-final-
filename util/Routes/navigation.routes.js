@@ -20,10 +20,7 @@ import { ServiceDetailsScreen } from '../../screens/customer/Home/ServiceDetails
 import { AgendarScreen } from '../../screens/customer/Home/AgendarScreen';
 import { DetalleScreen } from '../../screens/customer/Account/DetalleScreen';
 import { SeguimientoScreen } from '../../screens/customer/Account/SeguimientoScreen';
-import CustomerCartScreen from '../../screens/customer/customer.cartscreen';
-import { EnvioScreen } from '../../screens/customer/customer.envio.screen';
-import { MetodoScreen } from '../../screens/customer/customer.metodoscreen';
-import CustomerOrderSummaryFree from '../../screens/customer/customer.orderSummaryFree.screen';
+
 import { OrderSuccessful } from '../../screens/customer/customer.order-successful';
 import HeaderStore from '../../components/Customer/HeaderStore';
 import { CartScreen } from '../../screens/customer/Store/CartScreen';

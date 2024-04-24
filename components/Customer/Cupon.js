@@ -9,7 +9,7 @@ import Colors from '../../util/styles/colors';
 import { useCart } from '../../hooks/useCart';
 
 export const Cupon = () => {
-    const {aplicarCupones,isLoading} = useCompras()
+   
     const [txtCupon, setTxtCupon] = useState('')
     const {aplicar,aplicado} = useCart();
 

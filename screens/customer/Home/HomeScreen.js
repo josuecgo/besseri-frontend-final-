@@ -9,6 +9,7 @@ import { BackgroundCar } from '../../../components/Background/BackgroundCar'
 import { MyCarActive } from '../../../components/Customer/MyCarActive'
 
 import { useInfoUser } from '../../../hooks/useInfoUsers'
+import LoaderComponent from '../../../components/Loader/Loader.component';
 
 
 
@@ -35,7 +36,7 @@ export const HomeScreen = ({ navigation }) => {
       <MyCarActive navigation={navigation} />
 
       <BackgroundCar home={true}  />
-
+   
       <HStack
         justifyContent={'space-around'}
         alignItems={'center'}

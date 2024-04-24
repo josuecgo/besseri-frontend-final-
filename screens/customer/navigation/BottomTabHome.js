@@ -46,6 +46,7 @@ export const BottomTabHome = (props) => {
   const {
     iosPermisoss,
     getToken,
+    
   } = useContext(NotificationContext);
 
   useEffect(() => {
