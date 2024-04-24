@@ -70,6 +70,7 @@ export const NotificationScreen = (props) => {
 
   useEffect(() => {
     if (isFocused) {
+      
       getNotificaciones()
     }
     

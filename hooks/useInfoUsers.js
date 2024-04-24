@@ -117,12 +117,12 @@ export const useInfoUser = (  ) => {
       if (!id) {
         return;
       }
-     
+      
       const url = `${api_urls.getNotification}/${id}`;
   
       const apiCall = await axios.get(url);
       const data = apiCall.data;
-     
+      
       dispatch(saveNotification(data));
       if (Platform.OS === 'ios') {
         PushNotificationIOS.setApplicationIconBadgeNumber(data.count);

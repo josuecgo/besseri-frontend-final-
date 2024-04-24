@@ -80,7 +80,7 @@ const App = () => {
 }
 const App2 = () => {
  
-  const {showNotification,getNotificaciones  } = useContext(NotificationContext);
+  const {showNotification } = useContext(NotificationContext);
 
   const { allChats}  = useChat()
   
@@ -88,7 +88,7 @@ const App2 = () => {
 
   useEffect(() => {
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-      getNotificaciones()
+    
       showNotification(remoteMessage)
       
     
@@ -102,7 +102,7 @@ const App2 = () => {
     
   
     messaging().onMessage( async(msg) => {
-      getNotificaciones();
+     
       showNotification(msg)
      
 
