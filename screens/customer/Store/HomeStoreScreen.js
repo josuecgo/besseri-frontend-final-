@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { TouchableOpacity, View, StyleSheet, FlatList, ActivityIndicator, Dimensions, Animated, Pressable, Alert } from 'react-native';
+import React, { useContext, useEffect, useMemo,  useState } from 'react';
+import { TouchableOpacity, View, StyleSheet, FlatList, ActivityIndicator,  Alert } from 'react-native';
 
 
 import { Center, CheckIcon, HStack, Image, Select, Text, } from 'native-base';
@@ -32,9 +32,12 @@ const HomeStoreScreen = React.memo((props) => {
    loading, carCompatible,productos,isLoading,getProducts
   } = useContext(ProductContext);
   const [addresses, setAddresses] = useState(null)
-  const { carActive, address } = useSelector(state => state.user)
+  const { carActive, address } = useSelector(state => state.user);
+  
+  const direccionStore = useSelector(state => state.user.addresses);
   const [defaultAddress, setDefaultAddress] = useState(address?._id ?? null)
  
+
 
   const CategoryButton = ({ category, onPress }) => {
    
@@ -100,6 +103,16 @@ const HomeStoreScreen = React.memo((props) => {
       
 
       if (apiCall?.data?.data.length <= 0) {
+        if(direccionStore){
+          const data = {
+            _id:1,
+            ...direccionStore
+          }
+         
+          setAddresses([data]);
+          setDefaultAddress(1)
+          return
+        } 
         Alert.alert('No tienes ninguna direccion', 'Crea una direccion', [
           {
             text: 'Cancelar',
@@ -244,25 +257,7 @@ const HomeStoreScreen = React.memo((props) => {
                 refreshing={loading}
                 ListEmptyComponent={() => <Center><ListEmpty msg={'No hay productos para tu vehiculo'} /></Center>}
               />
-                // <FlatList
-                //   data={productos}
-                 
-                //   keyExtractor={item => item?._id}
-                //   renderItem={memorizedValue}
-                //   contentContainerStyle={{ marginTop: 15, paddingHorizontal: 5 }}
-                //   // numColumns={2}
-                //   // columnWrapperStyle={{ justifyContent: 'space-between' }}
-
-                //   ListFooterComponent={<View style={{ width: '100%', marginBottom: 10, height: deviceHeight * 20 / 100 }} />}
-                //   showsVerticalScrollIndicator={false}
-                //   onRefresh={() => {
-
-                //     getCategorias();
-
-                //   }}
-                //   refreshing={loading}
-                //   ListEmptyComponent={() => <Center><ListEmpty msg={'No hay productos para tu vehiculo'} /></Center>}
-                //  />
+              
 
               ) : (
                 <View

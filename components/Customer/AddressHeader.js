@@ -10,7 +10,12 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 export const AddressHeader = ({navigation}) => {
   const {top} = useSafeAreaInsets()
   return (
-    <View style={[styles.header,{top:top * 0.56}]} >
+    <View 
+    style={[
+      styles.header,
+      {
+        top:top * 0.56
+      }]} >
       <VStack>
         <HStack justifyContent={'space-between'} w={deviceWidth - 30} alignItems={'center'} >
          
@@ -34,9 +39,10 @@ export const AddressHeader = ({navigation}) => {
             
         </HStack>
         
-        <Box  zIndex={99} >
-          <Text style={styles.titulo} >Vive la experiencia</Text>
-          <Text style={styles.subtitulo} >desde tu casa u oficina</Text>
+        <Box>
+          <Text style={styles.subtitulo} >No salgas al trafico</Text>
+          <Text style={styles.titulo} >Paso 1. <Text style={[styles.titulo,{fontSize:adjust(17)}]} >Escribe donde requieres el servicio</Text></Text>
+          
         </Box>
       </VStack>
 
@@ -51,7 +57,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     // justifyContent: 'flex-end',
-    marginHorizontal: 15,
+    marginHorizontal: 10,
+    // maxHeight:280,
+    // backgroundColor:'red',
+    justifyContent:'center'
+    
     
   },
   logo: {
@@ -64,7 +74,7 @@ const styles = StyleSheet.create({
   },
   subtitulo: {
     color: Colors.white,
-    fontSize: adjust(20),
+    fontSize: adjust(22),
     fontWeight: 'bold'
   },
 })

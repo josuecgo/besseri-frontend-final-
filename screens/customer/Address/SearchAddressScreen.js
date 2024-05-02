@@ -16,6 +16,7 @@ import Colors from '../../../util/styles/colors'
 import CommonStyles from '../../../util/styles/styles'
 import { useSelector } from 'react-redux'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Box, Text, VStack } from 'native-base'
 
 export const SearchAddressScreen = (props) => {
   const mapStyle = [
@@ -204,7 +205,7 @@ export const SearchAddressScreen = (props) => {
       ]
     }
   ]
-  const {user} = useSelector(state => state.user)
+  const { user } = useSelector(state => state.user)
   const [term, setTerm] = useState('');
   const [addresses, setAddresses] = useState([]);
   const [direccion, setDireccion] = useState()
@@ -219,7 +220,7 @@ export const SearchAddressScreen = (props) => {
     show: false,
     msg: ''
   })
-  
+
   const centerPosition = async (loc) => {
 
     mapViewRef.current?.animateCamera({
@@ -318,104 +319,119 @@ export const SearchAddressScreen = (props) => {
     editData()
   }, [props])
 
-  
+
   return (
     <View style={styles.search} >
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+      <KeyboardAvoidingView style={{ flex: 1 }}>
      
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }} >
-        {
-          !user && (
-            <AddressHeader navigation={props.navigation} />
-          )
-        }
-     
-        <MapView
-          userInterfaceStyle={'dark'}
-          ref={(el) => mapViewRef.current = el}
-          style={styles.map}
-          initialRegion={{
-            latitude: location?.latitude || 19.485297844903283,
-            longitude: location?.longitude || -99.22777616792496,
-
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-          initialCamera={{
-            center: {
-              latitude: location?.latitude || 19.485297844903283,
-              longitude: location?.longitude || -99.22777616792496,
-            },
-            pitch: 0,
-            heading: 0,
-            altitude: 0,
-            zoom: 16,
-          }}
-          onPress={e => {
-            if (isLoading) {
-              showToaster('Espere un momento.')
-              return
-            }
-
-            setShow({
-              show: false,
-              msg: ''
-            })
-
-
-            let loc = {
-              latitude: e.nativeEvent.coordinate.latitude,
-              longitude: e.nativeEvent.coordinate.longitude,
-            }
-            // //console.log(e.nativeEvent);
-
-            onMovePositionMaker(loc)
-          }}
-          customMapStyle={mapStyle}
-        >
-          <Marker
-            coordinate={{
-              latitude: parseFloat(location?.latitude) || 19.485297844903283,
-              longitude: parseFloat(location?.longitude) || -99.22777616792496,
-            }}
-          />
-        </MapView>
-       
-      </ScrollView>
-      <View>
-          <InputMaps
-            placeholder='Direccion'
-            onDebounce={(value) => setTerm(value)}
-            addresses={addresses}
-            onChangeDirection={onChangeDirection}
-            textValue={textValue}
-            setTextValue={setTextValue}
-          />
-          {
-            show.view && (
-              <View style={styles.alertInfo} >
-                <AlertInfo show={show} setShow={setShow} />
-              </View>
-
+      
+      
+           
+  <ScrollView>
+        
+          <VStack space={1}>
+         
+ {
+            !user && (
+              <AddressHeader navigation={props.navigation} />
             )
           }
+        
+        
 
-        </View>
-      {
-        direccion?.formatted_address && (
-          <SelectAddress address={direccion} navigation={props.navigation} />
-        )
-      }
+          <InputMaps
+              placeholder='Direccion'
+              onDebounce={(value) => setTerm(value)}
+              addresses={addresses}
+              onChangeDirection={onChangeDirection}
+              textValue={textValue}
+              setTextValue={setTextValue}
+            />
+            {
+              show.view && (
+                <View style={styles.alertInfo} >
+                  <AlertInfo show={show} setShow={setShow} />
+                </View>
 
-      {
-        isLoading && (
-          <View style={styles.loading} >
-            <Loading />
-          </View>
-        )
-      }
+              )
+            }
+          <Box marginX={1} rounded={'md'} overflow={'hidden'} >
+            <MapView
+            userInterfaceStyle={'dark'}
+            ref={(el) => mapViewRef.current = el}
+            style={styles.map}
+            initialRegion={{
+              latitude: location?.latitude || 19.485297844903283,
+              longitude: location?.longitude || -99.22777616792496,
 
-</KeyboardAvoidingView>
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+            initialCamera={{
+              center: {
+                latitude: location?.latitude || 19.485297844903283,
+                longitude: location?.longitude || -99.22777616792496,
+              },
+              pitch: 0,
+              heading: 0,
+              altitude: 0,
+              zoom: 16,
+            }}
+            onPress={e => {
+              if (isLoading) {
+                showToaster('Espere un momento.')
+                return
+              }
+
+              setShow({
+                show: false,
+                msg: ''
+              })
+
+
+              let loc = {
+                latitude: e.nativeEvent.coordinate.latitude,
+                longitude: e.nativeEvent.coordinate.longitude,
+              }
+              // //console.log(e.nativeEvent);
+
+              onMovePositionMaker(loc)
+            }}
+            customMapStyle={mapStyle}
+          >
+            <Marker
+              coordinate={{
+                latitude: parseFloat(location?.latitude) || 19.485297844903283,
+                longitude: parseFloat(location?.longitude) || -99.22777616792496,
+              }}
+            />
+            </MapView>
+            <Text textAlign={'center'} fontSize={adjust(10)} >Selecciona la posicion en el mapa para corregir la dirección</Text>
+          </Box>
+          
+
+
+          {
+            direccion?.formatted_address && (
+              <SelectAddress address={direccion} navigation={props.navigation} />
+            )
+          }
+          
+          </VStack>
+      
+  </ScrollView>
+      
+
+
+        {
+          isLoading && (
+            <View style={styles.loading} >
+              <Loading />
+            </View>
+          )
+        }
+
+      </KeyboardAvoidingView>
     </View>
   )
 }
@@ -427,13 +443,14 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bgColor,
     flex: 1,
     ...CommonStyles.screenY,
-    paddingBottom:30
+    // paddingBottom:30
   },
- 
-  map: {
-    height: deviceHeight * 0.50,
 
-    flex:1
+  map: {
+    height: deviceHeight * 0.40,
+
+    flex: 1,
+    marginHorizontal: 10
   },
   alertInfo: {
 

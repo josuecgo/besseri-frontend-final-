@@ -1,6 +1,6 @@
 import { FlatList, StyleSheet, View } from 'react-native'
 import React, { useEffect } from 'react'
-import { Avatar, HStack, Text, Input, Box, Pressable, Divider } from 'native-base'
+import { Avatar, HStack, Text, Input, Box, Pressable, Divider, ScrollView } from 'native-base'
 
 import Colors from '../../util/styles/colors'
 
@@ -33,7 +33,7 @@ export const InputMaps = ({ placeholder, onDebounce, addresses, onChangeDirectio
 
       />
 
-      {
+      {/* {
         addresses && addresses.length > 0 && (
           <FlatList
             data={addresses}
@@ -41,14 +41,14 @@ export const InputMaps = ({ placeholder, onDebounce, addresses, onChangeDirectio
               <Box
                 pl={["0", "4"]} 
                 pr={["0", "5"]} 
-
+                mx={5}
               >
                 <Pressable
                   onPress={() => onChangeDirection(item)} rounded="8"
                 >
                   <HStack
                     alignItems={'center'}
-                    // justifyContent={'space-around'}
+                  
                     space={4}
                     w="90%"
                   >
@@ -66,7 +66,39 @@ export const InputMaps = ({ placeholder, onDebounce, addresses, onChangeDirectio
             ListFooterComponent={() => <View style={{ height: 80 }} ></View>}
           />
         )
-      }
+      } */}
+      <ScrollView>
+        {
+  addresses && addresses.length > 0 && addresses.map((item, index) => (
+    <Box
+      key={index} // Asegúrate de proporcionar una clave única para cada elemento
+      pl={["0", "4"]} 
+      pr={["0", "5"]} 
+      mx={5}
+    >
+      <Pressable
+        onPress={() => onChangeDirection(item)} rounded="8"
+      >
+        <HStack
+          alignItems={'center'}
+          space={4}
+          w="90%"
+        >
+          <Avatar size="25px"
+            source={require('../../assets/images/iconos/ubicacion.png')}
+            backgroundColor={Colors.white}
+          />
+          <Text width="100%" flexShrink={1} color={Colors.white} > {item?.formatted_address} </Text>
+        </HStack>
+      </Pressable>
+      <Divider />
+    </Box>
+  ))
+}
+      </ScrollView>
+
+
+
 
     </View>
   )
@@ -75,8 +107,13 @@ export const InputMaps = ({ placeholder, onDebounce, addresses, onChangeDirectio
 
 const styles = StyleSheet.create({
   inpSearch: {
-    backgroundColor:'transparent',
-    paddingVertical: 10,
+    // backgroundColor:'transparent',
+
+    paddingVertical: 5,
+   
+    justifyContent:'center',
+    alignItems:'center',
+    backgroundColor:Colors.bgColor
     // flex:1
 
   }

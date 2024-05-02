@@ -114,8 +114,9 @@ export const CreateCarScreen = (props) => {
 
       <ScrollView>
         <Box style={styles.contentTitle} >
-          <Text style={styles.titulo} >Déjanos encargarnos </Text>
-          <Text style={styles.subtitulo} >de tu auto</Text>
+        
+        <Text style={styles.titulo} >Paso 2. Indícanos marca, modelo y año</Text>
+          
         </Box>
 
         <Image
@@ -156,7 +157,7 @@ export const CreateCarScreen = (props) => {
          
 
 
-            <Heading size="xs" mb="3" color={Colors.white}>kilometraje</Heading>
+            {/* <Heading size="xs" mb="3" color={Colors.white}>kilometraje</Heading>
            
             <Input
               value={km.toString()}
@@ -164,7 +165,7 @@ export const CreateCarScreen = (props) => {
               onChangeText={handleTextChange}
               borderColor={Colors.lightBorder}
               color={Colors.white}
-            />
+            /> */}
         
 
           <Heading size="xs" my="3" color={Colors.white}>Dirección</Heading>

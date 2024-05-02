@@ -1,10 +1,10 @@
-import { View, StyleSheet, Platform, Linking } from 'react-native'
+import { View, StyleSheet, Platform, Linking, Alert } from 'react-native'
 import React from 'react'
 import Colors from '../../../util/styles/colors'
 import { MyCarActive } from '../../../components/Customer/MyCarActive'
 import { BackgroundCar } from '../../../components/Background/BackgroundCar'
 import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal'
-import {  CUSTOMER_HOME_SCREEN_ROUTES } from '../../../util/constants'
+import {  CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constants'
 import { logout } from '../../../util/local-storage/auth_service'
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector,useDispatch } from 'react-redux'
@@ -24,6 +24,26 @@ export const AccountScreen = (props) => {
   const loginLogout = async() => {
     
      if (user) {
+      Alert.alert(
+        'Cerrar Sesión',
+        '¿Estás seguro de que deseas cerrar sesión?',
+        [
+          {
+            text: 'Cancelar',
+            onPress: () => console.log('Cancelado'),
+            style: 'cancel',
+          },
+          { text: 'Sí', onPress: () => logout() },
+        ],
+        { cancelable: false }
+      );
+    }else{
+       props.navigation.navigate('AuthStack',{reload:true});
+    }
+  }
+
+  const logout = async() => {
+    try {
       await logout();
       await deleteNotificaciones()
       dispatch(deleteToUser())
@@ -32,22 +52,12 @@ export const AccountScreen = (props) => {
         PushNotificationIOS.setApplicationIconBadgeNumber(0);
       }
       props.navigation.replace('Splash',{reload:true});
-    }else{
-       props.navigation.replace('AuthStack',{reload:true});
+    } catch (error) {
+      showToaster('Ocurrió un error.')
     }
   }
 
-  const openWhatsApp = (phoneNumber) => {
-    const whatsappUrl = `whatsapp://send?phone=${phoneNumber}`;
-  
-    Linking.canOpenURL(whatsappUrl).then((supported) => {
-      if (supported) {
-        return Linking.openURL(whatsappUrl);
-      } else {
-        console.error("WhatsApp is not installed on the device");
-      }
-    }).catch((err) => console.error("An error occurred", err));
-  };
+
 
   const abrirWhatsApp = (numero) => {
     const enlaceWhatsApp = `https://wa.me/${numero}`;
@@ -66,6 +76,9 @@ export const AccountScreen = (props) => {
       })
       .catch((error) => console.log(error));
   };
+
+
+  
   
   return (
     <View style={styles.account} >
@@ -76,15 +89,23 @@ export const AccountScreen = (props) => {
      
 
       <View style={{marginBottom:20}} >
-        <BtnPrincipal
-        text={'Mi cuenta'}
-        onPress={() =>  props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.MY_ACCOUNT)}
-        />
 
-        <BtnPrincipal
-        text={'Historial'}
-        onPress={() =>  props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_PEDIDOS)}
-        />
+        {
+          user && (
+           <>
+            <BtnPrincipal
+            text={'Mi cuenta'}
+            onPress={() =>  props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.MY_ACCOUNT)}
+            />
+    
+            <BtnPrincipal
+            text={'Historial'}
+            onPress={() =>  props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_PEDIDOS)}
+            />
+           </>
+          )
+        }
+       
 
         
 

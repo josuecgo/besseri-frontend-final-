@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet,  View } from 'react-native'
 import React from 'react'
-import { Box, Button } from 'native-base'
+import { Box, Button,Text } from 'native-base'
 import * as UserInfoActions from '../../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 
 import { customer_api_urls } from '../../util/api/api_essentials'
@@ -13,7 +13,7 @@ import CommonStyles from '../../util/styles/styles';
 import { useInfoUser } from '../../hooks/useInfoUsers';
 
 export const SelectAddress = ({address,navigation}) => {
-  const {label,phone,latitude,longitude,address_components,formatted_address,place_id} = address;
+  const {latitude,longitude,address_components,formatted_address,place_id} = address;
   const dispatch = useDispatch()
   const {getUserInfo} = useInfoUser()
 
@@ -75,8 +75,8 @@ export const SelectAddress = ({address,navigation}) => {
       overflow="hidden" 
       borderColor="coolGray.200" 
       borderWidth="1" 
-      padding={2}
-      marginBottom={5}
+      padding={1}
+      marginBottom={2}
       _dark={{
       borderColor: "coolGray.600",
       backgroundColor: Colors.darker
@@ -85,7 +85,7 @@ export const SelectAddress = ({address,navigation}) => {
         backgroundColor: "gray.50"
       }}
       >
-        <Text style={{textAlign:'center',...CommonStyles.h3}} >{address.formatted_address}</Text>
+        <Text style={{...CommonStyles.h3}} >{address.formatted_address}</Text>
       </Box>
 
 
@@ -98,7 +98,7 @@ export const SelectAddress = ({address,navigation}) => {
         onPress={setUpLocation} 
         width={'100%' }
         >
-        Guardar direccion
+        Confirmar dirección
         </Button>
 
       </View>
