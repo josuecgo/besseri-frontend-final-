@@ -33,7 +33,7 @@ export const AccountScreen = (props) => {
             onPress: () => console.log('Cancelado'),
             style: 'cancel',
           },
-          { text: 'Sí', onPress: () => logout() },
+          { text: 'Sí', onPress: () => logoutOff() },
         ],
         { cancelable: false }
       );
@@ -42,16 +42,17 @@ export const AccountScreen = (props) => {
     }
   }
 
-  const logout = async() => {
+  const logoutOff = async() => {
     try {
-      await logout();
+      await logout()
       await deleteNotificaciones()
       dispatch(deleteToUser())
       dispatch(resetOrdersUser())
+
       if (Platform.OS === 'ios') {
         PushNotificationIOS.setApplicationIconBadgeNumber(0);
       }
-      props.navigation.replace('Splash',{reload:true});
+      props.navigation.replace('Splash',{logout:true});
     } catch (error) {
       showToaster('Ocurrió un error.')
     }

@@ -82,7 +82,7 @@ const App2 = () => {
  
   const {showNotification } = useContext(NotificationContext);
 
-  const { allChats}  = useChat()
+  
   
 
 
@@ -112,15 +112,6 @@ const App2 = () => {
     
   },[]);
 
-
-
-
-  // useEffect(() => {
-  //   allChats()
-  // }, [notificaciones])
-
-
-  
 
 
 

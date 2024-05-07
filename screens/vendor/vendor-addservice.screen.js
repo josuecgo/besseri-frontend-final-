@@ -65,6 +65,7 @@ export const CREDENTIAL_KEYS = {
   PRODUCT_MAKERS_IDS: 'MAKER IDS',
   OTP_CODE: 'Código de verificación',
   PASSWORD: 'Contraseña',
+  REPEAT_PASSWORD: 'Repetir Contraseña',
 };
 export const SCREEN_TYPES = {
   SERVICE_NAME: 'Nombre del Servicio',

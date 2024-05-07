@@ -25,13 +25,23 @@ export const LavadoMaps = (props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [stores, setStores] = useState(null)
   const [defaultAddress, setDefaultAddress] = useState(address)
-
+  const direccionStore = useSelector(state => state.user.addresses);
 
   const getAddresses = async () => {
     try {
 
       const userId = await getUserId();
       if (!userId) {
+        if(direccionStore){
+          const data = {
+            _id:1,
+            ...direccionStore
+          }
+     
+        setAddresses([data]);
+        setDefaultAddress(1)
+          return
+        }
         showAlertLogin(goLogin, goCancel)
         return
       }
@@ -103,7 +113,14 @@ export const LavadoMaps = (props) => {
     }
   }
 
-  const goService = (item) => {
+  const goService = async(item) => {
+
+    const userId = await getUserId();
+    if (!userId) {
+     
+      showAlertLogin(goLogin, goCancel)
+      return
+    }
 
     const findAddres = addresses.find(item => item?._id === defaultAddress);
 

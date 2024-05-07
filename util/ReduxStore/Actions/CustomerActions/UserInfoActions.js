@@ -22,7 +22,7 @@ export const addToUser = (item) => {
 }
 
 export const deleteToUser = () => {
-   
+  
   return({
       type:DELETE_TO_USER,
      

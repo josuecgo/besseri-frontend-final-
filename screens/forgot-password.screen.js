@@ -1,15 +1,11 @@
 import React, {useState} from 'react';
-import {View,StyleSheet} from 'react-native';
-import CustomSafeAreaViewComponent from '../components/custom-safe-area-view/custom-safe-area-view.component';
-import TopCircleComponent from '../components/top-circle/top-circle.component';
+import {View,StyleSheet, Alert} from 'react-native';
 import KEYBOARD_TYPES from '../util/keyboard-types';
 import InputFieldComponent from '../components/input-field/input-field.component';
 import Colors from '../util/styles/colors';
 import ButtonComponent from '../components/button/button.component';
 import {
   LOGIN_SIGNUP_FORGOT_ROUTES,
-  SCREEN_HORIZONTAL_MARGIN,
-  SCREEN_HORIZONTAL_MARGIN_FORM,
   showToaster,
 } from '../util/constants';
 import SideOptionComponent from '../components/top-circle/side-option.component';
@@ -20,6 +16,7 @@ import BottomContentComponent from '../components/bottom-content/bottom-content.
 import axios from 'axios';
 import { api_statuses, api_urls } from '../util/api/api_essentials';
 import LoaderComponent from '../components/Loader/Loader.component';
+import { Text } from 'native-base';
 
 const CREDENTIAL_KEYS = {
   EMAIL_ADDRESS: 'Correo electrónico',
@@ -73,39 +70,76 @@ const ForgotPasswordScreen = ({navigation}) => {
     }
   }
 
+
+  const sendCode = async (msj) => {
+
+
+    try {
+      setLoading(true);
+      const url = api_urls.regenerate_otp;
+      const body = {
+        email: email,
+        msj: msj
+      }
+
+      
+      const apiCall = await axios.post(url, body);
+
+      
+      if (apiCall.status == api_statuses.success && apiCall.data.success == true) {
+        setLoading(false);
+
+        navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.RECOVERY_OTP_PASSWORD, {
+          otp: apiCall.data.otp,
+          body: body
+        });
+      }
+    } catch (e) {
+     
+      console.log(e);
+      showToaster(e?.response?.data?.message)
+      setLoading(false);
+    }
+  }
+
+  const generateOtp = async () => {
+   
+
+    Alert.alert(
+      "Código de verificación",
+      "¿Porque medio desea recibir su código de verificación?",
+      [
+        {
+          text: "Correo",
+          onPress: () => sendCode('email')
+        },
+        {
+          text: "SMS",
+          onPress: () => sendCode('sms'),
+
+        },
+        // { text: "Whatsapp", onPress: () => sendCode('whatsapp') }
+      ]
+    );
+
+
+  }
+
   return (
-    <CustomSafeAreaViewComponent>
+    <View style={styles.body} >
       <LoaderComponent isVisible={loading}/>
-      <TopCircleComponent
-        textHeading="¿Olvidaste tu contraseña?"
-      />
+    
       <View
         style={[
           CommonStyles.flexCenter,
           styles.body
         ]}>
-          {codeSent ? (
-            <InputFieldComponent
-              icon={
-                <MaterialCommunityIcons
-                  color={Colors.dark}
-                  size={28}
-                  name="key-variant"
-                />
-              }
-              keyboardType={KEYBOARD_TYPES.NUMBER_PAD}
-              onChangeText={inputText => {
-                onChangeText(inputText, CREDENTIAL_KEYS.OTP_CODE);
-              }}
-              placeholderText={CREDENTIAL_KEYS.OTP_CODE}
-              value={userCredentials[CREDENTIAL_KEYS.OTP_CODE]}
-              secureTextEntry={false}
-            />
-          ) : (
+         
+          
             <InputFieldComponent
               icon={
                 <MaterialIcons
-                  color={Colors.dark}
+                  color={Colors.white}
                   size={28}
                   name="email"
                 />
@@ -118,35 +152,30 @@ const ForgotPasswordScreen = ({navigation}) => {
               value={email}
               secureTextEntry={false}
             />
-          )}
-          <View style={{justifyContent: 'flex-end'}}>
-            <SideOptionComponent
-              text="Iniciar sesión en su cuenta"
-              textAlign="right"
-              navigation={navigation}
-              keyToRoute={LOGIN_SIGNUP_FORGOT_ROUTES.LOGIN}
-            />
-          </View>
+         
+         
           <BottomContentComponent>
           <ButtonComponent
             colorB={Colors.terciarySolid}
             buttonText={codeSent ? 'Verificar' : 'ENVIAR CÓDIGO'}
-            handlePress={codeSent ? verifyOtp : handleForgotPassword}
+            handlePress={codeSent ? verifyOtp : generateOtp}
           />
         </BottomContentComponent>
       </View>
-    </CustomSafeAreaViewComponent>
+    </View>
   );
 };
 
 export default ForgotPasswordScreen;
+
+
+
 const styles = StyleSheet.create({
   body:{
-    marginTop: SCREEN_HORIZONTAL_MARGIN,
-    backgroundColor:Colors.white,
-    paddingVertical:50,
-    elevation:2,
-    marginHorizontal:SCREEN_HORIZONTAL_MARGIN_FORM
-    
+    ...CommonStyles.screenY,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
   }
 })

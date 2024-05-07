@@ -168,6 +168,15 @@ console.log(e,'erro loging');
               </Pressable>}
 
             />
+            <Center mt={1}>
+              <Pressable
+              onPress={() => navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.FORGOT_PASSWORD)}
+              >
+                <Text style={{ ...CommonStyles.h2 }} >¿Has olvidado la contraseña?</Text>
+              </Pressable>
+               
+            </Center>
+           
           </View>
 
         </ImageBackground>

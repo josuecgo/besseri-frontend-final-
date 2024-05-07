@@ -65,11 +65,11 @@ const InputFieldComponent = forwardRef(
               // CommonStyles.flexCenter,
               {
                 borderWidth: isFocused ? 1.5 : 1,
-                borderColor: isFocusedColor,
-                width: width ? width : deviceWidth * 0.78,
+               
+                // width: width ? width : deviceWidth * 0.78,
                 height: height ? height : 35,
-                borderRadius: borderRadius ? borderRadius : 2,
-                backgroundColor: isFocused ? '#e6e6ff' : Colors.white,
+                borderRadius: borderRadius ? borderRadius : 5,
+                backgroundColor: isFocused ? Colors.white : Colors.white,
               },
             ]}>
             <TextInput

@@ -27,7 +27,7 @@ import { addAddressToUser, addCarActiveToUser, addCarsToUser, addToUser } from '
 import { getUser } from '../util/local-storage/auth_service';
 
 
-const SplashScreen = ({navigation}) => {
+const SplashScreen = ({navigation,route}) => {
   const {width, height} = useWindowDimensions();
   const dispatch = useDispatch()
 
@@ -72,7 +72,7 @@ const SplashScreen = ({navigation}) => {
       dispatch(addToUser(user))
     }
     setTimeout(async() => {
-      if (user_id && userType) {
+      if (user_id && userType ) {
         
         
         if (userType == USER_ROLES.customer) {
@@ -83,7 +83,7 @@ const SplashScreen = ({navigation}) => {
       
       } else {
         // navigation.replace(MAIN_ROUTES.AUTH_STACK);
-        if (addressCustomer && carActive) {
+        if (addressCustomer && carActive ) {
          
           await dispatch(addAddressToUser(addressCustomer));
           await dispatch(addCarActiveToUser(carActive));

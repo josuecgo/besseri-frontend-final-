@@ -23,7 +23,8 @@ import LoaderComponent from '../../../components/Loader/Loader.component';
 export const MapServiceScreen = (props) => {
   const [addresses, setAddresses] = useState(null)
 
-  const { carActive, address } = useSelector(state => state.user)
+  const { carActive, address } = useSelector(state => state.user);
+  const direccionStore = useSelector(state => state.user.addresses);
   const { type,isHome } = props.route.params;
   const [stores, setStores] = useState(null)
   const [defaultAddress, setDefaultAddress] = useState(address)
@@ -35,6 +36,17 @@ export const MapServiceScreen = (props) => {
 
       const userId = await getUserId();
       if (!userId) {
+      
+      if(direccionStore){
+        const data = {
+          _id:1,
+          ...direccionStore
+        }
+   
+      setAddresses([data]);
+      setDefaultAddress(1)
+        return
+      }
         showAlertLogin(goLogin,goCancel)
         return
       }
@@ -99,7 +111,14 @@ export const MapServiceScreen = (props) => {
     }
   }
 
-  const goService = (item) => {
+  const goService = async(item) => {
+
+    const userId = await getUserId();
+    if (!userId) {
+    
+      showAlertLogin(goLogin, goCancel)
+      return
+    }
     const findAddres = addresses.find(item => item._id === defaultAddress)
     props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.DETAILS_SERVICES, {
       service: item,
@@ -112,6 +131,7 @@ export const MapServiceScreen = (props) => {
   const changeCar = async() => {
     const id = await getUserId();
     if (!id) {
+      
       showAlertLogin(goLogin,goCancel)
       return
     }

@@ -1,13 +1,13 @@
-export const env = 'prod';
+export const env = 'dev';
 
-export const base_url = env === 'prod' ? 'https://api.besseri.mx'  
-    : env === 'dev' ?  'http://192.168.1.34:3005' : 'http://192.168.100.4:3005';// export const base_url = false ? 'http://192.168.100.72:3005' : 'http://192.168.1.17:3005'
+export const base_url = env === 'prod' ? 'https://api.besseri.mx'  : env === 'dev' ?  'http://192.168.1.34:3005' : 'http://192.168.1.34:3005';// export const base_url = false ? 'http://192.168.100.72:3005' : 'http://192.168.1.17:3005'
 
 export const api_urls = {
     registration:`${base_url}/user/signup`,
     login:`${base_url}/user/login`,
     delete_user:`${base_url}/user/delete-account`,
     generate_otp:`${base_url}/user/generate-otp`,
+    regenerate_otp:`${base_url}/user/regenerate-otp`,
     get_order_details:`${base_url}/orders/get-order-details`,
     forget_password:`${base_url}/forgot-password/generatecode`,
     reset_password:`${base_url}/forgot-password/resetpassword`,
@@ -137,6 +137,7 @@ export const customer_api_urls = {
     close_travel:`${base_url}/fuel/close-travel`,
     close_consumption:`${base_url}/fuel/close-consumption`,
     get_consumption:`${base_url}/fuel/consumption`,
+    changepassword:`${base_url}/user/changepassword`
 }
 export const rider_api_urls = {
     get_details:`${base_url}/rider/get-riderinfo`,

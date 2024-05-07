@@ -320,6 +320,8 @@ export const SearchAddressScreen = (props) => {
   }, [props])
 
 
+  
+
   return (
     <View style={styles.search} >
       <KeyboardAvoidingView style={{ flex: 1 }}>

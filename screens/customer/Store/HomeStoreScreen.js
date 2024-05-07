@@ -35,6 +35,7 @@ const HomeStoreScreen = React.memo((props) => {
   const { carActive, address } = useSelector(state => state.user);
   
   const direccionStore = useSelector(state => state.user.addresses);
+  
   const [defaultAddress, setDefaultAddress] = useState(address?._id ?? null)
  
 
@@ -100,7 +101,7 @@ const HomeStoreScreen = React.memo((props) => {
     
       const apiCall = await axios.get(`${customer_api_urls.get_addresses}/${userId}`);
 
-      
+     
 
       if (apiCall?.data?.data.length <= 0) {
         if(direccionStore){
@@ -113,6 +114,7 @@ const HomeStoreScreen = React.memo((props) => {
           setDefaultAddress(1)
           return
         } 
+
         Alert.alert('No tienes ninguna direccion', 'Crea una direccion', [
           {
             text: 'Cancelar',

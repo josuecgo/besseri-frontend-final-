@@ -1,30 +1,26 @@
-import React, { useEffect, useState, useRef, useContext } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet, Platform, ScrollView, Image, useWindowDimensions, Linking, Modal } from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import React, { useEffect, useState, useRef } from 'react';
+import { Text, TouchableOpacity, View, StyleSheet, Platform, ScrollView, Image, useWindowDimensions } from 'react-native';
+
 import axios from 'axios';
 
 import Colors from '../../../util/styles/colors';
 import CommonStyles from '../../../util/styles/styles';
 import ButtonComponent from '../../../components/button/button.component';
-import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constants';
+import { CUSTOMER_HOME_SCREEN_ROUTES, MAIN_ROUTES, showToaster } from '../../../util/constants';
 import { useRoute } from '@react-navigation/native';
-import { api_statuses, base_url, customer_api_urls } from '../../../util/api/api_essentials';
+import {  base_url, customer_api_urls } from '../../../util/api/api_essentials';
 import { adjust, deviceHeight, deviceWidth } from '../../../util/Dimentions';
-import { HeaderBackground } from '../../../components/Background/HeaderBackground';
-import { ThinlineSeparator } from '../../../components/CommonComponents';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { moneda } from '../../../util/Moneda';
 import { useCart } from '../../../hooks/useCart'
 import { ProductImg } from '../../../components/image-carousel/ProductImg';
-import { ChatContext } from '../../../util/context/Chat/ChatContext';
 import { getUserId } from '../../../util/local-storage/auth_service';
 import { CardFeedback } from '../../../components/Feedback/CardFeedback';
 import { Box, Button, Card, Center, HStack, VStack } from 'native-base';
-import { decreaseQuantity, increaseQuantity } from '../../../util/ReduxStore/Actions/CustomerActions/CartActions';
-import { useDispatch } from 'react-redux';
-import { BtnCantidad } from '../../../components/button/BtnCantidad';
+
 import ModalChildren from '../../../components/ModalChildren';
 import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal';
+import { Alert } from 'react-native';
 
 
 
@@ -50,8 +46,21 @@ const ProductDetailScreen = (props) => {
 
   const handleChange = async () => {
     try {
+      const userId = await getUserId()
       if (isDisable) {
         return
+      }
+
+      if (!userId) {
+        Alert.alert('No has iniciado sesión', 'Inicia sesión o regístrate', [
+          {
+            text: 'Cancelar',
+            onPress: () => props.navigation.goBack(),
+            style: 'cancel',
+          },
+          { text: 'Crear', onPress: () => props.navigation.navigate(MAIN_ROUTES.AUTH_STACK) },
+        ]);
+        return 
       }
       setIsDisable(true)
  

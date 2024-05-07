@@ -14,6 +14,7 @@ import { HomePageScreen } from './HomePageScreen';
 import SignUpScreenCustomer from './sign-up.screen-customer';
 import PrivacyPolicy from './privacypolicy.screen';
 import { HeaderTitle } from '../components/Customer/HeaderTitle';
+import RecoveryPasswordScreen from './recovery-password.screen';
 
 
 const Stack = createStackNavigator();
@@ -45,6 +46,35 @@ export const LSFS = ({route}) => {
         }}
       />
 
+    <Stack.Screen
+        name={LOGIN_SIGNUP_FORGOT_ROUTES.FORGOT_PASSWORD}
+        component={ForgotPasswordScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props} 
+            titulo="Recuperar contraseña" 
+            nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+      
+      <Stack.Screen
+        name={LOGIN_SIGNUP_FORGOT_ROUTES.RECOVERY_OTP_PASSWORD}
+        component={RecoveryPasswordScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props} 
+            titulo="Ingresar código" 
+            nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+   
+
       <Stack.Screen
         name={LOGIN_SIGNUP_FORGOT_ROUTES.CUSTOMER_SIGN_UP}
         component={CustomerSignUpScreen}
@@ -69,10 +99,7 @@ export const LSFS = ({route}) => {
         name={LOGIN_SIGNUP_FORGOT_ROUTES.SIGN_UP}
         component={SignUpScreen}
       />
-      <Stack.Screen
-        name={LOGIN_SIGNUP_FORGOT_ROUTES.FORGOT_PASSWORD}
-        component={ForgotPasswordScreen}
-      />
+      
       <Stack.Screen
         name={LOGIN_SIGNUP_FORGOT_ROUTES.VENDOR_SIGN_UP}
         component={VendorSsSignUpScreen}
