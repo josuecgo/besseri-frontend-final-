@@ -252,11 +252,11 @@ const CustomerSignUpScreen = ({ navigation }) => {
               <InputTxt
                 label={'Repetir Contraseña'}
                 onChangeText={inputText => {
-                  onChangeText(inputText, CREDENTIAL_KEYS.PASSWORDCONFIRM);
+                  onChangeText(inputText, CREDENTIAL_KEYS.CONFIRMPASSWORD);
                 }}
-                placeholderText={CREDENTIAL_KEYS.PASSWORDCONFIRM}
+                placeholderText={CREDENTIAL_KEYS.CONFIRMPASSWORD}
                 secureTextEntry={showPass}
-                value={userCredentials[CREDENTIAL_KEYS.PASSWORDCONFIRM]}
+                value={userCredentials[CREDENTIAL_KEYS.CONFIRMPASSWORD]}
               // ref={passwordRef}
               />
               <InputTxt
