@@ -109,7 +109,7 @@ const HomeStoreScreen = React.memo((props) => {
             _id:1,
             ...direccionStore
           }
-         
+     
           setAddresses([data]);
           setDefaultAddress(1)
           return
@@ -152,7 +152,10 @@ const HomeStoreScreen = React.memo((props) => {
         if (isMounted) {
         
           if (!addresses) return
-          const findAddres =  addresses.find(item => item?._id === defaultAddress  ) 
+          const userId = await getUserId();
+          const findAddres =  userId ? addresses.find(item => item?._id === defaultAddress  ) : addresses[0] ;
+          
+       
           await getProducts(activeCategory, carActive,findAddres);
         }
       } catch (error) {
@@ -170,7 +173,7 @@ const HomeStoreScreen = React.memo((props) => {
   }, [activeCategory, carActive,defaultAddress,addresses]);
   
  
-
+  
   const handleAddress = (address) => {
 
     setDefaultAddress(address)
