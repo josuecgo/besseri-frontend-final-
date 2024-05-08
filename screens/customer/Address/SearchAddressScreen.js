@@ -331,7 +331,7 @@ export const SearchAddressScreen = (props) => {
            
   <ScrollView>
         
-          <VStack space={1}>
+          <VStack space={6}>
          
  {
             !user && (

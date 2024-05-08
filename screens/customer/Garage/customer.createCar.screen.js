@@ -115,7 +115,7 @@ export const CreateCarScreen = (props) => {
       <ScrollView>
         <Box style={styles.contentTitle} >
         
-        <Text style={styles.titulo} >Paso 2. Indícanos marca, modelo y año</Text>
+        <Text style={styles.titulo} >Paso 2. Indícanos marca, modelo y año de tu auto</Text>
           
         </Box>
 
@@ -217,7 +217,8 @@ const styles = StyleSheet.create({
   titulo: {
     color: Colors.white,
     fontSize: adjust(17),
-    marginBottom:10
+    marginBottom:10,
+    
   },
   subtitulo: {
     color: Colors.white,
@@ -226,7 +227,7 @@ const styles = StyleSheet.create({
   },
   contentTitle: {
     marginHorizontal: 10,
-    marginVertical: 15
+    marginVertical: 10
   },
   logo: {
     height: deviceWidth * 0.40,
