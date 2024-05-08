@@ -41,7 +41,11 @@ export const AddressHeader = ({navigation}) => {
         
         <Box>
           <Text style={styles.subtitulo} >No salgas al trafico</Text>
-          <Text style={styles.titulo} >Paso 1. <Text style={[styles.titulo,{fontSize:adjust(17)}]} >Escribe donde requieres el servicio</Text></Text>
+          <Text style={styles.titulo} >Paso 1. 
+            <Text style={[styles.titulo,{fontSize:adjust(17)}]} >
+              Escribe donde requieres el servicio
+            </Text>
+          </Text>
           
         </Box>
       </VStack>
@@ -60,7 +64,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     // maxHeight:280,
     // backgroundColor:'red',
-    justifyContent:'center'
+    justifyContent:'center',
+    marginBottom:10
     
     
   },

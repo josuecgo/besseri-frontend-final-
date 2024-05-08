@@ -37,7 +37,7 @@ const CREDENTIAL_KEYS = {
   EMAIL_ADDRESS: 'Email',
   PHONE_NUMBER: 'Número de teléfono',
   PASSWORD: 'Contraseña',
-  PASSWORDCONFIRM: 'Confirmar contraseña'
+  CONFIRMPASSWORD: 'Confirmar contraseña'
 };
 
 const CustomerSignUpScreen = ({ navigation }) => {
@@ -58,6 +58,7 @@ const CustomerSignUpScreen = ({ navigation }) => {
 
 
   const onChangeText = (inputText, key) => {
+    
     setUserCredentials({
       ...userCredentials,
       [key]: inputText,
@@ -101,11 +102,14 @@ const CustomerSignUpScreen = ({ navigation }) => {
       setShowLoader(false);
     }
   }
-
   const generateOtp = async () => {
     let validPhone = userCredentials[CREDENTIAL_KEYS.PHONE_NUMBER].length > 9
     // let validName = userCredentials[CREDENTIAL_KEYS.FULL_NAME].length > 0 && userCredentials[CREDENTIAL_KEYS.LASTNAME].length > 0
-    let valid = comparaText(userCredentials[CREDENTIAL_KEYS.CONFIRMPASSWORD], userCredentials[CREDENTIAL_KEYS.PASSWORD]) && userCredentials[CREDENTIAL_KEYS.PASSWORD].length > 0;
+    let valid = 
+    comparaText(userCredentials[CREDENTIAL_KEYS.CONFIRMPASSWORD], 
+      userCredentials[CREDENTIAL_KEYS.PASSWORD]) && 
+      userCredentials[CREDENTIAL_KEYS.PASSWORD].length > 0;
+
 
 
     if (!validPhone) {

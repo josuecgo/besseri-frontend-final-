@@ -127,7 +127,7 @@ export const CreateCarScreen = (props) => {
         />
 
         <Box marginX={4} marginTop={10} >
-          <Heading size="xs" mb="3" color={Colors.white}>Marca de vehículo</Heading>
+          <Heading size="xs" mb="3" color={Colors.white}>Marca de tu auto</Heading>
           <SelectDropDownBtn
             items={marcas}
             onChange={handleMarca}
@@ -216,7 +216,8 @@ const styles = StyleSheet.create({
   },
   titulo: {
     color: Colors.white,
-    fontSize: adjust(18)
+    fontSize: adjust(17),
+    marginBottom:10
   },
   subtitulo: {
     color: Colors.white,
@@ -228,7 +229,7 @@ const styles = StyleSheet.create({
     marginVertical: 15
   },
   logo: {
-    height: deviceWidth * 0.50,
+    height: deviceWidth * 0.40,
     width: deviceWidth
   },
 })
