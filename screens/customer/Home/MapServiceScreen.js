@@ -40,7 +40,7 @@ export const MapServiceScreen = (props) => {
       if(direccionStore){
         const data = {
           _id:1,
-          ...direccionStore
+          ...direccionStore[0]
         }
    
       setAddresses([data]);
@@ -96,8 +96,10 @@ export const MapServiceScreen = (props) => {
       setLoading(true)
       
       if (!addresses) return
-      const findAddres =  addresses.find(item => item?._id === defaultAddress  ) 
-
+      const userId = await getUserId();
+      const findAddres =  userId ? addresses.find(item => item?._id === defaultAddress  ) : addresses[0] ;
+      
+    
       const apiCall = await axios.post(`${customer_api_urls.get_stores_type_services}/${type}`, {
          addresses:findAddres, carActive,isHome 
         });

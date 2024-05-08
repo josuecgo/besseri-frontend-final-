@@ -33,12 +33,15 @@ export const LavadoMaps = (props) => {
       const userId = await getUserId();
       if (!userId) {
         if(direccionStore){
-          const data = {
-            _id:1,
-            ...direccionStore
-          }
-     
-        setAddresses([data]);
+       
+
+          const arreglo = [
+            {
+              _id:1,
+              ...direccionStore[0]
+            }
+          ];
+        setAddresses(arreglo);
         setDefaultAddress(1)
           return
         }
@@ -68,7 +71,7 @@ export const LavadoMaps = (props) => {
       }
 
     } catch (e) {
-      
+      console.log(e);
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 2')
     }
   }
@@ -87,13 +90,14 @@ export const LavadoMaps = (props) => {
     }
   }
 
-  
+  // console.log(addresses[0]);
   const getStoreService = async () => {
     try {
 
       if (!addresses) return
       setIsLoading(true)
-      const findAddres =  addresses.find(item => item?._id === defaultAddress  );
+      const userId = await getUserId();
+      const findAddres =  userId ? addresses.find(item => item?._id === defaultAddress  ) : addresses[0] ;
       
       const apiCall = await axios.post(`${customer_api_urls.get_carwash}`,
         {
@@ -107,12 +111,12 @@ export const LavadoMaps = (props) => {
       setStores(apiCall?.data?.data);
       setIsLoading(false)
     } catch (error) {
-      console.log(error);
+   
       setIsLoading(false)
       showToaster('Error con el servidor')
     }
   }
-
+  
   const goService = async(item) => {
 
     const userId = await getUserId();
@@ -121,7 +125,7 @@ export const LavadoMaps = (props) => {
       showAlertLogin(goLogin, goCancel)
       return
     }
-
+   
     const findAddres = addresses.find(item => item?._id === defaultAddress);
 
     props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.DETAILS_SERVICES, {
