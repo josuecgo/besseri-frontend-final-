@@ -29,46 +29,11 @@ const ForgotPasswordScreen = ({navigation}) => {
     [CREDENTIAL_KEYS.EMAIL_ADDRESS]: '',
     [CREDENTIAL_KEYS.OTP_CODE]: '',
   });
-  const [recievedOtp,setRecievedOtp] = useState('');
-  const [codeSent, setCodeSent] = useState(false);
+
   const [email,setEmail] = useState('')
 
-  const onChangeText = (inputText, key) => {
-    setUserCredentials({
-      [key]: inputText,
-    });
-  };
+ 
 
-  const handleForgotPassword = async() => {
-    try {
-      setLoading(true);
-     const apiCall = await axios.post(api_urls.forget_password,{
-       email:email
-     });
-     setLoading(false);
-     if(apiCall.status == api_statuses.success && apiCall?.data?.OTP) {
-     setRecievedOtp(apiCall?.data?.OTP)
-      setCodeSent(true);
-     } else {
-       showToaster('Algo salió mal')
-     }
-    } catch(e) {
-      setLoading(false);
-      showToaster(e?.response?.data?.message ?  e?.response?.data?.message :'Algo salió mal')
-    }
-  };
-  const verifyOtp = () => {
-    if(userCredentials[CREDENTIAL_KEYS.OTP_CODE] == recievedOtp ) {
-    
-      navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.CHANGE_PASSWORD,{
-        email:email,
-        isResetPassword:true
-      });
-    } else {
-      showToaster('Invalid Otp');
-      return
-    }
-  }
 
 
   const sendCode = async (msj) => {
@@ -157,8 +122,8 @@ const ForgotPasswordScreen = ({navigation}) => {
           <BottomContentComponent>
           <ButtonComponent
             colorB={Colors.terciarySolid}
-            buttonText={codeSent ? 'Verificar' : 'ENVIAR CÓDIGO'}
-            handlePress={codeSent ? verifyOtp : generateOtp}
+            buttonText={ 'ENVIAR CÓDIGO'}
+            handlePress={generateOtp}
           />
         </BottomContentComponent>
       </View>

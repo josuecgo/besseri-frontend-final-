@@ -105,7 +105,7 @@ const CustomerSignUpScreen = ({ navigation }) => {
   const generateOtp = async () => {
     let validPhone = userCredentials[CREDENTIAL_KEYS.PHONE_NUMBER].length > 9
     // let validName = userCredentials[CREDENTIAL_KEYS.FULL_NAME].length > 0 && userCredentials[CREDENTIAL_KEYS.LASTNAME].length > 0
-    // let valid = comparaText(userCredentials[CREDENTIAL_KEYS.CONFIRMPASSWORD], userCredentials[CREDENTIAL_KEYS.PASSWORD]) && userCredentials[CREDENTIAL_KEYS.PASSWORD].length > 0;
+    let valid = comparaText(userCredentials[CREDENTIAL_KEYS.CONFIRMPASSWORD], userCredentials[CREDENTIAL_KEYS.PASSWORD]) && userCredentials[CREDENTIAL_KEYS.PASSWORD].length > 0;
 
 
     if (!validPhone) {
@@ -113,7 +113,7 @@ const CustomerSignUpScreen = ({ navigation }) => {
       return
     }
 
-    if (true) {
+    if (valid) {
       if (isSelected) {
         Alert.alert(
           "Código de verificación",
@@ -242,6 +242,17 @@ const CustomerSignUpScreen = ({ navigation }) => {
                 placeholderText={CREDENTIAL_KEYS.PASSWORD}
                 secureTextEntry={showPass}
                 value={userCredentials[CREDENTIAL_KEYS.PASSWORD]}
+              // ref={passwordRef}
+              />
+
+              <InputTxt
+                label={'Repetir Contraseña'}
+                onChangeText={inputText => {
+                  onChangeText(inputText, CREDENTIAL_KEYS.PASSWORDCONFIRM);
+                }}
+                placeholderText={CREDENTIAL_KEYS.PASSWORDCONFIRM}
+                secureTextEntry={showPass}
+                value={userCredentials[CREDENTIAL_KEYS.PASSWORDCONFIRM]}
               // ref={passwordRef}
               />
               <InputTxt

@@ -10,6 +10,7 @@ import { MyCarActive } from '../../../components/Customer/MyCarActive'
 
 import { useInfoUser } from '../../../hooks/useInfoUsers'
 import LoaderComponent from '../../../components/Loader/Loader.component';
+import { useIsFocused } from '@react-navigation/native';
 
 
 
@@ -19,8 +20,9 @@ export const HomeScreen = ({ navigation }) => {
 
   const { getUserInfo } = useInfoUser();
   const { carActive } = useSelector(state => state.user);
+  const isFocused  = useIsFocused()
 
-
+  
 
   useEffect(() => {
     getUserInfo()
