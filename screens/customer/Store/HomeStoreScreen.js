@@ -107,11 +107,11 @@ const HomeStoreScreen = React.memo((props) => {
         if(direccionStore){
           const data = {
             _id:1,
-            ...direccionStore
+            ...direccionStore[0]
           }
      
-          setAddresses([data]);
-          setDefaultAddress(1)
+        setAddresses([data]);
+        setDefaultAddress(1)
           return
         } 
 
@@ -141,6 +141,9 @@ const HomeStoreScreen = React.memo((props) => {
   useEffect(() => {
      getAddresses();
   }, [])
+
+
+
   useEffect(() => {
     let isMounted = true; // Variable para rastrear si el componente está montado
   
