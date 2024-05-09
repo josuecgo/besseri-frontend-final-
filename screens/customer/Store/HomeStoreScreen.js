@@ -141,7 +141,6 @@ const HomeStoreScreen = React.memo((props) => {
   useEffect(() => {
      getAddresses();
   }, [])
-  
   useEffect(() => {
     let isMounted = true; // Variable para rastrear si el componente está montado
   
@@ -152,10 +151,9 @@ const HomeStoreScreen = React.memo((props) => {
         if (isMounted) {
         
           if (!addresses) return
-          const userId = await getUserId();
-          const findAddres =  userId ? addresses.find(item => item?._id === defaultAddress  ) : addresses[0] ;
+          const findAddres =   addresses.find(item => item?._id === defaultAddress  );
           
-       
+          
           await getProducts(activeCategory, carActive,findAddres);
         }
       } catch (error) {
