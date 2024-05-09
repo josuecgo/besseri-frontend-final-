@@ -203,68 +203,142 @@ export const useFuel = (  ) => {
         return consumoPromedio;
     }
 
-    const calcularTotalKm = (response) => {
-       try {
-        if (response.length <= 0) {
-            dispatch(addKmRecorrido({
-                kmPerByDay:null,
-                totalKmTraveled:null,
-                daysPassed:null,
-                fuelTotal:null,
-                amountTotal:null
-            }));
-            return
-        }
-        const ultimoRegistro = response[0];
-        const count = response.length
-        const primerRegistro = response[count - 1];
-        const actual = ultimoRegistro?.km_actual ?? ultimoRegistro?.km_anterior;
-        const totalKmRecorridos = actual - primerRegistro?.km_anterior;
+    // const calcularTotalKm = (response) => {
+    //    try {
+    //     if (response.length <= 0) {
+    //         dispatch(addKmRecorrido({
+    //             kmPerByDay:null,
+    //             totalKmTraveled:null,
+    //             daysPassed:null,
+    //             fuelTotal:null,
+    //             amountTotal:null
+    //         }));
+    //         return
+    //     }
+    //     console.log(response);
+    //     const ultimoRegistro = response[0];
+       
+    //     const count = response.length
+    //     const primerRegistro = response[count - 1];
+       
+    //     const actual = ultimoRegistro?.km_actual ?? ultimoRegistro?.km_anterior;
+    //     const totalKmRecorridos = actual - primerRegistro?.km_anterior;
 
-        const fechaInicialDate = new Date(primerRegistro.createdAt);
-        const fechaFinalDate = new Date(ultimoRegistro.createdAt);
+    //     const fechaInicialDate = new Date(primerRegistro.createdAt);
+    //     const fechaFinalDate = new Date(ultimoRegistro.createdAt);
       
-        const diferenciaMilisegundos = fechaFinalDate - fechaInicialDate;
+    //     const diferenciaMilisegundos = fechaFinalDate - fechaInicialDate;
       
-        const diasTranscurridos = Math.round(diferenciaMilisegundos / (1000 * 60 * 60 * 24)) ;
+    //     const diasTranscurridos = Math.round(diferenciaMilisegundos / (1000 * 60 * 60 * 24)) ;
        
 
-        const kmPorDia = diasTranscurridos <= 0 ? totalKmRecorridos :  totalKmRecorridos / diasTranscurridos;
+    //     const kmPorDia = diasTranscurridos <= 0 ? totalKmRecorridos :  totalKmRecorridos / diasTranscurridos;
 
 
      
         
        
 
-        let sumaAmounts = 0;
-        let sumaLiters = 0;
+    //     let sumaAmounts = 0;
+    //     let sumaLiters = 0;
 
-        response.forEach(registro => {
-            if (registro.amount !== null && !isNaN(registro.amount)) {
-                sumaAmounts += registro.amount;
-            }
-            if (registro.liters !== null && !isNaN(registro.liters)) {
-                sumaLiters += registro.liters;
-            }
-        });
-
-
-        dispatch(addKmRecorrido({
-            kmPerByDay:kmPorDia,
-            totalKmTraveled:totalKmRecorridos,
-            daysPassed:diasTranscurridos,
-            fuelTotal:sumaLiters,
-            amountTotal:sumaAmounts
-        }));
+    //     response.forEach(registro => {
+    //         if (registro.amount !== null && !isNaN(registro.amount)) {
+    //             sumaAmounts += registro.amount;
+    //         }
+    //         if (registro.liters !== null && !isNaN(registro.liters)) {
+    //             sumaLiters += registro.liters;
+    //         }
+    //     });
 
 
-       } catch (error) {
-        console.log(error);
-        setLoading(false)
-       }
+    //     dispatch(addKmRecorrido({
+    //         kmPerByDay: response.length > 1 ? kmPorDia : 0,
+    //         totalKmTraveled:response.length > 1 ? totalKmRecorridos : 0,
+    //         daysPassed:diasTranscurridos,
+    //         fuelTotal:sumaLiters,
+    //         amountTotal:sumaAmounts
+    //     }));
+
+
+    //    } catch (error) {
+    //     console.log(error);
+    //     setLoading(false)
+    //    }
             
-    }
+    // }
 
+    
+    const calcularTotalKm = (response) => {
+        try {
+           
+            if (response.length <= 0) {
+                dispatch(addKmRecorrido({
+                    kmPerByDay: null,
+                    totalKmTraveled: null,
+                    daysPassed: null,
+                    fuelTotal: null,
+                    amountTotal: null
+                }));
+                return;
+            }
+    
+            const registrosConKilometraje = response.filter(registro => registro.km_anterior !== null && registro.km_actual !== null);
+    
+            if (registrosConKilometraje.length <= 0) {
+                dispatch(addKmRecorrido({
+                    kmPerByDay: 0,
+                    totalKmTraveled: 0,
+                    daysPassed: null,
+                    fuelTotal: null,
+                    amountTotal: null
+                }));
+                return;
+            }
+    
+            const primerRegistro = registrosConKilometraje[registrosConKilometraje.length - 1];
+            const ultimoRegistro = registrosConKilometraje[0];
+    
+            const totalKmRecorridos = ultimoRegistro.km_actual - primerRegistro.km_anterior;
+    
+            const fechaInicialDate = new Date(primerRegistro.createdAt);
+            const fechaFinalDate = new Date(ultimoRegistro.createdAt);
+          
+            const diferenciaMilisegundos = fechaFinalDate - fechaInicialDate;
+          
+            const diasTranscurridos = Math.round(diferenciaMilisegundos / (1000 * 60 * 60 * 24));
+    
+            const kmPorDia = diasTranscurridos <= 0 ? 0 : totalKmRecorridos / diasTranscurridos;
+    
+            let sumaAmounts = 0;
+            let sumaLiters = 0;
+    
+            response.forEach(registro => {
+                if (registro.amount !== null && !isNaN(registro.amount)) {
+                    sumaAmounts += registro.amount;
+                }
+                if (registro.liters !== null && !isNaN(registro.liters)) {
+                    sumaLiters += registro.liters;
+                }
+            });
+    
+            dispatch(addKmRecorrido({
+                kmPerByDay: kmPorDia,
+                totalKmTraveled: totalKmRecorridos,
+                daysPassed: diasTranscurridos,
+                fuelTotal: sumaLiters, // Utilizamos la suma de litros de todos los registros
+                amountTotal: sumaAmounts
+            }));
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+        }
+    }
+    
+    
+    
+    
+    
     return {
         getDrivers,
         loading, 

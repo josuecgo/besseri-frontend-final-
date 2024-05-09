@@ -141,7 +141,7 @@ const fetchPaymentSheetParams = async (walletId) => {
         intentId:response?.data?.intentId
     }
 
-    console.log({apiResponse});
+   
     setStripeEssentials(apiResponse)
     setIsVisible(false);
     return {

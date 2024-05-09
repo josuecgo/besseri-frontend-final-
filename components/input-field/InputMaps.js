@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, View } from 'react-native'
+import { FlatList, Platform, StyleSheet, View } from 'react-native'
 import React, { useEffect } from 'react'
 import { Avatar, HStack, Text, Input, Box, Pressable, Divider, ScrollView } from 'native-base'
 
@@ -30,7 +30,7 @@ export const InputMaps = ({ placeholder, onDebounce, addresses, onChangeDirectio
         onChangeText={debounce}
         color={Colors.white}
         value={textValue}
-
+        size={Platform.OS === 'ios' ? '2xl' : 'md'}
       />
 
       {/* {

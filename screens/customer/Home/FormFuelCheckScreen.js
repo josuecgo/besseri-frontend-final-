@@ -25,7 +25,7 @@ export const FormFuelCheckScreen = ({ navigation, route }) => {
     const [amount, setAmount] = useState(data?.amount  ? data.amount.toString() : '');
     const [gasolinePrice, setGasolinePrice] = useState(data?.gasolinePrice ?data?.gasolinePrice.toString() : '' )
 
-
+    
 
     const { getDrivers, loading, createFuelConsumption, createFuelConsumptionInitial, createTravel, closeTravel } = useFuel()
     const [isOpenModal, setIsOpenModal] = useState(false)

@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native'
 import React from 'react'
 import { useSelector } from 'react-redux';
-import { Box, Center, Divider, Flex, HStack, Heading, Text, VStack } from 'native-base';
+import { Box, Center, Divider, Flex,  Text, VStack } from 'native-base';
 import { formatNumberWithCommas, moneda } from '../../util/Moneda';
 import Colors from '../../util/styles/colors';
 import { adjust } from '../../util/Dimentions';
