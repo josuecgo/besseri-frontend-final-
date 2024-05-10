@@ -136,6 +136,7 @@ const HomeStoreScreen = React.memo((props) => {
     } catch (e) {
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 2')
     }
+    
   }
 
   useEffect(() => {

@@ -197,13 +197,8 @@ export const CardFuel = ({ item, navigation }) => {
 
 
 const ModalGas = ({ data, showModal, setShowModal, gasConsumption }) => {
-    const styleIcon = {
-        size: 20,
-        color: Colors.white,
+   
 
-    }
-
-    console.log(data.fuel_level);
     return (
         <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="lg">
             <Modal.Content maxWidth="350">
