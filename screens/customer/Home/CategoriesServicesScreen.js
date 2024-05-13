@@ -24,15 +24,17 @@ export const CategoriesServicesScreen = ({navigation,route}) => {
     const getCategories = async () => {
         try {
             setIsLoading(true)
-           
-            const apiCall = await axios.get(customer_api_urls.get_categories_services)
-            
-            setCategories(apiCall?.data?.data)
+            const url = `${customer_api_urls.active_categories_services}?is_home=${isHome}`;
+
+            const apiCall = await axios.get(url)
+            setCategories(apiCall?.data?.data.categories)
             setIsLoading(false)
         } catch (error) {
-           
+            
             setIsLoading(false)
-            showToaster(error?.response?.data?.message);
+            const errorMessage = error.response.data.message ? error.response.data.message : "Error de conexión";
+            console.log(errorMessage,'error mesase');
+            showToaster(errorMessage);
         }
     }
 
@@ -57,7 +59,9 @@ export const CategoriesServicesScreen = ({navigation,route}) => {
                       
                         return (
                             <Pressable
-                            onPress={() =>  navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_STACK,{category:item._id,isHome}) }
+                            onPress={
+                                () =>  navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_STACK,{category:item._id,isHome}) 
+                            }
                             >
                                 <HStack
                                     justifyContent={'space-between'}

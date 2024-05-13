@@ -129,8 +129,8 @@ android {
         applicationId "com.besseri"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 55
-        versionName "55.0"
+        versionCode 56
+        versionName "56.0"
     }
 
     signingConfigs
