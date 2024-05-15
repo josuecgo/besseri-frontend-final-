@@ -1,4 +1,4 @@
-import { ADD_ADDRESS, ADD_CARS_TO_USER, ADD_CAR_ACTIVE_TO_USER, ADD_USER, DELETE_TO_USER, GET_MAKERS_CARS, GET_MAKER_VALUE_CARS, GET_MODELS_CARS, GET_MODEL_VALUE_CARS, GET_YEARS_CARS, GET_YEAR_VALUE_CAR, RESET_FILTROS, SAVE_NOTIFICATION } from "../../Actions/CustomerActions/UserInfoActions"
+import { ADD_ADDRESS, ADD_CARS_TO_USER, ADD_CAR_ACTIVE_TO_USER, ADD_DEFAULT_ADDRESS, ADD_USER, DELETE_TO_USER, GET_MAKERS_CARS, GET_MAKER_VALUE_CARS, GET_MODELS_CARS, GET_MODEL_VALUE_CARS, GET_YEARS_CARS, GET_YEAR_VALUE_CAR, RESET_FILTROS, SAVE_NOTIFICATION } from "../../Actions/CustomerActions/UserInfoActions"
 
 
 const initialState = {
@@ -6,6 +6,7 @@ const initialState = {
   userId: null,
   address:null,
   addresses:[],
+  defaultAddress:null,
   cars:[],
   carActive: null,
   marcas:[],
@@ -44,7 +45,8 @@ export default (state = initialState, action) => {
             yearValue:'',
             isLoading:false,
             notificaciones:[],
-            count:0
+            count:0,
+            defaulAdress:null,
         }
         case ADD_ADDRESS:
             
@@ -52,6 +54,14 @@ export default (state = initialState, action) => {
                 ...state,
                 address: action.data[0],
                 addresses:action.data,
+                isLoading:false,
+                defaultAddress:action.data[0]._id
+            }
+        case ADD_DEFAULT_ADDRESS:
+            
+            return {
+                ...state,
+                defaultAddress: action.data,
                 isLoading:false
             }
         case ADD_CAR_ACTIVE_TO_USER:

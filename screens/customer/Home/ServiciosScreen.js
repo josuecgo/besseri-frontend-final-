@@ -9,13 +9,14 @@ import { TypeServices } from '../../../components/Services/TypeServices'
 import { Heading, Pressable } from 'native-base'
 import CommonStyles from '../../../util/styles/styles'
 import { Empty } from '../../../components/Customer/Empty'
+import { useStoreLocation } from '../../../hooks/useStoreLocation'
+import { useSelector } from 'react-redux'
 
 export const ServiciosScreen = ({navigation,route}) => {
   const {category,isHome} = route.params
   const [servicios, setServicios] = useState([]);
-  
-  
-  
+
+
   const getServicios = async() => {
     try {
        
@@ -39,7 +40,6 @@ export const ServiciosScreen = ({navigation,route}) => {
   }, [])
   
  
-
   return (
     <View style={styles.servicios} >
     

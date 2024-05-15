@@ -1,6 +1,8 @@
 export const env = 'dev';
 
-export const base_url = env === 'prod' ? 'https://api.besseri.mx'  : env === 'dev' ?  'http://192.168.1.34:3005' : 'http://192.168.1.34:3005';// export const base_url = false ? 'http://192.168.100.72:3005' : 'http://192.168.1.17:3005'
+export const base_url = env === 'prod' ? 'https://api.besseri.mx'  : env === 'dev' ?  
+'http://192.168.1.36:3005' : 'http://192.168.1.34:3005';
+// export const base_url = false ? 'http://192.168.100.72:3005' : 'http://192.168.1.17:3005'
 
 export const api_urls = {
     registration:`${base_url}/user/signup`,
@@ -97,6 +99,7 @@ export const customer_api_urls = {
 
     get_services:`${base_url}/services/get-services`,
     get_type_services_customer:`${base_url}/services/get-type-services-customer`,
+    active_type_services_customer:`${base_url}/services/active-type-services-customer`,
     get_categories_services:`${base_url}/services/get-categories-services`,
     active_categories_services:`${base_url}/services/active-categories-services`,
 

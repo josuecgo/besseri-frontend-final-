@@ -12,6 +12,10 @@ import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constant
 import Colors from '../../../util/styles/colors'
 import { adjust } from '../../../util/Dimentions'
 import { Empty } from '../../../components/Customer/Empty'
+import { useStoreLocation } from '../../../hooks/useStoreLocation'
+import { useSelector } from 'react-redux'
+import { getUserId } from '../../../util/local-storage/auth_service'
+
 
 
 
@@ -20,29 +24,45 @@ export const CategoriesServicesScreen = ({navigation,route}) => {
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const isHome = route.params;
+
+
    
     const getCategories = async () => {
         try {
+           
             setIsLoading(true)
-            const url = `${customer_api_urls.active_categories_services}?is_home=${isHome}`;
+            const url =  `${customer_api_urls.get_categories_services}` 
 
             const apiCall = await axios.get(url)
-            setCategories(apiCall?.data?.data.categories)
-            setIsLoading(false)
-        } catch (error) {
+            setCategories(apiCall?.data?.data)
             
             setIsLoading(false)
-            const errorMessage = error.response.data.message ? error.response.data.message : "Error de conexión";
-            console.log(errorMessage,'error mesase');
+        } catch (error) {
+            console.log(error,'error');
+            setIsLoading(false)
+            const errorMessage = error?.response?.data?.message ? error?.response?.data?.message : "Error de conexión";
+          
             showToaster(errorMessage);
         }
     }
 
     
 
+ 
+
+  
+
     useEffect(() => {
         getCategories()
+     
+    
     }, [])
+    
+
+
+
+    
+    // console.log(categoriesActive);
 
     return (
         <View style={[styles.container]} >
@@ -60,7 +80,13 @@ export const CategoriesServicesScreen = ({navigation,route}) => {
                         return (
                             <Pressable
                             onPress={
-                                () =>  navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_STACK,{category:item._id,isHome}) 
+                                () => { 
+                                   
+                                    navigation.navigate(
+                                        CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_STACK,
+                                        {category:item._id,isHome}
+                                    ) 
+                                }
                             }
                             >
                                 <HStack

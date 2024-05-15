@@ -306,7 +306,7 @@ export const CustomerAccountStack = () => {
           headerShown: true,
           header: props => (
             <HeaderTitle {...props}
-              titulo="Mis autos"
+              titulo="Agregar auto"
               nav={props.navigation.goBack}
             />
           ),

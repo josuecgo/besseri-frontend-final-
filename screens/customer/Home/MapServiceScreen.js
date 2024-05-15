@@ -10,27 +10,26 @@ import { ServiceSkeleton } from '../../../components/Services/ServiceSkeleton';
 import { ListServices } from '../../../components/Services/ListServices';
 import { ProductContext } from '../../../util/context/Product/ProductContext';
 import { MapCarDefault } from '../../../components/Customer/MapCarDefault';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Colors from '../../../util/styles/colors';
 import CommonStyles from '../../../util/styles/styles';
 import { deviceWidth } from '../../../util/Dimentions';
 import { MAIN_ROUTES } from '../../../util/constants';
 import { useIsFocused } from '@react-navigation/native';
 import LoaderComponent from '../../../components/Loader/Loader.component';
+import { addAddressToUser, addDefaultAddressToUser } from '../../../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 
 
 
 export const MapServiceScreen = (props) => {
-  const [addresses, setAddresses] = useState(null)
 
-  const { carActive, address } = useSelector(state => state.user);
+  const { carActive,addresses,defaultAddress } = useSelector(state => state.user);
   const direccionStore = useSelector(state => state.user.addresses);
   const { type,isHome } = props.route.params;
   const [stores, setStores] = useState(null)
-  const [defaultAddress, setDefaultAddress] = useState(address)
   const isFocus = useIsFocused()
   const [loading, setLoading] = useState(false)
-  
+  const dispatch = useDispatch()
   const getAddresses = async () => {
     try {
 
@@ -43,8 +42,10 @@ export const MapServiceScreen = (props) => {
           ...direccionStore[0]
         }
    
-      setAddresses([data]);
-      setDefaultAddress(1)
+        dispatch(addAddressToUser([data]))
+         
+          
+        dispatch( addDefaultAddressToUser(1) )
         return
       }
         showAlertLogin(goLogin,goCancel)
@@ -63,12 +64,15 @@ export const MapServiceScreen = (props) => {
           { text: 'Crear', onPress: () => props.navigation.navigate('Mi dirección') },
         ]);
       } else {
-        setAddresses(apiCall.data.data);
+        dispatch(addAddressToUser(apiCall.data.data))
         if (apiCall?.data?.data.length > 0) {
-          setDefaultAddress(apiCall.data.data[0]._id)
+          dispatch( addDefaultAddressToUser(apiCall.data.data[0]._id) )
+         
 
         } else {
-          setDefaultAddress(null)
+          dispatch( addDefaultAddressToUser(null) )
+        
+        
         }
       }
 
@@ -77,6 +81,7 @@ export const MapServiceScreen = (props) => {
     }
   }
 
+ 
   const getCars = async () => {
 
     if (!carActive) {
@@ -96,19 +101,21 @@ export const MapServiceScreen = (props) => {
       setLoading(true)
       
       if (!addresses) return
+      
       const userId = await getUserId();
       const findAddres =  userId ? addresses.find(item => item?._id === defaultAddress  ) : addresses[0] ;
       
-    
+      
       const apiCall = await axios.post(`${customer_api_urls.get_stores_type_services}/${type}`, {
          addresses:findAddres, carActive,isHome 
         });
       
       setStores(apiCall?.data?.data)
+     
       setLoading(false)
     } catch (error) {
       setLoading(false);
-      console.log(error);
+     
       showToaster('Error con el servidor');
     }
   }
@@ -142,7 +149,8 @@ export const MapServiceScreen = (props) => {
 
   const handleAddress = (address) => {
 
-    setDefaultAddress(address)
+   
+    dispatch( addDefaultAddressToUser(address) )
   }
 
   const goLogin = () => {
@@ -162,7 +170,7 @@ export const MapServiceScreen = (props) => {
       getCars();
     }
    
-  }, [isFocus])
+  }, [])
 
   useEffect(() => {
     if (defaultAddress) {

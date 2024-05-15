@@ -9,7 +9,7 @@ import axios from 'axios';
 import { customer_api_urls } from '../util/api/api_essentials';
 import { useInfoUser } from '../hooks/useInfoUsers';
 
-export const ItemCar = ({ data,handleModalizeDelete,isDisabled }) => {
+export const ItemCar = ({ data,carActive,isDisabled }) => {
 
     const { getUserInfo,activeCar } = useInfoUser()
 
@@ -57,7 +57,7 @@ export const ItemCar = ({ data,handleModalizeDelete,isDisabled }) => {
         marginX={5} 
         marginY={'10px'}
         borderWidth={'1px'}  
-        borderColor={'#DEDEDE'} 
+        borderColor={carActive._id === data._id ? Colors.succes :'#DEDEDE'} 
         borderRadius={'5px'} 
         paddingX={'15px'}
         
@@ -84,11 +84,12 @@ export const ItemCar = ({ data,handleModalizeDelete,isDisabled }) => {
             </TouchableOpacity>
             
 
+          
+
             <TouchableOpacity  
             style={styles.delete}
             onPress={() => deleteCar(data)}
-            // justifyContent={'flex-end'}  
-            // paddingBottom={'3px'}
+           
             >
                 <MaterialIcons name='delete'  color={'white'} size={20}/>
             </TouchableOpacity>

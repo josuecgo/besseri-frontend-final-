@@ -1,6 +1,7 @@
 export const ADD_USER = 'ADD_USER';
 export const DELETE_TO_USER = 'DELETE_TO_USER';
 export const ADD_ADDRESS = 'ADD_ADDRESS';
+export const ADD_DEFAULT_ADDRESS = 'ADD_DEFAULT_ADDRESS';
 export const ADD_CAR_ACTIVE_TO_USER = 'ADD_CAR_ACTIVE_TO_USER';
 export const ADD_CARS_TO_USER = 'ADD_CARS_TO_USER';
 export const GET_MAKERS_CARS = 'GET_MAKERS_CARS';
@@ -20,7 +21,6 @@ export const addToUser = (item) => {
      
   })
 }
-
 export const deleteToUser = () => {
   
   return({
@@ -29,8 +29,6 @@ export const deleteToUser = () => {
      
   })
 }
-
-
 export const addAddressToUser = (item) => {
     
   return({
@@ -39,7 +37,14 @@ export const addAddressToUser = (item) => {
      
   })
 }
-
+export const addDefaultAddressToUser = (item) => {
+    
+  return({
+      type:ADD_DEFAULT_ADDRESS,
+      data:item,
+     
+  })
+}
 export const addCarActiveToUser = (item) => {
     
   return({
@@ -48,7 +53,6 @@ export const addCarActiveToUser = (item) => {
      
   })
 }
-
 export const addCarsToUser = (item) => {
     
   return({
@@ -57,7 +61,6 @@ export const addCarsToUser = (item) => {
      
   })
 }
-
 export const getMakersCars = (item) => {
     
   return({
@@ -66,7 +69,6 @@ export const getMakersCars = (item) => {
      
   })
 }
-
 export const getModelsCars = (item) => {
     
   return({
@@ -75,7 +77,6 @@ export const getModelsCars = (item) => {
      
   })
 }
-
 export const getMakerValueCars = (item) => {
     
   return({
@@ -84,7 +85,6 @@ export const getMakerValueCars = (item) => {
      
   })
 }
-
 export const getModelValueCars = (item) => {
     
   return({
@@ -93,7 +93,6 @@ export const getModelValueCars = (item) => {
      
   })
 }
-
 export const getYearsCars = (item) => {
     
   return({
@@ -102,7 +101,6 @@ export const getYearsCars = (item) => {
      
   })
 }
-
 export const getYearValueCar = (item) => {
     
   return({
@@ -111,7 +109,6 @@ export const getYearValueCar = (item) => {
      
   })
 }
-
 export const saveNotification = (item) => {
     
   return({
@@ -120,7 +117,6 @@ export const saveNotification = (item) => {
      
   })
 }
-
 export const resetFiltros = () => {
     
   return({

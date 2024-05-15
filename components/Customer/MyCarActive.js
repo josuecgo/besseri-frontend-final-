@@ -11,9 +11,10 @@ import { adjust } from '../../util/Dimentions'
 import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants'
 
 export const MyCarActive = ({navigation}) => {
-  const { carActive } = useSelector(state => state.user);
+  const { carActive,userId } = useSelector(state => state.user);
 
- 
+
+  
   
 
   return (
@@ -55,7 +56,7 @@ export const MyCarActive = ({navigation}) => {
                 }
 
                 {
-                  navigation && (
+                  navigation && userId && (
                     <TouchableOpacity
                     onPress={() => navigation.navigate(
                       CUSTOMER_HOME_SCREEN_ROUTES.FUEL_CHECK,
