@@ -12,11 +12,11 @@ import moment from 'moment';
 import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal';
 import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constants';
 import axios from 'axios';
-import { customer_api_urls } from '../../../util/api/api_essentials';
+import { customer_api_urls, vendor_api_urls } from '../../../util/api/api_essentials';
 import ModalChildren from '../../../components/ModalChildren';
 import { CardField, useConfirmPayment, useStripe } from '@stripe/stripe-react-native';
 import { usePayment } from '../../../hooks/usePayment';
-import { getUser } from '../../../util/local-storage/auth_service';
+import { getUser, getUserId } from '../../../util/local-storage/auth_service';
 import { useContext } from 'react';
 import { ProductContext } from '../../../util/context/Product/ProductContext';
 import { Cupon } from '../../../components/Customer/Cupon';
@@ -37,9 +37,11 @@ export const AgendarScreen = (props) => {
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const [loading, setLoading] = useState(false);
   const [stripeEssentials, setStripeEssentials] = useState(null);
-  const {aplicarCupones} = useCompras()
-
-
+  const [coupon, setCoupon] = useState({
+    discount:0
+  })
+  const total = comisionMoneda(serviceId?.price,comision)
+  
 
 
   const fetchPaymentSheetParams = async () => {
@@ -126,7 +128,12 @@ export const AgendarScreen = (props) => {
 
 
   const openPaymentSheet = async () => {
-
+   
+    if (coupon.discount === 100) { 
+      freeAgendarCita()
+    
+      return
+    }
     setFetchLoading(true)
     await initializePaymentSheet();
 
@@ -193,7 +200,8 @@ export const AgendarScreen = (props) => {
         chargeId: stripeEssentials?.intentId,
         amount: serviceId?.price,
         total_amount:comisionFormatted(serviceId?.price,comision),
-        comision:comision
+        comision:comision,
+        coupon
       }
     
 
@@ -218,6 +226,81 @@ export const AgendarScreen = (props) => {
     }
   }
 
+  const freeAgendarCita = async () => {
+    try {
+      
+      if (fetchLoading) return
+      
+
+      setFetchLoading(true)
+     
+      if (!booked_by_id) return showToaster('Faltan campos.');
+    
+
+      
+      const customerData = await getUser();
+      const data = {
+        booked_by_id,
+        serviceId,
+        businessId,
+        startDate,
+        endDate,
+        car,
+        address: address._id,
+        type,
+        customerId: customerData?.customerId,
+        chargeId: stripeEssentials?.intentId,
+        amount: serviceId?.price,
+        // total_amount:aplicarDescuento(total,coupon?.discount),
+        comision:comision,
+        coupon
+      }
+    
+
+     
+      const apiCall = await axios.post(customer_api_urls.book_service, data)
+      setFetchLoading(false)
+      if (apiCall.data.success) {
+        aplicarPromotion(coupon)
+        // showToaster(apiCall.data.message);
+        setShowModal(true)
+      } else {
+        setFetchLoading(false)
+        showToaster(apiCall.data.message);
+      }
+     
+    } catch (error) {
+      
+      setFetchLoading(false)
+      
+      showToaster('Error con el servidor')
+
+
+    }
+  }
+
+ 
+
+  const aplicarPromotion = async (coupon) => {
+    try {
+       
+        const id = await getUserId();
+       
+
+        const data = {
+            code: coupon?.code,
+            serviceId: serviceId._id
+        };
+
+        const apiCall = await axios.post(`${vendor_api_urls.aplicar_promotion_besser}/${id}`, data);
+
+        console.log(apiCall.data?.data);
+       
+    } catch (error) {
+        console.log(error, 'aplicar promotion');
+       
+    } 
+};
 
 
   return (
@@ -243,7 +326,7 @@ export const AgendarScreen = (props) => {
         <HStack justifyContent={'space-between'} mt={'10px'} flexWrap={'wrap'} >
           <Text style={{ ...CommonStyles.h2 }} >Servicio: {serviceId?.type_services?.type} </Text>
           <Text style={{ ...CommonStyles.h2 }} >{
-          comisionMoneda(serviceId?.price,comision)} MXN </Text>
+          aplicarDescuento(total,coupon?.discount)} MXN </Text>
 
         </HStack>
       </Box>
@@ -262,7 +345,7 @@ export const AgendarScreen = (props) => {
         <Text style={{ color: Colors.white }} >{address?.formatted_address}</Text>
       </Box>
 
-      {/* <Cupon /> */}
+      <Cupon setCoupon={setCoupon} serviceId={serviceId._id} />
 
       <BtnPrincipal
         text={ fetchLoading ? 'Enviando...' : 'Reservar'}
@@ -312,6 +395,24 @@ export const AgendarScreen = (props) => {
     </ScrollView>
   )
 }
+
+
+const aplicarDescuento = (precioOriginal, discount) => {
+  if (discount >= 100) {
+    return 0
+  }
+  if (discount === 0) {
+    
+    return precioOriginal
+  }
+  if (typeof discount !== 'number' || discount < 0 || discount > 100) {
+      throw new Error('El descuento debe ser un número entre 0 y 100');
+  }
+  const descuentoAplicado = (precioOriginal * discount) / 100;
+  const precioFinal = precioOriginal - descuentoAplicado;
+  return precioFinal;
+}
+
 
 
 const styles = StyleSheet.create({

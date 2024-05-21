@@ -4,7 +4,7 @@ import AddressFormatted from '../AddressFormatted'
 import { Divider, HStack, VStack,Center } from 'native-base'
 import CommonStyles from '../../util/styles/styles'
 import moment from 'moment'
-import { comisionMoneda, moneda } from '../../util/Moneda'
+import { aplicarDescuento, comisionMoneda, moneda } from '../../util/Moneda'
 import OrderProductItemComponent from '../vendor-shared/order-product-item.component'
 import { ProductContext } from '../../util/context/Product/ProductContext'
 import { useContext } from 'react'
@@ -91,7 +91,7 @@ const CardServicio = ({data}) => {
     </>
   )
 
- 
+  let total = comisionMoneda(data?.serviceId?.price, comision)
   return (
     <>
        <AddressFormatted address={data?.businessId?.location?.formatted_address} />
@@ -136,9 +136,29 @@ const CardServicio = ({data}) => {
           </HStack>
 
           <HStack alignItems={'center'} justifyContent={'space-between'} >
-            <Text style={{...CommonStyles.h2}} >Total servicio:</Text>
-            <Text style={{...CommonStyles.h2}} >{comisionMoneda(data?.serviceId?.price, comision)} MXN</Text>
-          </HStack>
+            {
+              !data?.coupon ? (
+                <>
+                  <Text style={{...CommonStyles.h2}} >Total servicio:</Text>
+                  <Text style={{...CommonStyles.h2}} >{total} MXN</Text>
+                </>
+              ):(
+                <>
+                <VStack>
+                  <Text style={{...CommonStyles.h2}} >Costo del servicio:</Text>
+                  <Text style={{...CommonStyles.h2}} >Descuento:</Text>
+                  <Text style={{...CommonStyles.h2}} >Total servicio:</Text>
+                 </VStack>
+                <VStack>
+                  <Text style={{...CommonStyles.h2}} >{comisionMoneda(data?.serviceId?.price, comision)} MXN</Text>
+                  <Text style={{...CommonStyles.h2}} >{data?.coupon.discount}%</Text>
+                  <Text style={{...CommonStyles.h2,color:Colors.succes}} >${aplicarDescuento(total,data?.coupon.discount)}</Text>
+                </VStack>
+                </>
+            
+              )
+            }
+            </HStack>
         </VStack>
     </>
   )

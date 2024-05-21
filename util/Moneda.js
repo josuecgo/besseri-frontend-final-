@@ -42,3 +42,19 @@ export const formatNumberWithCommas = (number) => {
    
     return `${number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} km`;
 }
+
+export const aplicarDescuento = (precioOriginal, discount) => {
+    if (discount >= 100) {
+      return 0
+    }
+    if (discount === 0) {
+      
+      return precioOriginal
+    }
+    if (typeof discount !== 'number' || discount < 0 || discount > 100) {
+        throw new Error('El descuento debe ser un número entre 0 y 100');
+    }
+    const descuentoAplicado = (precioOriginal * discount) / 100;
+    const precioFinal = precioOriginal - descuentoAplicado;
+    return precioFinal;
+  }
