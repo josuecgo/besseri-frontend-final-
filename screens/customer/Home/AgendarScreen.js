@@ -6,7 +6,7 @@ import CommonStyles from '../../../util/styles/styles';
 import { Box, Center, HStack, Heading, VStack } from 'native-base';
 import Colors from '../../../util/styles/colors';
 import AddressFormatted from '../../../components/AddressFormatted';
-import { comisionFormatted, comisionMoneda, moneda } from '../../../util/Moneda';
+import { aplicarDescuento, comisionFormatted, comisionMoneda, moneda } from '../../../util/Moneda';
 import { deviceHeight, deviceWidth } from '../../../util/Dimentions';
 import moment from 'moment';
 import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal';
@@ -40,18 +40,19 @@ export const AgendarScreen = (props) => {
   const [coupon, setCoupon] = useState({
     discount:0
   })
-  const total = comisionMoneda(serviceId?.price,comision)
+  const total = comisionFormatted(serviceId?.price,comision)
   
 
 
   const fetchPaymentSheetParams = async () => {
     try {
       const customerData = await getUser();
+      let amount = aplicarDescuento(total,coupon.discount)
       const data = {
         customerId: customerData?.customerId,
   
         walletId: "acct_1MpG6RIq5dapP1T4",
-        amount:comisionFormatted(serviceId?.price,comision),
+        amount:amount,
 
       }
   
@@ -252,6 +253,7 @@ export const AgendarScreen = (props) => {
         chargeId: stripeEssentials?.intentId,
         amount: serviceId?.price,
         // total_amount:aplicarDescuento(total,coupon?.discount),
+        total_amount:comisionFormatted(serviceId?.price,comision),
         comision:comision,
         coupon
       }
@@ -325,7 +327,7 @@ export const AgendarScreen = (props) => {
 
         <HStack justifyContent={'space-between'} mt={'10px'} flexWrap={'wrap'} >
           <Text style={{ ...CommonStyles.h2 }} >Servicio: {serviceId?.type_services?.type} </Text>
-          <Text style={{ ...CommonStyles.h2 }} >{
+          <Text style={{ ...CommonStyles.h2 }} >${
           aplicarDescuento(total,coupon?.discount)} MXN </Text>
 
         </HStack>
@@ -397,21 +399,7 @@ export const AgendarScreen = (props) => {
 }
 
 
-const aplicarDescuento = (precioOriginal, discount) => {
-  if (discount >= 100) {
-    return 0
-  }
-  if (discount === 0) {
-    
-    return precioOriginal
-  }
-  if (typeof discount !== 'number' || discount < 0 || discount > 100) {
-      throw new Error('El descuento debe ser un número entre 0 y 100');
-  }
-  const descuentoAplicado = (precioOriginal * discount) / 100;
-  const precioFinal = precioOriginal - descuentoAplicado;
-  return precioFinal;
-}
+
 
 
 

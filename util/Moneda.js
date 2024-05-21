@@ -51,10 +51,12 @@ export const aplicarDescuento = (precioOriginal, discount) => {
       
       return precioOriginal
     }
-    if (typeof discount !== 'number' || discount < 0 || discount > 100) {
-        throw new Error('El descuento debe ser un número entre 0 y 100');
+    if (typeof discount !== 'number'  || discount > 100) {
+        
+        return precioOriginal
     }
     const descuentoAplicado = (precioOriginal * discount) / 100;
     const precioFinal = precioOriginal - descuentoAplicado;
-    return precioFinal;
+   console.log(precioOriginal,'descuentoAplicado');
+    return precioFinal.toFixed(2);
   }
