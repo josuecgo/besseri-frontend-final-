@@ -1,6 +1,6 @@
-import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native'
-import React from 'react'
-import { Box, HStack, Image, Text, VStack } from 'native-base';
+import { Alert, Pressable, StyleSheet, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Box, Checkbox, HStack, Image, Switch, Text, VStack } from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../util/styles/colors';
 import CommonStyles from '../util/styles/styles';
@@ -9,25 +9,36 @@ import axios from 'axios';
 import { customer_api_urls } from '../util/api/api_essentials';
 import { useInfoUser } from '../hooks/useInfoUsers';
 
-export const ItemCar = ({ data,carActive,isDisabled }) => {
+export const ItemCar = ({ data, carActive, isDisabled }) => {
+    const [groupValues, setGroupValues] = useState([]);
+    const { getUserInfo, activeCar } = useInfoUser();
+    const [isEnabled, setIsEnabled] = useState(false);
 
-    const { getUserInfo,activeCar } = useInfoUser()
+    useEffect(() => {
+        if (carActive._id === data._id) {
+            setIsEnabled(true);
+        } else {
+            setIsEnabled(false);
+        }
+    }, [carActive, data]);
 
-    const deleteCar = async(item) => {
-     
+    const deleteCar = async (item) => {
         Alert.alert('Eliminar', `Estas a punto de eliminar ${item?.model?.name}`, [
             {
-              text: 'Cancelar',
-              onPress: () => {},
-              style: 'cancel',
+                text: 'Cancelar',
+                onPress: () => {},
+                style: 'cancel',
             },
-            {text: 'Aceptar', onPress: () => fetchDeleteCar(item)},
+            { text: 'Aceptar', onPress: () => fetchDeleteCar(item) },
         ]);
-    }
+    };
 
-    const fetchDeleteCar = async(car) => {
+    const fetchDeleteCar = async (car) => {
         try {
-
+            if (data._id === carActive._id) {
+                showToaster('No puedes quedarte sin vehículo principal, cambia de vehículo principal.')
+                return
+            }
             const apiCall = await axios.delete(`${customer_api_urls.delete_garage}/${car._id}`);
 
             if (apiCall.data.success) {
@@ -35,131 +46,130 @@ export const ItemCar = ({ data,carActive,isDisabled }) => {
                 showToaster(apiCall?.data?.message);
             }
         } catch (error) {
-            
-            showToaster(error)
+            showToaster(error);
         }
-    }
+    };
 
     const activarCarDefault = (item) => {
         Alert.alert('Activar', `Estas a punto de activar como default ${item?.model?.name}`, [
             {
-              text: 'Cancelar',
-              onPress: () => {},
-              style: 'cancel',
+                text: 'Cancelar',
+                onPress: () => {},
+                style: 'cancel',
             },
-            {text: 'Aceptar', onPress: () => activeCar(item)},
+            { text: 'Aceptar', onPress: () => activeCar(item) },
         ]);
-    }
+    };
 
-   
+    const handleSwitchChange = () => {
+        if (data._id === carActive._id) {
+            showToaster('No puedes quedarte sin vehículo principal')
+            return
+        }
+        activarCarDefault(data);
+    };
+
     return (
-        <Box  
-        marginX={5} 
-        marginY={'10px'}
-        borderWidth={'1px'}  
-        borderColor={carActive._id === data._id ? Colors.succes :'#DEDEDE'} 
-        borderRadius={'5px'} 
-        paddingX={'15px'}
-        
+        <Box
+            marginX={5}
+            marginY={'10px'}
+            borderWidth={'1px'}
+            borderColor={carActive._id === data._id ? Colors.succes : '#DEDEDE'}
+            borderRadius={'5px'}
+            paddingX={'15px'}
+
         >
-            <TouchableOpacity
-            onLongPress={() => activarCarDefault(data)}
-            >
-                <HStack space={4} alignItems={'center'} >
-                    <Image
+            <HStack space={4} alignItems={'center'}>
+                <Image
                     source={require('../assets/images/iconos/car.png')}
                     alt='car'
                     style={styles.car}
                     resizeMode='contain'
-                    />
+                />
 
-                    <VStack>
-                        <Text  style={CommonStyles.h2} >{data?.maker?.name}</Text>
-                        <Text  style={CommonStyles.h2} >{data?.model?.name}</Text>
-                        <Text  style={CommonStyles.h2} >{data?.model?.type?.type}</Text>
-                        <Text  style={CommonStyles.h2} >{data?.year}</Text>
-                    </VStack>
-                    
-                </HStack>
-            </TouchableOpacity>
-            
+                <VStack>
+                    <Text style={CommonStyles.h2}>{data?.maker?.name}</Text>
+                    <Text style={CommonStyles.h2}>{data?.model?.name}</Text>
+                    <Text style={CommonStyles.h2}>{data?.model?.type?.type}</Text>
+                    <Text style={CommonStyles.h2}>{data?.year}</Text>
+                </VStack>
+            </HStack>
 
-          
+            <Box style={styles.checkbox}>
+                <RadioButton
+                selected={carActive._id === data._id}
+                onPress={() => handleSwitchChange(data)}
+                />
+               
+            </Box>
 
-            <TouchableOpacity  
-            style={styles.delete}
-            onPress={() => deleteCar(data)}
-           
+            <TouchableOpacity
+                style={styles.delete}
+                onPress={() => deleteCar(data)}
             >
-                <MaterialIcons name='delete'  color={'white'} size={20}/>
+                <MaterialIcons name='delete' color={'white'} size={20} />
             </TouchableOpacity>
-            
-        </Box> 
-       
-           
-       
-       
-    )
-}
+        </Box>
+    );
+};
 
 
+const RadioButton = ({ selected, onPress }) => {
+    return (
+      <Pressable onPress={onPress} style={styles.radioButtonContainer}>
+        <View style={[styles.radioButton, selected && styles.radioButtonSelected]}>
+          {selected && <View style={styles.radioButtonInner} >
+          <MaterialIcons name='check' color={'white'} size={14} />
+            </View>}
+        </View>
+       
+      </Pressable>
+    );
+  };
 
 const styles = StyleSheet.create({
-    body:{
-        borderWidth:1,
-        borderColor:Colors.red,
-        marginHorizontal:100,
-        width:100,
-        height:100,
-        backgroundColor:'red'
+    car: {
+        width: 100,
+        height: 100,
     },
-    car:{
-        width:100,
-        height:100,
-    
+    delete: {
+        position: 'absolute',
+        bottom: 5,
+        right: 10,
     },
-    delete:{
-        position:'absolute',
-        bottom:5,
-        right:10
-    }
-})
-
-//  {/* <Radio isDisabled={isDisabled}  value={data._id} my={1}>
-             
-//                 <TouchableOpacity
-//                 onLongPress={() => handleModalizeDelete(data)}
-            
-//                 >
-//                     <HStack
-//                         space={[2, 3]}
-//                         justifyContent="center"
-//                         alignItems={'center'}
-//                         // marginX={30}
-//                     >
-//                         <MaterialIcons 
-//                         name='directions-car'  
-//                         size={40} 
-                        
-//                         />
-//                         {/* <VStack> */}
-//                         <Text _dark={{
-//                             color: "warmGray.50"
-//                         }} color="coolGray.800" bold>
-//                             {data.model.name}
-//                         </Text>
-//                         <Text color="coolGray.600" _dark={{
-//                             color: "warmGray.200"
-//                         }}>
-//                         {data.maker.name} {data.year}
-//                         </Text>
-                    
-//                     {/* </VStack> */}
-//                     <Spacer />
-                
-//                 </HStack>
-//             </TouchableOpacity>
-
-   
-//         </Radio>
-//           */}
+    checkbox: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+    },
+    radioButtonContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 5,
+      },
+      radioButton: {
+        height: 20,
+        width: 20,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: Colors.white,
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      radioButtonSelected: {
+        borderColor: Colors.succes,
+      },
+      radioButtonInner: {
+        height: 15,
+        width:  15,
+        borderRadius: 5,
+        // backgroundColor: '#007AFF',
+        backgroundColor:Colors.succes,
+        justifyContent:'center',
+        alignItems:'center'
+      },
+      radioButtonLabel: {
+        marginLeft: 10,
+        fontSize: 16,
+      },
+});

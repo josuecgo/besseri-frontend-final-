@@ -35,7 +35,6 @@ export const MyCarsScreen = ({ navigation }) => {
  
   return (
     <View style={styles.cars}>
-      <Text style={styles.txt} >Mantén presionado el vehículo que deseas establecer como activo.</Text>
       <FlatList
         data={sortedCars}
         renderItem={({ item }) => <ItemCar data={item} carActive={carActive} />}
