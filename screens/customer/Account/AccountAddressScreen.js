@@ -1,5 +1,6 @@
-import { View,  ScrollView,Image, TouchableOpacity, Platform, StyleSheet } from 'react-native'
+import { View,  ScrollView,Image, TouchableOpacity, Platform, StyleSheet, Pressable } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
+
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { deviceHeight } from '../../../util/Dimentions';
 import CommonStyles from '../../../util/styles/styles';
@@ -9,18 +10,19 @@ import AddressComponent from '../../../components/customer-components/customer.a
 import ButtonComponent from '../../../components/button/button.component';
 import axios from 'axios';
 import { api_statuses, customer_api_urls } from '../../../util/api/api_essentials';
-import { getUserId } from '../../../util/local-storage/auth_service';
+
 import { Text } from 'native-base';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LoaderComponent from '../../../components/Loader/Loader.component';
 import { useInfoUser } from '../../../hooks/useInfoUsers';
+import { addDefaultAddressToUser } from '../../../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 
 export const AccountAddressScreen = (props) => {
     const width = 300;
     const [loading, setLoading] = useState(false);
-    const {address,addresses,user} = useSelector(state => state.user)
+    const {address,addresses,user,defaultAddress} = useSelector(state => state.user)
     const {getUserInfo} = useInfoUser();
-   
+    const dispatch = useDispatch()
     
 
 
@@ -56,6 +58,14 @@ export const AccountAddressScreen = (props) => {
             props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR)
         }
 
+    }
+
+    const onChangeDefaultaddress = async(id) => {
+        try {
+           await dispatch( addDefaultAddressToUser(id) )
+        } catch (error) {
+            
+        }
     }
 
     if(loading) return <View style={CommonStyles.screenY}><LoaderComponent isVisible={loading} /></View>
@@ -104,10 +114,10 @@ export const AccountAddressScreen = (props) => {
                                     info={item.info}
                                     phone={item.phone}
                                     deleteAddress={deleteAddress}
-                                    
                                     addressLine={item.addressLine} label={item.label}
                                     item={item} 
-                                    selected={address._id === item._id}   
+                                    selected={defaultAddress === item._id}  
+                                    onChangeDefaultaddress={onChangeDefaultaddress} 
                                 />
                             </View>
                         )
@@ -122,6 +132,8 @@ export const AccountAddressScreen = (props) => {
     </View>
   )
 }
+
+
 
  
 
@@ -143,5 +155,6 @@ const styles = StyleSheet.create({
     },
     createAddressText: { ...CommonStyles.fontFamily, fontSize: 20 },
     createAddressDetailText: { fontSize: 13, fontWeight: '300', width: '90%', alignSelf: 'center', textAlign: 'center', color: Colors.dark },
-    AddressesDetailsWrapper: { justifyContent: 'center', alignItems: 'center', bottom: 40 }
+    AddressesDetailsWrapper: { justifyContent: 'center', alignItems: 'center', bottom: 40 },
+   
 })

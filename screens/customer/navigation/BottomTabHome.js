@@ -161,7 +161,7 @@ export const CustomerHomeStack = () => {
           headerShown: true,
           header: props => (
             <HeaderTitle {...props}
-              titulo="Servicios"
+              titulo="Servicios cercanos"
               nav={props.navigation.goBack}
             />
           ),

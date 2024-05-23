@@ -10,17 +10,10 @@ import { customer_api_urls } from '../util/api/api_essentials';
 import { useInfoUser } from '../hooks/useInfoUsers';
 
 export const ItemCar = ({ data, carActive, isDisabled }) => {
-    const [groupValues, setGroupValues] = useState([]);
+   
     const { getUserInfo, activeCar } = useInfoUser();
-    const [isEnabled, setIsEnabled] = useState(false);
-
-    useEffect(() => {
-        if (carActive._id === data._id) {
-            setIsEnabled(true);
-        } else {
-            setIsEnabled(false);
-        }
-    }, [carActive, data]);
+    
+   
 
     const deleteCar = async (item) => {
         Alert.alert('Eliminar', `Estas a punto de eliminar ${item?.model?.name}`, [

@@ -29,10 +29,13 @@ export const MapServiceScreen = (props) => {
   const [stores, setStores] = useState(null)
   const isFocus = useIsFocused()
   const [loading, setLoading] = useState(false)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
+
+
   const getAddresses = async () => {
     try {
-
+      setLoading(true)
       const userId = await getUserId();
       if (!userId) {
       
@@ -66,7 +69,10 @@ export const MapServiceScreen = (props) => {
       } else {
         dispatch(addAddressToUser(apiCall.data.data))
         if (apiCall?.data?.data.length > 0) {
-          dispatch( addDefaultAddressToUser(apiCall.data.data[0]._id) )
+          if (!defaultAddress) {
+             dispatch( addDefaultAddressToUser(apiCall.data.data[0]._id) )
+          }
+         
          
 
         } else {
@@ -76,7 +82,10 @@ export const MapServiceScreen = (props) => {
         }
       }
 
+      setLoading(false)
+
     } catch (e) {
+      setLoading(false)
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 2')
     }
   }
@@ -103,11 +112,12 @@ export const MapServiceScreen = (props) => {
       if (!addresses) return
       
       const userId = await getUserId();
-      const findAddres =  userId ? addresses.find(item => item?._id === defaultAddress  ) : addresses[0] ;
+      const findAddress =  userId ? addresses.find(item => item?._id === defaultAddress  ) : defaultAddress ;
+      
       
       
       const apiCall = await axios.post(`${customer_api_urls.get_stores_type_services}/${type}`, {
-         addresses:findAddres, carActive,isHome 
+         addresses:findAddress, carActive,isHome 
         });
       
       setStores(apiCall?.data?.data)
@@ -182,7 +192,8 @@ export const MapServiceScreen = (props) => {
 
 
 
-  if (!addresses) return <ServiceSkeleton />
+  if (!addresses || loading ) return  <LoaderComponent isVisible={loading} />
+
 
 
 
@@ -191,7 +202,7 @@ export const MapServiceScreen = (props) => {
       <HStack alignItems={'center'} justifyContent={'center'} >
         <Image
           source={require('../../../assets/images/30.png')}
-          alt='dirrecion'
+          alt='direccion'
           style={styles.icon}
         />
         <Select
@@ -243,7 +254,7 @@ export const MapServiceScreen = (props) => {
         </Text>
       </VStack>
         
-        <LoaderComponent isVisible={loading} />
+       
 
       <ListServices services={stores} goService={goService} />
     </View>

@@ -2,19 +2,26 @@ import React from 'react';
 import { View,StyleSheet} from 'react-native';
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
-
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Box, Menu, Pressable, Text } from 'native-base';
 
 
-const AddressComponent = ({deleteAddress,phone,width,selected,item}) => {
+const AddressComponent = ({deleteAddress,phone,width,selected,item,onChangeDefaultaddress}) => {
  
   return (
     <Box 
    
     style={[styles.cardContainer,{width:width?width:'95%',borderColor:'white'}]}>
   
-      <View style={{width:'90%',paddingLeft:10}}>
+            <Box>
+                <RadioButton
+                selected={selected}
+                onPress={() => onChangeDefaultaddress(item._id)}
+                />
+               
+            </Box>
+      <View style={{width:'85%',paddingLeft:10}}>
           <Text style={{fontSize:13,...CommonStyles.fontFamily,paddingLeft:10}}>{item.formatted_address}</Text>
         {
             phone ?
@@ -28,7 +35,7 @@ const AddressComponent = ({deleteAddress,phone,width,selected,item}) => {
       </View>
 
       
-      <Menu w="190" trigger={triggerProps => {
+      <Menu w="10" trigger={triggerProps => {
       return <Pressable accessibilityLabel="More options menu" {...triggerProps}>
               <MaterialCommunityIcons name='dots-vertical' size={35} color={Colors.white} />
             </Pressable>;
@@ -40,6 +47,21 @@ const AddressComponent = ({deleteAddress,phone,width,selected,item}) => {
     </Box>
   );
 };
+
+const RadioButton = ({ selected, onPress }) => {
+  return (
+    <Pressable onPress={onPress} style={styles.radioButtonContainer}>
+      <View style={[styles.radioButton, selected && styles.radioButtonSelected]}>
+        {selected && <View style={styles.radioButtonInner} >
+        <MaterialIcons name='check' color={'white'} size={14} />
+          </View>}
+      </View>
+     
+    </Pressable>
+  );
+};
+
+
 const styles = StyleSheet.create({
   cardContainer:{
     width:'95%',
@@ -63,7 +85,37 @@ const styles = StyleSheet.create({
      ...CommonStyles.flexCenter,
      borderRadius:40/2
  },
- flexWrapper:{...CommonStyles.flexDirectionRow,...CommonStyles.horizontalCenter,paddingLeft:5,paddingTop:5}
+ flexWrapper:{...CommonStyles.flexDirectionRow,...CommonStyles.horizontalCenter,paddingLeft:5,paddingTop:5},
+ radioButtonContainer: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginVertical: 5,
+},
+radioButton: {
+  height: 20,
+  width: 20,
+  borderRadius: 5,
+  borderWidth: 1,
+  borderColor: Colors.white,
+  alignItems: 'center',
+  justifyContent: 'center',
+},
+radioButtonSelected: {
+  borderColor: Colors.succes,
+},
+radioButtonInner: {
+  height: 15,
+  width:  15,
+  borderRadius: 5,
+  // backgroundColor: '#007AFF',
+  backgroundColor:Colors.succes,
+  justifyContent:'center',
+  alignItems:'center'
+},
+radioButtonLabel: {
+  marginLeft: 10,
+  fontSize: 16,
+},
 })
 
 export default AddressComponent;

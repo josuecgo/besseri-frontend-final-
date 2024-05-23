@@ -12,9 +12,7 @@ import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constant
 import Colors from '../../../util/styles/colors'
 import { adjust } from '../../../util/Dimentions'
 import { Empty } from '../../../components/Customer/Empty'
-import { useStoreLocation } from '../../../hooks/useStoreLocation'
-import { useSelector } from 'react-redux'
-import { getUserId } from '../../../util/local-storage/auth_service'
+
 
 
 

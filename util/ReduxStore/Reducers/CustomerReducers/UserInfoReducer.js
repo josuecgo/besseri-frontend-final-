@@ -55,7 +55,7 @@ export default (state = initialState, action) => {
                 address: action.data[0],
                 addresses:action.data,
                 isLoading:false,
-                defaultAddress:action.data[0]._id
+                
             }
         case ADD_DEFAULT_ADDRESS:
             
