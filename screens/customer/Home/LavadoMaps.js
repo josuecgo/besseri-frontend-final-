@@ -3,7 +3,7 @@ import React from 'react'
 import { useState } from 'react'
 import { CheckIcon, HStack, Image, Select, Text, VStack } from 'native-base'
 import { MapCarDefault } from '../../../components/Customer/MapCarDefault'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { ServiceSkeleton } from '../../../components/Services/ServiceSkeleton'
 import { customer_api_urls } from '../../../util/api/api_essentials'
@@ -16,16 +16,21 @@ import CommonStyles from '../../../util/styles/styles'
 import { ListServices } from '../../../components/Services/ListServices'
 import { useIsFocused } from '@react-navigation/native'
 import LoaderComponent from '../../../components/Loader/Loader.component'
+import { addAddressToUser, addDefaultAddressToUser } from '../../../util/ReduxStore/Actions/CustomerActions/UserInfoActions'
 
 export const LavadoMaps = (props) => {
   const isHome = props.route.params
-  const [addresses, setAddresses] = useState(null)
+
   const isFocus = useIsFocused()
-  const { carActive, address } = useSelector(state => state.user)
+  const { carActive,defaultAddress,addresses } = useSelector(state => state.user)
   const [isLoading, setIsLoading] = useState(false)
   const [stores, setStores] = useState(null)
-  const [defaultAddress, setDefaultAddress] = useState(address)
+  const dispatch = useDispatch()
+
+ 
+
   const direccionStore = useSelector(state => state.user.addresses);
+
 
   const getAddresses = async () => {
     try {
@@ -35,14 +40,13 @@ export const LavadoMaps = (props) => {
         if(direccionStore){
        
 
-          const arreglo = [
-            {
-              _id:1,
-              ...direccionStore[0]
-            }
-          ];
-        setAddresses(arreglo);
-        setDefaultAddress(1)
+          const data = {
+            _id:1,
+            ...direccionStore[0]
+          }
+       
+        dispatch(addAddressToUser([data]))
+        dispatch( addDefaultAddressToUser(1) )
           return
         }
         showAlertLogin(goLogin, goCancel)
@@ -61,12 +65,13 @@ export const LavadoMaps = (props) => {
           { text: 'Crear', onPress: () => props.navigation.navigate('Mi dirección') },
         ]);
       } else {
-        setAddresses(apiCall.data.data);
+        dispatch(addAddressToUser(apiCall.data.data))
         if (apiCall?.data?.data.length > 0) {
-          setDefaultAddress(apiCall.data.data[0]._id)
+          dispatch( addDefaultAddressToUser(apiCall.data.data[0]._id) )
 
         } else {
-          setDefaultAddress(null)
+          dispatch( addDefaultAddressToUser(null) )
+         
         }
       }
 
@@ -94,14 +99,16 @@ export const LavadoMaps = (props) => {
   const getStoreService = async () => {
     try {
 
-      if (!addresses) return
+        if (!addresses || !defaultAddress) return
       setIsLoading(true)
-      const userId = await getUserId();
-      const findAddres =  userId ? addresses.find(item => item?._id === defaultAddress  ) : addresses[0] ;
+  
+      
+     
+      const findAddress =   addresses.find(item => item?._id === defaultAddress  ); 
       
       const apiCall = await axios.post(`${customer_api_urls.get_carwash}`,
         {
-          addresses:findAddres,
+          addresses:findAddress,
           carActive,
           isHome
         }
@@ -162,19 +169,23 @@ export const LavadoMaps = (props) => {
       getAddresses()
       getCars();
     }
-
-  }, [isFocus])
+   
+  }, [])
 
   useEffect(() => {
-    if (addresses) {
-      getStoreService()
+    if (defaultAddress) {
+       getStoreService()
     }
+   
+    
   }, [defaultAddress, carActive])
 
 
 
   if (!addresses) return <ServiceSkeleton />
 
+
+ 
   return (
     <View style={styles.map} >
       <LoaderComponent isVisible={isLoading} /> 

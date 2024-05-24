@@ -109,9 +109,9 @@ export const MapServiceScreen = (props) => {
     try {
       setLoading(true)
       
-      if (!addresses) return
+      if (!addresses || !defaultAddress) return
       
-      const userId = await getUserId();
+     
       const findAddress =   addresses.find(item => item?._id === defaultAddress  );
       
       

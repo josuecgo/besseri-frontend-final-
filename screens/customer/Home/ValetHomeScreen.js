@@ -36,15 +36,15 @@ export const ValetHomeScreen = ({navigation,route}) => {
                     </TouchableOpacity>
 
                     {
-                        lavado ? (
-                            <TouchableOpacity 
-                    onPress={()=> goLavadoScreen(false) }
-                    style={styles.btn}
-                    >
-                        <MaterialCommunityIcons name='car-wash' size={40} color={Colors.white} />
-                        <Text>Lavadora</Text>
-                    </TouchableOpacity>
-                        ):(
+                    //     lavado ? (
+                    //         <TouchableOpacity 
+                    // onPress={()=> goLavadoScreen(false) }
+                    // style={styles.btn}
+                    // >
+                    //     <MaterialCommunityIcons name='car-wash' size={40} color={Colors.white} />
+                    //     <Text>Lavadora</Text>
+                    // </TouchableOpacity>
+                    !lavado && (
                             <TouchableOpacity 
                     onPress={()=> goLavadoScreen(false) }
                     style={styles.btn}
