@@ -84,7 +84,7 @@ const SplashScreen = ({navigation,route}) => {
       } else {
         // navigation.replace(MAIN_ROUTES.AUTH_STACK);
         if (addressCustomer && carActive ) {
-         
+        
           await dispatch(addAddressToUser(addressCustomer));
           await dispatch(addCarActiveToUser(carActive));
          

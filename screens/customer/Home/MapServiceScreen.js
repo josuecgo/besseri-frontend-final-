@@ -112,7 +112,7 @@ export const MapServiceScreen = (props) => {
       if (!addresses) return
       
       const userId = await getUserId();
-      const findAddress =  userId ? addresses.find(item => item?._id === defaultAddress  ) : defaultAddress ;
+      const findAddress =   addresses.find(item => item?._id === defaultAddress  );
       
       
       
