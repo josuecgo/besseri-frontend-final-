@@ -11,7 +11,7 @@ import ButtonComponent from '../../../components/button/button.component';
 import axios from 'axios';
 import { api_statuses, customer_api_urls } from '../../../util/api/api_essentials';
 
-import { Text } from 'native-base';
+import { Box, Text } from 'native-base';
 import { useDispatch, useSelector } from 'react-redux';
 import LoaderComponent from '../../../components/Loader/Loader.component';
 import { useInfoUser } from '../../../hooks/useInfoUsers';
@@ -126,8 +126,8 @@ export const AccountAddressScreen = (props) => {
 
 
                 }
-
-
+                
+                <Box mb={10} />
             </ScrollView>
     </View>
   )

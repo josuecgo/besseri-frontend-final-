@@ -64,6 +64,8 @@ export const useInfoUser = (  ) => {
         if (carActive) {
           getCategorias();
         }
+
+        return myAddresses;
       }
     } catch (error) {
       console.log(error,'getUserInfo');

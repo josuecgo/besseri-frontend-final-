@@ -31,7 +31,7 @@ import { InputTxt } from '../components/Customer/InputTxt';
 import { BtnPrincipal } from '../components/Customer/BtnPrincipal';
 import { Center, Input, VStack } from 'native-base';
 import { useInfoUser } from '../hooks/useInfoUsers';
-import { addToUser } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
+import { addDefaultAddressToUser, addToUser } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 
 
 const CREDENTIAL_KEYS = {
@@ -95,10 +95,14 @@ const LoginScreen = ({ navigation }) => {
 
 
           }
-          await getUserInfo(user)
+          const userInfo = await getUserInfo(user[0])
+          dispatch(addDefaultAddressToUser(userInfo[0]?._id))
           await getPedidosUser()
+
+
           navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
 
+          
 
         } else {
           showToaster('Usuario no encontrado.')
@@ -108,7 +112,7 @@ const LoginScreen = ({ navigation }) => {
 
     } catch (e) {
 
-console.log(e,'erro loging');
+
       setShowLoader(false);
       showToaster('Error con el servidor.')
     }

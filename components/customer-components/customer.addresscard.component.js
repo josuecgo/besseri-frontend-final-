@@ -21,7 +21,7 @@ const AddressComponent = ({deleteAddress,phone,width,selected,item,onChangeDefau
                 />
                
             </Box>
-      <View style={{width:'85%',paddingLeft:10}}>
+      <View style={{width:'85%',paddingLeft:5}}>
           <Text style={{fontSize:13,...CommonStyles.fontFamily,paddingLeft:10}}>{item.formatted_address}</Text>
         {
             phone ?
@@ -35,13 +35,17 @@ const AddressComponent = ({deleteAddress,phone,width,selected,item,onChangeDefau
       </View>
 
       
-      <Menu w="10" trigger={triggerProps => {
+      <Menu  trigger={triggerProps => {
       return <Pressable accessibilityLabel="More options menu" {...triggerProps}>
               <MaterialCommunityIcons name='dots-vertical' size={35} color={Colors.white} />
             </Pressable>;
     }}>
       
-        <Menu.Item onPress={() => deleteAddress(item._id)}  _text={{color:'danger.600'}} >Eliminar</Menu.Item>
+        <Menu.Item onPress={() => deleteAddress(item._id)}  _text={{color:'danger.600'}} >
+          
+        <MaterialCommunityIcons name='delete' size={20} color={Colors.red} />
+      
+        </Menu.Item>
       
       </Menu>
     </Box>

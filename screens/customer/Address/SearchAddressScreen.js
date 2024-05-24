@@ -221,6 +221,9 @@ export const SearchAddressScreen = (props) => {
     msg: ''
   })
 
+
+  
+
   const centerPosition = async (loc) => {
 
     mapViewRef.current?.animateCamera({
@@ -342,7 +345,7 @@ export const SearchAddressScreen = (props) => {
         
 
           <InputMaps
-              placeholder='Direccion'
+              placeholder='Dirección'
               onDebounce={(value) => setTerm(value)}
               addresses={addresses}
               onChangeDirection={onChangeDirection}

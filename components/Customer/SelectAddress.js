@@ -1,5 +1,5 @@
 import { StyleSheet,  View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Button,Text } from 'native-base'
 import * as UserInfoActions from '../../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 
@@ -11,17 +11,18 @@ import { useDispatch } from 'react-redux'
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
 import { useInfoUser } from '../../hooks/useInfoUsers';
+import LoaderComponent from '../Loader/Loader.component';
 
 export const SelectAddress = ({address,navigation}) => {
   const {latitude,longitude,address_components,formatted_address,place_id} = address;
   const dispatch = useDispatch()
   const {getUserInfo} = useInfoUser()
-
+  const [isLoading, setIsLoading] = useState(false)
 
   const setUpLocation = async() => {
     try {
      
-      
+      setIsLoading(true)
       const userId = await getUserId();
       if (userId) {
         const apiCall = await axios.post(customer_api_urls.create_address,{
@@ -54,12 +55,13 @@ export const SelectAddress = ({address,navigation}) => {
           userId,
         }]));
         
+        setIsLoading(false)
         navigation.navigate('AddMyCar');
       }
      
   
     } catch(e) {
-      
+      setIsLoading(false)
       
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo - Address');
     //  //console.log(e?.response?.data)
@@ -67,6 +69,7 @@ export const SelectAddress = ({address,navigation}) => {
   }
   return (
     <View style={styles.body} >
+      <LoaderComponent isVisible={isLoading} />
       <Text>Mi direccion:</Text>
      
       <Box 
