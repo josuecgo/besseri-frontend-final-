@@ -76,7 +76,7 @@ export const LavadoMaps = (props) => {
       }
 
     } catch (e) {
-      console.log(e);
+      
       showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 2')
     }
   }
@@ -95,7 +95,7 @@ export const LavadoMaps = (props) => {
     }
   }
 
-  // console.log(addresses[0]);
+ 
   const getStoreService = async () => {
     try {
 
@@ -149,8 +149,10 @@ export const LavadoMaps = (props) => {
   }
 
   const handleAddress = (address) => {
-
-    setDefaultAddress(address)
+ 
+   
+    dispatch( addDefaultAddressToUser(address) )
+    // setDefaultAddress(address)
   }
 
   const goLogin = () => {
