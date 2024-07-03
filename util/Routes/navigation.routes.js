@@ -36,6 +36,7 @@ import { CustomerFormFeedback } from '../../screens/customer/Orders/customer.ord
 import { CustomerOrderFeedbacks } from '../../screens/customer/Orders/customer.order.feedbacks';
 import { ServiceFormFeedback } from '../../screens/customer/Orders/customer.form-service.feedback';
 import { CustomerServiceFeedbacks } from '../../screens/customer/Bookings/CustomerServiceFeedbacks';
+import { UserRegisterScreen } from '../../screens/customer/Preregister/UserRegisterScreen';
 
 const Stack = createStackNavigator();
 
@@ -51,9 +52,15 @@ export const MainNavigation = () => {
         component={LSFS}
       />
       <Stack.Screen
+        name={'PreregisterStack'}
+        component={PreregisterStack}
+      />
+
+<Stack.Screen
         name={'UpdateScreen'}
         component={UpdateScreen}
       />
+      
 
       <Stack.Screen
         name={'CustomerStack'}
@@ -272,5 +279,31 @@ export const MainNavigation = () => {
     </Stack.Navigator>
   );
 };
+
+
+const PreregisterStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen
+        name={'UserRegisterScreen'}
+        component={UserRegisterScreen}
+      />
+      {/* <Stack.Screen
+        name={'AddMyCar'}
+        component={CreateCarScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props}
+              titulo="Mi Auto"
+              nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      /> */}
+
+    </Stack.Navigator>
+  )
+}
 
 

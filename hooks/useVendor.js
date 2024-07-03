@@ -22,14 +22,14 @@ export const useVendor = () => {
 
   const getMyProducts = async () => {
     try {
-      setShowLoader(true);
-      const profile = await getBusinessProfile();
-      setBusinessDetails(profile);
+      // setShowLoader(true);
+      // const profile = await getBusinessProfile();
+      // setBusinessDetails(profile);
 
-      // const businessId = await getBusinessId();
-      // const url = `${vendor_api_urls.get_products}/${businessId}`
-      // const apiCall = await axios.get(url);
-      setShowLoader(false);
+      // // const businessId = await getBusinessId();
+      // // const url = `${vendor_api_urls.get_products}/${businessId}`
+      // // const apiCall = await axios.get(url);
+      // setShowLoader(false);
       // if (apiCall.status == 200) {
       //   setProducts(apiCall.data.data);
 
@@ -46,12 +46,12 @@ export const useVendor = () => {
   const getCategorias = async (params) => {
     try {
       setShowLoader(true)
-      const apiCall = await axios.get(customer_api_urls.get_products, { params });
+      // const apiCall = await axios.get(customer_api_urls.get_products, { params });
 
-      if (apiCall.status === 200) {
-        setCategorias(apiCall?.data?.data?.categories)
-        setShowLoader(false)
-      }
+      // if (apiCall.status === 200) {
+      //   setCategorias(apiCall?.data?.data?.categories)
+      //   setShowLoader(false)
+      // }
 
 
     } catch (e) {
@@ -64,19 +64,19 @@ export const useVendor = () => {
   const getSubCategories = async (data) => {
     try {
 
-      if (data?._id) {
-        setShowLoader(true);
-        const apiCall = await axios.get(
-          `${vendor_api_urls.get_sub_categories}/${data?._id}`,
-        );
+      // if (data?._id) {
+      //   setShowLoader(true);
+      //   const apiCall = await axios.get(
+      //     `${vendor_api_urls.get_sub_categories}/${data?._id}`,
+      //   );
 
-        setShowLoader(false);
+      //   setShowLoader(false);
 
-        if (apiCall?.status == api_statuses?.success) {
-          setSubcategories(apiCall.data.data);
-        }
+      //   if (apiCall?.status == api_statuses?.success) {
+      //     setSubcategories(apiCall.data.data);
+      //   }
 
-      }
+      // }
 
     } catch (e) {
       // //console.log(e?.response?.data);
@@ -88,21 +88,21 @@ export const useVendor = () => {
   const productSubCategoria = async (data) => {
     try {
 
-      if (data?._id) {
-        setShowLoader(true);
-        const apiCall = await axios.get(
-          `${vendor_api_urls.get_products_sub_categories}/${data?._id}`,
-        );
+      // if (data?._id) {
+      //   setShowLoader(true);
+      //   const apiCall = await axios.get(
+      //     `${vendor_api_urls.get_products_sub_categories}/${data?._id}`,
+      //   );
 
-        setShowLoader(false);
+      //   setShowLoader(false);
 
-        if (apiCall?.status == api_statuses?.success) {
-          setProductsCategoria(apiCall.data.data);
-          setProductsFilter(apiCall.data.data);
+      //   if (apiCall?.status == api_statuses?.success) {
+      //     setProductsCategoria(apiCall.data.data);
+      //     setProductsFilter(apiCall.data.data);
 
-        }
+      //   }
 
-      }
+      // }
 
     } catch (e) {
       // //console.log(e?.response?.data);
@@ -135,11 +135,11 @@ export const useVendor = () => {
 
 
 
-        const apiCall = await axios.get(`${vendor_api_urls.get_models}/${id}`);
+        // const apiCall = await axios.get(`${vendor_api_urls.get_models}/${id}`);
 
-        if (apiCall?.status == 200) {
-          setModelos(apiCall.data.data);
-        }
+        // if (apiCall?.status == 200) {
+        //   setModelos(apiCall.data.data);
+        // }
 
 
 
@@ -297,25 +297,25 @@ export const useVendor = () => {
 
 
 
-  useEffect(() => {
-    getCategorias()
-  }, [])
+  // useEffect(() => {
+  //   getCategorias()
+  // }, [])
 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    getMarcas()
+  //   getMarcas()
 
 
-  }, [])
+  // }, [])
 
-  useEffect(() => {
-    rangeYear()
-  }, [])
+  // useEffect(() => {
+  //   rangeYear()
+  // }, [])
 
-  useEffect(() => {
-    getMyProducts()
-  }, [])
+  // useEffect(() => {
+  //   getMyProducts()
+  // }, [])
   
 
 

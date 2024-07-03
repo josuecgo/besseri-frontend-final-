@@ -118,6 +118,37 @@ const LoginScreen = ({ navigation }) => {
     }
   };
 
+  const checkPreregister = async () => {
+    try {
+      setShowLoader(true);
+      const url = api_urls.login_preregister;
+      const body = {
+        email: userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS],
+        code: userCredentials[CREDENTIAL_KEYS.PASSWORD]
+      }
+     
+      const apiCall = await axios.post(url, body);
+
+      const data = apiCall?.data?.data;
+     
+      if (!data) {
+        handleSignIn()
+      }else{
+        // setUserCredentials({
+        //   ...userCredentials,
+        //   [CREDENTIAL_KEYS.EMAIL_ADDRESS]: '',
+        //   [CREDENTIAL_KEYS.PASSWORD]:''
+        // });
+        navigation.navigate('PreregisterStack', { screen: 'UserRegisterScreen', params: data });
+
+        setShowLoader(false);
+      }
+      
+    } catch (error) {
+      setShowLoader(false);
+    }
+  }
+
 
   return (
     <CustomSafeAreaViewComponent>
@@ -204,7 +235,7 @@ const LoginScreen = ({ navigation }) => {
 
         <BtnPrincipal
           text={'Ingresar'}
-          onPress={handleSignIn}
+          onPress={checkPreregister}
         />
       </VStack>
 

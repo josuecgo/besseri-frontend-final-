@@ -28,7 +28,7 @@ export const CreateCarScreen = (props) => {
     handleYear
   } = useSearchStore();
   const dispatch = useDispatch()
-  const { address,marcas,marcaValue,modelos,modeloValue,yearValue,years,addresses }  = useSelector(state => state.user);
+  const { address,marcas,marcaValue,modelos,modeloValue,yearValue,years }  = useSelector(state => state.user);
   const [km, setKm ] = useState('')
   
 
@@ -89,12 +89,6 @@ export const CreateCarScreen = (props) => {
   
   }
 
-  const handleTextChange = text => {
-    const regex = /^[0-9]*$/; // Expresión regular que solo permite números
-    if (regex.test(text)) {
-      setKm(text);
-    }
-  };
 
   const handleScreenPress = () => {
     Keyboard.dismiss();
@@ -107,8 +101,6 @@ export const CreateCarScreen = (props) => {
     <TouchableWithoutFeedback onPress={handleScreenPress}>
     <View style={styles.garage} >
 
-{/* <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}> */}
 
         
 
@@ -157,15 +149,7 @@ export const CreateCarScreen = (props) => {
          
 
 
-            {/* <Heading size="xs" mb="3" color={Colors.white}>kilometraje</Heading>
-           
-            <Input
-              value={km.toString()}
-              keyboardType="numeric"
-              onChangeText={handleTextChange}
-              borderColor={Colors.lightBorder}
-              color={Colors.white}
-            /> */}
+         
         
 
           <Heading size="xs" my="3" color={Colors.white}>Dirección</Heading>
@@ -183,7 +167,7 @@ export const CreateCarScreen = (props) => {
           
         </Box>
       </ScrollView>
-      {/* </KeyboardAvoidingView> */}
+     
       <View style={{alignItems:'center' }} >
 
         <Button 

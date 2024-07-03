@@ -252,7 +252,6 @@ export const AgendarScreen = (props) => {
         customerId: customerData?.customerId,
         chargeId: stripeEssentials?.intentId,
         amount: serviceId?.price,
-        // total_amount:aplicarDescuento(total,coupon?.discount),
         total_amount:comisionFormatted(serviceId?.price,comision),
         comision:comision,
         coupon

@@ -257,10 +257,7 @@ export const CustomerHomeStack = () => {
         name={CUSTOMER_HOME_SCREEN_ROUTES.PERFIL}
         component={ProfileScreen}
       />
-      {/* <Stack.Screen
-        name={'LSFS'}
-        component={LSFS}
-      /> */}
+      
     </Stack.Navigator>
   );
 };

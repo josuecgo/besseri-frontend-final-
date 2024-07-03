@@ -129,13 +129,7 @@ export const useFiltrado = ( isServicios ) => {
         
     }, [productos,carActive])
    
- 
 
-
-    
-    
-    
-   
 
     return {
         productFilter,

@@ -105,37 +105,8 @@ const CustomerProductsViewScreen = React.memo((props) => {
 
       <View style={{ flex: 1, backgroundColor: Colors.white }} >
 
-        {/* <View style={Platform.OS === 'ios' ? styles.filterContainer : styles.filterContainer2}>
-          <SelectFilter/>
        
-        </View> */}
-        {/* <View style={styles.reset} >
-          <View style={{marginVertical:10}} >
-            <CarDefault navigation={props.navigation} />
-          </View>
-          {
-            modelo && (
-              <TouchableOpacity 
-              onPress={resetFiltro}
-              style={styles.btnReset} 
-              >
-                <Text style={styles.txtReset} >Limpiar filtros</Text>
-              </TouchableOpacity>
-              
-            )
-            
-          }
-          
-        </View> */}
-
-
-
-        <View style={{
-          paddingVertical: 5,
-          backgroundColor: 'transparent',
-          // alignSelf: 'flex-start', flexDirection: 'row' ,
-
-        }}>
+        <View style={{paddingVertical: 5,backgroundColor: 'transparent'}}>
 
           <Text style={{ ...CommonStyles.h1, color: Colors.black, fontWeight: 'bold', marginLeft: 10 }} >
             Categorías

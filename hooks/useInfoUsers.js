@@ -147,9 +147,6 @@ export const useInfoUser = (  ) => {
     let modelo = modelos.find(item => item._id === modeloValue);
 
    
-
-    
-
     const max = modelo?.years?.al
 
     const min = modelo?.years?.de
