@@ -91,7 +91,7 @@ const CardServicio = ({data}) => {
     </>
   )
 
-  let total = comisionFormatted(data?.serviceId?.price, comision);
+  let total = comisionFormatted(data?.total_amount, 0);
   
   return (
     <>

@@ -107,7 +107,7 @@ export const customer_api_urls = {
     get_categories_services:`${base_url}/services/get-categories-services`,
     active_categories_services:`${base_url}/services/active-categories-services`,
 
-    get_availability_services:`${base_url}/services/availability-services`,
+    
    
     update_additional_service:`${base_url}/appointment/update-service-additional`,
     

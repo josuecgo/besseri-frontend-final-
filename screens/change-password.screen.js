@@ -48,7 +48,7 @@ const ChangePasswordScreen = ({navigation}) => {
           showToaster('Las contraseñas no coinciden');
           return;
       }
-      if(confirmPassword?.length < 6) {
+      if(confirmPassword?.length < 4) {
           showToaster('La contraseña debe tener al menos 6 caracteres');
           return;
       }
