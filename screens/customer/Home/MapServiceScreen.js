@@ -58,13 +58,13 @@ export const MapServiceScreen = (props) => {
 
 
       if (apiCall?.data?.data.length <= 0) {
-        Alert.alert('No tienes ninguna direccion', 'Crea una direccion', [
+        Alert.alert('No tienes ninguna dirección', 'Crea una dirección', [
           {
             text: 'Cancelar',
             onPress: () => props.navigation.goBack(),
             style: 'cancel',
           },
-          { text: 'Crear', onPress: () => props.navigation.navigate('Mi dirección') },
+          { text: 'Crear', onPress: () => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_MY_ADDRESS) },
         ]);
       } else {
         dispatch(addAddressToUser(apiCall.data.data))

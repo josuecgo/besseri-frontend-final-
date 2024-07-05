@@ -29,8 +29,9 @@ export const AppointmentScreen = (props) => {
 
     try {
       setHourSelected(null)
+
       const url = `${customer_api_urls.get_availability_services}/${service._id}`
-      
+      console.log(url);
       const apiCall = await axios.post(url, { 
         date: daySelected, 
         timezone: "America/Mexico_City",
@@ -46,6 +47,7 @@ export const AppointmentScreen = (props) => {
       }
 
     } catch (error) {
+      console.log(error);
       setHourSelected(null)
       showToaster(error?.response?.data?.message)
       
