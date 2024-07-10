@@ -23,11 +23,15 @@ export const NotificationScreen = (props) => {
   const isFocused = useIsFocused()
 
   const orderDetail = async(data,item) => {
-    
-    // props.navigation.navigate(BOTTOM_TAB_CUSTOMER_ROUTES.ACCOUNT,{screen:CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_PEDIDOS})
-   getPedidosUser()
-    props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.DETALLE,data)
    
+    // if (item.type === 'quote') {
+    //   props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRESUPUESTO,data)
+    // }else{
+      getPedidosUser()
+      props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.DETALLE,data)
+     
+    // }
+
     if (!item?.isView)  {
         viewItem(item._id);
         

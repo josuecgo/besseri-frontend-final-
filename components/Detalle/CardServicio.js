@@ -12,7 +12,7 @@ import Colors from '../../util/styles/colors'
 
 const CardServicio = ({data}) => {
   const {comision} = useContext(ProductContext)
-  console.log(data);
+  
 
   const openMapsApp = (latitude, longitude) => {
 

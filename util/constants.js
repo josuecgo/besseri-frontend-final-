@@ -103,7 +103,9 @@ export const OrderStatusCode = {
 }
 
 export const BookingsStatusCode = {
-   EN_PROCESO:'En proceso',
+  CANCELADO:'CANCELADO',
+    PRESUPUESTO:"PRESUPUESTO",
+    EN_PROCESO:'En proceso',
     ESPERANDO_RIDER:'Esperando un rider',
     RIDER_EN_CAMINO_A_CUSTOMER:'Valet en camino con cliente',
     CUSTOMER_ENTREGADO_A_RIDER:'Cliente entrega a valet ',
@@ -167,6 +169,7 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   AGENDAR: 'Agendar',
   PAYMENT:'Payment',
   DETALLE: 'Detalle',
+  PRESUPUESTO: 'PRESUPUESTO',
   SEGUIMIENTO: 'Seguimiento',
   DETAILS_SERVICES: 'Details Services',
   SERVICE: 'Services',

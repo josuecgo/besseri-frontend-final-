@@ -37,6 +37,7 @@ import { CustomerOrderFeedbacks } from '../../screens/customer/Orders/customer.o
 import { ServiceFormFeedback } from '../../screens/customer/Orders/customer.form-service.feedback';
 import { CustomerServiceFeedbacks } from '../../screens/customer/Bookings/CustomerServiceFeedbacks';
 import { UserRegisterScreen } from '../../screens/customer/Preregister/UserRegisterScreen';
+import { QuoteScreen } from '../../screens/customer/Quote/QuoteScreen';
 
 const Stack = createStackNavigator();
 
@@ -133,6 +134,20 @@ export const MainNavigation = () => {
           header: props => (
             <HeaderTitle {...props}
               titulo="Detalle"
+              nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.PRESUPUESTO}
+        component={QuoteScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props}
+              titulo="Cotización"
               nav={props.navigation.goBack}
             />
           ),

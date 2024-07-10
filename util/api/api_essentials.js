@@ -1,7 +1,7 @@
-export const env = 'prod';
+export const env = 'dev';
 
 export const base_url = env === 'prod' ? 'https://api.besseri.mx'  : env === 'dev' ?  
-'http://192.168.1.37:3005' : 'http://192.168.1.34:3005';
+'http://192.168.1.46:3005' : 'http://192.168.1.34:3005';
 // export const base_url = false ? 'http://192.168.100.72:3005' : 'http://192.168.1.17:3005'
 
 export const api_urls = {
@@ -98,7 +98,7 @@ export const customer_api_urls = {
     get_stores:`${base_url}/business/get-stores`,
     get_store_data:`${base_url}/business/get-store`,
     get_stores_type_services:`${base_url}/business/get-stores`,
-
+   
     get_carwash:`${base_url}/carwash/get-services`,
 
     get_services:`${base_url}/services/get-services`,

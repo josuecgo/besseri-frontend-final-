@@ -51,9 +51,7 @@ export const CategoriesServicesScreen = ({navigation,route}) => {
   
 
     useEffect(() => {
-        getCategories()
-     
-    
+        getCategories()    
     }, [])
     
 

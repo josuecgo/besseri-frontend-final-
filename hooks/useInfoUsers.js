@@ -96,7 +96,7 @@ export const useInfoUser = (  ) => {
   const getPedidosUser = useCallback(async () => {
     try {
       const id = await getUserId();
-      console.log(id,'---');
+    
       if (!id) {
         return 
       }

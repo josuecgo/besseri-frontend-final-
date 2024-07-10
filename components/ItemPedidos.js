@@ -6,18 +6,17 @@ import CommonStyles from '../util/styles/styles';
 import { adjust } from '../util/Dimentions';
 import AddressFormatted from './AddressFormatted';
 import moment from 'moment';
-import { CUSTOMER_HOME_SCREEN_ROUTES } from '../util/constants';
+import { BookingsStatusCode, CUSTOMER_HOME_SCREEN_ROUTES } from '../util/constants';
 
 export const ItemPedidos = ({ item,navigation }) => {
 
-//  if (item.type === 'refaccion') {
-//   console.log(item.storePickup);
-//  }
+
   const goDetalle = (data) => {
     navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.DETALLE,data)
-    // console.log(data);
+   
   }
  
+
   
   return (
     <Box backgroundColor={Colors.white} style={styles.card} rounded={'lg'} >
@@ -58,7 +57,7 @@ export const ItemPedidos = ({ item,navigation }) => {
             <VStack space={2} >
               <HStack justifyContent={'space-between'} >
                 <Box backgroundColor={Colors.bgColor} rounded={'lg'} py={'8px'} px={'5px'} width={'40%'} alignItems={'center'} >
-                  <Text style={styles.type} >{item.type}</Text>
+                  <Text style={styles.type} >{item.status_code === BookingsStatusCode.PRESUPUESTO ? item.status : item.type}</Text>
                 </Box>
 
                 <Text style={styles.plan} >{item?.serviceId?.type_services?.name} </Text>

@@ -7,22 +7,23 @@ import { Box, Center, HStack, Image } from 'native-base';
 
 import CardServicio from '../../../components/Detalle/CardServicio';
 import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal';
-import { CUSTOMER_HOME_SCREEN_ROUTES, MAIN_ROUTES } from '../../../util/constants';
+import { BookingsStatusCode, CUSTOMER_HOME_SCREEN_ROUTES, MAIN_ROUTES, showToaster } from '../../../util/constants';
 import CardServiceAdditional from '../../../components/Detalle/CardServiceAdditional';
 import { useContext } from 'react';
 import { ProductContext } from '../../../util/context/Product/ProductContext';
 import { useCompras } from '../../../hooks/useCompras';
 import LoaderComponent from '../../../components/Loader/Loader.component';
-import { customer_api_urls } from '../../../util/api/api_essentials';
+import { customer_api_urls, vendor_api_urls } from '../../../util/api/api_essentials';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { QuoteScreen } from '../Quote/QuoteScreen';
 
 export const DetalleScreen = ({ route, navigation }) => {
   const [data, setData] = useState(route.params)
   const { comision } = useContext(ProductContext)
   const { buyAdditional, loading } = useCompras()
   const [reception, setReception] = useState(null)
-
+  const [isLoading, setIsLoading] = useState(false)
  
   if(data.type === 'refaccion') return <DetailRefaccion data={data} navigation={navigation} />
 
@@ -38,6 +39,30 @@ export const DetalleScreen = ({ route, navigation }) => {
   
     navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SEGUIMIENTO, status)
   }
+
+  const changeStatusBooking = async (code) => {
+
+    try {
+      setIsLoading(true)
+     
+      const apiCall = await axios.post(vendor_api_urls.change_booking_status, {
+        booking_id: data?._id,
+        code: code
+      })
+
+
+      if (apiCall.data.success) {
+        setData(apiCall?.data?.data)
+        setIsLoading(false)
+        showToaster('Servicio aceptados')
+      }
+      setIsLoading(false)
+
+    } catch (error) {
+      setIsLoading(false)
+      showToaster('Error en el cambio status')
+    }
+  } 
 
   const goFeedbackForm = () => {
 
@@ -100,7 +125,17 @@ export const DetalleScreen = ({ route, navigation }) => {
 
   let viewFeedback = data?.status_code === 'SERVICIO_CONCLUIDO' ||  data?.status_code === 'ENTREGADO_A_CUSTOMER'
   
+
+
+
+  if (!data || isLoading) return <LoaderComponent isVisible={true} />
  
+
+  if (data?.status_code === BookingsStatusCode.PRESUPUESTO) return <QuoteScreen
+    booking={data}
+    comision={comision}
+    onChange={changeStatusBooking}
+  />
   return (
     <ScrollView contentContainerStyle={styles.container} >
       <LoaderComponent isVisible={loading} />
