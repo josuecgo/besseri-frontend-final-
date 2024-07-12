@@ -54,7 +54,7 @@ export const DetalleScreen = ({ route, navigation }) => {
       if (apiCall.data.success) {
         setData(apiCall?.data?.data)
         setIsLoading(false)
-        showToaster('Servicio aceptados')
+        showToaster('Cambio realizado correctamente')
       }
       setIsLoading(false)
 

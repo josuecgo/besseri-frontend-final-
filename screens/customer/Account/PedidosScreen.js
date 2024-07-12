@@ -46,7 +46,7 @@ const goCancel = () => {
     <View style={styles.pedidos} >
    
      
-      <FlatList
+   <FlatList
       data={orders}
       renderItem={({item}) => {
        
