@@ -17,7 +17,7 @@ export const ServiceDetail = ({ booking, comision }) => {
   
   const amount = comisionFormatted(service?.price, comision)
   const total = booking?.pieceCost + amount
-
+  
   return (
 
     <Box alignItems="center" >
@@ -26,9 +26,9 @@ export const ServiceDetail = ({ booking, comision }) => {
         overflow="hidden"
 
       >
-        <Box paddingX={3} py={1} >
+        {/* <Box paddingX={3} py={1} >
           <Text style={styles.car} >{car?.maker?.name} {car?.model?.name} - {car?.type?.type}</Text>
-        </Box>
+        </Box> */}
 
         <Center>
           <Image
@@ -61,7 +61,7 @@ export const ServiceDetail = ({ booking, comision }) => {
 
                   <HStack justifyContent={'space-between'} >
                     <Text bold >Refacción</Text>
-                    <Text>${booking?.pieceCost}</Text>
+                    <Text>{moneda(booking?.pieceCost)}</Text>
                   </HStack>
                   <HStack justifyContent={'space-between'} >
                     <Text bold >Total</Text>
