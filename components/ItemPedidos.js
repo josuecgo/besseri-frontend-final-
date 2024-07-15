@@ -70,8 +70,8 @@ export const ItemPedidos = ({ item,navigation }) => {
                 </VStack>
                 <VStack>
 
-                <Text style={styles.txt}>{moment(item?.ordered_on).format('DD')} de {moment(item?.ordered_on).format('MMMM')} del {moment(item?.ordered_on).format('YYYY')} </Text>
-                  <Text style={styles.txt}>{moment(item?.ordered_on).format('HH:mm')}</Text>
+                <Text style={styles.txt}>{moment(item?.startDate).format('DD')} de {moment(item?.startDate).format('MMMM')} del {moment(item?.startDate).format('YYYY')} </Text>
+                  <Text style={styles.txt}>{moment(item?.startDate).format('HH:mm')}</Text>
                 </VStack>
 
               </HStack>
@@ -99,8 +99,8 @@ export const ItemPedidos = ({ item,navigation }) => {
               </VStack>
               <VStack>
 
-              <Text style={styles.txt}>{moment(item?.ordered_on).format('DD')} de {moment(item?.ordered_on).format('MMMM')} del {moment(item?.ordered_on).format('YYYY')} </Text>
-                  <Text style={styles.txt}>{moment(item?.ordered_on).format('HH:mm')}</Text>
+              <Text style={styles.txt}>{moment(item?.startDate).format('DD')} de {moment(item?.startDate).format('MMMM')} del {moment(item?.startDate).format('YYYY')} </Text>
+                  <Text style={styles.txt}>{moment(item?.startDate).format('HH:mm')}</Text>
               </VStack>
 
             </HStack>

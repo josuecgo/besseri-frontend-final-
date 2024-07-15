@@ -130,12 +130,14 @@ export const DetalleScreen = ({ route, navigation }) => {
 
   if (!data || isLoading) return <LoaderComponent isVisible={true} />
  
-
+ 
   if (data?.status_code === BookingsStatusCode.PRESUPUESTO) return <QuoteScreen
     booking={data}
     comision={comision}
     onChange={changeStatusBooking}
   />
+
+
   return (
     <ScrollView contentContainerStyle={styles.container} >
       <LoaderComponent isVisible={loading} />

@@ -91,7 +91,7 @@ const CardServicio = ({data}) => {
     </>
   )
 
-  let total = comisionFormatted(data?.total_amount, 0);
+  let total = comisionFormatted(data?.total_amount, 0) + data?.pieceCost;
   
   return (
     <>
@@ -122,9 +122,9 @@ const CardServicio = ({data}) => {
           </HStack>
 
           {
-            !data.serviceId.is_home && (
+            !data.serviceId.is_home &&  (
               <>
-               <Text style={{...CommonStyles.h2}} >Servicio de VALET incluido</Text>
+               <Text style={{...CommonStyles.h2}} >{data.chargeId === 'noDate' ? '' : 'Servicio de VALET incluido'}</Text>
               <Text style={{...CommonStyles.h3}} >{data?.address?.formatted_address}</Text>
               </>
             )

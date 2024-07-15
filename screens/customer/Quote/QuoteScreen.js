@@ -10,7 +10,7 @@ import Colors from '../../../util/styles/colors';
 export const QuoteScreen = ({ booking, comision,onChange }) => {
   const handleAcceptService = async() => {
     
-    onChange('RIDER_EN_CAMINO_A_CUSTOMER')
+    onChange('customerAccepted')
    
   };
 
