@@ -1,0 +1,6 @@
+module Pods_Besseri {
+  umbrella header "Pods-Besseri-umbrella.h"
+
+  export *
+  module * { export * }
+}

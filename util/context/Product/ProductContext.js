@@ -553,13 +553,14 @@ export const ProductProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        rangeYear()
-    }, [])
-
-    useEffect(() => {
-        getComision()
-        getCategorias()
-    }, []);
+        async function fetchData() {
+          rangeYear();
+          await getComision();
+          await getCategorias();
+        }
+      
+        fetchData();
+      }, []);
 
   
     

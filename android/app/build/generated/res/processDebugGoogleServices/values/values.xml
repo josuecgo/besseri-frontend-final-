@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">817083462769-b3rhdm4d6k4ie94cubhq22plmaf71ssr.apps.googleusercontent.com</string>
+    <string name="firebase_database_url" translatable="false">https://besseri-334619-default-rtdb.firebaseio.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">817083462769</string>
+    <string name="google_api_key" translatable="false">AIzaSyA2G4EswlvlJxAvzR_zZmtzS-pJjxLFr5I</string>
+    <string name="google_app_id" translatable="false">1:817083462769:android:65e44ae2a989437d2297d0</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyA2G4EswlvlJxAvzR_zZmtzS-pJjxLFr5I</string>
+    <string name="google_storage_bucket" translatable="false">besseri-334619.appspot.com</string>
+    <string name="project_id" translatable="false">besseri-334619</string>
+</resources>

@@ -7,20 +7,20 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { MainNavigation } from './util/Routes/navigation.routes';
 import { combineReducers, createStore,applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import {thunk} from 'redux-thunk';
 import { Provider } from 'react-redux';
 import CartReducer from './util/ReduxStore/Reducers/CustomerReducers/CartReducer';
 import { StripeProvider } from '@stripe/stripe-react-native';
 
 import messaging from '@react-native-firebase/messaging';
-import {  NativeBaseProvider,  extendTheme } from 'native-base';
+import {  NativeBaseProvider,  Text,  extendTheme } from 'native-base';
 
 import { NotificationContext, NotificationProvider } from './util/context/NotificationContext';
 
 import { ProductProvider } from './util/context/Product/ProductContext';
 
 import { ChatProvider } from './util/context/Chat/ChatContext';
-import { useChat } from './hooks/useChat';
+
 import FeedbackReducer from './util/ReduxStore/Reducers/CustomerReducers/FeedbackReducer';
 import UserInfoReducer from './util/ReduxStore/Reducers/CustomerReducers/UserInfoReducer';
 import PedidosReducer from './util/ReduxStore/Reducers/CustomerReducers/PedidosReducer';
@@ -34,19 +34,35 @@ const config = {
 
 const customTheme = extendTheme({ config });
 
+
+
+const rootReducer = combineReducers({
+  cart: CartReducer,
+  feedback: FeedbackReducer,
+  user: UserInfoReducer,
+  pedidos: PedidosReducer,
+  fuel: FuelReducer,
+});
+
+// Crear tienda Redux con middleware (redux-thunk)
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
+
+
+
 const App = () => {
 
 
   
-  const store = combineReducers({
-    cart: CartReducer,
-    feedback: FeedbackReducer,
-    user: UserInfoReducer,
-    pedidos:PedidosReducer,
-    fuel:FuelReducer
+  // const store = combineReducers({
+  //   cart: CartReducer,
+  //   feedback: FeedbackReducer,
+  //   user: UserInfoReducer,
+  //   pedidos:PedidosReducer,
+  //   fuel:FuelReducer
     
-  });
-  const reduxStore = createStore(store,applyMiddleware(thunk));
+  // });
+  // const reduxStore = createStore(store,applyMiddleware(thunk));
 
 
 
@@ -58,7 +74,7 @@ const App = () => {
     <StripeProvider
     publishableKey={KeysStripe.LIVE_KEY}
     >
-    <Provider store={reduxStore}>
+    <Provider store={store}>
     
         <NotificationProvider>  
           
@@ -126,7 +142,7 @@ const App2 = () => {
         <StatusBar barStyle={isDarkMode ? 'dark-content' : 'light-content'} />
         {/* {showSplashScreen ? <SplashScreen /> : <MainNavigation />} */}
         <MainNavigation />
-   
+      
       </NavigationContainer>
     
 

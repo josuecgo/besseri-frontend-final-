@@ -1,0 +1,36 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.besseri.app-mergeDebugResources-104:/values-ku/values-ku.xml",
+            "map": [
+                {
+                    "source": "/Users/mario-dev/.gradle/caches/transforms-3/c201851c15fd55415da22ca660f211ad/transformed/jetified-hcaptcha-20.48.6/res/values-ku/values-ku.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "84",
+                        "endOffsets": "135"
+                    },
+                    "to": {
+                        "startLines": "8",
+                        "startColumns": "4",
+                        "startOffsets": "495",
+                        "endColumns": "84",
+                        "endOffsets": "575"
+                    }
+                },
+                {
+                    "source": "/Users/mario-dev/.gradle/caches/transforms-3/40d20c5853981a6afdeb59ae11366de2/transformed/jetified-react-android-0.73.2-debug/res/values-ku/values-ku.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "55,136,205,288,355,422",
+                        "endColumns": "80,68,82,66,66,72",
+                        "endOffsets": "131,200,283,350,417,490"
+                    }
+                }
+            ]
+        }
+    ]
+}

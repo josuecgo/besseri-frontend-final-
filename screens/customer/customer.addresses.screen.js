@@ -16,7 +16,6 @@ import Geolocation from '@react-native-community/geolocation';
 import { HeaderBackground } from '../../components/Background/HeaderBackground';
 import { deviceHeight } from '../../util/Dimentions';
 import { useLocation } from '../../hooks/useLocation';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 
 const CustomerAddressesScreen = (props) => {

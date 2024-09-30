@@ -52,21 +52,26 @@ export const MainNavigation = () => {
         name={'AuthStack'}
         component={LSFS}
       />
-      <Stack.Screen
-        name={'PreregisterStack'}
-        component={PreregisterStack}
+
+<Stack.Screen
+        name={'CustomerStack'}
+        component={PartsServicesFunctionsDrawer}
       />
 
 <Stack.Screen
         name={'UpdateScreen'}
         component={UpdateScreen}
       />
-      
 
       <Stack.Screen
-        name={'CustomerStack'}
-        component={PartsServicesFunctionsDrawer}
+        name={'PreregisterStack'}
+        component={PreregisterStack}
       />
+
+
+      
+
+     
       <Stack.Screen
         name={'CustomerHomeStack'}
         component={BottomTabHome}

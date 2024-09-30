@@ -41,6 +41,78 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817083462769:android:c0691fc9e9e255122297d0",
+        "android_client_info": {
+          "package_name": "com.besseri.business"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "817083462769-b3rhdm4d6k4ie94cubhq22plmaf71ssr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2G4EswlvlJxAvzR_zZmtzS-pJjxLFr5I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "817083462769-b3rhdm4d6k4ie94cubhq22plmaf71ssr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "817083462769-9vuhjobm91g34gd8h0sjaamcm9k9cnd5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.josue.oropeza.refacciones.besseri"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817083462769:android:b5425450f88718c82297d0",
+        "android_client_info": {
+          "package_name": "com.besseri.rider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "817083462769-b3rhdm4d6k4ie94cubhq22plmaf71ssr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2G4EswlvlJxAvzR_zZmtzS-pJjxLFr5I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "817083462769-b3rhdm4d6k4ie94cubhq22plmaf71ssr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "817083462769-9vuhjobm91g34gd8h0sjaamcm9k9cnd5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.josue.oropeza.refacciones.besseri"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

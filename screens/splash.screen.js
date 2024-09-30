@@ -97,10 +97,22 @@ const SplashScreen = ({navigation,route}) => {
     }, 2200);
     
   };
+ 
   useEffect(() => {
-    check_auth();
+    let isMounted = true;
+  
+    const runCheckAuth = async () => {
+      if (isMounted) {
+        await check_auth();
+      }
+    };
+  
+    runCheckAuth();
+  
+    return () => {
+      isMounted = false;
+    };
   }, []);
-
   return (
     <CustomSafeAreaViewComponent>
       <View

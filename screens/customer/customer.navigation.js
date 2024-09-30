@@ -57,48 +57,64 @@ export const PartsServicesFunctionsDrawer = () => {
 
 
 
-  useEffect(async () => {
+  useEffect(() => {
+    const fetchComision = async () => {
+      if (!comision) {
+        await getComision();
+      }
+    };
+  
     let abortController = new AbortController();
+  
+    fetchComision();
+  
+    return () => {
+      abortController.abort();  // Esta línea está bien
+    };
+  }, [comision]);
+  
+  
 
-    if (!comision) {
-      getComision()
-    }
 
+
+
+
+
+
+
+
+  useEffect(() => {
+    const fetchMarcas = async () => {
+      await getMarcas();
+    };
+  
+    let abortController = new AbortController();
+  
+    fetchMarcas();
+  
     return () => {
       abortController.abort();
-    }
-  }, [comision])
+    };
+  }, []);
+  
 
 
-
-
-
-
-
-
-
-  useEffect(async () => {
-
-
+  useEffect(() => {
+    const fetchModelo = async () => {
+      if (valueMaker) {
+        await getModelo(valueMaker);
+      }
+    };
+  
     let abortController = new AbortController();
-    getMarcas();
+  
+    fetchModelo();
+  
     return () => {
       abortController.abort();
-    }
-
-
-  }, [])
-
-
-  useEffect(async () => {
-    let abortController = new AbortController();
-    if (valueMaker) {
-      getModelo(valueMaker);
-    }
-    return () => {
-      abortController.abort();
-    }
-  }, [valueMaker])
+    };
+  }, [valueMaker]);
+  
 
 
   return (

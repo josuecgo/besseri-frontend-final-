@@ -1,15 +1,15 @@
 /**
  * @format
  */
-import React from 'react';
 import 'react-native-gesture-handler';
 import {AppRegistry} from 'react-native';
-import App from './App';
+
 import {name as appName} from './app.json';
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from 'react-native-push-notification'
 import moment from 'moment'
 import 'moment/locale/es'  
+import App from './App';
 moment.locale('es')
 
 
@@ -17,7 +17,7 @@ moment.locale('es')
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: function (token) {
-    //console.log("TOKEn:", token);
+    console.log("TOKEn:", token);
     
   },
   // (required) Called when a remote is received or opened, or local notification is opened
@@ -50,5 +50,4 @@ PushNotification.configure({
 
 
 
-
-AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent(appName, () => App );

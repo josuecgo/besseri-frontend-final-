@@ -157,7 +157,10 @@ export const NotificationProvider = ({children}) => {
       }
     
       const getToken = async() => {
-        const permission =  Platform.OS === 'android' ? await  requestUserPermission() : PushNotificationIOS.requestPermissions()
+        const permission =  
+        Platform.OS === 'android' 
+          ? await  requestUserPermission() 
+          : PushNotificationIOS.requestPermissions()
        
         if(permission) {
           const fcmToken =  await firebase.messaging().getToken();
@@ -179,14 +182,7 @@ export const NotificationProvider = ({children}) => {
      
       async function pushIos(){
        
-        // const unsubscribe = await messaging().onMessage(async (remoteMsg) => {
-        //   //console.log('remote push ios');
-        //   // await PushNotificationIOS.addNotificationRequest({
-        //   //   alertTitle:remoteMsg?.data?.title,
-        //   //   alertBody:remoteMsg?.data?.message
-        //   // })
-
-        // })
+ 
         
         getNotificaciones();
 
@@ -204,14 +200,7 @@ export const NotificationProvider = ({children}) => {
 
    
 
-    useEffect(async() => {
-      const type = 'notification';
-      PushNotificationIOS.addEventListener(type, onRemoteNotification);
-      // await getNotificaciones();
-      return () => {
-        PushNotificationIOS.removeEventListener(type);
-      };
-    });
+    
   
     const onRemoteNotification = (notification) => {
         // //console.log({notification});
@@ -224,6 +213,18 @@ export const NotificationProvider = ({children}) => {
         getNotificaciones();
       }
     };
+
+
+    useEffect(() => {
+      const notificationType = 'notification';
+    
+      PushNotificationIOS.addEventListener(notificationType, onRemoteNotification);
+
+    
+      return () => {
+        PushNotificationIOS.removeEventListener(notificationType);
+      };
+    }, []);
 
 
     return (

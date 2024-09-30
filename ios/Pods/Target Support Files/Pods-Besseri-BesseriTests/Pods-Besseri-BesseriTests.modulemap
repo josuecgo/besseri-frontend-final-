@@ -1,0 +1,6 @@
+module Pods_Besseri_BesseriTests {
+  umbrella header "Pods-Besseri-BesseriTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
