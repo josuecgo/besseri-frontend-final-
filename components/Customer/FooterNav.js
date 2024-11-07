@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import { Box, HStack, Center, Image } from 'native-base';
+import { Box, HStack, Center, Image, Text } from 'native-base';
 
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -27,7 +27,8 @@ export const FooterNav = ({ state, navigation }) => {
 
     switch (route) {
       case BOTTOM_TAB_CUSTOMER_ROUTES.HOME_SCREEN:
-
+       
+        
         return 'home'
       case BOTTOM_TAB_CUSTOMER_ROUTES.ACCOUNT:
 
@@ -84,8 +85,8 @@ export const FooterNav = ({ state, navigation }) => {
                   )
                 }
 
-                <MaterialCommunityIcons name={getIconName(route?.name)} size={size} />
-
+                <MaterialCommunityIcons name={getIconName(route?.name)} size={size} color={Colors.bgColor} />
+              
               </Center>
             </TouchableOpacity>
           );

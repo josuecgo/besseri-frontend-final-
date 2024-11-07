@@ -96,39 +96,19 @@ const App = () => {
 }
 const App2 = () => {
  
-  const {showNotification } = useContext(NotificationContext);
-
-  
-  
 
 
-  useEffect(() => {
-    messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-    
-      showNotification(remoteMessage)
-      
-    
-    });
-  },[])
-
-
- 
+  const {
+    iosPermisoss,
+    getToken,
+  } = useContext(NotificationContext);
 
   useEffect(() => {
-    
-  
-    messaging().onMessage( async(msg) => {
-     
-      showNotification(msg)
-     
-
-
-    })
-
-    
-  },[]);
-
-
+    if (Platform.OS === 'ios') {
+      iosPermisoss();
+    }
+    getToken();
+  }, []);
 
 
   

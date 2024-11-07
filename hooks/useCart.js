@@ -111,12 +111,16 @@ export const useCart = () => {
     // setAplicado(null);
   }
   
-  useEffect(async() => {
-    if (!cupon) {
-      borrarDescuento()
-    }
-  }, [cupon])
+
   
+  useEffect(() => {
+    async function checkAndRemoveDiscount() {
+      if (!cupon) {
+        await borrarDescuento();
+      }
+    }
+    checkAndRemoveDiscount();
+  }, [cupon]);
   
 
 

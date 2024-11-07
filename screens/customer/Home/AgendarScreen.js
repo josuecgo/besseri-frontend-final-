@@ -14,13 +14,12 @@ import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constant
 import axios from 'axios';
 import { customer_api_urls, vendor_api_urls } from '../../../util/api/api_essentials';
 import ModalChildren from '../../../components/ModalChildren';
-import { CardField, useConfirmPayment, useStripe } from '@stripe/stripe-react-native';
+import {  useStripe } from '@stripe/stripe-react-native';
 import { usePayment } from '../../../hooks/usePayment';
 import { getUser, getUserId } from '../../../util/local-storage/auth_service';
 import { useContext } from 'react';
 import { ProductContext } from '../../../util/context/Product/ProductContext';
 import { Cupon } from '../../../components/Customer/Cupon';
-import { useCompras } from '../../../hooks/useCompras';
 
 
 
@@ -103,6 +102,10 @@ export const AgendarScreen = (props) => {
           publishableKey,
         } = data
 
+      console.log({ paymentIntent,
+          ephemeralKey,
+          customer,});
+      
       const { error } = await initPaymentSheet({
         customerId: customer,
         customerEphemeralKeySecret: ephemeralKey,
@@ -119,7 +122,7 @@ export const AgendarScreen = (props) => {
         setLoading(true);
       }
     } catch (error) {
-      console.log(error);
+     
       showToaster('No hay conexion en este momento');
       setLoading(false);
       setFetchLoading(false)
@@ -130,25 +133,30 @@ export const AgendarScreen = (props) => {
 
   const openPaymentSheet = async () => {
    
-    if (coupon.discount === 100) { 
-      freeAgendarCita()
-    
-      return
-    }
-    setFetchLoading(true)
-    await initializePaymentSheet();
-
-
-
-    const { error } = await presentPaymentSheet();
-
-    if (error) {
-      setFetchLoading(false)
+    try {
+      if (coupon.discount === 100) { 
+        freeAgendarCita()
       
-      Alert.alert(`Pago cancelado`);
-
-    } else {
-      agendarCita()
+        return
+      }
+      setFetchLoading(true)
+      await initializePaymentSheet();
+  
+  
+  
+      const { error } = await presentPaymentSheet();
+     
+      if (error) {
+        setFetchLoading(false)
+        
+        Alert.alert(`Pago cancelado`);
+  
+      } else {
+        agendarCita()
+      }
+    } catch (error) {
+      console.log(error,'open payment sheet');
+      
     }
 
   };

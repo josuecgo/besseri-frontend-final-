@@ -30,15 +30,21 @@ export const MyCarsScreen = ({ navigation }) => {
     navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ADD_MY_CAR)
   };
 
-  const sortedCars = [carActive, ...cars.filter(car => car._id !== carActive._id)];
+  const sortedCars = cars.length > 0 
+    ? (carActive ? [carActive, ...cars.filter(car => car?._id !== carActive?._id)] : cars) 
+    : (carActive ? [carActive] : []);
 
+
+
+
+  
  
   return (
     <View style={styles.cars}>
       <FlatList
         data={sortedCars}
         renderItem={({ item }) => <ItemCar data={item} carActive={carActive} />}
-        keyExtractor={item => item._id}
+        keyExtractor={item => item?._id}
         ListEmptyComponent={<CarsEmpty />}
         showsVerticalScrollIndicator={false}
        

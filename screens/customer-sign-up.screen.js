@@ -1,24 +1,19 @@
 import React, { useRef, useState } from 'react';
-import { StyleSheet, View, Text, Alert, Linking, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, Alert, Linking, ImageBackground, Pressable } from 'react-native';
 import CustomSafeAreaViewComponent from '../components/custom-safe-area-view/custom-safe-area-view.component';
-import TopCircleComponent from '../components/top-circle/top-circle.component';
 import CommonStyles from '../util/styles/styles';
 import {
   LOGIN_SIGNUP_FORGOT_ROUTES,
-  SCREEN_HORIZONTAL_MARGIN,
-  SCREEN_HORIZONTAL_MARGIN_FORM,
+
   showToaster,
 } from '../util/constants';
 import Colors from '../util/styles/colors';
 import KEYBOARD_TYPES from '../util/keyboard-types';
-import InputFieldComponent from '../components/input-field/input-field.component';
-
-import ButtonComponent from '../components/button/button.component';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { api_statuses, api_urls } from '../util/api/api_essentials';
 import axios from 'axios';
 import LoaderComponent from '../components/Loader/Loader.component';
-import { adjust, deviceHeight, deviceWidth } from '../util/Dimentions';
-import { ButtonIconoInput } from '../components/button/ButtonIconoInput';
+import {  deviceWidth } from '../util/Dimentions';
 import { comparaText } from '../util/helpers/StatusText';
 
 import CheckboxTerms from '../components/button/CheckboxTerms';
@@ -27,7 +22,7 @@ import { HeaderTitle } from '../components/Customer/HeaderTitle';
 import { NewLogo } from '../components/NewLogo';
 import { BtnPrincipal } from '../components/Customer/BtnPrincipal';
 import { InputTxt } from '../components/Customer/InputTxt';
-import { Center, HStack, VStack } from 'native-base';
+import { Center, HStack, Input, VStack } from 'native-base';
 
 
 
@@ -53,7 +48,8 @@ const CustomerSignUpScreen = ({ navigation }) => {
     [CREDENTIAL_KEYS.CONFIRMPASSWORD]: '',
   });
   const [isSelected, setIsSelected] = useState(false);
-  const [showPass, setShowPass] = useState(true);
+  const [show, setShow] = useState(false)
+  const [showPass, setShowPass] = useState(false);
   const phoneNumberRef = useRef();
 
 
@@ -238,26 +234,58 @@ const CustomerSignUpScreen = ({ navigation }) => {
                 nextFieldRef={phoneNumberRef}
                 returnType="next"
               />
-              <InputTxt
-                label={'Contraseña'}
-                onChangeText={inputText => {
-                  onChangeText(inputText, CREDENTIAL_KEYS.PASSWORD);
-                }}
-                placeholderText={CREDENTIAL_KEYS.PASSWORD}
-                secureTextEntry={showPass}
-                value={userCredentials[CREDENTIAL_KEYS.PASSWORD]}
-              // ref={passwordRef}
-              />
+              <Text style={{ ...CommonStyles.h2 }} >{CREDENTIAL_KEYS.PASSWORD}</Text>
 
-              <InputTxt
-                label={'Repetir Contraseña'}
-                onChangeText={inputText => {
+              <Input
+              backgroundColor={Colors.bgInput}
+              borderColor={Colors.darker}
+              borderWidth={'1px'}
+              borderRadius={'10px'}
+              onChangeText={inputText => {
+                onChangeText(inputText, CREDENTIAL_KEYS.PASSWORD);
+              }}
+              color={Colors.white}
+              placeholder={CREDENTIAL_KEYS.PASSWORD}
+              value={userCredentials[CREDENTIAL_KEYS.PASSWORD]}
+              mt={'13px'}
+              size={Platform.OS === 'ios' ? '2xl' : 'lg'}
+              type={show ? "text" : "password"}
+              InputRightElement={<Pressable onPress={() => setShow(!show)}
+              style={{padding:10}}
+              >
+                <MaterialIcons name={show ? "visibility" : "visibility-off"}
+                  size={25}
+                  color={Colors.white}
+                />
+              </Pressable>}
+
+            />
+              
+              
+
+              <Input
+                 backgroundColor={Colors.bgInput}
+              borderColor={Colors.darker}
+              borderWidth={'1px'}
+              borderRadius={'10px'}
+              onChangeText={inputText => {
                   onChangeText(inputText, CREDENTIAL_KEYS.CONFIRMPASSWORD);
                 }}
-                placeholderText={CREDENTIAL_KEYS.CONFIRMPASSWORD}
-                secureTextEntry={showPass}
-                value={userCredentials[CREDENTIAL_KEYS.CONFIRMPASSWORD]}
-              // ref={passwordRef}
+                 color={Colors.white}
+              placeholder={CREDENTIAL_KEYS.CONFIRMPASSWORD}
+              value={userCredentials[CREDENTIAL_KEYS.CONFIRMPASSWORD]}
+              mt={'13px'}
+              size={Platform.OS === 'ios' ? '2xl' : 'lg'}
+              type={showPass ? "text" : "password"}
+              InputRightElement={<Pressable onPress={() => setShowPass(!showPass)}
+              style={{padding:10}}
+              >
+                <MaterialIcons name={showPass ? "visibility" : "visibility-off"}
+                  size={25}
+                  color={Colors.white}
+                />
+              </Pressable>}
+         
               />
               <InputTxt
                 label={CREDENTIAL_KEYS.PHONE_NUMBER}
@@ -275,10 +303,10 @@ const CustomerSignUpScreen = ({ navigation }) => {
             </VStack>
 
             <Center>
-              <TouchableOpacity onPress={goPoliticas} >
+              <TouchableOpacity onPress={handlePress} >
 
 
-              </TouchableOpacity>
+             
               <CheckboxTerms
                 isSelected={isSelected}
                 roleName={'terminos'}
@@ -287,6 +315,7 @@ const CustomerSignUpScreen = ({ navigation }) => {
                 handlePress={handlePress}
 
               />
+               </TouchableOpacity>
               <TouchableOpacity onPress={goPoliticas} >
                 <Text style={{ ...CommonStyles.h2 }} >Politicas de privacidad</Text>
               </TouchableOpacity>

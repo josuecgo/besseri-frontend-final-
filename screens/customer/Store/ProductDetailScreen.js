@@ -37,7 +37,7 @@ const ProductDetailScreen = (props) => {
   const isChange = useRef(false);
   const [isDisable, setIsDisable] = useState(false);
   const [showModal, setShowModal] = useState(false)
-
+  const isMounted = useRef(true);
 
   useEffect(() => {
     setEnCarrito(inTheCart(product))
@@ -90,22 +90,7 @@ const ProductDetailScreen = (props) => {
     props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_REVIEWS,feedback)
   }
 
-  // const getBusinessDetails = async () => {
-  //   try {
-     
-  //     const businessDetailsAPi = await axios.get(`${customer_api_urls.get_business_details}/${product?.business_id}`)
-  //     if (businessDetailsAPi.status == api_statuses.success) {
-  //       setBusiness(businessDetailsAPi.data.data.store);
 
-  //     } else {
-  //       showToaster('Algo salio mal code 1')
-  //     }
-  //   } catch (e) {
-  //     showToaster('No se pudo traer informacion del vendedor')
-
-
-  //   }
-  // }
 
   const getFeedbacks = async() => {
     try {
@@ -113,30 +98,49 @@ const ProductDetailScreen = (props) => {
 
       
       if (apiCall.status === 200) {
-        setFeedback(apiCall?.data?.data)
+        if (isMounted) {
+          setFeedback(apiCall?.data?.data)
+        }
+      
       }
      } catch(e) {
         //  showToaster('No se pudo traer informacion del vendedor')
         
-         
+         setFeedback([])
      }
   }
 
   const goCart = async () => {
     const user_id = await getUserId();
-
-    setShowModal(false)
-    if (user_id) {
-      props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK)
-    } else {
-      props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR)
+    if (isMounted.current) {
+      setShowModal(false);
+      if (user_id) {
+        props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_STACK);
+      } else {
+        props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.INICIAR);
+      }
     }
+  };
+  
+  const incrementPriece = (price, discount) => {
+    let increase = (price * discount) / 100;
+    // Sumar el 10% al precio original
+    let newPrice = price + increase;
 
+    return moneda(newPrice);
   }
 
-  useEffect(() => {
-    getFeedbacks()
-  }, []);
+  
+
+useEffect(() => {
+    isMounted.current = true;
+    getFeedbacks();
+
+    return () => {
+        isMounted.current = false; // Marca como no montado al desmontar
+    };
+}, []);
+
 
   
   return (
@@ -182,9 +186,32 @@ const ProductDetailScreen = (props) => {
 
         </Card>
           <VStack space={2} style={styles.detailCard} >
-            <Text style={{...CommonStyles.h1,color:Colors.black, fontWeight:'bold'}} >{product?.name}</Text>
+          <Text style={{...CommonStyles.h1,color:Colors.black, fontWeight:'bold'}} >{product?.name}</Text>
+            {
+               product?.discount > 0 && (
+                <Text 
+                style={{...CommonStyles.h2,color:'#727272',textDecorationLine:'line-through'}}
+                >
+                  {incrementPriece((Number(product?.price) + Number(comision * product?.price / 100)),product?.discount)} MXN
+                </Text>
+              )
+            }
+            
+            <HStack>
+            <Text style={{...CommonStyles.h2,color:Colors.black}} >{`${moneda(Number(product?.price) + Number(comision * product?.price / 100))} MXN `}</Text>
+            {
+               product?.discount > 0 && (
+                <Text 
+                style={{...CommonStyles.h2,color:'#727272',textDecorationLine:'line-through'}}
+                >
+                  {product?.discount}% OFF
+                </Text>
+              )
+            }
 
-            <Text style={{...CommonStyles.h2,color:Colors.black}} >{`${moneda(Number(product?.price) + Number(comision * product?.price / 100))} MXN`}</Text>
+            </HStack>
+
+            
             
 
             

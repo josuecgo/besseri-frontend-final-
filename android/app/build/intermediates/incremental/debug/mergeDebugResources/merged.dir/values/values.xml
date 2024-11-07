@@ -2574,7 +2574,7 @@
     <string name="google_api_key" translatable="false">AIzaSyA2G4EswlvlJxAvzR_zZmtzS-pJjxLFr5I</string>
     <string name="google_app_id" translatable="false">1:817083462769:android:65e44ae2a989437d2297d0</string>
     <string name="google_crash_reporting_api_key" translatable="false">AIzaSyA2G4EswlvlJxAvzR_zZmtzS-pJjxLFr5I</string>
-    <string name="google_storage_bucket" translatable="false">besseri-334619.appspot.com</string>
+    <string name="google_storage_bucket" translatable="false">besseri-334619.firebasestorage.app</string>
     <string description="Alternate text for the Google Pay logo-only button [CHAR_LIMIT=40]" name="gpay_logo_description">Google Pay</string>
     <string description="heading to a page or section" name="header_description">Heading</string>
     <string name="hide_bottom_view_on_scroll_behavior" translatable="false">com.google.android.material.behavior.HideBottomViewOnScrollBehavior</string>

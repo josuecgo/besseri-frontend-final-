@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
   },
   plan: { fontSize: adjust(18), color: Colors.bgColor, fontWeight: 'bold' },
   txt: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color:Colors.bgColor
   }
 })

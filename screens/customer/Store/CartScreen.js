@@ -33,7 +33,7 @@ export const CartScreen = (props) => {
   //   lat: 0,
   //   label: ''
   // })
-  const [businessProfiles, setBusinessProfiles] = useState([]);
+  const [businessProfiles, setBusinessProfiles] = useState(null);
   const [comission, setComission] = useState();
   const [delivery_fee, setDeliveryFee] = useState(null);
   const [totalDeliveryFee, setTotalDeliveryFee] = useState(0);
@@ -48,26 +48,25 @@ export const CartScreen = (props) => {
   const [loading, setLoading] = useState(false)
  
 
-  
-  useEffect(() => {
-    
-    fetchBusinessDetails()
-  
-  }, [])
 
-  useEffect(async () => {
-    let abortController = new AbortController();
-    const user = await getUserId();
-    setIsLogin(user)
-    getComision();
-   
+  
 
-    return () => {
-      abortController.abort();
+  const fetchBusinessDetails = async () => {
+    try {
+      setLoading(true)
+      const getBusinessDetails = await axios.post(vendor_api_urls?.get_multiple_stores, {
+        businessIds: [businessId]
+      });
+      setBusinessProfiles(getBusinessDetails.data.data[0]);
+      setLoading(false)
+      return getBusinessDetails.data.data[0]
+      
+    } catch (e) {
+      props.navigation.goBack()
+      showToaster('Algo salió mal, inténtalo mas tarde.');
+      setLoading(false)
     }
-
-  }, [isLogin])
-
+  }
 
   const getComision = async () => {
     try {
@@ -86,42 +85,21 @@ export const CartScreen = (props) => {
     }
   }
 
-  
-
-
-
-  const fetchBusinessDetails = async () => {
-    try {
-      setLoading(true)
-      const getBusinessDetails = await axios.post(vendor_api_urls?.get_multiple_stores, {
-        businessIds: [businessId]
-      });
-      setBusinessProfiles(getBusinessDetails.data.data);
-      setLoading(false)
-      return getBusinessDetails.data.data
-      
-    } catch (e) {
-      props.navigation.goBack()
-      showToaster('Algo salió mal, inténtalo mas tarde.');
-      setLoading(false)
-    }
-  }
-
-  
   const calculateDelivery = async() => {
     try {
       let vendor = businessProfiles;
-    setLoading(true)
-    if (businessProfiles.length <= 0) {
-      vendor = await fetchBusinessDetails()
+      setLoading(true)
+      if (!businessProfiles) {
+        vendor = await fetchBusinessDetails() 
+      }
+     
       
-    }
-   
-
+  
     const distance = Math.sqrt(
-      Math.pow(69.1 * (Number(vendor[0]?.location?.latitude) - [address.latitude]), 2) +
-      Math.pow(69.1 * ([address?.longitude] - Number(vendor[0]?.location?.longitude)) * Math.cos(Number(vendor[0]?.location?.latitude) / 57.3), 2));
+      Math.pow(69.1 * (Number(vendor?.location?.latitude) - [address.latitude]), 2) +
+      Math.pow(69.1 * ([address?.longitude] - Number(vendor?.location?.longitude)) * Math.cos(Number(vendor?.location?.latitude) / 57.3), 2));
       
+      console.log(distance, 'distancia');
       
     
       let dis = Math.round(distance)
@@ -140,21 +118,16 @@ export const CartScreen = (props) => {
       setLoading(false);
       props.navigation.goBack()
       showToaster('Error, por favor intente mas tarde o ingrese otra dirección')
-    }
-    
-     
-    
-
-     
+    }     
   }
 
  
 
 
-  const goPurchase = () => {
+  const goPurchase = async() => {
    
-
-    if (isLogin) {
+    const user = await getUserId();
+    if (user) {
       
       if (!address) {
         showToaster('Crea una dirección para poder realizar tu compra')
@@ -162,7 +135,7 @@ export const CartScreen = (props) => {
       }
     
 
-      if (businessProfiles[0]?.wallet_id && !businessProfiles[0]?.isBlocked) {
+      if (businessProfiles?.wallet_id && !businessProfiles?.isBlocked) {
         let allProducts = products
         let totalProductsPrice = [];
 
@@ -180,9 +153,9 @@ export const CartScreen = (props) => {
         let subtotal = totalAmount;
         props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PAGO, {
           deliveryDistance: deliveryDistance,
-          storeId: businessProfiles[0]?._id,
+          storeId: businessProfiles?._id,
           products: allProducts,
-          business: businessProfiles[0],
+          business: businessProfiles,
           totalAmount: (totalDeliveryFee + totalAmount + comission * totalAmount / 100 - descuento ).toFixed(2),
           comission: Math.round((comission * subtotal) / 100),
           delivery_fee: delivery_fee,
@@ -210,6 +183,7 @@ export const CartScreen = (props) => {
     setLoading(true)
     setPickup(value)
    
+    
     if (!value) {
       // Si no se selecciona el servicio de VALET, restablece los valores relacionados
       setTotalDeliveryFee(0);
@@ -217,6 +191,8 @@ export const CartScreen = (props) => {
     }
    
     if (value ) {
+     
+      
       await calculateDelivery()
       
     }
@@ -241,40 +217,6 @@ export const CartScreen = (props) => {
       props.navigation.goBack()
     }
   }
-  useEffect(() => {
-    let abortController = new AbortController();
-    fetchFees();
-    return () => {
-      abortController.abort();
-    }
-  }, []);
-
-  useEffect(() => {
-    let abortController = new AbortController();
-
-    for (var a = 0; a < products?.length; a++) {
-      if (businessIds?.includes(products[a]?.business_id)) {
-        return;
-      } else {
-        businessIds?.push(products[a]?.business_id);
-      }
-    }
-    return () => {
-      abortController.abort();
-    }
-
-  }, [products])
-
-  
-  // useEffect(() => {
-  //   if (businessProfiles.length > 0 && delivery_fee) {
-  //     // calculateDelivery()
-  //   }
-   
-  // }, [businessProfiles,delivery_fee,tempDeliveryDistance,tempTotalDeliveryFee])
-  
-
-
 
   const increaseQuantity = (id, price) => {
     dispatch(CartActions.increaseQuantity(id, price));
@@ -299,13 +241,63 @@ export const CartScreen = (props) => {
       </View>
     )
   }
+  
+
+
+  useEffect(() => {
+    let isMounted = true;
+    fetchBusinessDetails()
+    return () => {
+      isMounted = false;
+    };  
+  }, [])
+
+
+  useEffect(() => {
+    let isMounted = true;
+    getComision();
+    return () => {
+      isMounted = false;
+    }; 
+     
+  }, [])
+ 
+  
+ 
+  useEffect(() => {
+    let isMounted = true;
+    fetchFees();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    for (var a = 0; a < products?.length; a++) {
+      if (businessIds?.includes(products[a]?.business_id)) {
+        return;
+      } else {
+        businessIds?.push(products[a]?.business_id);
+      }
+    }
+
+    return () => {
+      isMounted = false;
+    }
+
+  }, [products])
+
+  
+ 
+
+
+
+  
 
  
-  // console.log({
-  //   totalDeliveryFee,
-  //   totalAmount,
-  //   comission
-  // });
+  
   
   return (
     <VStack alignItems={'center'} style={{ ...CommonStyles.screenWhiteY }} >
@@ -373,21 +365,35 @@ export const CartScreen = (props) => {
 
 
             <HStack justifyContent={'space-between'} mt={'10px'} >
-              <Checkbox
+              
+             <Checkbox
                 value="test"
                 accessibilityLabel="Valet"
                 onChange={(value) => {
-                 
-                  servicioValet(value)
+                  servicioValet(value);
                 }}
-                backgroundColor={Colors.white}
+                
+                
               >
-
-
+                <Box 
+             
+                width={deviceWidth * 0.87} 
+                flexDirection={'row'} 
+                justifyContent={'space-between'}
+                >
+                   <Text style={{ ...CommonStyles.h2, color: Colors.black }} >
+                 
+                </Text>
+                <Text style={{ ...CommonStyles.h2, color: Colors.black }} >
+                  Seleccionar servicio de VALET
+                </Text>
+                </Box>
+               
               </Checkbox>
-              <Text style={{ ...CommonStyles.h2, color: Colors.black }} >
-                Seleccionar servicio de VALET
-              </Text>
+
+
+
+              
             </HStack>
 
             {

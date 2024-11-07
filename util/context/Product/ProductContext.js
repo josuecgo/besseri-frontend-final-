@@ -73,7 +73,7 @@ export const ProductProvider = ({ children }) => {
                         }
                     });
                  
-                    // getProducts(cate);
+                    
                 } 
     
     
@@ -109,6 +109,8 @@ export const ProductProvider = ({ children }) => {
     const getProducts = async (category,carActive,address) => {
         try {
            
+            
+            
             await dispatch({
                 type: 'isLoading',
                 payload: {
@@ -553,13 +555,17 @@ export const ProductProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        async function fetchData() {
-          rangeYear();
-          await getComision();
-          await getCategorias();
-        }
-      
+        
+        const fetchData = async () => {
+          rangeYear(); // Llama a la función sin esperar
+          await getComision(); // Espera a que se complete
+          await getCategorias(); // Espera a que se complete
+        };
+        
         fetchData();
+       
+      
+        
       }, []);
 
   
@@ -580,7 +586,6 @@ export const ProductProvider = ({ children }) => {
                 resetFiltro,
                 searchCall,
                 filterProduct,
-                
                 getProducts,
                 getCategorias,
                 activarCategoria,

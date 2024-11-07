@@ -13,14 +13,14 @@ import { AccountScreen } from '../Account/AccountScreen';
 import { MyCarsScreen } from '../Account/MyCarsScreen';
 import { HeaderTitle } from '../../../components/Customer/HeaderTitle';
 import { PedidosScreen } from '../Account/PedidosScreen';
-import { BookingsStack } from '../customer.navigation';
+
 import { ServiciosScreen } from '../Home/ServiciosScreen';
 import { MapServiceScreen } from '../Home/MapServiceScreen';
 import { useEffect } from 'react';
 import { Platform } from 'react-native';
 import { useContext } from 'react';
 import { NotificationContext } from '../../../util/context/NotificationContext';
-import CustomerProductsViewScreen from '../customer.products-view.screen';
+
 import HeaderStore from '../../../components/Customer/HeaderStore';
 import HomeStoreScreen from '../Store/HomeStoreScreen';
 import ProductDetailScreen from '../Store/ProductDetailScreen';
@@ -46,25 +46,73 @@ export const BottomTabHome = (props) => {
   const {
     iosPermisoss,
     getToken,
-    
-  } = useContext(NotificationContext);
+    showNotification,listenerBack} = useContext(NotificationContext);
 
-  useEffect(() => {
-    if (Platform.OS === 'ios') {
-      iosPermisoss();
-    }
-    getToken();
-  }, []);
+  // useEffect(() => {
+  //   if (Platform.OS === 'ios') {
+  //     iosPermisoss();
+  //   }
+  //   getToken();
+  // }, []);
 
 
-  useEffect(() => {
-    const unsubscribe = messaging().onNotificationOpenedApp((remoteMessage) => {
-      // Aquí puedes manejar la lógica cuando se presione una notificación
-      props.navigation.navigate(BOTTOM_TAB_CUSTOMER_ROUTES.NOTIFICATION_STACK)
-    });
+  // useEffect(() => {
+  //   const unsubscribe = messaging().onNotificationOpenedApp((remoteMessage) => {
+  //     // Aquí puedes manejar la lógica cuando se presione una notificación
+  //     props.navigation.navigate(BOTTOM_TAB_CUSTOMER_ROUTES.NOTIFICATION_STACK)
+  //   });
   
-    return unsubscribe;
-  }, []);
+  //   return unsubscribe;
+  // }, []);
+
+
+
+  useEffect(() => {
+    let isMounted = true;
+    messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+      if (isMounted) {
+        console.log(remoteMessage,'remoteMessage');
+        
+        showNotification(remoteMessage,props.navigation)
+      }   
+    
+    })
+    return () => {
+      isMounted = false; // Marcamos el componente como desmontado al limpiar
+    };
+  },[])
+
+
+ 
+
+  useEffect(() => {
+    let isMounted = true;
+  
+    messaging().onMessage( async(msg) => {
+      if (isMounted) {
+        showNotification(msg,props.navigation)
+      }
+    
+     
+
+
+    })
+
+    return () => {
+      isMounted = false; // Marcamos el componente como desmontado al limpiar
+    };
+  },[]);
+
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      listenerBack(props.navigation)
+    }
+  
+    return () => {
+      isMounted = false;
+    }
+  }, [])
 
 
   return (

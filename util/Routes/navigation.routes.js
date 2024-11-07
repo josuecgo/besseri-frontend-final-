@@ -1,5 +1,5 @@
 // Main stack
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LSFS } from '../../screens/login.navigation';
 import { VendorNavigation } from '../../screens/vendor/vendor.navigation';
@@ -38,10 +38,19 @@ import { ServiceFormFeedback } from '../../screens/customer/Orders/customer.form
 import { CustomerServiceFeedbacks } from '../../screens/customer/Bookings/CustomerServiceFeedbacks';
 import { UserRegisterScreen } from '../../screens/customer/Preregister/UserRegisterScreen';
 import { QuoteScreen } from '../../screens/customer/Quote/QuoteScreen';
+import messaging from '@react-native-firebase/messaging';
+import { NotificationContext } from '../context/NotificationContext';
+
+
+
 
 const Stack = createStackNavigator();
 
-export const MainNavigation = () => {
+export const MainNavigation = (props) => {
+
+
+
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen

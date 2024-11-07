@@ -7,18 +7,20 @@ import { Center, CheckIcon, HStack, Image, Select, Text, } from 'native-base';
 import Colors from '../../../util/styles/colors';
 import CommonStyles from '../../../util/styles/styles';
 
-import { CUSTOMER_HOME_SCREEN_ROUTES, MAIN_ROUTES, showAlertLogin } from '../../../util/constants';
+import { CUSTOMER_HOME_SCREEN_ROUTES, MAIN_ROUTES, showAlertLogin, showToaster } from '../../../util/constants';
 import ProductListing from '../../../components/customer-components/ProductsListing.component';
 import { adjust, deviceHeight, deviceWidth } from '../../../util/Dimentions';
 
 import { ProductContext } from '../../../util/context/Product/ProductContext';
 import { useFiltrado } from '../../../hooks/useFiltrado';
 import { ListEmpty } from '../../../components/Vendor/ListEmpty';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { customer_api_urls } from '../../../util/api/api_essentials';
 import { getUserId } from '../../../util/local-storage/auth_service';
 import { ServiceSkeleton } from '../../../components/Services/ServiceSkeleton';
+import { useStoreLocation } from '../../../hooks/useStoreLocation';
+import { useCart } from '../../../hooks/useCart';
 
 
 
@@ -29,7 +31,7 @@ const HomeStoreScreen = React.memo((props) => {
     getCategorias,
     categorias,activeCategory,activarCategoria,
     comision,
-   loading, carCompatible,productos,isLoading,getProducts
+   loading, carCompatible,productos,isLoading,getProducts,
   } = useContext(ProductContext);
   const [addresses, setAddresses] = useState(null)
   const { carActive, address } = useSelector(state => state.user);
@@ -37,7 +39,11 @@ const HomeStoreScreen = React.memo((props) => {
   const direccionStore = useSelector(state => state.user.addresses);
   
   const [defaultAddress, setDefaultAddress] = useState(address?._id ?? null)
- 
+  
+  const dispatch = useDispatch()
+  const cartProductIds = useSelector(state => state.cart.cart_items_ids);
+
+  const {addItemToCart} = useCart()
 
 
   const CategoryButton = ({ category, onPress }) => {
@@ -70,17 +76,26 @@ const HomeStoreScreen = React.memo((props) => {
         marginVertical: 5, 
         marginHorizontal: 10
         }} >
-        <ProductListing
+          {
+            !isLoading && (
+<ProductListing
         navigation={props.navigation}
         category={item}
         products={item}
         comision={comision}
         carCompatible={carCompatible}
+        dispatch={dispatch}
+        cartProductIds={cartProductIds} 
+        addItemToCart={addItemToCart}
         />
+            )
+          }
+        
       </View>
 
     )
   }
+  const memorizedProductos = useMemo(() => renderItem, [productos]);
 
   const renderItemCategorias = ({ item }) => (
     <CategoryButton
@@ -139,49 +154,76 @@ const HomeStoreScreen = React.memo((props) => {
     
   }
 
-  useEffect(() => {
-     getAddresses();
-  }, [])
 
-
-
-  useEffect(() => {
-    let isMounted = true; // Variable para rastrear si el componente está montado
   
-    const fetchData = async () => {
-      // Realizar la solicitud de API u otras operaciones asíncronas
-      try {
-        
-        if (isMounted) {
-        
-          if (!addresses) return
-          const findAddres =   addresses.find(item => item?._id === defaultAddress  );
-          
-          
-          await getProducts(activeCategory, carActive,findAddres);
-        }
-      } catch (error) {
-        
-      }
-    };
   
-    if (activeCategory && carActive && defaultAddress && addresses) {
-      fetchData(); // Llamar a la función asíncrona
-    }
-  
-    return () => {
-      isMounted = false; 
-    };
-  }, [activeCategory, carActive,defaultAddress,addresses]);
-  
- 
   
   const handleAddress = (address) => {
 
     setDefaultAddress(address)
   }
 
-  if (!addresses) return <ServiceSkeleton />
+
+
+  useEffect(() => {
+    let isMounted = true;
+  
+    const fetchData = async () => {
+     
+        if (isMounted) {
+          await getAddresses();
+        }
+     
+    };
+  
+    fetchData(); // Llamada a la función asíncrona
+  
+    return () => {
+      isMounted = false;
+    }
+  }, [])
+  
+
+  
+
+  
+  
+  useEffect(() => {
+    let isMounted = true;
+  
+    const fetchData = async () => {
+      try {
+        if (isMounted) {
+          if (!addresses) return;
+          
+          
+          const findAddres = addresses.find(item => item?._id === defaultAddress);
+        
+          
+          await getProducts(activeCategory, carActive, findAddres);
+        }
+      } catch (error) {
+        showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 2');
+      }
+    };
+  
+    if (activeCategory && carActive && defaultAddress && addresses && !isLoading) {
+      fetchData(); // Llamar a la función asíncrona
+    }
+  
+    return () => {
+      isMounted = false; // Cleanup
+    };
+  }, [activeCategory, carActive, defaultAddress, addresses]);
+
+
+  
+  if (!addresses && isLoading) return <ServiceSkeleton />
+
+
+
+  
+
 
   return (
     <View style={{ 
@@ -235,7 +277,7 @@ const HomeStoreScreen = React.memo((props) => {
           size={'xs'}
         >
           {
-            addresses.map((item) => (
+            direccionStore.map((item) => (
               <Select.Item key={item._id} label={item.formatted_address} value={item._id} />
             ))
           }
@@ -244,26 +286,42 @@ const HomeStoreScreen = React.memo((props) => {
         </Select>
       </HStack>
 
+          {/* PRODUCTOS */}
         <View style={{  marginTop: 5 }}>
           {
             comision && productos && !isLoading
               ?
               (
-                <FlatList
+                <>
+                    <FlatList
                 data={productos}
                 keyExtractor={item => item?._id}
-                renderItem={renderItem}
+                renderItem={memorizedProductos}
                 contentContainerStyle={{ marginTop: 15}}
                 numColumns={2} // Set the number of columns to 2
                 columnWrapperStyle={{ justifyContent: 'center' }}
                 ListFooterComponent={<View style={{ width: '100%', marginBottom: 10, height: deviceHeight * 20 / 100 }} />}
                 showsVerticalScrollIndicator={false}
-                onRefresh={() => {
-                  getCategorias();
-                }}
+               
                 refreshing={loading}
                 ListEmptyComponent={() => <Center><ListEmpty msg={'No hay productos para tu vehiculo'} /></Center>}
               />
+                </>
+              //   <FlatList
+              //   data={productos}
+              //   keyExtractor={item => item?._id}
+              //   renderItem={renderItem}
+              //   contentContainerStyle={{ marginTop: 15}}
+              //   numColumns={2} // Set the number of columns to 2
+              //   columnWrapperStyle={{ justifyContent: 'center' }}
+              //   ListFooterComponent={<View style={{ width: '100%', marginBottom: 10, height: deviceHeight * 20 / 100 }} />}
+              //   showsVerticalScrollIndicator={false}
+              //   onRefresh={() => {
+              //     getCategorias();
+              //   }}
+              //   refreshing={loading}
+              //   ListEmptyComponent={() => <Center><ListEmpty msg={'No hay productos para tu vehiculo'} /></Center>}
+              // />
               
 
               ) : (

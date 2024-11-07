@@ -44,7 +44,7 @@ export const GarageScreen = (props) => {
   const [typeCar, setTypeCar] = useState([])
   const [typeCarSelect, setTypeCarSelect] = useState(null)
   const [carSelect, setCarSelect] = useState(false)
-  const [value, setValue] = useState(carDefault ? carDefault._id : '')
+  const [value, setValue] = useState(carDefault ? carDefault?._id : '')
   
   const handleModalize = () => {
     setShowModal(true)
@@ -101,7 +101,7 @@ export const GarageScreen = (props) => {
   const onDelete = async(car) => {
     try {
       
-      const apiCall = await axios.delete(`${customer_api_urls.delete_garage}/${car._id}`);
+      const apiCall = await axios.delete(`${customer_api_urls.delete_garage}/${car?._id}`);
 
       if (apiCall.status == api_statuses.success) {
        
@@ -118,7 +118,7 @@ export const GarageScreen = (props) => {
   }
 
   const changeCarDefault = async(car) => {
-    let firstCar = cars.find((c) => c._id === car)
+    let firstCar = cars.find((c) => c?._id === car)
    
     activeCar(firstCar)
     setValue(car)
@@ -232,7 +232,7 @@ const ModalCreateCar = ({
               backgroundColor={Colors.white}
             >
               {
-                marcas.map((item) => <Select.Item key={item._id} label={item.name} value={item._id} />)
+                marcas.map((item) => <Select.Item key={item?._id} label={item?.name} value={item?._id} />)
               }
 
             </Select>
@@ -257,7 +257,7 @@ const ModalCreateCar = ({
                   backgroundColor={Colors.white}
                 >
                   {
-                    modelo.map((item) => <Select.Item key={item._id} label={item.name} value={item._id} />)
+                    modelo.map((item) => <Select.Item key={item?._id} label={item?.name} value={item?._id} />)
                   }
                 </Select>
               </FormControl>
@@ -283,7 +283,7 @@ const ModalCreateCar = ({
                   backgroundColor={Colors.white}
                 >
                   {
-                    typeCar.map((item) => <Select.Item key={item._id} label={item.type} value={item._id} />)
+                    typeCar.map((item) => <Select.Item key={item?._id} label={item.type} value={item?._id} />)
                   }
                 </Select>
               </FormControl>

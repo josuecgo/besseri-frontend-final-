@@ -31,7 +31,7 @@ export const AppointmentScreen = (props) => {
       setHourSelected(null)
 
       const url = `${customer_api_urls.get_availability_services}/${service._id}`
-      console.log(url);
+     
       const apiCall = await axios.post(url, { 
         date: daySelected, 
         timezone: "America/Mexico_City",
@@ -61,11 +61,16 @@ export const AppointmentScreen = (props) => {
     const userId = await getUserId();
     if (!userId || !service._id || !service?.business_id._id || !hourSelected?.start || !hourSelected?.end) return showToaster('Faltan campos.')
     
-    const date = new Date(hourSelected.start);
+      const date = moment(hourSelected.start, "ddd MMM DD YYYY HH:mm:ss [GMT]ZZ")
+
+    // const date = new Date(hourSelected.start);
     // const date = moment(hourSelected.start).local()
     const startDate = moment(date).local();
+
+   
+    
     // const startDate = moment(date.toISOString());
-    const date2  = new Date(hourSelected.end);
+    const date2  = moment(hourSelected.end, "ddd MMM DD YYYY HH:mm:ss [GMT]ZZ")
  
 
     const endDate = moment(date2).local()
@@ -82,7 +87,8 @@ export const AppointmentScreen = (props) => {
       type
     }
     
-    
+ 
+     
     
     props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.AGENDAR, {
       data
@@ -243,16 +249,11 @@ export const AppointmentScreen = (props) => {
                   {
 
                     citas ? citas.map((item) => {
-                      var fecha = new Date(item.start);
-                      var hora = fecha.getHours();
-                      var minutos = fecha.getMinutes();
-                      var horaFormateada = hora.toString().padStart(2, "0");
-                      var minutosFormateados = minutos.toString().padStart(2, "0");
-                     
-                      var fechaActual = new Date();
-                     
-                      let comp = compararFechas(fechaActual,fecha)
-                    
+                      
+
+                      const fecha = moment(item?.start, "ddd MMM DD YYYY HH:mm:ss [GMT]ZZ")
+                      const currentDate = moment();
+                      let comp = compararFechas(currentDate,fecha)  
 
                       if (!comp) {
                         
@@ -274,7 +275,7 @@ export const AppointmentScreen = (props) => {
                           }}
                         >
                           <Text fontSize={adjust(12)} color={hourSelected === item ? 'black' : '#FFFFFF'} >
-                            {horaFormateada + ":" + minutosFormateados}
+                            {fecha.format('HH:mm')}
                           </Text>
   
                         </TouchableOpacity>

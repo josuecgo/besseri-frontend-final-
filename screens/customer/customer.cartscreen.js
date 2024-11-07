@@ -43,8 +43,9 @@ const CustomerCartScreen = (props) => {
   const [delivery_fee, setDeliveryFee] = useState();
   const [totalDeliveryFee, setTotalDeliveryFee] = useState(null);
   const [billComission, setBillComission] = useState()
-  const [deliveryDistance, setDeliveryDistance] = useState(null);
   const [isLogin, setIsLogin] = useState(false)
+  const [deliveryDistance, setDeliveryDistance] = useState(null);
+  
   let businessIds = [];
   // const [totalAmount, setTotalAmount] = useState(false)
 

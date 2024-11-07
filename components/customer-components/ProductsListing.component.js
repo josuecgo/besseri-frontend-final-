@@ -15,11 +15,13 @@ import { customer_api_urls } from '../../util/api/api_essentials';
 import { Empty } from '../Customer/Empty';
 import { ListEmpty } from '../Vendor/ListEmpty';
 
-const ProductListing = ({products,navigation,comision}) => {
-  const dispatch = useDispatch()
-  const cartProductIds = useSelector(state => state.cart.cart_items_ids);
+const ProductListing = ({products,navigation,comision,cartProductIds,addItemToCart,dispatch}) => {
 
-  const {addItemToCart} = useCart()
+ 
+  // const dispatch = useDispatch()
+  // const cartProductIds = useSelector(state => state.cart.cart_items_ids);
+
+  // const {addItemToCart} = useCart()
  
   
   
@@ -37,32 +39,11 @@ const ProductListing = ({products,navigation,comision}) => {
                   onAddToCart={() => addItemToCart(products)}
                   data={products}
                   inCart={cartProductIds.includes(products._id)}
+                 
                   comision={comision}
               />
 
-      {/* <FlatList
-          data={products}
-          contentContainerStyle={{ marginTop: 15, paddingHorizontal: 5 }}
-          numColumns={2}
-          columnWrapperStyle={{ justifyContent: 'space-between' }} // Agrega esta línea para ajustar el espaciado entre las columnas
-          renderItem={itemData => (
-              <ProductCardComponent
-                  onViewDetail={() => {
-                      dispatch(CartActions.selectItemFromCart(itemData.item._id, itemData.item?.price));
-                      navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL, {
-                          product: itemData.item,
-                          comision
-                      });
-                  }}
-                  increaseQuantity={() => CartActions.increaseQuantity(itemData.item?._id)}
-                  onAddToCart={() => addItemToCart(itemData.item)}
-                  data={itemData.item}
-                  inCart={cartProductIds.includes(itemData.item._id)}
-                  comision={comision}
-              />
-          )}
-          ListEmptyComponent={() => <ListEmpty msg={'No hay productos para tu vehiculo'} />}
-      /> */}
+     
     </View>
   );
 };

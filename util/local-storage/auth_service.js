@@ -113,3 +113,12 @@ export const getBusinessStatus = async() => {
     const status = await AsyncStorage.getItem(ASYNC_STORAGE_NAMES.BUSINESS_STATUS);
     return JSON.parse(status);
 }
+
+
+export const saveTokenFcm = async(tokenFcm) => {
+    await AsyncStorage.setItem('tokenFcm',JSON.stringify(tokenFcm));
+}
+export const getTokenFcm = async() => {
+    const status = await AsyncStorage.getItem('tokenFcm');
+    return JSON.parse(status);
+}

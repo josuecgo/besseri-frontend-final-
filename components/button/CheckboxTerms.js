@@ -1,7 +1,7 @@
 import { View, Text,StyleSheet,TouchableOpacity } from 'react-native'
 import React from 'react'
 import CommonStyles from '../../util/styles/styles'
-import { adjust, deviceWidth } from '../../util/Dimentions'
+import { adjust } from '../../util/Dimentions'
 
 import Colors from '../../util/styles/colors'
 
@@ -67,8 +67,8 @@ const styles = StyleSheet.create({
         
       },
       inner: {
-        width: 12,
-        height: 12,
+        width: 15,
+        height: 15,
         borderWidth: 1,
       },
       roleType: {

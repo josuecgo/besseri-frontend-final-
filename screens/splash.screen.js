@@ -66,11 +66,20 @@ const SplashScreen = ({navigation,route}) => {
     const userType = await getUserType();
     const addressCustomer = await getUserAddress();
     const carActive = await getCarActive();
-   
-    if (user) {
-      
-      dispatch(addToUser(user))
+
+    
+    if (user) { dispatch(addToUser(user))}
+
+    if (addressCustomer && carActive ) {
+        
+      await dispatch(addAddressToUser(addressCustomer));
+      await dispatch(addCarActiveToUser(carActive));
+     
+     
     }
+
+  
+    
     setTimeout(async() => {
       if (user_id && userType ) {
         
@@ -82,11 +91,10 @@ const SplashScreen = ({navigation,route}) => {
         }
       
       } else {
-        // navigation.replace(MAIN_ROUTES.AUTH_STACK);
+       
         if (addressCustomer && carActive ) {
         
-          await dispatch(addAddressToUser(addressCustomer));
-          await dispatch(addCarActiveToUser(carActive));
+        
          
           navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
         }else{
@@ -113,6 +121,9 @@ const SplashScreen = ({navigation,route}) => {
       isMounted = false;
     };
   }, []);
+
+
+  
   return (
     <CustomSafeAreaViewComponent>
       <View

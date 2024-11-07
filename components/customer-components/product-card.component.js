@@ -25,15 +25,15 @@ import { BtnCantidad } from '../button/BtnCantidad';
 const ProductCardComponent = ({
   data,
   onAddToCart,
-  horizontal,
+  
   onViewDetail,
   cartProduct = false,
   increaseQuantity,
   decreaseQuantity,
   onRemoveFromCart
 }) => {
-  const { comision, carActive } = useContext(ProductContext)
-  const cartProductIds = useSelector(state => state.cart.cart_items_ids);
+  
+  const { comision,  } = useContext(ProductContext)
 
   // console.log(data.name);
   const handleChange = async () => {
@@ -49,6 +49,8 @@ const ProductCardComponent = ({
 
 
   }
+
+
 
 
   if (cartProduct) {

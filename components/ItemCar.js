@@ -13,7 +13,8 @@ export const ItemCar = ({ data, carActive, isDisabled }) => {
    
     const { getUserInfo, activeCar } = useInfoUser();
     
-   
+
+    
 
     const deleteCar = async (item) => {
         Alert.alert('Eliminar', `Estas a punto de eliminar ${item?.model?.name}`, [
@@ -55,7 +56,8 @@ export const ItemCar = ({ data, carActive, isDisabled }) => {
     };
 
     const handleSwitchChange = () => {
-        if (data._id === carActive._id) {
+                
+        if (data._id === carActive?._id) {
             showToaster('No puedes quedarte sin vehículo principal')
             return
         }
@@ -67,7 +69,7 @@ export const ItemCar = ({ data, carActive, isDisabled }) => {
             marginX={5}
             marginY={'10px'}
             borderWidth={'1px'}
-            borderColor={carActive._id === data._id ? Colors.succes : '#DEDEDE'}
+            borderColor={carActive?._id === data?._id ? Colors.succes : '#DEDEDE'}
             borderRadius={'5px'}
             paddingX={'15px'}
 
@@ -90,7 +92,7 @@ export const ItemCar = ({ data, carActive, isDisabled }) => {
 
             <Box style={styles.checkbox}>
                 <RadioButton
-                selected={carActive._id === data._id}
+                selected={carActive?._id === data?._id}
                 onPress={() => handleSwitchChange(data)}
                 />
                

@@ -62,7 +62,9 @@ export const LavadoMaps = (props) => {
             onPress: () => props.navigation.goBack(),
             style: 'cancel',
           },
-          { text: 'Crear', onPress: () => props.navigation.navigate('Mi dirección') },
+          { text: 'Crear', onPress: () => props.navigation.navigate(BOTTOM_TAB_CUSTOMER_ROUTES.ACCOUNT, {
+            screen: CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_MY_ADDRESS,
+          }) },
         ]);
       } else {
         dispatch(addAddressToUser(apiCall.data.data))

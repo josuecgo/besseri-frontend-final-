@@ -24,6 +24,9 @@ export const DetalleScreen = ({ route, navigation }) => {
   const { buyAdditional, loading } = useCompras()
   const [reception, setReception] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+
+ 
+  
  
   if(data.type === 'refaccion') return <DetailRefaccion data={data} navigation={navigation} />
 
