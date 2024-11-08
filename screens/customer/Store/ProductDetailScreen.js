@@ -197,12 +197,12 @@ useEffect(() => {
               )
             }
             
-            <HStack>
+            <HStack alignItems={'center'}  >
             <Text style={{...CommonStyles.h2,color:Colors.black}} >{`${moneda(Number(product?.price) + Number(comision * product?.price / 100))} MXN `}</Text>
             {
                product?.discount > 0 && (
                 <Text 
-                style={{...CommonStyles.h2,color:'#727272',textDecorationLine:'line-through'}}
+                style={{...CommonStyles.h2,color:'#727272',fontWeight:'bold'}}
                 >
                   {product?.discount}% OFF
                 </Text>

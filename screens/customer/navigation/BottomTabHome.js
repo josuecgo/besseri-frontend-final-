@@ -48,12 +48,12 @@ export const BottomTabHome = (props) => {
     getToken,
     showNotification,listenerBack} = useContext(NotificationContext);
 
-  // useEffect(() => {
-  //   if (Platform.OS === 'ios') {
-  //     iosPermisoss();
-  //   }
-  //   getToken();
-  // }, []);
+  useEffect(() => {
+    if (Platform.OS === 'ios') {
+      iosPermisoss();
+    }
+    getToken();
+  }, []);
 
 
   // useEffect(() => {

@@ -232,6 +232,7 @@ export const NotificationProvider = ({children}) => {
           
           // Verificar si el permiso ha sido denegado y pedir permiso si es necesario
           else if (settings.authorizationStatus === AuthorizationStatus.DENIED) {
+            console.log('Notification permission was denied');
             
             const newSettings = await notifee.requestPermission();
             

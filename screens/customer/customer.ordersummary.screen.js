@@ -57,6 +57,7 @@ const CustomerOrderSummary = (props) => {
     const [deliveryDistance, setDeliveryDistance] = useState(0)
     const totalAmount = allCharges?.subtotal + allCharges?.besseri_commission + allCharges.delivery_charges - allCharges.descuento;
     const [showModal, setshowModal] = useState(false)
+
     const handleModalize = async (flag) => {
         if (flag == 'open') {
             addressListingRef?.current?.open()
@@ -94,12 +95,12 @@ const CustomerOrderSummary = (props) => {
             await initializePaymentSheet()
             setIsVisible(false);
         }
-
+        const userData = await getUser();
         try {
             setLoading(true);
            
             const body = {
-                ordered_by_id: user?._id,
+                ordered_by_id: userData?._id,
                 products: order.products,
                 storeId: order.storeId,
                 total_amount: allCharges.totalAmount,
@@ -112,7 +113,8 @@ const CustomerOrderSummary = (props) => {
                 storePickup:!order.pickup
             }
 
-
+            
+            
             const apiCall = await axios.post(`${customer_api_urls.place_order}`, body);
             setLoading(false);
 
@@ -131,11 +133,14 @@ const CustomerOrderSummary = (props) => {
                 setIsVisible(false);
             }
         } catch (e) {
+
+            console.log(e,'placeOrder');
+            
             setLoading(false);
            
-            setLoading(false);
+           
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo 2 code: 4')
-            refundPayment()
+            // refundPayment()
             setIsVisible(false)
         }
 
@@ -158,7 +163,7 @@ const CustomerOrderSummary = (props) => {
             //  Alert.alert('Refund failed',JSON.stringify(e))
             setIsVisible(false);
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 5')
-            // //console.log(e?.response?.data)
+            console.log(e)
         }
     }
 
@@ -287,21 +292,32 @@ const CustomerOrderSummary = (props) => {
 
     };
 
+    
     useEffect(() => {
-        getAddresses();
-    }, []);
-
-    useEffect(async () => {
+        let abortController = new AbortController();
         if (deliveryAddress) {
-            await initializePaymentSheet()
+            initializePaymentSheet()
         }
-    }, []);
+          return () => {  
+            abortController.abort();  
+          } 
+      }, []);
 
-    useEffect(() => {
-        getUserDetails();
-    }, []);
+    // useEffect(async () => {
+       
+    // }, []);
 
+    // useEffect(() => {
+    //     getUserDetails();
+    // }, []);
 
+useEffect(() => {
+    let abortController = new AbortController();
+    getAddresses();
+      return () => {  
+        abortController.abort();  
+      } 
+  }, []);
 
     
 
