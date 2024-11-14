@@ -72,13 +72,13 @@ export const NotificationScreen = (props) => {
   };
 
 
-  useEffect(() => {
-    if (isFocused) {
+  // useEffect(() => {
+  //   if (isFocused) {
       
-      getNotificaciones()
-    }
+  //     getNotificaciones()
+  //   }
     
-  }, [isFocused])
+  // }, [isFocused])
   
   
 

@@ -11,17 +11,16 @@ import { getOrdersUser, isLoadingOrdersUser } from '../util/ReduxStore/Actions/C
 import { ProductContext } from '../util/context/Product/ProductContext';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import { Platform } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 
 
 
 export const useInfoUser = (  ) => {
   const dispatch = useDispatch()
-  const {
-      getCategorias
-  } = useContext(ProductContext)
+  const {getCategorias} = useContext(ProductContext)
   const { modeloValue,modelos }  = useSelector(state => state.user);
-
+  
 
   const getUserInfo = useCallback(async () => {
     try {
@@ -31,7 +30,6 @@ export const useInfoUser = (  ) => {
         return;
       }
 
-     
   
       const apiCall = await axios(`${customer_api_urls.get_info_user}/${id}`);
   
@@ -53,13 +51,6 @@ export const useInfoUser = (  ) => {
           await saveGarage(garage);
         }
        
-       
-  
-      
-      
-  
-      
-     
   
         if (carActive) {
           getCategorias();
@@ -112,30 +103,58 @@ export const useInfoUser = (  ) => {
       dispatch(getOrdersUser([]));
     }
   }, []);
-  
-  const getNotificaciones = async () => {
-    try {
-      const id = await getUserId();
-      if (!id) {
-        return;
-      }
-      
-      const url = `${api_urls.getNotification}/${id}`;
-  
-      const apiCall = await axios.get(url);
-      const data = apiCall.data;
-      
-      dispatch(saveNotification(data));
-      if (Platform.OS === 'ios') {
-        PushNotificationIOS.setApplicationIconBadgeNumber(data.count);
-      }
-    } catch (e) {
-     
-      showToaster('Algo salió mal. Por favor, vuelva a intentarlo - N');
-    }
-  };
-  
 
+  
+  
+  // const getNotificaciones = async () => {
+  //   try {
+  //     const id = await getUserId();
+  //     if (!id) {
+  //       return;
+  //     }
+      
+  //     const url = `${api_urls.getNotification}/${id}`;
+  
+  //     const apiCall = await axios.get(url);
+  //     const data = apiCall.data;
+      
+      
+      
+  //     dispatch(saveNotification(data));
+  //     if (Platform.OS === 'ios') {
+  //       PushNotificationIOS.setApplicationIconBadgeNumber(data.count);
+  //     }
+  //   } catch (e) {
+  //     console.log(e,'error en get notificaciones');
+      
+  //     showToaster('Algo salió mal. Por favor, vuelva a intentarlo - N');
+  //   }
+  // };
+  
+  const getNotificaciones = useCallback(async () => {
+      try {
+        const id = await getUserId();
+        if (!id) {
+          return;
+        }
+        
+        const url = `${api_urls.getNotification}/${id}`;
+    
+        const apiCall = await axios.get(url);
+        const data = apiCall.data;
+        
+        
+        
+        dispatch(saveNotification(data));
+        if (Platform.OS === 'ios') {
+          PushNotificationIOS.setApplicationIconBadgeNumber(data.count);
+        }
+      } catch (e) {
+        console.log(e,'error en get notificaciones');
+        
+        showToaster('Algo salió mal. Por favor, vuelva a intentarlo - N');
+      }
+  }, []);
   
 
 
@@ -164,11 +183,11 @@ export const useInfoUser = (  ) => {
   }, [modeloValue])
   
 
-  useEffect(() => {
+  // useEffect(() => {
     
-    getNotificaciones()
+  //   getNotificaciones()
    
-  }, [])
+  // }, [])
   
 
 

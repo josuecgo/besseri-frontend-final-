@@ -18,7 +18,7 @@ import { useIsFocused } from '@react-navigation/native';
 
 export const HomeScreen = ({ navigation }) => {
 
-  const { getUserInfo } = useInfoUser();
+  const { getUserInfo,getNotificaciones } = useInfoUser();
   const { carActive } = useSelector(state => state.user);
   const isFocused  = useIsFocused()
 
@@ -28,7 +28,13 @@ export const HomeScreen = ({ navigation }) => {
     getUserInfo()
   }, [])
 
-
+  useEffect(() => {
+    if (isFocused) {
+      
+      getNotificaciones()
+    }
+    
+  }, [isFocused])
 
 
 

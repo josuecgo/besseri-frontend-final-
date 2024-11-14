@@ -46,7 +46,7 @@ export const BottomTabHome = (props) => {
   const {
     iosPermisoss,
     getToken,
-    showNotification,listenerBack} = useContext(NotificationContext);
+    showNotification,listenerBack,onForegroundMessageRecived} = useContext(NotificationContext);
 
   useEffect(() => {
     if (Platform.OS === 'ios') {
@@ -71,7 +71,7 @@ export const BottomTabHome = (props) => {
     let isMounted = true;
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
       if (isMounted) {
-        console.log(remoteMessage,'remoteMessage');
+       
         
         showNotification(remoteMessage,props.navigation)
       }   
@@ -89,8 +89,10 @@ export const BottomTabHome = (props) => {
     let isMounted = true;
   
     messaging().onMessage( async(msg) => {
+    
+      
       if (isMounted) {
-        showNotification(msg,props.navigation)
+        onForegroundMessageRecived(msg,props.navigation)
       }
     
      
@@ -149,7 +151,7 @@ export const BottomTabHome = (props) => {
       <BottomTab.Screen
         name={BOTTOM_TAB_CUSTOMER_ROUTES.NOTIFICATION_STACK}
         // name='StackNoti'
-        component={CustomerNotificationStack}
+        component={NotificationScreen}
 
       />
 
@@ -157,6 +159,29 @@ export const BottomTabHome = (props) => {
     </BottomTab.Navigator>
   );
 }
+
+export const CustomerNotificationStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.NOTIFICATION_HOME}
+    >
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.NOTIFICATION_HOME}
+        component={NotificationScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <CustomHeaderComponent {...props} name="Home" />
+          ),
+        }}
+      />
+
+
+
+    </Stack.Navigator>
+  );
+};
 
 export const CustomerHomeStack = () => {
   return (
@@ -382,28 +407,7 @@ export const CustomerAccountStack = () => {
   );
 };
 
-export const CustomerNotificationStack = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false }}
-      initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.NOTIFICATION_HOME}
-    >
-      <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.NOTIFICATION_HOME}
-        component={NotificationScreen}
-        options={{
-          headerShown: true,
-          header: props => (
-            <CustomHeaderComponent {...props} name="Home" />
-          ),
-        }}
-      />
 
-
-
-    </Stack.Navigator>
-  );
-};
 
 const AddressStack = () => {
   return (

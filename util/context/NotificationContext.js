@@ -6,7 +6,7 @@ import {
   Platform,
 } from 'react-native';
 import { api_urls } from "../api/api_essentials";
-import { showToaster } from "../constants";
+import { BOTTOM_TAB_VENDOR_ROUTES, showToaster } from "../constants";
 import { getTokenFcm, getUser, getUserId, saveTokenFcm } from "../local-storage/auth_service";
 
 import { notificationReducer } from "./notificationReducer";
@@ -19,6 +19,7 @@ import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import { useInfoUser } from "../../hooks/useInfoUsers";
 import DeviceInfo from 'react-native-device-info';
 import notifee, { AuthorizationStatus, EventType } from '@notifee/react-native';
+import { useNavigation } from "@react-navigation/native";
 
 
 
@@ -111,7 +112,6 @@ export const NotificationProvider = ({children}) => {
     const onMessageReceived = async (message) => {
       try {
   
-  
         // if (appStateVisible !== 'active') {
         //   await getNotificaciones();
         //   return
@@ -129,26 +129,21 @@ export const NotificationProvider = ({children}) => {
   
         });
   
-   
-        const notifeeData = JSON.parse(message.data.notifee);
-        const messageId = message.messageId;
-  
-  
-      
+        // const notifeeData = JSON.parse(message.data.notifee)
+        // const messageId = message.messageId;
        
-        if (received.includes(messageId) )  return;
+        // if (received.includes(messageId) )  return;
+         
+        // if (messageId) {
+        //   setReceived([... received,messageId]);
+        // }
+  
+        // await notifee.displayNotification(notifeeData);
+        // console.log('notificciones');
         
+        await getNotificaciones()
   
-  
-  
-        if (messageId) {
-          setReceived([... received,messageId]);
-        }
-  
-        await notifee.displayNotification(notifeeData);
-  
-        // await getNotificaciones()
-  
+       
       } catch (error) {
         console.error('Error al mostrar la notificación:', error);
       }
@@ -157,18 +152,10 @@ export const NotificationProvider = ({children}) => {
 
     const onForegroundMessageRecived = async (message, navigation) => {
 
-      if (received === message?.messageId)  return;
-      
-  
-  
-      setReceived(message?.messageId)
-  
-   
+
+      // onMessageReceived(message)
   
 
-  
-  
-  
       Alert.alert(
         message?.notification.title ?? '',
         message?.notification.body ?? 'Nueva notificación',
@@ -180,7 +167,7 @@ export const NotificationProvider = ({children}) => {
           },
           {
             text: 'Ir a notificaciones',
-            onPress: () => { navigation.navigate(BOTTOM_TAB_VENDOR_ROUTES.NOTIFICATION_STACK) }, 
+            onPress: () => { navigation.navigate('Notification Stack') }, 
           },
         ]
       );
@@ -266,27 +253,29 @@ export const NotificationProvider = ({children}) => {
           : PushNotificationIOS.requestPermissions()
          
         
-          
+      
+        
         if(permission) {
           const fcmToken =  await firebase.messaging().getToken();
-          const savedToken =  await  getTokenFcm()
+        
 
           const userId = await getUserId();
           let version = DeviceInfo.getDeviceId();
+     
+          
           if(fcmToken && userId) {
            
-         
-            
-            if(fcmToken !== savedToken) {
+          
+              
               const r = await axios.post(api_urls?.save_fcm_token,{
                 token:fcmToken,
                 userId:userId,
                 deviceId:version
               })
-              // console.log(r.data,'response save fcm token');
+            
               
               saveTokenFcm(fcmToken)
-            }
+            
            
             
     
