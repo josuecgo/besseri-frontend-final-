@@ -7,6 +7,10 @@ export const DELETE_ITEM = 'DELETE_ITEM';
 export const SELECT_ITEM = 'SELECT_ITEM';
 export const RESET_CART = 'RESET_CART';
 
+export const ADD_PRODUCT = 'ADD_PRODUCT';
+export const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
+export const CLEAR_CART = 'CLEAR_CART';
+
 export const addItemToCart = (item) => {
     
     return({
@@ -15,6 +19,8 @@ export const addItemToCart = (item) => {
         _id:item?._id
     })
 }
+
+
 
 
 export const descuentoToCart = (item,name) => {
@@ -70,3 +76,23 @@ export const selectItemFromCart = (productId,price) => {
         data:productId,
     })
 }
+
+
+
+// Agregar producto al carrito
+export const addProduct = (product) => ({
+    type: ADD_PRODUCT,
+    payload: product,
+  });
+  
+  // Eliminar producto del carrito
+  export const removeProduct = (productId, sellerId) => ({
+    type: REMOVE_PRODUCT,
+    payload: { productId, sellerId },
+  });
+  
+  // Vaciar carrito
+  export const clearCart = () => ({
+    type: CLEAR_CART,
+  });
+  

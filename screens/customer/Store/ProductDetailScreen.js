@@ -65,8 +65,11 @@ const ProductDetailScreen = (props) => {
       setIsDisable(true)
  
       const { data } = await axios.get(`${customer_api_urls.inStock_product}/${product._id}`)
-
+        
+        
       if (data?.product) {
+        
+        
         let resp = addItemToCart(product)
      
         setShowModal(resp)
@@ -132,16 +135,17 @@ const ProductDetailScreen = (props) => {
 
   
 
-useEffect(() => {
-    isMounted.current = true;
-    getFeedbacks();
+  useEffect(() => {
+      isMounted.current = true;
+      getFeedbacks();
 
-    return () => {
-        isMounted.current = false; // Marca como no montado al desmontar
-    };
-}, []);
+      return () => {
+          isMounted.current = false; // Marca como no montado al desmontar
+      };
+  }, []);
 
 
+  
   
   return (
     <>

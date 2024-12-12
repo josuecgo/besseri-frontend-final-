@@ -90,7 +90,14 @@ const ProductCardComponent = ({
     );
   }
 
+ 
+  const incrementPriece = (price, discount) => {
+    let increase = (price * discount) / 100;
+    // Sumar el 10% al precio original
+    let newPrice = price + increase;
 
+    return moneda(newPrice);
+  }
 
   return (
     <Pressable onPress={onViewDetail} style={styles.cardContainer}>
@@ -111,12 +118,34 @@ const ProductCardComponent = ({
       <Box mt={'5px'}>
 
         <Text style={styles.productTitle}>{data?.name}</Text>
+
+
+        {
+               data?.discount > 0 && (
+                <Text 
+                style={{...CommonStyles.h2,color:'#727272',textDecorationLine:'line-through'}}
+                >
+                  {incrementPriece((Number(data?.price) + Number(comision * data?.price / 100)),data?.discount)} MXN
+                </Text>
+              )
+            }
+        <HStack alignItems={'center'} >
         <Text style={styles.productPrice}>
           {moneda(
             Number(data?.price) + Number((comision * data?.price) / 100),
           )}
         </Text>
-
+        {
+               data?.discount > 0 && (
+                <Text 
+                style={{...CommonStyles.h2,color:'#727272',fontWeight:'bold'}}
+                >
+                  {data?.discount}% OFF
+                </Text>
+              )
+            }
+        </HStack>
+        
 
         {
           !cartProduct && (

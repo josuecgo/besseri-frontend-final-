@@ -35,7 +35,6 @@ const config = {
 const customTheme = extendTheme({ config });
 
 
-
 const rootReducer = combineReducers({
   cart: CartReducer,
   feedback: FeedbackReducer,
@@ -51,23 +50,6 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 
 
 const App = () => {
-
-
-  
-  // const store = combineReducers({
-  //   cart: CartReducer,
-  //   feedback: FeedbackReducer,
-  //   user: UserInfoReducer,
-  //   pedidos:PedidosReducer,
-  //   fuel:FuelReducer
-    
-  // });
-  // const reduxStore = createStore(store,applyMiddleware(thunk));
-
-
-
-
-
    
   
   return(

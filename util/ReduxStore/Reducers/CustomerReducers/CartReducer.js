@@ -1,4 +1,4 @@
-import { ADD_ITEM_TO_CART, INCREASE_QUANTITY,DECRASE_QUANTITY, REMOVE_ITEM,RESET_CART,DELETE_ITEM, DESCUENTO, SELECT_ITEM } from "../../Actions/CustomerActions/CartActions"
+import { ADD_ITEM_TO_CART, INCREASE_QUANTITY,DECRASE_QUANTITY, REMOVE_ITEM,RESET_CART,DELETE_ITEM, DESCUENTO, SELECT_ITEM, ADD_PRODUCT, REMOVE_PRODUCT, CLEAR_CART } from "../../Actions/CustomerActions/CartActions"
 import { ADD_NOTIFICATION } from "../../Actions/NotificationActions"
 
 const initialState = {
@@ -9,20 +9,77 @@ const initialState = {
     notifications:[],
     descuento:0,
     idDesc:false,
-    productDetail:null
+    productDetail:null,
+    carts_by_seller:[]
 }
 export default (state = initialState, action) => {
     switch (action.type) {
+
+  
+
  
         case ADD_ITEM_TO_CART:
-            //console.log(action?.data);
-            return {
-                ...state,
-                cart_items: state.cart_items.concat(action.data),
-                cart_items_ids: state.cart_items_ids.concat(action.data?._id),
-                total_amount:state.total_amount + Number(action.data.price),
-                businessId:action?.data?.business_id,
-            }
+            const businessId = action?.data?.business_id?._id;
+
+            const  cart_items =  state.cart_items.concat(action.data)
+            const cart_items_ids = state.cart_items_ids.concat(action.data?._id)
+            const total_amount = state.total_amount + Number(action.data.price)
+            const business = action?.data?.business_id
+
+            
+            // Verificar si ya existe un vendedor en carts_by_seller
+        const existVendorIndex = state.carts_by_seller.findIndex(
+            (item) => item.businessId === businessId
+        );
+
+        let updatedCartsBySeller;
+
+            if (existVendorIndex !== -1) {
+                // Si el vendedor ya existe, actualizamos ese elemento específico
+                updatedCartsBySeller = state.carts_by_seller.map((seller, index) => {
+                    if (index === existVendorIndex) {
+                        return {
+                            ...seller,
+                            cart_items: seller.cart_items.concat(action.data),
+                            cart_items_ids: seller.cart_items_ids.concat(action.data?._id),
+                            total_amount: seller.total_amount + Number(action.data.price),
+                        };
+                    }
+                    return seller; // Los otros vendedores no se modifican
+                });
+            } else {
+            // Si el vendedor no existe, agregamos un nuevo objeto
+            const newCartSeller = {
+                cart_items: [action.data],
+                cart_items_ids: [action.data?._id],
+                total_amount: Number(action.data.price),
+                businessId: businessId,
+                business: business,
+            };
+
+            updatedCartsBySeller = [...state.carts_by_seller, newCartSeller];
+        }
+
+        return {
+            ...state,
+            cart_items: cart_items,
+            cart_items_ids: cart_items_ids,
+            total_amount: total_amount,
+            carts_by_seller: updatedCartsBySeller,
+        };
+            
+            
+            // return {
+            //     ...state,
+            //     cart_items:cart_items,
+            //     cart_items_ids: cart_items_ids ,
+            //     total_amount: total_amount,
+            //     businessId:business,
+            //     carts_by_seller: [
+            //         ...state.carts_by_seller,
+            //         newCartSeller,
+            //     ],
+            // }
         case DESCUENTO:
             
             return {
@@ -120,3 +177,6 @@ export default (state = initialState, action) => {
             return state
     }
 }
+
+
+

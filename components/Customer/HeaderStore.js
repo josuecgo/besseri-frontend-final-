@@ -86,7 +86,7 @@ const HeaderStore = (props) => {
               }}
             />
           </TouchableOpacity>
-          {cart_items.length > 0 ? (
+          {cart_items?.length > 0 ? (
             <TouchableOpacity onPress={goCart} style={styles.cartItemsLengthWrapper}>
               {/* <Text style={styles.cartItemsLengthWrapperText}>
                 {cart_items.length}

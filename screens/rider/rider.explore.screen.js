@@ -245,6 +245,8 @@ export default function RiderExplore(props) {
     </View>
   );
 }
+
+
 //create our styling code:
 const styles = StyleSheet.create({
   container: {

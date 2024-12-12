@@ -318,6 +318,8 @@ export const SearchAddressScreen = (props) => {
       }
     )
   }
+
+  
   useEffect(() => {
     editData()
   }, [props])

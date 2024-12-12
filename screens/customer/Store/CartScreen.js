@@ -46,9 +46,10 @@ export const CartScreen = (props) => {
   const address = useSelector( state => state.user.address );
   const [pickup, setPickup] = useState(false)
   const [loading, setLoading] = useState(false)
- 
+  const cart = useSelector(state => state.cart.carts_by_seller);
 
-
+  
+  
   
 
   const fetchBusinessDetails = async () => {
@@ -98,8 +99,7 @@ export const CartScreen = (props) => {
     const distance = Math.sqrt(
       Math.pow(69.1 * (Number(vendor?.location?.latitude) - [address.latitude]), 2) +
       Math.pow(69.1 * ([address?.longitude] - Number(vendor?.location?.longitude)) * Math.cos(Number(vendor?.location?.latitude) / 57.3), 2));
-      
-      console.log(distance, 'distancia');
+  
       
     
       let dis = Math.round(distance)
@@ -292,8 +292,7 @@ export const CartScreen = (props) => {
   
  
 
-
-
+  
   
 
  
@@ -328,6 +327,7 @@ export const CartScreen = (props) => {
                   ))
                 }
               </View>
+              
             </ScrollView>
           </>
 
