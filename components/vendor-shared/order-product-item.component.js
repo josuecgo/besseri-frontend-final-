@@ -16,6 +16,8 @@ const OrderProductItemComponent = ({
   comision
 }) => {
 
+  
+  
   return (
     <HStack space={2} justifyContent={'space-between'} alignItems={'center'} flex={1} my={1}  >
       <Box 

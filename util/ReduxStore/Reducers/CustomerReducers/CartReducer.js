@@ -19,6 +19,8 @@ export default (state = initialState, action) => {
 
  
         case ADD_ITEM_TO_CART:
+          
+            
             const businessId = action?.data?.business_id?._id;
 
             const  cart_items =  state.cart_items.concat(action.data)
@@ -35,12 +37,13 @@ export default (state = initialState, action) => {
         let updatedCartsBySeller;
 
             if (existVendorIndex !== -1) {
-                // Si el vendedor ya existe, actualizamos ese elemento específico
+               
+               
                 updatedCartsBySeller = state.carts_by_seller.map((seller, index) => {
                     if (index === existVendorIndex) {
                         return {
                             ...seller,
-                            cart_items: seller.cart_items.concat(action.data),
+                            cart_items: [...seller.cart_items,action.data],
                             cart_items_ids: seller.cart_items_ids.concat(action.data?._id),
                             total_amount: seller.total_amount + Number(action.data.price),
                         };
@@ -48,6 +51,8 @@ export default (state = initialState, action) => {
                     return seller; // Los otros vendedores no se modifican
                 });
             } else {
+             
+                
             // Si el vendedor no existe, agregamos un nuevo objeto
             const newCartSeller = {
                 cart_items: [action.data],
@@ -56,7 +61,8 @@ export default (state = initialState, action) => {
                 businessId: businessId,
                 business: business,
             };
-
+            
+            
             updatedCartsBySeller = [...state.carts_by_seller, newCartSeller];
         }
 

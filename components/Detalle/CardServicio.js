@@ -13,7 +13,8 @@ import Colors from '../../util/styles/colors'
 const CardServicio = ({data}) => {
   const {comision} = useContext(ProductContext)
   
-
+ 
+  
   const openMapsApp = (latitude, longitude) => {
 
     const url = Platform.select({
@@ -85,7 +86,7 @@ const CardServicio = ({data}) => {
       
       <HStack alignItems={'center'} justifyContent={'space-between'} >
         <Text style={{...CommonStyles.h2}} >Total:</Text>
-        <Text style={{...CommonStyles.h2}} >{moneda(data?.total_amount)} MXN</Text>
+        <Text style={{...CommonStyles.h2}} >{comisionMoneda(data?.total_amount,comision)} MXN</Text>
       </HStack>
     </VStack>
     </>

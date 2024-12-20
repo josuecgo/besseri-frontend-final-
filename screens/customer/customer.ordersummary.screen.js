@@ -84,6 +84,8 @@ const CustomerOrderSummary = (props) => {
 
 
 
+
+
     const getAddresses = async () => {
        
     }
@@ -98,42 +100,91 @@ const CustomerOrderSummary = (props) => {
         const userData = await getUser();
         try {
             setLoading(true);
-           
-            const body = {
-                ordered_by_id: userData?._id,
-                products: order.products,
-                storeId: order.storeId,
-                total_amount: allCharges.totalAmount,
-                delivery_address: order.address,
-                ordered_on: new Date(),
-                delivery_fee: allCharges?.delivery_charges,
-                besseri_comission: allCharges?.besseri_commission,
-                intentId: stripeEssentials?.intentId,
-                cupon: order?.cupon,
-                storePickup:!order.pickup
-            }
 
-            
-            
-            const apiCall = await axios.post(`${customer_api_urls.place_order}`, body);
-            setLoading(false);
-
-            if (apiCall.status == api_statuses.success) {
-                // setOrderPlaced(true)
-                for (var a = 0; a < products?.length; a++) {
-                    dispatch(deleteItemFromCart(products[a]?._id, products[a]?.price))
-                }
-                getPedidosUser()
+            // let apiCall;
+            // order?.vendors.map(async(vendor,index) => {
                
-                props.navigation.replace(CUSTOMER_HOME_SCREEN_ROUTES.PAGO_COMPLETED)
-                // setshowModal(true)
-                setIsVisible(false)
-            } else {
-                showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 3')
+                
+            //     const body = {
+            //         ordered_by_id: userData?._id,
+            //         products: vendor?.cart_items,
+            //         storeId: vendor?.businessId,
+            //         total_amount: Number(vendor?.totalAmount),
+            //         delivery_address: order.address,
+            //         ordered_on: new Date(),
+            //         delivery_fee: allCharges?.delivery_charges,
+            //         besseri_comission: allCharges?.besseri_commission,
+            //         intentId: stripeEssentials?.intentId,
+            //         cupon: order?.cupon,
+            //         storePickup:!order.pickup
+            //     }
+    
+                
+                
+            //     apiCall = await axios.post(`${customer_api_urls.place_order}`, body);
+                
+            // })
+           
+            
+            const apiCalls = await Promise.all(
+                order?.vendors.map(async (vendor) => {
+                    const body = {
+                        ordered_by_id: userData?._id,
+                        products: vendor?.cart_items,
+                        storeId: vendor?.businessId,
+                        total_amount: Number(vendor?.total_amount),
+                        delivery_address: order.address,
+                        ordered_on: new Date(),
+                        delivery_fee: allCharges?.delivery_charges,
+                        besseri_comission: allCharges?.besseri_commission,
+                        intentId: stripeEssentials?.intentId,
+                        cupon: order?.cupon,
+                        storePickup: !order.pickup,
+                    };
+
+                   
+                    return axios.post(`${customer_api_urls.place_order}`, body);
+                })
+            );
+
+            // console.log(apiCalls.data, 'apiCalls');
+            
+
+            if (apiCalls.every((response) => response.status === api_statuses.success)) {
+                // Elimina productos del carrito
+                products?.forEach((product) => {
+                    dispatch(deleteItemFromCart(product?._id, product?.price));
+                });
+        
+                // Actualiza pedidos y redirige
+                await getPedidosUser();
+                props.navigation.replace(CUSTOMER_HOME_SCREEN_ROUTES.PAGO_COMPLETED);
+                setLoading(false);
                 setIsVisible(false);
+            } else {
+                setLoading(false);
+                throw new Error("Una o más órdenes no se pudieron procesar.");
             }
+            
+            
+
+            // if (apiCall.status == api_statuses.success) {
+            //     // setOrderPlaced(true)
+            //     for (var a = 0; a < products?.length; a++) {
+            //         dispatch(deleteItemFromCart(products[a]?._id, products[a]?.price))
+            //     }
+            //     getPedidosUser()
+               
+            //     props.navigation.replace(CUSTOMER_HOME_SCREEN_ROUTES.PAGO_COMPLETED)
+            //     // setshowModal(true)
+            //     setIsVisible(false)
+            // } else {
+            //     showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 3')
+            //     setIsVisible(false);
+            // }
         } catch (e) {
 
+          
             console.log(e,'placeOrder');
             
             setLoading(false);
@@ -167,8 +218,9 @@ const CustomerOrderSummary = (props) => {
         }
     }
 
-
-    const fetchPaymentSheetParams = async (walletId) => {
+    
+    
+    const fetchPaymentSheetParams = async () => {
         let ids = [];
         
         cartProduct?.cart_items.map((item) => {
@@ -190,11 +242,11 @@ const CustomerOrderSummary = (props) => {
                 cupon: desc
             }
 
-            if (!business?.wallet_id) {
-                showToaster('La tienda aún no ha configurado la billetera, por lo que no es posible realizar un pedido desde esta tienda');
-                props.navigation.goBack()
-                return;
-            }
+            // if (!business?.wallet_id) {
+            //     showToaster('La tienda aún no ha configurado la billetera, por lo que no es posible realizar un pedido desde esta tienda');
+            //     props.navigation.goBack()
+            //     return;
+            // }
             
             const response = await axios.post(customer_api_urls?.create_payment_sheet, data);
             
@@ -205,6 +257,8 @@ const CustomerOrderSummary = (props) => {
                 publishableKey: response?.data?.publishableKey,
                 intentId: response?.data?.intentId
             }
+            
+            
             setStripeEssentials(apiResponse)
             setIsVisible(false);
             return {
@@ -222,7 +276,7 @@ const CustomerOrderSummary = (props) => {
     };
 
 
-    const initializePaymentSheet = async (walletId) => {
+    const initializePaymentSheet = async () => {
 
 
         try {
@@ -231,7 +285,7 @@ const CustomerOrderSummary = (props) => {
                 ephemeralKey,
                 customer,
                 publishableKey,
-            } = await fetchPaymentSheetParams(walletId);
+            } = await fetchPaymentSheetParams();
             const { error } = await initPaymentSheet({
                 customerId: customer,
                 customerEphemeralKeySecret: ephemeralKey,
@@ -243,10 +297,9 @@ const CustomerOrderSummary = (props) => {
 
             });
 
-            if (!error) {
-                //console.log({ initializePay: error })
-            }
+          
         } catch (error) {
+        //    console.log(error,'initializePaymentSheet');
            
             showToaster('No hay conexion en este momento')
         }
@@ -262,11 +315,11 @@ const CustomerOrderSummary = (props) => {
             setIsVisible(false);
             return;
         }
-        if (!business) {
-            showToaster('Aún no se ha obtenido el negocio, espere, por favor...');
-            setIsVisible(false);
-            return;
-        }
+        // if (!business) {
+        //     showToaster('Aún no se ha obtenido el negocio, espere, por favor...');
+        //     setIsVisible(false);
+        //     return;
+        // }
         if (!products) {
             showToaster('No se puede realizar el pedido cuando la cantidad de productos es cero :/');
             setIsVisible(false);
@@ -303,21 +356,19 @@ const CustomerOrderSummary = (props) => {
           } 
       }, []);
 
-    // useEffect(async () => {
-       
-    // }, []);
+
 
     // useEffect(() => {
     //     getUserDetails();
     // }, []);
 
-useEffect(() => {
-    let abortController = new AbortController();
-    getAddresses();
-      return () => {  
-        abortController.abort();  
-      } 
-  }, []);
+// useEffect(() => {
+//     let abortController = new AbortController();
+//     getAddresses();
+//       return () => {  
+//         abortController.abort();  
+//       } 
+//   }, []);
 
     
 

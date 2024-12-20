@@ -28,11 +28,6 @@ export const CartScreen = (props) => {
   const descuento = useSelector(state => state.cart.descuento);
   const idDesc = useSelector(state => state.cart.idDesc);
   const businessId = useSelector(state => state?.cart?.businessId);
-  // const [direccion, setDireccion] = useState({
-  //   long: 0,
-  //   lat: 0,
-  //   label: ''
-  // })
   const [businessProfiles, setBusinessProfiles] = useState(null);
   const [comission, setComission] = useState();
   const [delivery_fee, setDeliveryFee] = useState(null);
@@ -46,8 +41,14 @@ export const CartScreen = (props) => {
   const address = useSelector( state => state.user.address );
   const [pickup, setPickup] = useState(false)
   const [loading, setLoading] = useState(false)
-  const cart = useSelector(state => state.cart.carts_by_seller);
+  const vendors = useSelector(state => state.cart.carts_by_seller);
+ 
+  
 
+
+  
+  console.log(vendors[0]);
+  
   
   
   
@@ -86,34 +87,86 @@ export const CartScreen = (props) => {
     }
   }
 
+  
+
+  
   const calculateDelivery = async() => {
     try {
-      let vendor = businessProfiles;
-      setLoading(true)
-      if (!businessProfiles) {
-        vendor = await fetchBusinessDetails() 
-      }
-     
-      
-  
-    const distance = Math.sqrt(
-      Math.pow(69.1 * (Number(vendor?.location?.latitude) - [address.latitude]), 2) +
-      Math.pow(69.1 * ([address?.longitude] - Number(vendor?.location?.longitude)) * Math.cos(Number(vendor?.location?.latitude) / 57.3), 2));
-  
-      
-    
-      let dis = Math.round(distance)
-      let del = Math.round(distance) * delivery_fee
-    
-      setTotalDeliveryFee(del);
-    
-      setDeliveryDistance(dis);
+      // let vendor = businessProfiles;
+      // setLoading(true)
+      // if (!businessProfiles) {
+      //   vendor = await fetchBusinessDetails() 
+      // }
 
-      setLoading(false)
-      return {
-        distancia: dis,
-        delivery: del
+
+      for (const vendor of vendors) {
+        const latitude = vendor?.business?.location?.latitude;
+        const longitude = vendor?.business?.location?.longitude;
+  
+     
+  
+        
+  
+        // Simula la variable `address` para la demostración
+        if (!address) {
+          showToaster("Elige una direccion de entrega");
+         return
+        }
+  
+        // Calcular la distancia usando la fórmula de la distancia
+        const distance = Math.sqrt(
+          Math.pow(69.1 * (Number(latitude) - address.latitude), 2) +
+            Math.pow(69.1 * (address.longitude - Number(longitude)) * Math.cos(Number(latitude) / 57.3), 2)
+        );
+  
+       
+  
+        let dis = Math.round(distance)
+        let del = Math.round(distance) * delivery_fee
+  
+        setTotalDeliveryFee(totalDeliveryFee + del);
+        
+        setDeliveryDistance(dis + deliveryDistance);
+       
+      
       }
+      // vendors.map((vendor) => {
+     
+      //   const latitude = vendor?.business?.location?.latitude;
+      //   const longitude = vendor?.business?.location?.longitude;
+      //   console.log({
+      //     latitude,
+      //     longitude,
+      //     // storeName: vendor?.business
+      //   });
+        
+      
+      //   // const distance = Math.sqrt(
+      //   //   Math.pow(69.1 * (Number(latitude) - [address.latitude]), 2) +
+      //   //   Math.pow(69.1 * ([address?.longitude] - Number(longitude)) * Math.cos(Number(latitude) / 57.3), 2));
+      
+      //   // console.log(distance,'distancia');
+        
+        
+
+        
+      // setTotalDeliveryFee(totalDeliveryFee + del);
+        
+      // setDeliveryDistance(dis+ deliveryDistance);
+      //     // console.log({
+      //     //   distancia: dis,
+      //     //   delivery: del
+      //     // });
+          
+      //     // setLoading(false)
+      //     return {
+      //       distancia: dis,
+      //       delivery: del
+      //     }
+
+      // })
+  
+    
     } catch (error) {
       setLoading(false);
       props.navigation.goBack()
@@ -135,7 +188,8 @@ export const CartScreen = (props) => {
       }
     
 
-      if (businessProfiles?.wallet_id && !businessProfiles?.isBlocked) {
+      // if (businessProfiles?.wallet_id && !businessProfiles?.isBlocked) {
+      if (true) {
         let allProducts = products
         let totalProductsPrice = [];
 
@@ -166,7 +220,8 @@ export const CartScreen = (props) => {
           envio:totalDeliveryFee,
           pickup:pickup,
           address,
-          totalProductsPrice
+          totalProductsPrice,
+          vendors
         })
       } else {
         showToaster('No puedes hacer pedidos en esta tienda en este momento.')

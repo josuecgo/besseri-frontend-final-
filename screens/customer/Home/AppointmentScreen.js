@@ -47,7 +47,7 @@ export const AppointmentScreen = (props) => {
       }
 
     } catch (error) {
-      console.log(error);
+      
       setHourSelected(null)
       showToaster(error?.response?.data?.message)
       
@@ -103,8 +103,9 @@ export const AppointmentScreen = (props) => {
   }
 
   const compararFechas = (fecha1, fecha2) => {
-    var actual = moment(fecha1);
-    var reserva = moment(fecha2);
+    const actual = moment.utc(fecha1); // Asegura que interprete como UTC
+    const reserva = moment.utc(fecha2);
+  
     if (actual.isBefore(reserva)) {
 
       return true;
@@ -249,13 +250,15 @@ export const AppointmentScreen = (props) => {
                   {
 
                     citas ? citas.map((item) => {
-                      
-
-                      const fecha = moment(item?.start, "ddd MMM DD YYYY HH:mm:ss [GMT]ZZ")
+                      const fecha = moment(item?.start, "ddd MMM DD YYYY HH:mm:ss [GMT]ZZ",true)
+                     
                       const currentDate = moment();
+                      console.log({currentDate,fecha});
+                      
                       let comp = compararFechas(currentDate,fecha)  
-
                       if (!comp) {
+                       console.log(comp,'comp');
+                       
                         
                         return
                       }
