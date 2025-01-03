@@ -19,9 +19,11 @@ import { useIsFocused } from '@react-navigation/native';
 export const HomeScreen = ({ navigation }) => {
 
   const { getUserInfo,getNotificaciones } = useInfoUser();
-  const { carActive } = useSelector(state => state.user);
+  const { carActive,user } = useSelector(state => state.user);
   const isFocused  = useIsFocused()
-
+  
+  
+ 
   
 
   useEffect(() => {
@@ -51,16 +53,20 @@ export const HomeScreen = ({ navigation }) => {
         mb={'50px'}
 
       >
-        <ButtonService
-          label={'Servicios'}
-          icono={require('../../../assets/images/home/servicios.png')}
-          onPress={() => {
-            navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.HOME_VALET,{lavado:false})
-            // navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_CATEGORIES)
-          }}
-          style={74}
+        {
+          user?.role !== 'mechanic' && (<ButtonService
+            label={'Servicios'}
+            icono={require('../../../assets/images/home/servicios.png')}
+            onPress={() => {
+              navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.HOME_VALET,{lavado:false})
+              // navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_CATEGORIES)
+            }}
+            style={74}
+  
+          />  )
 
-        />
+        }
+        
         <ButtonService
           label={'Refacciones'}
           icono={require('../../../assets/images/home/refaccion.png')}
@@ -74,15 +80,21 @@ export const HomeScreen = ({ navigation }) => {
           }}
           style={85}
         />
-        <ButtonService
-          label={'Lavado'}
-          icono={require('../../../assets/images/home/lavado.png')}
-          onPress={() => {
 
-            navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.HOME_VALET,{lavado:true})
-          }}
+{
+          user?.role !== 'mechanic' && ( 
+          <ButtonService
+            label={'Lavado'}
+            icono={require('../../../assets/images/home/lavado.png')}
+            onPress={() => {
+  
+              navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.HOME_VALET,{lavado:true})
+            }}
+  
+          />  )
 
-        />
+        }
+       
       </HStack>
 
     </View>

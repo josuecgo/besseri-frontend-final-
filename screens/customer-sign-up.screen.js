@@ -22,7 +22,7 @@ import { HeaderTitle } from '../components/Customer/HeaderTitle';
 import { NewLogo } from '../components/NewLogo';
 import { BtnPrincipal } from '../components/Customer/BtnPrincipal';
 import { InputTxt } from '../components/Customer/InputTxt';
-import { Center, HStack, Input, VStack } from 'native-base';
+import { Center, HStack, Input, Radio, VStack } from 'native-base';
 
 
 
@@ -31,6 +31,7 @@ const CREDENTIAL_KEYS = {
   LASTNAME: 'Apellidos',
   EMAIL_ADDRESS: 'Email',
   PHONE_NUMBER: 'Número de teléfono',
+  IS_MECHANIC: '¿Eres consumidor o mecánico?',
   PASSWORD: 'Contraseña',
   CONFIRMPASSWORD: 'Confirmar contraseña'
 };
@@ -51,6 +52,9 @@ const CustomerSignUpScreen = ({ navigation }) => {
   const [show, setShow] = useState(false)
   const [showPass, setShowPass] = useState(false);
   const phoneNumberRef = useRef();
+  const [value, setValue] = React.useState("client");
+
+
 
 
   const onChangeText = (inputText, key) => {
@@ -60,9 +64,6 @@ const CustomerSignUpScreen = ({ navigation }) => {
       [key]: inputText,
     });
   };
-
-
-
 
   const sendCode = async (msj) => {
 
@@ -79,7 +80,8 @@ const CustomerSignUpScreen = ({ navigation }) => {
         isCommonUser: true,
         isVendor: false,
         isRider: false,
-        msj: msj
+        msj: msj,
+        role:value
       }
       const apiCall = await axios.post(url, body);
       if (apiCall.status == api_statuses.success && apiCall.data.success == true) {
@@ -220,6 +222,7 @@ const CustomerSignUpScreen = ({ navigation }) => {
 
               />
               </HStack>
+
               <InputTxt
                 label={'Email'}
                 // placeholderText={'Email'}
@@ -234,6 +237,26 @@ const CustomerSignUpScreen = ({ navigation }) => {
                 nextFieldRef={phoneNumberRef}
                 returnType="next"
               />
+
+              <Text style={{ ...CommonStyles.h2,marginTop:5 }} >{CREDENTIAL_KEYS.IS_MECHANIC}</Text>
+              <Radio.Group 
+              name="myRadioGroup" 
+              accessibilityLabel="favorite number" 
+              value={value} 
+              onChange={nextValue => {setValue(nextValue)}}
+            
+              >
+                <HStack justifyContent={'space-around'} width={'100%'} my={3} >
+                  <Radio value="client" my={1}>
+                    Consumidor
+                  </Radio>
+                  <Radio value="mechanic" my={1}>
+                    Mecánico
+                  </Radio>
+                </HStack>
+                
+              </Radio.Group>
+
               <Text style={{ ...CommonStyles.h2 }} >{CREDENTIAL_KEYS.PASSWORD}</Text>
 
               <Input

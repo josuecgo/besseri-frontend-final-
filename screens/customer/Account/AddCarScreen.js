@@ -22,7 +22,8 @@ export const AddCarScreen = (props) => {
     handleYear
   } = useSearchStore();
   const dispatch = useDispatch()
-  const { address,marcas,marcaValue,modelos,modeloValue,yearValue,years }  = useSelector(state => state.user);
+  
+  const { user,marcas,marcaValue,modelos,modeloValue,yearValue,years }  = useSelector(state => state.user);
   const [km, setKm ] = useState('');
   const [isLoading, setIsLoading] = useState(false)
   const {bottom} = useSafeAreaInsets()
@@ -128,19 +129,26 @@ export const AddCarScreen = (props) => {
             )
           }
 
+          {
+            user?.role !== 'mechanic' && ( 
+            <>
+              <Heading size="xs" mb="3" color={Colors.white}>Kilometraje</Heading>
+              
+              <Input
+                value={km.toString()}
+                keyboardType="numeric"
+                onChangeText={handleTextChange}
+                borderColor={Colors.lightBorder}
+                color={Colors.white}
+                size={'2xl'}
+                backgroundColor={Colors.lightBlack}
+                placeholder='Kilometraje'
+              />
+            </>
+             )
+          }
 
-            <Heading size="xs" mb="3" color={Colors.white}>Kilometraje</Heading>
-           
-            <Input
-              value={km.toString()}
-              keyboardType="numeric"
-              onChangeText={handleTextChange}
-              borderColor={Colors.lightBorder}
-              color={Colors.white}
-              size={'2xl'}
-              backgroundColor={Colors.lightBlack}
-              placeholder='Kilometraje'
-            />
+            
         
 
          

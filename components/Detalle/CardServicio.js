@@ -24,6 +24,9 @@ const CardServicio = ({data}) => {
     Linking.openURL(url);
 
   };
+
+ 
+  
  
   if(data.type === 'refaccion') return (
     <>

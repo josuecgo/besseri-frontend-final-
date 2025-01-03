@@ -56,39 +56,29 @@ export const AppointmentScreen = (props) => {
   }
 
 
-  const agendarCita = async () => {
 
+  
+  
+  const agendarCita = async () => {
+   
     const userId = await getUserId();
     if (!userId || !service._id || !service?.business_id._id || !hourSelected?.start || !hourSelected?.end) return showToaster('Faltan campos.')
     
-      const date = moment(hourSelected.start, "ddd MMM DD YYYY HH:mm:ss [GMT]ZZ")
-
-    // const date = new Date(hourSelected.start);
-    // const date = moment(hourSelected.start).local()
-    const startDate = moment(date).local();
-
-   
-    
-    // const startDate = moment(date.toISOString());
-    const date2  = moment(hourSelected.end, "ddd MMM DD YYYY HH:mm:ss [GMT]ZZ")
- 
-
-    const endDate = moment(date2).local()
 
 
     const data = {
       booked_by_id: userId,
       serviceId: service,
       businessId: service?.business_id._id,
-      startDate: startDate,
-      endDate: endDate,
+      startDate: hourSelected?.start,
+      endDate: hourSelected?.end,
       car,
       address,
       type
     }
     
- 
-     
+
+
     
     props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.AGENDAR, {
       data
@@ -102,21 +92,7 @@ export const AppointmentScreen = (props) => {
     setHourSelected(hour);
   }
 
-  const compararFechas = (fecha1, fecha2) => {
-    const actual = moment.utc(fecha1); // Asegura que interprete como UTC
-    const reserva = moment.utc(fecha2);
-  
-    if (actual.isBefore(reserva)) {
 
-      return true;
-    } else if (actual.isAfter(reserva)) {
-    
-      return false;
-    } else {
-   
-      return false;
-    }
-  }
 
   useEffect(() => {
     if (daySelected) {
@@ -124,6 +100,9 @@ export const AppointmentScreen = (props) => {
     }
 
   }, [daySelected])
+
+
+  
 
 
   return (
@@ -250,18 +229,17 @@ export const AppointmentScreen = (props) => {
                   {
 
                     citas ? citas.map((item) => {
-                      const fecha = moment(item?.start, "ddd MMM DD YYYY HH:mm:ss [GMT]ZZ",true)
-                     
-                      const currentDate = moment();
-                      console.log({currentDate,fecha});
                       
-                      let comp = compararFechas(currentDate,fecha)  
-                      if (!comp) {
-                       console.log(comp,'comp');
-                       
-                        
-                        return
-                      }
+                      const cleanDate = item.start.trim()
+                      const fecha = moment(cleanDate, 'ddd MMM DD YYYY HH:mm:ss ZZ');
+                                          
+                  
+                      
+                      // let comp = compararFechas(currentDate,fecha)  
+
+                      
+                      // if (!comp) return
+                      
                     
 
                       return (

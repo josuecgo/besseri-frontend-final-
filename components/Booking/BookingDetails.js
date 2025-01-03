@@ -13,6 +13,7 @@ export const BookingDetails = ({ booking }) => {
   const {comision} = useContext(ProductContext);
 
 
+
   return (
     <Box alignItems="center">
       <Box

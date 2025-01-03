@@ -50,7 +50,7 @@ const ProductCardComponent = ({
 
   }
 
-
+ 
 
 
   if (cartProduct) {
@@ -69,6 +69,8 @@ const ProductCardComponent = ({
           />
           <Box flexWrap="wrap" alignItems="center" maxWidth={deviceWidth * 0.3}>
             <Text  numberOfLines={2}  style={[CommonStyles.h3,{color:Colors.black}]}>{data?.name}</Text>
+            <Text  numberOfLines={2}  style={[CommonStyles.h3,{color:Colors.black}]}>{data?.brand?.name}</Text>
+            <Text  numberOfLines={2}  style={[CommonStyles.h3,{color:Colors.black}]}>{data?.model?.maker.name} {data?.model?.name}</Text>
             <Text  style={[CommonStyles.h3,{color:Colors.black}]}>
               {moneda(
                 Number(data?.price) + Number((comision * data?.price) / 100),
@@ -115,10 +117,12 @@ const ProductCardComponent = ({
       </Card>
 
 
-      <Box mt={'5px'}>
+      <Box mt={'5px'} justifyContent={'center'} ml={1} >
 
         <Text style={styles.productTitle}>{data?.name}</Text>
-
+        <Text  numberOfLines={2}  style={[CommonStyles.h3,{color:Colors.black}]}>{data?.brand?.name}</Text>
+        <Text  numberOfLines={2}  style={[CommonStyles.h3,{color:Colors.black}]}>{data?.model?.maker.name} {data?.model?.name}</Text>
+       
 
         {
                data?.discount > 0 && (
@@ -161,7 +165,7 @@ const ProductCardComponent = ({
 };
 const styles = StyleSheet.create({
   cardContainer: {
-    width: '45%',
+    width: '48%',
     marginHorizontal: 10,
     marginVertical: 4,
     

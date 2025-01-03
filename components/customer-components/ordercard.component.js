@@ -7,11 +7,12 @@ import moment from 'moment';
 import ButtonComponent from '../button/button.component';
 
 import 'moment/locale/es';
+moment.locale('es');
 import { adjust, deviceWidth } from '../../util/Dimentions';
 import { OrderStatusCode } from '../../util/constants';
 import { Image } from 'native-base';
 import { base_url } from '../../util/api/api_essentials';
-moment.locale('es');
+
 
 
 const OrderCard = ({ data, onPress, isRider,isDelivered,onFeedback }) => {

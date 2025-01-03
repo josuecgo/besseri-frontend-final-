@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList , Alert, Text, TouchableOpacity, View,Image, StyleSheet} from 'react-native';
+import { FlatList, Alert, Text, TouchableOpacity, View, Image, StyleSheet } from 'react-native';
 import Colors from '../../util/styles/colors';
 import CommonStyles from '../../util/styles/styles';
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -15,53 +15,49 @@ import { customer_api_urls } from '../../util/api/api_essentials';
 import { Empty } from '../Customer/Empty';
 import { ListEmpty } from '../Vendor/ListEmpty';
 
-const ProductListing = ({products,navigation,comision,cartProductIds,addItemToCart,dispatch}) => {
+const ProductListing = ({ products, navigation, comision, cartProductIds, addItemToCart, dispatch }) => {
 
- 
+
   // const dispatch = useDispatch()
   // const cartProductIds = useSelector(state => state.cart.cart_items_ids);
 
   // const {addItemToCart} = useCart()
- 
-  
-  
+
+
+
   return (
     <View style={styles.container}>
-            <ProductCardComponent
-                  onViewDetail={() => {
-                      dispatch(CartActions.selectItemFromCart(products._id, products.price));
-                      navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL, {
-                          product: products,
-                          comision
-                      });
-                  }}
-                  increaseQuantity={() => CartActions.increaseQuantity(products?._id)}
-                  onAddToCart={() => addItemToCart(products)}
-                  data={products}
-                  inCart={cartProductIds.includes(products._id)}
-                 
-                  comision={comision}
-              />
+      <ProductCardComponent
+        onViewDetail={() => {
+          dispatch(CartActions.selectItemFromCart(products._id, products.price));
+          navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL, {
+            product: products,
+            comision
+          });
+        }}
+        increaseQuantity={() => CartActions.increaseQuantity(products?._id)}
+        onAddToCart={() => addItemToCart(products)}
+        data={products}
+        inCart={cartProductIds.includes(products._id)}
 
-     
+        comision={comision}
+      />
+
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container:{
-   
-    width:deviceWidth * 0.8
+  container: {
+
+    width: deviceWidth * 0.8
   },
-  buttonAndTextContainer:{
-    // flexDirection:'row',
-    // justifyContent:'space-between',
-    // alignItems:'baseline',
-    // paddingHorizontal:10,
-    // backgroundColor:'red'
+  buttonAndTextContainer: {
+
   },
-  // seeMoreButton:{paddingHorizontal:15,backgroundColor:Colors.primaryColor,justifyContent:'center',alignItems:'center',padding:10,borderWidth:1,borderColor:Colors.primaryColor,borderRadius:30},
- 
+
+
 })
 
 export default ProductListing;

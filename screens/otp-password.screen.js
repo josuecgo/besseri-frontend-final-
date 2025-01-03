@@ -101,7 +101,7 @@ const OtpPasswordScreen = ({ navigation }) => {
   }
 
 
-  //  //console.log(route);
+  
 
   return (
     <CustomSafeAreaViewComponent>

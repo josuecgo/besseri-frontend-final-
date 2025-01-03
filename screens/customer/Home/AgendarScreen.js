@@ -10,7 +10,7 @@ import { aplicarDescuento, comisionFormatted, comisionMoneda, moneda } from '../
 import { deviceHeight, deviceWidth } from '../../../util/Dimentions';
 import moment from 'moment';
 import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal';
-import { CUSTOMER_HOME_SCREEN_ROUTES, showToaster } from '../../../util/constants';
+import {  showToaster } from '../../../util/constants';
 import axios from 'axios';
 import { customer_api_urls, vendor_api_urls } from '../../../util/api/api_essentials';
 import ModalChildren from '../../../components/ModalChildren';
@@ -312,6 +312,8 @@ export const AgendarScreen = (props) => {
 };
 
 
+
+
   return (
     <ScrollView contentContainerStyle={styles.container} >
       <Text>AgendarScreen</Text>
@@ -328,7 +330,7 @@ export const AgendarScreen = (props) => {
         <AddressFormatted address={serviceId?.business_id?.location?.formatted_address} />
 
         <VStack space={4} mt={'10px'} >
-          <Text style={{ ...CommonStyles.h2 }} >Dia: {moment(startDate).format('LLLL')}</Text>
+          <Text style={{ ...CommonStyles.h2 }} >Dia: {startDate}</Text>
           {/* <Text style={{ ...CommonStyles.h2 }} >Hora: </Text> */}
         </VStack>
 
@@ -377,13 +379,12 @@ export const AgendarScreen = (props) => {
             {
               serviceId?.is_home ? (
                 <Text style={{...CommonStyles.h5,textTransform:'uppercase' }} >
-                Pronto uno de nuestros lavadores estará en tu domicilio.
+                Pronto estarán en tu domicilio.
                 Revisa en tu zona de pedidos 
               </Text>
               ): (
                 <Text style={{...CommonStyles.h5,textTransform:'uppercase' }} >
-                Pronto uno de nuestros valets recogerá tu vehículo.
-                Revisa en tu zona de pedidos 
+                 Revisa en tu zona de pedidos 
               </Text>
               )
             }

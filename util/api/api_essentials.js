@@ -1,4 +1,4 @@
-export const env = 'dev';
+export const env = 'prod';
 
 
 export const base_url =   env === 'prod' ? 'https://api.besseri.mx'  
