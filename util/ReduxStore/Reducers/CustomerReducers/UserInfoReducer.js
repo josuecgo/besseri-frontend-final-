@@ -1,4 +1,4 @@
-import { ADD_ADDRESS, ADD_CARS_TO_USER, ADD_CAR_ACTIVE_TO_USER, ADD_DEFAULT_ADDRESS, ADD_USER, DELETE_TO_USER, GET_MAKERS_CARS, GET_MAKER_VALUE_CARS, GET_MODELS_CARS, GET_MODEL_VALUE_CARS, GET_YEARS_CARS, GET_YEAR_VALUE_CAR, RESET_FILTROS, SAVE_NOTIFICATION } from "../../Actions/CustomerActions/UserInfoActions"
+import { ADD_ADDRESS, ADD_CARS_TO_USER, ADD_CAR_ACTIVE_TO_USER, ADD_DEFAULT_ADDRESS, ADD_USER, DELETE_TO_USER, GET_MAKERS_CARS, GET_MAKER_VALUE_CARS, GET_MODELS_CARS, GET_MODEL_VALUE_CARS, GET_YEARS_CARS, GET_YEAR_VALUE_CAR, RESET_FILTROS, SAVE_NOTIFICATION, SET_USER_LOCATION } from "../../Actions/CustomerActions/UserInfoActions"
 
 
 const initialState = {
@@ -17,7 +17,11 @@ const initialState = {
   isLoading:false,
   years:[],
   notificaciones:[],
-  count:0
+  count:0,
+  userLocation:{
+    latitude: 19.485297844903283,
+    longitude: -99.22777616792496
+  }
 }
 export default (state = initialState, action) => {
    
@@ -141,6 +145,12 @@ export default (state = initialState, action) => {
                 notificaciones:action.data?.data,
                 count:action.data?.count
             }
+        case SET_USER_LOCATION: 
+        
+        return {
+            ...state,
+            userLocation: action.data
+        }
         default:
             return state
     }

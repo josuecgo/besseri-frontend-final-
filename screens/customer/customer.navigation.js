@@ -51,12 +51,6 @@ export const PartsServicesFunctionsDrawer = () => {
 
 
 
-
-
-
-
-
-
   useEffect(() => {
     const fetchComision = async () => {
       if (!comision) {
@@ -73,14 +67,6 @@ export const PartsServicesFunctionsDrawer = () => {
     };
   }, [comision]);
   
-  
-
-
-
-
-
-
-
 
 
   useEffect(() => {

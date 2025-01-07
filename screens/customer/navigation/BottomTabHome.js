@@ -37,6 +37,7 @@ import { AccountAddressScreen } from '../Account/AccountAddressScreen';
 import messaging from '@react-native-firebase/messaging';
 import { HeaderPedidos } from '../../../components/Customer/HeaderPedidos';
 import { ValetHomeScreen } from '../Home/ValetHomeScreen';
+import { useLocation } from '../../../hooks/useLocation';
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -184,11 +185,29 @@ export const CustomerNotificationStack = () => {
 };
 
 export const CustomerHomeStack = () => {
+
+  
+  
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS}
+      initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES}
     >
+
+        <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES}
+        component={HomeStoreScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderStore {...props}
+              titulo="Tienda"
+              nav={props.navigation.goBack}
+              tienda={true}
+            />
+          ),
+          }}
+        />
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS}
         component={HomeScreen}
@@ -268,20 +287,7 @@ export const CustomerHomeStack = () => {
         }}
       />
 
-      <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES}
-        component={HomeStoreScreen}
-        options={{
-          headerShown: true,
-          header: props => (
-            <HeaderStore {...props}
-              titulo="Tienda"
-              nav={props.navigation.goBack}
-              tienda={true}
-            />
-          ),
-        }}
-      />
+      
 
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL}

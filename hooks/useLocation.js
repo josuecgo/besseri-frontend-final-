@@ -7,13 +7,15 @@ import { showToaster } from '../util/constants';
 import Geocoder from 'react-native-geocoding';
 import { rider_api_urls } from '../util/api/api_essentials';
 import { getRiderId } from '../util/local-storage/auth_service';
+import { useDispatch } from 'react-redux';
+import { addUserLocation } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 
 
 
 export const useLocation = () => {
     const [user, setUser] = useState([])
     Geocoder.init('AIzaSyAjyGdmeJ8fyRP7eKPJ2ODtF0JEbqEbw8o');
-   
+    const dispatch = useDispatch();
     
     
    
@@ -21,19 +23,16 @@ export const useLocation = () => {
     const [ routeLines, setRouteLines ] = useState([])
     const [direccion, setDireccion] = useState([])
     const [ initialPosition, setInitialPosition ] = useState({
-        longitude: 0,
-        latitude: 0
+        longitude: -99.22777616792496,
+        latitude: 19.485297844903283
     });
 
     const [ userLocation, setUserLocation] = useState({
-        longitude: 0,
-        latitude: 0
+        longitude: -99.22777616792496,
+        latitude: 19.485297844903283 
     });
 
 
-   
-    
-    const watchId = useRef();
     const isMounted = useRef(true);
 
 
@@ -44,22 +43,14 @@ export const useLocation = () => {
         }
     }, [])
 
-    useEffect(() => {
-      getCurrentLocation()
-        .then( location => {
-            setInitialPosition(location);
-            setHasLocation(true)
-        } )
-    }, [])
-    
 
     
 
-    useEffect(() => {
-        getLocationHook()
-       
 
-    }, []);
+    
+    
+
+    
 
 
     const getCurrentLocation = () => {
@@ -130,6 +121,11 @@ export const useLocation = () => {
             )
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
               await Geolocation.getCurrentPosition(res => {
+              
+                dispatch(addUserLocation({
+                    latitude:res?.coords?.latitude,
+                    longitude:res?.coords?.longitude
+                  }))
                 return setUserLocation({
                   latitude:res?.coords?.latitude,
                   longitude:res?.coords?.longitude
@@ -170,6 +166,7 @@ export const useLocation = () => {
     }
    
 
+console.log(userLocation,'hook');
 
     
     

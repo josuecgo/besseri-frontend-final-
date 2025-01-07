@@ -26,7 +26,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const HeaderStore = (props) => {
   const {top} = useSafeAreaInsets()
   const cart_items = useSelector(state => state.cart.cart_items);
- 
+  const user = useSelector(state => state?.auth?.user);
+
+
+  
   let screenName = props?.titulo;
   
 
@@ -45,23 +48,28 @@ const HeaderStore = (props) => {
       <HeaderBackground />
       <View style={[styles.header,{paddingTop:top + 10,paddingBottom:10}]}>
         <HStack alignItems={'center'} space={3}>
-          <Pressable
-            onPress={() => {
-              props.navigation.goBack();
-            }}
-            style={{
-              backgroundColor: Colors.darker,
-              borderRadius: 5,
-              padding: 2
-            }}
-          >
+          {
+            user && (
+              <Pressable
+                onPress={() => {
+                  props.navigation.goBack();
+                }}
+                style={{
+                  backgroundColor: Colors.darker,
+                  borderRadius: 5,
+                  padding: 2
+                }}
+              >
 
-            <MaterialCommunityIcons
-              name={'keyboard-backspace'}
-              color={Colors.white}
-              size={24}
-            />
-          </Pressable>
+                <MaterialCommunityIcons
+                  name={'keyboard-backspace'}
+                  color={Colors.white}
+                  size={24}
+                />
+              </Pressable>
+            )
+          }
+          
 
           <Text style={styles.titulo}>{screenName}</Text>
 

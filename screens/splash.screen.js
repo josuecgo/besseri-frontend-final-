@@ -98,7 +98,7 @@ const SplashScreen = ({navigation,route}) => {
          
           navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
         }else{
-          navigation.replace(MAIN_ROUTES.CUSTOMER_STACK);
+          navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
         }
        
       }

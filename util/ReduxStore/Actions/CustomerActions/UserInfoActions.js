@@ -12,6 +12,7 @@ export const GET_YEARS_CARS = 'GET_YEARS_CARS';
 export const GET_YEAR_VALUE_CAR = 'GET_YEAR_VALUE_CAR';
 export const SAVE_NOTIFICATION = 'SAVE_NOTIFICATION';
 export const RESET_FILTROS ='RESET_FILTROS'
+export const SET_USER_LOCATION = 'SET_USER_LOCATION'
 
 export const addToUser = (item) => {
    
@@ -49,6 +50,14 @@ export const addCarActiveToUser = (item) => {
     
   return({
       type:ADD_CAR_ACTIVE_TO_USER,
+      data:item,
+     
+  })
+}
+export const addUserLocation = (item) => {
+    
+  return({
+      type:SET_USER_LOCATION,
       data:item,
      
   })

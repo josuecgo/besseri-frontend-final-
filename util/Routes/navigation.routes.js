@@ -62,12 +62,12 @@ export const MainNavigation = (props) => {
         component={LSFS}
       />
 
-<Stack.Screen
-        name={'CustomerStack'}
+      <Stack.Screen
+        name={MAIN_ROUTES.CUSTOMER_STACK}
         component={PartsServicesFunctionsDrawer}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name={'UpdateScreen'}
         component={UpdateScreen}
       />
@@ -78,9 +78,9 @@ export const MainNavigation = (props) => {
       />
 
 
-      
 
-     
+
+
       <Stack.Screen
         name={'CustomerHomeStack'}
         component={BottomTabHome}
@@ -244,7 +244,7 @@ export const MainNavigation = (props) => {
         }}
       />
 
-    <Stack.Screen
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.FORM_FUEL_CHECK}
         component={FormFuelCheckScreen}
         options={{
@@ -261,12 +261,12 @@ export const MainNavigation = (props) => {
         name={CUSTOMER_HOME_SCREEN_ROUTES.FORM_SERVICE_REVIEWS}
         component={ServiceFormFeedback}
       />
-    <Stack.Screen
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SERVICE_REVIEWS}
         component={CustomerServiceFeedbacks}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_REVIEWS}
         component={CustomerOrderFeedbacks}
       />
@@ -291,7 +291,7 @@ export const MainNavigation = (props) => {
         }}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name={MAIN_ROUTES.VIEW_DIAGNOSTIC_CAR
         }
         component={ChecksCarScreen}
@@ -317,19 +317,7 @@ const PreregisterStack = () => {
         name={'UserRegisterScreen'}
         component={UserRegisterScreen}
       />
-      {/* <Stack.Screen
-        name={'AddMyCar'}
-        component={CreateCarScreen}
-        options={{
-          headerShown: true,
-          header: props => (
-            <HeaderTitle {...props}
-              titulo="Mi Auto"
-              nav={props.navigation.goBack}
-            />
-          ),
-        }}
-      /> */}
+
 
     </Stack.Navigator>
   )

@@ -15,8 +15,9 @@ import { AddressHeader } from '../../../components/Customer/AddressHeader'
 import Colors from '../../../util/styles/colors'
 import CommonStyles from '../../../util/styles/styles'
 import { useSelector } from 'react-redux'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
 import { Box, Text, VStack } from 'native-base'
+import { useLocation } from '../../../hooks/useLocation'
 
 export const SearchAddressScreen = (props) => {
   const mapStyle = [
@@ -209,9 +210,10 @@ export const SearchAddressScreen = (props) => {
   const [term, setTerm] = useState('');
   const [addresses, setAddresses] = useState([]);
   const [direccion, setDireccion] = useState()
+  const { userLocation } = useSelector(state => state.user)
   const [location, setLocation] = useState({
-    latitude: null,
-    longitude: null,
+    latitude: userLocation?.latitude,
+    longitude: userLocation?.longitude,
   });
   const mapViewRef = useRef();
   const [textValue, setTextValue] = useState('');
@@ -220,9 +222,9 @@ export const SearchAddressScreen = (props) => {
     show: false,
     msg: ''
   })
-
-
   
+
+
 
   const centerPosition = async (loc) => {
 
@@ -270,8 +272,6 @@ export const SearchAddressScreen = (props) => {
     setAddresses([])
   }
 
-
-
   const onMovePositionMaker = async (loc) => {
     try {
       setIsLoading(true)
@@ -294,9 +294,11 @@ export const SearchAddressScreen = (props) => {
           place_id,
 
         })
-        // setTextValue(apiCall?.data?.data)
+       
       }
 
+
+      
       setLocation(loc)
       centerPosition(loc)
 
@@ -319,34 +321,36 @@ export const SearchAddressScreen = (props) => {
     )
   }
 
-  
+
   useEffect(() => {
     editData()
   }, [props])
 
 
+  useEffect(() => {
+    setLocation(userLocation)
+    onMovePositionMaker(userLocation)
+    
+    
+  }, [useLocation])
   
+
+  
+
+
 
   return (
     <View style={styles.search} >
       <KeyboardAvoidingView style={{ flex: 1 }}>
-     
-      
-      
-           
-  <ScrollView>
-        
-          <VStack space={6}>
-         
- {
-            !user && (
-              <AddressHeader navigation={props.navigation} />
-            )
-          }
-        
-        
 
-          <InputMaps
+        <ScrollView>
+          <VStack space={6}>
+            {
+              !user && (
+                <AddressHeader navigation={props.navigation} />
+              )
+            }
+            <InputMaps
               placeholder='Dirección'
               onDebounce={(value) => setTerm(value)}
               addresses={addresses}
@@ -362,72 +366,66 @@ export const SearchAddressScreen = (props) => {
 
               )
             }
-          <Box marginX={1} rounded={'md'} overflow={'hidden'} >
-            <MapView
-            userInterfaceStyle={'dark'}
-            ref={(el) => mapViewRef.current = el}
-            style={styles.map}
-            initialRegion={{
-              latitude: location?.latitude || 19.485297844903283,
-              longitude: location?.longitude || -99.22777616792496,
-
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-            initialCamera={{
-              center: {
-                latitude: location?.latitude || 19.485297844903283,
-                longitude: location?.longitude || -99.22777616792496,
-              },
-              pitch: 0,
-              heading: 0,
-              altitude: 0,
-              zoom: 16,
-            }}
-            onPress={e => {
-              if (isLoading) {
-                showToaster('Espere un momento.')
-                return
-              }
-
-              setShow({
-                show: false,
-                msg: ''
-              })
-
-
-              let loc = {
-                latitude: e.nativeEvent.coordinate.latitude,
-                longitude: e.nativeEvent.coordinate.longitude,
-              }
-              // //console.log(e.nativeEvent);
-
-              onMovePositionMaker(loc)
-            }}
-            customMapStyle={mapStyle}
-          >
-            <Marker
-              coordinate={{
-                latitude: parseFloat(location?.latitude) || 19.485297844903283,
-                longitude: parseFloat(location?.longitude) || -99.22777616792496,
-              }}
-            />
-            </MapView>
-            <Text textAlign={'center'} fontSize={adjust(10)} >Selecciona la posicion en el mapa para corregir la dirección</Text>
-          </Box>
-          
+            <Box marginX={1} rounded={'md'} overflow={'hidden'} >
+              <MapView
+                userInterfaceStyle={'dark'}
+                ref={(el) => mapViewRef.current = el}
+                style={styles.map}
+                region={{
+                  latitude: location?.latitude,
+                  longitude: location?.longitude,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
+                }}
+                camera={{
+                  center: {
+                    latitude: location?.latitude ,
+                    longitude: location?.longitude,
+                  },
+                  pitch: 0,
+                  heading: 0,
+                  altitude: 0,
+                  zoom: 16,
+                }}
+                onPress={e => {
+                  if (isLoading) {
+                    showToaster('Espere un momento.')
+                    return
+                  }
+                  setShow({
+                    show: false,
+                    msg: ''
+                  })
+                  let loc = {
+                    latitude: e.nativeEvent.coordinate.latitude,
+                    longitude: e.nativeEvent.coordinate.longitude,
+                  }
+                  onMovePositionMaker(loc)
+                }}
+                customMapStyle={mapStyle}
+              >
+                <Marker
+                  coordinate={{
+                    latitude: parseFloat(location?.latitude)  ,
+                    longitude: parseFloat(location?.longitude) ,
+                  }}
+                />
+              </MapView>
+              <Text textAlign={'center'} fontSize={adjust(10)} >Selecciona la posicion en el mapa para corregir la dirección</Text>
+            </Box>
 
 
-          {
-            direccion?.formatted_address && (
-              <SelectAddress address={direccion} navigation={props.navigation} />
-            )
-          }
-          
+
+            {
+              direccion?.formatted_address && (
+                <SelectAddress address={direccion} navigation={props.navigation} />
+              )
+            }
+
           </VStack>
-      
-  </ScrollView>
-      
+
+        </ScrollView>
+
 
 
         {

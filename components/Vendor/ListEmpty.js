@@ -7,7 +7,7 @@ export const ListEmpty = ({msg}) => {
   
   return (
     <View style={styles.container} >
-      <Text >{msg}</Text>
+      <Text style={{color:'black'}} >{msg}</Text>
     </View>
   )
 }
