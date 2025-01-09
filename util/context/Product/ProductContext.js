@@ -60,7 +60,8 @@ export const ProductProvider = ({ children }) => {
             try {
                
                 const apiCall = await axios.get(customer_api_urls.get_products);
-               
+              
+                
                 if (apiCall?.data?.data?.categories.length > 0) {
                     let cate = apiCall?.data?.data?.categories[0]
     
@@ -91,7 +92,8 @@ export const ProductProvider = ({ children }) => {
 
     const activarCategoria = async(cate) => {
 
-      
+       
+        
         dispatch({
             type: 'activeCategoria',
             payload: {
@@ -257,6 +259,8 @@ export const ProductProvider = ({ children }) => {
     const getModelo = useCallback(
         async (id) => {
             try {
+              
+                
                 if (valueMaker.length > 0) {
 
 
@@ -269,7 +273,8 @@ export const ProductProvider = ({ children }) => {
 
 
             } catch (e) {
-
+                
+                
                 alert('Algo salió mal modelo');
             }
         },

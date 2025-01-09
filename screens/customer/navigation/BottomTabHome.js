@@ -38,6 +38,7 @@ import messaging from '@react-native-firebase/messaging';
 import { HeaderPedidos } from '../../../components/Customer/HeaderPedidos';
 import { ValetHomeScreen } from '../Home/ValetHomeScreen';
 import { useLocation } from '../../../hooks/useLocation';
+import { ProductContext } from '../../../util/context/Product/ProductContext';
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -48,6 +49,64 @@ export const BottomTabHome = (props) => {
     iosPermisoss,
     getToken,
     showNotification,listenerBack,onForegroundMessageRecived} = useContext(NotificationContext);
+
+    const {
+        comision, getMarcas, getModelo,
+        valueMaker, getComision
+      } = useContext(ProductContext)
+    
+    
+    
+      useEffect(() => {
+        const fetchComision = async () => {
+          if (!comision) {
+            await getComision();
+          }
+        };
+      
+        let abortController = new AbortController();
+      
+        fetchComision();
+      
+        return () => {
+          abortController.abort();  // Esta línea está bien
+        };
+      }, [comision]);
+      
+    
+    
+      useEffect(() => {
+        const fetchMarcas = async () => {
+          await getMarcas();
+        };
+      
+        let abortController = new AbortController();
+      
+        fetchMarcas();
+      
+        return () => {
+          abortController.abort();
+        };
+      }, []);
+      
+    
+    
+      useEffect(() => {
+        const fetchModelo = async () => {
+          if (valueMaker) {
+            await getModelo(valueMaker);
+          }
+        };
+      
+        let abortController = new AbortController();
+      
+        fetchModelo();
+      
+        return () => {
+          abortController.abort();
+        };
+      }, [valueMaker]);
+
 
   useEffect(() => {
     if (Platform.OS === 'ios') {
@@ -198,7 +257,7 @@ export const CustomerHomeStack = () => {
         name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES}
         component={HomeStoreScreen}
         options={{
-          headerShown: true,
+          headerShown: false,
           header: props => (
             <HeaderStore {...props}
               titulo="Tienda"

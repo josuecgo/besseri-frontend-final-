@@ -45,7 +45,9 @@ export const SelectAddress = ({address,navigation}) => {
           formatted_address,
           place_id,
           userId,
+          _id:1
         })
+
         dispatch(UserInfoActions.addAddressToUser([{
           latitude:latitude,
           longitude:longitude,
@@ -53,10 +55,12 @@ export const SelectAddress = ({address,navigation}) => {
           formatted_address,
           place_id,
           userId,
+          _id:1
         }]));
         
         setIsLoading(false)
-        navigation.navigate('AddMyCar');
+
+        navigation.goBack();
       }
      
   

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { TouchableOpacity, View, StyleSheet, FlatList, ActivityIndicator, Alert } from 'react-native';
 
 
-import { Center, CheckIcon, HStack, Image, Select, Text, } from 'native-base';
+import { Box, Center, CheckIcon, HStack, Image, Select, Text, } from 'native-base';
 
 import Colors from '../../../util/styles/colors';
 import CommonStyles from '../../../util/styles/styles';
@@ -23,6 +23,8 @@ import { useStoreLocation } from '../../../hooks/useStoreLocation';
 import { useCart } from '../../../hooks/useCart';
 import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal';
 import { useLocation } from '../../../hooks/useLocation';
+import { SelectCar } from '../../../components/Customer/SelectCar';
+import HeaderStore from '../../../components/Customer/HeaderStore';
 
 
 
@@ -36,11 +38,11 @@ const HomeStoreScreen = React.memo((props) => {
     loading, carCompatible, productos, isLoading, getProducts,
   } = useContext(ProductContext);
   const [addresses, setAddresses] = useState(null)
-  const { carActive, address } = useSelector(state => state.user);
+  const { carActive, address,marcaValue,modeloValue,yearValue } = useSelector(state => state.user);
 
   const direccionStore = useSelector(state => state.user.addresses);
 
-  const [defaultAddress, setDefaultAddress] = useState(address?._id ?? null)
+  const [defaultAddress, setDefaultAddress] = useState(address?._id ?? 1)
 
   const dispatch = useDispatch()
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
@@ -100,7 +102,9 @@ const { getLocationHook } = useLocation()
 
     )
   }
-  const memorizedProductos = useMemo(() => renderItem, [productos]);
+
+  
+
 
   const renderItemCategorias = ({ item }) => (
     <CategoryButton
@@ -112,8 +116,8 @@ const { getLocationHook } = useLocation()
     />
   )
 
-  const memorizedValueCategoria = useMemo(() => renderItemCategorias, [categorias, activeCategory]);
 
+  
   const getAddresses = async () => {
     try {
 
@@ -124,7 +128,8 @@ const { getLocationHook } = useLocation()
 
 
       if (apiCall?.data?.data.length <= 0) {
-        if (direccionStore) {
+        if (direccionStore.length < 0) {
+
           const data = {
             _id: 1,
             ...direccionStore[0]
@@ -135,14 +140,7 @@ const { getLocationHook } = useLocation()
           return
         }
 
-        Alert.alert('No tienes ninguna direccion', 'Crea una direccion', [
-          {
-            text: 'Cancelar',
-            onPress: () => props.navigation.goBack(),
-            style: 'cancel',
-          },
-          { text: 'Crear', onPress: () => props.navigation.navigate('Mi dirección') },
-        ]);
+
       } else {
         setAddresses(apiCall.data.data);
         if (apiCall?.data?.data.length > 0) {
@@ -159,14 +157,18 @@ const { getLocationHook } = useLocation()
 
   }
 
-
-
-
-
   const handleAddress = (address) => {
 
     setDefaultAddress(address)
   }
+
+
+
+  const memorizedProductos = useMemo(() => renderItem, [productos]);
+
+  const memorizedValueCategoria = useMemo(() => renderItemCategorias, [categorias, activeCategory]);
+
+  
 
 
   useEffect(() => {
@@ -193,58 +195,60 @@ const { getLocationHook } = useLocation()
 
 
 
-
-
-
   useEffect(() => {
     let isMounted = true;
 
     const fetchData = async () => {
       try {
         if (isMounted) {
-          if (!addresses) return;
-
-
-          const findAddres = addresses.find(item => item?._id === defaultAddress);
-
-
-          await getProducts(activeCategory, carActive, findAddres);
+          if (!addresses && !direccionStore) return;
+          const findAddres = addresses?.place_id ? addresses.find(item => item?._id === defaultAddress) : direccionStore.find(item => item?._id === defaultAddress)
+          const car = carActive ? carActive : {
+            maker: {_id:marcaValue},
+            model:{_id:modeloValue},
+            year:yearValue
+          } 
+          await getProducts(activeCategory, car, findAddres);
         }
       } catch (error) {
         showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 2');
       }
     };
 
-    if (activeCategory && carActive && defaultAddress && addresses && !isLoading) {
+    if (activeCategory  && defaultAddress && direccionStore && !isLoading) {
       fetchData(); // Llamar a la función asíncrona
     }
 
     return () => {
       isMounted = false; // Cleanup
     };
-  }, [activeCategory, carActive, defaultAddress, addresses]);
+  }, [activeCategory,  defaultAddress, direccionStore,marcaValue,modeloValue,yearValue]);
+
+
+  
+
+  
 
 
 
-  if (!addresses && isLoading) return <ServiceSkeleton />
-
-
-
-  const goToMyAddress = () => {
-    props.navigation.navigate(MAIN_ROUTES.CUSTOMER_STACK);
-  };
+ 
 
 
 
 
 
+  
 
   return (
     <View style={{
       ...CommonStyles.flexOne,
       backgroundColor: Colors.white
     }}>
-
+      <HeaderStore
+      titulo="Tienda"
+      navigation={props.navigation}
+      tienda={true}
+      />
 
       <View style={{ flex: 1, backgroundColor: Colors.white }} >
         <View style={{
@@ -265,7 +269,7 @@ const { getLocationHook } = useLocation()
 
           />
         </View>
-        <HStack alignItems={'center'} justifyContent={'center'} space={1} mt={1} size={'xs'} >
+        {/* <HStack alignItems={'center'} justifyContent={'center'} space={1} mt={1} size={'xs'} >
 
 
           {
@@ -311,10 +315,16 @@ const { getLocationHook } = useLocation()
 
           }
 
-        </HStack>
-
+        </HStack> */}
+        
+        
+         
+        <SelectCar/>
+       
+        
         {/* PRODUCTOS */}
-        <View style={{ marginTop: 5 }}>
+        <View style={{ marginTop: 0 }}>
+        
           {
             comision && !isLoading
               ?
@@ -339,6 +349,8 @@ const { getLocationHook } = useLocation()
                 </>
 
 
+              ) : !addresses && isLoading ? (
+              <ServiceSkeleton />
               ) : (
                 <View
                   style={{
@@ -365,7 +377,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     ...CommonStyles.flexCenter,
 
-    margin: 5,
+    // margin: 5,
     // borderRadius: 100,
     // paddingHorizontal: 15
     // elevation:2,

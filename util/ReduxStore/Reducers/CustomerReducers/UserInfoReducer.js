@@ -54,6 +54,7 @@ export default (state = initialState, action) => {
         }
         case ADD_ADDRESS:
             
+            
             return {
                 ...state,
                 address: action.data[0],

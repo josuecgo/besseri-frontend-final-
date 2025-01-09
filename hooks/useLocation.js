@@ -5,18 +5,16 @@ import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
 import { showToaster } from '../util/constants';
 import Geocoder from 'react-native-geocoding';
-import { rider_api_urls } from '../util/api/api_essentials';
-import { getRiderId } from '../util/local-storage/auth_service';
+import { customer_api_urls, rider_api_urls } from '../util/api/api_essentials';
+import { getRiderId, getUserId, saveAdressCustomer } from '../util/local-storage/auth_service';
 import { useDispatch } from 'react-redux';
-import { addUserLocation } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
-
+import { addUserLocation,addAddressToUser, addDefaultAddressToUser } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 
 
 export const useLocation = () => {
     const [user, setUser] = useState([])
     Geocoder.init('AIzaSyAjyGdmeJ8fyRP7eKPJ2ODtF0JEbqEbw8o');
     const dispatch = useDispatch();
-    
     
    
     const [ hasLocation, setHasLocation ] = useState(false);
@@ -33,15 +31,8 @@ export const useLocation = () => {
     });
 
 
-    const isMounted = useRef(true);
 
 
-    useEffect(() => {
-        isMounted.current = true;
-        return () => {
-            isMounted.current = false;
-        }
-    }, [])
 
 
     
@@ -126,6 +117,11 @@ export const useLocation = () => {
                     latitude:res?.coords?.latitude,
                     longitude:res?.coords?.longitude
                   }))
+
+                onMovePositionMaker({
+                    latitude:res?.coords?.latitude,
+                    longitude:res?.coords?.longitude
+                })
                 return setUserLocation({
                   latitude:res?.coords?.latitude,
                   longitude:res?.coords?.longitude
@@ -164,9 +160,86 @@ export const useLocation = () => {
         
         }
     }
+
+
+    const onMovePositionMaker = async (loc) => {
+        try {
+        
+           
+            
+            const apiCall = await axios.post(`${customer_api_urls.geocode_addresses}`, loc);
+    
+    
+          if (apiCall?.data.success) {
+    
+            const { address_components, formatted_address, geometry, place_id } = apiCall?.data?.data
+
+            setUpLocation({
+                address_components,
+                formatted_address,
+                latitude: geometry.location.lat,
+                longitude: geometry.location.lng,
+                place_id,
+      
+              })
+          
+          } 
+    
+    
+          
+
+    
+        } catch (error) {
+            console.log(error,'error move position');
+            
+        }
+    
+      }
+
+    const setUpLocation = async(data) => {
+        try {
+         
+          
+          const userId = await getUserId();
+          if (userId) {
+            // const apiCall = await axios.post(customer_api_urls.create_address,{
+            //     latitude:latitude,
+            //     longitude:longitude,
+            //     address_components,
+            //     formatted_address,
+            //     place_id,
+            //     userId,
+            // });
+          
+          } else{
+    
+           
+            await saveAdressCustomer({
+              ...data,
+              _id:1
+            })
+
+            
+            dispatch(addDefaultAddressToUser(1));
+            dispatch(addAddressToUser([{
+                ...data,
+                _id:1
+            }]));
+         
+          }
+         
+      
+        } catch(e) {
+         
+          console.log(e,'setUpLocation');
+          
+          showToaster('Algo salió mal. Por favor, vuelva a intentarlo - Address');
+        //  //console.log(e?.response?.data)
+        }
+      }
    
 
-console.log(userLocation,'hook');
+
 
     
     

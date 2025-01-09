@@ -144,7 +144,7 @@ const ProductCardComponent = ({
                 <Text 
                 style={{...CommonStyles.h2,color:'#727272',fontWeight:'bold'}}
                 >
-                  {data?.discount}% OFF
+                 {' '}{data?.discount}% OFF
                 </Text>
               )
             }
