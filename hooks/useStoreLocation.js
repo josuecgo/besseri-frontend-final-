@@ -58,6 +58,8 @@ export const useStoreLocation = () => {
       } else {
         
         dispatch(addAddressToUser(apiCall.data.data))
+  
+        
         if (apiCall?.data?.data.length > 0) {
          
           dispatch( addDefaultAddressToUser(apiCall.data.data[0]._id) )
@@ -119,7 +121,7 @@ export const useStoreLocation = () => {
        
         showToaster(errorMessage);
     }
-}
+  }
 
 
   

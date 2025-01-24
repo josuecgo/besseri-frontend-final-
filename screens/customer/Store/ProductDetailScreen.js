@@ -8,26 +8,27 @@ import CommonStyles from '../../../util/styles/styles';
 import ButtonComponent from '../../../components/button/button.component';
 import { CUSTOMER_HOME_SCREEN_ROUTES, MAIN_ROUTES, showToaster } from '../../../util/constants';
 import { useRoute } from '@react-navigation/native';
-import {  base_url, customer_api_urls } from '../../../util/api/api_essentials';
+import { base_url, customer_api_urls } from '../../../util/api/api_essentials';
 import { adjust, deviceHeight, deviceWidth } from '../../../util/Dimentions';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { moneda } from '../../../util/Moneda';
 import { useCart } from '../../../hooks/useCart'
 import { ProductImg } from '../../../components/image-carousel/ProductImg';
-import { getUserId } from '../../../util/local-storage/auth_service';
+import { getUser, getUserId } from '../../../util/local-storage/auth_service';
 import { CardFeedback } from '../../../components/Feedback/CardFeedback';
 import { Box, Button, Card, Center, HStack, VStack } from 'native-base';
 
 import ModalChildren from '../../../components/ModalChildren';
 import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal';
 import { Alert } from 'react-native';
+import { useInfoUser } from '../../../hooks/useInfoUsers';
 
 
 
 
 const ProductDetailScreen = (props) => {
   const { width } = useWindowDimensions();
-  const {bottom} = useSafeAreaInsets()
+  const { bottom } = useSafeAreaInsets()
   const [feedback, setFeedback] = useState([]);
   const { params } = useRoute();
   const [enCarrito, setEnCarrito] = useState(false)
@@ -38,10 +39,9 @@ const ProductDetailScreen = (props) => {
   const [isDisable, setIsDisable] = useState(false);
   const [showModal, setShowModal] = useState(false)
   const isMounted = useRef(true);
+  const [productSaved, setProductSaved] = useState(false); // Nuevo estado
+  const {saveRecentProduct} = useInfoUser()
 
-  useEffect(() => {
-    setEnCarrito(inTheCart(product))
-  }, [isChange.current])
 
 
   const handleChange = async () => {
@@ -60,27 +60,27 @@ const ProductDetailScreen = (props) => {
           },
           { text: 'Crear', onPress: () => props.navigation.navigate(MAIN_ROUTES.AUTH_STACK) },
         ]);
-        return 
+        return
       }
       setIsDisable(true)
- 
+
       const { data } = await axios.get(`${customer_api_urls.inStock_product}/${product._id}`)
-        
-        
+
+
       if (data?.product) {
-        
-        
+
+
         let resp = addItemToCart(product)
-     
+
         setShowModal(resp)
         isChange.current = !isChange.current
 
       } else {
         showToaster('Producto sin existencias, lamentamos el inconveniente.')
       }
-    
 
-    setIsDisable(false)
+
+      setIsDisable(false)
     } catch (error) {
       setIsDisable(false)
     }
@@ -90,27 +90,27 @@ const ProductDetailScreen = (props) => {
     if (feedback.length === 0) {
       return
     }
-    props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_REVIEWS,feedback)
+    props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_REVIEWS, feedback)
   }
 
 
 
-  const getFeedbacks = async() => {
+  const getFeedbacks = async () => {
     try {
       const apiCall = await axios.get(`${customer_api_urls.get_feedback}/${product?._id}`);
 
-      
+
       if (apiCall.status === 200) {
         if (isMounted) {
           setFeedback(apiCall?.data?.data)
         }
-      
+
       }
-     } catch(e) {
-        //  showToaster('No se pudo traer informacion del vendedor')
-        
-         setFeedback([])
-     }
+    } catch (e) {
+      //  showToaster('No se pudo traer informacion del vendedor')
+
+      setFeedback([])
+    }
   }
 
   const goCart = async () => {
@@ -124,7 +124,7 @@ const ProductDetailScreen = (props) => {
       }
     }
   };
-  
+
   const incrementPriece = (price, discount) => {
     let increase = (price * discount) / 100;
     // Sumar el 10% al precio original
@@ -133,92 +133,101 @@ const ProductDetailScreen = (props) => {
     return moneda(newPrice);
   }
 
-  
+  const saveProduct = async () => {
+    try {
+      const userId = await getUser()
+      console.log(userId?.role);
+      
+      if (!userId || userId?.role !== 'mechanic') {
+        return; // No se guarda si no hay sesión
+      }
+
+      saveRecentProduct(userId._id, product._id);
+    } catch (error) {
+      console.error('Error al guardar el producto:', error);
+    }
+  };
 
   useEffect(() => {
-      isMounted.current = true;
-      getFeedbacks();
+    isMounted.current = true;
+    getFeedbacks();
 
-      return () => {
-          isMounted.current = false; // Marca como no montado al desmontar
-      };
+    // Temporizador para guardar automáticamente después de 5 segundos
+    const timer = setTimeout(() => {
+      if (!productSaved) {
+        saveProduct();
+        setProductSaved(true); // Evita múltiples guardados
+      }
+    }, 5000);
+
+    return () => {
+      clearTimeout(timer); // Limpia el temporizador al desmontar
+      isMounted.current = false;
+    };
   }, []);
 
+  useEffect(() => {
+    setEnCarrito(inTheCart(product))
+  }, [isChange.current])
 
-  
-  
+
   return (
     <>
-      <View
-      style={[CommonStyles.screenWhiteY,{paddingBottom:bottom + 20}]}
-      >
-
-
-       
-
-
+      <View style={[CommonStyles.screenWhiteY, { paddingBottom: bottom + 20 }]}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ flexGrow: 1 }}
         >
-           <Card 
-        style={styles.cardImg} >
-          <Text style={[CommonStyles.h2,{color:Colors.black,fontWeight:'bold',marginBottom:10}]} >{product?.category?.name} / {product?.subCategory?.name}</Text>
-          
-          <Center>
-          {
-            product?.urlsImg ? (
-              product?.urlsImg?.length > 0 ? (
-                <ProductImg imgs={product?.urlsImg} />
-              ) : (
-                <Image
-                  source={{ uri: `${base_url}/${product?.productImg}` }}
-                  style={styles.productImg}
-                />
-              )
-            ) : (
-              <Image
-                source={{ uri: `${base_url}/${product?.productImg}` }}
-                style={styles.productImg}
-              />
-            )
-          }
-          </Center>
-          
+          <Card
+            style={styles.cardImg} >
+            <Text style={[CommonStyles.h2, { color: Colors.black, fontWeight: 'bold', marginBottom: 10 }]} >{product?.category?.name} / {product?.subCategory?.name}</Text>
 
+            <Center>
+              {
+                product?.urlsImg ? (
+                  product?.urlsImg?.length > 0 ? (
+                    <ProductImg imgs={product?.urlsImg} />
+                  ) : (
+                    <Image
+                      source={{ uri: `${base_url}/${product?.productImg}` }}
+                      style={styles.productImg}
+                    />
+                  )
+                ) : (
+                  <Image
+                    source={{ uri: `${base_url}/${product?.productImg}` }}
+                    style={styles.productImg}
+                  />
+                )
+              }
+            </Center>
 
-
-        </Card>
+          </Card>
           <VStack space={2} style={styles.detailCard} >
-          <Text style={{...CommonStyles.h1,color:Colors.black, fontWeight:'bold'}} >{product?.name}</Text>
+            <Text style={{ ...CommonStyles.h1, color: Colors.black, fontWeight: 'bold' }} >{product?.name}</Text>
             {
-               product?.discount > 0 && (
-                <Text 
-                style={{...CommonStyles.h2,color:'#727272',textDecorationLine:'line-through'}}
+              product?.discount > 0 && (
+                <Text
+                  style={{ ...CommonStyles.h2, color: '#727272', textDecorationLine: 'line-through' }}
                 >
-                  {incrementPriece((Number(product?.price) + Number(comision * product?.price / 100)),product?.discount)} MXN
+                  {incrementPriece((Number(product?.price) + Number(comision * product?.price / 100)), product?.discount)} MXN
                 </Text>
               )
             }
-            
+
             <HStack alignItems={'center'}  >
-            <Text style={{...CommonStyles.h2,color:Colors.black}} >{`${moneda(Number(product?.price) + Number(comision * product?.price / 100))} MXN `}</Text>
-            {
-               product?.discount > 0 && (
-                <Text 
-                style={{...CommonStyles.h2,color:'#727272',fontWeight:'bold'}}
-                >
-                  {product?.discount}% OFF
-                </Text>
-              )
-            }
+              <Text style={{ ...CommonStyles.h2, color: Colors.black }} >{`${moneda(Number(product?.price) + Number(comision * product?.price / 100))} MXN `}</Text>
+              {
+                product?.discount > 0 && (
+                  <Text
+                    style={{ ...CommonStyles.h2, color: '#727272', fontWeight: 'bold' }}
+                  >
+                    {product?.discount}% OFF
+                  </Text>
+                )
+              }
 
             </HStack>
-
-            
-            
-
-            
             <Center mt={'15px'}>
               <ButtonComponent
                 disabled={isDisable}
@@ -233,8 +242,6 @@ const ProductDetailScreen = (props) => {
                 handlePress={handleChange}
               />
             </Center>
-            
-
           </VStack>
 
           <View style={styles.description}>
@@ -245,50 +252,50 @@ const ProductDetailScreen = (props) => {
           </View>
 
           {
-              feedback.length > 0 && ( 
-                <CardFeedback feedback={feedback} onPress={goReviews} colorTxt={Colors.bgColor} />
-              )
-            }
-          
+            feedback.length > 0 && (
+              <CardFeedback feedback={feedback} onPress={goReviews} colorTxt={Colors.bgColor} />
+            )
+          }
+
           <ModalChildren showModal={showModal} handleModal={(e) => setShowModal(e)} >
             <Box style={CommonStyles.modal}  >
-              <TouchableOpacity style={styles.btnClose} 
-              onPress={() => setShowModal(false)}
+              <TouchableOpacity style={styles.btnClose}
+                onPress={() => setShowModal(false)}
               >
                 <Image
-                source={require('../../../assets/images/close.png')}
-                style={styles.close}
+                  source={require('../../../assets/images/close.png')}
+                  style={styles.close}
                 />
               </TouchableOpacity>
               <VStack space={2} >
                 <Center mb={10}>
-                  <Text style={[CommonStyles.h1,{fontWeight:'bold',marginBottom:10}]} >Producto Agregado</Text>
+                  <Text style={[CommonStyles.h1, { fontWeight: 'bold', marginBottom: 10 }]} >Producto Agregado</Text>
                   <Text style={CommonStyles.h2} >Tu producto ha sido agregado con éxito</Text>
                 </Center>
-                
-                  
-                <Button 
-                variant={'outline'}  
-                _text={{
-                  fontWeight: '700',
-                  fontSize: '18px',
-                  color: Colors.white,
-                  fontStyle:'normal'
-                }} 
-                onPress={() => setShowModal(false)}
+
+
+                <Button
+                  variant={'outline'}
+                  _text={{
+                    fontWeight: '700',
+                    fontSize: '18px',
+                    color: Colors.white,
+                    fontStyle: 'normal'
+                  }}
+                  onPress={() => setShowModal(false)}
                 >
                   Seguir en tienda
                 </Button>
-              
-                
+
+
 
                 <BtnPrincipal
-                text={'Pagar'}
-                marginHorizontal={0}
-                onPress={goCart}
+                  text={'Pagar'}
+                  marginHorizontal={0}
+                  onPress={goCart}
                 />
               </VStack>
-              
+
             </Box>
           </ModalChildren>
 
@@ -296,7 +303,7 @@ const ProductDetailScreen = (props) => {
 
         </ScrollView>
 
-        
+
 
       </View>
     </>
@@ -313,7 +320,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
-  cardImg:{
+  cardImg: {
     // Add the shadow properties
     shadowColor: "#000",
     shadowOffset: {
@@ -322,22 +329,22 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    
+
     elevation: 5,
 
     // Add other styles as needed
     backgroundColor: 'white',
     borderRadius: 8,
     marginBottom: 10,
-    marginHorizontal:10,
-    top:-5
+    marginHorizontal: 10,
+    top: -5
     // alignItems:'center'
-  
+
   },
   headerText: { ...CommonStyles.fontFamily, color: Colors.white, fontSize: 20 },
   detailCard: {
-    marginHorizontal:10,
-    backgroundColor:Colors.white
+    marginHorizontal: 10,
+    backgroundColor: Colors.white
   },
   productImg: {
     width: deviceWidth,
@@ -354,21 +361,21 @@ const styles = StyleSheet.create({
     ...CommonStyles.fontFamily,
     ...CommonStyles.h3,
     marginVertical: 20,
-    color:Colors.black
+    color: Colors.black
   },
-  description:{ 
-    backgroundColor: Colors.white, 
-    marginTop: 10, 
-    padding: 10 
+  description: {
+    backgroundColor: Colors.white,
+    marginTop: 10,
+    padding: 10
   },
-  close:{
-    width:30,
-    height:30
+  close: {
+    width: 30,
+    height: 30
   },
-  btnClose:{
-    position:'absolute',
-    right:10,
-    top:5
+  btnClose: {
+    position: 'absolute',
+    right: 10,
+    top: 5
   }
 })
 

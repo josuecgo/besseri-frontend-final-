@@ -71,7 +71,8 @@ const SplashScreen = ({navigation,route}) => {
     if (user) { dispatch(addToUser(user))}
 
     if (addressCustomer && carActive ) {
-        
+      
+      
       await dispatch(addAddressToUser(addressCustomer));
       await dispatch(addCarActiveToUser(carActive));
      

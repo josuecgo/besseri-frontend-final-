@@ -39,6 +39,8 @@ import { HeaderPedidos } from '../../../components/Customer/HeaderPedidos';
 import { ValetHomeScreen } from '../Home/ValetHomeScreen';
 import { useLocation } from '../../../hooks/useLocation';
 import { ProductContext } from '../../../util/context/Product/ProductContext';
+import { useSelector } from 'react-redux';
+import { RecentProductsScreen } from '../Account/RecentProductsScreen';
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -48,64 +50,64 @@ export const BottomTabHome = (props) => {
   const {
     iosPermisoss,
     getToken,
-    showNotification,listenerBack,onForegroundMessageRecived} = useContext(NotificationContext);
+    showNotification, listenerBack, onForegroundMessageRecived } = useContext(NotificationContext);
 
-    const {
-        comision, getMarcas, getModelo,
-        valueMaker, getComision
-      } = useContext(ProductContext)
-    
-    
-    
-      useEffect(() => {
-        const fetchComision = async () => {
-          if (!comision) {
-            await getComision();
-          }
-        };
-      
-        let abortController = new AbortController();
-      
-        fetchComision();
-      
-        return () => {
-          abortController.abort();  // Esta línea está bien
-        };
-      }, [comision]);
-      
-    
-    
-      useEffect(() => {
-        const fetchMarcas = async () => {
-          await getMarcas();
-        };
-      
-        let abortController = new AbortController();
-      
-        fetchMarcas();
-      
-        return () => {
-          abortController.abort();
-        };
-      }, []);
-      
-    
-    
-      useEffect(() => {
-        const fetchModelo = async () => {
-          if (valueMaker) {
-            await getModelo(valueMaker);
-          }
-        };
-      
-        let abortController = new AbortController();
-      
-        fetchModelo();
-      
-        return () => {
-          abortController.abort();
-        };
-      }, [valueMaker]);
+  const {
+    comision, getMarcas, getModelo,
+    valueMaker, getComision
+  } = useContext(ProductContext)
+
+
+
+  useEffect(() => {
+    const fetchComision = async () => {
+      if (!comision) {
+        await getComision();
+      }
+    };
+
+    let abortController = new AbortController();
+
+    fetchComision();
+
+    return () => {
+      abortController.abort();  // Esta línea está bien
+    };
+  }, [comision]);
+
+
+
+  useEffect(() => {
+    const fetchMarcas = async () => {
+      await getMarcas();
+    };
+
+    let abortController = new AbortController();
+
+    fetchMarcas();
+
+    return () => {
+      abortController.abort();
+    };
+  }, []);
+
+
+
+  useEffect(() => {
+    const fetchModelo = async () => {
+      if (valueMaker) {
+        await getModelo(valueMaker);
+      }
+    };
+
+    let abortController = new AbortController();
+
+    fetchModelo();
+
+    return () => {
+      abortController.abort();
+    };
+  }, [valueMaker]);
 
 
   useEffect(() => {
@@ -116,14 +118,6 @@ export const BottomTabHome = (props) => {
   }, []);
 
 
-  // useEffect(() => {
-  //   const unsubscribe = messaging().onNotificationOpenedApp((remoteMessage) => {
-  //     // Aquí puedes manejar la lógica cuando se presione una notificación
-  //     props.navigation.navigate(BOTTOM_TAB_CUSTOMER_ROUTES.NOTIFICATION_STACK)
-  //   });
-  
-  //   return unsubscribe;
-  // }, []);
 
 
 
@@ -131,31 +125,31 @@ export const BottomTabHome = (props) => {
     let isMounted = true;
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
       if (isMounted) {
-       
-        
-        showNotification(remoteMessage,props.navigation)
-      }   
-    
+
+
+        showNotification(remoteMessage, props.navigation)
+      }
+
     })
     return () => {
       isMounted = false; // Marcamos el componente como desmontado al limpiar
     };
-  },[])
+  }, [])
 
 
- 
+
 
   useEffect(() => {
     let isMounted = true;
-  
-    messaging().onMessage( async(msg) => {
-    
-      
+
+    messaging().onMessage(async (msg) => {
+
+
       if (isMounted) {
-        onForegroundMessageRecived(msg,props.navigation)
+        onForegroundMessageRecived(msg, props.navigation)
       }
-    
-     
+
+
 
 
     })
@@ -163,14 +157,14 @@ export const BottomTabHome = (props) => {
     return () => {
       isMounted = false; // Marcamos el componente como desmontado al limpiar
     };
-  },[]);
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
       listenerBack(props.navigation)
     }
-  
+
     return () => {
       isMounted = false;
     }
@@ -186,20 +180,17 @@ export const BottomTabHome = (props) => {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarActiveTintColor: Colors.primarySolid,
-        
+
 
       })
       }
-    
+
 
     >
       <BottomTab.Screen
         name={BOTTOM_TAB_CUSTOMER_ROUTES.HOME_SCREEN}
         component={CustomerHomeStack}
-        options={{
-          title: 'Home',
-          
-        }}
+
       />
 
       <BottomTab.Screen
@@ -245,19 +236,36 @@ export const CustomerNotificationStack = () => {
 
 export const CustomerHomeStack = () => {
 
-  
-  
+  const { user } = useSelector(state => state?.user)
+
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES}
+      initialRouteName={user?.role === 'client' ? CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS : CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES}
     >
+      {
+        user?.role === 'client' && user && (
+          <Stack.Screen
+            name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS}
+            component={HomeScreen}
+            options={{
+              headerShown: true,
+              header: props => (
+                <CustomHeaderComponent {...props} name="Home" />
+              ),
+            }}
+          />
+        )
+      }
 
-        <Stack.Screen
+
+
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES}
         component={HomeStoreScreen}
         options={{
-          headerShown: false,
+          animationEnabled: false,
+          headerShown: true,
           header: props => (
             <HeaderStore {...props}
               titulo="Tienda"
@@ -265,18 +273,9 @@ export const CustomerHomeStack = () => {
               tienda={true}
             />
           ),
-          }}
-        />
-      <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS}
-        component={HomeScreen}
-        options={{
-          headerShown: true,
-          header: props => (
-            <CustomHeaderComponent {...props} name="Home" />
-          ),
         }}
       />
+
 
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_CATEGORIES}
@@ -346,7 +345,7 @@ export const CustomerHomeStack = () => {
         }}
       />
 
-      
+
 
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.PRODUCT_DETAIL}
@@ -380,7 +379,7 @@ export const CustomerAccountStack = () => {
           header: props => (
             <CustomHeaderComponent {...props} name="Home" />
           ),
-          
+
         }}
       />
 
@@ -397,6 +396,21 @@ export const CustomerAccountStack = () => {
           ),
         }}
       />
+
+<Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_RECENT_PRODUCTS}
+        component={RecentProductsScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props}
+              titulo="Artículos recientes"
+              nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_MY_CARS}
         component={MyCarsScreen}
@@ -436,7 +450,7 @@ export const CustomerAccountStack = () => {
           ),
         }}
       />
-      
+
       <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ADD_MY_CAR}
         component={AddCarScreen}

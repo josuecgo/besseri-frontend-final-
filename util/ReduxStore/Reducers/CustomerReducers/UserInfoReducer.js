@@ -118,7 +118,8 @@ export default (state = initialState, action) => {
                 marcaValue: '',
                 modeloValue: '',
                 yearValue:'',
-                isLoading:false
+                isLoading:false,
+                carActive:null
             } 
         case GET_MODEL_VALUE_CARS:
            

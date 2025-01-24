@@ -1,27 +1,23 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { TouchableOpacity, View, StyleSheet, FlatList, ActivityIndicator, Alert } from 'react-native';
 
-
-import { Box, Center, CheckIcon, HStack, Image, Select, Text, } from 'native-base';
+import {  Center,  Text, } from 'native-base';
 
 import Colors from '../../../util/styles/colors';
 import CommonStyles from '../../../util/styles/styles';
 
-import { BOTTOM_TAB_CUSTOMER_ROUTES, CUSTOMER_HOME_SCREEN_ROUTES, MAIN_ROUTES, showAlertLogin, showToaster } from '../../../util/constants';
+import {showToaster } from '../../../util/constants';
 import ProductListing from '../../../components/customer-components/ProductsListing.component';
 import { adjust, deviceHeight, deviceWidth } from '../../../util/Dimentions';
 
 import { ProductContext } from '../../../util/context/Product/ProductContext';
-import { useFiltrado } from '../../../hooks/useFiltrado';
 import { ListEmpty } from '../../../components/Vendor/ListEmpty';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { customer_api_urls } from '../../../util/api/api_essentials';
 import { getUserId } from '../../../util/local-storage/auth_service';
 import { ServiceSkeleton } from '../../../components/Services/ServiceSkeleton';
-import { useStoreLocation } from '../../../hooks/useStoreLocation';
 import { useCart } from '../../../hooks/useCart';
-import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal';
 import { useLocation } from '../../../hooks/useLocation';
 import { SelectCar } from '../../../components/Customer/SelectCar';
 import HeaderStore from '../../../components/Customer/HeaderStore';
@@ -30,16 +26,14 @@ import HeaderStore from '../../../components/Customer/HeaderStore';
 
 
 
-const HomeStoreScreen = React.memo((props) => {
+const HomeStoreScreen = (props) => {
   const {
-    getCategorias,
     categorias, activeCategory, activarCategoria,
     comision,
     loading, carCompatible, productos, isLoading, getProducts,
   } = useContext(ProductContext);
   const [addresses, setAddresses] = useState(null)
-  const { carActive, address,marcaValue,modeloValue,yearValue } = useSelector(state => state.user);
-
+  const { carActive, address,marcaValue,modeloValue,yearValue,user } = useSelector(state => state.user);
   const direccionStore = useSelector(state => state.user.addresses);
 
   const [defaultAddress, setDefaultAddress] = useState(address?._id ?? 1)
@@ -48,7 +42,7 @@ const HomeStoreScreen = React.memo((props) => {
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
 
   const { addItemToCart } = useCart()
-const { getLocationHook } = useLocation()
+  const { getLocationHook } = useLocation()
 
 
   
@@ -103,6 +97,7 @@ const { getLocationHook } = useLocation()
     )
   }
 
+
   
 
 
@@ -117,53 +112,6 @@ const { getLocationHook } = useLocation()
   )
 
 
-  
-  const getAddresses = async () => {
-    try {
-
-      const userId = await getUserId();
-
-      const apiCall = await axios.get(`${customer_api_urls.get_addresses}/${userId}`);
-
-
-
-      if (apiCall?.data?.data.length <= 0) {
-        if (direccionStore.length < 0) {
-
-          const data = {
-            _id: 1,
-            ...direccionStore[0]
-          }
-
-          setAddresses([data]);
-          setDefaultAddress(1)
-          return
-        }
-
-
-      } else {
-        setAddresses(apiCall.data.data);
-        if (apiCall?.data?.data.length > 0) {
-          setDefaultAddress(apiCall.data.data[0]._id)
-
-        } else {
-          setDefaultAddress(null)
-        }
-      }
-
-    } catch (e) {
-      showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 2')
-    }
-
-  }
-
-  const handleAddress = (address) => {
-
-    setDefaultAddress(address)
-  }
-
-
-
   const memorizedProductos = useMemo(() => renderItem, [productos]);
 
   const memorizedValueCategoria = useMemo(() => renderItemCategorias, [categorias, activeCategory]);
@@ -174,44 +122,35 @@ const { getLocationHook } = useLocation()
   useEffect(() => {
     getLocationHook()
 }, []);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const fetchData = async () => {
-
-      if (isMounted) {
-        await getAddresses();
-      }
-
-    };
-
-    fetchData(); // Llamada a la función asíncrona
-
-    return () => {
-      isMounted = false;
-    }
-  }, [])
-
-
-
+   
+  
   useEffect(() => {
     let isMounted = true;
 
     const fetchData = async () => {
       try {
         if (isMounted) {
+         
+          
           if (!addresses && !direccionStore) return;
-          const findAddres = addresses?.place_id ? addresses.find(item => item?._id === defaultAddress) : direccionStore.find(item => item?._id === defaultAddress)
+        
+          
+          const address = direccionStore[defaultAddress - 1] ||  direccionStore.find(item => item?._id === defaultAddress)
+
           const car = carActive ? carActive : {
             maker: {_id:marcaValue},
             model:{_id:modeloValue},
             year:yearValue
           } 
-          await getProducts(activeCategory, car, findAddres);
+         
+          
+          
+          await getProducts(activeCategory, car, address);
         }
       } catch (error) {
-        showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 2');
+    
+        
+        showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 3');
       }
     };
 
@@ -224,17 +163,8 @@ const { getLocationHook } = useLocation()
     };
   }, [activeCategory,  defaultAddress, direccionStore,marcaValue,modeloValue,yearValue]);
 
-
   
-
   
-
-
-
- 
-
-
-
 
 
   
@@ -244,11 +174,7 @@ const { getLocationHook } = useLocation()
       ...CommonStyles.flexOne,
       backgroundColor: Colors.white
     }}>
-      <HeaderStore
-      titulo="Tienda"
-      navigation={props.navigation}
-      tienda={true}
-      />
+
 
       <View style={{ flex: 1, backgroundColor: Colors.white }} >
         <View style={{
@@ -269,60 +195,15 @@ const { getLocationHook } = useLocation()
 
           />
         </View>
-        {/* <HStack alignItems={'center'} justifyContent={'center'} space={1} mt={1} size={'xs'} >
 
-
-          {
-            direccionStore.length <= 0 ? (
-              <BtnPrincipal onPress={goToMyAddress} text={'Crear una direccion'} marginHorizontal={1} />
-            ) : (
-              <>
-                <Image
-                  source={require('../../../assets/images/1.png')}
-                  alt='dirrecion'
-                  style={styles.icon}
-                />
-                <Select
-                  selectedValue={defaultAddress}
-                  defaultValue={defaultAddress}
-                  minWidth={deviceWidth - 60}
-                  accessibilityLabel="Elegir direccion"
-                  placeholder={'Elegir direccion'}
-                  placeholderTextColor={Colors.white}
-                  variant='unstyled'
-                  _selectedItem={{
-                    bg: "teal.600",
-                    endIcon: <CheckIcon size="5" />
-                  }}
-
-                  onValueChange={itemValue => handleAddress(itemValue)}
-                  borderColor={Colors.bgColor}
-                  color={Colors.bgColor}
-                  backgroundColor={Colors.white}
-                  size={'xs'}
-                >
-                  {
-                    direccionStore.map((item) => (
-                      <Select.Item key={item._id} label={item.formatted_address} value={item._id} />
-                    ))
-                  }
-
-
-                </Select>
-              </>
-
-            )
-
-          }
-
-        </HStack> */}
-        
-        
-         
-        <SelectCar/>
+        {
+          user?.role === 'mechanic' && ( 
+            <SelectCar/>
+          )
+        }
+       
        
         
-        {/* PRODUCTOS */}
         <View style={{ marginTop: 0 }}>
         
           {
@@ -369,7 +250,7 @@ const { getLocationHook } = useLocation()
       </View>
     </View>
   );
-})
+}
 
 const styles = StyleSheet.create({
   categoryButton: {

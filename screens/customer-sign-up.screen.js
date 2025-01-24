@@ -30,8 +30,9 @@ const CREDENTIAL_KEYS = {
   FULL_NAME: 'Nombre',
   LASTNAME: 'Apellidos',
   EMAIL_ADDRESS: 'Email',
+  CONFIRM_EMAIL_ADDRESS: 'Confirmar Email',
   PHONE_NUMBER: 'Número de teléfono',
-  IS_MECHANIC: '¿Eres consumidor o mecánico?',
+  IS_MECHANIC: '¿Buscas servicios para tu auto o eres un PRO de la mecanica?',
   PASSWORD: 'Contraseña',
   CONFIRMPASSWORD: 'Confirmar contraseña'
 };
@@ -44,6 +45,7 @@ const CustomerSignUpScreen = ({ navigation }) => {
     [CREDENTIAL_KEYS.FULL_NAME]: '',
     [CREDENTIAL_KEYS.LASTNAME]: '',
     [CREDENTIAL_KEYS.EMAIL_ADDRESS]: '',
+    [CREDENTIAL_KEYS.CONFIRM_EMAIL_ADDRESS]: '',
     [CREDENTIAL_KEYS.PHONE_NUMBER]: '',
     [CREDENTIAL_KEYS.PASSWORD]: '',
     [CREDENTIAL_KEYS.CONFIRMPASSWORD]: '',
@@ -108,13 +110,23 @@ const CustomerSignUpScreen = ({ navigation }) => {
       userCredentials[CREDENTIAL_KEYS.PASSWORD]) && 
       userCredentials[CREDENTIAL_KEYS.PASSWORD].length > 0;
 
-
+    let emailValid = 
+    comparaText(userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS], 
+      userCredentials[CREDENTIAL_KEYS.CONFIRM_EMAIL_ADDRESS]) && 
+      userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS].length > 0;
 
     if (!validPhone) {
       showToaster('Introduce un numero correcto');
       return
     }
+  
+    
+    if (!emailValid) {
+      showToaster('Verifica el correo, no coinciden');
+      return
+    }
 
+    
     if (valid) {
       if (isSelected) {
         Alert.alert(
@@ -234,8 +246,26 @@ const CustomerSignUpScreen = ({ navigation }) => {
                 secureTextEntry={false}
                 value={userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS]}
                 // ref={emailAddressRef}
+                nextFieldRef={phoneNumberRef} 
+                autoCapitalize='none'
+                returnType="next"
+              />
+
+
+              <InputTxt
+                label={'Confirmar Email'}
+                keyboardType={KEYBOARD_TYPES.EMAIL_ADDRESS}
+                onChangeText={inputText => {
+                  onChangeText(inputText, CREDENTIAL_KEYS.CONFIRM_EMAIL_ADDRESS);
+                }}
+                placeholderText={CREDENTIAL_KEYS.CONFIRM_EMAIL_ADDRESS}
+                secureTextEntry={false}
+                value={userCredentials[CREDENTIAL_KEYS.CONFIRM_EMAIL_ADDRESS]}
+                // ref={emailAddressRef}
                 nextFieldRef={phoneNumberRef}
                 returnType="next"
+                autoCapitalize='none'
+
               />
 
               <Text style={{ ...CommonStyles.h2,marginTop:5 }} >{CREDENTIAL_KEYS.IS_MECHANIC}</Text>

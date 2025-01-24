@@ -4,37 +4,26 @@ import { customer_api_urls, vendor_api_urls } from '../util/api/api_essentials';
 import { showToaster } from '../util/constants';
 import { ProductContext } from '../util/context/Product/ProductContext';
 import { matchMaker, matchModel, matchYear } from '../util/utility-functions';
-import { getMakerValueCars, getMakersCars, getModelValueCars, getModelsCars, getYearValueCar } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
+import { addCarActiveToUser, getMakerValueCars, getMakersCars, getModelValueCars, getModelsCars, getYearValueCar, getYearsCars } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
+import * as UserInfoActions from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 import { useDispatch, useSelector } from 'react-redux';
 
 
 export const useSearchStore = (  ) => {
     const  dispatch = useDispatch();
-    const {marcaValue} = useSelector(state => state.user )
+    const {carActive,user} = useSelector(state => state.user )
     
     const [ isLoading, setIsLoading ] = useState(true);
     const [ marcas, setMarcas ] = useState([]);
-    const [modelo, setModelo] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [dataFilter,setDataFilter] = useState([]);
-    const [servicesData,setServicesData] = useState([]);
+    const [modelo, setModelo] = useState(null);
     const [productFilter, setProductFilter] = useState([]);
     const [valueMaker, setValueMaker] = useState(null);
     const [valueModel, setValueModel] = useState(null);
     const [valueYear, setValueYear] = useState("")
     const [valueCategorias, setValueCategorias] = useState(null);
-    const [servicios, setServicios] = useState(false)
-    const [minimumPrice, setMinimumPrice] = useState('loading');
-    const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [services, setServices] = useState([]);
     const [productsData, setProductsData] = useState([])
-    const [comision, setComision] = useState(10);
-
-    const {
-        getCategorias,
-        carDefault,carCompatible
-    } = useContext(ProductContext)
+    const { carCompatible,getProducts } = useContext(ProductContext)
 
     const getStore = async (tienda) => {
         
@@ -63,11 +52,10 @@ export const useSearchStore = (  ) => {
         }
     };
 
-   
-
     const getMarcas = useCallback(
         async () => {
-        
+            
+            
             try {
                 const apiCall = await axios.get(vendor_api_urls?.get_makers)
                 if (apiCall.status == 200) {
@@ -85,31 +73,46 @@ export const useSearchStore = (  ) => {
         },
       [],
     )
+
+    const getModelo = async (id) => {
+  
+        try {
+            const apiCall = await axios.get(`${vendor_api_urls.get_models}/${id}`);
+          
+            if (apiCall?.status === 200) {
+
+                dispatch(getModelsCars(apiCall.data?.data))
+
+               
+            }
+        } catch (error) {
+           
+           showToaster(error.response.data.message)
+        }
+       
+    }
     
 
-    const getModelo = async(id) => {
-        
-        try {
-            
-           
-            const apiCall = await axios.get(`${vendor_api_urls.get_models}/${id}`,);
-            
-            if (apiCall?.status == 200) {
-               
-                dispatch(getModelsCars(apiCall.data?.data))
-            }
-            
-            } catch (e) {
-                
-              alert(e.response.data.message);
-            }
-        
+
+
+    const rangeYear = async() => {
+        const max = new Date().getFullYear() + 1
+
+        const min = max - 33
+        const years = []
+
+        for (let i = max; i >= min; i--) {
+            years.push(i)
+        }
+       
+        await dispatch(getYearsCars(years))
+
     }
 
 
 
     const searchCallStore = async(st,isServices) => {
-        setServicios(isServices);
+       
         
         let itemData;
         let itemModel;
@@ -177,7 +180,7 @@ export const useSearchStore = (  ) => {
         setProductFilter(productsData);
         setValueCategorias(null);
         
-        dispatch(resetFiltros())
+        // dispatch(resetFiltros())
        
       
         
@@ -186,48 +189,62 @@ export const useSearchStore = (  ) => {
 
 
     const handleMarca = (item) => {
-       
+        handleModel('')
+        handleYear('')
         dispatch(getMakerValueCars(item))
         
-
+        dispatch(addCarActiveToUser({
+            ...carActive,
+            maker:{
+                _id:item
+            },
+            model:'',
+            year:null
+        }))
+        
+       
     }
     const handleModel = (item) => {
        
         dispatch(getModelValueCars(item))
+
+        dispatch(addCarActiveToUser({
+            ...carActive,
+            model:{
+                _id:item
+            },
+            year:null
+        }))
     }
     const handleYear = (item) => {
         
        
         dispatch(getYearValueCar(item))
+        dispatch(addCarActiveToUser({
+            ...carActive,
+            year:item
+        }))
 
     }
     
+    const resetCar = () => {
+        dispatch(UserInfoActions.resetFiltros())
+    }
 
-    useEffect(() => {
-        handleMarca(carDefault?.maker?._id)
-        handleYear(carDefault?.year)
-    }, [carDefault])
-
-    useEffect(() => {
-      if (carDefault && modelo) {
-        handleModel(carDefault?.model?._id)
-      }
-    }, [modelo,carDefault])
+ 
     
    
     useEffect(() => {
         getMarcas();
+        rangeYear()
     }, [])
 
-    useEffect(() => {
-        if (marcaValue) {
-            getModelo(marcaValue);
-            
-        }
-    }, [marcaValue]);
-   
   
    
+
+
+   
+
     
     
     return {
@@ -237,8 +254,6 @@ export const useSearchStore = (  ) => {
         modelo,
         setModelo,
         productsData,
-        servicesData,
-        loading,
         getModelo,
         makerFilter,
         productFilter,
@@ -246,18 +261,16 @@ export const useSearchStore = (  ) => {
         setValueMaker,
         valueModel, 
         setValueModel,
-        dataFilter,
+        resetCar,
         searchCallStore,
-        minimumPrice,
-        products,
         categories,
-        services,
         valueCategorias, setValueCategorias,
-        setCategories,resetFiltros,comision,
+        setCategories,resetFiltros,
         getStore,valueYear, setValueYear,
         handleMarca,
         handleModel,
-        handleYear
+        handleYear,
+        getMarcas
     }
 
 }

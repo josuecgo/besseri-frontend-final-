@@ -8,7 +8,7 @@ import { Box, HStack, Pressable, Text } from 'native-base'
 import { getUserId, logout } from '../../../util/local-storage/auth_service';
 import axios from 'axios';
 import { useInfoUser } from '../../../hooks/useInfoUsers';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteToUser } from '../../../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 import { api_urls } from '../../../util/api/api_essentials';
 import Colors from '../../../util/styles/colors';
@@ -16,11 +16,15 @@ import Colors from '../../../util/styles/colors';
 
 export const MyAccountScreen = (props) => {
     const {getNotificaciones} = useInfoUser();
+    const { user } = useSelector(state => state.user)
     const dispatch = useDispatch()
+
+
+    
     const menu = [
         {
-            name:'Mis autos',
-            nav:CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_MY_CARS
+            name: user?.role === 'mechanic' ? 'Artículos recientes' : 'Mis autos',
+            nav:user?.role === 'mechanic' ?  CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_RECENT_PRODUCTS : CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_MY_CARS
         },
         {
             name:'Mis direcciones',

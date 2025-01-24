@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { Platform, StyleSheet, Text, View, TouchableOpacity, Pressable } from 'react-native'
 import React from 'react'
 import CommonStyles from '../../util/styles/styles'
 import Colors from '../../util/styles/colors'
@@ -14,13 +14,13 @@ export const HeaderTitle = ({ nav, titulo, iconName = 'keyboard-backspace', tien
   const { top } = useSafeAreaInsets()
   
   return (
-    <>
-      <HeaderBackground />
+    <View style={{ backgroundColor:Colors.bgColor,}} >
+      {/* <HeaderBackground /> */}
       <View style={[styles.header,{paddingTop:top }]}>
         <HStack space={4} alignItems={'center'} >
           {
             nav && (
-              <TouchableOpacity
+              <Pressable
                 onPress={nav}
                 style={styles.btn}
               >
@@ -29,7 +29,7 @@ export const HeaderTitle = ({ nav, titulo, iconName = 'keyboard-backspace', tien
                   color={Colors.white}
                   size={24}
                 />
-              </TouchableOpacity>
+              </Pressable>
             )
           }
 
@@ -50,7 +50,7 @@ export const HeaderTitle = ({ nav, titulo, iconName = 'keyboard-backspace', tien
         bg: "#2C2A2A"
       }}
       />
-    </>
+    </View>
   )
 }
 

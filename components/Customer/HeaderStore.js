@@ -11,13 +11,14 @@ import CommonStyles from '../../util/styles/styles';
 import Colors from '../../util/styles/colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { CUSTOMER_HOME_SCREEN_ROUTES, MAIN_ROUTES } from '../../util/constants';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deviceWidth } from '../../util/Dimentions';
 import { HeaderBackground } from '../Background/HeaderBackground';
 import { getUserId } from '../../util/local-storage/auth_service';
 
 import { CheckIcon, HStack, Image, Select } from 'native-base';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { addDefaultAddressToUser } from '../../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 
 
 
@@ -26,11 +27,17 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const HeaderStore = (props) => {
   const { top } = useSafeAreaInsets()
   const cart_items = useSelector(state => state.cart.cart_items);
-  const user = useSelector(state => state?.auth?.user);
-  const { address, addresses, defaultAddress } = useSelector(state => state?.user);
+  // const user = useSelector(state => state?.auth?.user);
+  const { user, addresses, defaultAddress,address } = useSelector(state => state?.user);
 
- 
+  const  dispatch = useDispatch();
+
   
+
+   
+    
+   
+    
 
   let screenName = props?.titulo;
 
@@ -50,13 +57,20 @@ const HeaderStore = (props) => {
   };
 
 
+  const handleAddress = async(id) => {
+    await dispatch( addDefaultAddressToUser(id) )      
+  }
+
+  
+  
+
   return (
     <>
       <HeaderBackground />
       <View style={[styles.header, { paddingTop: top + 10, paddingBottom: 10 }]}>
         <HStack alignItems={'center'} space={3}>
           {
-            user && (
+            user?.role === 'client' && (
               <Pressable
                 onPress={() => {
                   props.navigation.goBack();
@@ -83,15 +97,11 @@ const HeaderStore = (props) => {
         </HStack>
 
       
-        {/* <Image
-          source={require('../../assets/images/13.png')}
-          alt='dirrecion'
-          style={styles.icon}
-        /> */}
+    
 
         <Select
-          selectedValue={defaultAddress}
-          defaultValue={defaultAddress}
+          selectedValue={address?._id}
+          defaultValue={address?._id}
           minWidth={'50%'}
           accessibilityLabel="Elegir direccion"
           placeholder={'Elegir direccion'}
@@ -114,7 +124,7 @@ const HeaderStore = (props) => {
         
            
           {
-            addresses.map((item) => (
+            addresses.length > 0 && addresses.map((item) => (
               <Select.Item key={item._id} label={item.formatted_address} value={item._id} />
             ))
           }

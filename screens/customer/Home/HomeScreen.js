@@ -40,6 +40,7 @@ export const HomeScreen = ({ navigation }) => {
 
 
 
+
   return (
     <View style={styles.body} >
 
@@ -58,6 +59,7 @@ export const HomeScreen = ({ navigation }) => {
             label={'Servicios'}
             icono={require('../../../assets/images/home/servicios.png')}
             onPress={() => {
+              
               navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.HOME_VALET,{lavado:false})
               // navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SERVICES_CATEGORIES)
             }}
@@ -71,12 +73,14 @@ export const HomeScreen = ({ navigation }) => {
           label={'Refacciones'}
           icono={require('../../../assets/images/home/refaccion.png')}
           onPress={() => {
+           
             if (!carActive) {
 
               showToaster('Active un vehículo para ver los productos.')
               return
             }
             navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES)
+            
           }}
           style={85}
         />
@@ -87,7 +91,7 @@ export const HomeScreen = ({ navigation }) => {
             label={'Lavado'}
             icono={require('../../../assets/images/home/lavado.png')}
             onPress={() => {
-  
+             
               navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.HOME_VALET,{lavado:true})
             }}
   

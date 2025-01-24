@@ -19,7 +19,7 @@ const productInicialState = {
     categorias: [],
     activeCategory: null,
     marcas: [],
-    modelo: null,
+    modelos: null,
     comision: false,
     isLoading: false,
     productFiltrado: false,
@@ -45,12 +45,11 @@ export const ProductProvider = ({ children }) => {
     const [marcas, setMarcas] = useState([]);
     const [modelo, setModelo] = useState(false);
     const [years, setYears] = useState([]);
-    const [servicios, setServicios] = useState(false)
     const [loading, setLoading] = useState(false)
     const [reset, setReset] = useState(false)
     const [activeCarLoading, setActiveCarLoading] = useState(false);
     const [cars, setCars] = useState([])
-
+    
    
 
     
@@ -111,6 +110,7 @@ export const ProductProvider = ({ children }) => {
     const getProducts = async (category,carActive,address) => {
         try {
            
+          
             
             
             await dispatch({
@@ -268,6 +268,7 @@ export const ProductProvider = ({ children }) => {
 
                     if (apiCall?.status == 200) {
                         setModelo(apiCall.data.data);
+                      
                     }
                 }
 
@@ -284,7 +285,7 @@ export const ProductProvider = ({ children }) => {
     const searchCall = useCallback(
         async (st, isServices) => {
             setLoading(true);
-            setServicios(isServices)
+        
 
             try {
 
@@ -560,18 +561,36 @@ export const ProductProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        
+        const controller = new AbortController(); // Crear un controlador de abortos
+        const signal = controller.signal;
+    
         const fetchData = async () => {
-          rangeYear(); // Llama a la función sin esperar
-          await getComision(); // Espera a que se complete
-          await getCategorias(); // Espera a que se complete
+            try {
+                
+                // Pasar la señal de abort a las solicitudes para poder abortarlas si es necesario
+                await Promise.all([
+                    getCategorias({ signal }),
+                    getComision({ signal })
+                ]);
+    
+                rangeYear(); 
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    console.error("Error fetching data:", error);
+                    // Manejar el error
+                }
+            }
         };
-        
+    
         fetchData();
-       
-      
-        
-      }, []);
+        return () => {
+            // Limpiar: Abortamos las solicitudes pendientes
+            controller.abort();
+        };
+    }, []);
+    
+
+    
 
   
     

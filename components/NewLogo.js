@@ -1,20 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Image, View } from 'react-native'
 import React from 'react'
-import { Image } from 'native-base'
 
 export const NewLogo = ({ height= 50,width=40}) => {
   return (
     <>
        <Image
             source={require('../assets/images/newLogo.png')}
-            alt='logo'
+          
             style={{
               height: height,
               width: width,
-             
+             resizeMode:'contain'
             }}
-            resizeMode='contain'
-          />
+            
+          /> 
     </>
   )
 }
@@ -24,6 +23,7 @@ export const NewLogo = ({ height= 50,width=40}) => {
 const styles = StyleSheet.create({
   logo: {
     height: 50,
-    width: 40
+    width: 40,
+    resizeMode:'contain'
   },
 })

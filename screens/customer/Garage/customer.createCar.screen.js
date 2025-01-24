@@ -74,7 +74,7 @@ export const CreateCarScreen = (props) => {
         await getUserInfo();
         showToaster(apiCall?.data?.message);
       }
-      resetFiltros();
+      
       setKm('');
       setShowModal(false);
       setRefreshKey(refreshKey + 1);

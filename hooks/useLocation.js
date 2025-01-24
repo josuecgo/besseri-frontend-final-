@@ -31,19 +31,6 @@ export const useLocation = () => {
     });
 
 
-
-
-
-
-    
-
-
-    
-    
-
-    
-
-
     const getCurrentLocation = () => {
         return new Promise( (resolve, reject) => {
             Geolocation.getCurrentPosition(
@@ -88,6 +75,17 @@ export const useLocation = () => {
                     (position) => {
                         const currentLatitude = JSON.stringify(position.coords.latitude);
                         const currentLongitude = JSON.stringify(position.coords.longitude);
+
+                        dispatch(addUserLocation({
+                          latitude:position?.coords?.latitude,
+                          longitude:position?.coords?.longitude
+                        }))
+      
+                      onMovePositionMaker({
+                          latitude:position?.coords?.latitude,
+                          longitude:position?.coords?.longitude
+                      })
+
                         return setUserLocation({
                                 latitude:currentLatitude,
                                 longitude:currentLongitude
@@ -95,7 +93,8 @@ export const useLocation = () => {
                         }
                     );
             } catch (error) {   
-               
+              console.log(error,'getLocationHook ios');
+              
             }
            
  

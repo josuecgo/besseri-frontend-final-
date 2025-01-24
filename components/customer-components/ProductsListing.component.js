@@ -1,21 +1,15 @@
 import React from 'react';
-import { FlatList, Alert, Text, TouchableOpacity, View, Image, StyleSheet } from 'react-native';
-import Colors from '../../util/styles/colors';
-import CommonStyles from '../../util/styles/styles';
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { View,  StyleSheet } from 'react-native';
+
 import ProductCardComponent from './product-card.component';
 import * as CartActions from '../../util/ReduxStore/Actions/CustomerActions/CartActions';
-import { useDispatch, useSelector } from 'react-redux';
-import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants';
-import { adjust, deviceWidth } from '../../util/Dimentions';
-import { useCart } from '../../hooks/useCart';
-import axios from 'axios';
-import { customer_api_urls } from '../../util/api/api_essentials';
-import { Empty } from '../Customer/Empty';
-import { ListEmpty } from '../Vendor/ListEmpty';
 
-const ProductListing = ({ products, navigation, comision, cartProductIds, addItemToCart, dispatch }) => {
+import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants';
+import {  deviceWidth } from '../../util/Dimentions';
+
+
+
+const ProductListing = ({ products, navigation, comision, cartProductIds, addItemToCart, dispatch,w= deviceWidth * 0.8 }) => {
 
 
   // const dispatch = useDispatch()
@@ -26,7 +20,7 @@ const ProductListing = ({ products, navigation, comision, cartProductIds, addIte
 
 
   return (
-    <View style={styles.container}>
+    <View style={[{ width: w}]}>
       <ProductCardComponent
         onViewDetail={() => {
           dispatch(CartActions.selectItemFromCart(products._id, products.price));
@@ -49,10 +43,7 @@ const ProductListing = ({ products, navigation, comision, cartProductIds, addIte
 };
 
 const styles = StyleSheet.create({
-  container: {
-
-    width: deviceWidth * 0.8
-  },
+ 
   buttonAndTextContainer: {
 
   },

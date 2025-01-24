@@ -17,11 +17,10 @@ import { useSelector } from 'react-redux';
 export const FooterNav = ({ state, navigation }) => {
   const { bottom } = useSafeAreaInsets()
   const size = 33;
-  const { count } = useSelector(state => state.user)
+  const { count,user } = useSelector(state => state.user)
 
 
-
-
+  
 
   const getIconName = (route) => {
 
@@ -46,7 +45,7 @@ export const FooterNav = ({ state, navigation }) => {
     switch (route) {
       case BOTTOM_TAB_CUSTOMER_ROUTES.HOME_SCREEN:
 
-        return CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS
+        return user?.role === 'client' ? CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS : CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES
       case BOTTOM_TAB_CUSTOMER_ROUTES.ACCOUNT:
 
         return CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_HOME

@@ -70,8 +70,9 @@ const LoginScreen = ({ navigation }) => {
       }
 
       const apiCall = await axios.post(url, body);
-      setShowLoader(false);
+    
       if (apiCall?.status != api_statuses.success) {
+        setShowLoader(false);
         showToaster(apiCall?.data?.info?.message ? apiCall?.data?.info?.message : 'Something went wrong');
         return;
       }
@@ -81,28 +82,27 @@ const LoginScreen = ({ navigation }) => {
 
       if (apiCall.status == api_statuses.success) {
         const { user } = apiCall?.data?.data;
-        setShowLoader(false);
+       
 
         if (user.status === 'preregister') {
+          setShowLoader(false);
           navigation.navigate('PreregisterStack', { screen: 'UserRegisterScreen', params: user });
           return
         }
         if (user.isCommonUser) {
 
-          await saveUserId(user?._id);
-          await saveUserType(user)
-          await saveUserData(user);
+           saveUserId(user?._id);
+           saveUserType(user)
+           saveUserData(user);
           dispatch(addToUser(user))
           if (user?.carActive) {
-            await saveCarActive(user?.isCarActive);
-
-
+            saveCarActive(user?.isCarActive);
           }
           const userInfo = await getUserInfo(user[0])
           dispatch(addDefaultAddressToUser(userInfo[0]?._id))
-          await getPedidosUser()
+           getPedidosUser()
 
-
+           setShowLoader(false);
           navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
 
           

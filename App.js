@@ -12,7 +12,7 @@ import { Provider } from 'react-redux';
 import CartReducer from './util/ReduxStore/Reducers/CustomerReducers/CartReducer';
 import { StripeProvider } from '@stripe/stripe-react-native';
 
-import messaging from '@react-native-firebase/messaging';
+
 import {  NativeBaseProvider,  Text,  extendTheme } from 'native-base';
 
 import { NotificationContext, NotificationProvider } from './util/context/NotificationContext';
@@ -57,9 +57,7 @@ const App = () => {
     publishableKey={KeysStripe.LIVE_KEY}
     >
     <Provider store={store}>
-    
-        <NotificationProvider>  
-          
+        <NotificationProvider>            
           <ProductProvider>
             <ChatProvider>
               <NativeBaseProvider theme={customTheme} >
@@ -67,19 +65,13 @@ const App = () => {
               </NativeBaseProvider>
             </ChatProvider>
           </ProductProvider>
-       
         </NotificationProvider>
-      
-      
-    
     </Provider>
   </StripeProvider>
   )
 }
 const App2 = () => {
- 
-
-
+  const isDarkMode = useColorScheme() === 'dark';
   const {
     iosPermisoss,
     getToken,
@@ -92,9 +84,7 @@ const App2 = () => {
     getToken();
   }, []);
 
-
   
-  const isDarkMode = useColorScheme() === 'dark';
 
   return (
   

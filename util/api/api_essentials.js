@@ -1,9 +1,9 @@
-export const env = 'dev';
+export const env = 'prod';
 
 
 export const base_url =   env === 'prod' ? 'https://api.besseri.mx'  
-                        : env === 'dev' ?  'http://192.168.1.34:3005' 
-                        : 'http://192.168.1.34:3005';
+                        : env === 'dev' ?  'http://192.168.1.40:3005' 
+                        : 'http://192.168.1.40:3005';
 
 export const api_urls = {
     registration:`${base_url}/user/signup`,
@@ -83,6 +83,9 @@ export const customer_api_urls = {
     get_products:`${base_url}/products/get-products`,
     inStock_product:`${base_url}/products/inStock-product`,
     get_business_details:`${base_url}/business/get-business-details`,
+
+    add_recent_product:`${base_url}/products/save-recent-product`,
+    get_recent_product:`${base_url}/products/recent-product`,
 
     create_address:`${base_url}/addresses/create-address`,
     get_addresses:`${base_url}/addresses/get-my-address`,

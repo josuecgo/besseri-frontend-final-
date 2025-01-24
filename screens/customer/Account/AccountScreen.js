@@ -14,6 +14,7 @@ import { useContext } from 'react'
 import { NotificationContext } from '../../../util/context/NotificationContext'
 import PushNotificationIOS from '@react-native-community/push-notification-ios'
 import { Button } from 'native-base'
+import { resetCart } from '../../../util/ReduxStore/Actions/CustomerActions/CartActions'
 
 export const AccountScreen = (props) => {
   
@@ -48,7 +49,7 @@ export const AccountScreen = (props) => {
       await deleteNotificaciones()
       dispatch(deleteToUser())
       dispatch(resetOrdersUser())
-
+      dispatch(resetCart())
       if (Platform.OS === 'ios') {
         PushNotificationIOS.setApplicationIconBadgeNumber(0);
       }
@@ -84,7 +85,12 @@ export const AccountScreen = (props) => {
   return (
     <View style={styles.account} >
       <View>
-        <MyCarActive/>
+        {
+          user?.role === 'client' && (
+            <MyCarActive/>
+          )
+        }
+       
         <BackgroundCar/>
       </View>
      

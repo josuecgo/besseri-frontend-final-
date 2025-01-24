@@ -1,4 +1,4 @@
-import { StyleSheet,  TouchableOpacity, View } from 'react-native'
+import { Pressable, StyleSheet,  TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { Image, Text } from 'native-base'
 
@@ -6,9 +6,9 @@ import { Image, Text } from 'native-base'
 export const ButtonService = ({label,icono,onPress,style=100}) => {
   return (
     <View style={[styles.btnService]}>
-    <TouchableOpacity onPress={onPress} style={[styles.btn]}>
+    <Pressable onPress={onPress} style={[styles.btn]}>
       <Image source={icono} style={[styles.icono, { width: style, height: style }]} alt={label} />
-    </TouchableOpacity>
+    </Pressable>
     <Text style={styles.labelText}>{label}</Text>
   </View>
   
