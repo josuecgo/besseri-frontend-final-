@@ -63,10 +63,11 @@ export default (state = initialState, action) => {
                 
             }
         case ADD_DEFAULT_ADDRESS:
-            
+            const address = state.addresses.find( el => el._id === action.data );
             return {
                 ...state,
                 defaultAddress: action.data,
+                address,
                 isLoading:false
             }
         case ADD_CAR_ACTIVE_TO_USER:

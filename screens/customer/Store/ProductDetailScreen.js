@@ -136,7 +136,7 @@ const ProductDetailScreen = (props) => {
   const saveProduct = async () => {
     try {
       const userId = await getUser()
-      console.log(userId?.role);
+     
       
       if (!userId || userId?.role !== 'mechanic') {
         return; // No se guarda si no hay sesión

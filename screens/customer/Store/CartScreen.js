@@ -25,31 +25,18 @@ export const CartScreen = (props) => {
   const dispatch = useDispatch();
   const products = useSelector(state => state.cart.cart_items);
   const totalAmount = useSelector(state => state.cart.total_amount);
-  const descuento = useSelector(state => state.cart.descuento);
-  const idDesc = useSelector(state => state.cart.idDesc);
-  const businessId = useSelector(state => state?.cart?.businessId);
   const [businessProfiles, setBusinessProfiles] = useState(null);
   const [comission, setComission] = useState();
   const [delivery_fee, setDeliveryFee] = useState(null);
   const [totalDeliveryFee, setTotalDeliveryFee] = useState(0);
-  // const [tempTotalDeliveryFee, setTempTotalDeliveryFee] = useState(null)
   const [billComission, setBillComission] = useState()
   const [deliveryDistance, setDeliveryDistance] = useState(null);
-  // const [tempDeliveryDistance, setTempDeliveryDistance] = useState(null)
-  const [isLogin, setIsLogin] = useState(false)
   let businessIds = [];
-  const address = useSelector( state => state.user.address );
+  const {address,user} = useSelector( state => state.user );
   const [pickup, setPickup] = useState(false)
   const [loading, setLoading] = useState(false)
   const vendors = useSelector(state => state.cart.carts_by_seller);
- 
-  
-
-
-  
-  console.log(vendors[0]);
-  
-  
+  const {businessId,idDesc,descuento } = useSelector(state => state.cart);
   
   
 
@@ -79,7 +66,7 @@ export const CartScreen = (props) => {
       setBillComission(getFee.data.data[0]?.besseri_comission);
       setLoading(false)
     } catch (e) {
-      // //console.log({error:e})
+      
       setLoading(false)
 
       showToaster('Error por favor intenta mas tarde')
@@ -87,96 +74,7 @@ export const CartScreen = (props) => {
     }
   }
 
-  
-
-  
-  const calculateDelivery = async() => {
-    try {
-      // let vendor = businessProfiles;
-      // setLoading(true)
-      // if (!businessProfiles) {
-      //   vendor = await fetchBusinessDetails() 
-      // }
-
-
-      for (const vendor of vendors) {
-        const latitude = vendor?.business?.location?.latitude;
-        const longitude = vendor?.business?.location?.longitude;
-  
-     
-  
-        
-  
-        // Simula la variable `address` para la demostración
-        if (!address) {
-          showToaster("Elige una direccion de entrega");
-         return
-        }
-  
-        // Calcular la distancia usando la fórmula de la distancia
-        const distance = Math.sqrt(
-          Math.pow(69.1 * (Number(latitude) - address.latitude), 2) +
-            Math.pow(69.1 * (address.longitude - Number(longitude)) * Math.cos(Number(latitude) / 57.3), 2)
-        );
-  
-       
-  
-        let dis = Math.round(distance)
-        let del = Math.round(distance) * delivery_fee
-  
-        setTotalDeliveryFee(totalDeliveryFee + del);
-        
-        setDeliveryDistance(dis + deliveryDistance);
-       
-      
-      }
-      // vendors.map((vendor) => {
-     
-      //   const latitude = vendor?.business?.location?.latitude;
-      //   const longitude = vendor?.business?.location?.longitude;
-      //   console.log({
-      //     latitude,
-      //     longitude,
-      //     // storeName: vendor?.business
-      //   });
-        
-      
-      //   // const distance = Math.sqrt(
-      //   //   Math.pow(69.1 * (Number(latitude) - [address.latitude]), 2) +
-      //   //   Math.pow(69.1 * ([address?.longitude] - Number(longitude)) * Math.cos(Number(latitude) / 57.3), 2));
-      
-      //   // console.log(distance,'distancia');
-        
-        
-
-        
-      // setTotalDeliveryFee(totalDeliveryFee + del);
-        
-      // setDeliveryDistance(dis+ deliveryDistance);
-      //     // console.log({
-      //     //   distancia: dis,
-      //     //   delivery: del
-      //     // });
-          
-      //     // setLoading(false)
-      //     return {
-      //       distancia: dis,
-      //       delivery: del
-      //     }
-
-      // })
-  
-    
-    } catch (error) {
-      setLoading(false);
-      props.navigation.goBack()
-      showToaster('Error, por favor intente mas tarde o ingrese otra dirección')
-    }     
-  }
-
  
-
-
   const goPurchase = async() => {
    
     const user = await getUserId();
@@ -235,6 +133,7 @@ export const CartScreen = (props) => {
   }
   
   const servicioValet = async(value) => {
+
     setLoading(true)
     setPickup(value)
    
@@ -246,27 +145,22 @@ export const CartScreen = (props) => {
     }
    
     if (value ) {
-     
-      
       await calculateDelivery()
-      
     }
     setLoading(false)
   }
-
-
 
 
   const fetchFees = async () => {
     try {
       setLoading(true)
       const getFee = await axios.get(customer_api_urls?.get_fees);
-      // //console.log(getFee.data)
+     
       setComission(getFee.data.data[0]?.besseri_comission);
       setDeliveryFee(getFee.data.data[0]?.delivery_fee);
       setLoading(false)
     } catch (e) {
-      // //console.log(e?.response);
+   
       showToaster('No cuentas con conexión a internet, intenta mas tarde.');
       setLoading(false)
       props.navigation.goBack()
@@ -296,6 +190,77 @@ export const CartScreen = (props) => {
       </View>
     )
   }
+
+
+
+  const calculateDelivery = async() => {
+    try {
+      
+      if (!pickup) {
+        setTotalDeliveryFee(0);
+        setDeliveryDistance(null);
+        return
+        
+      }
+      for (const vendor of vendors) {
+        const latitude = vendor?.business?.location?.latitude;
+        const longitude = vendor?.business?.location?.longitude;
+
+      
+        
+        // Simula la variable `address` para la demostración
+        if (!address) {
+          showToaster("Elige una direccion de entrega");
+         return
+        }
+  
+        // Calcular la distancia usando la fórmula de la distancia
+        const distance = Math.sqrt(
+          Math.pow(69.1 * (Number(latitude) - address.latitude), 2) +
+            Math.pow(69.1 * (address.longitude - Number(longitude)) * Math.cos(Number(latitude) / 57.3), 2)
+        );
+  
+      
+        
+        
+        let dis = Math.round(distance)
+        let del = Math.round(distance) * delivery_fee;
+
+        
+       
+        
+  
+        setTotalDeliveryFee(totalDeliveryFee + del);
+        
+        setDeliveryDistance(dis + deliveryDistance);
+       
+      
+      }
+      
+  
+    
+    } catch (error) {
+      setLoading(false);
+      props.navigation.goBack()
+      showToaster('Error, por favor intente mas tarde o ingrese otra dirección')
+    }     
+  }
+  
+  const changeDeliveryMechanic = async() => {
+
+    if (user?.role === 'mechanic') {
+      setTotalDeliveryFee(0);
+      setDeliveryDistance(null);
+      setPickup(true)
+    }else{
+      setTotalDeliveryFee(0);
+      setDeliveryDistance(null);
+      setPickup(pickup)
+    }
+   
+   
+   
+  }
   
 
 
@@ -320,11 +285,9 @@ export const CartScreen = (props) => {
   
  
   useEffect(() => {
-    let isMounted = true;
+
     fetchFees();
-    return () => {
-      isMounted = false;
-    };
+
   }, []);
 
   useEffect(() => {
@@ -345,10 +308,21 @@ export const CartScreen = (props) => {
   }, [products])
 
   
- 
+  useEffect(() => {
+    if (comission && delivery_fee) {  
+      changeDeliveryMechanic()
+    }
+  }, [delivery_fee,comission,address])
 
+  useEffect(() => {
+    if (totalDeliveryFee === 0 && delivery_fee ) {
+      calculateDelivery();
+    }
+   
+  }, [totalDeliveryFee,delivery_fee,pickup]); 
   
-  
+
+
 
  
   
@@ -420,31 +394,36 @@ export const CartScreen = (props) => {
 
 
             <HStack justifyContent={'space-between'} mt={'10px'} >
-              
-             <Checkbox
-                value="test"
-                accessibilityLabel="Valet"
-                onChange={(value) => {
-                  servicioValet(value);
-                }}
-                
-                
-              >
-                <Box 
-             
-                width={deviceWidth * 0.87} 
-                flexDirection={'row'} 
-                justifyContent={'space-between'}
+              {
+                user?.role !== 'mechanic' && ( 
+                  <Checkbox
+                  value="test"
+                  
+                  accessibilityLabel="Valet"
+                  onChange={(value) => {
+                    servicioValet(value);
+                  }}
+                  
+                  
                 >
-                   <Text style={{ ...CommonStyles.h2, color: Colors.black }} >
-                 
-                </Text>
-                <Text style={{ ...CommonStyles.h2, color: Colors.black }} >
-                  Seleccionar servicio de VALET
-                </Text>
-                </Box>
+                  <Box 
                
-              </Checkbox>
+                  width={deviceWidth * 0.87} 
+                  flexDirection={'row'} 
+                  justifyContent={'space-between'}
+                  >
+                     <Text style={{ ...CommonStyles.h2, color: Colors.black }} >
+                   
+                  </Text>
+                  <Text style={{ ...CommonStyles.h2, color: Colors.black }} >
+                    Seleccionar servicio de VALET
+                  </Text>
+                  </Box>
+                 
+                </Checkbox>
+                )
+              }
+            
 
 
 

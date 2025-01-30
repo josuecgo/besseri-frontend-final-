@@ -197,7 +197,7 @@ const HomeStoreScreen = (props) => {
         </View>
 
         {
-          user?.role === 'mechanic' && ( 
+          user?.role !== 'client' && ( 
             <SelectCar/>
           )
         }

@@ -27,17 +27,9 @@ import { addDefaultAddressToUser } from '../../util/ReduxStore/Actions/CustomerA
 const HeaderStore = (props) => {
   const { top } = useSafeAreaInsets()
   const cart_items = useSelector(state => state.cart.cart_items);
-  // const user = useSelector(state => state?.auth?.user);
   const { user, addresses, defaultAddress,address } = useSelector(state => state?.user);
-
   const  dispatch = useDispatch();
 
-  
-
-   
-    
-   
-    
 
   let screenName = props?.titulo;
 
@@ -63,6 +55,8 @@ const HeaderStore = (props) => {
 
   
   
+
+
 
   return (
     <>
@@ -102,7 +96,7 @@ const HeaderStore = (props) => {
         <Select
           selectedValue={address?._id}
           defaultValue={address?._id}
-          minWidth={'50%'}
+          minWidth={'40%'}
           accessibilityLabel="Elegir direccion"
           placeholder={'Elegir direccion'}
           placeholderTextColor={Colors.white}
@@ -112,12 +106,16 @@ const HeaderStore = (props) => {
             endIcon: <CheckIcon size="5" />
           }}
 
-          onValueChange={itemValue => handleAddress(itemValue)}
+          onValueChange={(newAddress) => handleAddress(newAddress)}
           borderColor={Colors.bgColor}
           color={Colors.bgColor}
           backgroundColor={Colors.white}
           size={'xs'}
           dropdownIcon={<MaterialCommunityIcons name="menu-down" size={23} color={Colors.black} />}
+          _text={{
+            numberOfLines: 1,
+            ellipsizeMode: 'clip',
+          }}
         >
          
             <Select.Item  onPress={goToMyAddress} label={'Crear direccion'} value={0} />
@@ -125,7 +123,9 @@ const HeaderStore = (props) => {
            
           {
             addresses.length > 0 && addresses.map((item) => (
-              <Select.Item key={item._id} label={item.formatted_address} value={item._id} />
+              <Select.Item key={item._id} label={item.formatted_address} value={item._id}  
+              style={{ flexShrink: 1 }}
+              />
             ))
           }
 

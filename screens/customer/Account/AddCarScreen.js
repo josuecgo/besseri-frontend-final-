@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CommonStyles from '../../../util/styles/styles'
 import { Box, Button, Heading, Image, Input, ScrollView, Text } from 'native-base'
 import { SelectDropDownBtn } from '../../../components/button/SelectDropDownBtn'
@@ -19,7 +19,8 @@ export const AddCarScreen = (props) => {
   const {
     handleMarca,
     handleModel,
-    handleYear
+    handleYear,
+    getModelo
   } = useSearchStore();
   const dispatch = useDispatch()
   
@@ -89,6 +90,12 @@ export const AddCarScreen = (props) => {
     dispatch(resetFiltros());
     setKm('')
   }
+
+  useEffect(() => {
+          if (marcaValue) {
+              getModelo(marcaValue)
+          }
+      }, [marcaValue])
 
   return (
     <View style={CommonStyles.screenY} >

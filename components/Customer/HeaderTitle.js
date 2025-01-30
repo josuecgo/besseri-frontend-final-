@@ -15,7 +15,7 @@ export const HeaderTitle = ({ nav, titulo, iconName = 'keyboard-backspace', tien
   
   return (
     <View style={{ backgroundColor:Colors.bgColor,}} >
-      {/* <HeaderBackground /> */}
+      <HeaderBackground />
       <View style={[styles.header,{paddingTop:top }]}>
         <HStack space={4} alignItems={'center'} >
           {
