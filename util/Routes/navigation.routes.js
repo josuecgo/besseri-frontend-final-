@@ -147,7 +147,7 @@ export const MainNavigation = (props) => {
           headerShown: true,
           header: props => (
             <HeaderTitle {...props}
-              titulo="Detalle"
+              titulo="Detalle del pedido"
               nav={props.navigation.goBack}
             />
           ),

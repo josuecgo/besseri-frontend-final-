@@ -102,7 +102,14 @@ export default (state = initialState, action) => {
                 cart_items:state?.cart_items?.filter(item => item?._id != action?.data),
                 cart_items_ids:state?.cart_items_ids?.filter(item => item != action?.data),
                 total_amount:state?.total_amount - productAmount,
-                businessId:id
+                businessId:id,
+                carts_by_seller:state?.carts_by_seller?.find(item => {
+                    if(item?.businessId === state?.businessId){
+                        item.total_amount = item.total_amount - productAmount;
+                        item.cart_items = item.cart_items.filter(item => item?._id != action?.data);
+                        item.cart_items_ids = item.cart_items_ids.filter(item => item != action?.data);
+                    }
+                })
                 
         } 
          
@@ -120,7 +127,8 @@ export default (state = initialState, action) => {
                 cart_items:[], 
                 cart_items_ids:[],
                 total_amount:0,
-                businessId: null
+                businessId: null,
+                carts_by_seller:[]
             }      
         case INCREASE_QUANTITY:
             const item = state.cart_items.find(

@@ -11,7 +11,7 @@ import * as CartActions from '../../../util/ReduxStore/Actions/CustomerActions/C
 import {  customer_api_urls, vendor_api_urls } from '../../../util/api/api_essentials';
 
 import {  deviceHeight, deviceWidth } from '../../../util/Dimentions';
-import { getUserId } from '../../../util/local-storage/auth_service';
+import { getUser, getUserId } from '../../../util/local-storage/auth_service';
 
 import { ExploreScreen } from '.././Cart/ExploreScreen';
 import Colors from '../../../util/styles/colors';
@@ -37,6 +37,7 @@ export const CartScreen = (props) => {
   const [loading, setLoading] = useState(false)
   const vendors = useSelector(state => state.cart.carts_by_seller);
   const {businessId,idDesc,descuento } = useSelector(state => state.cart);
+  
   
   
 
@@ -73,11 +74,12 @@ export const CartScreen = (props) => {
       props.navigation.goBack()
     }
   }
-
+  console.log(vendors);
+  
  
   const goPurchase = async() => {
    
-    const user = await getUserId();
+    const user = await getUser();
     if (user) {
       
       if (!address) {
@@ -119,7 +121,8 @@ export const CartScreen = (props) => {
           pickup:pickup,
           address,
           totalProductsPrice,
-          vendors
+          vendors,
+          user
         })
       } else {
         showToaster('No puedes hacer pedidos en esta tienda en este momento.')
@@ -322,7 +325,8 @@ export const CartScreen = (props) => {
   }, [totalDeliveryFee,delivery_fee,pickup]); 
   
 
-
+ 
+  
 
  
   

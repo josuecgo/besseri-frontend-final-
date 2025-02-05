@@ -31,6 +31,9 @@ export const ProductosPago = ({productos}) => {
               <Text style={CommonStyles.h2} isTruncated >{item?.name}</Text>
             </Box>
             <Box>
+              <Text style={CommonStyles.h2} isTruncated>x{item?.quantity}</Text>
+            </Box>
+            <Box>
               <Text style={CommonStyles.h2} isTruncated>{moneda(item?.precio)}</Text>
             </Box>
    

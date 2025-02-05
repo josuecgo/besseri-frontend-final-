@@ -88,7 +88,7 @@ const CardServicio = ({data}) => {
       
       
       <HStack alignItems={'center'} justifyContent={'space-between'} >
-        <Text style={{...CommonStyles.h2}} >Total:</Text>
+        <Text style={{...CommonStyles.h2}} >{data.chargeId === 'cash' ? 'Total a pagar' :'Total:'}</Text>
         <Text style={{...CommonStyles.h2}} >{comisionMoneda(data?.total_amount,comision)} MXN</Text>
       </HStack>
     </VStack>

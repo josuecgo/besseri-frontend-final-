@@ -22,7 +22,7 @@ export const ExploreScreen = (props) => {
         borderRadius={10}
         width={200}
         margin={20}
-        handlePress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS)}
+        handlePress={() => props.navigation.goBack()}
         />
     </View>
     

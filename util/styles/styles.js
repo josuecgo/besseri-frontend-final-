@@ -35,7 +35,7 @@ const CommonStyles = StyleSheet.create({
   h2:{
     fontWeight:'700',
     fontFamily:'Arial',
-    fontSize:adjust(12),
+    fontSize:adjust(14),
     color:Colors.white
   },
   h3:{

@@ -18,7 +18,7 @@ import { Text, Box, HStack, VStack } from 'native-base';
 import AddressFormatted from '../../components/AddressFormatted';
 import { ProductosPago } from '../../components/Customer/ProductosPago';
 import { BtnPrincipal } from '../../components/Customer/BtnPrincipal';
-import { deleteItemFromCart } from '../../util/ReduxStore/Actions/CustomerActions/CartActions';
+import { deleteItemFromCart, resetCart } from '../../util/ReduxStore/Actions/CustomerActions/CartActions';
 
 import { BOTTOM_TAB_CUSTOMER_ROUTES } from '../../util/constants';
 import { useInfoUser } from '../../hooks/useInfoUsers';
@@ -32,13 +32,13 @@ const CustomerOrderSummary = (props) => {
 
     const desc = useSelector(state => state.cart.descuento);
     const order = props?.route?.params;
+    const user = order?.user;
     const { initPaymentSheet, presentPaymentSheet } = useStripe();
     const addressListingRef = useRef(null);
     const cartProduct = useSelector(state => state.cart);
     const dispatch = useDispatch();
     const products = params?.products;
     const business = params?.business;
-    const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
     const [stripeEssentials, setStripeEssentials] = useState(null);
     const {  CalcularDistancia, distancia } = useCostos()
@@ -73,22 +73,7 @@ const CustomerOrderSummary = (props) => {
     const {getPedidosUser} = useInfoUser()
 
 
-    const getUserDetails = async () => {
-        setLoading(true);
-        const userData = await getUser();
-        setUser(userData);
-        setLoading(false);
-    }
-
-
-
-
-
-
-
-    const getAddresses = async () => {
-       
-    }
+    
 
    
     const placeOrder = async () => {
@@ -100,31 +85,7 @@ const CustomerOrderSummary = (props) => {
         const userData = await getUser();
         try {
             setLoading(true);
-
-            // let apiCall;
-            // order?.vendors.map(async(vendor,index) => {
-               
-                
-            //     const body = {
-            //         ordered_by_id: userData?._id,
-            //         products: vendor?.cart_items,
-            //         storeId: vendor?.businessId,
-            //         total_amount: Number(vendor?.totalAmount),
-            //         delivery_address: order.address,
-            //         ordered_on: new Date(),
-            //         delivery_fee: allCharges?.delivery_charges,
-            //         besseri_comission: allCharges?.besseri_commission,
-            //         intentId: stripeEssentials?.intentId,
-            //         cupon: order?.cupon,
-            //         storePickup:!order.pickup
-            //     }
-    
-                
-                
-            //     apiCall = await axios.post(`${customer_api_urls.place_order}`, body);
-                
-            // })
-           
+          
             
             const apiCalls = await Promise.all(
                 order?.vendors.map(async (vendor) => {
@@ -152,9 +113,7 @@ const CustomerOrderSummary = (props) => {
 
             if (apiCalls.every((response) => response.status === api_statuses.success)) {
                 // Elimina productos del carrito
-                products?.forEach((product) => {
-                    dispatch(deleteItemFromCart(product?._id, product?.price));
-                });
+                await dispatch(resetCart());
         
                 // Actualiza pedidos y redirige
                 await getPedidosUser();
@@ -191,6 +150,71 @@ const CustomerOrderSummary = (props) => {
            
            
             showToaster('Algo salió mal. Por favor, vuelva a intentarlo 2 code: 4')
+            // refundPayment()
+            setIsVisible(false)
+        }
+
+
+    }
+
+    const placeOrderMechanic = async () => {
+
+        setIsVisible(true);
+        const userData = await getUser();
+        try {
+            setLoading(true);
+           
+           
+            
+           
+            const apiCalls = await Promise.all(
+                order?.vendors.map(async (vendor) => {
+                    const body = {
+                        ordered_by_id: userData?._id,
+                        products: vendor?.cart_items,
+                        storeId: vendor?.businessId,
+                        total_amount: Number(vendor?.total_amount),
+                        delivery_address: order.address,
+                        ordered_on: new Date(),
+                        delivery_fee: allCharges?.delivery_charges,
+                        besseri_comission: allCharges?.besseri_commission,
+                        intentId: 'cash',
+                        cupon: order?.cupon,
+                        storePickup: !order.pickup,
+                    };
+
+                   
+                    return axios.post(`${customer_api_urls.place_order}`, body);
+                })
+            );
+
+            
+            if (apiCalls.every((response) => response.status === api_statuses.success)) {
+                // Elimina productos del carrito
+                // products?.forEach((product) => {
+                //     dispatch(deleteItemFromCart(product?._id, product?.price));
+                // });
+                await dispatch(resetCart());
+                // Actualiza pedidos y redirige
+                await getPedidosUser();
+                props.navigation.replace(CUSTOMER_HOME_SCREEN_ROUTES.PAGO_COMPLETED);
+                setLoading(false);
+                setIsVisible(false);
+            } else {
+                setLoading(false);
+                throw new Error("Una o más órdenes no se pudieron procesar.");
+            }
+            
+
+        } catch (e) {
+
+       
+            
+                    
+            setLoading(false);
+           
+           
+            showToaster('Algo salió mal. Por favor, vuelva a intentarlo  code: 55')
             // refundPayment()
             setIsVisible(false)
         }
@@ -306,7 +330,10 @@ const CustomerOrderSummary = (props) => {
 
     };
 
+ 
+    
     const openPaymentSheet = async () => {
+
         setIsVisible(true);
 
         await initializePaymentSheet();
@@ -348,7 +375,7 @@ const CustomerOrderSummary = (props) => {
     
     useEffect(() => {
         let abortController = new AbortController();
-        if (deliveryAddress) {
+        if (deliveryAddress ) {
             initializePaymentSheet()
         }
           return () => {  
@@ -358,17 +385,7 @@ const CustomerOrderSummary = (props) => {
 
 
 
-    // useEffect(() => {
-    //     getUserDetails();
-    // }, []);
 
-// useEffect(() => {
-//     let abortController = new AbortController();
-//     getAddresses();
-//       return () => {  
-//         abortController.abort();  
-//       } 
-//   }, []);
 
     
 
@@ -439,7 +456,17 @@ const CustomerOrderSummary = (props) => {
                         : (
                             <VStack mt={'10px'} space={3} >
                                
-                                <BtnPrincipal text={'Pagar'} onPress={openPaymentSheet} marginHorizontal={0} />
+                                <BtnPrincipal text={user?.role == 'mechanic' ? 'Pagar con tarjeta' :'Pagar'} onPress={openPaymentSheet} marginHorizontal={0} />
+                                {
+                                    user?.role == 'mechanic' && (
+                                        <BtnPrincipal 
+                                        text={'Pagar en efectivo'} 
+                                        onPress={placeOrderMechanic} 
+                                        marginHorizontal={0} 
+
+                                        />
+                                    )
+                                }
                             </VStack>
                         )
 

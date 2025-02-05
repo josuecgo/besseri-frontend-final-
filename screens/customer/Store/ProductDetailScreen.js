@@ -168,7 +168,7 @@ const ProductDetailScreen = (props) => {
 
   useEffect(() => {
     setEnCarrito(inTheCart(product))
-  }, [isChange.current])
+  }, [isChange.current,props.route])
 
 
   return (

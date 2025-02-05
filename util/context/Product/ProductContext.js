@@ -109,10 +109,7 @@ export const ProductProvider = ({ children }) => {
 
     const getProducts = async (category,carActive,address) => {
         try {
-           
-          
-            
-            
+ 
             await dispatch({
                 type: 'isLoading',
                 payload: {
