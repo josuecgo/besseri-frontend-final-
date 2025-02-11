@@ -35,7 +35,7 @@ const ProductCardComponent = ({
   
   const { comision,  } = useContext(ProductContext)
 
-  // console.log(data.name);
+ 
   const handleChange = async () => {
 
     const stock = await axios.get(`${customer_api_urls.inStock_product}/${data._id}`)
@@ -51,7 +51,8 @@ const ProductCardComponent = ({
   }
 
  
-
+ 
+  
 
   if (cartProduct) {
 

@@ -68,6 +68,7 @@ export const useLocation = () => {
     }
 
     const getLocationHook = async() => {
+      
        
         if (Platform.OS === 'ios') {
             try {
@@ -110,8 +111,11 @@ export const useLocation = () => {
               }
             )
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-              await Geolocation.getCurrentPosition(res => {
+             
               
+              await Geolocation.getCurrentPosition(res => {
+               
+                
                 dispatch(addUserLocation({
                     latitude:res?.coords?.latitude,
                     longitude:res?.coords?.longitude
@@ -127,7 +131,8 @@ export const useLocation = () => {
                 });
               });
             } else {
-            
+              console.log('else get location hook');
+              
             }
         
           } catch(e) {
@@ -193,7 +198,7 @@ export const useLocation = () => {
             
         }
     
-      }
+    }
 
     const setUpLocation = async(data) => {
         try {

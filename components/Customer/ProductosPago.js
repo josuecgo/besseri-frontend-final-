@@ -10,15 +10,10 @@ export const ProductosPago = ({productos}) => {
 
 
 
-
-  
-   
-      
-
   return (
     <VStack
     space={6}
-    mb={'15px'}
+    mt={'5px'}
     >
      
      {productos.map((item,i) => {  
@@ -28,14 +23,13 @@ export const ProductosPago = ({productos}) => {
         key={i}
         >
             <Box w={'55%'} >
-              <Text style={CommonStyles.h2} isTruncated >{item?.name}</Text>
+              <Text style={CommonStyles.h2} isTruncated >Total a pagar</Text>
             </Box>
-            <Box>
-              <Text style={CommonStyles.h2} isTruncated>x{item?.quantity}</Text>
-            </Box>
+           
             <Box>
               <Text style={CommonStyles.h2} isTruncated>{moneda(item?.precio)}</Text>
             </Box>
+          
    
         </HStack>
       )

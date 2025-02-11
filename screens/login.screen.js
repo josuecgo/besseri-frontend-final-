@@ -70,7 +70,7 @@ const LoginScreen = ({ navigation }) => {
       }
 
       const apiCall = await axios.post(url, body);
-    
+
       if (apiCall?.status != api_statuses.success) {
         setShowLoader(false);
         showToaster(apiCall?.data?.info?.message ? apiCall?.data?.info?.message : 'Something went wrong');
@@ -78,11 +78,11 @@ const LoginScreen = ({ navigation }) => {
       }
 
 
-     
+
 
       if (apiCall.status == api_statuses.success) {
         const { user } = apiCall?.data?.data;
-       
+
 
         if (user.status === 'preregister') {
           setShowLoader(false);
@@ -91,21 +91,25 @@ const LoginScreen = ({ navigation }) => {
         }
         if (user.isCommonUser) {
 
-           saveUserId(user?._id);
-           saveUserType(user)
-           saveUserData(user);
-          dispatch(addToUser(user))
-          if (user?.carActive) {
-            saveCarActive(user?.isCarActive);
-          }
-          const userInfo = await getUserInfo(user[0])
-          dispatch(addDefaultAddressToUser(userInfo[0]?._id))
-           getPedidosUser()
 
-           setShowLoader(false);
+          saveUserId(user?._id);
+          saveUserType(user)
+          saveUserData(user);
+          dispatch(addToUser(user))
+
+          const userInfo = await getUserInfo()
+
+
+
+          if (userInfo) {
+            dispatch(addDefaultAddressToUser(userInfo[0])._id)
+          }
+
+          getPedidosUser()
+
+          setShowLoader(false);
           navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
 
-          
 
         } else {
           showToaster('Usuario no encontrado.')
@@ -114,14 +118,13 @@ const LoginScreen = ({ navigation }) => {
       }
 
     } catch (e) {
-      console.log(e,'login');
-
+      
       setShowLoader(false);
       showToaster('Error con el servidor.')
     }
   };
 
-  
+
 
 
   return (
@@ -142,7 +145,7 @@ const LoginScreen = ({ navigation }) => {
             }}
             placeholderText={CREDENTIAL_KEYS.EMAIL_ADDRESS}
             value={userCredentials[CREDENTIAL_KEYS.EMAIL_ADDRESS]}
-            
+
             autoCapitalize="none"
             returnType="next"
             // validator={emailValidator}
@@ -152,7 +155,7 @@ const LoginScreen = ({ navigation }) => {
 
           <View style={{ marginVertical: 10, width: deviceWidth - 30 }}  >
             <Text style={{ ...CommonStyles.h2 }} >{CREDENTIAL_KEYS.PASSWORD}</Text>
-          
+
             <Input
               backgroundColor={Colors.bgInput}
               borderColor={Colors.darker}
@@ -168,7 +171,7 @@ const LoginScreen = ({ navigation }) => {
               size={Platform.OS === 'ios' ? '2xl' : 'lg'}
               type={show ? "text" : "password"}
               InputRightElement={<Pressable onPress={() => setShow(!show)}
-              style={{padding:10}}
+                style={{ padding: 10 }}
               >
                 <MaterialIcons name={show ? "visibility" : "visibility-off"}
                   size={25}
@@ -179,13 +182,13 @@ const LoginScreen = ({ navigation }) => {
             />
             <Center mt={1}>
               <Pressable
-              onPress={() => navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.FORGOT_PASSWORD)}
+                onPress={() => navigation.navigate(LOGIN_SIGNUP_FORGOT_ROUTES.FORGOT_PASSWORD)}
               >
                 <Text style={{ ...CommonStyles.h2 }} >¿Has olvidado la contraseña?</Text>
               </Pressable>
-               
+
             </Center>
-           
+
           </View>
 
         </ImageBackground>

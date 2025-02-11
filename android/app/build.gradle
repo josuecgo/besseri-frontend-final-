@@ -92,8 +92,8 @@ android {
         applicationId "com.besseri"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 67
-        versionName "6.7"
+        versionCode 68
+        versionName "6.8"
     }
     signingConfigs {
         debug {

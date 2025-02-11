@@ -21,6 +21,7 @@ import { useCart } from '../../../hooks/useCart';
 import { useLocation } from '../../../hooks/useLocation';
 import { SelectCar } from '../../../components/Customer/SelectCar';
 import HeaderStore from '../../../components/Customer/HeaderStore';
+import { useIsFocused } from '@react-navigation/native';
 
 
 
@@ -30,23 +31,21 @@ const HomeStoreScreen = (props) => {
   const {
     categorias, activeCategory, activarCategoria,
     comision,
-    loading, carCompatible, productos, isLoading, getProducts,
+    loading,  productos, isLoading, getProducts,
   } = useContext(ProductContext);
   const [addresses, setAddresses] = useState(null)
   const { carActive, address,marcaValue,modeloValue,yearValue,user } = useSelector(state => state.user);
   const direccionStore = useSelector(state => state.user.addresses);
-
   const [defaultAddress, setDefaultAddress] = useState(address?._id ?? 1)
-
   const dispatch = useDispatch()
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
-
   const { addItemToCart } = useCart()
   const { getLocationHook } = useLocation()
-
+  const focused = useIsFocused()
 
   
-
+ 
+  
   const CategoryButton = ({ category, onPress }) => {
 
     return (
@@ -68,6 +67,7 @@ const HomeStoreScreen = (props) => {
 
 
 
+
   const renderItem = ({ item }) => {
 
     return (
@@ -84,7 +84,7 @@ const HomeStoreScreen = (props) => {
               category={item}
               products={item}
               comision={comision}
-              carCompatible={carCompatible}
+            
               dispatch={dispatch}
               cartProductIds={cartProductIds}
               addItemToCart={addItemToCart}
@@ -120,9 +120,16 @@ const HomeStoreScreen = (props) => {
 
 
   useEffect(() => {
-    getLocationHook()
-}, []);
+    if (focused && direccionStore.length === 0) {
    
+      getLocationHook()
+    }
+    
+}, [focused,direccionStore]);
+   
+ 
+
+ 
   
   useEffect(() => {
     let isMounted = true;
@@ -142,9 +149,10 @@ const HomeStoreScreen = (props) => {
             model:{_id:modeloValue},
             year:yearValue
           } 
-         
+
+          // console.log(car,'car');
           
-          
+
           await getProducts(activeCategory, car, address);
         }
       } catch (error) {
@@ -161,11 +169,12 @@ const HomeStoreScreen = (props) => {
     return () => {
       isMounted = false; // Cleanup
     };
-  }, [activeCategory,  defaultAddress, direccionStore,marcaValue,modeloValue,yearValue]);
+  }, [activeCategory,  defaultAddress, direccionStore,marcaValue,modeloValue,yearValue,carActive]);
 
   
-  
 
+  
+    
 
   
 

@@ -2,9 +2,9 @@
 import axios from 'axios';
 import { useCallback, useContext, useState } from 'react';
 import { api_statuses, api_urls, customer_api_urls } from '../util/api/api_essentials';
-import { getUser, getUserAddress, getUserId, saveAdressCustomer, saveCarActive, saveGarage } from '../util/local-storage/auth_service';
+import { getUser, getUserAddress, getUserId, saveAdressCustomer, saveCarActive, saveGarage, saveUserData, saveUserId, saveUserType } from '../util/local-storage/auth_service';
 import { useDispatch, useSelector } from 'react-redux';
-import { addAddressToUser, addCarActiveToUser, addCarsToUser, addToUser, getMakerValueCars, getModelValueCars, getYearsCars, getYearValueCar, saveNotification } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
+import { addAddressToUser, addCarActiveToUser, addCarsToUser, addDefaultAddressToUser, addToUser, getMakerValueCars, getModelValueCars, getYearsCars, getYearValueCar, saveNotification } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 import { useEffect } from 'react';
 import { showAlertLogin, showToaster, showToasterError } from '../util/constants';
 import { getOrdersUser, isLoadingOrdersUser } from '../util/ReduxStore/Actions/CustomerActions/PedidosAction';
@@ -17,71 +17,77 @@ import { useSearchStore } from './useSearchStore';
 
 
 
-export const useInfoUser = (  ) => {
+export const useInfoUser = () => {
   const dispatch = useDispatch()
-  const {getCategorias} = useContext(ProductContext)
-  const { modeloValue,modelos,carActive }  = useSelector(state => state.user);
-  const {getModelo} = useSearchStore()
-  
-  
-   
+  const { getCategorias } = useContext(ProductContext)
+  const { modeloValue, modelos, carActive } = useSelector(state => state.user);
+  const { getModelo } = useSearchStore()
+
+
+
 
   const getUserInfo = useCallback(async () => {
     try {
       const id = await getUserId();
-      const user = await getUser();
-      if (!id) {
-        return;
-      }
 
-  
+      if (!id) return;
+
       const apiCall = await axios(`${customer_api_urls.get_info_user}/${id}`);
-  
-      if (apiCall.status === api_statuses.success) {
-        const { carActive, myAddresses, garage } = apiCall.data.data;
-       
-        dispatch(addToUser(user));
-        if (carActive) {
 
+      if (apiCall.status === api_statuses.success) {
+        const { carActive, myAddresses, garage, user } = apiCall.data.data;
+
+
+        // saveUserId(user?._id);
+        // saveUserType(user)
+        // saveUserData(user);
+        // dispatch(addToUser(user));
+
+       
+        
+        if (carActive) {
+          if (user?.role === 'mechanic') return
           dispatch(getMakerValueCars(carActive?.maker?._id))
           await getModelo(carActive?.maker?._id)
-          
+
           dispatch(addCarActiveToUser(carActive));
           await saveCarActive(carActive);
-          
+
           dispatch(getModelValueCars(carActive?.model?._id))
-          
+
           dispatch(getYearValueCar(carActive?.year))
 
 
         }
 
-        if (myAddresses) {
-         
-          
-          dispatch(addAddressToUser(myAddresses));
-          await saveAdressCustomer(myAddresses);
-        }
+
+
+        
         if (garage) {
           dispatch(addCarsToUser(garage));
           await saveGarage(garage);
         }
-       
-  
         if (carActive) {
           getCategorias();
         }
 
-        
+        if (myAddresses) {
+          dispatch(addAddressToUser(myAddresses));
+          await saveAdressCustomer(myAddresses);
 
-        return myAddresses;
+          return myAddresses;
+        }else{
+          return false
+        }
+        
       }
     } catch (error) {
-      console.log(error,'getUserInfo');
-      showToaster(error?.response?.data?.message, 'code - IU56');
+      console.log(error);
+      
+      showToaster(error?.response?.data?.message || 'code - IU56');
     }
   }, []);
-  
+
   const activeCar = useCallback(async (data) => {
     const userId = await getUserId();
     try {
@@ -89,36 +95,36 @@ export const useInfoUser = (  ) => {
         showAlertLogin();
         return;
       }
-  
+
       const apiCall = await axios.post(`${customer_api_urls.active_car}/${userId}`, { garage: data });
-  
+
       if (apiCall.status === api_statuses.success) {
         getUserInfo();
-       
+
         showToaster('Nuevo Auto activado');
       }
     } catch (error) {
-      console.log(error,'activeCar');
+      console.log(error, 'activeCar');
       showToasterError(error);
     }
   }, []);
 
-  
+
   const getPedidosUser = useCallback(async () => {
     try {
       const id = await getUserId();
-    
+
       if (!id) {
-        return 
+        return
       }
       dispatch(isLoadingOrdersUser(true));
       const apiCall = await axios.get(`${customer_api_urls.get_pedidos_user}/${id}`);
-  
+
       if (apiCall.status === api_statuses.success) {
         dispatch(getOrdersUser(apiCall?.data?.data));
       }
     } catch (error) {
-      console.log(error,'getPedidosUser');
+      console.log(error, 'getPedidosUser');
       showToaster(error?.response?.data?.message);
       dispatch(getOrdersUser([]));
     }
@@ -126,71 +132,71 @@ export const useInfoUser = (  ) => {
 
 
   const getNotificaciones = useCallback(async () => {
-      try {
-        const id = await getUserId();
-        if (!id) {
-          return;
-        }
-        
-        const url = `${api_urls.getNotification}/${id}`;
-    
-        const apiCall = await axios.get(url);
-        const data = apiCall.data;
-        
-        
-        
-        dispatch(saveNotification(data));
-        if (Platform.OS === 'ios') {
-          PushNotificationIOS.setApplicationIconBadgeNumber(data.count);
-        }
-      } catch (e) {
-        console.log(e,'error en get notificaciones');
-        
-        showToaster('Algo salió mal. Por favor, vuelva a intentarlo - N');
-      }
-  }, []);
-
-  const saveRecentProduct = async (userId,productId) => {  
-    try {
-      const apiCall = await axios.post(`${customer_api_urls.add_recent_product}`, { userId,productId });
-    } catch (error) {
-      console.log(error,'saveRecentProduct');
-      
-    }
-  }
-
-  const getRecentProduct = async () => {  
     try {
       const id = await getUserId();
-        if (!id) {
-          return;
-        }
-        
-        const url = `${customer_api_urls.get_recent_product}/${id}`;
-    
-        const apiCall = await axios.get(url);
-      
+      if (!id) {
+        return;
+      }
 
-        return apiCall.data?.data;  
-        
+      const url = `${api_urls.getNotification}/${id}`;
 
+      const apiCall = await axios.get(url);
+      const data = apiCall.data;
+
+
+
+      dispatch(saveNotification(data));
+      if (Platform.OS === 'ios') {
+        PushNotificationIOS.setApplicationIconBadgeNumber(data.count);
+      }
+    } catch (e) {
+      console.log(e, 'error en get notificaciones');
+
+      showToaster('Algo salió mal. Por favor, vuelva a intentarlo - N');
+    }
+  }, []);
+
+  const saveRecentProduct = async (userId, productId) => {
+    try {
+      const apiCall = await axios.post(`${customer_api_urls.add_recent_product}`, { userId, productId });
     } catch (error) {
-      console.log(error,'getRecentProduct');
-      
+      console.log(error, 'saveRecentProduct');
+
     }
   }
-  
 
-  
+  const getRecentProduct = async () => {
+    try {
+      const id = await getUserId();
+      if (!id) {
+        return;
+      }
+
+      const url = `${customer_api_urls.get_recent_product}/${id}`;
+
+      const apiCall = await axios.get(url);
+
+
+      return apiCall.data?.data;
+
+
+    } catch (error) {
+      console.log(error, 'getRecentProduct');
+
+    }
+  }
+
+
+
 
   const rangeYear = () => {
-    
+
     if (!modeloValue || modelos) {
       return
     }
     let modelo = modelos.find(item => item._id === modeloValue);
 
-   
+
     const max = modelo?.years?.al
 
     const min = modelo?.years?.de
@@ -200,27 +206,27 @@ export const useInfoUser = (  ) => {
       years.push(i)
     }
     dispatch(getYearsCars(years));
-    
+
   }
 
   useEffect(() => {
     if (modelos) {
-       rangeYear()
+      rangeYear()
     }
-   
-  }, [modeloValue,modelos])
-  
 
-  
-
-
- 
+  }, [modeloValue, modelos])
 
 
 
 
- 
-  
+
+
+
+
+
+
+
+
 
   return {
     getUserInfo,

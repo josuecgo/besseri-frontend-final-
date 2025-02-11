@@ -74,7 +74,7 @@ export const CartScreen = (props) => {
       props.navigation.goBack()
     }
   }
-  console.log(vendors);
+  
   
  
   const goPurchase = async() => {
@@ -224,7 +224,7 @@ export const CartScreen = (props) => {
         );
   
       
-        
+        console.log(vendor,'vendor?.business');
         
         let dis = Math.round(distance)
         let del = Math.round(distance) * delivery_fee;
@@ -232,7 +232,8 @@ export const CartScreen = (props) => {
         
        
         
-  
+        
+        
         setTotalDeliveryFee(totalDeliveryFee + del);
         
         setDeliveryDistance(dis + deliveryDistance);
@@ -327,8 +328,6 @@ export const CartScreen = (props) => {
 
  
   
-
- 
   
   
   return (
@@ -458,7 +457,7 @@ export const CartScreen = (props) => {
         products?.length > 0 ?
           <View style={{ position: 'absolute', bottom: 0, width: '100%', zIndex: 9999 }}>
             <BtnPrincipal
-              text={'Pagar'}
+              text={'Comprar ahora'}
               onPress={goPurchase}
             />
           </View>

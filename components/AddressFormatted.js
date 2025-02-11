@@ -18,7 +18,7 @@ const AddressFormatted = ({address,color = 'white'}) => {
           <Box maxWidth={deviceWidth * 0.8 } flexWrap={'wrap'} flexDirection={'row'}
           
           >
-            <Text style={{...CommonStyles.h3,color:color}}>
+            <Text style={{...CommonStyles.h2,color:color}}>
               {address}
             </Text>
           </Box>

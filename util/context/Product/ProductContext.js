@@ -107,9 +107,13 @@ export const ProductProvider = ({ children }) => {
 
 
 
+
     const getProducts = async (category,carActive,address) => {
         try {
- 
+            
+
+           
+            if (state.isLoading || !address) return
             await dispatch({
                 type: 'isLoading',
                 payload: {
@@ -120,6 +124,8 @@ export const ProductProvider = ({ children }) => {
             const body = {
                 address,carActive
             }
+            
+            
             const apiCall = await axios.post(
                 `${customer_api_urls.get_category_products}/${category._id}`, body
             );

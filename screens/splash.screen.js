@@ -25,12 +25,13 @@ import Video from 'react-native-video';
 import { useDispatch } from 'react-redux';
 import { addAddressToUser, addCarActiveToUser, addCarsToUser, addToUser } from '../util/ReduxStore/Actions/CustomerActions/UserInfoActions';
 import { getUser } from '../util/local-storage/auth_service';
+import { useAuth } from '../hooks/useAuth';
 
 
 const SplashScreen = ({navigation,route}) => {
   const {width, height} = useWindowDimensions();
   const dispatch = useDispatch()
-
+  const {logoutOff} = useAuth()
 
 
   const checkBuildApp = async () => {
@@ -67,16 +68,17 @@ const SplashScreen = ({navigation,route}) => {
     const addressCustomer = await getUserAddress();
     const carActive = await getCarActive();
 
+   
     
     if (user) { dispatch(addToUser(user))}
 
-    if (addressCustomer && carActive ) {
-      
-      
-      await dispatch(addAddressToUser(addressCustomer));
+    if (addressCustomer ) {
+      await dispatch(addAddressToUser([addressCustomer]));
       await dispatch(addCarActiveToUser(carActive));
+    }
+    if ( carActive ) {
      
-     
+      await dispatch(addCarActiveToUser(carActive));
     }
 
   
@@ -89,14 +91,14 @@ const SplashScreen = ({navigation,route}) => {
           navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
         } else {
           showToaster('Usuario no encontrado.')
+          logoutOff()
+
         }
       
       } else {
        
         if (addressCustomer && carActive ) {
-        
-        
-         
+
           navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
         }else{
           navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);

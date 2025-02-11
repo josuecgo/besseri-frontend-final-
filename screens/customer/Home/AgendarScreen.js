@@ -102,9 +102,7 @@ export const AgendarScreen = (props) => {
           publishableKey,
         } = data
 
-      console.log({ paymentIntent,
-          ephemeralKey,
-          customer,});
+
       
       const { error } = await initPaymentSheet({
         customerId: customer,
@@ -303,7 +301,7 @@ export const AgendarScreen = (props) => {
 
         const apiCall = await axios.post(`${vendor_api_urls.aplicar_promotion_besser}/${id}`, data);
 
-        console.log(apiCall.data?.data);
+       
        
     } catch (error) {
         console.log(error, 'aplicar promotion');

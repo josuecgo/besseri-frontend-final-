@@ -14,12 +14,16 @@ import { Box } from 'native-base';
 
 export const SelectCar = () => {
 
-    const { marcaValue, modeloValue, yearValue, marcas, modelos, years } = useSelector(state => state.user)
+    const { marcaValue, modeloValue, yearValue, marcas, modelos, years,carActive } = useSelector(state => state.user)
     const { handleMarca, handleModel, handleYear, getModelo, resetCar } = useSearchStore();
-
     const [marcasIsVisible, setMarcasIsVisible] = useState(false)
     const [modelosIsVisible, setModelosIsVisible] = useState(false)
     const [yearsIsVisible, setYearsIsVisible] = useState(false)
+    const [labelValue, setLabelValue] = useState({
+        marca:'Marca',
+        modelo:'Modelo',
+        year:'Año'
+    })
 
     const onOpen = (inputValue) => {
       
@@ -70,7 +74,62 @@ export const SelectCar = () => {
 
     }
 
+
+
+    const getAllPlaceholders = () => {
+      
+            if (marcaValue) {
+                const find = marcas.find((item) => marcaValue === item._id)
+                setLabelValue({
+                    ...labelValue,
+                    marca:find.name
+                })
+               
+            } else {
+                setLabelValue({
+                    ...labelValue,
+                    marca:'Marca'
+                })
+            }
+        
+
+      
+            if (modeloValue) {
+                const find = modelos.find((item) => modeloValue === item._id)
+                setLabelValue({
+                    ...labelValue,
+                    modelo: find?.name ?? 'Modelo'
+                })
+               
+            } else {
+                setLabelValue({
+                    ...labelValue,
+                    modelo:'Modelo'
+                })
+               
+            }
+      
+
+      
+            if (yearValue) {
+                const find = years.find((item) => yearValue === item)
+                setLabelValue({
+                    ...labelValue,
+                    year:find
+                })
+
+                
+            } else {
+                setLabelValue({
+                    ...labelValue,
+                    modelo:'Año'
+                })
+               
+            }
+
+    }
   
+    
 
     useEffect(() => {
         if (marcaValue) {
@@ -78,7 +137,11 @@ export const SelectCar = () => {
         }
     }, [marcaValue])
 
+    // useEffect(() => {
+    //     getAllPlaceholders()
 
+    // }, [marcaValue,modeloValue,yearValue])
+    
 
     return (
         <>

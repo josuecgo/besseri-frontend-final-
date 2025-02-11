@@ -1,4 +1,4 @@
-import { View,  ScrollView,Image, TouchableOpacity, Platform, StyleSheet, Pressable } from 'react-native'
+import { View, ScrollView, Image, TouchableOpacity, Platform, StyleSheet, Pressable } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -20,26 +20,27 @@ import { addDefaultAddressToUser } from '../../../util/ReduxStore/Actions/Custom
 export const AccountAddressScreen = (props) => {
     const width = 300;
     const [loading, setLoading] = useState(false);
-    const {address,addresses,user,defaultAddress} = useSelector(state => state.user)
-    const {getUserInfo} = useInfoUser();
+    const { address, addresses, user, defaultAddress } = useSelector(state => state.user)
+    const { getUserInfo } = useInfoUser();
     const dispatch = useDispatch()
+
+
+   
     
-
-
 
 
     const deleteAddress = async (id) => {
         try {
             if (!user) {
                 showToaster('Necesitas iniciar sesion')
-                return 
+                return
             }
             setLoading(true);
             const apiCall = await axios.delete(`${customer_api_urls.delete_address}/${id}`);
             setLoading(false);
             if (apiCall.status == api_statuses.success) {
                 getUserInfo();
-              
+
             } else {
                 showToaster('Algo salió mal. Por favor, vuelva a intentarlo :/')
             }
@@ -60,20 +61,20 @@ export const AccountAddressScreen = (props) => {
 
     }
 
-    const onChangeDefaultaddress = async(id) => {
+    const onChangeDefaultaddress = async (id) => {
         try {
-           await dispatch( addDefaultAddressToUser(id) )
+            await dispatch(addDefaultAddressToUser(id))
         } catch (error) {
-            
+
         }
     }
 
-    if(loading) return <View style={CommonStyles.screenY}><LoaderComponent isVisible={loading} /></View>
+    if (loading) return <View style={CommonStyles.screenY}><LoaderComponent isVisible={loading} /></View>
 
-  return (
-    <View style={CommonStyles.screenY} >
-     
-      {
+    return (
+        <View style={CommonStyles.screenY} >
+
+            {
                 addresses.length > 0 ?
                     <TouchableOpacity
                         onPress={() => props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_SEARCH_MY_ADDRESS)}
@@ -83,7 +84,7 @@ export const AccountAddressScreen = (props) => {
                     </TouchableOpacity>
                     : null
             }
-            
+
 
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 {
@@ -107,35 +108,36 @@ export const AccountAddressScreen = (props) => {
                         </View>
                         :
                         addresses.map((item) => {
-                            
-                            return(
-                            <View key={item._id} >
-                                <AddressComponent
-                                    info={item.info}
-                                    phone={item.phone}
-                                    deleteAddress={deleteAddress}
-                                    addressLine={item.addressLine} label={item.label}
-                                    item={item} 
-                                    selected={defaultAddress === item._id}  
-                                    onChangeDefaultaddress={onChangeDefaultaddress} 
-                                />
-                            </View>
-                        )
+
+                            return (
+                                <View key={item._id} >
+                                    <AddressComponent
+                                        info={item.info}
+                                        phone={item.phone}
+                                        deleteAddress={deleteAddress}
+                                        addressLine={item.addressLine} 
+                                        label={item.label}
+                                        item={item}
+                                        selected={defaultAddress === item._id}
+                                        onChangeDefaultaddress={onChangeDefaultaddress}
+                                    />
+                                </View>
+                            )
                         })
 
 
 
                 }
-                
+
                 <Box mb={10} />
             </ScrollView>
-    </View>
-  )
+        </View>
+    )
 }
 
 
 
- 
+
 
 const styles = StyleSheet.create({
     header: {
@@ -148,7 +150,7 @@ const styles = StyleSheet.create({
     headerText: { ...CommonStyles.fontFamily, color: Colors.bgColor, fontSize: 20, position: 'absolute' },
     detailCard: {
         width: '100%',
-      
+
         elevation: 5,
         alignSelf: 'center',
         padding: 20,
@@ -156,5 +158,5 @@ const styles = StyleSheet.create({
     createAddressText: { ...CommonStyles.fontFamily, fontSize: 20 },
     createAddressDetailText: { fontSize: 13, fontWeight: '300', width: '90%', alignSelf: 'center', textAlign: 'center', color: Colors.dark },
     AddressesDetailsWrapper: { justifyContent: 'center', alignItems: 'center', bottom: 40 },
-   
+
 })

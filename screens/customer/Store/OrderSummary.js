@@ -5,7 +5,6 @@ import { Box, Button, HStack, Text, VStack } from 'native-base'
 import AddressFormatted from '../../../components/AddressFormatted'
 import Colors from '../../../util/styles/colors'
 import { moneda } from '../../../util/Moneda'
-import { ProductosPago } from '../../../components/Customer/ProductosPago'
 import { CardField, useStripe } from '@stripe/stripe-react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../../util/local-storage/auth_service';

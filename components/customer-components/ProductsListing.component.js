@@ -12,10 +12,7 @@ import {  deviceWidth } from '../../util/Dimentions';
 const ProductListing = ({ products, navigation, comision, cartProductIds, addItemToCart, dispatch,w= deviceWidth * 0.8 }) => {
 
 
-  // const dispatch = useDispatch()
-  // const cartProductIds = useSelector(state => state.cart.cart_items_ids);
 
-  // const {addItemToCart} = useCart()
 
 
 
@@ -42,13 +39,6 @@ const ProductListing = ({ products, navigation, comision, cartProductIds, addIte
   );
 };
 
-const styles = StyleSheet.create({
- 
-  buttonAndTextContainer: {
 
-  },
-
-
-})
 
 export default ProductListing;

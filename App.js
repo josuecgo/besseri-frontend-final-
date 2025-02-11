@@ -53,9 +53,7 @@ const App = () => {
    
   
   return(
-    <StripeProvider
-    publishableKey={KeysStripe.TEST_KEY}
-    >
+    <StripeProvider publishableKey={KeysStripe.TEST_KEY} >
     <Provider store={store}>
         <NotificationProvider>            
           <ProductProvider>
