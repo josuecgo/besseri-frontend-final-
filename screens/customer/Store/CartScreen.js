@@ -38,6 +38,8 @@ export const CartScreen = (props) => {
   const vendors = useSelector(state => state.cart.carts_by_seller);
   const {businessId,idDesc,descuento } = useSelector(state => state.cart);
   
+
+  
   
   
 
@@ -75,6 +77,7 @@ export const CartScreen = (props) => {
     }
   }
   
+ 
   
  
   const goPurchase = async() => {
@@ -199,7 +202,8 @@ export const CartScreen = (props) => {
   const calculateDelivery = async() => {
     try {
       
-      if (!pickup) {
+      if(vendors.length <= 0 ) return
+       if (!pickup) {
         setTotalDeliveryFee(0);
         setDeliveryDistance(null);
         return
@@ -224,7 +228,7 @@ export const CartScreen = (props) => {
         );
   
       
-        console.log(vendor,'vendor?.business');
+     
         
         let dis = Math.round(distance)
         let del = Math.round(distance) * delivery_fee;

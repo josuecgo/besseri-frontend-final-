@@ -14,6 +14,7 @@ import { BOTTOM_TAB_CUSTOMER_ROUTES, CUSTOMER_HOME_SCREEN_ROUTES } from '../../.
 import { NotificationEmpty } from '../../../components/NotificationEmpty';
 import { useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/native';
+import { HeaderTitle } from '../../../components/Customer/HeaderTitle';
 
 
 export const NotificationScreen = (props) => {
@@ -84,7 +85,7 @@ export const NotificationScreen = (props) => {
 
   return (
     <View style={CommonStyles.screenY} >
-
+      <HeaderTitle titulo='Notificaciones'  />
       <Box>
        
 

@@ -57,9 +57,11 @@ const CustomerOrderSummary = (props) => {
     const [deliveryDistance, setDeliveryDistance] = useState(0)
     const totalAmount = allCharges?.subtotal + allCharges?.besseri_commission + allCharges.delivery_charges - allCharges.descuento;
     const [showModal, setshowModal] = useState(false)
-    const [value, setValue] = React.useState("tarjeta");
+    const [value, setValue] = React.useState("");
 
 
+
+    
 
 
     const handleModalize = async (flag) => {
@@ -76,7 +78,8 @@ const CustomerOrderSummary = (props) => {
     }
     const { getPedidosUser } = useInfoUser()
 
-
+  
+    
 
 
 
@@ -107,13 +110,16 @@ const CustomerOrderSummary = (props) => {
                         storePickup: !order.pickup,
                     };
 
-
+                   
+                    
+                  
+                    
                     return axios.post(`${customer_api_urls.place_order}`, body);
                 })
             );
 
             // console.log(apiCalls.data, 'apiCalls');
-
+          
 
             if (apiCalls.every((response) => response.status === api_statuses.success)) {
                 // Elimina productos del carrito
@@ -131,20 +137,7 @@ const CustomerOrderSummary = (props) => {
 
 
 
-            // if (apiCall.status == api_statuses.success) {
-            //     // setOrderPlaced(true)
-            //     for (var a = 0; a < products?.length; a++) {
-            //         dispatch(deleteItemFromCart(products[a]?._id, products[a]?.price))
-            //     }
-            //     getPedidosUser()
-
-            //     props.navigation.replace(CUSTOMER_HOME_SCREEN_ROUTES.PAGO_COMPLETED)
-            //     // setshowModal(true)
-            //     setIsVisible(false)
-            // } else {
-            //     showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 3')
-            //     setIsVisible(false);
-            // }
+         
         } catch (e) {
 
 
@@ -187,17 +180,16 @@ const CustomerOrderSummary = (props) => {
                         storePickup: !order.pickup,
                     };
 
+                  
+                    
 
                     return axios.post(`${customer_api_urls.place_order}`, body);
                 })
             );
 
-
+           
             if (apiCalls.every((response) => response.status === api_statuses.success)) {
-                // Elimina productos del carrito
-                // products?.forEach((product) => {
-                //     dispatch(deleteItemFromCart(product?._id, product?.price));
-                // });
+              
                 await dispatch(resetCart());
                 // Actualiza pedidos y redirige
                 await getPedidosUser();
@@ -335,11 +327,16 @@ const CustomerOrderSummary = (props) => {
     };
 
 
+    
 
     const openPaymentSheet = async () => {
 
         setIsVisible(true);
-
+        if (totalAmount <= 0) {
+            showToaster('No se puede realizar el pedido cuando la cantidad de productos es cero :/');
+            setIsVisible(false);
+            return;
+        }
         await initializePaymentSheet();
         if (!deliveryAddress) {
             showToaster('Por favor, seleccione la dirección de entrega');
@@ -391,16 +388,6 @@ const CustomerOrderSummary = (props) => {
 
 
 
-
-
-    const completedPurchase = () => {
-        setshowModal(false);
-        props.navigation.navigate('CustomerHomeStack', { screen: BOTTOM_TAB_CUSTOMER_ROUTES.HOME_SCREEN });
-    }
-
-
-
-
     return (
         <View style={[CommonStyles.screenY, { justifyContent: 'space-between' }]}>
 
@@ -425,13 +412,13 @@ const CustomerOrderSummary = (props) => {
                     {
                         order.pickup && (
                             <HStack justifyContent={'space-between'} mt={'15px'} >
-                                <Text style={CommonStyles.h2} >Valet</Text>
+                                <Text style={CommonStyles.h2} >Costo de envío</Text>
                                 <Text style={CommonStyles.h2} >{moneda(allCharges?.delivery_charges)}</Text>
                             </HStack>
                         )
                     }
 
-                    <ProductosPago productos={order?.totalProductsPrice} />
+                    <ProductosPago productos={order?.totalProductsPrice} totalAmount={totalAmount} />
 
 
                 </Box>
@@ -482,7 +469,7 @@ const CustomerOrderSummary = (props) => {
 
                                 <BtnPrincipal text={'Pagar'} onPress={() => {
                                     if (value === 'efectivo') {
-                                        openPaymentSheet()
+                                        placeOrderMechanic()
                                         return
                                     }
                                     if (value === 'tarjeta') {

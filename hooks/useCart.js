@@ -28,28 +28,21 @@ export const useCart = () => {
 
 
   const addItemToCart = (item) => {
-        
-       
-    // Si el articulo existe se elimina del carrito
+
     if(cartProductIds.includes(item?._id)) {
       dispatch(CartActions.deleteItemFromCart(item?._id));
      
       return false ;
     }
     
-    // // Si el articulo es de vendedor diferente se prohibe agregar
-    // if(item?.business_id != businessIdInCart && businessIdInCart != null) {
-    //   showToaster('Solo puede agregar artículos al carrito de una tienda a la vez');
-      
-    //   return false;
-    // }
-
-    // Si no cumple ninguna se agrega al carrito
+   
+    
     dispatch(CartActions.addItemToCart({
       ...item,
       quantity:1
     }))
 
+ 
     return true
    
    

@@ -108,7 +108,8 @@ export const AccountAddressScreen = (props) => {
                         </View>
                         :
                         addresses.map((item) => {
-
+                          
+                            
                             return (
                                 <View key={item._id} >
                                     <AddressComponent

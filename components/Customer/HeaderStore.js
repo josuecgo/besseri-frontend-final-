@@ -29,12 +29,7 @@ const HeaderStore = (props) => {
   const cart_items = useSelector(state => state.cart.cart_items);
   const { user, addresses, defaultAddress,address } = useSelector(state => state?.user);
   const  dispatch = useDispatch();
-
-
-  
-
   let screenName = props?.titulo;
-
 
   const goCart = async () => {
     const user_id = await getUserId();
@@ -55,7 +50,6 @@ const HeaderStore = (props) => {
     await dispatch( addDefaultAddressToUser(id) )      
   }
 
-  
   
 
 
@@ -96,7 +90,7 @@ const HeaderStore = (props) => {
     
 
         <Select
-          selectedValue={address?._id}
+          selectedValue={ address?._id}
           defaultValue={address?._id}
           minWidth={'40%'}
           accessibilityLabel="Elegir direccion"

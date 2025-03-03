@@ -21,7 +21,7 @@ export const BtnCantidad = ({increaseQuantity, decreaseQuantity,onRemoveFromCart
   return (
     <HStack alignItems={'center'} style={styles.container} s >
       <Button onPress={quitarProducto} variant={'ghost'} _text={{...CommonStyles.h1,color:Colors.black}} >-</Button>
-      <Text>{product?.quantity ? product?.quantity : 1 }</Text>
+      <Text style={{...CommonStyles.h3,color:Colors.bgColor}} >{product?.quantity ? product?.quantity : 1 }</Text>
       <Button  onPress={increaseQuantity} variant={'ghost'} _text={{...CommonStyles.h1,color:Colors.black}} >+</Button>
     </HStack>
   )

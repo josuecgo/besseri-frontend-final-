@@ -69,54 +69,14 @@ export const NotificationProvider = ({children}) => {
        
         onMessageReceived(msg)
 
-        // try {
-         
-        //   // 
-
-        //   await getNotificaciones();
-        //   PushNotification.createChannel(
-        //     {
-        //       channelId: "channel-id", // (required)
-        //       channelName: "My channel", // (required)
-        //       channelDescription: "A channel to categorise your notifications", // (optional) default: undefined.
-        //       playSound: false, // (optional) default: true
-        //       soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
-        //       vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-        //     },
-        //     (created) => {} // (optional) callback returns whether the channel was created, false means it already existed.
-        //   );
-          
-         
-
-   
-        //   await PushNotification.localNotification({
-        //       title:msg?.data?.title,
-        //       message:msg?.data?.message,
-        //       channelId:'channel-id'
-        //    });
-           
-           
-          
-          
-        // } catch(e) {
-        //   console.log(e,'show notification');
-        //   // alert('No se pudo recibir notificacion');
-        //   //console.log({e})
-        // }
-
-
+      
        
     }
 
 
     const onMessageReceived = async (message) => {
       try {
-  
-        // if (appStateVisible !== 'active') {
-        //   await getNotificaciones();
-        //   return
-        // }
-  
+    
         if (Platform.OS === 'ios') {
           await notifee.requestPermission()
         }
@@ -129,18 +89,7 @@ export const NotificationProvider = ({children}) => {
   
         });
   
-        // const notifeeData = JSON.parse(message.data.notifee)
-        // const messageId = message.messageId;
-       
-        // if (received.includes(messageId) )  return;
-         
-        // if (messageId) {
-        //   setReceived([... received,messageId]);
-        // }
-  
-        // await notifee.displayNotification(notifeeData);
-        // console.log('notificciones');
-        
+    
         await getNotificaciones()
   
        
@@ -153,7 +102,7 @@ export const NotificationProvider = ({children}) => {
     const onForegroundMessageRecived = async (message, navigation) => {
 
 
-      // onMessageReceived(message)
+      await getNotificaciones()
   
 
       Alert.alert(
@@ -273,6 +222,7 @@ export const NotificationProvider = ({children}) => {
                 deviceId:version
               })
             
+              
               
               saveTokenFcm(fcmToken)
             

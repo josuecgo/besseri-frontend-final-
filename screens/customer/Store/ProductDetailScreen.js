@@ -40,18 +40,24 @@ const ProductDetailScreen = (props) => {
   const [showModal, setShowModal] = useState(false)
   const isMounted = useRef(true);
   const [productSaved, setProductSaved] = useState(false); // Nuevo estado
-  const {saveRecentProduct} = useInfoUser()
+  const {saveRecentProduct,getUserInfo} = useInfoUser()
 
 
 
   const handleChange = async () => {
     try {
-      const userId = await getUserId()
+
+     
+      
+      const user = await getUser()
+    
+     
+      
       if (isDisable) {
         return
       }
 
-      if (!userId) {
+      if (!user) {
         Alert.alert('No has iniciado sesión', 'Inicia sesión o regístrate', [
           {
             text: 'Cancelar',
@@ -62,16 +68,26 @@ const ProductDetailScreen = (props) => {
         ]);
         return
       }
+      if (user?.role === 'mechanic' && !user?.verified ) {
+        getUserInfo()
+        showToaster('No puedes comprar productos como mecánico, tu cuenta está en revisión')
+        return
+        
+      }
+     
+
       setIsDisable(true)
 
       const { data } = await axios.get(`${customer_api_urls.inStock_product}/${product._id}`)
 
+     
 
+      
+      
       if (data?.product) {
 
-
         let resp = addItemToCart(product)
-
+    
         setShowModal(resp)
         isChange.current = !isChange.current
 
@@ -82,6 +98,9 @@ const ProductDetailScreen = (props) => {
 
       setIsDisable(false)
     } catch (error) {
+     
+      // console.log(error,'---');
+      
       setIsDisable(false)
     }
 
@@ -282,7 +301,10 @@ const ProductDetailScreen = (props) => {
                     color: Colors.white,
                     fontStyle: 'normal'
                   }}
-                  onPress={() => setShowModal(false)}
+                  onPress={() => {
+                    setShowModal(false)
+                  props.navigation.goBack()
+                }}
                 >
                   Seguir en tienda
                 </Button>

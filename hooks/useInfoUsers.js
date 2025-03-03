@@ -13,6 +13,7 @@ import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import { Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSearchStore } from './useSearchStore';
+import { useLocation } from './useLocation';
 
 
 
@@ -23,14 +24,17 @@ export const useInfoUser = () => {
   const { modeloValue, modelos, carActive } = useSelector(state => state.user);
   const { getModelo } = useSearchStore()
 
-
+ const { getLocationHook } = useLocation()
 
 
   const getUserInfo = useCallback(async () => {
     try {
       const id = await getUserId();
 
-      if (!id) return;
+      if (!id) {
+        getLocationHook()
+        return
+      };
 
       const apiCall = await axios(`${customer_api_urls.get_info_user}/${id}`);
 
@@ -38,10 +42,6 @@ export const useInfoUser = () => {
         const { carActive, myAddresses, garage, user } = apiCall.data.data;
 
 
-        // saveUserId(user?._id);
-        // saveUserType(user)
-        // saveUserData(user);
-        // dispatch(addToUser(user));
 
        
         
@@ -71,12 +71,13 @@ export const useInfoUser = () => {
           getCategorias();
         }
 
-        if (myAddresses) {
+        if (myAddresses.length > 0) {
           dispatch(addAddressToUser(myAddresses));
           await saveAdressCustomer(myAddresses);
 
           return myAddresses;
         }else{
+          getLocationHook()
           return false
         }
         

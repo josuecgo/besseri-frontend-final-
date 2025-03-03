@@ -53,15 +53,28 @@ export default (state = initialState, action) => {
             defaulAdress:null,
         }
         case ADD_ADDRESS:
+            const a = action.data[0]
             
-            
-            return {
-                ...state,
-                address: action.data[0],
-                addresses:action.data,
-                isLoading:false,
-                
+          
+            if (Array.isArray(a)) {
+                return {
+                    ...state,
+                    address: a[0],
+                    addresses:action.data[0],
+                    isLoading:false,
+                    
+                }
+            } else {
+                return {
+                    ...state,
+                    address: action.data[0],
+                    addresses:action.data,
+                    isLoading:false,
+                    
+                }
             }
+            
+           
         case ADD_DEFAULT_ADDRESS:
             const address = state.addresses.find( el => el._id === action.data );
             return {

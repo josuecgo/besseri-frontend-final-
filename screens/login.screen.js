@@ -95,13 +95,15 @@ const LoginScreen = ({ navigation }) => {
           saveUserId(user?._id);
           saveUserType(user)
           saveUserData(user);
+
           dispatch(addToUser(user))
 
           const userInfo = await getUserInfo()
 
 
-
-          if (userInfo) {
+         
+          
+          if (userInfo && userInfo.length > 0) {
             dispatch(addDefaultAddressToUser(userInfo[0])._id)
           }
 
@@ -118,6 +120,7 @@ const LoginScreen = ({ navigation }) => {
       }
 
     } catch (e) {
+      console.log(e,'handleSignIn');
       
       setShowLoader(false);
       showToaster('Error con el servidor.')

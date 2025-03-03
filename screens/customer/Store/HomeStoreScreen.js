@@ -39,10 +39,13 @@ const HomeStoreScreen = (props) => {
   const [defaultAddress, setDefaultAddress] = useState(address?._id ?? 1)
   const dispatch = useDispatch()
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
+
   const { addItemToCart } = useCart()
   const { getLocationHook } = useLocation()
   const focused = useIsFocused()
 
+ 
+ 
   
  
   
@@ -121,7 +124,8 @@ const HomeStoreScreen = (props) => {
 
   useEffect(() => {
     if (focused && direccionStore.length === 0) {
-   
+      
+      
       getLocationHook()
     }
     
