@@ -1,4 +1,4 @@
-import React, {  useContext,  useState } from 'react';
+import React, {  useContext,  useEffect,  useState } from 'react';
 import {  TouchableOpacity, View, StyleSheet, ScrollView } from 'react-native';
 
 import Colors from '../../util/styles/colors';
@@ -22,7 +22,8 @@ export const CustomerNotificationViewScreen = React.memo((props) => {
     
     
     const orderDetail = (body,item) => {
-        // const {orderNumber,orderId} = route.params
+        console.log(item);
+        return
         
         props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ORDER_DETAIL,
             {order:body, 
@@ -48,6 +49,10 @@ export const CustomerNotificationViewScreen = React.memo((props) => {
         }
     }
 
+
+    useEffect(() => {
+        getNotificaciones();
+    },[])   
    
   
     return (

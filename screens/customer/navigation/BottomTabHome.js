@@ -41,6 +41,8 @@ import { useLocation } from '../../../hooks/useLocation';
 import { ProductContext } from '../../../util/context/Product/ProductContext';
 import { useSelector } from 'react-redux';
 import { RecentProductsScreen } from '../Account/RecentProductsScreen';
+import { useInfoUser } from '../../../hooks/useInfoUsers';
+import { useIsFocused } from '@react-navigation/native';
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -50,14 +52,27 @@ export const BottomTabHome = (props) => {
   const {
     iosPermisoss,
     getToken,
-    showNotification, listenerBack, onForegroundMessageRecived } = useContext(NotificationContext);
-
+    showNotification, 
+    listenerBack, 
+    onForegroundMessageRecived 
+  } = useContext(NotificationContext);
+  const isFocused = useIsFocused()
   const {
     comision, getMarcas, getModelo,
     valueMaker, getComision
   } = useContext(ProductContext)
+  const {getNotificaciones,getPedidosUser} = useInfoUser();
+  
+  
 
 
+  useEffect(() => {
+    if (isFocused) {
+      
+      getNotificaciones()
+    }
+    
+  }, [isFocused])
 
   useEffect(() => {
     const fetchComision = async () => {

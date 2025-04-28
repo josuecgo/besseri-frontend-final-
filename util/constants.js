@@ -150,6 +150,7 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   FUEL_CHECK:'FUEL_CHECK',
   FORM_FUEL_CHECK:'FORM_FUEL_CHECK',
   NOTIFICATION_HOME: 'Notificaciones',
+  NEWS: 'News',
 
   ACCOUNT_HOME : 'Cuenta',
   MY_ACCOUNT : 'Mi cuenta',

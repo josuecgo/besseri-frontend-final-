@@ -21,17 +21,19 @@ export const NotificationScreen = (props) => {
   const { notificaciones } = useSelector(state => state.user);
   const {getNotificaciones,getPedidosUser} = useInfoUser();
   
-  const isFocused = useIsFocused()
+ 
 
   const orderDetail = async(data,item) => {
    
-    // if (item.type === 'quote') {
-    //   props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.PRESUPUESTO,data)
-    // }else{
+  
+    
+    if (item?.type === 'preregistro') {
+      props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.NEWS,item)
+    }else{
       getPedidosUser()
       props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.DETALLE,data)
      
-    // }
+    }
 
     if (!item?.isView)  {
         viewItem(item._id);
@@ -73,13 +75,7 @@ export const NotificationScreen = (props) => {
   };
 
 
-  // useEffect(() => {
-  //   if (isFocused) {
-      
-  //     getNotificaciones()
-  //   }
-    
-  // }, [isFocused])
+  
   
   
 

@@ -40,6 +40,7 @@ import { UserRegisterScreen } from '../../screens/customer/Preregister/UserRegis
 import { QuoteScreen } from '../../screens/customer/Quote/QuoteScreen';
 import messaging from '@react-native-firebase/messaging';
 import { NotificationContext } from '../context/NotificationContext';
+import { WelcomeMechanicScreen } from '../../screens/customer/Preregister/WelcomeMechanicScreen';
 
 
 
@@ -162,6 +163,19 @@ export const MainNavigation = (props) => {
           header: props => (
             <HeaderTitle {...props}
               titulo="Cotización"
+              nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+       <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.NEWS}
+        component={WelcomeMechanicScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props}
+              titulo="Bienvenido"
               nav={props.navigation.goBack}
             />
           ),

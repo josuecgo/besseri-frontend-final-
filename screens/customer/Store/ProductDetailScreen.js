@@ -22,6 +22,7 @@ import ModalChildren from '../../../components/ModalChildren';
 import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal';
 import { Alert } from 'react-native';
 import { useInfoUser } from '../../../hooks/useInfoUsers';
+import { CardQuestion } from '../../../components/Questions/CardQuestion';
 
 
 
@@ -41,14 +42,14 @@ const ProductDetailScreen = (props) => {
   const isMounted = useRef(true);
   const [productSaved, setProductSaved] = useState(false); // Nuevo estado
   const {saveRecentProduct,getUserInfo} = useInfoUser()
-
-
+  const [fetchLoading, setFetchLoading] = useState(false)
+ const [question, setQuestion] = useState([])
 
   const handleChange = async () => {
     try {
 
      
-      
+      setIsDisable(true)
       const user = await getUser()
     
      
@@ -66,12 +67,19 @@ const ProductDetailScreen = (props) => {
           },
           { text: 'Crear', onPress: () => props.navigation.navigate(MAIN_ROUTES.AUTH_STACK) },
         ]);
+        setIsDisable(false)
         return
       }
       if (user?.role === 'mechanic' && !user?.verified ) {
-        getUserInfo()
-        showToaster('No puedes comprar productos como mecánico, tu cuenta está en revisión')
-        return
+        await getUserInfo()
+       
+        const mechanic = await getUser()
+        if (!mechanic.verified) {
+          setIsDisable(false)
+          showToaster('No puedes comprar productos como mecánico, tu cuenta está en revisión')
+          return
+        }
+       
         
       }
      
@@ -132,6 +140,9 @@ const ProductDetailScreen = (props) => {
     }
   }
 
+
+
+
   const goCart = async () => {
     const user_id = await getUserId();
     if (isMounted.current) {
@@ -186,10 +197,45 @@ const ProductDetailScreen = (props) => {
   }, []);
 
   useEffect(() => {
+    isMounted.current = true;
+    setFetchLoading(true);
+
+    const fetchOpinions = async () => {
+      await new Promise(resolve => setTimeout(resolve, 3000)); // Esperar 3 segundos
+
+      if (!isMounted.current) return; // Si el componente ya no está montado, salir
+
+      if (fetchLoading) return;
+
+      try {
+        const apiCall = await axios.get(`${customer_api_urls.get_questions}/${product?._id}`);
+        
+        if (apiCall.status === 200 && isMounted.current) {
+          setQuestion(apiCall?.data?.data);
+        }
+      } catch (error) {
+        console.error('Error fetching feedback:', error);
+      } finally {
+        if (isMounted.current) {
+          setFetchLoading(false);
+        }
+      }
+    };
+
+    fetchOpinions();
+
+    return () => {
+      isMounted.current = false;
+      setFetchLoading(false);
+    };
+  }, []);
+
+  useEffect(() => {
     setEnCarrito(inTheCart(product))
   }, [isChange.current,props.route])
 
 
+  
   return (
     <>
       <View style={[CommonStyles.screenWhiteY, { paddingBottom: bottom + 20 }]}>
@@ -269,6 +315,8 @@ const ProductDetailScreen = (props) => {
               {product?.description}
             </Text>
           </View>
+
+          <CardQuestion questions={question} />
 
           {
             feedback.length > 0 && (

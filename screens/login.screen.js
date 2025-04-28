@@ -101,10 +101,13 @@ const LoginScreen = ({ navigation }) => {
           const userInfo = await getUserInfo()
 
 
-         
+          
+       
           
           if (userInfo && userInfo.length > 0) {
-            dispatch(addDefaultAddressToUser(userInfo[0])._id)
+            
+            
+            dispatch(addDefaultAddressToUser(userInfo[0]._id))
           }
 
           getPedidosUser()

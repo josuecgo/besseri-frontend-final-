@@ -1,8 +1,8 @@
-export const env = 'prod';
+export const env = 'dev';
 
 export const base_url =   env === 'prod' ? 'https://api.besser-auto.app'  
-                        : env === 'dev' ?  'http://192.168.1.38:3005' 
-                        : 'http://192.168.1.38:3005';
+                        : env === 'dev' ?  'http://192.168.1.41:3005' 
+                        : 'http://192.168.1.41:3005';
 
 export const api_urls = {
     registration:`${base_url}/user/signup`,
@@ -138,6 +138,8 @@ export const customer_api_urls = {
     create_service_feedback: `${base_url}/feedback/create-service-rating`,
     close_service_feedback: `${base_url}/feedback/close-service-rating`,
     get_feedback: `${base_url}/feedback/get-feedback`,
+    get_questions: `${base_url}/question/get-questions`,
+    create_questions: `${base_url}/question/create-question`,
     upload_imgs_feedback: `${base_url}/feedback/upload-feedback-images`,
     get_service_feedback: `${base_url}/feedback/get-service-feedback`,
 

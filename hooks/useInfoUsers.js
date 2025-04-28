@@ -42,7 +42,7 @@ export const useInfoUser = () => {
         const { carActive, myAddresses, garage, user } = apiCall.data.data;
 
 
-
+        saveUserData(user);
        
         
         if (carActive) {
@@ -134,6 +134,8 @@ export const useInfoUser = () => {
 
   const getNotificaciones = useCallback(async () => {
     try {
+      
+      
       const id = await getUserId();
       if (!id) {
         return;
