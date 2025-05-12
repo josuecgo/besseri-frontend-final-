@@ -2,44 +2,52 @@ import { StyleSheet,  View } from 'react-native'
 import React from 'react'
 import { Box, Button, Text } from 'native-base'
 import Colors from '../../util/styles/colors'
-import { BtnPrincipal } from '../Customer/BtnPrincipal'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export const CardQuestion = ({questions}) => {
+
+export const CardQuestion = ({questions,onPress}) => {
+    let emptyQuestion = questions.length > 0
+    
 
   return (
     <>
 
-    <Box mx={2} >
+    <Box  >
         
         <Box
-            borderWidth={1}
-            borderColor={'#E5E5E5'}
-            borderRadius={10}
+        
             padding={3}
             marginBottom={2}
         >
             {
-            questions.map((item,i) => {
+
+            emptyQuestion && questions.map((item,i) => {
                
                 if(i >= 3 ) return null;
                 return (
                     <Box
                         key={i}
-                        borderWidth={1}
-                        borderColor={'#E5E5E5'}
-                        borderRadius={10}
-                        padding={3}
+                       
                         marginBottom={2}
+                        flexDirection={'row'}
+                        alignItems={'center'}
+                        
                     >
-                        <Text color={Colors.textPrimary} >{item?.question}</Text>
+                        <MaterialCommunityIcons name='frequently-asked-questions' color={Colors.black} size={20}  />
+                        <Text paddingX={1} color={Colors.black} >{item?.title}</Text>
                     </Box>
                 )
             })  
         }
 
-            <BtnPrincipal
-            text={'¿Tienes alguna pregunta?'}
-            />
+            <Button
+            // text={'¿Tienes alguna pregunta?'}
+            variant={'link'}
+            onPress={onPress}
+
+            >
+               {emptyQuestion ?  'Ver mas' : 'Preguntar'}
+            </Button>
             
         </Box>
     </Box>

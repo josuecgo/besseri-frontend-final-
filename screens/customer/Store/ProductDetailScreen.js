@@ -43,7 +43,7 @@ const ProductDetailScreen = (props) => {
   const [productSaved, setProductSaved] = useState(false); // Nuevo estado
   const {saveRecentProduct,getUserInfo} = useInfoUser()
   const [fetchLoading, setFetchLoading] = useState(false)
- const [question, setQuestion] = useState([])
+ const [questions, setQuestions] = useState([])
 
   const handleChange = async () => {
     try {
@@ -141,7 +141,9 @@ const ProductDetailScreen = (props) => {
   }
 
 
-
+  const goVerMas = () => {
+    props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.QUESTIONSCREEN,questions)
+  }
 
   const goCart = async () => {
     const user_id = await getUserId();
@@ -211,7 +213,7 @@ const ProductDetailScreen = (props) => {
         const apiCall = await axios.get(`${customer_api_urls.get_questions}/${product?._id}`);
         
         if (apiCall.status === 200 && isMounted.current) {
-          setQuestion(apiCall?.data?.data);
+          setQuestions(apiCall?.data?.data);
         }
       } catch (error) {
         console.error('Error fetching feedback:', error);
@@ -316,7 +318,7 @@ const ProductDetailScreen = (props) => {
             </Text>
           </View>
 
-          <CardQuestion questions={question} />
+          <CardQuestion questions={questions} onPress={goVerMas}/>
 
           {
             feedback.length > 0 && (

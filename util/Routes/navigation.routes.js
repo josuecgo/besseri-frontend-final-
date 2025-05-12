@@ -41,6 +41,8 @@ import { QuoteScreen } from '../../screens/customer/Quote/QuoteScreen';
 import messaging from '@react-native-firebase/messaging';
 import { NotificationContext } from '../context/NotificationContext';
 import { WelcomeMechanicScreen } from '../../screens/customer/Preregister/WelcomeMechanicScreen';
+import { QuestionScreen } from '../../screens/customer/Question/QuestionScreen';
+import { DetailQuestionScreen } from '../../screens/customer/Question/DetailQuestionScreen';
 
 
 
@@ -168,6 +170,35 @@ export const MainNavigation = (props) => {
           ),
         }}
       />
+
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.QUESTIONSCREEN}
+        component={QuestionScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props}
+              titulo="Preguntas"
+              nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+
+       <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.DETAILQUESTIONSCREEN}
+        component={DetailQuestionScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props}
+              titulo=""
+              nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+      
        <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.NEWS}
         component={WelcomeMechanicScreen}
