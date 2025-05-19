@@ -178,7 +178,7 @@ export const MainNavigation = (props) => {
           headerShown: true,
           header: props => (
             <HeaderTitle {...props}
-              titulo="Preguntas"
+              titulo="Comunidad"
               nav={props.navigation.goBack}
             />
           ),
@@ -192,7 +192,7 @@ export const MainNavigation = (props) => {
           headerShown: true,
           header: props => (
             <HeaderTitle {...props}
-              titulo=""
+              titulo="Detalles de pregunta"
               nav={props.navigation.goBack}
             />
           ),

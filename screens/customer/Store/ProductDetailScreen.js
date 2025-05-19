@@ -318,7 +318,7 @@ const ProductDetailScreen = (props) => {
             </Text>
           </View>
 
-          <CardQuestion questions={questions} onPress={goVerMas}/>
+          <CardQuestion questions={questions} onPress={goVerMas} fetchLoading={fetchLoading} />
 
           {
             feedback.length > 0 && (

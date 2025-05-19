@@ -1,72 +1,111 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
+import React, { useState } from 'react'
 import Colors from '../../../util/styles/colors'
 import { adjust } from '../../../util/Dimentions'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment'
-import { Box, Divider, FlatList, HStack, TextArea } from 'native-base'
+import { Box, Divider, FlatList, HStack, Spinner, TextArea } from 'native-base'
 import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal';
+import axios from 'axios';
+import { customer_api_urls } from '../../../util/api/api_essentials';
+import { getUserId } from '../../../util/local-storage/auth_service';
 
 
 export const DetailQuestionScreen = ({ route }) => {
-    const question = route.params
-    console.log(question.answers);
+    const [question, setQuestion] = useState(route.params)
+    const [answer, setAnswer] = useState("")
+    const [isSending, setIsSending] = useState(false)
+
+
+    const createAnswer = async () => {
+        try {
+
+
+            setIsSending(true)
+            const userId = await getUserId()
+            const apiCall = await axios.post(`${customer_api_urls.response_question}/${question._id}`, {
+                answeredBy: userId,
+                answer: answer
+            });
+
+            setQuestion(apiCall.data.data)
+
+            setAnswer("")
+            setIsSending(false)
+        } catch (error) {
+
+            setIsSending(false)
+
+        }
+    }
+
+
 
     return (
-        <View style={styles.container} >
-            <Box>
-                <HStack alignItems={'center'} space={2} >
-                <MaterialCommunityIcons name='frequently-asked-questions' color={Colors.black} size={20} />
-                <Text style={styles.title} >{question.title}</Text>
-            </HStack>
+         <KeyboardAvoidingView
+    style={{ flex: 1 }}
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    keyboardVerticalOffset={100} // Ajusta si tienes Header
+  >
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 10, paddingBottom: 40 }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <Box>
+          {/* Título y pregunta */}
+          <HStack alignItems={'center'} space={2}>
+            <MaterialCommunityIcons name='frequently-asked-questions' color={Colors.black} size={20} />
+            <Text style={styles.title}>{question.title}</Text>
+          </HStack>
 
-            <HStack mb={2} >
+          <HStack mb={2}>
+            <MaterialCommunityIcons name='account' color={Colors.primaryColor} size={20} />
+            <Text style={styles.user}>{question.askedBy.name} - </Text>
+            <Text style={styles.date}>{moment(question.createdAt).fromNow() || ''}</Text>
+          </HStack>
+
+          <Divider color={'gray.100'} />
+          <Text style={styles.date}>Respuestas {question.answers.length}</Text>
+
+          {/* Respuestas */}
+          {question.answers.map((item) => (
+            <Box my={5} key={item._id}>
+              <HStack alignItems={'center'}>
                 <MaterialCommunityIcons name='account' color={Colors.primaryColor} size={20} />
-                <Text style={styles.user} >{question.askedBy.name} - </Text>
-                <Text style={styles.date} >{moment(question.createdAt).fromNow() || ''}</Text>
-            </HStack>
-
-            <Divider color={'gray.100'} />
-
-            <Text style={styles.date} >Respuestas {question.answers.length}</Text>
-            <Box>
-
+                <Text style={styles.user}>{item?.answeredBy.name}- </Text>
+                <Text style={styles.date}>
+                  {moment(item?.answeredAt).fromNow() || ''}
+                </Text>
+              </HStack>
+              <Text style={styles.answer}>{item?.answer}</Text>
             </Box>
+          ))}
 
-                <FlatList
-                data={question.answers}
-                renderItem={({item}) => {
-                    console.log(item);
-                    
-                    return(
-                    <Box my={5} >
-                        <HStack alignItems={'center'} >
-                            <MaterialCommunityIcons name='account' color={Colors.primaryColor} size={20} />
-                            <Text style={styles.user} >{item?.answeredBy.name}- </Text>
-                              <Text style={styles.date} >{moment(item?.answeredBy.answeredAt).fromNow() || ''}</Text>
-                            
-                        </HStack>
-                        <Text style={styles.answer} >{item?.answer}</Text>
-                    </Box>
-                )}}
-                keyExtractor={(item) => item._id.toString()}
-                />
-            </Box>
-
-
-
-           
-            <Box>
-                <Text style={styles.title} >Tu Respuesta</Text>
-                <TextArea
-                />
-                <BtnPrincipal
+          {/* Tu respuesta */}
+          <Box mt={4}>
+            <Text style={styles.title}>Tu Respuesta</Text>
+            <TextArea
+              onChangeText={(text) => setAnswer(text)}
+              value={answer}
+              placeholder='Responder'
+              placeholderTextColor="gray.400"
+              color="black"
+              totalLines={4}
+            />
+            {!isSending ? (
+              <BtnPrincipal
                 text={'Añadir una respuesta'}
-
-                />
-            </Box>
-            
-        </View>
+                onPress={createAnswer}
+              />
+            ) : (
+              <Spinner />
+            )}
+          </Box>
+        </Box>
+      </ScrollView>
+    </TouchableWithoutFeedback>
+  </KeyboardAvoidingView>
     )
 }
 
@@ -75,8 +114,8 @@ export const DetailQuestionScreen = ({ route }) => {
 const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 10,
-        justifyContent:'space-between',
-        flex:1
+        justifyContent: 'space-between',
+        flex: 1
     },
     title: {
         color: Colors.black,
@@ -88,7 +127,7 @@ const styles = StyleSheet.create({
     date: {
         color: Colors.textSecundary,
     },
-    answer:{
-         color: Colors.black,
+    answer: {
+        color: Colors.black,
     }
 })
