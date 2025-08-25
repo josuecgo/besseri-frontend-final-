@@ -41,7 +41,8 @@ const SplashScreen = ({navigation,route}) => {
       let os = Platform.OS;
      
       const url = `${api_urls.check_version}`;
-
+      
+      
       const apiCall = await axios.post(url, {
         os,
         version: parseInt(version),

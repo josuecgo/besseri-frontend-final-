@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { TouchableOpacity, View, StyleSheet, FlatList, ActivityIndicator, Alert } from 'react-native';
 
-import {  Center,  Text, } from 'native-base';
+import {  Center,  Fab,  Text, } from 'native-base';
 
 import Colors from '../../../util/styles/colors';
 import CommonStyles from '../../../util/styles/styles';
 
-import {showToaster } from '../../../util/constants';
+import {CUSTOMER_HOME_SCREEN_ROUTES, MAIN_ROUTES, showToaster } from '../../../util/constants';
 import ProductListing from '../../../components/customer-components/ProductsListing.component';
 import { adjust, deviceHeight, deviceWidth } from '../../../util/Dimentions';
 
@@ -15,7 +15,7 @@ import { ListEmpty } from '../../../components/Vendor/ListEmpty';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { customer_api_urls } from '../../../util/api/api_essentials';
-import { getUserId } from '../../../util/local-storage/auth_service';
+import { getUser, getUserId } from '../../../util/local-storage/auth_service';
 import { ServiceSkeleton } from '../../../components/Services/ServiceSkeleton';
 import { useCart } from '../../../hooks/useCart';
 import { useLocation } from '../../../hooks/useLocation';
@@ -46,7 +46,21 @@ const HomeStoreScreen = (props) => {
 
  
  
-  
+  const goQuoteForm = async() => {
+     const user = await getUser()
+    if (user) {
+      props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.QUOTE_FORM_SCREEN)
+    } else {
+      Alert.alert('No has iniciado sesión', 'Inicia sesión o regístrate', [
+               {
+                 text: 'Cancelar',
+                 onPress: () => {},
+                 style: 'cancel',
+               },
+               { text: 'Crear', onPress: () => props.navigation.navigate(MAIN_ROUTES.AUTH_STACK) },
+             ]);
+    } 
+  }
  
   
   const CategoryButton = ({ category, onPress }) => {
@@ -257,7 +271,17 @@ const HomeStoreScreen = (props) => {
               )
           }
 
-
+ {focused && (
+ <Fab 
+          label="¿No esta el producto?" 
+          size='sm'
+          marginBottom={70}
+          onPress={goQuoteForm} 
+          backgroundColor={Colors.primarySolid}
+          />
+ )
+}
+         
           <View style={{ height: deviceWidth * 0.05, width: deviceWidth, marginVertical: 30 }} />
         </View>
       </View>

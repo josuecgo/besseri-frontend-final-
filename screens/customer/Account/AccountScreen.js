@@ -1,5 +1,5 @@
 import { View, StyleSheet, Platform, Linking, Alert } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Colors from '../../../util/styles/colors'
 import { MyCarActive } from '../../../components/Customer/MyCarActive'
 import { BackgroundCar } from '../../../components/Background/BackgroundCar'
@@ -15,12 +15,22 @@ import { NotificationContext } from '../../../util/context/NotificationContext'
 import PushNotificationIOS from '@react-native-community/push-notification-ios'
 import { Button } from 'native-base'
 import { resetCart } from '../../../util/ReduxStore/Actions/CustomerActions/CartActions'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 export const AccountScreen = (props) => {
   
   const {user} = useSelector(state => state.user)
   const dispatch = useDispatch()
   const {deleteNotificaciones} = useContext(NotificationContext)
+
+    const navigation = useNavigation();
+      const route = useRoute();
+
+      useEffect(() => {
+        if (route.params?.goTo) {
+          navigation.navigate(route.params.goTo);
+        }
+      }, [route.params?.goTo]);
  
   const loginLogout = async() => {
     
@@ -108,6 +118,11 @@ export const AccountScreen = (props) => {
             <BtnPrincipal
             text={'Historial'}
             onPress={() =>  props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_PEDIDOS)}
+            />
+
+             <BtnPrincipal
+            text={'Mis cotizaciones'}
+            onPress={() =>  props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_MY_QUOTE)}
             />
            </>
           )

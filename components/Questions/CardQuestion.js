@@ -19,12 +19,17 @@ export const CardQuestion = ({ questions, onPress, fetchLoading }) => {
         <>
 
             <Box  >
-
+            
                 <Box
-
+                    borderWidth={1}
                     padding={3}
                     marginBottom={5}
+                    marginX={2}
+                    borderRadius={10}
                 >
+                <Text style={{color:Colors.bgColor}} >
+                    Foro de preguntas y respuestas
+                </Text>
                     {
 
                         emptyQuestion && questions.map((item, i) => {
@@ -52,9 +57,9 @@ export const CardQuestion = ({ questions, onPress, fetchLoading }) => {
                         onPress={onPress}
 
                     >
-                        {emptyQuestion ? 'Ver mas' : 'Preguntar'}
+                        {emptyQuestion ? 'Ver mas' : 'Crear pregunta'}
                     </Button>
-                    <View style={{ width: 10, height: 20 }} />
+                    {/* <View style={{ width: 10, height: 20 }} /> */}
 
                 </Box>
             </Box>

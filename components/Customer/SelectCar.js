@@ -12,7 +12,7 @@ import { deviceHeight } from '../../util/Dimentions';
 import { Box } from 'native-base';
 
 
-export const SelectCar = () => {
+export const SelectCar = ({reset = true}) => {
 
     const { marcaValue, modeloValue, yearValue, marcas, modelos, years,carActive } = useSelector(state => state.user)
     const { handleMarca, handleModel, handleYear, getModelo, resetCar } = useSearchStore();
@@ -137,10 +137,7 @@ export const SelectCar = () => {
         }
     }, [marcaValue])
 
-    // useEffect(() => {
-    //     getAllPlaceholders()
 
-    // }, [marcaValue,modeloValue,yearValue])
     
 
     return (
@@ -167,12 +164,18 @@ export const SelectCar = () => {
                 <MaterialCommunityIcons name='arrow-down-drop-circle-outline' color={Colors.bgColor} size={15}/>
             </Pressable>
          </View>
-         <Pressable
+
+         {
+            reset && (
+ <Pressable
                 style={{ alignItems: 'flex-end', marginHorizontal: 10, marginVertical: 4,padding:4 }}
                 onPress={resetCar}
             >
                 <Text style={{ color: 'black', textDecorationLine: 'underline' }} >Limpiar filtro</Text>
         </Pressable>
+            )
+         }
+        
 
 
         <Modal

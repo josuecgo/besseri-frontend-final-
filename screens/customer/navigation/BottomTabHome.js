@@ -43,6 +43,8 @@ import { useSelector } from 'react-redux';
 import { RecentProductsScreen } from '../Account/RecentProductsScreen';
 import { useInfoUser } from '../../../hooks/useInfoUsers';
 import { useIsFocused } from '@react-navigation/native';
+import { QuoteFormScreen } from '../Store/QuoteFormScreen';
+import { MyQuoteScreen } from '../Store/MyQuoteScreen';
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -190,13 +192,10 @@ export const BottomTabHome = (props) => {
     <BottomTab.Navigator
       initialRouteName={BOTTOM_TAB_CUSTOMER_ROUTES.HOME_SCREEN}
       tabBar={props => <FooterNav {...props} />}
-
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarShowLabel: false,
         tabBarActiveTintColor: Colors.primarySolid,
-
-
       })
       }
 
@@ -377,6 +376,20 @@ export const CustomerHomeStack = () => {
         }}
       />
 
+       <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.QUOTE_FORM_SCREEN}
+        component={QuoteFormScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderTitle {...props}
+              titulo="Solictar cotizacion producto"
+              nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+
     </Stack.Navigator>
   );
 };
@@ -412,7 +425,7 @@ export const CustomerAccountStack = () => {
         }}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_RECENT_PRODUCTS}
         component={RecentProductsScreen}
         options={{
@@ -488,6 +501,20 @@ export const CustomerAccountStack = () => {
           header: props => (
             <HeaderPedidos {...props}
               titulo="Historial"
+              nav={props.navigation}
+            />
+          ),
+        }}
+      />
+
+       <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_MY_QUOTE}
+        component={MyQuoteScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderPedidos {...props}
+              titulo="Mis cotizaciones"
               nav={props.navigation}
             />
           ),

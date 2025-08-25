@@ -142,7 +142,7 @@ const ProductDetailScreen = (props) => {
 
 
   const goVerMas = () => {
-    props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.QUESTIONSCREEN,questions)
+    props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.QUESTIONSCREEN,{product,questions})
   }
 
   const goCart = async () => {

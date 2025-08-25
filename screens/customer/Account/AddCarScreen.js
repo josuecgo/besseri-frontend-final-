@@ -26,6 +26,7 @@ export const AddCarScreen = (props) => {
   
   const { user,marcas,marcaValue,modelos,modeloValue,yearValue,years }  = useSelector(state => state.user);
   const [km, setKm ] = useState('');
+  const [plate, setPlate] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const {bottom} = useSafeAreaInsets()
   const { getUserInfo } = useInfoUser()
@@ -52,6 +53,7 @@ export const AddCarScreen = (props) => {
         type: newModel?.type?._id,
         year: yearValue,
         km,
+        plate:plate.toUpperCase()
       };
    
       const apiCall = await axios.post(`${customer_api_urls.create_car}`, data);
@@ -151,6 +153,17 @@ export const AddCarScreen = (props) => {
                 backgroundColor={Colors.lightBlack}
                 placeholder='Kilometraje'
               />
+               <Heading size="xs" my="3" color={Colors.white}>Placa</Heading>
+              <Input
+                value={plate}
+             
+                onChangeText={(text) => setPlate(text)}
+                borderColor={Colors.lightBorder}
+                color={Colors.white}
+                size={'2xl'}
+                backgroundColor={Colors.lightBlack}
+                placeholder='Placa'
+              />
             </>
              )
           }
@@ -176,6 +189,7 @@ export const AddCarScreen = (props) => {
           </Button>
 
           </View>
+        <View style={{height:75,width:10 }} />
       </ScrollView>
 
      

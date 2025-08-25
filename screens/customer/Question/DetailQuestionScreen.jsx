@@ -8,7 +8,8 @@ import { Box, Divider, FlatList, HStack, Spinner, TextArea } from 'native-base'
 import { BtnPrincipal } from '../../../components/Customer/BtnPrincipal';
 import axios from 'axios';
 import { customer_api_urls } from '../../../util/api/api_essentials';
-import { getUserId } from '../../../util/local-storage/auth_service';
+import { getUser } from '../../../util/local-storage/auth_service';
+import { showToaster } from '../../../util/constants';
 
 
 export const DetailQuestionScreen = ({ route }) => {
@@ -19,12 +20,16 @@ export const DetailQuestionScreen = ({ route }) => {
 
     const createAnswer = async () => {
         try {
+            const user = await getUser()
 
+            if (!user)  return showToaster('Necesitas iniciar sesión para responder preguntas')
+
+            if(user.role !== 'mechanic') return showToaster('No tienes permiso para responder preguntas')
 
             setIsSending(true)
-            const userId = await getUserId()
+           
             const apiCall = await axios.post(`${customer_api_urls.response_question}/${question._id}`, {
-                answeredBy: userId,
+                answeredBy: user._id,
                 answer: answer
             });
 
@@ -93,7 +98,7 @@ export const DetailQuestionScreen = ({ route }) => {
               color="black"
               totalLines={4}
             />
-            {!isSending ? (
+            {!isSending  ? (
               <BtnPrincipal
                 text={'Añadir una respuesta'}
                 onPress={createAnswer}

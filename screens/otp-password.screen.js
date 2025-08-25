@@ -39,6 +39,7 @@ const OtpPasswordScreen = ({ navigation }) => {
   });
 
 
+
   const onChangeText = (inputText, key) => {
 
     setUserCredentials({
@@ -75,6 +76,7 @@ const OtpPasswordScreen = ({ navigation }) => {
       showToaster('Algo salió mal')
     }
   }
+
   const registerApiCall = async (path) => {
     try {
       const url = api_urls.registration;
@@ -195,9 +197,3 @@ const OtpPasswordScreen = ({ navigation }) => {
 export default OtpPasswordScreen;
 
 
-const styles = StyleSheet.create({
-  number: {
-    color: Colors.white,
-    width: 50
-  }
-})

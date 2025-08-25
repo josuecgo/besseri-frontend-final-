@@ -38,7 +38,7 @@ export const UpdateScreen = () => {
                 borderWidth="1"
                 style={styles.card}
                 >
-                    <Text>Hay una nueva version disponible, por favor actualice la aplicacion</Text>
+                    <Text style={styles.text} >Hay una nueva version disponible, por favor actualice la aplicacion</Text>
 
                     <View style={{marginTop:deviceWidth * 0.15}} >
                         <Divider/>
@@ -70,5 +70,11 @@ const styles = StyleSheet.create({
         height:deviceWidth / 2,
         justifyContent:'flex-end',
         backgroundColor:Colors.white
+    },
+    text:{
+        fontSize:16,
+        textAlign:'center',
+        fontWeight:'500',
+        color:Colors.black
     }
 })
