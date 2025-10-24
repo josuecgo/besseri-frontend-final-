@@ -12,6 +12,8 @@ export const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
 export const CLEAR_CART = 'CLEAR_CART';
 
 export const addItemToCart = (item) => {
+    console.log(item,'item');
+    
     
     return({
         type:ADD_ITEM_TO_CART,

@@ -4,7 +4,7 @@
             "outputFile": "com.besseri.app-mergeDebugResources-104:/values-jv/values-jv.xml",
             "map": [
                 {
-                    "source": "/Users/mario-dev/.gradle/caches/transforms-3/40d20c5853981a6afdeb59ae11366de2/transformed/jetified-react-android-0.73.2-debug/res/values-jv/values-jv.xml",
+                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/40d20c5853981a6afdeb59ae11366de2/transformed/jetified-react-android-0.73.2-debug/res/values-jv/values-jv.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",

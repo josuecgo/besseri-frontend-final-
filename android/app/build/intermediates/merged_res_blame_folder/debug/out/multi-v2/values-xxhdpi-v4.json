@@ -4,7 +4,7 @@
             "outputFile": "com.besseri.app-mergeDebugResources-104:/values-xxhdpi-v4/values-xxhdpi-v4.xml",
             "map": [
                 {
-                    "source": "/Users/mario-dev/.gradle/caches/transforms-3/e77691df4b74bbdc0d708f1e74dfe0e5/transformed/jetified-payments-core-20.48.6/res/values-xxhdpi-v4/values-xxhdpi-v4.xml",
+                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/e77691df4b74bbdc0d708f1e74dfe0e5/transformed/jetified-payments-core-20.48.6/res/values-xxhdpi-v4/values-xxhdpi-v4.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

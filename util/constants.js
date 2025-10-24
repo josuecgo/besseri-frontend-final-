@@ -158,6 +158,7 @@ export const CUSTOMER_HOME_SCREEN_ROUTES = {
   ACCOUNT_RECENT_PRODUCTS : 'Articulos recientes',
   ACCOUNT_MY_ADDRESS : 'Mis direcciones',
   ACCOUNT_MY_QUOTE : 'Mis cotizaciones',
+  ACCOUNT_DETAIL_QUOTE : 'Cotizacion',
   ACCOUNT_VIEW_MY_ADDRESS : 'Ver mis direcciones',
   ACCOUNT_SEARCH_MY_ADDRESS : 'Search Address',
   ADD_MY_CAR : 'Add My Car',

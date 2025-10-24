@@ -4,7 +4,7 @@
             "outputFile": "com.besseri.app-mergeDebugResources-104:/values-lb/values-lb.xml",
             "map": [
                 {
-                    "source": "/Users/mario-dev/.gradle/caches/transforms-3/c201851c15fd55415da22ca660f211ad/transformed/jetified-hcaptcha-20.48.6/res/values-lb/values-lb.xml",
+                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/c201851c15fd55415da22ca660f211ad/transformed/jetified-hcaptcha-20.48.6/res/values-lb/values-lb.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

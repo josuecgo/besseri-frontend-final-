@@ -70,6 +70,7 @@ const ProductDetailScreen = (props) => {
         setIsDisable(false)
         return
       }
+      
       if (user?.role === 'mechanic' && !user?.verified ) {
         await getUserInfo()
        

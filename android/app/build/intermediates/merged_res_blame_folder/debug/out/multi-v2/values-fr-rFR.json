@@ -4,7 +4,7 @@
             "outputFile": "com.besseri.app-mergeDebugResources-104:/values-fr-rFR/values-fr-rFR.xml",
             "map": [
                 {
-                    "source": "/Users/mario-dev/.gradle/caches/transforms-3/6f4433f276f2e3313f1372d861b1b08b/transformed/jetified-stripe-3ds2-android-6.1.8/res/values-fr-rFR/values-fr-rFR.xml",
+                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/6f4433f276f2e3313f1372d861b1b08b/transformed/jetified-stripe-3ds2-android-6.1.8/res/values-fr-rFR/values-fr-rFR.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8",
                         "startColumns": "4,4,4,4,4,4,4",

@@ -4,7 +4,7 @@
             "outputFile": "com.besseri.app-mergeDebugResources-104:/values-ps/values-ps.xml",
             "map": [
                 {
-                    "source": "/Users/mario-dev/.gradle/caches/transforms-3/c201851c15fd55415da22ca660f211ad/transformed/jetified-hcaptcha-20.48.6/res/values-ps/values-ps.xml",
+                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/c201851c15fd55415da22ca660f211ad/transformed/jetified-hcaptcha-20.48.6/res/values-ps/values-ps.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "/Users/mario-dev/.gradle/caches/transforms-3/40d20c5853981a6afdeb59ae11366de2/transformed/jetified-react-android-0.73.2-debug/res/values-ps/values-ps.xml",
+                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/40d20c5853981a6afdeb59ae11366de2/transformed/jetified-react-android-0.73.2-debug/res/values-ps/values-ps.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8",
                         "startColumns": "4,4,4,4,4,4,4",

@@ -4,7 +4,7 @@
             "outputFile": "com.besseri.app-mergeDebugResources-104:/values-small-v4/values-small-v4.xml",
             "map": [
                 {
-                    "source": "/Users/mario-dev/.gradle/caches/transforms-3/0d65a7b76fc2ca48ae05fb0f3e2ac313/transformed/material-1.11.0/res/values-small-v4/values-small-v4.xml",
+                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/0d65a7b76fc2ca48ae05fb0f3e2ac313/transformed/material-1.11.0/res/values-small-v4/values-small-v4.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",

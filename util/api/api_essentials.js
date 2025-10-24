@@ -1,8 +1,8 @@
-export const env = 'dev';
+export const env = 'prod';
 
 export const base_url =   env === 'prod' ? 'https://api.besser-auto.app'  
-                        : env === 'dev' ?  'https://018976333f8c.ngrok-free.app' 
-                        : 'https://018976333f8c.ngrok-free.app';
+                        : env === 'dev' ?  'https://21cc8e0de010.ngrok-free.app' 
+                        : 'https://eed9ec7cc83f.ngrok-free.app';
 
 export const api_urls = {
     registration:`${base_url}/user/signup`,
@@ -122,6 +122,10 @@ export const customer_api_urls = {
     search_api:`${base_url}/products/search-api`,
     search_or_quote:`${base_url}/products/search-or-quote`,
     my_quote:`${base_url}/products/get-my-quote`,
+    detail_quote:`${base_url}/products/get-detail-quote`,
+    quote_recived:`${base_url}/products/quote-customer`,
+    create_product_quote:`${base_url}/products/create-product-quote`,
+    
     create_payment_sheet:`${base_url}/payments/payment-sheet`,
     
     get_fees:`${base_url}/admin/get-fee`,

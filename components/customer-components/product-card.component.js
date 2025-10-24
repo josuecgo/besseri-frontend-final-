@@ -60,14 +60,29 @@ const ProductCardComponent = ({
       <View style={{ marginVertical: 10 }} >
 
         <HStack space={2} justifyContent={'space-around'} alignItems={'center'} >
-          <Image
-            source={{ uri: `${base_url}/${data?.productImg}` }}
-            style={{
-              width: deviceWidth * 0.25,
-              height: deviceWidth * 0.25
-            }}
-            resizeMode='cover'
-          />
+          {
+            data?.productImg ? (
+              <Image
+                source={{ uri: `${base_url}/${data?.productImg}` }}
+                style={{
+                  width: deviceWidth * 0.25,
+                  height: deviceWidth * 0.25
+                }}
+                resizeMode='cover'
+              />
+            ):(
+                <Image
+                source={require('../../assets/images/newLogo.png')}
+                style={{
+                  width: deviceWidth * 0.25,
+                  height: deviceWidth * 0.25,
+                  backgroundColor:'black'
+                }}
+                resizeMode='contain'
+              />
+            )
+          }
+          
           <Box flexWrap="wrap" alignItems="center" maxWidth={deviceWidth * 0.3}>
             <Text  numberOfLines={2}  style={[CommonStyles.h3,{color:Colors.black}]}>{data?.name}</Text>
             <Text  numberOfLines={2}  style={[CommonStyles.h3,{color:Colors.black,textTransform:'uppercase'}]}>{data?.brand?.name}</Text>

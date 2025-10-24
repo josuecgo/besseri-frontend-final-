@@ -15,7 +15,7 @@ import { getUser } from '../../../util/local-storage/auth_service';
 
 
 
-export const QuoteFormScreen = () => {
+export const QuoteFormScreen = ({navigation}) => {
   const [formData, setFormData] = useState({
     category: '',
     subCategory: '',
@@ -82,11 +82,14 @@ const {  addresses,marcaValue,modeloValue,yearValue } = useSelector(state => sta
     }
   };
 
+  
+  
   const handleSubmit = async() => {
     try {
 
       setIsLoading(true)
-      const findAddress = addresses[formData.addressId - 1]
+      const findAddress = typeof formData.addressId === 'number' ?  addresses[formData.addressId - 1]  : addresses.find(address => address._id === formData.addressId);
+
       const user = await getUser();
 
        if (Object.values(formData).some(value => value === '') || !marcaValue || !modeloValue || !yearValue) {
@@ -106,12 +109,13 @@ const {  addresses,marcaValue,modeloValue,yearValue } = useSelector(state => sta
       }
 
 
+
       const url = `${customer_api_urls.search_or_quote}`;
       const apiCall = await axios.post(url,data)
 
       if (apiCall) {
        showToaster('Solicitud de cotización enviada correctamente')
-       
+       navigation.goBack()
        setFormData({
          category: '',
           subCategory: '',
@@ -122,6 +126,8 @@ const {  addresses,marcaValue,modeloValue,yearValue } = useSelector(state => sta
       
        setIsLoading(false)
     } catch (error) {
+      console.log(error);
+      
        showToaster('Error al enviar la solicitud de cotización')
        setIsLoading(false)
       

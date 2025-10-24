@@ -4,24 +4,7 @@
             "outputFile": "com.besseri.app-mergeDebugResources-104:/values-sr/values-sr.xml",
             "map": [
                 {
-                    "source": "/Users/mario-dev/.gradle/caches/transforms-3/96cfd11d0787b7e206ba5ac173c6951b/transformed/core-1.12.0/res/values-sr/values-sr.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,153,255,352,456,560,665,781",
-                        "endColumns": "97,101,96,103,103,104,115,100",
-                        "endOffsets": "148,250,347,451,555,660,776,877"
-                    },
-                    "to": {
-                        "startLines": "40,41,42,43,44,45,46,173",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "3605,3703,3805,3902,4006,4110,4215,15339",
-                        "endColumns": "97,101,96,103,103,104,115,100",
-                        "endOffsets": "3698,3800,3897,4001,4105,4210,4326,15435"
-                    }
-                },
-                {
-                    "source": "/Users/mario-dev/.gradle/caches/transforms-3/56e06eb9195213d05a6e15eb53816247/transformed/appcompat-1.6.1/res/values-sr/values-sr.xml",
+                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/56e06eb9195213d05a6e15eb53816247/transformed/appcompat-1.6.1/res/values-sr/values-sr.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -38,7 +21,24 @@
                     }
                 },
                 {
-                    "source": "/Users/mario-dev/.gradle/caches/transforms-3/9842f164587b9b309327d78171f452dd/transformed/jetified-play-services-wallet-19.3.0/res/values-sr/values.xml",
+                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/c201851c15fd55415da22ca660f211ad/transformed/jetified-hcaptcha-20.48.6/res/values-sr/values-sr.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "77",
+                        "endOffsets": "128"
+                    },
+                    "to": {
+                        "startLines": "174",
+                        "startColumns": "4",
+                        "startOffsets": "15440",
+                        "endColumns": "77",
+                        "endOffsets": "15513"
+                    }
+                },
+                {
+                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/9842f164587b9b309327d78171f452dd/transformed/jetified-play-services-wallet-19.3.0/res/values-sr/values.xml",
                     "from": {
                         "startLines": "4,5",
                         "startColumns": "0,0",
@@ -55,24 +55,109 @@
                     }
                 },
                 {
-                    "source": "/Users/mario-dev/.gradle/caches/transforms-3/57ab2f0c649a437d4f20b73c5227d000/transformed/jetified-play-services-basement-18.3.0/res/values-sr/values.xml",
+                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/441fff5d3d7874e2acd9d63ab14dc173/transformed/jetified-material3-1.0.1/res/values-sr/values-sr.xml",
                     "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "195",
-                        "endColumns": "125",
-                        "endOffsets": "320"
+                        "startLines": "2,3,4",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,135,208",
+                        "endColumns": "79,72,79",
+                        "endOffsets": "130,203,283"
                     },
                     "to": {
-                        "startLines": "64",
-                        "startColumns": "4",
-                        "startOffsets": "6177",
-                        "endColumns": "129",
-                        "endOffsets": "6302"
+                        "startLines": "54,77,80",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "5021,7663,7888",
+                        "endColumns": "79,72,79",
+                        "endOffsets": "5096,7731,7963"
                     }
                 },
                 {
-                    "source": "/Users/mario-dev/.gradle/caches/transforms-3/0d65a7b76fc2ca48ae05fb0f3e2ac313/transformed/material-1.11.0/res/values-sr/values-sr.xml",
+                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/40d20c5853981a6afdeb59ae11366de2/transformed/jetified-react-android-0.73.2-debug/res/values-sr/values-sr.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,129,239,329,412,485,554,636,703,770,852,935,1023,1106,1178,1263,1349,1425,1507,1589,1665,1742,1817,1905,1977,2056,2126",
+                        "endColumns": "73,109,89,82,72,68,81,66,66,81,82,87,82,71,84,85,75,81,81,75,76,74,87,71,78,69,82",
+                        "endOffsets": "124,234,324,407,480,549,631,698,765,847,930,1018,1101,1173,1258,1344,1420,1502,1584,1660,1737,1812,1900,1972,2051,2121,2204"
+                    },
+                    "to": {
+                        "startLines": "34,47,48,55,86,88,89,93,107,108,109,157,158,161,162,165,166,167,168,169,170,171,172,175,178,180,181",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "3099,4331,4441,5101,8432,8573,8642,8955,9977,10044,10126,14044,14132,14380,14452,14697,14783,14859,14941,15023,15099,15176,15251,15518,15739,15936,16006",
+                        "endColumns": "73,109,89,82,72,68,81,66,66,81,82,87,82,71,84,85,75,81,81,75,76,74,87,71,78,69,82",
+                        "endOffsets": "3168,4436,4526,5179,8500,8637,8719,9017,10039,10121,10204,14127,14210,14447,14532,14778,14854,14936,15018,15094,15171,15246,15334,15585,15813,16001,16084"
+                    }
+                },
+                {
+                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/c35b0a8229b8d526329d4e4811b58f99/transformed/browser-1.7.0/res/values-sr/values-sr.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,166,266,379",
+                        "endColumns": "110,99,112,97",
+                        "endOffsets": "161,261,374,472"
+                    },
+                    "to": {
+                        "startLines": "74,82,83,84",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "7354,8060,8160,8273",
+                        "endColumns": "110,99,112,97",
+                        "endOffsets": "7460,8155,8268,8366"
+                    }
+                },
+                {
+                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/8f99f7562da53a5f2f64b1db45314fd8/transformed/jetified-ui-release/res/values-sr/values-sr.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,202,289,386,487,573,650,741,833,918,989,1059,1139,1224,1297,1376,1446",
+                        "endColumns": "96,86,96,100,85,76,90,91,84,70,69,79,84,72,78,69,117",
+                        "endOffsets": "197,284,381,482,568,645,736,828,913,984,1054,1134,1219,1292,1371,1441,1559"
+                    },
+                    "to": {
+                        "startLines": "52,53,75,76,78,90,91,152,153,154,155,159,160,164,176,177,179",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "4837,4934,7465,7562,7736,8724,8801,13646,13738,13823,13894,14215,14295,14624,15590,15669,15818",
+                        "endColumns": "96,86,96,100,85,76,90,91,84,70,69,79,84,72,78,69,117",
+                        "endOffsets": "4929,5016,7557,7658,7817,8796,8887,13733,13818,13889,13959,14290,14375,14692,15664,15734,15931"
+                    }
+                },
+                {
+                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/638ebc24aa8d7ab801ee442f74050b84/transformed/jetified-play-services-base-18.3.0/res/values-sr/values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
+                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
+                        "startOffsets": "193,295,447,569,675,825,948,1056,1154,1299,1402,1558,1681,1826,1964,2028,2089",
+                        "endColumns": "101,151,121,105,149,122,107,97,144,102,155,122,144,137,63,60,75",
+                        "endOffsets": "294,446,568,674,824,947,1055,1153,1298,1401,1557,1680,1825,1963,2027,2088,2164"
+                    },
+                    "to": {
+                        "startLines": "56,57,58,59,60,61,62,63,65,66,67,68,69,70,71,72,73",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "5184,5290,5446,5572,5682,5836,5963,6075,6307,6456,6563,6723,6850,6999,7141,7209,7274",
+                        "endColumns": "105,155,125,109,153,126,111,101,148,106,159,126,148,141,67,64,79",
+                        "endOffsets": "5285,5441,5567,5677,5831,5958,6070,6172,6451,6558,6718,6845,6994,7136,7204,7269,7349"
+                    }
+                },
+                {
+                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/96cfd11d0787b7e206ba5ac173c6951b/transformed/core-1.12.0/res/values-sr/values-sr.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,153,255,352,456,560,665,781",
+                        "endColumns": "97,101,96,103,103,104,115,100",
+                        "endOffsets": "148,250,347,451,555,660,776,877"
+                    },
+                    "to": {
+                        "startLines": "40,41,42,43,44,45,46,173",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "3605,3703,3805,3902,4006,4110,4215,15339",
+                        "endColumns": "97,101,96,103,103,104,115,100",
+                        "endOffsets": "3698,3800,3897,4001,4105,4210,4326,15435"
+                    }
+                },
+                {
+                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/0d65a7b76fc2ca48ae05fb0f3e2ac313/transformed/material-1.11.0/res/values-sr/values-sr.xml",
                     "from": {
                         "startLines": "2,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -91,105 +176,20 @@
                     }
                 },
                 {
-                    "source": "/Users/mario-dev/.gradle/caches/transforms-3/8f99f7562da53a5f2f64b1db45314fd8/transformed/jetified-ui-release/res/values-sr/values-sr.xml",
+                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/57ab2f0c649a437d4f20b73c5227d000/transformed/jetified-play-services-basement-18.3.0/res/values-sr/values.xml",
                     "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,202,289,386,487,573,650,741,833,918,989,1059,1139,1224,1297,1376,1446",
-                        "endColumns": "96,86,96,100,85,76,90,91,84,70,69,79,84,72,78,69,117",
-                        "endOffsets": "197,284,381,482,568,645,736,828,913,984,1054,1134,1219,1292,1371,1441,1559"
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "195",
+                        "endColumns": "125",
+                        "endOffsets": "320"
                     },
                     "to": {
-                        "startLines": "52,53,75,76,78,90,91,152,153,154,155,159,160,164,176,177,179",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "4837,4934,7465,7562,7736,8724,8801,13646,13738,13823,13894,14215,14295,14624,15590,15669,15818",
-                        "endColumns": "96,86,96,100,85,76,90,91,84,70,69,79,84,72,78,69,117",
-                        "endOffsets": "4929,5016,7557,7658,7817,8796,8887,13733,13818,13889,13959,14290,14375,14692,15664,15734,15931"
-                    }
-                },
-                {
-                    "source": "/Users/mario-dev/.gradle/caches/transforms-3/441fff5d3d7874e2acd9d63ab14dc173/transformed/jetified-material3-1.0.1/res/values-sr/values-sr.xml",
-                    "from": {
-                        "startLines": "2,3,4",
-                        "startColumns": "4,4,4",
-                        "startOffsets": "55,135,208",
-                        "endColumns": "79,72,79",
-                        "endOffsets": "130,203,283"
-                    },
-                    "to": {
-                        "startLines": "54,77,80",
-                        "startColumns": "4,4,4",
-                        "startOffsets": "5021,7663,7888",
-                        "endColumns": "79,72,79",
-                        "endOffsets": "5096,7731,7963"
-                    }
-                },
-                {
-                    "source": "/Users/mario-dev/.gradle/caches/transforms-3/40d20c5853981a6afdeb59ae11366de2/transformed/jetified-react-android-0.73.2-debug/res/values-sr/values-sr.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,129,239,329,412,485,554,636,703,770,852,935,1023,1106,1178,1263,1349,1425,1507,1589,1665,1742,1817,1905,1977,2056,2126",
-                        "endColumns": "73,109,89,82,72,68,81,66,66,81,82,87,82,71,84,85,75,81,81,75,76,74,87,71,78,69,82",
-                        "endOffsets": "124,234,324,407,480,549,631,698,765,847,930,1018,1101,1173,1258,1344,1420,1502,1584,1660,1737,1812,1900,1972,2051,2121,2204"
-                    },
-                    "to": {
-                        "startLines": "34,47,48,55,86,88,89,93,107,108,109,157,158,161,162,165,166,167,168,169,170,171,172,175,178,180,181",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "3099,4331,4441,5101,8432,8573,8642,8955,9977,10044,10126,14044,14132,14380,14452,14697,14783,14859,14941,15023,15099,15176,15251,15518,15739,15936,16006",
-                        "endColumns": "73,109,89,82,72,68,81,66,66,81,82,87,82,71,84,85,75,81,81,75,76,74,87,71,78,69,82",
-                        "endOffsets": "3168,4436,4526,5179,8500,8637,8719,9017,10039,10121,10204,14127,14210,14447,14532,14778,14854,14936,15018,15094,15171,15246,15334,15585,15813,16001,16084"
-                    }
-                },
-                {
-                    "source": "/Users/mario-dev/.gradle/caches/transforms-3/c201851c15fd55415da22ca660f211ad/transformed/jetified-hcaptcha-20.48.6/res/values-sr/values-sr.xml",
-                    "from": {
-                        "startLines": "2",
+                        "startLines": "64",
                         "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "77",
-                        "endOffsets": "128"
-                    },
-                    "to": {
-                        "startLines": "174",
-                        "startColumns": "4",
-                        "startOffsets": "15440",
-                        "endColumns": "77",
-                        "endOffsets": "15513"
-                    }
-                },
-                {
-                    "source": "/Users/mario-dev/.gradle/caches/transforms-3/638ebc24aa8d7ab801ee442f74050b84/transformed/jetified-play-services-base-18.3.0/res/values-sr/values.xml",
-                    "from": {
-                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
-                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
-                        "startOffsets": "193,295,447,569,675,825,948,1056,1154,1299,1402,1558,1681,1826,1964,2028,2089",
-                        "endColumns": "101,151,121,105,149,122,107,97,144,102,155,122,144,137,63,60,75",
-                        "endOffsets": "294,446,568,674,824,947,1055,1153,1298,1401,1557,1680,1825,1963,2027,2088,2164"
-                    },
-                    "to": {
-                        "startLines": "56,57,58,59,60,61,62,63,65,66,67,68,69,70,71,72,73",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "5184,5290,5446,5572,5682,5836,5963,6075,6307,6456,6563,6723,6850,6999,7141,7209,7274",
-                        "endColumns": "105,155,125,109,153,126,111,101,148,106,159,126,148,141,67,64,79",
-                        "endOffsets": "5285,5441,5567,5677,5831,5958,6070,6172,6451,6558,6718,6845,6994,7136,7204,7269,7349"
-                    }
-                },
-                {
-                    "source": "/Users/mario-dev/.gradle/caches/transforms-3/c35b0a8229b8d526329d4e4811b58f99/transformed/browser-1.7.0/res/values-sr/values-sr.xml",
-                    "from": {
-                        "startLines": "2,3,4,5",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "55,166,266,379",
-                        "endColumns": "110,99,112,97",
-                        "endOffsets": "161,261,374,472"
-                    },
-                    "to": {
-                        "startLines": "74,82,83,84",
-                        "startColumns": "4,4,4,4",
-                        "startOffsets": "7354,8060,8160,8273",
-                        "endColumns": "110,99,112,97",
-                        "endOffsets": "7460,8155,8268,8366"
+                        "startOffsets": "6177",
+                        "endColumns": "129",
+                        "endOffsets": "6302"
                     }
                 }
             ]

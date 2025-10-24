@@ -1,19 +1,15 @@
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Box, Text, Pressable, Icon, HStack, Avatar, VStack, Spacer, ScrollView, Divider } from 'native-base';
-import { SwipeListView } from 'react-native-swipe-list-view';
-import { useState } from 'react';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Box, Text,Divider } from 'native-base';
+
 import CommonStyles from '../../../util/styles/styles';
-import Colors from '../../../util/styles/colors';
 import { useInfoUser } from '../../../hooks/useInfoUsers';
 import axios from 'axios';
 import { api_urls } from '../../../util/api/api_essentials';
-import { BOTTOM_TAB_CUSTOMER_ROUTES, CUSTOMER_HOME_SCREEN_ROUTES } from '../../../util/constants';
+import {  BOTTOM_TAB_CUSTOMER_ROUTES, CUSTOMER_HOME_SCREEN_ROUTES } from '../../../util/constants';
 import { NotificationEmpty } from '../../../components/NotificationEmpty';
-import { useEffect } from 'react';
-import { useIsFocused } from '@react-navigation/native';
+
 import { HeaderTitle } from '../../../components/Customer/HeaderTitle';
 
 
@@ -24,20 +20,23 @@ export const NotificationScreen = (props) => {
  
 
   const orderDetail = async(data,item) => {
-   
-  
+
     
     if (item?.type === 'preregistro') {
       props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.NEWS,item)
-    }else{
+    } else if (item?.type === 'quotation'){
+      props.navigation.navigate(BOTTOM_TAB_CUSTOMER_ROUTES.ACCOUNT, {
+        screen: CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_DETAIL_QUOTE,
+        params: { quoteId: data?._id }
+      });
+    } else{
       getPedidosUser()
       props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.DETALLE,data)
      
     }
 
     if (!item?.isView)  {
-        viewItem(item._id);
-        
+      viewItem(item._id); 
     }
   }
 
@@ -59,6 +58,8 @@ export const NotificationScreen = (props) => {
     item,
     index
   }) => {
+    
+    
     return (
       <Box py={'2'}  >
       <TouchableOpacity onPress={() => orderDetail(item?.body,item)}>

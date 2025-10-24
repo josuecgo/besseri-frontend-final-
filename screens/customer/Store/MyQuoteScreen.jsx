@@ -6,8 +6,9 @@ import axios from 'axios'
 import { HStack } from 'native-base'
 import Colors from '../../../util/styles/colors'
 import moment from 'moment'
+import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../../util/constants'
 
-export const MyQuoteScreen = () => {
+export const MyQuoteScreen = ({ navigation }) => {
     const [quotes, setQuotes] = useState([])
 
 
@@ -29,7 +30,7 @@ export const MyQuoteScreen = () => {
 
 
     const formatDate = (dateString) => {
-         const momentDate = moment(dateString);
+        const momentDate = moment(dateString);
 
 
         const formattedDate = momentDate.format('D [de] MMMM [de] YYYY'); // Ejemplo: 25 de Agosto de 2025
@@ -39,18 +40,23 @@ export const MyQuoteScreen = () => {
     }
 
 
+    const goDetailQuote = (item) => {
+
+        navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_DETAIL_QUOTE, { quoteId: item._id })
+    }
+
+
     useEffect(() => {
         getMyQuotes()
     }, [])
 
     return (
-        <View>
-
+        <View style={styles.container} >
             <FlatList
                 data={quotes}
                 keyExtractor={item => item._id}
                 renderItem={({ item }) => (
-                    <View style={styles.card}>
+                    <Pressable onPress={() => goDetailQuote(item)} style={styles.card}>
                         <HStack
                             justifyContent="space-evenly"
                             borderBottomWidth={1}
@@ -59,22 +65,22 @@ export const MyQuoteScreen = () => {
                             <Text style={styles.label}>{item?.model?.name}</Text>
                             <Text style={styles.label}>{item?.year}</Text>
                         </HStack>
-                        <HStack justifyContent="space-evenly"  mt={2} mb={2} >
+                        <HStack justifyContent="space-evenly" mt={2} mb={2} >
                             <Text style={styles.label}>{item?.category?.name}</Text>
                             <Text style={styles.label}>{item?.subCategory?.name}</Text>
                         </HStack>
                         <HStack justifyContent={'space-between'} alignItems={'center'}  >
 
-                            
+
                             <Text style={styles.label} >{formatDate(item.createdAt)}</Text>
                             <View style={styles.status} >
                                 <Text style={styles.textStatus} >{item?.status}</Text>
                             </View>
-                           
-                                
-                            
+
+
+
                         </HStack>
-                    </View>
+                    </Pressable>
                 )}
             />
         </View>
@@ -84,6 +90,10 @@ export const MyQuoteScreen = () => {
 
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: Colors.white,
+        flex: 1
+    },
 
     label: {
         color: Colors.bgColor,
@@ -94,18 +104,18 @@ const styles = StyleSheet.create({
         margin: 10,
         borderColor: Colors.bgColor,
         borderWidth: 1,
-       
+
     },
-    status:{
-        backgroundColor:Colors.brightBlue,
-        paddingVertical:5,
-        paddingHorizontal:20,
-        borderRadius:15,
+    status: {
+        backgroundColor: Colors.brightBlue,
+        paddingVertical: 5,
+        paddingHorizontal: 20,
+        borderRadius: 15,
     },
-    textStatus:{
-        color:Colors.white,
-        fontWeight:'bold',
-        textTransform:'capitalize'
+    textStatus: {
+        color: Colors.white,
+        fontWeight: 'bold',
+        textTransform: 'capitalize'
     }
 
 })

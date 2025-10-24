@@ -74,6 +74,10 @@ export const useInfoUser = () => {
         if (myAddresses.length > 0) {
           dispatch(addAddressToUser(myAddresses));
           await saveAdressCustomer(myAddresses);
+          if (myAddresses.length === 0 && myAddresses[0]._id) {
+            await dispatch(addDefaultAddressToUser(myAddresses[0]._id))
+          }
+          
 
           return myAddresses;
         }else{

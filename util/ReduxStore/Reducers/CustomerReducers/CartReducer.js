@@ -16,6 +16,10 @@ export default (state = initialState, action) => {
     switch (action.type) {
 
         case ADD_ITEM_TO_CART:
+
+            
+            
+            
             const businessId = action?.data?.business_id?._id;
             const cart_items = state.cart_items.concat(action.data)
             const cart_items_ids = state.cart_items_ids.concat(action.data?._id)
@@ -38,7 +42,7 @@ export default (state = initialState, action) => {
 
                 updatedCartsBySeller = state.carts_by_seller.map((seller, index) => {
                     if (index === existVendorIndex) {
-                        console.log(seller, 'seller');
+                      
 
                         return {
                             ...seller,

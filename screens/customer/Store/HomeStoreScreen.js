@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { TouchableOpacity, View, StyleSheet, FlatList, ActivityIndicator, Alert } from 'react-native';
 
-import {  Center,  Fab,  Text, } from 'native-base';
+import { Center, Fab, Text, } from 'native-base';
 
 import Colors from '../../../util/styles/colors';
 import CommonStyles from '../../../util/styles/styles';
 
-import {CUSTOMER_HOME_SCREEN_ROUTES, MAIN_ROUTES, showToaster } from '../../../util/constants';
+import { CUSTOMER_HOME_SCREEN_ROUTES, MAIN_ROUTES, showToaster } from '../../../util/constants';
 import ProductListing from '../../../components/customer-components/ProductsListing.component';
 import { adjust, deviceHeight, deviceWidth } from '../../../util/Dimentions';
 
@@ -22,6 +22,7 @@ import { useLocation } from '../../../hooks/useLocation';
 import { SelectCar } from '../../../components/Customer/SelectCar';
 import HeaderStore from '../../../components/Customer/HeaderStore';
 import { useIsFocused } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
 
@@ -31,10 +32,10 @@ const HomeStoreScreen = (props) => {
   const {
     categorias, activeCategory, activarCategoria,
     comision,
-    loading,  productos, isLoading, getProducts,
+    loading, productos, isLoading, getProducts,
   } = useContext(ProductContext);
   const [addresses, setAddresses] = useState(null)
-  const { carActive, address,marcaValue,modeloValue,yearValue,user } = useSelector(state => state.user);
+  const { carActive, address, marcaValue, modeloValue, yearValue, user } = useSelector(state => state.user);
   const direccionStore = useSelector(state => state.user.addresses);
   const [defaultAddress, setDefaultAddress] = useState(address?._id ?? 1)
   const dispatch = useDispatch()
@@ -43,26 +44,27 @@ const HomeStoreScreen = (props) => {
   const { addItemToCart } = useCart()
   const { getLocationHook } = useLocation()
   const focused = useIsFocused()
+  const {bottom} = useSafeAreaInsets()
 
- 
- 
-  const goQuoteForm = async() => {
-     const user = await getUser()
+
+
+  const goQuoteForm = async () => {
+    const user = await getUser()
     if (user) {
       props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.QUOTE_FORM_SCREEN)
     } else {
       Alert.alert('No has iniciado sesión', 'Inicia sesión o regístrate', [
-               {
-                 text: 'Cancelar',
-                 onPress: () => {},
-                 style: 'cancel',
-               },
-               { text: 'Crear', onPress: () => props.navigation.navigate(MAIN_ROUTES.AUTH_STACK) },
-             ]);
-    } 
+        {
+          text: 'Cancelar',
+          onPress: () => { },
+          style: 'cancel',
+        },
+        { text: 'Crear', onPress: () => props.navigation.navigate(MAIN_ROUTES.AUTH_STACK) },
+      ]);
+    }
   }
- 
-  
+
+
   const CategoryButton = ({ category, onPress }) => {
 
     return (
@@ -101,7 +103,7 @@ const HomeStoreScreen = (props) => {
               category={item}
               products={item}
               comision={comision}
-            
+
               dispatch={dispatch}
               cartProductIds={cartProductIds}
               addItemToCart={addItemToCart}
@@ -115,7 +117,7 @@ const HomeStoreScreen = (props) => {
   }
 
 
-  
+
 
 
   const renderItemCategorias = ({ item }) => (
@@ -133,68 +135,68 @@ const HomeStoreScreen = (props) => {
 
   const memorizedValueCategoria = useMemo(() => renderItemCategorias, [categorias, activeCategory]);
 
-  
+
 
 
   useEffect(() => {
     if (focused && direccionStore.length === 0) {
-      
-      
+
+
       getLocationHook()
     }
-    
-}, [focused,direccionStore]);
-   
- 
 
- 
-  
+  }, [focused, direccionStore]);
+
+
+
+
+
   useEffect(() => {
     let isMounted = true;
 
     const fetchData = async () => {
       try {
         if (isMounted) {
-         
-          
+
+
           if (!addresses && !direccionStore) return;
-        
-          
-          const address = direccionStore[defaultAddress - 1] ||  direccionStore.find(item => item?._id === defaultAddress)
+
+
+          const address = direccionStore[defaultAddress - 1] || direccionStore.find(item => item?._id === defaultAddress)
 
           const car = carActive ? carActive : {
-            maker: {_id:marcaValue},
-            model:{_id:modeloValue},
-            year:yearValue
-          } 
+            maker: { _id: marcaValue },
+            model: { _id: modeloValue },
+            year: yearValue
+          }
 
           // console.log(car,'car');
-          
+
 
           await getProducts(activeCategory, car, address);
         }
       } catch (error) {
-    
-        
+
+
         showToaster('Algo salió mal. Por favor, vuelva a intentarlo code: 3');
       }
     };
 
-    if (activeCategory  && defaultAddress && direccionStore && !isLoading) {
+    if (activeCategory && defaultAddress && direccionStore && !isLoading) {
       fetchData(); // Llamar a la función asíncrona
     }
 
     return () => {
       isMounted = false; // Cleanup
     };
-  }, [activeCategory,  defaultAddress, direccionStore,marcaValue,modeloValue,yearValue,carActive]);
+  }, [activeCategory, defaultAddress, direccionStore, marcaValue, modeloValue, yearValue, carActive]);
 
-  
 
-  
-    
 
-  
+
+
+
+
 
   return (
     <View style={{
@@ -224,15 +226,15 @@ const HomeStoreScreen = (props) => {
         </View>
 
         {
-          user?.role !== 'client' && ( 
-            <SelectCar/>
+          user?.role !== 'client' && (
+            <SelectCar />
           )
         }
-       
-       
-        
+
+
+
         <View style={{ marginTop: 0 }}>
-        
+
           {
             comision && !isLoading
               ?
@@ -250,7 +252,7 @@ const HomeStoreScreen = (props) => {
 
                     refreshing={loading}
                     ListEmptyComponent={() => <Center>
-                      <ListEmpty msg={direccionStore.length <= 0 ? 'Necesitas agregar tu dirección' :'No hay productos para tu vehiculo'} />
+                      <ListEmpty msg={direccionStore.length <= 0 ? 'Necesitas agregar tu dirección' : 'No hay productos para tu vehiculo'} />
                     </Center>
                     }
                   />
@@ -258,7 +260,7 @@ const HomeStoreScreen = (props) => {
 
 
               ) : !addresses && isLoading ? (
-              <ServiceSkeleton />
+                <ServiceSkeleton />
               ) : (
                 <View
                   style={{
@@ -271,17 +273,18 @@ const HomeStoreScreen = (props) => {
               )
           }
 
- {focused && (
- <Fab 
-          label="¿No esta el producto?" 
-          size='sm'
-          marginBottom={70}
-          onPress={goQuoteForm} 
-          backgroundColor={Colors.primarySolid}
-          />
- )
-}
-         
+          {focused && (
+            <Fab
+              label="COTIZAR"
+              size='lg'
+              marginBottom={79}
+
+              onPress={goQuoteForm}
+              backgroundColor={Colors.primarySolid}
+            />
+          )
+          }
+
           <View style={{ height: deviceWidth * 0.05, width: deviceWidth, marginVertical: 30 }} />
         </View>
       </View>
@@ -294,13 +297,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 13,
     backgroundColor: Colors.white,
     ...CommonStyles.flexCenter,
-
-    // margin: 5,
-    // borderRadius: 100,
-    // paddingHorizontal: 15
-    // elevation:2,
-    // width:50,
-    // height:50
   },
   categoryButtonText: {
 

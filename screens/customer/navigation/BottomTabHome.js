@@ -45,6 +45,7 @@ import { useInfoUser } from '../../../hooks/useInfoUsers';
 import { useIsFocused } from '@react-navigation/native';
 import { QuoteFormScreen } from '../Store/QuoteFormScreen';
 import { MyQuoteScreen } from '../Store/MyQuoteScreen';
+import { MyQuoteDetailScreen } from '../Store/MyQuoteDetailScreen';
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -507,14 +508,28 @@ export const CustomerAccountStack = () => {
         }}
       />
 
-       <Stack.Screen
+      <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_MY_QUOTE}
         component={MyQuoteScreen}
         options={{
           headerShown: true,
           header: props => (
-            <HeaderPedidos {...props}
+            <HeaderTitle {...props}
               titulo="Mis cotizaciones"
+              nav={props.navigation.goBack}
+            />
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_DETAIL_QUOTE}
+        component={MyQuoteDetailScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderPedidos {...props}
+              titulo="Cotizacion"
               nav={props.navigation}
             />
           ),
