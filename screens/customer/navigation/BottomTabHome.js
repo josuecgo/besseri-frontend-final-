@@ -256,10 +256,11 @@ export const CustomerHomeStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName={user?.role === 'client' ? CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS : CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES}
+      // initialRouteName={user?.role === 'client' ? CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS : CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES}
+      
     >
       {
-        user?.role === 'client' && user && (
+        user?.role === 'client' || !user && (
           <Stack.Screen
             name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS}
             component={HomeScreen}
@@ -270,8 +271,10 @@ export const CustomerHomeStack = () => {
               ),
             }}
           />
-        )
-      }
+       )
+      } 
+
+
 
 
 

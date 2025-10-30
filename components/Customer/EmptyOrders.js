@@ -1,12 +1,17 @@
 import { Image, Platform, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import CommonStyles from '../../util/styles/styles'
-import Colors from '../../util/styles/colors'
-import ButtonComponent from '../button/button.component'
+
 import { deviceHeight, deviceWidth } from '../../util/Dimentions'
-import { CUSTOMER_HOME_SCREEN_ROUTES } from '../../util/constants'
+
+import { useSelector } from 'react-redux'
+import ButtonComponent from '../button/button.component'
+import Colors from '../../util/styles/colors'
 
 export const EmptyOrders = ({navigation}) => {
+  const {user} = useSelector(state => state.user)
+  const title = user?.role === 'mechanic' ? 'No tienes pedido' : 'No tienes servcios'
+  const subtitle = user?.role === 'mechanic' ? 'Agregue artículos al carrito y haga su pedido ahora' : ''
   return (
     <View style={{ ...CommonStyles.flexOneCenter }}>
       <Image
@@ -14,8 +19,8 @@ export const EmptyOrders = ({navigation}) => {
         style={{ width: 200, height: 200, resizeMode: 'contain', bottom: 40 }}
       />
       <View style={[styles.placeOrderWrapper, { deviceWidth }]}>
-        <Text style={styles.placeOrderText}>Realizar pedido</Text>
-        <Text style={styles.placeOrderTextDetail}>Agregue artículos al carrito y haga su pedido ahora!</Text>
+        <Text style={styles.placeOrderText}>{title}</Text>
+        <Text style={styles.placeOrderTextDetail}>{subtitle}</Text>
         <ButtonComponent
           buttonText={'Explore'}
           colorB={Colors.primarySolid}

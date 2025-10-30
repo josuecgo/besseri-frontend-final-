@@ -120,10 +120,15 @@ export const AccountScreen = (props) => {
             onPress={() =>  props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_PEDIDOS)}
             />
 
-             <BtnPrincipal
-            text={'Mis cotizaciones'}
-            onPress={() =>  props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_MY_QUOTE)}
-            />
+            {
+              user?.role === 'mechanic' && (
+                <BtnPrincipal
+                text={'Mis cotizaciones'}
+                onPress={() =>  props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_MY_QUOTE)}
+                />
+              )
+            }
+             
            </>
           )
         }

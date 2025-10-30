@@ -42,8 +42,8 @@ export const SelectDropDownBtn = ({value,items,onChange,years = false}) => {
                 size={'2xl'}
             >
                 {
-                    items.map((item) => <Select.Item 
-                    key={item._id} 
+                    items.map((item,index) => <Select.Item 
+                    key={item?._id || index} 
                     label={item?.name} 
                     value={item._id} 
                     textTransform={'uppercase'}
@@ -80,7 +80,7 @@ export const SelectDropDownBtn = ({value,items,onChange,years = false}) => {
             >
               {
                 items.map((item, i) => <Select.Item 
-                key={item} 
+                key={i} 
                 label={item.toString()} 
                 value={item} />)
               }

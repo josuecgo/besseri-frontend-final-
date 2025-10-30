@@ -38,7 +38,8 @@ const OtpPasswordScreen = ({ navigation }) => {
     [CREDENTIAL_KEYS.PASSWORD]: '',
   });
 
-
+  console.log(route.params);
+  
 
   const onChangeText = (inputText, key) => {
 

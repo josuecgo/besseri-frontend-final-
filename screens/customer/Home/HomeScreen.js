@@ -70,42 +70,48 @@ export const HomeScreen = ({ navigation }) => {
 
         }
 
+        {
+          user?.role === 'mechanic' && (
         <ButtonService
           label={'Refacciones'}
           icono={require('../../../assets/images/home/refaccion.png')}
           onPress={() => {
 
-            if (!carActive) {
-              Alert.alert(
-                'Active un vehículo para ver los productos.',
-                '¿Ir a Mis Autos?',
-                [
-                  {
-                    text: 'Cancelar',
-                    style: 'cancel',
-                  },
-                  {
-                    text: 'Ir',
-                    onPress: () => {
-                      navigation.navigate(BOTTOM_TAB_CUSTOMER_ROUTES.ACCOUNT, {
-                      screen: CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_HOME,
-                      params: { goTo: CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_MY_CARS },
-                    });
+            // if (!carActive) {
+            //   Alert.alert(
+            //     'Active un vehículo para ver los productos.',
+            //     '¿Ir a Mis Autos?',
+            //     [
+            //       {
+            //         text: 'Cancelar',
+            //         style: 'cancel',
+            //       },
+            //       {
+            //         text: 'Ir',
+            //         onPress: () => {
+            //           navigation.navigate(BOTTOM_TAB_CUSTOMER_ROUTES.ACCOUNT, {
+            //           screen: CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_HOME,
+            //           params: { goTo: CUSTOMER_HOME_SCREEN_ROUTES.ACCOUNT_MY_CARS },
+            //         });
 
-                    },
-                  },
-                ],
-                { cancelable: true }
-              );
+            //         },
+            //       },
+            //     ],
+            //     { cancelable: true }
+            //   );
 
             
-              return
-            }
+            //   return
+            // }
             navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES)
 
           }}
           style={85}
         />
+          )
+        }
+
+        
 
         {
           user?.role !== 'mechanic' && (

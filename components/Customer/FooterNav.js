@@ -45,6 +45,7 @@ export const FooterNav = ({ state, navigation }) => {
     switch (route) {
       case BOTTOM_TAB_CUSTOMER_ROUTES.HOME_SCREEN:
 
+      
         return user?.role === 'client' ? CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS : CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES
       case BOTTOM_TAB_CUSTOMER_ROUTES.ACCOUNT:
 

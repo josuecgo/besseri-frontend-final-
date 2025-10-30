@@ -82,7 +82,7 @@ const SplashScreen = ({navigation,route}) => {
       await dispatch(addCarActiveToUser(carActive));
     }
 
-  
+   
     
     setTimeout(async() => {
       if (user_id && userType ) {
@@ -97,13 +97,15 @@ const SplashScreen = ({navigation,route}) => {
         }
       
       } else {
-       
-        if (addressCustomer && carActive ) {
 
-          navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
-        }else{
-          navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
-        }
+
+        navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
+        // if (addressCustomer && carActive ) {
+
+        //   navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
+        // }else{
+        //   navigation.replace(MAIN_ROUTES.CUSTOMER_HOME_STACK);
+        // }
        
       }
     }, 2200);

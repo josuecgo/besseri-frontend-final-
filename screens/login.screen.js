@@ -71,6 +71,7 @@ const LoginScreen = ({ navigation }) => {
 
       const apiCall = await axios.post(url, body);
 
+      
       if (apiCall?.status != api_statuses.success) {
         setShowLoader(false);
         showToaster(apiCall?.data?.info?.message ? apiCall?.data?.info?.message : 'Something went wrong');
