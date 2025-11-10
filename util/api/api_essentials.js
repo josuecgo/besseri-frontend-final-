@@ -1,7 +1,7 @@
-export const env = 'prod';
+export const env = 'dev';
 
 export const base_url =   env === 'prod' ? 'https://api.besser-auto.app'  
-                        : env === 'dev' ?  'https://21cc8e0de010.ngrok-free.app' 
+                        : env === 'dev' ?  'https://4fc276510696.ngrok-free.app' 
                         : 'https://eed9ec7cc83f.ngrok-free.app';
 
 export const api_urls = {

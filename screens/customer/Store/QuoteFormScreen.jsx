@@ -160,7 +160,7 @@ const {  addresses,marcaValue,modeloValue,yearValue } = useSelector(state => sta
     <View style={styles.container}>
       <Text style={styles.title}>Formulario de Cotización</Text>
 
- <Text style={styles.label}>Selecciona el vehiculo:</Text>
+      <Text style={styles.label}>Selecciona el vehiculo:</Text>
       <View style={{ marginBottom: 20,borderWidth:0.5,borderRadius:10 }}>
        
 
@@ -252,9 +252,10 @@ const {  addresses,marcaValue,modeloValue,yearValue } = useSelector(state => sta
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    paddingHorizontal:10
+    // flex: 1,
     // justifyContent: 'center',
-    padding: 20,
+    // padding: 20,
     // backgroundColor: '#000000ff',
   },
   title: {

@@ -23,6 +23,7 @@ import { SelectCar } from '../../../components/Customer/SelectCar';
 import HeaderStore from '../../../components/Customer/HeaderStore';
 import { useIsFocused } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { QuoteFormScreen } from './QuoteFormScreen';
 
 
 
@@ -193,7 +194,8 @@ const HomeStoreScreen = (props) => {
 
 
 
-
+  
+  
 
 
 
@@ -232,6 +234,7 @@ const HomeStoreScreen = (props) => {
         }
 
 
+       
 
         <View style={{ marginTop: 0 }}>
 
@@ -247,6 +250,7 @@ const HomeStoreScreen = (props) => {
                     contentContainerStyle={{ marginTop: 15 }}
                     numColumns={2} // Set the number of columns to 2
                     columnWrapperStyle={{ justifyContent: 'center' }}
+                    ListHeaderComponent={ <QuoteFormScreen navigation={props.navigation} />}
                     ListFooterComponent={<View style={{ width: '100%', marginBottom: 10, height: deviceHeight * 20 / 100 }} />}
                     showsVerticalScrollIndicator={false}
 
