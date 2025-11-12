@@ -45,25 +45,9 @@ const HomeStoreScreen = (props) => {
   const { addItemToCart } = useCart()
   const { getLocationHook } = useLocation()
   const focused = useIsFocused()
-  const {bottom} = useSafeAreaInsets()
 
 
 
-  const goQuoteForm = async () => {
-    const user = await getUser()
-    if (user) {
-      props.navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.QUOTE_FORM_SCREEN)
-    } else {
-      Alert.alert('No has iniciado sesión', 'Inicia sesión o regístrate', [
-        {
-          text: 'Cancelar',
-          onPress: () => { },
-          style: 'cancel',
-        },
-        { text: 'Crear', onPress: () => props.navigation.navigate(MAIN_ROUTES.AUTH_STACK) },
-      ]);
-    }
-  }
 
 
   const CategoryButton = ({ category, onPress }) => {
@@ -198,7 +182,8 @@ const HomeStoreScreen = (props) => {
   
 
 
-
+ 
+  
 
   return (
     <View style={{
@@ -250,7 +235,7 @@ const HomeStoreScreen = (props) => {
                     contentContainerStyle={{ marginTop: 15 }}
                     numColumns={2} // Set the number of columns to 2
                     columnWrapperStyle={{ justifyContent: 'center' }}
-                    ListHeaderComponent={ <QuoteFormScreen navigation={props.navigation} />}
+                    // ListHeaderComponent={ <QuoteFormScreen navigation={props.navigation} />}
                     ListFooterComponent={<View style={{ width: '100%', marginBottom: 10, height: deviceHeight * 20 / 100 }} />}
                     showsVerticalScrollIndicator={false}
 
@@ -277,7 +262,7 @@ const HomeStoreScreen = (props) => {
               )
           }
 
-          {focused && (
+          {/* {focused && (
             <Fab
               label="COTIZAR"
               size='lg'
@@ -287,7 +272,7 @@ const HomeStoreScreen = (props) => {
               backgroundColor={Colors.primarySolid}
             />
           )
-          }
+          } */}
 
           <View style={{ height: deviceWidth * 0.05, width: deviceWidth, marginVertical: 30 }} />
         </View>

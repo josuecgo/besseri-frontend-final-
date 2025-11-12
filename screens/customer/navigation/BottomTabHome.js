@@ -256,7 +256,7 @@ export const CustomerHomeStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      // initialRouteName={user?.role === 'client' ? CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS : CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES}
+      
       
     >
       {
@@ -275,7 +275,20 @@ export const CustomerHomeStack = () => {
       } 
 
 
-
+      <Stack.Screen
+        name={CUSTOMER_HOME_SCREEN_ROUTES.QUOTE_FORM_SCREEN}
+        component={QuoteFormScreen}
+        options={{
+          headerShown: true,
+          header: props => (
+            <HeaderStore {...props}
+              titulo="BESSER"
+              // nav={props.navigation.goBack}
+              tienda={true}
+            />
+          ),
+        }}
+      />
 
 
       <Stack.Screen
@@ -380,19 +393,7 @@ export const CustomerHomeStack = () => {
         }}
       />
 
-       <Stack.Screen
-        name={CUSTOMER_HOME_SCREEN_ROUTES.QUOTE_FORM_SCREEN}
-        component={QuoteFormScreen}
-        options={{
-          headerShown: true,
-          header: props => (
-            <HeaderTitle {...props}
-              titulo="Solictar cotizacion producto"
-              nav={props.navigation.goBack}
-            />
-          ),
-        }}
-      />
+       
 
     </Stack.Navigator>
   );

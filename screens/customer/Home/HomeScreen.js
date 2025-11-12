@@ -103,7 +103,7 @@ export const HomeScreen = ({ navigation }) => {
             
             //   return
             // }
-            navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_REFACCIONES)
+            navigation.navigate(CUSTOMER_HOME_SCREEN_ROUTES.QUOTE_FORM_SCREEN)
 
           }}
           style={85}
