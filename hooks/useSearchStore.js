@@ -74,23 +74,20 @@ export const useSearchStore = (  ) => {
       [],
     )
 
-    const getModelo = async (id) => {
-  
+    const getModelo = useCallback(
+    async (id) => {
         try {
             const apiCall = await axios.get(`${vendor_api_urls.get_models}/${id}`);
           
             if (apiCall?.status === 200) {
-
                 dispatch(getModelsCars(apiCall.data?.data))
-
-               
             }
         } catch (error) {
-           
            showToaster(error.response.data.message)
         }
-       
-    }
+    },
+    [dispatch] // Solo depende de dispatch, que es estable
+);
     
 
 

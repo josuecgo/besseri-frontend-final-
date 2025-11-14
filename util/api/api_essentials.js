@@ -1,7 +1,7 @@
 export const env = 'dev';
 
 export const base_url =   env === 'prod' ? 'https://api.besser-auto.app'  
-                        : env === 'dev' ?  'https://416290d5a427.ngrok-free.app' 
+                        : env === 'dev' ?  'https://d540737f3c4e.ngrok-free.app' 
                         : 'https://eed9ec7cc83f.ngrok-free.app';
 
 export const api_urls = {
@@ -97,7 +97,7 @@ export const customer_api_urls = {
     get_my_orders_pending:`${base_url}/orders/get-my-orders-pending`,
     
     get_category_products:`${base_url}/products/get-category-products`,
-
+    get_discounted_products:`${base_url}/products/discounted-products`,
     get_stores:`${base_url}/business/get-stores`,
     get_store_data:`${base_url}/business/get-store`,
     get_stores_type_services:`${base_url}/business/get-stores`,

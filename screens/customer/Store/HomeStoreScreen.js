@@ -85,10 +85,9 @@ const HomeStoreScreen = (props) => {
           !isLoading && (
             <ProductListing
               navigation={props.navigation}
-              category={item}
+            
               products={item}
               comision={comision}
-
               dispatch={dispatch}
               cartProductIds={cartProductIds}
               addItemToCart={addItemToCart}

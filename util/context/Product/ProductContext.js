@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const productInicialState = {
     productos: null,
+    discountedProducts:null,
     servicios: [],
     categorias: [],
     activeCategory: null,
@@ -107,7 +108,30 @@ export const ProductProvider = ({ children }) => {
 
 
 
-
+    const getDiscountedProducts = async () => {
+        try {
+           
+            
+            const apiCall = await axios.get(`${customer_api_urls.get_discounted_products}`);
+    
+            
+            
+            if (apiCall.data.data.length > 0) {
+                 await dispatch({
+                    type: 'discountedProductos',
+                    payload: {
+                        data: apiCall.data.data,
+                    }
+            });
+            }
+           
+            
+        } catch (e) {
+            
+           console.log(e);
+           
+        }
+    };
     const getProducts = async (category,carActive,address) => {
         try {
             
@@ -636,7 +660,8 @@ export const ProductProvider = ({ children }) => {
                 getGarage,
                 cars,
                 carCompatible,
-                resetCarDefault
+                resetCarDefault,
+                getDiscountedProducts
             }}
         >
             {children}
