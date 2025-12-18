@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.besseri.app-mergeDebugResources-104:/values-as/values-as.xml",
+            "outputFile": "com.besseri.app-mergeDebugResources-106:/values-as/values-as.xml",
             "map": [
                 {
                     "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/638ebc24aa8d7ab801ee442f74050b84/transformed/jetified-play-services-base-18.3.0/res/values-as/values.xml",
@@ -18,23 +18,6 @@
                         "startOffsets": "4868,4976,5129,5252,5362,5492,5614,5727,5965,6108,6217,6367,6492,6625,6778,6838,6904",
                         "endColumns": "107,152,122,109,129,121,112,111,142,108,149,124,132,152,59,65,85",
                         "endOffsets": "4971,5124,5247,5357,5487,5609,5722,5834,6103,6212,6362,6487,6620,6773,6833,6899,6985"
-                    }
-                },
-                {
-                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/96cfd11d0787b7e206ba5ac173c6951b/transformed/core-1.12.0/res/values-as/values-as.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,156,259,367,472,576,676,805",
-                        "endColumns": "100,102,107,104,103,99,128,100",
-                        "endOffsets": "151,254,362,467,571,671,800,901"
-                    },
-                    "to": {
-                        "startLines": "38,39,40,41,42,43,44,155",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "3472,3573,3676,3784,3889,3993,4093,13737",
-                        "endColumns": "100,102,107,104,103,99,128,100",
-                        "endOffsets": "3568,3671,3779,3884,3988,4088,4217,13833"
                     }
                 },
                 {
@@ -69,6 +52,23 @@
                         "startOffsets": "4706,7289,7514",
                         "endColumns": "82,72,82",
                         "endOffsets": "4784,7357,7592"
+                    }
+                },
+                {
+                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/09afc61b20fcfe9f7d7be4781536ad60/transformed/core-1.13.0/res/values-as/values-as.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,156,259,367,472,576,676,805",
+                        "endColumns": "100,102,107,104,103,99,128,100",
+                        "endOffsets": "151,254,362,467,571,671,800,901"
+                    },
+                    "to": {
+                        "startLines": "38,39,40,41,42,43,44,155",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "3472,3573,3676,3784,3889,3993,4093,13737",
+                        "endColumns": "100,102,107,104,103,99,128,100",
+                        "endOffsets": "3568,3671,3779,3884,3988,4088,4217,13833"
                     }
                 },
                 {

@@ -40,6 +40,8 @@ export const FooterNav = ({ state, navigation }) => {
     }
   }
 
+
+  
   const getRouteName = (route) => {
 
     switch (route) {

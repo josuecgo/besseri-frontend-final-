@@ -108,30 +108,34 @@ export const ProductProvider = ({ children }) => {
 
 
 
-    const getDiscountedProducts = async () => {
-        try {
-           
+    const getDiscountedProducts = async (category) => {
+        // try {
             
-            const apiCall = await axios.get(`${customer_api_urls.get_discounted_products}`);
+            
+        //     const apiCall = await axios.get(`${customer_api_urls.get_discounted_products}`);
     
-            
-            
-            if (apiCall.data.data.length > 0) {
-                 await dispatch({
-                    type: 'discountedProductos',
-                    payload: {
-                        data: apiCall.data.data,
-                    }
-            });
-            }
+        //     const products = category ? apiCall.data.data.filter(producto => producto.categoryId === category)   
+        //     : apiCall.data.data;
+
+             
+        //     if (apiCall.data.data.length > 0) {
+        //          await dispatch({
+        //             type: 'discountedProductos',
+        //             payload: {
+        //                 data: products
+        //             }
+        //     });
+        //     }
            
             
-        } catch (e) {
+        // } catch (e) {
             
-           console.log(e);
+        //    console.log(e);
            
-        }
+        // }
     };
+
+
     const getProducts = async (category,carActive,address) => {
         try {
             
@@ -157,16 +161,24 @@ export const ProductProvider = ({ children }) => {
           
             if (apiCall?.status === 200) {
 
-              
+                const productos = apiCall.data.data
                 await dispatch({
                     type: 'getProductos',
                     payload: {
-                        productos: apiCall.data.data,
+                        productos: productos,
                         // categorias: apiCall?.data?.data?.categories
                     }
                 }); 
              
-
+               
+                
+                const arregloFiltrado = productos.filter(producto => producto.discount > 0);
+                await dispatch({
+                        type: 'discountedProductos',
+                        payload: {
+                            data: arregloFiltrado,
+                        }
+                });
             }else{
                 await dispatch({
                     type: 'isLoading',
@@ -184,6 +196,7 @@ export const ProductProvider = ({ children }) => {
             }
             
         } catch (e) {
+            console.log(e,'error get products');
             
             dispatch({
                 type: 'getProductos',

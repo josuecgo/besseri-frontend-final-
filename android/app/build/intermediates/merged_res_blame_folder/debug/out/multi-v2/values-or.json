@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.besseri.app-mergeDebugResources-104:/values-or/values-or.xml",
+            "outputFile": "com.besseri.app-mergeDebugResources-106:/values-or/values-or.xml",
             "map": [
                 {
                     "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/c35b0a8229b8d526329d4e4811b58f99/transformed/browser-1.7.0/res/values-or/values-or.xml",
@@ -35,23 +35,6 @@
                         "startOffsets": "4506,4603,7166,7258,7429,8145,8222,12648,12736,12823,12893,13047,13125,13297,13551,13634,13701",
                         "endColumns": "96,86,91,99,85,76,97,87,86,69,69,77,81,69,82,66,118",
                         "endOffsets": "4598,4685,7253,7353,7510,8217,8315,12731,12818,12888,12958,13120,13202,13362,13629,13696,13815"
-                    }
-                },
-                {
-                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/96cfd11d0787b7e206ba5ac173c6951b/transformed/core-1.12.0/res/values-or/values-or.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,158,260,363,468,569,671,790",
-                        "endColumns": "102,101,102,104,100,101,118,100",
-                        "endOffsets": "153,255,358,463,564,666,785,886"
-                    },
-                    "to": {
-                        "startLines": "38,39,40,41,42,43,44,148",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "3493,3596,3698,3801,3906,4007,4109,13367",
-                        "endColumns": "102,101,102,104,100,101,118,100",
-                        "endOffsets": "3591,3693,3796,3901,4002,4104,4223,13463"
                     }
                 },
                 {
@@ -105,6 +88,23 @@
                         "startOffsets": "322,441,551,658,744,848,968,1047,1128,1219,1312,1415,1510,1610,1703,1798,1894,1985,2075,2164,2274,2378,2484,2595,2699,2817,2980,13207",
                         "endColumns": "118,109,106,85,103,119,78,80,90,92,102,94,99,92,94,95,90,89,88,109,103,105,110,103,117,162,105,89",
                         "endOffsets": "436,546,653,739,843,963,1042,1123,1214,1307,1410,1505,1605,1698,1793,1889,1980,2070,2159,2269,2373,2479,2590,2694,2812,2975,3081,13292"
+                    }
+                },
+                {
+                    "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/09afc61b20fcfe9f7d7be4781536ad60/transformed/core-1.13.0/res/values-or/values-or.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,158,260,363,468,569,671,790",
+                        "endColumns": "102,101,102,104,100,101,118,100",
+                        "endOffsets": "153,255,358,463,564,666,785,886"
+                    },
+                    "to": {
+                        "startLines": "38,39,40,41,42,43,44,148",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "3493,3596,3698,3801,3906,4007,4109,13367",
+                        "endColumns": "102,101,102,104,100,101,118,100",
+                        "endOffsets": "3591,3693,3796,3901,4002,4104,4223,13463"
                     }
                 },
                 {

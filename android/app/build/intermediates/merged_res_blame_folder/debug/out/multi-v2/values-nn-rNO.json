@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.besseri.app-mergeDebugResources-104:/values-nn-rNO/values-nn-rNO.xml",
+            "outputFile": "com.besseri.app-mergeDebugResources-106:/values-nn-rNO/values-nn-rNO.xml",
             "map": [
                 {
                     "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/4d3be10aa2f5228567bdba93413aff18/transformed/jetified-payments-ui-core-20.48.6/res/values-nn-rNO/values-nn-rNO.xml",

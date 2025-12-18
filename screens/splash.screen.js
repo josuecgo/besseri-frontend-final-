@@ -32,6 +32,7 @@ const SplashScreen = ({navigation,route}) => {
   const {width, height} = useWindowDimensions();
   const dispatch = useDispatch()
   const {logoutOff} = useAuth()
+  
 
 
   const checkBuildApp = async () => {
@@ -41,13 +42,13 @@ const SplashScreen = ({navigation,route}) => {
       let os = Platform.OS;
      
       const url = `${api_urls.check_version}`;
-      console.log(url,'rul');
+     
       
       const apiCall = await axios.post(url, {
         os,
         version: parseInt(version),
       });
-      console.log(apiCall.data);
+     
       
       
 	  return apiCall?.data?.success

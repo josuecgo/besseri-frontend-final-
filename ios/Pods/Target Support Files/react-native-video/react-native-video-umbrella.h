@@ -10,11 +10,8 @@
 #endif
 #endif
 
-#import "RCTVideo.h"
-#import "RCTVideoManager.h"
-#import "RCTVideoPlayerViewController.h"
-#import "RCTVideoPlayerViewControllerDelegate.h"
-#import "UIView+FindUIViewController.h"
+#import "RCTVideo-Bridging-Header.h"
+#import "RCTVideoSwiftLog.h"
 
 FOUNDATION_EXPORT double react_native_videoVersionNumber;
 FOUNDATION_EXPORT const unsigned char react_native_videoVersionString[];

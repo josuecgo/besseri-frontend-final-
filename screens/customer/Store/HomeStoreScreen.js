@@ -1,43 +1,41 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
-import { TouchableOpacity, View, StyleSheet, FlatList, ActivityIndicator, Alert } from 'react-native';
+import { TouchableOpacity, View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 
-import { Center, Fab, Text, } from 'native-base';
+import { Center,  Text, } from 'native-base';
 
 import Colors from '../../../util/styles/colors';
 import CommonStyles from '../../../util/styles/styles';
 
-import { CUSTOMER_HOME_SCREEN_ROUTES, MAIN_ROUTES, showToaster } from '../../../util/constants';
+import {  showToaster } from '../../../util/constants';
 import ProductListing from '../../../components/customer-components/ProductsListing.component';
 import { adjust, deviceHeight, deviceWidth } from '../../../util/Dimentions';
 
 import { ProductContext } from '../../../util/context/Product/ProductContext';
 import { ListEmpty } from '../../../components/Vendor/ListEmpty';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import { customer_api_urls } from '../../../util/api/api_essentials';
-import { getUser, getUserId } from '../../../util/local-storage/auth_service';
+
 import { ServiceSkeleton } from '../../../components/Services/ServiceSkeleton';
 import { useCart } from '../../../hooks/useCart';
 import { useLocation } from '../../../hooks/useLocation';
 import { SelectCar } from '../../../components/Customer/SelectCar';
-import HeaderStore from '../../../components/Customer/HeaderStore';
-import { useIsFocused } from '@react-navigation/native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { QuoteFormScreen } from './QuoteFormScreen';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 
 
 
 
 
-const HomeStoreScreen = (props) => {
+
+const HomeStoreScreen = () => {
   const {
     categorias, activeCategory, activarCategoria,
     comision,
     loading, productos, isLoading, getProducts,
   } = useContext(ProductContext);
+  const navigation = useNavigation()
   const [addresses, setAddresses] = useState(null)
   const { carActive, address, marcaValue, modeloValue, yearValue, user } = useSelector(state => state.user);
   const direccionStore = useSelector(state => state.user.addresses);
+  const direccion = useSelector(state => state.user.defaultAddress);
   const [defaultAddress, setDefaultAddress] = useState(address?._id ?? 1)
   const dispatch = useDispatch()
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
@@ -84,7 +82,7 @@ const HomeStoreScreen = (props) => {
         {
           !isLoading && (
             <ProductListing
-              navigation={props.navigation}
+              navigation={navigation}
             
               products={item}
               comision={comision}
@@ -129,7 +127,7 @@ const HomeStoreScreen = (props) => {
       getLocationHook()
     }
 
-  }, [focused, direccionStore]);
+  }, [focused,direccionStore]);
 
 
 
@@ -145,18 +143,17 @@ const HomeStoreScreen = (props) => {
 
           if (!addresses && !direccionStore) return;
 
+          const oneAddress = direccionStore[defaultAddress - 1] || direccionStore.find(item => item?._id === defaultAddress);          
 
-          const address = direccionStore[defaultAddress - 1] || direccionStore.find(item => item?._id === defaultAddress)
+          const address = direccion ? direccionStore.find(item => item?._id === direccion) : oneAddress
 
           const car = carActive ? carActive : {
             maker: { _id: marcaValue },
             model: { _id: modeloValue },
             year: yearValue
           }
-
-          // console.log(car,'car');
-
-
+        
+          
           await getProducts(activeCategory, car, address);
         }
       } catch (error) {
@@ -173,10 +170,11 @@ const HomeStoreScreen = (props) => {
     return () => {
       isMounted = false; // Cleanup
     };
-  }, [activeCategory, defaultAddress, direccionStore, marcaValue, modeloValue, yearValue, carActive]);
+  }, [activeCategory, direccionStore, marcaValue, modeloValue, yearValue, carActive,direccion]);
 
 
 
+  
   
   
 
@@ -234,13 +232,11 @@ const HomeStoreScreen = (props) => {
                     contentContainerStyle={{ marginTop: 15 }}
                     numColumns={2} // Set the number of columns to 2
                     columnWrapperStyle={{ justifyContent: 'center' }}
-                    // ListHeaderComponent={ <QuoteFormScreen navigation={props.navigation} />}
                     ListFooterComponent={<View style={{ width: '100%', marginBottom: 10, height: deviceHeight * 20 / 100 }} />}
                     showsVerticalScrollIndicator={false}
-
                     refreshing={loading}
                     ListEmptyComponent={() => <Center>
-                      <ListEmpty msg={direccionStore.length <= 0 ? 'Necesitas agregar tu dirección' : 'No hay productos para tu vehiculo'} />
+                      <ListEmpty msg={direccionStore.length <= 0 ? 'Necesitas agregar tu dirección' : 'No hay productos cercanos a tu ubicacion'} />
                     </Center>
                     }
                   />

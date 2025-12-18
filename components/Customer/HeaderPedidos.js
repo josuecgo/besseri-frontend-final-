@@ -22,7 +22,8 @@ export const HeaderPedidos = ({ nav, titulo, iconName = 'keyboard-backspace', ti
           {
             nav && (
               <TouchableOpacity
-                onPress={() => nav.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS)}
+                // onPress={() => nav.navigate(CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS)}
+                onPress={() => nav.goBack()}
                 style={styles.btn}
               >
                 <MaterialCommunityIcons

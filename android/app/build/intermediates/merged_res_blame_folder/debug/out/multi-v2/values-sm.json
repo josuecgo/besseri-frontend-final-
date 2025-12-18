@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.besseri.app-mergeDebugResources-104:/values-sm/values-sm.xml",
+            "outputFile": "com.besseri.app-mergeDebugResources-106:/values-sm/values-sm.xml",
             "map": [
                 {
                     "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/c201851c15fd55415da22ca660f211ad/transformed/jetified-hcaptcha-20.48.6/res/values-sm/values-sm.xml",

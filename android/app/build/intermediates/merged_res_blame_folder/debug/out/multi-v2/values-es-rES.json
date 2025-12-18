@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.besseri.app-mergeDebugResources-104:/values-es-rES/values-es-rES.xml",
+            "outputFile": "com.besseri.app-mergeDebugResources-106:/values-es-rES/values-es-rES.xml",
             "map": [
                 {
                     "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/40d20c5853981a6afdeb59ae11366de2/transformed/jetified-react-android-0.73.2-debug/res/values-es-rES/values-es-rES.xml",

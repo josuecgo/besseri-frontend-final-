@@ -11,7 +11,6 @@ import { getOrdersUser, isLoadingOrdersUser } from '../util/ReduxStore/Actions/C
 import { ProductContext } from '../util/context/Product/ProductContext';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import { Platform } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { useSearchStore } from './useSearchStore';
 import { useLocation } from './useLocation';
 

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.besseri.app-mergeDebugResources-104:/values-w400dp-port-v13/values-w400dp-port-v13.xml",
+            "outputFile": "com.besseri.app-mergeDebugResources-106:/values-w400dp-port-v13/values-w400dp-port-v13.xml",
             "map": [
                 {
                     "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/0d65a7b76fc2ca48ae05fb0f3e2ac313/transformed/material-1.11.0/res/values-w400dp-port-v13/values-w400dp-port-v13.xml",

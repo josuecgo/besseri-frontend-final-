@@ -184,45 +184,83 @@ export const useSearchStore = (  ) => {
 
     }
 
-
-    const handleMarca = (item) => {
-        handleModel('')
-        handleYear('')
-        dispatch(getMakerValueCars(item))
-        
-        dispatch(addCarActiveToUser({
+    const handleMarca = useCallback((item) => {
+    dispatch(UserInfoActions.updateCarSelection({
+        marcaValue: item,
+        modeloValue: '', // Reset
+        yearValue: '', // Reset
+        carActive: {
             ...carActive,
-            maker:{
-                _id:item
-            },
-            model:'',
-            year:null
+            maker: { _id: item },
+            model: '',
+            year: null
+        }
+    }))
+}, [dispatch, carActive])
+
+    const handleModel = useCallback((item) => {
+        dispatch(UserInfoActions.updateCarSelection({
+            marcaValue: carActive?.maker?._id, // Mantén el actual
+            modeloValue: item,
+            yearValue: '', // Reset
+            carActive: {
+                ...carActive,
+                model: { _id: item },
+                year: null
+            }
         }))
+    }, [dispatch, carActive])
+
+    const handleYear = useCallback((item) => {
+        dispatch(UserInfoActions.updateCarSelection({
+            marcaValue: carActive?.maker?._id,
+            modeloValue: carActive?.model?._id,
+            yearValue: item,
+            carActive: {
+                ...carActive,
+                year: item
+            }
+        }))
+    }, [dispatch, carActive])
+
+    // const handleMarca = (item) => {
+    //     handleModel('')
+    //     handleYear('')
+    //     dispatch(getMakerValueCars(item))
+        
+    //     dispatch(addCarActiveToUser({
+    //         ...carActive,
+    //         maker:{
+    //             _id:item
+    //         },
+    //         model:'',
+    //         year:null
+    //     }))
         
        
-    }
-    const handleModel = (item) => {
+    // }
+    // const handleModel = (item) => {
        
-        dispatch(getModelValueCars(item))
+    //     dispatch(getModelValueCars(item))
 
-        dispatch(addCarActiveToUser({
-            ...carActive,
-            model:{
-                _id:item
-            },
-            year:null
-        }))
-    }
-    const handleYear = (item) => {
+    //     dispatch(addCarActiveToUser({
+    //         ...carActive,
+    //         model:{
+    //             _id:item
+    //         },
+    //         year:null
+    //     }))
+    // }
+    // const handleYear = (item) => {
         
        
-        dispatch(getYearValueCar(item))
-        dispatch(addCarActiveToUser({
-            ...carActive,
-            year:item
-        }))
+    //     dispatch(getYearValueCar(item))
+    //     dispatch(addCarActiveToUser({
+    //         ...carActive,
+    //         year:item
+    //     }))
 
-    }
+    // }
     
     const resetCar = () => {
         dispatch(UserInfoActions.resetFiltros())

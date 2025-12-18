@@ -43,6 +43,8 @@ import { NotificationContext } from '../context/NotificationContext';
 import { WelcomeMechanicScreen } from '../../screens/customer/Preregister/WelcomeMechanicScreen';
 import { QuestionScreen } from '../../screens/customer/Question/QuestionScreen';
 import { DetailQuestionScreen } from '../../screens/customer/Question/DetailQuestionScreen';
+import { PermissionsChecker } from '../../providers/PermissionsChecker';
+import { LocationScreenUpdate } from '../../screens/LocationScreenUpdate';
 
 
 
@@ -55,7 +57,8 @@ export const MainNavigation = (props) => {
 
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <PermissionsChecker>
+<Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
         name={'Splash'}
         component={Splash}
@@ -70,6 +73,13 @@ export const MainNavigation = (props) => {
         component={PartsServicesFunctionsDrawer}
       />
 
+      
+
+
+<Stack.Screen
+        name={'LocationScreenUpdate'}
+        component={LocationScreenUpdate}
+      />
       <Stack.Screen
         name={'UpdateScreen'}
         component={UpdateScreen}
@@ -351,6 +361,8 @@ export const MainNavigation = (props) => {
         }}
       />
     </Stack.Navigator>
+    </PermissionsChecker>
+    
   );
 };
 

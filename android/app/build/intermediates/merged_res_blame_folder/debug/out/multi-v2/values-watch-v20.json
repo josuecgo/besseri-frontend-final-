@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.besseri.app-mergeDebugResources-104:/values-watch-v20/values-watch-v20.xml",
+            "outputFile": "com.besseri.app-mergeDebugResources-106:/values-watch-v20/values-watch-v20.xml",
             "map": [
                 {
                     "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/res/values-watch-v20/values.xml",

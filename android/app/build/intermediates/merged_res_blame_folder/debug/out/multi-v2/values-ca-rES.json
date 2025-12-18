@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.besseri.app-mergeDebugResources-104:/values-ca-rES/values-ca-rES.xml",
+            "outputFile": "com.besseri.app-mergeDebugResources-106:/values-ca-rES/values-ca-rES.xml",
             "map": [
                 {
                     "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/35ccc74d23dea32a8dbc03ec8c01fb2e/transformed/jetified-stripe-ui-core-20.48.6/res/values-ca-rES/values-ca-rES.xml",

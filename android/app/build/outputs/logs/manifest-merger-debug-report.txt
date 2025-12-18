@@ -17,11 +17,13 @@ MERGED from [:react-native-firebase_app] /Volumes/Externo-SSD/Documentos/trabajo
 MERGED from [:react-native-masked-view_masked-view] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/@react-native-masked-view/masked-view/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:stripe_stripe-react-native] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/@stripe/stripe-react-native/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-device-info] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-device-info/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-geolocation-service] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-geolocation-service/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-gesture-handler] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-image-crop-picker] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-31:12
 MERGED from [:react-native-linear-gradient] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-linear-gradient/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-maps] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-maps/lib/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-10:12
 MERGED from [:react-native-pager-view] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-pager-view/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-permissions] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-permissions/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-prompt-android] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-prompt-android/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-push-notification] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-push-notification/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-reanimated] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-reanimated/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
@@ -30,7 +32,7 @@ MERGED from [:react-native-screens] /Volumes/Externo-SSD/Documentos/trabajo/nati
 MERGED from [:react-native-spinkit] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-spinkit/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-svg] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-svg/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-vector-icons] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-vector-icons/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
-MERGED from [:react-native-video] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-video/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:react-native-video] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-video/android/buildOutput_a15d4dee7fc4eda61b91308cbb6a2e72/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [com.facebook.react:react-android:0.73.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/40d20c5853981a6afdeb59ae11366de2/transformed/jetified-react-android-0.73.2-debug/AndroidManifest.xml:2:1-24:12
 MERGED from [com.facebook.fresco:flipper-fresco-plugin:3.1.3] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d2058183c54c9449a538e4df59b33239/transformed/jetified-flipper-fresco-plugin-3.1.3/AndroidManifest.xml:8:1-13:12
 MERGED from [com.facebook.fresco:flipper:3.1.3] /Volumes/Externo-SSD/.gradle/caches/transforms-3/7f871a9a30f29e2c4e3ade119880337c/transformed/jetified-flipper-3.1.3/AndroidManifest.xml:2:1-7:12
@@ -54,7 +56,6 @@ MERGED from [com.facebook.flipper:flipper-network-plugin:0.201.0] /Volumes/Exter
 MERGED from [com.facebook.flipper:flipper:0.201.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ba9a8d370471dde33424b11dce54785b/transformed/jetified-flipper-0.201.0/AndroidManifest.xml:8:1-16:12
 MERGED from [com.stripe:financial-connections:20.48.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e3d388f0ddb646ffcdc5623592d21374/transformed/jetified-financial-connections-20.48.6/AndroidManifest.xml:2:1-77:12
 MERGED from [com.github.yalantis:ucrop:2.2.6-native] /Volumes/Externo-SSD/.gradle/caches/transforms-3/001ea276bcf9bcf6a4f2f5339655c1ad/transformed/jetified-ucrop-2.2.6-native/AndroidManifest.xml:2:1-11:12
-MERGED from [com.github.adityaxjha:Android-ScalableVideoView:10e7b4da8b] /Volumes/Externo-SSD/.gradle/caches/transforms-3/a81e65c569382836b4f65892372e4c1c/transformed/jetified-Android-ScalableVideoView-10e7b4da8b/AndroidManifest.xml:2:1-9:12
 MERGED from [com.facebook.stetho:stetho:1.6.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/6b1e0045f218cbd457b2af631dda7921/transformed/jetified-stetho-1.6.0/AndroidManifest.xml:2:1-13:12
 MERGED from [com.stripe:stripe-android:20.48.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/0af2091de4a30a2bb965d03b52f3c16d/transformed/jetified-stripe-android-20.48.6/AndroidManifest.xml:2:1-7:12
 MERGED from [com.stripe:paymentsheet:20.48.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/44fe23f341919e84ae8e3ddd6589a8dd/transformed/jetified-paymentsheet-20.48.6/AndroidManifest.xml:2:1-45:12
@@ -72,12 +73,6 @@ MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Volumes/Externo-
 MERGED from [com.stripe:hcaptcha:20.48.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c201851c15fd55415da22ca660f211ad/transformed/jetified-hcaptcha-20.48.6/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.appcompat:appcompat:1.6.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/56e06eb9195213d05a6e15eb53816247/transformed/appcompat-1.6.1/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.work:work-runtime:2.8.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e85a3ef2980b41e2d8940604ff3f9c81/transformed/work-runtime-2.8.0/AndroidManifest.xml:17:1-145:12
-MERGED from [androidx.room:room-runtime:2.5.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/937fe7ce55aa8d737d67e0b564430f78/transformed/room-runtime-2.5.0/AndroidManifest.xml:17:1-31:12
-MERGED from [androidx.sqlite:sqlite-framework:2.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/afbed1f722a87792985d167202e80767/transformed/sqlite-framework-2.3.0/AndroidManifest.xml:17:1-22:12
-MERGED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:17:1-66:12
-MERGED from [com.google.firebase:firebase-installations:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2a438fa80316fc78bfb2111ee64510e8/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:2:1-24:12
-MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/b5f5eb4d4076ae6deba61237c6bca171/transformed/jetified-firebase-common-ktx-21.0.0/AndroidManifest.xml:2:1-18:12
-MERGED from [com.google.firebase:firebase-common:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2889f57b31988d1cc2012f0e3112c591/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:15:1-41:12
 MERGED from [com.stripe:stripe-ui-core:20.48.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/35ccc74d23dea32a8dbc03ec8c01fb2e/transformed/jetified-stripe-ui-core-20.48.6/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.navigation:navigation-common:2.7.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/3100b4ea335a8b56732e0e2daaa20e04/transformed/navigation-common-2.7.6/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.navigation:navigation-runtime:2.7.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/66f590b3a0e2dedf8efb65bba0f75919/transformed/navigation-runtime-2.7.6/AndroidManifest.xml:17:1-22:12
@@ -88,7 +83,8 @@ MERGED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-
 MERGED from [com.github.bumptech.glide:glide:4.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/7b47497d33fce0f7c2ba1b838cc829ff/transformed/jetified-glide-4.12.0/AndroidManifest.xml:2:1-12:12
 MERGED from [androidx.legacy:legacy-support-v4:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/3bfe80acdfead638a42d4fc2fe2b5ac5/transformed/legacy-support-v4-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [com.google.android.gms:play-services-iid:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1c6580f48318e118bca74be9ae7001c3/transformed/jetified-play-services-iid-17.0.0/AndroidManifest.xml:17:1-28:12
-MERGED from [com.google.android.gms:play-services-location:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/28d5cf329d7aefe2e603c98d20c29d7f/transformed/jetified-play-services-location-17.0.0/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-location:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/a75aa147c0e40d34797078b5033befc8/transformed/jetified-play-services-location-18.0.0/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:17:1-66:12
 MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ed27774e5227b8b5f12165648b22621f/transformed/jetified-play-services-auth-api-phone-18.0.2/AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.gms:play-services-auth-base:18.0.10] /Volumes/Externo-SSD/.gradle/caches/transforms-3/dd7e47b2a1940b40a4f9901ae60980ce/transformed/jetified-play-services-auth-base-18.0.10/AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.gms:play-services-fido:20.0.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/0b831da492d80f1344565c2ae9f0fc3e/transformed/jetified-play-services-fido-20.0.1/AndroidManifest.xml:2:1-10:12
@@ -97,10 +93,12 @@ MERGED from [com.google.android.gms:play-services-wallet:19.3.0] /Volumes/Extern
 MERGED from [com.google.android.gms:play-services-maps:18.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4e4aac19baf31ccc4a2f6b9971b60d7c/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:17:1-44:12
 MERGED from [com.google.android.gms:play-services-identity:18.0.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f2964615e5b1dbf6067aad4635def3af/transformed/jetified-play-services-identity-18.0.1/AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.android.gms:play-services-base:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/638ebc24aa8d7ab801ee442f74050b84/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:16:1-24:12
+MERGED from [com.google.firebase:firebase-installations:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2a438fa80316fc78bfb2111ee64510e8/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:2:1-24:12
+MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/b5f5eb4d4076ae6deba61237c6bca171/transformed/jetified-firebase-common-ktx-21.0.0/AndroidManifest.xml:2:1-18:12
+MERGED from [com.google.firebase:firebase-common:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2889f57b31988d1cc2012f0e3112c591/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:15:1-41:12
 MERGED from [com.google.firebase:firebase-iid-interop:17.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/56937379bf953899fdb27518616b7b0a/transformed/jetified-firebase-iid-interop-17.1.0/AndroidManifest.xml:2:1-10:12
 MERGED from [com.google.android.gms:play-services-cloud-messaging:17.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f55b58fa6b16c5de39d5f2823e7a2aba/transformed/jetified-play-services-cloud-messaging-17.2.0/AndroidManifest.xml:2:1-13:12
 MERGED from [com.stripe:stripe-core:20.48.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/bf1a86d9084c918a59b57716be7f68f6/transformed/jetified-stripe-core-20.48.6/AndroidManifest.xml:2:1-9:12
-MERGED from [com.google.accompanist:accompanist-systemuicontroller:0.32.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/3b443a1d5b8028809cc451ddc02fa1af/transformed/jetified-accompanist-systemuicontroller-0.32.0/AndroidManifest.xml:17:1-23:12
 MERGED from [androidx.compose.material3:material3:1.0.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/441fff5d3d7874e2acd9d63ab14dc173/transformed/jetified-material3-1.0.1/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.compose.material:material-ripple-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4652042a8c005f073b8a752c3d42c2b7/transformed/jetified-material-ripple-release/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.material:material-icons-core-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/bf1036a92060a9015ce10a365ec29ec6/transformed/jetified-material-icons-core-release/AndroidManifest.xml:2:1-7:12
@@ -110,6 +108,14 @@ MERGED from [androidx.compose.animation:animation-core-android:1.5.4] /Volumes/E
 MERGED from [androidx.compose.animation:animation-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/707c63623d9d4556ceb3378b43006400/transformed/jetified-animation-release/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.foundation:foundation-layout-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ce0f907ace45bc30b8dbfeeeabeaa828/transformed/jetified-foundation-layout-release/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.foundation:foundation-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f653f5ba2f184daad32e2281b59cd9bc/transformed/jetified-foundation-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-unit-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2316cbe5625728c15cb60c3f059c78e1/transformed/jetified-ui-unit-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-graphics-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/0827cd260fe0a932d47c6ba371cd2e77/transformed/jetified-ui-graphics-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-geometry-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/76ca34727248e3ec113483adcccaf1d0/transformed/jetified-ui-geometry-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-text-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c34b68f2969c4c1c2bcbfba30d75df9f/transformed/jetified-ui-text-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-util-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/69719d417ab01881b81a45b10757432e/transformed/jetified-ui-util-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/fd614eaf9258a3ae6d7e18bf43ea9925/transformed/jetified-ui-tooling-preview-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.ui:ui-viewbinding:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/444d3ec3a7e69ffd4c7b06dcf88e1a35/transformed/jetified-ui-viewbinding-1.5.4/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.fragment:fragment-ktx:1.6.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/5513bb1c66c122165569d4f21a885c17/transformed/jetified-fragment-ktx-1.6.2/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ab487ea13057be42f2e7dfe5e4810ab3/transformed/legacy-support-core-ui-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [com.google.android.gms:play-services-stats:17.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/87294a21286e86a636f8fe8c1fe534d2/transformed/jetified-play-services-stats-17.0.2/AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/606c8961460e1ca8bc3dacadef2268dc/transformed/dynamicanimation-1.0.0/AndroidManifest.xml:17:1-22:12
@@ -117,69 +123,78 @@ MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Volumes/Externo-S
 MERGED from [androidx.loader:loader:1.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/7ba6ef9e7cfa7c89600634030d00b13d/transformed/loader-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.emoji2:emoji2-views-helper:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2aeb06999570034c135a767202269fa0/transformed/jetified-emoji2-views-helper-1.3.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.emoji2:emoji2:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/aa76294ce89233065b023017f68bfdfe/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:17:1-35:12
-MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f61134b919787c02d21a1ed8777f7b4a/transformed/jetified-savedstate-ktx-1.2.1/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.savedstate:savedstate:1.2.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c6e3cc2683995fda049d523069efa57a/transformed/jetified-savedstate-1.2.1/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-livedata-ktx:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d4f015234b3885c1f796cfc3e4ee4564/transformed/jetified-lifecycle-livedata-ktx-2.7.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/a5fec76edd8f8d7b8440f901ba297b08/transformed/jetified-lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/9b30c7e898a378f6a7a88b4e7a987e63/transformed/jetified-lifecycle-viewmodel-compose-2.7.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e76c15278e2328776ca612327f0953dd/transformed/lifecycle-viewmodel-2.7.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-service:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/b8c1808629b7cb98d4933381fed91e51/transformed/jetified-lifecycle-service-2.7.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/3e7efd1693c893925625867d1a65f6f8/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:17:1-35:12
-MERGED from [androidx.compose.ui:ui-unit-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2316cbe5625728c15cb60c3f059c78e1/transformed/jetified-ui-unit-release/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.compose.ui:ui-graphics-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/0827cd260fe0a932d47c6ba371cd2e77/transformed/jetified-ui-graphics-release/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.compose.ui:ui-geometry-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/76ca34727248e3ec113483adcccaf1d0/transformed/jetified-ui-geometry-release/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.compose.ui:ui-text-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c34b68f2969c4c1c2bcbfba30d75df9f/transformed/jetified-ui-text-release/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.compose.ui:ui-util-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/69719d417ab01881b81a45b10757432e/transformed/jetified-ui-util-release/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/fd614eaf9258a3ae6d7e18bf43ea9925/transformed/jetified-ui-tooling-preview-release/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.compose.runtime:runtime-saveable-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/7e02bc536a83b79ea3035168f7369deb/transformed/jetified-runtime-saveable-release/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.runtime:runtime-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/a45aea99e72bf3070e36f490d264b59d/transformed/jetified-runtime-release/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.runtime:runtime-livedata:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/277beeee7db6150933b7e1fe4a3d6636/transformed/jetified-runtime-livedata-1.5.4/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8eacff35703b16135d3ad1a26bcaa0d7/transformed/lifecycle-livedata-2.7.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e37c86142fd9e5db23a389b1f9c6d257/transformed/lifecycle-livedata-core-2.7.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f61134b919787c02d21a1ed8777f7b4a/transformed/jetified-savedstate-ktx-1.2.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate:1.2.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c6e3cc2683995fda049d523069efa57a/transformed/jetified-savedstate-1.2.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/030cbecfd8f437e3e49960656b74bf38/transformed/lifecycle-runtime-2.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/977bae687ca94bea56946a0a7ab3edeb/transformed/jetified-lifecycle-viewmodel-ktx-2.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/04b4fb61b18b03c0341993a37458c14e/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ecd11514486b13470ad6980718b5bf19/transformed/jetified-lifecycle-runtime-ktx-2.7.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.accompanist:accompanist-systemuicontroller:0.32.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/3b443a1d5b8028809cc451ddc02fa1af/transformed/jetified-accompanist-systemuicontroller-0.32.0/AndroidManifest.xml:17:1-23:12
+MERGED from [com.google.firebase:firebase-installations-interop:17.1.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ae3d6a7b71019ead75e3f53a41a37875/transformed/jetified-firebase-installations-interop-17.1.1/AndroidManifest.xml:15:1-19:12
+MERGED from [com.google.android.gms:play-services-tasks:18.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/dcd7f67ce51d313b4e1152e2427eb38d/transformed/jetified-play-services-tasks-18.1.0/AndroidManifest.xml:2:1-6:12
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1dedfb1c27e20c2b7b8a674a141822ed/transformed/jetified-play-services-places-placereport-17.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2edcc4199eadc91b22a8446d82889b1b/transformed/jetified-firebase-measurement-connector-19.0.0/AndroidManifest.xml:17:1-25:12
+MERGED from [com.google.android.gms:play-services-basement:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/57ab2f0c649a437d4f20b73c5227d000/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:16:1-26:12
+MERGED from [androidx.media3:media3-exoplayer-smoothstreaming:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/478f7483681219a34a0a080ab97d4ac6/transformed/jetified-media3-exoplayer-smoothstreaming-1.4.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-exoplayer-dash:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/64f39a4f434cef578563dc08fb24a83c/transformed/jetified-media3-exoplayer-dash-1.4.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-exoplayer-hls:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/49da96c17812376a5c235ad506167c16/transformed/jetified-media3-exoplayer-hls-1.4.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-exoplayer:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/434df94197a5eb6301558dee9e1efd63/transformed/jetified-media3-exoplayer-1.4.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.media3:media3-datasource-okhttp:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/aa952a02135d3c296bf577543a75a089/transformed/jetified-media3-datasource-okhttp-1.4.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-session:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4e6d93aad90e8f618ef21ff8986c2eb6/transformed/jetified-media3-session-1.4.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-datasource:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/7a0b9f383ff22aaa18e6e014797afab6/transformed/jetified-media3-datasource-1.4.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-extractor:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/5ae905d1cfb19f54c871c69325bb3e6d/transformed/jetified-media3-extractor-1.4.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-container:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/455145ee9768302e4ceda4b3755826cb/transformed/jetified-media3-container-1.4.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-decoder:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d218c2c3d50b54ea550fa5e8593ebb7f/transformed/jetified-media3-decoder-1.4.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-database:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8754484b337186cef63981f04a15895d/transformed/jetified-media3-database-1.4.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media3:media3-common:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/84d2cf0b84ae0139fd8e2609472be111/transformed/jetified-media3-common-1.4.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.media3:media3-ui:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2daad04d11cb50b247efdeec3d8e99d2/transformed/jetified-media3-ui-1.4.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.recyclerview:recyclerview:1.3.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/6f01d58bb7d88b5e39c04ab14e17978d/transformed/recyclerview-1.3.2/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager2:viewpager2:1.1.0-beta02] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1a28ea7057da23bcf4777cb260c48c29/transformed/jetified-viewpager2-1.1.0-beta02/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.fragment:fragment:1.6.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f65fc143c54eace30dbd809d6a97c7d7/transformed/fragment-1.6.2/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity:1.9.3] /Volumes/Externo-SSD/.gradle/caches/transforms-3/11af3be48b6d8bdaced50c6771948470/transformed/jetified-activity-1.9.3/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity-ktx:1.9.3] /Volumes/Externo-SSD/.gradle/caches/transforms-3/84250e5b186cbf7e6a4db096bd2883cd/transformed/jetified-activity-ktx-1.9.3/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.activity:activity-compose:1.9.3] /Volumes/Externo-SSD/.gradle/caches/transforms-3/993ceb852e4dfb034f360f2b4b151287/transformed/jetified-activity-compose-1.9.3/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f99f7562da53a5f2f64b1db45314fd8/transformed/jetified-ui-release/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.autofill:autofill:1.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8305f20394eb3b743cc1c897bb3f352b/transformed/jetified-autofill-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/06820d864440670608022bfc4d90100a/transformed/swiperefreshlayout-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c496c133b97f8b159cc2b486b0b992e5/transformed/coordinatorlayout-1.2.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/34f7fefe98b50126e58dd75381037cf1/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/71f2ba76550d2158209fa851e0c77645/transformed/vectordrawable-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.browser:browser:1.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c35b0a8229b8d526329d4e4811b58f99/transformed/browser-1.7.0/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.media:media:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/529dd6374878d9c687090a6c067e103b/transformed/media-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media:media:1.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f9e232e994a2cbea090daf144cf2491e/transformed/media-1.7.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.viewpager:viewpager:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/76dacaa624eee7c3190939e8fc82df07/transformed/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.viewpager2:viewpager2:1.1.0-beta02] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1a28ea7057da23bcf4777cb260c48c29/transformed/jetified-viewpager2-1.1.0-beta02/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.recyclerview:recyclerview:1.3.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/6f01d58bb7d88b5e39c04ab14e17978d/transformed/recyclerview-1.3.2/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c42d0fd887629b45b3e9c5492327a24d/transformed/jetified-customview-poolingcontainer-1.0.0/AndroidManifest.xml:17:1-23:12
-MERGED from [androidx.core:core-ktx:1.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/6c481e7f3eefd761739ad788d7352583/transformed/jetified-core-ktx-1.12.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/02a66f393c98bee0116f290a2c180446/transformed/slidingpanelayout-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/bf39dc2cd2bf5a9de910054210043283/transformed/asynclayoutinflater-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c2f8af0b843178e5edac18aa7225192b/transformed/drawerlayout-1.1.1/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.transition:transition:1.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/80051f081e4b6dc1d6ec3edbaaf71621/transformed/transition-1.2.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.customview:customview:1.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d7fc7a032bd8bafed44b41510956b2db/transformed/customview-1.1.0/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.core:core:1.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96cfd11d0787b7e206ba5ac173c6951b/transformed/core-1.12.0/AndroidManifest.xml:17:1-30:12
-MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/030cbecfd8f437e3e49960656b74bf38/transformed/lifecycle-runtime-2.7.0/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/9b30c7e898a378f6a7a88b4e7a987e63/transformed/jetified-lifecycle-viewmodel-compose-2.7.0/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.compose.ui:ui-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f99f7562da53a5f2f64b1db45314fd8/transformed/jetified-ui-release/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.compose.ui:ui-viewbinding:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/444d3ec3a7e69ffd4c7b06dcf88e1a35/transformed/jetified-ui-viewbinding-1.5.4/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.fragment:fragment-ktx:1.6.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/5513bb1c66c122165569d4f21a885c17/transformed/jetified-fragment-ktx-1.6.2/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/977bae687ca94bea56946a0a7ab3edeb/transformed/jetified-lifecycle-viewmodel-ktx-2.7.0/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/04b4fb61b18b03c0341993a37458c14e/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:17:1-22:12
-MERGED from [com.google.firebase:firebase-installations-interop:17.1.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ae3d6a7b71019ead75e3f53a41a37875/transformed/jetified-firebase-installations-interop-17.1.1/AndroidManifest.xml:15:1-19:12
-MERGED from [com.google.android.gms:play-services-tasks:18.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/dcd7f67ce51d313b4e1152e2427eb38d/transformed/jetified-play-services-tasks-18.1.0/AndroidManifest.xml:2:1-6:12
-MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1dedfb1c27e20c2b7b8a674a141822ed/transformed/jetified-play-services-places-placereport-17.0.0/AndroidManifest.xml:17:1-24:12
-MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2edcc4199eadc91b22a8446d82889b1b/transformed/jetified-firebase-measurement-connector-19.0.0/AndroidManifest.xml:17:1-25:12
-MERGED from [com.google.android.gms:play-services-basement:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/57ab2f0c649a437d4f20b73c5227d000/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:16:1-26:12
-MERGED from [androidx.fragment:fragment:1.6.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f65fc143c54eace30dbd809d6a97c7d7/transformed/fragment-1.6.2/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.activity:activity:1.8.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/37eb9a701568d493c273331080b828bd/transformed/jetified-activity-1.8.2/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.activity:activity-compose:1.8.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/311f5c62638a6edee45ffab4bbcf8587/transformed/jetified-activity-compose-1.8.2/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.activity:activity-ktx:1.8.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/dccc9ec1476e4cfea022ee1908151135/transformed/jetified-activity-ktx-1.8.2/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ecd11514486b13470ad6980718b5bf19/transformed/jetified-lifecycle-runtime-ktx-2.7.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.13.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/09afc61b20fcfe9f7d7be4781536ad60/transformed/core-1.13.0/AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c42d0fd887629b45b3e9c5492327a24d/transformed/jetified-customview-poolingcontainer-1.0.0/AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.core:core-ktx:1.13.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c48320bdbb231824489ecc5e186e4427/transformed/jetified-core-ktx-1.13.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.room:room-runtime:2.5.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/937fe7ce55aa8d737d67e0b564430f78/transformed/room-runtime-2.5.0/AndroidManifest.xml:17:1-31:12
+MERGED from [androidx.sqlite:sqlite-framework:2.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/afbed1f722a87792985d167202e80767/transformed/sqlite-framework-2.3.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.annotation:annotation-experimental:1.4.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e0974cf2c52d06e49b68ae30425c2057/transformed/jetified-annotation-experimental-1.4.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.sqlite:sqlite:2.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96caa38852a32f60344438a8c83c934e/transformed/sqlite-2.3.0/AndroidManifest.xml:17:1-22:12
 MERGED from [com.facebook.react:hermes-android:0.73.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4335bf80da85c7b1ee02b6a1f0a2fc3d/transformed/jetified-hermes-android-0.73.2-debug/AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:17:1-55:12
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:17:1-55:12
 MERGED from [androidx.startup:startup-runtime:1.1.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/dde88ecc82c371338ffc9bdef4a920ff/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:17:1-33:12
 MERGED from [androidx.tracing:tracing:1.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/47bed6cc9c43a6c622ea8d4b5e4c82f6/transformed/jetified-tracing-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/52a4cf4e409923b4ace33077495b6045/transformed/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.interpolator:interpolator:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/fdf890bb0d5b814551f9827c8e8f5b13/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [com.github.bumptech.glide:gifdecoder:4.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d9e18c0910f957f42d84135786386b88/transformed/jetified-gifdecoder-4.12.0/AndroidManifest.xml:2:1-11:12
-MERGED from [androidx.exifinterface:exifinterface:1.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96fa2e306677ebb1bb9e865af5386e60/transformed/exifinterface-1.2.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2617fa0bd621fbff25f536175dabbdec/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.exifinterface:exifinterface:1.3.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/adb572d3396da91b4c8e82aae5391458/transformed/exifinterface-1.3.6/AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.firebase:firebase-components:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1541a64b7a321f358605ff8d1c9e01dc/transformed/jetified-firebase-components-18.0.0/AndroidManifest.xml:15:1-20:12
 MERGED from [com.google.firebase:firebase-datatransport:18.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/fdf7283a5f1c51faedc5ba1babef0213/transformed/jetified-firebase-datatransport-18.2.0/AndroidManifest.xml:15:1-31:12
 MERGED from [com.google.android.datatransport:transport-backend-cct:3.1.9] /Volumes/Externo-SSD/.gradle/caches/transforms-3/9e247b22708355a67f03fc7f9cac3249/transformed/jetified-transport-backend-cct-3.1.9/AndroidManifest.xml:15:1-37:12
@@ -192,7 +207,6 @@ MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Volume
 MERGED from [androidx.print:print:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/9db24c2e5c08a6ba6a2145512e228ba4/transformed/print-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.cardview:cardview:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/b6fd6e089d1fa589e7d66053083b84a2/transformed/cardview-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.arch.core:core-runtime:2.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/31358813bb7eafb1fd8470eb6936d30f/transformed/core-runtime-2.2.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.annotation:annotation-experimental:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/a9eba46da7affba4024d6c65434e6db0/transformed/jetified-annotation-experimental-1.3.0/AndroidManifest.xml:17:1-22:12
 MERGED from [com.facebook.fbjni:fbjni:0.5.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/9b19b78018c4544139b511698734f1d3/transformed/jetified-fbjni-0.5.1/AndroidManifest.xml:2:1-7:12
 MERGED from [com.facebook.soloader:soloader:0.10.5] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d226b9defa590c07510afd3d58e4276f/transformed/jetified-soloader-0.10.5/AndroidManifest.xml:2:1-17:12
 MERGED from [app.notifee:core:202108261754] /Volumes/Externo-SSD/.gradle/caches/transforms-3/17bcdd11661cbf438fa595becc06d13d/transformed/jetified-core-202108261754/AndroidManifest.xml:2:1-84:12
@@ -223,12 +237,12 @@ MERGED from [com.facebook.flipper:flipper:0.201.0] /Volumes/Externo-SSD/.gradle/
 MERGED from [com.facebook.flipper:flipper:0.201.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ba9a8d370471dde33424b11dce54785b/transformed/jetified-flipper-0.201.0/AndroidManifest.xml:13:5-67
 MERGED from [com.stripe:financial-connections:20.48.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e3d388f0ddb646ffcdc5623592d21374/transformed/jetified-financial-connections-20.48.6/AndroidManifest.xml:7:5-67
 MERGED from [com.stripe:financial-connections:20.48.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e3d388f0ddb646ffcdc5623592d21374/transformed/jetified-financial-connections-20.48.6/AndroidManifest.xml:7:5-67
-MERGED from [com.google.firebase:firebase-installations:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2a438fa80316fc78bfb2111ee64510e8/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:8:5-67
-MERGED from [com.google.firebase:firebase-installations:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2a438fa80316fc78bfb2111ee64510e8/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:8:5-67
 MERGED from [com.google.android.gms:play-services-iid:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1c6580f48318e118bca74be9ae7001c3/transformed/jetified-play-services-iid-17.0.0/AndroidManifest.xml:24:5-67
 MERGED from [com.google.android.gms:play-services-iid:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1c6580f48318e118bca74be9ae7001c3/transformed/jetified-play-services-iid-17.0.0/AndroidManifest.xml:24:5-67
 MERGED from [com.google.android.gms:play-services-maps:18.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4e4aac19baf31ccc4a2f6b9971b60d7c/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:24:5-67
 MERGED from [com.google.android.gms:play-services-maps:18.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4e4aac19baf31ccc4a2f6b9971b60d7c/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:24:5-67
+MERGED from [com.google.firebase:firebase-installations:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2a438fa80316fc78bfb2111ee64510e8/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:8:5-67
+MERGED from [com.google.firebase:firebase-installations:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2a438fa80316fc78bfb2111ee64510e8/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:8:5-67
 MERGED from [com.google.android.gms:play-services-cloud-messaging:17.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f55b58fa6b16c5de39d5f2823e7a2aba/transformed/jetified-play-services-cloud-messaging-17.2.0/AndroidManifest.xml:8:5-67
 MERGED from [com.google.android.gms:play-services-cloud-messaging:17.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f55b58fa6b16c5de39d5f2823e7a2aba/transformed/jetified-play-services-cloud-messaging-17.2.0/AndroidManifest.xml:8:5-67
 MERGED from [com.google.android.datatransport:transport-backend-cct:3.1.9] /Volumes/Externo-SSD/.gradle/caches/transforms-3/9e247b22708355a67f03fc7f9cac3249/transformed/jetified-transport-backend-cct-3.1.9/AndroidManifest.xml:25:5-67
@@ -257,14 +271,18 @@ MERGED from [androidx.work:work-runtime:2.8.0] /Volumes/Externo-SSD/.gradle/cach
 MERGED from [androidx.work:work-runtime:2.8.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e85a3ef2980b41e2d8940604ff3f9c81/transformed/work-runtime-2.8.0/AndroidManifest.xml:24:5-79
 MERGED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:22:5-79
 MERGED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:22:5-79
-MERGED from [com.google.firebase:firebase-installations:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2a438fa80316fc78bfb2111ee64510e8/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:7:5-79
-MERGED from [com.google.firebase:firebase-installations:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2a438fa80316fc78bfb2111ee64510e8/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:7:5-79
 MERGED from [com.google.android.gms:play-services-maps:18.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4e4aac19baf31ccc4a2f6b9971b60d7c/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:23:5-79
 MERGED from [com.google.android.gms:play-services-maps:18.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4e4aac19baf31ccc4a2f6b9971b60d7c/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:23:5-79
+MERGED from [com.google.firebase:firebase-installations:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2a438fa80316fc78bfb2111ee64510e8/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:7:5-79
+MERGED from [com.google.firebase:firebase-installations:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2a438fa80316fc78bfb2111ee64510e8/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:7:5-79
 MERGED from [com.google.android.gms:play-services-cloud-messaging:17.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f55b58fa6b16c5de39d5f2823e7a2aba/transformed/jetified-play-services-cloud-messaging-17.2.0/AndroidManifest.xml:7:5-79
 MERGED from [com.google.android.gms:play-services-cloud-messaging:17.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f55b58fa6b16c5de39d5f2823e7a2aba/transformed/jetified-play-services-cloud-messaging-17.2.0/AndroidManifest.xml:7:5-79
 MERGED from [com.stripe:stripe-core:20.48.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/bf1a86d9084c918a59b57716be7f68f6/transformed/jetified-stripe-core-20.48.6/AndroidManifest.xml:7:5-79
 MERGED from [com.stripe:stripe-core:20.48.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/bf1a86d9084c918a59b57716be7f68f6/transformed/jetified-stripe-core-20.48.6/AndroidManifest.xml:7:5-79
+MERGED from [androidx.media3:media3-exoplayer:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/434df94197a5eb6301558dee9e1efd63/transformed/jetified-media3-exoplayer-1.4.1/AndroidManifest.xml:22:5-79
+MERGED from [androidx.media3:media3-exoplayer:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/434df94197a5eb6301558dee9e1efd63/transformed/jetified-media3-exoplayer-1.4.1/AndroidManifest.xml:22:5-79
+MERGED from [androidx.media3:media3-common:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/84d2cf0b84ae0139fd8e2609472be111/transformed/jetified-media3-common-1.4.1/AndroidManifest.xml:22:5-79
+MERGED from [androidx.media3:media3-common:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/84d2cf0b84ae0139fd8e2609472be111/transformed/jetified-media3-common-1.4.1/AndroidManifest.xml:22:5-79
 MERGED from [com.google.android.datatransport:transport-backend-cct:3.1.9] /Volumes/Externo-SSD/.gradle/caches/transforms-3/9e247b22708355a67f03fc7f9cac3249/transformed/jetified-transport-backend-cct-3.1.9/AndroidManifest.xml:24:5-79
 MERGED from [com.google.android.datatransport:transport-backend-cct:3.1.9] /Volumes/Externo-SSD/.gradle/caches/transforms-3/9e247b22708355a67f03fc7f9cac3249/transformed/jetified-transport-backend-cct-3.1.9/AndroidManifest.xml:24:5-79
 MERGED from [com.google.android.datatransport:transport-runtime:3.1.9] /Volumes/Externo-SSD/.gradle/caches/transforms-3/5e67a44a104490a3f889bdab8e1ba1c0/transformed/jetified-transport-runtime-3.1.9/AndroidManifest.xml:22:5-79
@@ -338,24 +356,16 @@ MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Volumes/Externo-
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/42cf322a477936bbf76c41267143591d/transformed/constraintlayout-2.1.4/AndroidManifest.xml:9:5-20
 MERGED from [androidx.work:work-runtime:2.8.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e85a3ef2980b41e2d8940604ff3f9c81/transformed/work-runtime-2.8.0/AndroidManifest.xml:28:5-143:19
 MERGED from [androidx.work:work-runtime:2.8.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e85a3ef2980b41e2d8940604ff3f9c81/transformed/work-runtime-2.8.0/AndroidManifest.xml:28:5-143:19
-MERGED from [androidx.room:room-runtime:2.5.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/937fe7ce55aa8d737d67e0b564430f78/transformed/room-runtime-2.5.0/AndroidManifest.xml:23:5-29:19
-MERGED from [androidx.room:room-runtime:2.5.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/937fe7ce55aa8d737d67e0b564430f78/transformed/room-runtime-2.5.0/AndroidManifest.xml:23:5-29:19
-MERGED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:28:5-64:19
-MERGED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:28:5-64:19
-MERGED from [com.google.firebase:firebase-installations:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2a438fa80316fc78bfb2111ee64510e8/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:11:5-22:19
-MERGED from [com.google.firebase:firebase-installations:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2a438fa80316fc78bfb2111ee64510e8/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:11:5-22:19
-MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/b5f5eb4d4076ae6deba61237c6bca171/transformed/jetified-firebase-common-ktx-21.0.0/AndroidManifest.xml:8:5-16:19
-MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/b5f5eb4d4076ae6deba61237c6bca171/transformed/jetified-firebase-common-ktx-21.0.0/AndroidManifest.xml:8:5-16:19
-MERGED from [com.google.firebase:firebase-common:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2889f57b31988d1cc2012f0e3112c591/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:22:5-39:19
-MERGED from [com.google.firebase:firebase-common:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2889f57b31988d1cc2012f0e3112c591/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:22:5-39:19
 MERGED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:22:5-38:19
 MERGED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:22:5-38:19
 MERGED from [com.github.bumptech.glide:glide:4.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/7b47497d33fce0f7c2ba1b838cc829ff/transformed/jetified-glide-4.12.0/AndroidManifest.xml:10:5-20
 MERGED from [com.github.bumptech.glide:glide:4.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/7b47497d33fce0f7c2ba1b838cc829ff/transformed/jetified-glide-4.12.0/AndroidManifest.xml:10:5-20
 MERGED from [com.google.android.gms:play-services-iid:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1c6580f48318e118bca74be9ae7001c3/transformed/jetified-play-services-iid-17.0.0/AndroidManifest.xml:26:5-20
 MERGED from [com.google.android.gms:play-services-iid:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1c6580f48318e118bca74be9ae7001c3/transformed/jetified-play-services-iid-17.0.0/AndroidManifest.xml:26:5-20
-MERGED from [com.google.android.gms:play-services-location:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/28d5cf329d7aefe2e603c98d20c29d7f/transformed/jetified-play-services-location-17.0.0/AndroidManifest.xml:7:5-20
-MERGED from [com.google.android.gms:play-services-location:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/28d5cf329d7aefe2e603c98d20c29d7f/transformed/jetified-play-services-location-17.0.0/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-location:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/a75aa147c0e40d34797078b5033befc8/transformed/jetified-play-services-location-18.0.0/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-location:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/a75aa147c0e40d34797078b5033befc8/transformed/jetified-play-services-location-18.0.0/AndroidManifest.xml:7:5-20
+MERGED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:28:5-64:19
+MERGED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:28:5-64:19
 MERGED from [com.google.android.gms:play-services-fido:20.0.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/0b831da492d80f1344565c2ae9f0fc3e/transformed/jetified-play-services-fido-20.0.1/AndroidManifest.xml:7:5-8:19
 MERGED from [com.google.android.gms:play-services-fido:20.0.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/0b831da492d80f1344565c2ae9f0fc3e/transformed/jetified-play-services-fido-20.0.1/AndroidManifest.xml:7:5-8:19
 MERGED from [com.google.android.gms:play-services-maps:18.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4e4aac19baf31ccc4a2f6b9971b60d7c/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:36:5-42:19
@@ -364,6 +374,12 @@ MERGED from [com.google.android.gms:play-services-identity:18.0.1] /Volumes/Exte
 MERGED from [com.google.android.gms:play-services-identity:18.0.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f2964615e5b1dbf6067aad4635def3af/transformed/jetified-play-services-identity-18.0.1/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.gms:play-services-base:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/638ebc24aa8d7ab801ee442f74050b84/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:19:5-23:19
 MERGED from [com.google.android.gms:play-services-base:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/638ebc24aa8d7ab801ee442f74050b84/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:19:5-23:19
+MERGED from [com.google.firebase:firebase-installations:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2a438fa80316fc78bfb2111ee64510e8/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:11:5-22:19
+MERGED from [com.google.firebase:firebase-installations:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2a438fa80316fc78bfb2111ee64510e8/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:11:5-22:19
+MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/b5f5eb4d4076ae6deba61237c6bca171/transformed/jetified-firebase-common-ktx-21.0.0/AndroidManifest.xml:8:5-16:19
+MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/b5f5eb4d4076ae6deba61237c6bca171/transformed/jetified-firebase-common-ktx-21.0.0/AndroidManifest.xml:8:5-16:19
+MERGED from [com.google.firebase:firebase-common:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2889f57b31988d1cc2012f0e3112c591/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:22:5-39:19
+MERGED from [com.google.firebase:firebase-common:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2889f57b31988d1cc2012f0e3112c591/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:22:5-39:19
 MERGED from [com.google.firebase:firebase-iid-interop:17.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/56937379bf953899fdb27518616b7b0a/transformed/jetified-firebase-iid-interop-17.1.0/AndroidManifest.xml:7:5-8:19
 MERGED from [com.google.firebase:firebase-iid-interop:17.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/56937379bf953899fdb27518616b7b0a/transformed/jetified-firebase-iid-interop-17.1.0/AndroidManifest.xml:7:5-8:19
 MERGED from [com.google.android.gms:play-services-stats:17.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/87294a21286e86a636f8fe8c1fe534d2/transformed/jetified-play-services-stats-17.0.2/AndroidManifest.xml:7:5-20
@@ -372,8 +388,6 @@ MERGED from [androidx.emoji2:emoji2:1.3.0] /Volumes/Externo-SSD/.gradle/caches/t
 MERGED from [androidx.emoji2:emoji2:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/aa76294ce89233065b023017f68bfdfe/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:23:5-33:19
 MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/3e7efd1693c893925625867d1a65f6f8/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:23:5-33:19
 MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/3e7efd1693c893925625867d1a65f6f8/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:23:5-33:19
-MERGED from [androidx.core:core:1.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96cfd11d0787b7e206ba5ac173c6951b/transformed/core-1.12.0/AndroidManifest.xml:28:5-89
-MERGED from [androidx.core:core:1.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96cfd11d0787b7e206ba5ac173c6951b/transformed/core-1.12.0/AndroidManifest.xml:28:5-89
 MERGED from [com.google.android.gms:play-services-tasks:18.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/dcd7f67ce51d313b4e1152e2427eb38d/transformed/jetified-play-services-tasks-18.1.0/AndroidManifest.xml:5:5-20
 MERGED from [com.google.android.gms:play-services-tasks:18.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/dcd7f67ce51d313b4e1152e2427eb38d/transformed/jetified-play-services-tasks-18.1.0/AndroidManifest.xml:5:5-20
 MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1dedfb1c27e20c2b7b8a674a141822ed/transformed/jetified-play-services-places-placereport-17.0.0/AndroidManifest.xml:22:5-20
@@ -382,8 +396,12 @@ MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Volumes
 MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2edcc4199eadc91b22a8446d82889b1b/transformed/jetified-firebase-measurement-connector-19.0.0/AndroidManifest.xml:22:5-23:19
 MERGED from [com.google.android.gms:play-services-basement:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/57ab2f0c649a437d4f20b73c5227d000/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:20:5-24:19
 MERGED from [com.google.android.gms:play-services-basement:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/57ab2f0c649a437d4f20b73c5227d000/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:20:5-24:19
-MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:23:5-53:19
-MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.core:core:1.13.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/09afc61b20fcfe9f7d7be4781536ad60/transformed/core-1.13.0/AndroidManifest.xml:28:5-89
+MERGED from [androidx.core:core:1.13.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/09afc61b20fcfe9f7d7be4781536ad60/transformed/core-1.13.0/AndroidManifest.xml:28:5-89
+MERGED from [androidx.room:room-runtime:2.5.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/937fe7ce55aa8d737d67e0b564430f78/transformed/room-runtime-2.5.0/AndroidManifest.xml:23:5-29:19
+MERGED from [androidx.room:room-runtime:2.5.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/937fe7ce55aa8d737d67e0b564430f78/transformed/room-runtime-2.5.0/AndroidManifest.xml:23:5-29:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:23:5-53:19
 MERGED from [androidx.startup:startup-runtime:1.1.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/dde88ecc82c371338ffc9bdef4a920ff/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
 MERGED from [androidx.startup:startup-runtime:1.1.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/dde88ecc82c371338ffc9bdef4a920ff/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
 MERGED from [com.github.bumptech.glide:gifdecoder:4.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d9e18c0910f957f42d84135786386b88/transformed/jetified-gifdecoder-4.12.0/AndroidManifest.xml:9:5-20
@@ -409,7 +427,7 @@ MERGED from [com.google.android.instantapps:instantapps:1.1.0] /Volumes/Externo-
 	android:extractNativeLibs
 		INJECTED from /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/android/app/src/debug/AndroidManifest.xml
 	android:appComponentFactory
-		ADDED from [androidx.core:core:1.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96cfd11d0787b7e206ba5ac173c6951b/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
+		ADDED from [androidx.core:core:1.13.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/09afc61b20fcfe9f7d7be4781536ad60/transformed/core-1.13.0/AndroidManifest.xml:28:18-86
 	android:label
 		ADDED from /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/android/app/src/main/AndroidManifest.xml:19:7-39
 		ADDED from /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/android/app/src/main/AndroidManifest.xml:19:7-39
@@ -500,6 +518,8 @@ MERGED from [:stripe_stripe-react-native] /Volumes/Externo-SSD/Documentos/trabaj
 MERGED from [:stripe_stripe-react-native] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/@stripe/stripe-react-native/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-device-info] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-device-info/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-device-info] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-device-info/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-geolocation-service] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-geolocation-service/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-geolocation-service] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-geolocation-service/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-gesture-handler] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-gesture-handler] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-image-crop-picker] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
@@ -510,6 +530,8 @@ MERGED from [:react-native-maps] /Volumes/Externo-SSD/Documentos/trabajo/native/
 MERGED from [:react-native-maps] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-maps/lib/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-pager-view] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-pager-view/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-pager-view] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-pager-view/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-permissions] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-permissions/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-permissions] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-permissions/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-prompt-android] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-prompt-android/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-prompt-android] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-prompt-android/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-push-notification] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-push-notification/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
@@ -526,8 +548,8 @@ MERGED from [:react-native-svg] /Volumes/Externo-SSD/Documentos/trabajo/native/b
 MERGED from [:react-native-svg] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-svg/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-vector-icons] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-vector-icons/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-vector-icons] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-vector-icons/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-video] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-video/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:react-native-video] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-video/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-video] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-video/android/buildOutput_a15d4dee7fc4eda61b91308cbb6a2e72/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-video] /Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/node_modules/react-native-video/android/buildOutput_a15d4dee7fc4eda61b91308cbb6a2e72/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [com.facebook.react:react-android:0.73.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/40d20c5853981a6afdeb59ae11366de2/transformed/jetified-react-android-0.73.2-debug/AndroidManifest.xml:10:5-44
 MERGED from [com.facebook.react:react-android:0.73.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/40d20c5853981a6afdeb59ae11366de2/transformed/jetified-react-android-0.73.2-debug/AndroidManifest.xml:10:5-44
 MERGED from [com.facebook.fresco:flipper-fresco-plugin:3.1.3] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d2058183c54c9449a538e4df59b33239/transformed/jetified-flipper-fresco-plugin-3.1.3/AndroidManifest.xml:11:5-44
@@ -574,8 +596,6 @@ MERGED from [com.stripe:financial-connections:20.48.6] /Volumes/Externo-SSD/.gra
 MERGED from [com.stripe:financial-connections:20.48.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e3d388f0ddb646ffcdc5623592d21374/transformed/jetified-financial-connections-20.48.6/AndroidManifest.xml:5:5-44
 MERGED from [com.github.yalantis:ucrop:2.2.6-native] /Volumes/Externo-SSD/.gradle/caches/transforms-3/001ea276bcf9bcf6a4f2f5339655c1ad/transformed/jetified-ucrop-2.2.6-native/AndroidManifest.xml:7:5-9:41
 MERGED from [com.github.yalantis:ucrop:2.2.6-native] /Volumes/Externo-SSD/.gradle/caches/transforms-3/001ea276bcf9bcf6a4f2f5339655c1ad/transformed/jetified-ucrop-2.2.6-native/AndroidManifest.xml:7:5-9:41
-MERGED from [com.github.adityaxjha:Android-ScalableVideoView:10e7b4da8b] /Volumes/Externo-SSD/.gradle/caches/transforms-3/a81e65c569382836b4f65892372e4c1c/transformed/jetified-Android-ScalableVideoView-10e7b4da8b/AndroidManifest.xml:5:5-7:41
-MERGED from [com.github.adityaxjha:Android-ScalableVideoView:10e7b4da8b] /Volumes/Externo-SSD/.gradle/caches/transforms-3/a81e65c569382836b4f65892372e4c1c/transformed/jetified-Android-ScalableVideoView-10e7b4da8b/AndroidManifest.xml:5:5-7:41
 MERGED from [com.facebook.stetho:stetho:1.6.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/6b1e0045f218cbd457b2af631dda7921/transformed/jetified-stetho-1.6.0/AndroidManifest.xml:7:5-9:41
 MERGED from [com.facebook.stetho:stetho:1.6.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/6b1e0045f218cbd457b2af631dda7921/transformed/jetified-stetho-1.6.0/AndroidManifest.xml:7:5-9:41
 MERGED from [com.stripe:stripe-android:20.48.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/0af2091de4a30a2bb965d03b52f3c16d/transformed/jetified-stripe-android-20.48.6/AndroidManifest.xml:5:5-44
@@ -610,18 +630,6 @@ MERGED from [androidx.appcompat:appcompat:1.6.1] /Volumes/Externo-SSD/.gradle/ca
 MERGED from [androidx.appcompat:appcompat:1.6.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/56e06eb9195213d05a6e15eb53816247/transformed/appcompat-1.6.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.work:work-runtime:2.8.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e85a3ef2980b41e2d8940604ff3f9c81/transformed/work-runtime-2.8.0/AndroidManifest.xml:21:5-44
 MERGED from [androidx.work:work-runtime:2.8.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e85a3ef2980b41e2d8940604ff3f9c81/transformed/work-runtime-2.8.0/AndroidManifest.xml:21:5-44
-MERGED from [androidx.room:room-runtime:2.5.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/937fe7ce55aa8d737d67e0b564430f78/transformed/room-runtime-2.5.0/AndroidManifest.xml:21:5-44
-MERGED from [androidx.room:room-runtime:2.5.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/937fe7ce55aa8d737d67e0b564430f78/transformed/room-runtime-2.5.0/AndroidManifest.xml:21:5-44
-MERGED from [androidx.sqlite:sqlite-framework:2.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/afbed1f722a87792985d167202e80767/transformed/sqlite-framework-2.3.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.sqlite:sqlite-framework:2.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/afbed1f722a87792985d167202e80767/transformed/sqlite-framework-2.3.0/AndroidManifest.xml:20:5-44
-MERGED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:20:5-44
-MERGED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:20:5-44
-MERGED from [com.google.firebase:firebase-installations:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2a438fa80316fc78bfb2111ee64510e8/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:5:5-44
-MERGED from [com.google.firebase:firebase-installations:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2a438fa80316fc78bfb2111ee64510e8/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:5:5-44
-MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/b5f5eb4d4076ae6deba61237c6bca171/transformed/jetified-firebase-common-ktx-21.0.0/AndroidManifest.xml:5:5-44
-MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/b5f5eb4d4076ae6deba61237c6bca171/transformed/jetified-firebase-common-ktx-21.0.0/AndroidManifest.xml:5:5-44
-MERGED from [com.google.firebase:firebase-common:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2889f57b31988d1cc2012f0e3112c591/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:19:5-44
-MERGED from [com.google.firebase:firebase-common:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2889f57b31988d1cc2012f0e3112c591/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:19:5-44
 MERGED from [com.stripe:stripe-ui-core:20.48.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/35ccc74d23dea32a8dbc03ec8c01fb2e/transformed/jetified-stripe-ui-core-20.48.6/AndroidManifest.xml:5:5-44
 MERGED from [com.stripe:stripe-ui-core:20.48.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/35ccc74d23dea32a8dbc03ec8c01fb2e/transformed/jetified-stripe-ui-core-20.48.6/AndroidManifest.xml:5:5-44
 MERGED from [androidx.navigation:navigation-common:2.7.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/3100b4ea335a8b56732e0e2daaa20e04/transformed/navigation-common-2.7.6/AndroidManifest.xml:20:5-44
@@ -642,8 +650,10 @@ MERGED from [androidx.legacy:legacy-support-v4:1.0.0] /Volumes/Externo-SSD/.grad
 MERGED from [androidx.legacy:legacy-support-v4:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/3bfe80acdfead638a42d4fc2fe2b5ac5/transformed/legacy-support-v4-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-iid:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1c6580f48318e118bca74be9ae7001c3/transformed/jetified-play-services-iid-17.0.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-iid:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1c6580f48318e118bca74be9ae7001c3/transformed/jetified-play-services-iid-17.0.0/AndroidManifest.xml:20:5-44
-MERGED from [com.google.android.gms:play-services-location:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/28d5cf329d7aefe2e603c98d20c29d7f/transformed/jetified-play-services-location-17.0.0/AndroidManifest.xml:5:5-44
-MERGED from [com.google.android.gms:play-services-location:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/28d5cf329d7aefe2e603c98d20c29d7f/transformed/jetified-play-services-location-17.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-location:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/a75aa147c0e40d34797078b5033befc8/transformed/jetified-play-services-location-18.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-location:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/a75aa147c0e40d34797078b5033befc8/transformed/jetified-play-services-location-18.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ed27774e5227b8b5f12165648b22621f/transformed/jetified-play-services-auth-api-phone-18.0.2/AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ed27774e5227b8b5f12165648b22621f/transformed/jetified-play-services-auth-api-phone-18.0.2/AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-auth-base:18.0.10] /Volumes/Externo-SSD/.gradle/caches/transforms-3/dd7e47b2a1940b40a4f9901ae60980ce/transformed/jetified-play-services-auth-base-18.0.10/AndroidManifest.xml:5:5-44
@@ -660,14 +670,18 @@ MERGED from [com.google.android.gms:play-services-identity:18.0.1] /Volumes/Exte
 MERGED from [com.google.android.gms:play-services-identity:18.0.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f2964615e5b1dbf6067aad4635def3af/transformed/jetified-play-services-identity-18.0.1/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-base:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/638ebc24aa8d7ab801ee442f74050b84/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:18:5-43
 MERGED from [com.google.android.gms:play-services-base:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/638ebc24aa8d7ab801ee442f74050b84/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:18:5-43
+MERGED from [com.google.firebase:firebase-installations:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2a438fa80316fc78bfb2111ee64510e8/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-installations:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2a438fa80316fc78bfb2111ee64510e8/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/b5f5eb4d4076ae6deba61237c6bca171/transformed/jetified-firebase-common-ktx-21.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/b5f5eb4d4076ae6deba61237c6bca171/transformed/jetified-firebase-common-ktx-21.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-common:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2889f57b31988d1cc2012f0e3112c591/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:19:5-44
+MERGED from [com.google.firebase:firebase-common:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2889f57b31988d1cc2012f0e3112c591/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:19:5-44
 MERGED from [com.google.firebase:firebase-iid-interop:17.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/56937379bf953899fdb27518616b7b0a/transformed/jetified-firebase-iid-interop-17.1.0/AndroidManifest.xml:5:5-44
 MERGED from [com.google.firebase:firebase-iid-interop:17.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/56937379bf953899fdb27518616b7b0a/transformed/jetified-firebase-iid-interop-17.1.0/AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-cloud-messaging:17.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f55b58fa6b16c5de39d5f2823e7a2aba/transformed/jetified-play-services-cloud-messaging-17.2.0/AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-cloud-messaging:17.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f55b58fa6b16c5de39d5f2823e7a2aba/transformed/jetified-play-services-cloud-messaging-17.2.0/AndroidManifest.xml:5:5-44
 MERGED from [com.stripe:stripe-core:20.48.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/bf1a86d9084c918a59b57716be7f68f6/transformed/jetified-stripe-core-20.48.6/AndroidManifest.xml:5:5-44
 MERGED from [com.stripe:stripe-core:20.48.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/bf1a86d9084c918a59b57716be7f68f6/transformed/jetified-stripe-core-20.48.6/AndroidManifest.xml:5:5-44
-MERGED from [com.google.accompanist:accompanist-systemuicontroller:0.32.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/3b443a1d5b8028809cc451ddc02fa1af/transformed/jetified-accompanist-systemuicontroller-0.32.0/AndroidManifest.xml:21:5-44
-MERGED from [com.google.accompanist:accompanist-systemuicontroller:0.32.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/3b443a1d5b8028809cc451ddc02fa1af/transformed/jetified-accompanist-systemuicontroller-0.32.0/AndroidManifest.xml:21:5-44
 MERGED from [androidx.compose.material3:material3:1.0.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/441fff5d3d7874e2acd9d63ab14dc173/transformed/jetified-material3-1.0.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.compose.material3:material3:1.0.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/441fff5d3d7874e2acd9d63ab14dc173/transformed/jetified-material3-1.0.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.compose.material:material-ripple-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4652042a8c005f073b8a752c3d42c2b7/transformed/jetified-material-ripple-release/AndroidManifest.xml:5:5-44
@@ -686,6 +700,22 @@ MERGED from [androidx.compose.foundation:foundation-layout-android:1.5.4] /Volum
 MERGED from [androidx.compose.foundation:foundation-layout-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ce0f907ace45bc30b8dbfeeeabeaa828/transformed/jetified-foundation-layout-release/AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.foundation:foundation-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f653f5ba2f184daad32e2281b59cd9bc/transformed/jetified-foundation-release/AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.foundation:foundation-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f653f5ba2f184daad32e2281b59cd9bc/transformed/jetified-foundation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2316cbe5625728c15cb60c3f059c78e1/transformed/jetified-ui-unit-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2316cbe5625728c15cb60c3f059c78e1/transformed/jetified-ui-unit-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/0827cd260fe0a932d47c6ba371cd2e77/transformed/jetified-ui-graphics-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/0827cd260fe0a932d47c6ba371cd2e77/transformed/jetified-ui-graphics-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/76ca34727248e3ec113483adcccaf1d0/transformed/jetified-ui-geometry-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/76ca34727248e3ec113483adcccaf1d0/transformed/jetified-ui-geometry-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c34b68f2969c4c1c2bcbfba30d75df9f/transformed/jetified-ui-text-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c34b68f2969c4c1c2bcbfba30d75df9f/transformed/jetified-ui-text-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/69719d417ab01881b81a45b10757432e/transformed/jetified-ui-util-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/69719d417ab01881b81a45b10757432e/transformed/jetified-ui-util-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/fd614eaf9258a3ae6d7e18bf43ea9925/transformed/jetified-ui-tooling-preview-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/fd614eaf9258a3ae6d7e18bf43ea9925/transformed/jetified-ui-tooling-preview-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-viewbinding:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/444d3ec3a7e69ffd4c7b06dcf88e1a35/transformed/jetified-ui-viewbinding-1.5.4/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-viewbinding:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/444d3ec3a7e69ffd4c7b06dcf88e1a35/transformed/jetified-ui-viewbinding-1.5.4/AndroidManifest.xml:5:5-44
+MERGED from [androidx.fragment:fragment-ktx:1.6.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/5513bb1c66c122165569d4f21a885c17/transformed/jetified-fragment-ktx-1.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment-ktx:1.6.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/5513bb1c66c122165569d4f21a885c17/transformed/jetified-fragment-ktx-1.6.2/AndroidManifest.xml:20:5-44
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ab487ea13057be42f2e7dfe5e4810ab3/transformed/legacy-support-core-ui-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ab487ea13057be42f2e7dfe5e4810ab3/transformed/legacy-support-core-ui-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-stats:17.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/87294a21286e86a636f8fe8c1fe534d2/transformed/jetified-play-services-stats-17.0.2/AndroidManifest.xml:5:5-44
@@ -700,32 +730,18 @@ MERGED from [androidx.emoji2:emoji2-views-helper:1.3.0] /Volumes/Externo-SSD/.gr
 MERGED from [androidx.emoji2:emoji2-views-helper:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2aeb06999570034c135a767202269fa0/transformed/jetified-emoji2-views-helper-1.3.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.emoji2:emoji2:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/aa76294ce89233065b023017f68bfdfe/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:21:5-44
 MERGED from [androidx.emoji2:emoji2:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/aa76294ce89233065b023017f68bfdfe/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:21:5-44
-MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f61134b919787c02d21a1ed8777f7b4a/transformed/jetified-savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f61134b919787c02d21a1ed8777f7b4a/transformed/jetified-savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.savedstate:savedstate:1.2.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c6e3cc2683995fda049d523069efa57a/transformed/jetified-savedstate-1.2.1/AndroidManifest.xml:20:5-44
-MERGED from [androidx.savedstate:savedstate:1.2.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c6e3cc2683995fda049d523069efa57a/transformed/jetified-savedstate-1.2.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata-ktx:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d4f015234b3885c1f796cfc3e4ee4564/transformed/jetified-lifecycle-livedata-ktx-2.7.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata-ktx:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d4f015234b3885c1f796cfc3e4ee4564/transformed/jetified-lifecycle-livedata-ktx-2.7.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/a5fec76edd8f8d7b8440f901ba297b08/transformed/jetified-lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/a5fec76edd8f8d7b8440f901ba297b08/transformed/jetified-lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/9b30c7e898a378f6a7a88b4e7a987e63/transformed/jetified-lifecycle-viewmodel-compose-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/9b30c7e898a378f6a7a88b4e7a987e63/transformed/jetified-lifecycle-viewmodel-compose-2.7.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e76c15278e2328776ca612327f0953dd/transformed/lifecycle-viewmodel-2.7.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e76c15278e2328776ca612327f0953dd/transformed/lifecycle-viewmodel-2.7.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-service:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/b8c1808629b7cb98d4933381fed91e51/transformed/jetified-lifecycle-service-2.7.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.lifecycle:lifecycle-service:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/b8c1808629b7cb98d4933381fed91e51/transformed/jetified-lifecycle-service-2.7.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/3e7efd1693c893925625867d1a65f6f8/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:21:5-44
 MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/3e7efd1693c893925625867d1a65f6f8/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:21:5-44
-MERGED from [androidx.compose.ui:ui-unit-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2316cbe5625728c15cb60c3f059c78e1/transformed/jetified-ui-unit-release/AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.ui:ui-unit-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2316cbe5625728c15cb60c3f059c78e1/transformed/jetified-ui-unit-release/AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.ui:ui-graphics-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/0827cd260fe0a932d47c6ba371cd2e77/transformed/jetified-ui-graphics-release/AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.ui:ui-graphics-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/0827cd260fe0a932d47c6ba371cd2e77/transformed/jetified-ui-graphics-release/AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.ui:ui-geometry-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/76ca34727248e3ec113483adcccaf1d0/transformed/jetified-ui-geometry-release/AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.ui:ui-geometry-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/76ca34727248e3ec113483adcccaf1d0/transformed/jetified-ui-geometry-release/AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.ui:ui-text-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c34b68f2969c4c1c2bcbfba30d75df9f/transformed/jetified-ui-text-release/AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.ui:ui-text-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c34b68f2969c4c1c2bcbfba30d75df9f/transformed/jetified-ui-text-release/AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.ui:ui-util-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/69719d417ab01881b81a45b10757432e/transformed/jetified-ui-util-release/AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.ui:ui-util-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/69719d417ab01881b81a45b10757432e/transformed/jetified-ui-util-release/AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/fd614eaf9258a3ae6d7e18bf43ea9925/transformed/jetified-ui-tooling-preview-release/AndroidManifest.xml:20:5-44
-MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/fd614eaf9258a3ae6d7e18bf43ea9925/transformed/jetified-ui-tooling-preview-release/AndroidManifest.xml:20:5-44
 MERGED from [androidx.compose.runtime:runtime-saveable-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/7e02bc536a83b79ea3035168f7369deb/transformed/jetified-runtime-saveable-release/AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.runtime:runtime-saveable-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/7e02bc536a83b79ea3035168f7369deb/transformed/jetified-runtime-saveable-release/AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.runtime:runtime-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/a45aea99e72bf3070e36f490d264b59d/transformed/jetified-runtime-release/AndroidManifest.xml:5:5-44
@@ -736,6 +752,70 @@ MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] /Volumes/Externo-SSD/.
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8eacff35703b16135d3ad1a26bcaa0d7/transformed/lifecycle-livedata-2.7.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e37c86142fd9e5db23a389b1f9c6d257/transformed/lifecycle-livedata-core-2.7.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e37c86142fd9e5db23a389b1f9c6d257/transformed/lifecycle-livedata-core-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f61134b919787c02d21a1ed8777f7b4a/transformed/jetified-savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f61134b919787c02d21a1ed8777f7b4a/transformed/jetified-savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c6e3cc2683995fda049d523069efa57a/transformed/jetified-savedstate-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c6e3cc2683995fda049d523069efa57a/transformed/jetified-savedstate-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/030cbecfd8f437e3e49960656b74bf38/transformed/lifecycle-runtime-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/030cbecfd8f437e3e49960656b74bf38/transformed/lifecycle-runtime-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/977bae687ca94bea56946a0a7ab3edeb/transformed/jetified-lifecycle-viewmodel-ktx-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/977bae687ca94bea56946a0a7ab3edeb/transformed/jetified-lifecycle-viewmodel-ktx-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/04b4fb61b18b03c0341993a37458c14e/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/04b4fb61b18b03c0341993a37458c14e/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ecd11514486b13470ad6980718b5bf19/transformed/jetified-lifecycle-runtime-ktx-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ecd11514486b13470ad6980718b5bf19/transformed/jetified-lifecycle-runtime-ktx-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.accompanist:accompanist-systemuicontroller:0.32.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/3b443a1d5b8028809cc451ddc02fa1af/transformed/jetified-accompanist-systemuicontroller-0.32.0/AndroidManifest.xml:21:5-44
+MERGED from [com.google.accompanist:accompanist-systemuicontroller:0.32.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/3b443a1d5b8028809cc451ddc02fa1af/transformed/jetified-accompanist-systemuicontroller-0.32.0/AndroidManifest.xml:21:5-44
+MERGED from [com.google.firebase:firebase-installations-interop:17.1.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ae3d6a7b71019ead75e3f53a41a37875/transformed/jetified-firebase-installations-interop-17.1.1/AndroidManifest.xml:17:5-44
+MERGED from [com.google.firebase:firebase-installations-interop:17.1.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ae3d6a7b71019ead75e3f53a41a37875/transformed/jetified-firebase-installations-interop-17.1.1/AndroidManifest.xml:17:5-44
+MERGED from [com.google.android.gms:play-services-tasks:18.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/dcd7f67ce51d313b4e1152e2427eb38d/transformed/jetified-play-services-tasks-18.1.0/AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-tasks:18.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/dcd7f67ce51d313b4e1152e2427eb38d/transformed/jetified-play-services-tasks-18.1.0/AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1dedfb1c27e20c2b7b8a674a141822ed/transformed/jetified-play-services-places-placereport-17.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1dedfb1c27e20c2b7b8a674a141822ed/transformed/jetified-play-services-places-placereport-17.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2edcc4199eadc91b22a8446d82889b1b/transformed/jetified-firebase-measurement-connector-19.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2edcc4199eadc91b22a8446d82889b1b/transformed/jetified-firebase-measurement-connector-19.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-basement:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/57ab2f0c649a437d4f20b73c5227d000/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-basement:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/57ab2f0c649a437d4f20b73c5227d000/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:18:5-43
+MERGED from [androidx.media3:media3-exoplayer-smoothstreaming:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/478f7483681219a34a0a080ab97d4ac6/transformed/jetified-media3-exoplayer-smoothstreaming-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-exoplayer-smoothstreaming:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/478f7483681219a34a0a080ab97d4ac6/transformed/jetified-media3-exoplayer-smoothstreaming-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-exoplayer-dash:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/64f39a4f434cef578563dc08fb24a83c/transformed/jetified-media3-exoplayer-dash-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-exoplayer-dash:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/64f39a4f434cef578563dc08fb24a83c/transformed/jetified-media3-exoplayer-dash-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-exoplayer-hls:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/49da96c17812376a5c235ad506167c16/transformed/jetified-media3-exoplayer-hls-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-exoplayer-hls:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/49da96c17812376a5c235ad506167c16/transformed/jetified-media3-exoplayer-hls-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-exoplayer:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/434df94197a5eb6301558dee9e1efd63/transformed/jetified-media3-exoplayer-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-exoplayer:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/434df94197a5eb6301558dee9e1efd63/transformed/jetified-media3-exoplayer-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-datasource-okhttp:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/aa952a02135d3c296bf577543a75a089/transformed/jetified-media3-datasource-okhttp-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-datasource-okhttp:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/aa952a02135d3c296bf577543a75a089/transformed/jetified-media3-datasource-okhttp-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-session:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4e6d93aad90e8f618ef21ff8986c2eb6/transformed/jetified-media3-session-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-session:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4e6d93aad90e8f618ef21ff8986c2eb6/transformed/jetified-media3-session-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-datasource:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/7a0b9f383ff22aaa18e6e014797afab6/transformed/jetified-media3-datasource-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-datasource:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/7a0b9f383ff22aaa18e6e014797afab6/transformed/jetified-media3-datasource-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-extractor:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/5ae905d1cfb19f54c871c69325bb3e6d/transformed/jetified-media3-extractor-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-extractor:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/5ae905d1cfb19f54c871c69325bb3e6d/transformed/jetified-media3-extractor-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-container:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/455145ee9768302e4ceda4b3755826cb/transformed/jetified-media3-container-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-container:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/455145ee9768302e4ceda4b3755826cb/transformed/jetified-media3-container-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-decoder:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d218c2c3d50b54ea550fa5e8593ebb7f/transformed/jetified-media3-decoder-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-decoder:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d218c2c3d50b54ea550fa5e8593ebb7f/transformed/jetified-media3-decoder-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-database:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8754484b337186cef63981f04a15895d/transformed/jetified-media3-database-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-database:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8754484b337186cef63981f04a15895d/transformed/jetified-media3-database-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-common:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/84d2cf0b84ae0139fd8e2609472be111/transformed/jetified-media3-common-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-common:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/84d2cf0b84ae0139fd8e2609472be111/transformed/jetified-media3-common-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-ui:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2daad04d11cb50b247efdeec3d8e99d2/transformed/jetified-media3-ui-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media3:media3-ui:1.4.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2daad04d11cb50b247efdeec3d8e99d2/transformed/jetified-media3-ui-1.4.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.3.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/6f01d58bb7d88b5e39c04ab14e17978d/transformed/recyclerview-1.3.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.3.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/6f01d58bb7d88b5e39c04ab14e17978d/transformed/recyclerview-1.3.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager2:viewpager2:1.1.0-beta02] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1a28ea7057da23bcf4777cb260c48c29/transformed/jetified-viewpager2-1.1.0-beta02/AndroidManifest.xml:5:5-44
+MERGED from [androidx.viewpager2:viewpager2:1.1.0-beta02] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1a28ea7057da23bcf4777cb260c48c29/transformed/jetified-viewpager2-1.1.0-beta02/AndroidManifest.xml:5:5-44
+MERGED from [androidx.fragment:fragment:1.6.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f65fc143c54eace30dbd809d6a97c7d7/transformed/fragment-1.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment:1.6.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f65fc143c54eace30dbd809d6a97c7d7/transformed/fragment-1.6.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.9.3] /Volumes/Externo-SSD/.gradle/caches/transforms-3/11af3be48b6d8bdaced50c6771948470/transformed/jetified-activity-1.9.3/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.9.3] /Volumes/Externo-SSD/.gradle/caches/transforms-3/11af3be48b6d8bdaced50c6771948470/transformed/jetified-activity-1.9.3/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity-ktx:1.9.3] /Volumes/Externo-SSD/.gradle/caches/transforms-3/84250e5b186cbf7e6a4db096bd2883cd/transformed/jetified-activity-ktx-1.9.3/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.9.3] /Volumes/Externo-SSD/.gradle/caches/transforms-3/84250e5b186cbf7e6a4db096bd2883cd/transformed/jetified-activity-ktx-1.9.3/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-compose:1.9.3] /Volumes/Externo-SSD/.gradle/caches/transforms-3/993ceb852e4dfb034f360f2b4b151287/transformed/jetified-activity-compose-1.9.3/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-compose:1.9.3] /Volumes/Externo-SSD/.gradle/caches/transforms-3/993ceb852e4dfb034f360f2b4b151287/transformed/jetified-activity-compose-1.9.3/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f99f7562da53a5f2f64b1db45314fd8/transformed/jetified-ui-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f99f7562da53a5f2f64b1db45314fd8/transformed/jetified-ui-release/AndroidManifest.xml:5:5-44
 MERGED from [androidx.autofill:autofill:1.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8305f20394eb3b743cc1c897bb3f352b/transformed/jetified-autofill-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.autofill:autofill:1.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8305f20394eb3b743cc1c897bb3f352b/transformed/jetified-autofill-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/06820d864440670608022bfc4d90100a/transformed/swiperefreshlayout-1.1.0/AndroidManifest.xml:20:5-22:41
@@ -748,18 +828,10 @@ MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Volumes/Externo-SSD/
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/71f2ba76550d2158209fa851e0c77645/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.browser:browser:1.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c35b0a8229b8d526329d4e4811b58f99/transformed/browser-1.7.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.browser:browser:1.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c35b0a8229b8d526329d4e4811b58f99/transformed/browser-1.7.0/AndroidManifest.xml:5:5-44
-MERGED from [androidx.media:media:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/529dd6374878d9c687090a6c067e103b/transformed/media-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.media:media:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/529dd6374878d9c687090a6c067e103b/transformed/media-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media:media:1.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f9e232e994a2cbea090daf144cf2491e/transformed/media-1.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.media:media:1.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f9e232e994a2cbea090daf144cf2491e/transformed/media-1.7.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.viewpager:viewpager:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/76dacaa624eee7c3190939e8fc82df07/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.viewpager:viewpager:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/76dacaa624eee7c3190939e8fc82df07/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.viewpager2:viewpager2:1.1.0-beta02] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1a28ea7057da23bcf4777cb260c48c29/transformed/jetified-viewpager2-1.1.0-beta02/AndroidManifest.xml:5:5-44
-MERGED from [androidx.viewpager2:viewpager2:1.1.0-beta02] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1a28ea7057da23bcf4777cb260c48c29/transformed/jetified-viewpager2-1.1.0-beta02/AndroidManifest.xml:5:5-44
-MERGED from [androidx.recyclerview:recyclerview:1.3.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/6f01d58bb7d88b5e39c04ab14e17978d/transformed/recyclerview-1.3.2/AndroidManifest.xml:20:5-44
-MERGED from [androidx.recyclerview:recyclerview:1.3.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/6f01d58bb7d88b5e39c04ab14e17978d/transformed/recyclerview-1.3.2/AndroidManifest.xml:20:5-44
-MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c42d0fd887629b45b3e9c5492327a24d/transformed/jetified-customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
-MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c42d0fd887629b45b3e9c5492327a24d/transformed/jetified-customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
-MERGED from [androidx.core:core-ktx:1.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/6c481e7f3eefd761739ad788d7352583/transformed/jetified-core-ktx-1.12.0/AndroidManifest.xml:5:5-44
-MERGED from [androidx.core:core-ktx:1.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/6c481e7f3eefd761739ad788d7352583/transformed/jetified-core-ktx-1.12.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/02a66f393c98bee0116f290a2c180446/transformed/slidingpanelayout-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/02a66f393c98bee0116f290a2c180446/transformed/slidingpanelayout-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/bf39dc2cd2bf5a9de910054210043283/transformed/asynclayoutinflater-1.0.0/AndroidManifest.xml:20:5-44
@@ -770,48 +842,24 @@ MERGED from [androidx.transition:transition:1.2.0] /Volumes/Externo-SSD/.gradle/
 MERGED from [androidx.transition:transition:1.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/80051f081e4b6dc1d6ec3edbaaf71621/transformed/transition-1.2.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.customview:customview:1.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d7fc7a032bd8bafed44b41510956b2db/transformed/customview-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.customview:customview:1.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d7fc7a032bd8bafed44b41510956b2db/transformed/customview-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.core:core:1.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96cfd11d0787b7e206ba5ac173c6951b/transformed/core-1.12.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.core:core:1.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96cfd11d0787b7e206ba5ac173c6951b/transformed/core-1.12.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/030cbecfd8f437e3e49960656b74bf38/transformed/lifecycle-runtime-2.7.0/AndroidManifest.xml:5:5-44
-MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/030cbecfd8f437e3e49960656b74bf38/transformed/lifecycle-runtime-2.7.0/AndroidManifest.xml:5:5-44
-MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/9b30c7e898a378f6a7a88b4e7a987e63/transformed/jetified-lifecycle-viewmodel-compose-2.7.0/AndroidManifest.xml:5:5-44
-MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/9b30c7e898a378f6a7a88b4e7a987e63/transformed/jetified-lifecycle-viewmodel-compose-2.7.0/AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.ui:ui-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f99f7562da53a5f2f64b1db45314fd8/transformed/jetified-ui-release/AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.ui:ui-android:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f99f7562da53a5f2f64b1db45314fd8/transformed/jetified-ui-release/AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.ui:ui-viewbinding:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/444d3ec3a7e69ffd4c7b06dcf88e1a35/transformed/jetified-ui-viewbinding-1.5.4/AndroidManifest.xml:5:5-44
-MERGED from [androidx.compose.ui:ui-viewbinding:1.5.4] /Volumes/Externo-SSD/.gradle/caches/transforms-3/444d3ec3a7e69ffd4c7b06dcf88e1a35/transformed/jetified-ui-viewbinding-1.5.4/AndroidManifest.xml:5:5-44
-MERGED from [androidx.fragment:fragment-ktx:1.6.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/5513bb1c66c122165569d4f21a885c17/transformed/jetified-fragment-ktx-1.6.2/AndroidManifest.xml:20:5-44
-MERGED from [androidx.fragment:fragment-ktx:1.6.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/5513bb1c66c122165569d4f21a885c17/transformed/jetified-fragment-ktx-1.6.2/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/977bae687ca94bea56946a0a7ab3edeb/transformed/jetified-lifecycle-viewmodel-ktx-2.7.0/AndroidManifest.xml:5:5-44
-MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/977bae687ca94bea56946a0a7ab3edeb/transformed/jetified-lifecycle-viewmodel-ktx-2.7.0/AndroidManifest.xml:5:5-44
-MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/04b4fb61b18b03c0341993a37458c14e/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/04b4fb61b18b03c0341993a37458c14e/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:20:5-44
-MERGED from [com.google.firebase:firebase-installations-interop:17.1.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ae3d6a7b71019ead75e3f53a41a37875/transformed/jetified-firebase-installations-interop-17.1.1/AndroidManifest.xml:17:5-44
-MERGED from [com.google.firebase:firebase-installations-interop:17.1.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ae3d6a7b71019ead75e3f53a41a37875/transformed/jetified-firebase-installations-interop-17.1.1/AndroidManifest.xml:17:5-44
-MERGED from [com.google.android.gms:play-services-tasks:18.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/dcd7f67ce51d313b4e1152e2427eb38d/transformed/jetified-play-services-tasks-18.1.0/AndroidManifest.xml:4:5-43
-MERGED from [com.google.android.gms:play-services-tasks:18.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/dcd7f67ce51d313b4e1152e2427eb38d/transformed/jetified-play-services-tasks-18.1.0/AndroidManifest.xml:4:5-43
-MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1dedfb1c27e20c2b7b8a674a141822ed/transformed/jetified-play-services-places-placereport-17.0.0/AndroidManifest.xml:20:5-44
-MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1dedfb1c27e20c2b7b8a674a141822ed/transformed/jetified-play-services-places-placereport-17.0.0/AndroidManifest.xml:20:5-44
-MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2edcc4199eadc91b22a8446d82889b1b/transformed/jetified-firebase-measurement-connector-19.0.0/AndroidManifest.xml:20:5-44
-MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2edcc4199eadc91b22a8446d82889b1b/transformed/jetified-firebase-measurement-connector-19.0.0/AndroidManifest.xml:20:5-44
-MERGED from [com.google.android.gms:play-services-basement:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/57ab2f0c649a437d4f20b73c5227d000/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:18:5-43
-MERGED from [com.google.android.gms:play-services-basement:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/57ab2f0c649a437d4f20b73c5227d000/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:18:5-43
-MERGED from [androidx.fragment:fragment:1.6.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f65fc143c54eace30dbd809d6a97c7d7/transformed/fragment-1.6.2/AndroidManifest.xml:20:5-44
-MERGED from [androidx.fragment:fragment:1.6.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f65fc143c54eace30dbd809d6a97c7d7/transformed/fragment-1.6.2/AndroidManifest.xml:20:5-44
-MERGED from [androidx.activity:activity:1.8.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/37eb9a701568d493c273331080b828bd/transformed/jetified-activity-1.8.2/AndroidManifest.xml:20:5-44
-MERGED from [androidx.activity:activity:1.8.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/37eb9a701568d493c273331080b828bd/transformed/jetified-activity-1.8.2/AndroidManifest.xml:20:5-44
-MERGED from [androidx.activity:activity-compose:1.8.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/311f5c62638a6edee45ffab4bbcf8587/transformed/jetified-activity-compose-1.8.2/AndroidManifest.xml:5:5-44
-MERGED from [androidx.activity:activity-compose:1.8.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/311f5c62638a6edee45ffab4bbcf8587/transformed/jetified-activity-compose-1.8.2/AndroidManifest.xml:5:5-44
-MERGED from [androidx.activity:activity-ktx:1.8.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/dccc9ec1476e4cfea022ee1908151135/transformed/jetified-activity-ktx-1.8.2/AndroidManifest.xml:5:5-44
-MERGED from [androidx.activity:activity-ktx:1.8.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/dccc9ec1476e4cfea022ee1908151135/transformed/jetified-activity-ktx-1.8.2/AndroidManifest.xml:5:5-44
-MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ecd11514486b13470ad6980718b5bf19/transformed/jetified-lifecycle-runtime-ktx-2.7.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/ecd11514486b13470ad6980718b5bf19/transformed/jetified-lifecycle-runtime-ktx-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.13.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/09afc61b20fcfe9f7d7be4781536ad60/transformed/core-1.13.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.13.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/09afc61b20fcfe9f7d7be4781536ad60/transformed/core-1.13.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c42d0fd887629b45b3e9c5492327a24d/transformed/jetified-customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c42d0fd887629b45b3e9c5492327a24d/transformed/jetified-customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.core:core-ktx:1.13.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c48320bdbb231824489ecc5e186e4427/transformed/jetified-core-ktx-1.13.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.13.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/c48320bdbb231824489ecc5e186e4427/transformed/jetified-core-ktx-1.13.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.room:room-runtime:2.5.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/937fe7ce55aa8d737d67e0b564430f78/transformed/room-runtime-2.5.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.room:room-runtime:2.5.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/937fe7ce55aa8d737d67e0b564430f78/transformed/room-runtime-2.5.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.sqlite:sqlite-framework:2.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/afbed1f722a87792985d167202e80767/transformed/sqlite-framework-2.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.sqlite:sqlite-framework:2.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/afbed1f722a87792985d167202e80767/transformed/sqlite-framework-2.3.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e0974cf2c52d06e49b68ae30425c2057/transformed/jetified-annotation-experimental-1.4.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e0974cf2c52d06e49b68ae30425c2057/transformed/jetified-annotation-experimental-1.4.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.sqlite:sqlite:2.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96caa38852a32f60344438a8c83c934e/transformed/sqlite-2.3.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.sqlite:sqlite:2.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96caa38852a32f60344438a8c83c934e/transformed/sqlite-2.3.0/AndroidManifest.xml:20:5-44
 MERGED from [com.facebook.react:hermes-android:0.73.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4335bf80da85c7b1ee02b6a1f0a2fc3d/transformed/jetified-hermes-android-0.73.2-debug/AndroidManifest.xml:5:5-44
 MERGED from [com.facebook.react:hermes-android:0.73.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4335bf80da85c7b1ee02b6a1f0a2fc3d/transformed/jetified-hermes-android-0.73.2-debug/AndroidManifest.xml:5:5-44
-MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:21:5-44
-MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:21:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:21:5-44
 MERGED from [androidx.startup:startup-runtime:1.1.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/dde88ecc82c371338ffc9bdef4a920ff/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
 MERGED from [androidx.startup:startup-runtime:1.1.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/dde88ecc82c371338ffc9bdef4a920ff/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
 MERGED from [androidx.tracing:tracing:1.1.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/47bed6cc9c43a6c622ea8d4b5e4c82f6/transformed/jetified-tracing-1.1.0/AndroidManifest.xml:20:5-22:41
@@ -822,10 +870,10 @@ MERGED from [androidx.interpolator:interpolator:1.0.0] /Volumes/Externo-SSD/.gra
 MERGED from [androidx.interpolator:interpolator:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/fdf890bb0d5b814551f9827c8e8f5b13/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [com.github.bumptech.glide:gifdecoder:4.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d9e18c0910f957f42d84135786386b88/transformed/jetified-gifdecoder-4.12.0/AndroidManifest.xml:5:5-7:41
 MERGED from [com.github.bumptech.glide:gifdecoder:4.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d9e18c0910f957f42d84135786386b88/transformed/jetified-gifdecoder-4.12.0/AndroidManifest.xml:5:5-7:41
-MERGED from [androidx.exifinterface:exifinterface:1.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96fa2e306677ebb1bb9e865af5386e60/transformed/exifinterface-1.2.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.exifinterface:exifinterface:1.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96fa2e306677ebb1bb9e865af5386e60/transformed/exifinterface-1.2.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2617fa0bd621fbff25f536175dabbdec/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2617fa0bd621fbff25f536175dabbdec/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/adb572d3396da91b4c8e82aae5391458/transformed/exifinterface-1.3.6/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.6] /Volumes/Externo-SSD/.gradle/caches/transforms-3/adb572d3396da91b4c8e82aae5391458/transformed/exifinterface-1.3.6/AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.firebase:firebase-components:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1541a64b7a321f358605ff8d1c9e01dc/transformed/jetified-firebase-components-18.0.0/AndroidManifest.xml:18:5-44
 MERGED from [com.google.firebase:firebase-components:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1541a64b7a321f358605ff8d1c9e01dc/transformed/jetified-firebase-components-18.0.0/AndroidManifest.xml:18:5-44
 MERGED from [com.google.firebase:firebase-datatransport:18.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/fdf7283a5f1c51faedc5ba1babef0213/transformed/jetified-firebase-datatransport-18.2.0/AndroidManifest.xml:18:5-44
@@ -850,8 +898,6 @@ MERGED from [androidx.cardview:cardview:1.0.0] /Volumes/Externo-SSD/.gradle/cach
 MERGED from [androidx.cardview:cardview:1.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/b6fd6e089d1fa589e7d66053083b84a2/transformed/cardview-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.arch.core:core-runtime:2.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/31358813bb7eafb1fd8470eb6936d30f/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.arch.core:core-runtime:2.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/31358813bb7eafb1fd8470eb6936d30f/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.annotation:annotation-experimental:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/a9eba46da7affba4024d6c65434e6db0/transformed/jetified-annotation-experimental-1.3.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.annotation:annotation-experimental:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/a9eba46da7affba4024d6c65434e6db0/transformed/jetified-annotation-experimental-1.3.0/AndroidManifest.xml:20:5-44
 MERGED from [com.facebook.fbjni:fbjni:0.5.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/9b19b78018c4544139b511698734f1d3/transformed/jetified-fbjni-0.5.1/AndroidManifest.xml:5:5-44
 MERGED from [com.facebook.fbjni:fbjni:0.5.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/9b19b78018c4544139b511698734f1d3/transformed/jetified-fbjni-0.5.1/AndroidManifest.xml:5:5-44
 MERGED from [com.facebook.soloader:soloader:0.10.5] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d226b9defa590c07510afd3d58e4276f/transformed/jetified-soloader-0.10.5/AndroidManifest.xml:7:5-9:41
@@ -1318,8 +1364,8 @@ MERGED from [androidx.emoji2:emoji2:1.3.0] /Volumes/Externo-SSD/.gradle/caches/t
 MERGED from [androidx.emoji2:emoji2:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/aa76294ce89233065b023017f68bfdfe/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
 MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/3e7efd1693c893925625867d1a65f6f8/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:24:9-32:20
 MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/3e7efd1693c893925625867d1a65f6f8/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:24:9-32:20
-MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:24:9-32:20
-MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:24:9-32:20
 MERGED from [androidx.startup:startup-runtime:1.1.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/dde88ecc82c371338ffc9bdef4a920ff/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
 MERGED from [androidx.startup:startup-runtime:1.1.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/dde88ecc82c371338ffc9bdef4a920ff/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
 	tools:node
@@ -1538,30 +1584,40 @@ action#androidx.work.diagnostics.REQUEST_DIAGNOSTICS
 ADDED from [androidx.work:work-runtime:2.8.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e85a3ef2980b41e2d8940604ff3f9c81/transformed/work-runtime-2.8.0/AndroidManifest.xml:140:17-88
 	android:name
 		ADDED from [androidx.work:work-runtime:2.8.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/e85a3ef2980b41e2d8940604ff3f9c81/transformed/work-runtime-2.8.0/AndroidManifest.xml:140:25-85
-service#androidx.room.MultiInstanceInvalidationService
-ADDED from [androidx.room:room-runtime:2.5.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/937fe7ce55aa8d737d67e0b564430f78/transformed/room-runtime-2.5.0/AndroidManifest.xml:24:9-28:63
+activity#com.google.android.gms.auth.api.signin.internal.SignInHubActivity
+ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:23:9-27:75
+	android:excludeFromRecents
+		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:25:13-46
 	android:exported
-		ADDED from [androidx.room:room-runtime:2.5.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/937fe7ce55aa8d737d67e0b564430f78/transformed/room-runtime-2.5.0/AndroidManifest.xml:27:13-37
-	tools:ignore
-		ADDED from [androidx.room:room-runtime:2.5.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/937fe7ce55aa8d737d67e0b564430f78/transformed/room-runtime-2.5.0/AndroidManifest.xml:28:13-60
-	android:directBootAware
-		ADDED from [androidx.room:room-runtime:2.5.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/937fe7ce55aa8d737d67e0b564430f78/transformed/room-runtime-2.5.0/AndroidManifest.xml:26:13-43
+		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:26:13-37
+	android:theme
+		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:27:13-72
 	android:name
-		ADDED from [androidx.room:room-runtime:2.5.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/937fe7ce55aa8d737d67e0b564430f78/transformed/room-runtime-2.5.0/AndroidManifest.xml:25:13-74
+		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:24:13-93
+service#com.google.android.gms.auth.api.signin.RevocationBoundService
+ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:33:9-37:51
+	android:exported
+		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:35:13-36
+	android:visibleToInstantApps
+		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:37:13-48
+	android:permission
+		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:36:13-107
+	android:name
+		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:34:13-89
+uses-permission#com.google.android.c2dm.permission.RECEIVE
+ADDED from [com.google.android.gms:play-services-iid:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1c6580f48318e118bca74be9ae7001c3/transformed/jetified-play-services-iid-17.0.0/AndroidManifest.xml:23:5-82
+MERGED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:26:5-82
+MERGED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:26:5-82
+MERGED from [com.google.android.gms:play-services-cloud-messaging:17.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f55b58fa6b16c5de39d5f2823e7a2aba/transformed/jetified-play-services-cloud-messaging-17.2.0/AndroidManifest.xml:11:5-82
+MERGED from [com.google.android.gms:play-services-cloud-messaging:17.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f55b58fa6b16c5de39d5f2823e7a2aba/transformed/jetified-play-services-cloud-messaging-17.2.0/AndroidManifest.xml:11:5-82
+	android:name
+		ADDED from [com.google.android.gms:play-services-iid:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1c6580f48318e118bca74be9ae7001c3/transformed/jetified-play-services-iid-17.0.0/AndroidManifest.xml:23:22-79
 uses-permission#android.permission.POST_NOTIFICATIONS
 ADDED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:23:5-77
 MERGED from [app.notifee:core:202108261754] /Volumes/Externo-SSD/.gradle/caches/transforms-3/17bcdd11661cbf438fa595becc06d13d/transformed/jetified-core-202108261754/AndroidManifest.xml:9:5-77
 MERGED from [app.notifee:core:202108261754] /Volumes/Externo-SSD/.gradle/caches/transforms-3/17bcdd11661cbf438fa595becc06d13d/transformed/jetified-core-202108261754/AndroidManifest.xml:9:5-77
 	android:name
 		ADDED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:23:22-74
-uses-permission#com.google.android.c2dm.permission.RECEIVE
-ADDED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:26:5-82
-MERGED from [com.google.android.gms:play-services-iid:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1c6580f48318e118bca74be9ae7001c3/transformed/jetified-play-services-iid-17.0.0/AndroidManifest.xml:23:5-82
-MERGED from [com.google.android.gms:play-services-iid:17.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1c6580f48318e118bca74be9ae7001c3/transformed/jetified-play-services-iid-17.0.0/AndroidManifest.xml:23:5-82
-MERGED from [com.google.android.gms:play-services-cloud-messaging:17.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f55b58fa6b16c5de39d5f2823e7a2aba/transformed/jetified-play-services-cloud-messaging-17.2.0/AndroidManifest.xml:11:5-82
-MERGED from [com.google.android.gms:play-services-cloud-messaging:17.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/f55b58fa6b16c5de39d5f2823e7a2aba/transformed/jetified-play-services-cloud-messaging-17.2.0/AndroidManifest.xml:11:5-82
-	android:name
-		ADDED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:26:22-79
 receiver#com.google.firebase.iid.FirebaseInstanceIdReceiver
 ADDED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:29:9-40:20
 	android:exported
@@ -1596,6 +1652,24 @@ ADDED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/
 		ADDED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:62:17-82
 	android:name
 		ADDED from [com.google.firebase:firebase-messaging:24.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/8f050a2f810728e485ed04ada007be89/transformed/jetified-firebase-messaging-24.0.0/AndroidManifest.xml:61:17-119
+uses-feature#0x00020000
+ADDED from [com.google.android.gms:play-services-maps:18.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4e4aac19baf31ccc4a2f6b9971b60d7c/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:26:5-28:35
+	android:glEsVersion
+		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4e4aac19baf31ccc4a2f6b9971b60d7c/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:27:9-41
+	android:required
+		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4e4aac19baf31ccc4a2f6b9971b60d7c/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:28:9-32
+package#com.google.android.apps.maps
+ADDED from [com.google.android.gms:play-services-maps:18.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4e4aac19baf31ccc4a2f6b9971b60d7c/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:33:9-64
+	android:name
+		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4e4aac19baf31ccc4a2f6b9971b60d7c/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:33:18-61
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from [com.google.android.gms:play-services-base:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/638ebc24aa8d7ab801ee442f74050b84/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:20:9-22:45
+	android:exported
+		ADDED from [com.google.android.gms:play-services-base:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/638ebc24aa8d7ab801ee442f74050b84/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:22:19-43
+	android:theme
+		ADDED from [com.google.android.gms:play-services-base:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/638ebc24aa8d7ab801ee442f74050b84/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:21:19-78
+	android:name
+		ADDED from [com.google.android.gms:play-services-base:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/638ebc24aa8d7ab801ee442f74050b84/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:20:19-85
 meta-data#com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsKtxRegistrar
 ADDED from [com.google.firebase:firebase-installations:18.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2a438fa80316fc78bfb2111ee64510e8/transformed/jetified-firebase-installations-18.0.0/AndroidManifest.xml:15:13-17:85
 	android:value
@@ -1632,44 +1706,6 @@ ADDED from [com.google.firebase:firebase-common:21.0.0] /Volumes/Externo-SSD/.gr
 		ADDED from [com.google.firebase:firebase-common:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2889f57b31988d1cc2012f0e3112c591/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:37:17-82
 	android:name
 		ADDED from [com.google.firebase:firebase-common:21.0.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/2889f57b31988d1cc2012f0e3112c591/transformed/jetified-firebase-common-21.0.0/AndroidManifest.xml:36:17-109
-activity#com.google.android.gms.auth.api.signin.internal.SignInHubActivity
-ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:23:9-27:75
-	android:excludeFromRecents
-		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:25:13-46
-	android:exported
-		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:26:13-37
-	android:theme
-		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:27:13-72
-	android:name
-		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:24:13-93
-service#com.google.android.gms.auth.api.signin.RevocationBoundService
-ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:33:9-37:51
-	android:exported
-		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:35:13-36
-	android:visibleToInstantApps
-		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:37:13-48
-	android:permission
-		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:36:13-107
-	android:name
-		ADDED from [com.google.android.gms:play-services-auth:21.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/1e6a27e531e00414130aef1bc0e11341/transformed/jetified-play-services-auth-21.2.0/AndroidManifest.xml:34:13-89
-uses-feature#0x00020000
-ADDED from [com.google.android.gms:play-services-maps:18.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4e4aac19baf31ccc4a2f6b9971b60d7c/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:26:5-28:35
-	android:glEsVersion
-		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4e4aac19baf31ccc4a2f6b9971b60d7c/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:27:9-41
-	android:required
-		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4e4aac19baf31ccc4a2f6b9971b60d7c/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:28:9-32
-package#com.google.android.apps.maps
-ADDED from [com.google.android.gms:play-services-maps:18.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4e4aac19baf31ccc4a2f6b9971b60d7c/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:33:9-64
-	android:name
-		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /Volumes/Externo-SSD/.gradle/caches/transforms-3/4e4aac19baf31ccc4a2f6b9971b60d7c/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:33:18-61
-activity#com.google.android.gms.common.api.GoogleApiActivity
-ADDED from [com.google.android.gms:play-services-base:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/638ebc24aa8d7ab801ee442f74050b84/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:20:9-22:45
-	android:exported
-		ADDED from [com.google.android.gms:play-services-base:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/638ebc24aa8d7ab801ee442f74050b84/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:22:19-43
-	android:theme
-		ADDED from [com.google.android.gms:play-services-base:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/638ebc24aa8d7ab801ee442f74050b84/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:21:19-78
-	android:name
-		ADDED from [com.google.android.gms:play-services-base:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/638ebc24aa8d7ab801ee442f74050b84/transformed/jetified-play-services-base-18.3.0/AndroidManifest.xml:20:19-85
 meta-data#androidx.emoji2.text.EmojiCompatInitializer
 ADDED from [androidx.emoji2:emoji2:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/aa76294ce89233065b023017f68bfdfe/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
 	android:value
@@ -1682,26 +1718,6 @@ ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] /Volumes/Externo-SSD/.gr
 		ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/3e7efd1693c893925625867d1a65f6f8/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
 	android:name
 		ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/3e7efd1693c893925625867d1a65f6f8/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
-ADDED from [androidx.core:core:1.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96cfd11d0787b7e206ba5ac173c6951b/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
-	android:protectionLevel
-		ADDED from [androidx.core:core:1.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96cfd11d0787b7e206ba5ac173c6951b/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
-	android:name
-		ADDED from [androidx.core:core:1.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96cfd11d0787b7e206ba5ac173c6951b/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
-permission#com.besseri.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
-ADDED from [androidx.core:core:1.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96cfd11d0787b7e206ba5ac173c6951b/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
-	android:protectionLevel
-		ADDED from [androidx.core:core:1.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96cfd11d0787b7e206ba5ac173c6951b/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
-	android:name
-		ADDED from [androidx.core:core:1.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96cfd11d0787b7e206ba5ac173c6951b/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
-uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
-ADDED from [androidx.core:core:1.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96cfd11d0787b7e206ba5ac173c6951b/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
-	android:name
-		ADDED from [androidx.core:core:1.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96cfd11d0787b7e206ba5ac173c6951b/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
-uses-permission#com.besseri.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
-ADDED from [androidx.core:core:1.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96cfd11d0787b7e206ba5ac173c6951b/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
-	android:name
-		ADDED from [androidx.core:core:1.12.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/96cfd11d0787b7e206ba5ac173c6951b/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
 meta-data#com.google.android.gms.version
 ADDED from [com.google.android.gms:play-services-basement:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/57ab2f0c649a437d4f20b73c5227d000/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:21:9-23:69
 MERGED from [com.google.maps.android:android-maps-utils:0.5] /Volumes/Externo-SSD/.gradle/caches/transforms-3/5b1049a79941c879cf0796ab170eb923/transformed/jetified-android-maps-utils-0.5/AndroidManifest.xml:8:9-10:69
@@ -1710,48 +1726,78 @@ MERGED from [com.google.maps.android:android-maps-utils:0.5] /Volumes/Externo-SS
 		ADDED from [com.google.android.gms:play-services-basement:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/57ab2f0c649a437d4f20b73c5227d000/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:23:13-66
 	android:name
 		ADDED from [com.google.android.gms:play-services-basement:18.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/57ab2f0c649a437d4f20b73c5227d000/transformed/jetified-play-services-basement-18.3.0/AndroidManifest.xml:22:13-58
-meta-data#androidx.profileinstaller.ProfileInstallerInitializer
-ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
-	android:value
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.13.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/09afc61b20fcfe9f7d7be4781536ad60/transformed/core-1.13.0/AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.13.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/09afc61b20fcfe9f7d7be4781536ad60/transformed/core-1.13.0/AndroidManifest.xml:24:9-44
 	android:name
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
-receiver#androidx.profileinstaller.ProfileInstallReceiver
-ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
-	android:enabled
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+		ADDED from [androidx.core:core:1.13.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/09afc61b20fcfe9f7d7be4781536ad60/transformed/core-1.13.0/AndroidManifest.xml:23:9-81
+permission#com.besseri.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.13.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/09afc61b20fcfe9f7d7be4781536ad60/transformed/core-1.13.0/AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.13.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/09afc61b20fcfe9f7d7be4781536ad60/transformed/core-1.13.0/AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.13.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/09afc61b20fcfe9f7d7be4781536ad60/transformed/core-1.13.0/AndroidManifest.xml:23:9-81
+uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.13.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/09afc61b20fcfe9f7d7be4781536ad60/transformed/core-1.13.0/AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.13.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/09afc61b20fcfe9f7d7be4781536ad60/transformed/core-1.13.0/AndroidManifest.xml:26:22-94
+uses-permission#com.besseri.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.13.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/09afc61b20fcfe9f7d7be4781536ad60/transformed/core-1.13.0/AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.13.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/09afc61b20fcfe9f7d7be4781536ad60/transformed/core-1.13.0/AndroidManifest.xml:26:22-94
+service#androidx.room.MultiInstanceInvalidationService
+ADDED from [androidx.room:room-runtime:2.5.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/937fe7ce55aa8d737d67e0b564430f78/transformed/room-runtime-2.5.0/AndroidManifest.xml:24:9-28:63
 	android:exported
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
-	android:permission
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+		ADDED from [androidx.room:room-runtime:2.5.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/937fe7ce55aa8d737d67e0b564430f78/transformed/room-runtime-2.5.0/AndroidManifest.xml:27:13-37
+	tools:ignore
+		ADDED from [androidx.room:room-runtime:2.5.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/937fe7ce55aa8d737d67e0b564430f78/transformed/room-runtime-2.5.0/AndroidManifest.xml:28:13-60
 	android:directBootAware
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+		ADDED from [androidx.room:room-runtime:2.5.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/937fe7ce55aa8d737d67e0b564430f78/transformed/room-runtime-2.5.0/AndroidManifest.xml:26:13-43
 	android:name
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+		ADDED from [androidx.room:room-runtime:2.5.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/937fe7ce55aa8d737d67e0b564430f78/transformed/room-runtime-2.5.0/AndroidManifest.xml:25:13-74
+meta-data#androidx.profileinstaller.ProfileInstallerInitializer
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+receiver#androidx.profileinstaller.ProfileInstallReceiver
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+	android:enabled
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+	android:permission
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+	android:directBootAware
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
 intent-filter#action:name:androidx.profileinstaller.action.INSTALL_PROFILE
-ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
 action#androidx.profileinstaller.action.INSTALL_PROFILE
-ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
 	android:name
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
 intent-filter#action:name:androidx.profileinstaller.action.SKIP_FILE
-ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
 action#androidx.profileinstaller.action.SKIP_FILE
-ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
 	android:name
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
 intent-filter#action:name:androidx.profileinstaller.action.SAVE_PROFILE
-ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
 action#androidx.profileinstaller.action.SAVE_PROFILE
-ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
 	android:name
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
 intent-filter#action:name:androidx.profileinstaller.action.BENCHMARK_OPERATION
-ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
 action#androidx.profileinstaller.action.BENCHMARK_OPERATION
-ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
 	android:name
-		ADDED from [androidx.profileinstaller:profileinstaller:1.3.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/d8e98a99aee5fcc25cd67ee6653720f5/transformed/jetified-profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /Volumes/Externo-SSD/.gradle/caches/transforms-3/59f379e630d33864cbd9033a6e0193b6/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
 meta-data#com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar
 ADDED from [com.google.firebase:firebase-datatransport:18.2.0] /Volumes/Externo-SSD/.gradle/caches/transforms-3/fdf7283a5f1c51faedc5ba1babef0213/transformed/jetified-firebase-datatransport-18.2.0/AndroidManifest.xml:25:13-27:85
 	android:value

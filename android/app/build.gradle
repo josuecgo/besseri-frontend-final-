@@ -92,8 +92,8 @@ android {
         applicationId "com.besseri"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 75
-        versionName "7.5"
+        versionCode 81
+        versionName "8.1"
     }
     signingConfigs {
         debug {
@@ -134,6 +134,13 @@ dependencies {
         implementation("com.facebook.react:hermes-android")
     } else {
         implementation jscFlavor
+    }
+}
+configurations.all {
+    resolutionStrategy {
+        // Forzar las dependencias androidx.core a una versión anterior compatible con AGP 8.1.1
+        force 'androidx.core:core:1.13.0'
+        force 'androidx.core:core-ktx:1.13.0'
     }
 }
 

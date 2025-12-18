@@ -253,6 +253,8 @@ export const CustomerHomeStack = () => {
 
   const { user } = useSelector(state => state?.user)
 
+
+  
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
@@ -260,22 +262,8 @@ export const CustomerHomeStack = () => {
       
     >
       {
-        user?.role === 'client' || !user && (
-          <Stack.Screen
-            name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS}
-            component={HomeScreen}
-            options={{
-              headerShown: true,
-              header: props => (
-                <CustomHeaderComponent {...props} name="Home" />
-              ),
-            }}
-          />
-       )
-      } 
-
-
-      <Stack.Screen
+        (user?.role === 'mechanic' || !user) && (
+           <Stack.Screen
         name={CUSTOMER_HOME_SCREEN_ROUTES.QUOTE_FORM_SCREEN}
         component={QuoteFormScreen}
         options={{
@@ -289,6 +277,23 @@ export const CustomerHomeStack = () => {
           ),
         }}
       />
+         
+         
+       )
+      } 
+
+
+
+       <Stack.Screen
+            name={CUSTOMER_HOME_SCREEN_ROUTES.SHOW_AUTO_PARTS}
+            component={HomeScreen}
+            options={{
+              headerShown: true,
+              header: props => (
+                <CustomHeaderComponent {...props} name="Home" />
+              ),
+            }} 
+          />
 
 
       <Stack.Screen

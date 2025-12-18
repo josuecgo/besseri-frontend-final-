@@ -74,12 +74,16 @@ const ForgotPasswordScreen = ({navigation}) => {
       "Código de verificación",
       "¿Porque medio desea recibir su código de verificación?",
       [
+        // {
+        //   text: "Correo",
+        //   onPress: () => sendCode('email')
+        // },
         {
-          text: "Correo",
-          onPress: () => sendCode('email')
+          text: "Cancelar",
+          onPress: () => {}
         },
         {
-          text: "SMS",
+          text: "Enviar SMS",
           onPress: () => sendCode('sms'),
 
         },

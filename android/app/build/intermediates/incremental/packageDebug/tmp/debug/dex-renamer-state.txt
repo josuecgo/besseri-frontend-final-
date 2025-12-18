@@ -1,8 +1,10 @@
-#Wed Oct 15 15:20:41 CST 2025
+#Thu Dec 18 11:08:56 CST 2025
 path.4=8/classes.dex
 path.3=14/classes.dex
 path.2=0/classes.dex
 path.1=0/classes.dex
+renamed.8=classes9.dex
+path.8=classes5.dex
 path.7=classes4.dex
 path.6=classes3.dex
 path.5=classes2.dex
@@ -17,6 +19,7 @@ renamed.2=classes3.dex
 renamed.1=classes2.dex
 renamed.0=classes.dex
 renamed.7=classes8.dex
+base.8=/Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/android/app/build/intermediates/dex/debug/mergeExtDexDebug/classes5.dex
 renamed.6=classes7.dex
 base.7=/Volumes/Externo-SSD/Documentos/trabajo/native/besser/customer-besser/android/app/build/intermediates/dex/debug/mergeExtDexDebug/classes4.dex
 renamed.5=classes6.dex

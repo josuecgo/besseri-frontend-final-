@@ -28,7 +28,7 @@ import { PrivateScreen } from '../Chat/PrivateScreen';
 
 import CustomerOrderDetail from './Orders/customer.orderdetail.screen';
 
-import { CustomerOrderFeedbacks } from './Orders/customer.order.feedbacks';
+
 import { SearchAddressScreen } from './Address/SearchAddressScreen';
 
 import { ServiciosScreen } from './Home/ServiciosScreen';

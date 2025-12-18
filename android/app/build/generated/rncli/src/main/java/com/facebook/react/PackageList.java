@@ -33,6 +33,8 @@ import org.reactnative.maskedview.RNCMaskedViewPackage;
 import com.reactnativestripesdk.StripeSdkPackage;
 // react-native-device-info
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
+// react-native-geolocation-service
+import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 // react-native-gesture-handler
 import com.swmansion.gesturehandler.RNGestureHandlerPackage;
 // react-native-image-crop-picker
@@ -43,6 +45,8 @@ import com.BV.LinearGradient.LinearGradientPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 // react-native-pager-view
 import com.reactnativepagerview.PagerViewPackage;
+// react-native-permissions
+import com.zoontek.rnpermissions.RNPermissionsPackage;
 // react-native-prompt-android
 import im.shimo.react.prompt.RNPromptPackage;
 // react-native-push-notification
@@ -117,11 +121,13 @@ public class PackageList {
       new RNCMaskedViewPackage(),
       new StripeSdkPackage(),
       new RNDeviceInfo(),
+      new RNFusedLocationPackage(),
       new RNGestureHandlerPackage(),
       new PickerPackage(),
       new LinearGradientPackage(),
       new MapsPackage(),
       new PagerViewPackage(),
+      new RNPermissionsPackage(),
       new RNPromptPackage(),
       new ReactNativePushNotificationPackage(),
       new ReanimatedPackage(),

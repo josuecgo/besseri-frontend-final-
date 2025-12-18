@@ -1,4 +1,4 @@
-import { ADD_ADDRESS, ADD_CARS_TO_USER, ADD_CAR_ACTIVE_TO_USER, ADD_DEFAULT_ADDRESS, ADD_USER, DELETE_TO_USER, GET_MAKERS_CARS, GET_MAKER_VALUE_CARS, GET_MODELS_CARS, GET_MODEL_VALUE_CARS, GET_YEARS_CARS, GET_YEAR_VALUE_CAR, RESET_FILTROS, SAVE_NOTIFICATION, SET_USER_LOCATION } from "../../Actions/CustomerActions/UserInfoActions"
+import { ADD_ADDRESS, ADD_CARS_TO_USER, ADD_CAR_ACTIVE_TO_USER, ADD_DEFAULT_ADDRESS, ADD_USER, DELETE_TO_USER, GET_MAKERS_CARS, GET_MAKER_VALUE_CARS, GET_MODELS_CARS, GET_MODEL_VALUE_CARS, GET_YEARS_CARS, GET_YEAR_VALUE_CAR, RESET_FILTROS, SAVE_NOTIFICATION, SET_PERMISSION_LOCATION, SET_USER_LOCATION, UPDATE_CAR_SELECTION } from "../../Actions/CustomerActions/UserInfoActions"
 
 
 const initialState = {
@@ -21,7 +21,9 @@ const initialState = {
   userLocation:{
     latitude: 19.485297844903283,
     longitude: -99.22777616792496
-  }
+  },
+  locationStatus: null,
+  locationPermissionGranted: false
 }
 export default (state = initialState, action) => {
    
@@ -125,6 +127,14 @@ export default (state = initialState, action) => {
                 modeloValue: null,
                 isLoading:false
             } 
+        case UPDATE_CAR_SELECTION:
+            return {
+                ...state,
+                marcaValue: action.data.marcaValue,
+                modeloValue: action.data.modeloValue,
+                yearValue: action.data.yearValue,
+                carActive: action.data.carActive
+            }
         case RESET_FILTROS:
            
             return {
@@ -165,7 +175,15 @@ export default (state = initialState, action) => {
         
         return {
             ...state,
-            userLocation: action.data
+            userLocation: action.data,
+            locationStatus: true
+        }
+        case SET_PERMISSION_LOCATION: 
+        
+        return {
+            ...state,
+            userLocation: action.data,
+            locationPermissionGranted: action.data
         }
         default:
             return state

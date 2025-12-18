@@ -13,6 +13,17 @@ export const GET_YEAR_VALUE_CAR = 'GET_YEAR_VALUE_CAR';
 export const SAVE_NOTIFICATION = 'SAVE_NOTIFICATION';
 export const RESET_FILTROS ='RESET_FILTROS'
 export const SET_USER_LOCATION = 'SET_USER_LOCATION'
+export const SET_PERMISSION_LOCATION = 'SET_PERMISSION_LOCATION'
+export const UPDATE_CAR_SELECTION = 'UPDATE_CAR_SELECTION'
+
+export const updateCarSelection = (payload) => {
+  return({
+      type: UPDATE_CAR_SELECTION,
+      data:payload
+  })
+}
+
+
 
 export const addToUser = (item) => {
    
@@ -58,6 +69,15 @@ export const addUserLocation = (item) => {
     
   return({
       type:SET_USER_LOCATION,
+      data:item,
+     
+  })
+}
+
+export const setPermissionLocation = (item) => {
+    
+  return({
+      type:SET_PERMISSION_LOCATION,
       data:item,
      
   })
@@ -133,3 +153,4 @@ export const resetFiltros = () => {
      
   })
 }
+

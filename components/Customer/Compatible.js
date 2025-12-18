@@ -8,6 +8,7 @@ import CommonStyles from '../../util/styles/styles'
 export const Compatible = ({autopart}) => {
   const {carActive,modelos} = useSelector(state => state.user);
  
+  
   const model = carActive?.model?._id || carActive?.model
 
   

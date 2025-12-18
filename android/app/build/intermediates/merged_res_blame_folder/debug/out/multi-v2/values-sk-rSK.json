@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.besseri.app-mergeDebugResources-104:/values-sk-rSK/values-sk-rSK.xml",
+            "outputFile": "com.besseri.app-mergeDebugResources-106:/values-sk-rSK/values-sk-rSK.xml",
             "map": [
                 {
                     "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/e1c14fbbe93804649152af5b10d81d6e/transformed/jetified-link-20.48.6/res/values-sk-rSK/values-sk-rSK.xml",

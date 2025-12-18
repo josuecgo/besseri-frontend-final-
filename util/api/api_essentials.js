@@ -1,9 +1,12 @@
-export const env = 'dev';
+export const env = 'prod';
 
 export const base_url =   env === 'prod' ? 'https://api.besser-auto.app'  
-                        : env === 'dev' ?  'https://d540737f3c4e.ngrok-free.app' 
+                        : env === 'dev' ?  'https://9f2d210eb289.ngrok-free.app' 
                         : 'https://eed9ec7cc83f.ngrok-free.app';
 
+                       
+         
+                        
 export const api_urls = {
     registration:`${base_url}/user/signup`,
     login:`${base_url}/user/login`,

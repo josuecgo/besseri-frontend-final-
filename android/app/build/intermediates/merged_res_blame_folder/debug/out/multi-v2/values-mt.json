@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.besseri.app-mergeDebugResources-104:/values-mt/values-mt.xml",
+            "outputFile": "com.besseri.app-mergeDebugResources-106:/values-mt/values-mt.xml",
             "map": [
                 {
                     "source": "/Volumes/Externo-SSD/.gradle/caches/transforms-3/bf1a86d9084c918a59b57716be7f68f6/transformed/jetified-stripe-core-20.48.6/res/values-mt/values-mt.xml",

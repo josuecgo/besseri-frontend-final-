@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator, Dimensions, Pressable, Animated, StatusBar } from 'react-native';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Colors from '../../../util/styles/colors';
 import { SelectCar } from '../../../components/Customer/SelectCar';
-import { showToaster } from '../../../util/constants';
+import { showAlertLogin, showToaster } from '../../../util/constants';
 import { api_statuses, customer_api_urls, vendor_api_urls } from '../../../util/api/api_essentials';
 import axios from 'axios';
 import { Box, Center, CheckIcon, FlatList, Image, ScrollView, Select, useColorModeValue } from 'native-base';
@@ -19,6 +19,7 @@ import { ProductContext } from '../../../util/context/Product/ProductContext';
 import ProductListing from '../../../components/customer-components/ProductsListing.component';
 import { useNavigation } from '@react-navigation/native';
 import { useCart } from '../../../hooks/useCart';
+import LoaderComponent from '../../../components/Loader/Loader.component';
 
 
 
@@ -32,7 +33,7 @@ const chunkArray = (array, size) => {
 };
 
 const FirstRoute = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const [formData, setFormData] = useState({
     category: '',
     subCategory: '',
@@ -42,19 +43,19 @@ const FirstRoute = () => {
   const [subcategories, setSubcategories] = useState([])
   const [isLoading, setIsLoading] = useState(false);
   const { addresses, marcaValue, modeloValue, yearValue } = useSelector(state => state.user);
-  const { getDiscountedProducts, discountedProducts, comision } = useContext(ProductContext)
+  const {  discountedProducts, comision } = useContext(ProductContext)
   const dispatch = useDispatch()
   const cartProductIds = useSelector(state => state.cart.cart_items_ids);
-
   const { addItemToCart } = useCart()
   const productRows = chunkArray(discountedProducts, 2);
+  
+  
 
 
-  const handleChange = (value, name) => {
-
-
-    setFormData({ ...formData, [name]: value });
-  };
+  
+  const handleChange = useCallback((value, name) => {
+    setFormData(prev => ({ ...prev, [name]: value }));
+  }, []);
 
 
   const getCategories = async () => {
@@ -76,30 +77,19 @@ const FirstRoute = () => {
     }
   }
 
-  const getSubCategories = async (categoryId) => {
-    try {
+  const getSubCategories = useCallback(async (categoryId) => {
+  try {
+    const apiCall = await axios.get(
+      `${vendor_api_urls.get_sub_categories}/${categoryId}`,
+    );
 
-      const apiCall = await axios.get(
-        `${vendor_api_urls.get_sub_categories}/${categoryId}`,
-      );
-
-
-
-      if (apiCall?.status == api_statuses?.success) {
-
-        setSubcategories(apiCall.data.data);
-      }
-
-
-
-
-    } catch (error) {
-      // console.log(error);
-
-      showToaster('No hay conexion con el servidor')
-
+    if (apiCall?.status == api_statuses?.success) {
+      setSubcategories(apiCall.data.data);
     }
-  };
+  } catch (error) {
+    showToaster('No hay conexion con el servidor')
+  }
+}, []);
 
 
 
@@ -111,6 +101,13 @@ const FirstRoute = () => {
       const findAddress = typeof formData.addressId === 'number' ? addresses[formData.addressId - 1] : addresses.find(address => address._id === formData.addressId);
 
       const user = await getUser();
+
+      if (!user) {
+        let goLogin = () => navigation.navigate('AuthStack');
+        setIsLoading(false)
+        showAlertLogin(goLogin);
+        return
+      }
 
       if (Object.values(formData).some(value => value === '') || !marcaValue || !modeloValue || !yearValue) {
         Alert.alert('Error', 'Por favor, completa todos los campos.');
@@ -131,11 +128,14 @@ const FirstRoute = () => {
 
 
       const url = `${customer_api_urls.search_or_quote}`;
+
+   
+      
       const apiCall = await axios.post(url, data)
 
       if (apiCall) {
         showToaster('Solicitud de cotización enviada correctamente')
-        navigation.goBack()
+        // navigation.goBack()
         setFormData({
           category: '',
           subCategory: '',
@@ -146,9 +146,13 @@ const FirstRoute = () => {
 
       setIsLoading(false)
     } catch (error) {
-      console.log(error);
+      
+      const errorMessage = error.response?.data?.message 
+                          ? error.response.data.message  
+                          : 'Error al enviar la solicitud de cotización'; 
 
-      showToaster('Error al enviar la solicitud de cotización')
+
+      showToaster(errorMessage);
       setIsLoading(false)
 
     }
@@ -161,20 +165,29 @@ const FirstRoute = () => {
 
   useEffect(() => {
     getCategories()
-
-    getDiscountedProducts()
+    // getDiscountedProducts()
   }, [])
 
-  useEffect(() => {
-    if (formData.category) {
-      getSubCategories(formData.category)
-    }
 
-  }, [formData.category])
+
+  // useEffect(() => {
+  //   if (formData.category) {
+  //     getSubCategories(formData.category)
+  //   }
+
+  // }, [formData.category])
+  useEffect(() => {
+  if (formData.category) {
+    if (formData.subCategory) {
+      setFormData(prev => ({ ...prev, subCategory: '' }));
+    }
+    getSubCategories(formData.category);
+  }
+}, [formData.category, getSubCategories]);
 
   return (
     <Box flex={1} >
-      <ScrollView>
+        <LoaderComponent isVisible={isLoading} />
         <Text style={styles.title}>¿QUÉ REFACCIÓN QUIERES COTIZAR?</Text>
         <Text style={styles.label}>Selecciona el vehiculo:</Text>
         <View style={{ marginBottom: 20, borderWidth: 0.5, borderRadius: 10 }}>
@@ -228,7 +241,7 @@ const FirstRoute = () => {
               backgroundColor={Colors.bgColor}
               borderWidth={'1px'}
               borderRadius={'10px'}
-              size={'xs'}
+              size={'2xl'}
               _text={{
                 numberOfLines: 1,
                 ellipsizeMode: 'clip',
@@ -260,7 +273,7 @@ const FirstRoute = () => {
 
           </View>
         </View>
-
+<ScrollView nestedScrollEnabled={true} showsVerticalScrollIndicator={false} >
         <View>
           {
             productRows?.length > 0 && (<Text style={styles.label}>Promociones</Text>)
@@ -305,6 +318,8 @@ const FirstRoute = () => {
     </Box>
   )
 }
+
+
 
 const SecondRoute = () => <HomeStoreScreen />
 
@@ -400,8 +415,6 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
     flex: 1,
-    // justifyContent: 'center',
-    // padding: 20,
     backgroundColor: Colors.white,
   },
   title: {
